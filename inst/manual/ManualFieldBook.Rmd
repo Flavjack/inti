@@ -1,0 +1,322 @@
+---
+title: "Field Book Manual"
+---
+#Objective of FieldBook
+_FieldBook_ es una aplicacion _online_ que busca ser una herramienta de ayuda a toda persona que este interesado en utilizar las estadisticas como herramientas cotidianas en su vida acad?mica, comercial y personal. Si esta herramienta te ayuda a reducir el tiempo en operaciones monotonas y pasar  directamente al an?lisis, la discusi?n e interpretaci?n de los resultados.
+
+#Description scream
+
+##Aplications
+
+![**In Black:** applications.  **In Green:** FielBook application](imagen/001_fieldbook.png)
+
+En la barra de direcciones se muestran las aplicaciones con las que cuenta _quipo.org_ en el cual puedes ingresar a la aplicacion de su interes pulsando directamente sobre el: ¡Bienvenido a FieldBook!
+
+Para visualizar pantalla completa pulse el boton adjunto: ![Bottom FullScream](imagen/002_fullscream.png). 
+
+Aqui podras encontrar heramientas que te ayudara a desarrollar de manera sencilla, rapida y rigurosa tu investigación: construir un libro de campo, analisis preliminar, multivariante, comparacion de medias, contrucción de graficas y regresion.
+
+
+#Tools
+Cabe recaltar tener los conceptos estadisticos claros, antes de continuar debes reponder las siguintes preguntas:
+¿Que es una unidad experimental?
+¿Que es un factor y sub factor o niveles del factor?
+¿Que es un variable?
+¿Que parametros emplear?
+¿Cuando usar un DCA y un DBCA?
+etc..
+
+Despues de sorter la valla de los conceptos estadisticos podrás construir tu libro de campo donde ingresaras tus factores, y niveles del factor, repeticiones, evluar en el tiempo y variables.
+
+La primeras dificultad con la que el joven investigador se encuentra cuando pretende desarrollar un trabajo, luego de escoger el _stadistical desing_ apropiado es: 
+      
+      como colectar los datos.
+      Como roturalo las columnas.
+      Que  hacer con los datos perdidos.
+
+Si esta es tu primera investigacion _Tools_ te sera de mucha utilidad.
+
+##Caso practico
+En el siguiente ejemplo practico Tenemos cuatro individuos de la misma especie de palto (**Treatment1**):
+
+_Antillano_, 
+_Mexicano_, 
+_Nabal_, y 
+_zutano_
+
+queremos saber como se comportan a la  enfermedad  "pudricion de raiz" causado por _P. cinnamomi_. Por tanto, para este factor tenemos dos sub-factores (**Treatment2**):
+
+_inoculado_ y 
+_noinoculado_
+
+Los hospederos de dicha enfermedad tendran la mismas condiciones ambientales y patogeno virulante. Se deses comparar como responden estos individuos a la enfermedad. Por tal razon el diseño estadistico sera un: 
+
+  **diseño ramdomizado completamente al azar**
+
+    cdr: Completely random design.
+    rcdb: Completely randomized block design.
+    lsd: Least significant difference
+
+De dos factores: hospedero y patogeno. Ademas, debera de evaluarse en el tiempo (**8 evaluaciones**) para conocer el progreso de la enfermedad, tendra **6 repeticiones** en cada evaluacion (*6 plantas de palto*) y la variable respuesta sera:
+
+
+      Weight fresh root (kg), .........FreshRootKg
+      Weight dry root (Kg), ...........DryRootKg
+      Weight humidity root (Kg), ......Hd_rootKg
+      Weight fresh foliage (Kg), ......FreshFolKg
+      Weight dry foliage (Kg), ........DryFolKg
+      Weight humidity foliage (Kg), ...Hd_folKg
+      Length root (Km), y..............LengthRootKm
+      Damage root (%)..................Damage
+      
+##Tools
+Con el planteamiento señalado procedemos a llenar _Tools_ 
+![**intelligent tools**](imagen/003_tools.png)
+
+Adicionalmente tenemos funciones como *label* el cual son los r?tulos de la columna _Treatment1_ y  _Treatment2_ respectivamente.
+
+###Buenas pr?cticas
+Al ser esta una plataforma de soporte estadistico no deja de ser riguroso con la nomenclatura y simbolos raros. Evitar ingresar simbologia extraña que **No pertenezca** al alfabeto ingles. Salvo en **label**,  el programa reconoce que haces referencia a un titulo, entonces los carateres raros solo los imprimira, mas no los analizara.
+
+Como se aprecia, para se?alar tratamientos diferentes, se separa con espacio. En ocasiones juntamos palabras como
+
+__noinoculado__ si por accidente separamos ambas palabras:  __no__  __inoculado__ el programa reconocer?  como dos tratamientos diferentes, _no_ e _inoculado_, otros errores comunes:
+
+
+~~palto~~~~001~~     incorrecto (dos tratamientos)
+
+~~pal?to%6""~~    incorrecto (evitar t?rminos extra?os, ???!"#$%&/()=??][{}[^)
+
+palto_001     correcto    (un tratamiento)
+
+Palto001      correcto   (un tratamiento)
+
+**evitar tildes y "ñ"**
+
+Una vez terminado de ingresar los componentes de nuestro dise?o mostrar? en **table** la libreta de campo donde podr?s _Copy_  ? imprimir en _csv_ o _xlsx_. Adicionalmente _search_ permite ingresar y ubicar un  grupos de celdas en la plantilla. Los datos seran ingresados a una hoja xlsx, de acuerdo a la plantilla.
+
+    Aunque el programa soporta un m?nimo de dos repeticiones, se recomienda al menos tener más de tres repeticiones. Siempre existe la posibilidad de p?rdida de datos. En caso de ocurrir, mantener la plantilla tal cual y en la casilla donde corresponde el dato pérdido, dejar en blanco (nulo). No cero (0), puesto que es un valor diferente a nulo.
+
+![**Table**, Flecha amarilla: Desplegables para escoger itms de int?res.     Flecha roja: Muestra la ubicaci?n y la cantidad de unidades experimentales para tu ensayo.](imagen/004_table.png)
+
+#FieldBook
+Cuando hayas digitalizado tus datos recogidos de campo, de acuerdo a la plantilla dise?ada en _Tools_ cargaras en **FieldBook** como url ? como xlsx.
+
+![**FieldBook**, **En amarillo**: Hoja en la que se encuentra tu base de datos que deseas subir. **En verde**: Actualizar  modificaciones  ](imagen/005_fieldbook.png)
+
+
+Una vez subido y actualizado el archivo. En ocaciones es muy util cargar una parte de la base de datos para un analisis parcial de bloques o factores, entonces en la herramienta **Filter** podrás filtrar la base de dato de acuerdo al criterio del investigador, tomando los factores que mejor los acerquen a sus propositos. Puede filtrar por evaluación  y algun tratamiento que sea de su particular interes.
+
+
+![**FieldBook - Filter** ](imagen/filter.png)
+
+
+De no escoger ningun filtro, cargara toda la base de datos a  _Outliers_.
+
+#outliers
+Aqu? se visualizan los valores at?picos, y permite al investigador tomar desiciones, como realizar una transfomaci?n de datos o suprimir valores at?picos.
+
+Para nuestro ejemplo, en **Response** seleccionamos la variable respuesta del desplegable y al pie **Ylabel** escribiremos el r?tulo del eje de la ordenadas. 
+
+    Aqu? se coloca el rotulo de las ordenas en cual permite  notacion cientifica y  simbolog?a no permitida siempre y cuando, vaya entre comillas (""). Ver ejemplo: Damage ("%")     escribira      Damage (%)
+
+Con el mismo criterio escogeremos uno de los factores (_Treatment_) en **Axis X**. Para nuestro ejemplo deseamos mostrar en el eje de las abscisas los Huespedes de la enfermedad y sobre el plano cartesiano **(Grouped)** el _patogeno_ con sus dos subfactores: _inoculado_ y _noinoculado_.
+
+![**outliers. Selector de tratamientos, rotulos y escala **  ](imagen/006_outliers.png)
+
+    Amarillo: Elegir la varaible respuesta que desea visulizar y su r?tulo.
+    verde: Elegir el Tratamiento  a mostrar en el eje de la abscisas
+    rojo: Elegir el Tratamiento  a mostrar en el plano cartesiano.  
+    Azul: Elegir la escala de los ejes y el tama?o de letra.  
+
+Ademas en **Ylabel** y **Xlabel** permite:
+
+    Si desea escribir: 
+    La formula del agua: H[2] O  
+    La formula de kil?metros por hora: km. Hr^{-1} 
+    La concentracion de ?cido sulf?rico:"[" SO[4] .H[2] "]"
+    *IMPORTANTE: Terminado de escribir el rotulo NO dejar espacio en blanco.
+
+Ahora, elegimos otra variable respuesta:
+
+Del desplegable **response** elegimos _LengthRootKm_, **Axis X** elegimos _patogeno_ y finalmente **Grouped**, _huesped_, del mismo modo debemos de cambiar los _labels_ puesto que el la imagen a?n no las hemos cambiado.
+
+![**outliers. Response: LengthRootKm.  AxisX: patogeno**  ](imagen/006_0outliers.png)
+
+Otro forma de presentar la misma variable es la siguiente:
+
+![**outliers. Response: LengthRootKm.  AxisX: huesped**   ](imagen/006_1outliers.png)
+
+Qued? a criterio del invesigador la mejor manera de presentar sus datos, siempre procuparando que esta sea la m?s legible de la formas.
+
+    Finalmente debemos precisar que para estas imagenes, hay tres puntos rojos (flecha azul) estos son los datos fuera de tipo (outliers), aumentando la desviación estandar.
+
+#Multivariate
+
+En  **Multivariate** tenemos dos presentaciones de las variables respuestas evaluadas. **Correlation** y **analisis de componentes principales (pca)** ambos con sus respectivos graficos. estos nos permitira reconocer la correlacion de las variables y simplificar un problema complejo, a criterio del investigador.
+
+![**correlation      y     pca**](imagen/007_0multivariante.png)
+
+##correlation
+
+En el cuadro de la izquierda **Correlation**  muestra  el grado de **Significance**, por defecto se trabaja con un grado de significancia igual al 5%, en el desplegable se puede cambiar el nivel de significancia. 
+
+La **Correlation**  permite conocer el grado de relacion que tiene cada variable respuesta respecto a la otra, en un rango de **+1 a -1**, si el valor absoluto de la correlacion es cercano a **1** indica que presenta una _magnitud_ relación muy estrecha, y el signo es positivo o negativo indica que es una relación directa o inversa, respectivamente.
+
+
+En **Font** se puede escoger el tamaño de fuente, el cual por defecto es **1** es el tamaño de fuente más apropiado si se desea copiar la imagen para imprimir. Por último, **color**, en este se colocaran los colores HTML de su preferencia separados por un espacio para representar dicha correlacion, notar que el orden como se ingresan los codigos de colores HTML es importante. 
+
+
+###colors HTML
+Para un mejor empleo de los colores HTML en **Multivariate**, se debera colocar los **colores HTML** o llamar a los  colores primarios por su nombre, como: _yellow_  _red_  _green_  _blue_  _orange_ _black_ _gray_ _white_. 
+
+Una forma practica de obtener el codigo es usando un **eyes dropper**, una vez instalado en su navegador, ingresar al **color picker**. Copiar el codigo del color y pegar sobre **Multivariate - correlation - color**, como se muestran en los circulos.
+
+![**colors HTML**, eyes dropper. **En rojo:** cuenta gotas. **En verde:** copiar codigo de  color](imagen/colors picker.png)
+
+
+Copiado el codigo de color HTML, pegar en **Multivariate - correlation - color**.
+
+Es asi como puede personalizar sus graficos de la **Correlation**.
+
+
+![**correlation y PCA** - Type var](imagen/007_07multivariante.png)
+
+
+##Analisis de componentes principales
+
+En el analisis de los componentes principales (PCA), se tiene el desplegable **Type** donde se presenta _biplot_, _var_ e _ind_; y junto a **Variable**, se puede escoger el plano que mejor grafique el proposito del investigador, con la combinacion de estos.
+
+**PCA- Type** permite encoger _var_  el que representa la correlacion de las variables respuestas en una grafica simple  de radio = **1**. El cual tienen el mismo marco conceptual que **Corretation** visto lineas arribas, pero en esta ocacion en una representación grafica.
+
+La variable respuestas poseen una _magnitud_ y _direccion_ respecto a los cuadrantes del plano cartesiano.
+
+    Para el ejemplo observamos que se mueven una dirección opuesta (relacion inversa) y magnitud cercano a cercana a "1" (una correlaciin alta) entre Damage y LengthRootKm. Al investigador le interesan particularmente estas dos variables, puesto se esta estudiando la damage que causa un patogeno a las raices, es prioritario centrar su atención sobre los sintomas primarios (el deterioro de la raices).  
+
+![**Relacion Damage y LengthRootKm** _inoculado_ y _noinoculado_ (control)](imagen/damage_length.png)
+
+
+
+En la herramienta  **Tools** se construyo la libreta de campo y el orden como se contruye la columna: repetecion, bloque, factores y variables, es importante a la hora de escoger en   **Multivariate - PCA - Variable**,la columna que vas a representar.
+
+    Para el ejemplo, cuando elegimos en varible 2, elegimos  la columna 2, que   representa a las evaluaciones por lo que en la leyenda iran las evaluaciones con su respectivo color, y en label, tiene la oportunidad de cambiar el rotulo de la columna, puede cambiar eva  por Evaluacion.
+
+![**PCA** _Los ejes en gris_ representan el % de variación de la _variancia_ para cada componente.](imagen/007_02multivariante.png)
+
+      Dando sobre el desplegable "Varaible"", hasta la  columna 3, el que representa  al  patogeno   por consecuencia aparece como rotulo en la leyenda, y se puede apreciar que en la grafica se separa la columna  patogeno (inoculado    y   noinoculado). Si deseamos cambiar el rotulo de la leyenda, escribir en "Label" el nombre de su preferencia.  
+
+Es criterio del investigador tomar la columna que mejor se ajuste a sus necesidades.
+
+![**Correlation y Analisis de componentes principales**](imagen/007_multivariante.png)
+
+
+El eje de las componentes principales representa el _porcentaje de variabilidad de la varianza_ y no tiene otro significado del que le da el investigador.
+
+
+#Stadistic
+
+Esta es un plataforma de calculos estadistístico, reposa sobre el investigador su correcto uso.
+
+En **Response** seleccionamos la variable respuesta que deseamos analizar.
+
+En **Block** dependiendo del stadistical desing seleccionar el bloque, o del criterio del investigador alguna columna que quiera aislar de manera particular.
+
+En **Factors** seleccionar el los tratamientos o factores.
+
+En **Significance** esta predefinido con un nivel de significancia del 5%, pero este también queda a criterio del investigador.
+
+En **Type** se presenta el tipo de prueba: _Tukey_, _Duncan_ y _Snk (Student Newman Keuls)_
+          
+![**ANVA: Analisis de varianza** ](imagen/anva.png)
+
+
+    Para nuestro ejemplo, segun la prueba de Tukey, existen diferencias estadisticamente significativas, entre evaluaciones, entre huespedes (individuos evaluados), y entre el factor patogeno (inoculado y noinoculado).
+    Y, No existe diferencias estadisticamente significativas cuando interatuan los factores (huesped:patogeno). Es decir, cuando se tomo cada bloque (cada evaluacion) no existe una respuesta significativa de los  hospederos  con respecto a la presencia o ausenica del patogeno. 
+     Cuando se evaluo la interacción, No se encontro evidencias estadisticamente significativas. Y esto, resulta beneficioso, pues de ser significativo se hubiera negado la validez de los factores analizados.
+
+En en el cuadro adjunto, se los principales parametros y sus niveles de significancia, donde puede copiar, o descargar en formato csv o xlsx para poder hacer las graficas en el programa de su preferencia.
+
+![**Cuadro de significancia**](imagen/table_anva.png)
+
+En la plataforma FieldBook tambien te permite relizar las graficas mas importantes, de lineas e histogramas para representar tu analisis de comparación de medias.
+
+
+#Graphics
+
+En la herramienta **Graphics** te permite traer de **Stadistic** lo analizado para representarlo graficamente. Aqui las herramientas:
+
+_Ylabel_,  _Xlabel_, y _Legend_ te permitirá dar forma a los rotulos de tus ejes de ordenadas, abscisas y leyenda respectivamente; manteniendo los mismos criterios de escritura vistas en el capitulo **Outliers** para la construcción de los rotulos.
+
+Si se desea mantenerlos en blanco, arrastrará la informacion de las cabeceras con el que se contruyo en **tools** la libreta de campo.
+
+
+![**Representación grafica, manteniendo  los rotulos de la libreta de campo. **](imagen/g02.png)
+
+Al pie de cada cuadro en azul, verde y rojo, tenemos _brakes_. En azul para definir el punto de partida del eje de las ordenas, el cual solo se habilita con el grafico de lineas. 
+
+En _brake text_ permite modificar el los rotulos de los subfactores, dando dos espacios entre cada nombre del subfactor.
+
+      Del ejemplo, se desea cambiar:
+      "inoculado"  y "noinoculado",por: enfermo  sano
+      es decir: enfermo(._._)sano
+      
+      Y para los niveles de huesped (Legend): "Antillano", "Mexicano", "Nabal", y "Zutano", se desea cambiar por:
+      G1  G2  g3 g4
+      es decir: 
+      G1(._._)G2(._._)g3(._._)g4
+      *._ es la representacion grafica de un pulso sobre la barra espaciadora de l teclado. Si solo se da un solo espacio(._)        No saltara a cambiar el nombre del otro subnivel,  y por defecto imprimira "N.A".
+      
+    
+![**Representación grafica, modificando los rotulos. **](imagen/g01.png)
+
+Note como el orden en el que se ingresan los factores en **Stadistic** es importante. Para cambiar el orden de los factores debe de regresar a **Stadistic** y seleccionar primero a factor que se quiere representar en el eje de la abscisas (huesped) y luego el otro factor representado como grafico de barras (patogeno).  El primer factor siempre refleja el eje de las abscisas.
+
+![**El primer factor seleccionado, se representará en el eje de las abscisas**](imagen/gfactors.png)
+
+El siguiente grafico refleja  mejor el comportamiento de los individuos evaluados a la variable longitud de raiz. Esta grafica mejor el proposito del investigador, el cual es distinguir el comportamiento de los individuos. 
+
+
+![**cambio en el eje de la abscisas.**](imagen/g03.png)
+
+Las modificaciones a los rotulos se hace del mismo modo que en el capitulo **Outliers**. La caja de herraminetas que se muestra al lado izquierdo permite:
+
+**Size:** El tamano por defecto es **2**, se recomienda descargarlo en **1** para una mejor resolucion en la impresion.
+
+**Type:** Se presentan dos tipos de graficos de _lineas_ y de _barras_. Cuando seleccionas _line_ puedes hacer uso en  *Ylabel* las funciones  *Limit(i)* y *Limit(f)* para modificar el eje de la ordenadas.
+
+**Color:** Se muestra la graficas en blanco y negro, y a color.
+
+**Significance:** Muestra la significancia representada por letras. 
+
+**Error:**  Mostrar la barra de error.
+
+**Lenged:** Muestra la ubicación del rotulo de la leyenda, _none_, _left_, _rigth_, _top_ y _bottom_.
+
+**Heigth(mm)** y **Width(mm):** Es la altura y el ancho de la figura a imprimir.
+
+**TIFF(300ppi):** Es el formato (del grafico) requerido para la divulgacion cientifica.
+
+![**cambio en el eje de la abscisas.**](imagen/gg.png)
+
+Se recalca una vez mas, el buen juicio del investigador. Para este ejemplo, es importante tener la representación grafica de la todas la evaluaciones en el tiempo y como se comportan los individuos con el patogeno (_inoculado_ y _noinoculado_), 
+
+Entonce, deberemos volver a **Stadistic**, y el primer factor que se debe ingresar es: evaluaciones seguido de los individuos evaluados (_huesped_), como se muestra a continuacion:
+
+![**Stadistci: Evaluacion - huesped **](imagen/e_h.png)
+
+Seleccionamos el **graphic** - **Type** - **line**  para una representación con grafico de lineas, vale señalar que la grafica se ha construido sobre el promedio de factor **patogeno**.
+
+![**Evaluación en el tiempo.**](imagen/g_eva.png)
+
+Si se desea hacer un disgregación más minusiosa, podemos usar la herramienta **Filter** de **FieldBook** y seleccionar en filtro el factor *patogeno* y como subfactor *inoculado* para su analisis y represenación grafica, como se muestra a continuación.
+
+![**Evaluación en el tiempo. Solamente de los inoculados**](imagen/inoculados_eva.png)
+
+
+
+#Regression
+
+
+
+
+
