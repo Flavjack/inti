@@ -1,11 +1,36 @@
 Package: fieldbook
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Interactive apps for science research data analisys
+Version: 1.0
+Authors@R: person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com", role = c("aut", "cre"))
+BugReports: https://github.com/flavjack/fieldbook/issues
+Description: Fieldbook is package develop to deploy interactive applicaction based in shiny for scientific research data analisys.
+Imports:
+    agricolae,
+    corrplot,
+    data.table,
+    dplyr,
+    DT,
+    ggplot2,
+    gsheet,
+    gtools,
+    factoextra,
+    FactoMineR,
+    flashClust,
+    lubridate,
+    plotly,
+    readxl,
+    shiny,
+    shinydashboard,
+    tibble,
+    tidyr,
+    leaps,
+    scatterplot3d,
+    zoo
+Depends:
+    R (>= 3.2.3)
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 5.0.1
+Suggests: testthat

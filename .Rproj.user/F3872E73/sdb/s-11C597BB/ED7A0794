@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "Package: fieldbook\nType: Package\nTitle: Interactive apps for science research data analisys\nVersion: 1.0\nAuthors@R: person(\"Flavio\", \"Lozano-Isla\", email = \"flavjack@gmail.com\", role = c(\"aut\", \"cre\"))\nBugReports: https://github.com/flavjack/fieldbook/issues\nDescription: Fieldbook is package develop to deploy interactive applicaction based in shiny for scientific research data analisys.\nImports:\n    agricolae,\n    corrplot,\n    data.table,\n    dplyr,\n    DT,\n    ggplot2,\n    gsheet,\n    gtools,\n    factoextra,\n    FactoMineR,\n    flashClust,\n    lubridate,\n    plotly,\n    readxl,\n    shiny,\n    shinydashboard,\n    tibble,\n    tidyr,\n    leaps,\n    scatterplot3d,\n    zoo\nDepends:\n    R (>= 3.2.3)\nLicense: MIT + file LICENSE\nEncoding: UTF-8\nLazyData: true\nRoxygenNote: 5.0.1\nSuggests: testthat\n",
+    "created" : 1487438002919.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3330306261",
+    "id" : "ED7A0794",
+    "lastKnownWriteTime" : 1487437636,
+    "last_content_update" : 1487437636,
+    "path" : "~/GitHub/fieldbook/DESCRIPTION",
+    "project_path" : "DESCRIPTION",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "dcf"
+}
