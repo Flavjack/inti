@@ -16,17 +16,11 @@ Imports:
     gtools,
     factoextra,
     FactoMineR,
-    flashClust,
-    lubridate,
-    plotly,
     readxl,
     shiny,
     shinydashboard,
     tibble,
-    tidyr,
-    leaps,
-    scatterplot3d,
-    zoo
+    tidyr
 Depends:
     R (>= 3.2.3)
 License: MIT + file LICENSE
