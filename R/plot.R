@@ -561,6 +561,8 @@ plot_PCA <- function(data, type = "biplot", quali.sup = NULL, lgl = NULL){
 #' @param zbl legend label in strign with doble space
 #' @param color colored figure (TRUE), otherwise black & white (FALSE)
 #' @param font letter size in plot
+#' @param rlx regression line position in axis x.
+#' @param rly regression line position in axis y.
 #' @return Line regression plot
 #' @importFrom dplyr mutate
 #' @importFrom ggplot2 geom_smooth scale_x_continuous scale_color_grey aes aes_string element_blank element_rect element_text geom_bar geom_errorbar geom_line geom_point geom_text ggplot position_dodge scale_color_discrete scale_fill_hue scale_shape_discrete scale_x_discrete scale_y_continuous theme theme_bw unit scale_fill_discrete scale_fill_grey
@@ -569,7 +571,7 @@ plot_PCA <- function(data, type = "biplot", quali.sup = NULL, lgl = NULL){
 #' @export
 
 
-plot_linereg <- function(data, x, y, z, ylab = NULL, xlab = NULL, lgl = NULL,lgd = "top", xbrk = NULL, ybrk = NULL, zbl = NULL, color = TRUE, font = 1){
+plot_linereg <- function(data, x, y, z, ylab = NULL, xlab = NULL, lgl = NULL,lgd = "top", xbrk = NULL, ybrk = NULL, zbl = NULL, color = TRUE, font = 1, rlx = NULL, rly = NULL){
 
 
   if( !is.null(xlab) ){
@@ -642,6 +644,10 @@ plot_linereg <- function(data, x, y, z, ylab = NULL, xlab = NULL, lgl = NULL,lgd
 
     }
 
+  rgl <- fieldbook::lm_eqn(x, y, data)
+
+  if ( is.null(rlx) ){ rlx = -Inf } else { rlx = rlx }
+  if ( is.null(rly) ){ rly = Inf } else { rly = rly }
 
 
   p <- ggplot(data, aes_string(  x = x , y = y, group = z, shape= z, color= z))+
@@ -649,7 +655,8 @@ plot_linereg <- function(data, x, y, z, ylab = NULL, xlab = NULL, lgl = NULL,lgd
     geom_point(size = 1.2*font)+
     scale_x_continuous( xlab, expand = c(0,0), breaks = xbrks)+
     scale_y_continuous( ylab, expand = c(0,0), breaks = ybrks )+
-    scale_shape_discrete(lgl, labels = zbl)
+    scale_shape_discrete(lgl, labels = zbl)+
+    annotate("text", label = rgl, parse = T, x = rlx, y = rly, vjust = "inward", hjust = "inward", size= 2.5*font)
 
 
   if ( color == TRUE ){

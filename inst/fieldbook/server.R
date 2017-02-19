@@ -976,6 +976,8 @@ plot_lr <- reactive({
   xbk  <- input$lr_brk1
   ybk <- input$lr_brk2
   lvl <- input$lr_lglv
+  rlx <- input$lr_eq_x
+  rly <- input$lr_eq_y
 
 
   if ( col == "yes" ){
@@ -1031,8 +1033,19 @@ plot_lr <- reactive({
 
   }
 
+  if ( is.na(rlx) ){
 
-  sapiens::plot_linereg(
+    rlx <- NULL
+
+  }
+
+  if ( is.na(rly) ){
+
+    rly <- NULL
+
+  }
+
+  fieldbook::plot_linereg(
     data = file,
     y = yvr,
     x = xvr,
@@ -1045,8 +1058,12 @@ plot_lr <- reactive({
     xbrk = xbk,
     ybrk = ybk,
     zbl = lvl,
-    font = sfn
+    font = sfn,
+    rlx = rlx,
+    rly = rly
   )
+
+
 })
 
 

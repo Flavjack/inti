@@ -970,6 +970,18 @@ shinyUI(dashboardPage(skin = "green",
             ),
 
 
+            column(width = 12,
+
+               numericInput('lr_eq_x', 'Eq. x',
+                            value = NA),
+
+               numericInput('lr_eq_y', 'Eq. y',
+                            value = NA)
+
+            ),
+
+
+
 
             column(width = 12,
 
