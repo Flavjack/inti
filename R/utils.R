@@ -34,7 +34,7 @@ test_comparison <- function( aov, comp, type = "snk", sig = 0.05){
 
   }
 
-  sapiens::data_summary(mc)
+  fieldbook::data_summary(mc)
 
 }
 

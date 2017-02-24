@@ -2,12 +2,10 @@
 
 library(shiny)
 library(shinydashboard)
-library(sapiens)
 library(agricolae)
-library(dplyr)
-library(tibble)
 library(DT)
-library(ggplot2)
+library(tidyverse)
+
 
 
 
@@ -32,14 +30,14 @@ data_fb <-  eventReactive(input$reload, {
 
     file.rename(xls$datapath, paste(xls$datapath, ".xlsx", sep = ""))
 
-    sapiens::getData(dir = paste(xls$datapath, ".xlsx", sep = ""), sheet = input$sheetdt)
+    fieldbook::getData(dir = paste(xls$datapath, ".xlsx", sep = ""), sheet = input$sheetdt)
 
 
   } else {
 
     url <- input$fbdt
 
-    sapiens::getData(dir = url, sheet = input$sheetdt)
+    fieldbook::getData(dir = url, sheet = input$sheetdt)
 
   }
 
@@ -293,7 +291,7 @@ output$boxplot <- renderPlot({
   } else { brks <- brk}
 
 
-  boxp <- sapiens::plot_box(
+  boxp <- fieldbook::plot_box(
 
     data = file,
     y = variable,
@@ -320,7 +318,7 @@ output$crpt <- renderPlot({
 
   file <- fb()
 
-  sapiens::plot_correlation(
+  fieldbook::plot_correlation(
     data = file,
     sig = input$corsig,
     color = input$corcol,
@@ -358,7 +356,7 @@ output$pca <- renderPlot({
 
 
 
-  sapiens::plot_PCA(
+  fieldbook::plot_PCA(
     data = file,
     type = input$pcatype,
     quali.sup = qs,
@@ -490,7 +488,7 @@ comp <- reactive({
 
   {
 
-    rs <- sapiens::test_comparison(
+    rs <- fieldbook::test_comparison(
       aov = file,
       comp = factor[1],
       type = test,
@@ -504,7 +502,7 @@ comp <- reactive({
 
   {
 
-    rs <- sapiens::test_comparison(
+    rs <- fieldbook::test_comparison(
       aov = file,
       comp = c( factor[1], factor[2] ),
       type = test,
@@ -712,7 +710,7 @@ if (gsig == "no"){
 
 if( length(factor) == 1 && !(variable == '') ){
 
-         pt <- sapiens::plot_brln(data = df, type = gtype,
+         pt <- fieldbook::plot_brln(data = df, type = gtype,
                              x = factor[1],
                              y = "mean",
                              z = factor[1],
@@ -738,7 +736,7 @@ else if( length(factor) >= 2  && !(variable == ''))
 {
 
 
-  pt <- sapiens::plot_brln(data = df, type = gtype,
+  pt <- fieldbook::plot_brln(data = df, type = gtype,
     x = factor[1],
     y = "mean",
     z = factor[2],
@@ -849,7 +847,7 @@ fdbk <- reactive({
   }
 
 
-  sapiens::design_fieldbook(
+  fieldbook::design_fieldbook(
     treat1 = trt1,
     treat2 = trt2,
     rep = r,

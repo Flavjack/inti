@@ -9,18 +9,14 @@ Imports:
     agricolae,
     corrplot,
     data.table,
-    dplyr,
     DT,
-    ggplot2,
     gsheet,
     gtools,
     factoextra,
     FactoMineR,
-    readxl,
     shiny,
     shinydashboard,
-    tibble,
-    tidyr
+    tidyverse
 Depends:
     R (>= 3.2.3)
 License: MIT + file LICENSE
