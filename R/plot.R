@@ -565,7 +565,7 @@ plot_PCA <- function(data, type = "biplot", quali.sup = NULL, lgl = NULL){
 #' @param rly regression line position in axis y.
 #' @return Line regression plot
 #' @importFrom dplyr mutate
-#' @importFrom ggplot2 geom_smooth scale_x_continuous scale_color_grey aes aes_string element_blank element_rect element_text geom_bar geom_errorbar geom_line geom_point geom_text ggplot position_dodge scale_color_discrete scale_fill_hue scale_shape_discrete scale_x_discrete scale_y_continuous theme theme_bw unit scale_fill_discrete scale_fill_grey
+#' @importFrom ggplot2 annotate geom_smooth scale_x_continuous scale_color_grey aes aes_string element_blank element_rect element_text geom_bar geom_errorbar geom_line geom_point geom_text ggplot position_dodge scale_color_discrete scale_fill_hue scale_shape_discrete scale_x_discrete scale_y_continuous theme theme_bw unit scale_fill_discrete scale_fill_grey
 #' @importFrom gtools mixedsort
 #' @importFrom stats lm
 #' @export

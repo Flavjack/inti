@@ -6,7 +6,7 @@
 #' @return data frame
 #' @importFrom gsheet gsheet2tbl
 #' @importFrom readxl read_excel
-#' @importFrom dplyr  '%>%'
+#' @importFrom dplyr '%>%'
 #' @export
 
 getData <- function(dir, sheet = 1) {
