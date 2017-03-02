@@ -34,7 +34,7 @@ plot_brln <- function(data, type= "bar", x, y, z, ylab = NULL, xlab = NULL, lgl 
 
     brks <- ggplot2::waiver() } else {
 
-    brks <- (((round(min(data[,y]), 0))*(-20)):((round(min(data[,y]), 0))*(+20))) * brk
+    brks <- (((round(mean(data[,y]), 0))*(-20)):((round(mean(data[,y]), 0))*(+20))) * brk
 
 
     }
