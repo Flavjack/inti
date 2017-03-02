@@ -4,9 +4,10 @@ library(shiny)
 library(shinydashboard)
 library(agricolae)
 library(DT)
-library(tidyverse)
-
-
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(fieldbook)
 
 
 shinyServer(function(input, output) {

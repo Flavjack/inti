@@ -4,7 +4,10 @@ library(shiny)
 library(shinydashboard)
 library(agricolae)
 library(DT)
-library(tidyverse)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(fieldbook)
 
 
 shinyUI(dashboardPage(skin = "green",
@@ -50,7 +53,7 @@ shinyUI(dashboardPage(skin = "green",
 
                 box(
                   title = "Presentacion",
-                  width = 6,
+                  width = 4,
                   status = "primary",
                   solidHeader = T,
 
@@ -63,7 +66,7 @@ shinyUI(dashboardPage(skin = "green",
 
                 box(
                   title = "Characteristics",
-                  width = 6,
+                  width = 4,
                   status = "danger",
                   solidHeader = T,
 
@@ -84,7 +87,7 @@ shinyUI(dashboardPage(skin = "green",
 
                 box(
                   title = "Contributors",
-                  width = 6,
+                  width = 4,
                   status = "success",
                   solidHeader = T,
 

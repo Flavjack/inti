@@ -15,6 +15,8 @@ plot_correlation(data, method = "pearson", sig = 0.05, color = NULL,
 \item{sig}{level of significance}
 
 \item{color}{colors in the correlation matrix}
+
+\item{font}{size of the font}
 }
 \value{
 correlation plot
@@ -22,4 +24,3 @@ correlation plot
 \description{
 Function use to plot correlation matrix
 }
-

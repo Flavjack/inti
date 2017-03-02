@@ -42,6 +42,7 @@ test_comparison <- function( aov, comp, type = "snk", sig = 0.05){
 #' @param treat1 strign with the name of the level factor with only space
 #' @param treat2 strign with the name of the level factor with only space
 #' @param rep number of repetition
+#' @param intime number of evaluation in time
 #' @param design experimental design c("rcbd","crd","lsd")
 #' @param lbl_treat1 col label for treat 1
 #' @param lbl_treat2 col label for treat 2
@@ -252,7 +253,6 @@ data_summary <- function(meanComp){
 #' @param data dataframe with the information
 #' @return regression equation
 #' @importFrom stats as.formula coef
-#' @importFrom fieldbook lm_eqn
 #' @export
 
 lm_eqn <- function(x, y, data) {

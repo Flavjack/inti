@@ -15,6 +15,8 @@ design_fieldbook(treat1 = NULL, treat2 = NULL, rep = NULL, intime = 1,
 
 \item{rep}{number of repetition}
 
+\item{intime}{number of evaluation in time}
+
 \item{design}{experimental design c("rcbd","crd","lsd")}
 
 \item{lbl_treat1}{col label for treat 1}
@@ -29,4 +31,3 @@ Table with the experimental design
 \description{
 Function to construct your field book for your experiment
 }
-

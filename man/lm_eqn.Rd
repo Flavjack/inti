@@ -17,6 +17,5 @@ lm_eqn(x, y, data)
 regression equation
 }
 \description{
-Construc the regression line equation
+Construction of the regression line equation
 }
-
