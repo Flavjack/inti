@@ -38,7 +38,7 @@ data_fb <-  eventReactive(input$reload, {
 
     url <- input$fbdt
 
-    fieldbook::getData(dir = url, sheet = input$sheetdt)
+    fieldbook::getData(dir = url)
 
   }
 
