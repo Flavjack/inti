@@ -437,7 +437,7 @@ av <- reactive({
 
     block <- input$stat_blk %>% paste0() %>% paste(collapse= " + ")
 
-    file <- file %>% dplyr::mutate_each_(funs(factor(.)), input$stat_fact)
+    file <- file %>% dplyr::mutate_each_(funs(factor(.)), c(input$stat_fact, input$stat_blk))
 
 
     if ( block == "" ){

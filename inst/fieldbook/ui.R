@@ -28,8 +28,7 @@ shinyUI(dashboardPage(skin = "green",
         menuItem("Regression", tabName = "regression", icon = icon("random")),
         menuItem("Statistics", tabName = "stat", icon = icon("pie-chart")),
         menuItem("Graphics", tabName = "graph", icon = icon("tint"))#,
-        # menuItem("Report", tabName = "report", icon = icon("book")),
-        # menuItem("About", tabName = "info", icon = icon("book"))
+        # menuItem("Report", tabName = "report", icon = icon("book"))
       )
 
 
@@ -442,6 +441,15 @@ shinyUI(dashboardPage(skin = "green",
 
           box(width = 5, background = "black",
 
+
+            column(width = 12,
+
+                   uiOutput("stat_factor")
+
+            ),
+
+
+
             column(width = 6,
 
               uiOutput("stat_response")
@@ -455,13 +463,6 @@ shinyUI(dashboardPage(skin = "green",
 
 
             ),
-
-            column(width = 12,
-
-              uiOutput("stat_factor")
-
-            ),
-
 
 
             column(width = 6,
@@ -1016,19 +1017,6 @@ shinyUI(dashboardPage(skin = "green",
 
 
           )
-
-
-
-        ),
-
-
-# information -------------------------------------------------------------
-
-
-        tabItem(tabName = "info"
-
-
-
 
 
 

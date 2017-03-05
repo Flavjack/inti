@@ -39,8 +39,8 @@ plot_brln <- function(data, type= "bar", x, y, z, ylab = NULL, xlab = NULL, lgl 
 
     }
 
-  data[,x] <- factor(data[,x], levels = gtools::mixedsort(data[,x]))
-  data[,z] <- factor(data[,z], levels = gtools::mixedsort(data[,z]))
+  data[,x] <- factor(data[,x], levels = gtools::mixedsort(levels(as.factor(data[, x]))))
+  data[,z] <- factor(data[,z], levels = gtools::mixedsort(levels(as.factor(data[, z]))))
 
 
   if ( is.null(ylab)){
@@ -298,8 +298,8 @@ plot_brln <- function(data, type= "bar", x, y, z, ylab = NULL, xlab = NULL, lgl 
 plot_box <- function(data, x, y, z, ylab = NULL, xlab = NULL, lgl = NULL, lgd = "top", brk = NULL, font = 1){
 
 
-  data[,x] <- factor(data[,x], levels = gtools::mixedsort(data[,x]))
-  data[,z] <- factor(data[,z], levels = gtools::mixedsort(data[,z]))
+  data[,x] <- factor(data[,x], levels = gtools::mixedsort(levels(as.factor(data[, x]))))
+  data[,z] <- factor(data[,z], levels = gtools::mixedsort(levels(as.factor(data[, z]))))
 
 
   if( !is.null(xlab) ){
@@ -573,6 +573,12 @@ plot_PCA <- function(data, type = "biplot", quali.sup = NULL, lgl = NULL){
 
 plot_linereg <- function(data, x, y, z, ylab = NULL, xlab = NULL, lgl = NULL,lgd = "top", xbrk = NULL, ybrk = NULL, zbl = NULL, color = TRUE, font = 1, rlx = NULL, rly = NULL){
 
+
+  if( !is.null(z) ){
+
+    data[,z] <- factor(data[,z], levels = gtools::mixedsort(levels(as.factor(data[, z]))))
+
+  }
 
   if( !is.null(xlab) ){
 
