@@ -9,7 +9,8 @@ Authors@R: c(
            person(family = "Quipo Inc", role = "cph")
            )
 BugReports: https://github.com/flavjack/fieldbook/issues
-Description: The Fieldbook package deploys an interactive applicaction based in shiny for scientific research data analisys.
+Description: The Fieldbook package deploys an interactive applicaction based in
+    shiny for scientific research data analisys.
 Imports:
     agricolae,
     corrplot,
@@ -30,5 +31,6 @@ Depends:
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
-Suggests: testthat
+RoxygenNote: 5.0.1
+Suggests:
+    testthat
