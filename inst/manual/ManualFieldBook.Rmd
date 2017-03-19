@@ -172,7 +172,7 @@ Para un mejor empleo de los colores HTML en **Multivariate**, se debera colocar 
 
 Una forma practica de obtener el codigo es usando un **eyes dropper**, una vez instalado en su navegador, ingresar al **color picker**. Copiar el codigo del color y pegar sobre **Multivariate - correlation - color**, como se muestran en los circulos.
 
-![**colors HTML**, eyes dropper. **En rojo:** cuenta gotas. **En verde:** copiar codigo de  color](imagen/colors picker.png)
+![**colors HTML**, eyes dropper. **En rojo:** cuenta gotas. **En verde:** copiar codigo de  color](imagen/colors_picker.png)
 
 
 Copiado el codigo de color HTML, pegar en **Multivariate - correlation - color**.

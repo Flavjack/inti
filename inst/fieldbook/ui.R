@@ -2,12 +2,12 @@
 
 library(shiny)
 library(shinydashboard)
-library(sapiens)
 library(agricolae)
-library(dplyr)
-library(tibble)
 library(DT)
+library(tidyr)
+library(dplyr)
 library(ggplot2)
+library(fieldbook)
 
 
 shinyUI(dashboardPage(skin = "green",
@@ -28,8 +28,7 @@ shinyUI(dashboardPage(skin = "green",
         menuItem("Regression", tabName = "regression", icon = icon("random")),
         menuItem("Statistics", tabName = "stat", icon = icon("pie-chart")),
         menuItem("Graphics", tabName = "graph", icon = icon("tint"))#,
-        # menuItem("Report", tabName = "report", icon = icon("book")),
-        # menuItem("About", tabName = "info", icon = icon("book"))
+        # menuItem("Report", tabName = "report", icon = icon("book"))
       )
 
 
@@ -53,20 +52,24 @@ shinyUI(dashboardPage(skin = "green",
 
                 box(
                   title = "Presentacion",
-                  width = 6,
+                  width = 4,
                   status = "primary",
                   solidHeader = T,
 
                 p( strong(em("FieldBook")),"is a interactive application for exploratory data analisys and graphics for experimnetal designs"),
 
-                  img(src = "agrinka.jpg",  width = "100%")
+                  img(src = "agrinka.jpg",  width = "100%"),
+
+
+                HTML('<p style="text-align: right;"><span style="font-size:14px;"><span style="font-family:comic sans ms,cursive;">Powered by <span style="font-size:16px;"><span style="font-family:lucida sans unicode,lucida grande,sans-serif;"><strong><span style="color:#ff0000;">Q</span><span style="color:#a52a2a;">u</span><span style="color:#008000;">i</span><span style="color:#008080;">p</span><span style="color:#0000ff;">o</span></strong></span></span></span></span></p>')
+
 
                 ),
 
 
                 box(
                   title = "Characteristics",
-                  width = 6,
+                  width = 4,
                   status = "danger",
                   solidHeader = T,
 
@@ -87,7 +90,7 @@ shinyUI(dashboardPage(skin = "green",
 
                 box(
                   title = "Contributors",
-                  width = 6,
+                  width = 4,
                   status = "success",
                   solidHeader = T,
 
@@ -111,6 +114,15 @@ shinyUI(dashboardPage(skin = "green",
                     strong("Jimmy R. Gomez Carrion"),
                     br(),
                     a("< purmacana@gmail.com >"),
+                    br(),
+                    code("Universidad Nacional Agraria la Molina, Lima, Perú")
+                  ),
+
+
+                  p(
+                    strong("Felipe de Mendiburu"),
+                    br(),
+                    a("<  fmendiburu@lamolina.edu.pe >"),
                     br(),
                     code("Universidad Nacional Agraria la Molina, Lima, Perú")
                   ),
@@ -442,6 +454,15 @@ shinyUI(dashboardPage(skin = "green",
 
           box(width = 5, background = "black",
 
+
+            column(width = 12,
+
+                   uiOutput("stat_factor")
+
+            ),
+
+
+
             column(width = 6,
 
               uiOutput("stat_response")
@@ -455,13 +476,6 @@ shinyUI(dashboardPage(skin = "green",
 
 
             ),
-
-            column(width = 12,
-
-              uiOutput("stat_factor")
-
-            ),
-
 
 
             column(width = 6,
@@ -1016,19 +1030,6 @@ shinyUI(dashboardPage(skin = "green",
 
 
           )
-
-
-
-        ),
-
-
-# information -------------------------------------------------------------
-
-
-        tabItem(tabName = "info"
-
-
-
 
 
 

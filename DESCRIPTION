@@ -1,30 +1,36 @@
 Package: fieldbook
 Type: Package
-Title: Interactive apps for science research data analisys
-Version: 1.0
-Authors@R: person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com", role = c("aut", "cre"))
+Title: Interactive apps for science research data analysis
+Version: 1.0.0
+Authors@R: c(
+           person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com", role = c("aut", "cre")),
+           person("Jimmy R", "Gomez-Carrion", , "pumcarna@gmail.com", "aut"),
+           person("Omar", "Benites-Alfaro", , "obacc07@gmail.com", "aut"),
+           person(family = "Quipo Inc", role = "cph")
+           )
 BugReports: https://github.com/flavjack/fieldbook/issues
-Description: Fieldbook is package develop to deploy interactive applicaction based in shiny for scientific research data analisys.
+Description: The Fieldbook package deploys an interactive applicaction based in
+    shiny for scientific research data analisys.
 Imports:
     agricolae,
     corrplot,
     data.table,
-    dplyr,
     DT,
-    ggplot2,
     gsheet,
     gtools,
     factoextra,
     FactoMineR,
-    readxl,
     shiny,
     shinydashboard,
-    tibble,
-    tidyr
+    ggplot2,
+    readxl,
+    tidyr,
+    dplyr
 Depends:
-    R (>= 3.2.3)
+    R (>= 3.2.2)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
-Suggests: testthat
+Suggests:
+    testthat
