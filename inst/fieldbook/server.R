@@ -13,6 +13,20 @@ library(fieldbook)
 shinyServer(function(input, output) {
 
 
+  # User Manual ------------------------------------------------------------
+
+  output$usm <- renderUI({
+
+    getPage <- function() {
+
+    HTML('<iframe src="https://flavjack.github.io/fieldbook-usm/" style="border: 0; position:fixed; top:50px; left:0; right:0; bottom:50px; width:100%; height:92%">')
+
+    }
+
+    getPage()
+
+  })
+
 # import data -----------------------------------------------------------
 
 data_fb <-  eventReactive(input$reload, {

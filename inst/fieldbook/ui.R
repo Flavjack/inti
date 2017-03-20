@@ -21,6 +21,7 @@ shinyUI(dashboardPage(skin = "green",
 
       sidebarMenu(
         menuItem("Presentacion", tabName = "intro", icon = icon("home")),
+        menuItem("User Manual", tabName = "usm", icon = icon("book")),
         menuItem("Tools", tabName = "tools", icon = icon("wrench")),
         menuItem("Fieldbook", tabName = "fieldbook", icon = icon("leaf")),
         menuItem("Outliers", tabName = "outlier", icon = icon("search")),
@@ -42,6 +43,16 @@ shinyUI(dashboardPage(skin = "green",
 
 
       tabItems(
+
+
+
+        tabItem(tabName = "usm",
+
+
+                htmlOutput("usm")
+
+
+        ),
 
 
 # presentacion ------------------------------------------------------------
