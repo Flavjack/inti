@@ -46,3 +46,12 @@ Network Trash Folder
 Temporary Items
 .apdisk
 .Rproj.user
+<<<<<<< HEAD
+=======
+
+
+# Rhistory
+.Rhistory
+.fieldbook.Rproj
+.RData
+>>>>>>> refs/remotes/Flavjack/master

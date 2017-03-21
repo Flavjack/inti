@@ -55,7 +55,7 @@ Los hospederos de dicha enfermedad tendran la mismas condiciones ambientales y p
 
     cdr: Completely random design.
     rcdb: Completely randomized block design.
-    lsd: Least significant difference
+    lsd: Latin square desing.
 
 De dos factores: hospedero y patogeno. Ademas, debera de evaluarse en el tiempo (**8 evaluaciones**) para conocer el progreso de la enfermedad, tendra **6 repeticiones** en cada evaluacion (*6 plantas de palto*) y la variable respuesta sera:
 
