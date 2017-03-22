@@ -776,8 +776,15 @@ shinyUI(dashboardPage(skin = "green",
 
         tabItem(tabName = "tools",
 
+          shiny::fluidRow(
 
-                  box(title = "My FieldBook", status = "info", width = 6,
+            # shinydashboard::tabBox(id = "fbookDesign", height = NULL, width = 12,
+
+
+                  box(title = "FieldBook Design",
+                      status = "info",
+                      width = 12,
+                      solidHeader = TRUE,
 
                     column(width = 8,
 
@@ -832,16 +839,30 @@ shinyUI(dashboardPage(skin = "green",
                     )
 
 
-                  ),
+                  )  #,
+
+                #  ) #, #end of   shinydashboard::tabBox(id = "fbookDesign
+
+              ),# end of
 
 
-                  box(width = 6,
+          shiny::fluidRow(#Begin fluidRow
+
+                  box(title = "Fieldbook Preview",
+                      status = "primary",
+                      height = 900,
+                      #width = NULL,
+                      solidHeader = TRUE,
+                      width = 12, collapsible = TRUE,
+
+                      #width = 6,
 
 
                     DT::dataTableOutput("fbdsg")
 
 
                   )
+          )
 
 
 
