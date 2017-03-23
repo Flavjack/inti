@@ -7,6 +7,8 @@ library(DT)
 library(tidyr)
 library(dplyr)
 library(ggplot2)
+library(rhandsontable)
+library(ggpubr)
 library(fieldbook)
 
 
@@ -155,59 +157,97 @@ shinyUI(dashboardPage(skin = "green",
 
 # fieldbook -------------------------------------------------------------
 
+# begin tabItem: Fieldbook
 
         tabItem(tabName = "fieldbook",
 
+##### #####
 
-        box(
+#Begin fluidRow: fieldbook-select Importation
+shiny::fluidRow(
 
-          status = "info",
-          width = 12,
-          background = "black",
+        box( #begin box (fieldbook tab)
+            status = "success",
+            width = 12,
+            #collapsible = TRUE,
+            #solidHeader = TRUE,
+            background = "black",
 
 
-          column(width = 6,
+            radioButtons("fb_import", label = h4("Select Importation", style = "font-family: 'Arial', cursive;
+                                                 font-weight: 1000; line-height: 1.1"),
+                         choices = c("Local", "GoogleDrive"),
+                         selected = "Local"),
+            br(),
 
-           h4(icon("book"), "Google SpreadSheet (URL)", width = "100%"),
 
-           textInput("fbdt",
-             label = NULL ,
-             width = "100%",
-             value = "https://docs.google.com/spreadsheets/d/14sO81N50Zx1al5O3Iu3IPaz1_5CVncvtsx-_JRqJ_qE/edit#gid=172957346")
+            conditionalPanel(
+              condition = "input.fb_import == 'GoogleDrive'",
+
+            column(width = 6,
+
+             h4(icon("book"), "Google SpreadSheet (URL)", width = "100%"),
+
+             textInput("fbdt",
+               label = NULL ,
+               width = "100%",
+               value = "https://docs.google.com/spreadsheets/d/14sO81N50Zx1al5O3Iu3IPaz1_5CVncvtsx-_JRqJ_qE/edit#gid=172957346")
+
+            )#,
 
 
           ),
 
 
-          column(width = 4,
-
-            h4(icon("book"), "Excel file (.xlsx)", width = "100%"),
-
-            fileInput('impdata',
-              label = NULL,
-              accept = c(".xlsx"))
-
-          ),
-
-          column(width = 1,
-
-            h4("Sheet", width = "100%"),
-
-            numericInput("sheetdt", label = NULL, value = 1, step = 1, min = 1)
-
-          ),
-
-          column(width = 1,
-
-            h4( "Update", width = "100%"),
-
-            actionButton(inputId = "reload", label = "", icon("refresh"), width = "100%")
-
-          )
+          conditionalPanel(
+            condition = "input.fb_import == 'Local'",
 
 
-        ),
+            column(width = 4,
 
+              h4(icon("book"), "Excel file (.xlsx)", width = "100%"),
+
+              fileInput('impdata',
+                label = NULL,
+                accept = c(".xlsx"))
+
+            ),
+
+            column(width = 1,
+
+              h4("Sheet", width = "100%"),
+
+              numericInput("sheetdt", label = NULL, value = 1, step = 1, min = 1)
+
+            ),
+
+            column(width = 1,
+
+              h4( "Update", width = "100%"),
+
+              actionButton(inputId = "reload", label = "", icon("refresh"), width = "100%")
+
+            )
+
+         )
+
+        )#, #end box (fieldbook tab)
+
+), #end fluidRow: fieldbook-select Importation
+
+
+shiny::fluidRow(
+
+  box(title = "",
+
+      status = "success",
+      width = 12,
+      collapsible = TRUE,
+      solidHeader = TRUE,
+
+
+  conditionalPanel(
+    condition = "input.fb_import == 'GoogleDrive'",
 
         box(
 
@@ -216,37 +256,75 @@ shinyUI(dashboardPage(skin = "green",
           width = 10,
 
         # DT::dataTableOutput('fbook')
-        htmlOutput("fbook")
+        htmlOutput("fbook"),
+        br()#,
+
+        )#,
+  ),
+
+  conditionalPanel(
+    condition = "input.fb_import == 'Local'",
+    box(
+
+      status = "danger",
+      solidHeader = T,
+      width = 10,
+
+      # DT::dataTableOutput('fbook')
+      rHandsontableOutput("fbook_excel"),
+      br()#,
+
+    )#,
+
+  ),
+
+  # filter ------------------------------------------------------------------
+
+  box(
+
+    status = "danger",
+    solidHeader = T,
+    width = 2,
+    title = 'Filter',
+
+    uiOutput("filter_01"),
+
+    uiOutput("filter_fact01"),
+
+    br(),
+    uiOutput("filter_02"),
+
+    uiOutput("filter_fact02")
+
+  )
+  # End filter ---------------------------------------------------------------
+
+) #end Box
 
 
-        ),
+) # end of fluidRow: fieldbook,
 
 
 # filter ------------------------------------------------------------------
 
-
-        box(
-
-          status = "danger",
-          solidHeader = T,
-          width = 2,
-          title = 'Filter',
-
-          uiOutput("filter_01"),
-
-          uiOutput("filter_fact01"),
-
-          br(),
-
-          uiOutput("filter_02"),
-
-          uiOutput("filter_fact02")
-
-
-        )
-
-
-        ),
+        # box(
+        #
+        #   status = "danger",
+        #   solidHeader = T,
+        #   width = 2,
+        #   title = 'Filter',
+        #
+        #   uiOutput("filter_01"),
+        #
+        #   uiOutput("filter_fact01"),
+        #
+        #   br(),
+        #   uiOutput("filter_02"),
+        #
+        #   uiOutput("filter_fact02")
+        #
+        # )
+  ), # end tabItem: Fieldbook
 
 
 # outliers ----------------------------------------------------------------
@@ -1067,12 +1145,13 @@ shinyUI(dashboardPage(skin = "green",
 
         )
 
-
-      )
-
-
+      ),
+      br(),
+      br(),
+      br()
 
     )
+
 
   )
 )

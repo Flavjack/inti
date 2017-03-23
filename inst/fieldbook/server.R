@@ -7,6 +7,7 @@ library(DT)
 library(tidyr)
 library(dplyr)
 library(ggplot2)
+library(rhandsontable)
 library(fieldbook)
 
 
@@ -31,34 +32,33 @@ shinyServer(function(input, output) {
 
 data_fb <-  eventReactive(input$reload, {
 
-
   validate(
-
     need( input$fbdt, message = "Insert a Google spreadsheet URL or xlsx file" )
+  )
+  #if( input$fb_import=="Local"){
 
-    )
+    if(!is.null(input$impdata)){
 
-
-  if ( !is.null(input$impdata) ) {
-
-    xls <- input$impdata
-
-    file.rename(xls$datapath, paste(xls$datapath, ".xlsx", sep = ""))
-
-    fieldbook::getData(dir = paste(xls$datapath, ".xlsx", sep = ""), sheet = input$sheetdt)
-
+      xls <- input$impdata
+      file.rename(xls$datapath, paste(xls$datapath, ".xlsx", sep = ""))
+      fieldbook::getData(dir = paste(xls$datapath, ".xlsx", sep = ""), sheet = input$sheetdt)
+      #print(fieldbook)
+    #}
+  #}
 
   } else {
 
-    url <- input$fbdt
+  #if( input$fb_import=="GoogleDrive"){
 
-    fieldbook::getData(dir = url)
+  #   if( !is.null(input$fbdt) ){
+      url <- input$fbdt
+      fieldbook::getData(dir = url)
+     }
+  #}
 
-  }
+   # fieldbook <- fieldbook
 
-
-
-    }, ignoreNULL = FALSE)
+  }, ignoreNULL = FALSE)
 
 
 
@@ -68,6 +68,15 @@ output$fbook <- renderUI({
     style="height:450px; width:100%; scrolling=no")
 
   print(gss)
+
+})
+
+output$fbook_excel <- renderRHandsontable({
+
+  req(input$impdata)
+  print(data_fb())
+  rhandsontable(data_fb(), width = 600, height = 500)
+
 
 })
 
@@ -239,7 +248,6 @@ output$bpy <- renderUI({
 
 })
 
-
 output$bpz <- renderUI({
 
   file <- fb()
@@ -252,7 +260,6 @@ output$bpz <- renderUI({
   )
 
 })
-
 
 output$boxplot <- renderPlot({
 
