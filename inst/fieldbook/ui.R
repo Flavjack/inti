@@ -162,21 +162,24 @@ shiny::fluidRow(
             #solidHeader = TRUE,
             background = "black",
 
+            fluidRow(
+              column(3,
+
 
             radioButtons("fb_import", label = h4("Select Importation", style = "font-family: 'Arial', cursive;
                                                  font-weight: 1000; line-height: 1.1"),
                          choices = c("Local", "GoogleDrive"),
                          selected = "Local"),
-            br(),
+            br()#,
 
+),
 
             conditionalPanel(
               condition = "input.fb_import == 'GoogleDrive'",
 
-            column(width = 6,
+            column(width = 6, offset = 1,
 
              h4(icon("book"), "Google SpreadSheet (URL)", width = "100%"),
-
              textInput("fbdt",
                label = NULL ,
                width = "100%",
@@ -192,20 +195,16 @@ shiny::fluidRow(
             condition = "input.fb_import == 'Local'",
 
 
-            column(width = 4,
+            column(width = 6,
 
               h4(icon("book"), "Excel file (.xlsx)", width = "100%"),
-
               fileInput('impdata',
                 label = NULL,
                 accept = c(".xlsx"))
-
             ),
 
-            column(width = 1,
-
+            column(width = 1, offset = 1,
               h4("Sheet", width = "100%"),
-
               numericInput("sheetdt", label = NULL, value = 1, step = 1, min = 1)
 
             ),
@@ -213,13 +212,13 @@ shiny::fluidRow(
             column(width = 1,
 
               h4( "Update", width = "100%"),
-
               actionButton(inputId = "reload", label = "", icon("refresh"), width = "100%")
 
             )
 
          )
 
+            )#,
         )#, #end box (fieldbook tab)
 
 ), #end fluidRow: fieldbook-select Importation
@@ -838,13 +837,14 @@ shiny::fluidRow(
                       status = "info",
                       width = 12,
                       solidHeader = TRUE,
+                      collapsible = TRUE,
 
 
                       radioButtons("tool_design", label = h4("Select Importation", style = "font-family: 'Arial', cursive;
                                                  font-weight: 1000; line-height: 1.1"),
                                    choices = c("Standard", "Special"),
                                    selected = "Special"),
-                      br(),
+                      #br(),
 
                 # begin conditional panel1 ----
                   conditionalPanel(
@@ -882,7 +882,12 @@ shiny::fluidRow(
 
                   #column(width = 12,
                   condition = "input.tool_design == 'Special'",
+                  HTML('<div>'),
+                  shiny::tags$b("Step 1: Download empty template"),
+                  br(),
                   downloadButton(outputId = "download_sp_export", label = "Download Template"),
+                  HTML('</div>'),
+
                   br(),
                   #br(),
                   br(),
@@ -953,7 +958,7 @@ shiny::fluidRow(
       ),
 
 
-# Lineal Regression -------------------------------------------------------
+# Linear Regression -------------------------------------------------------
 
         tabItem(tabName = "regression",
 
