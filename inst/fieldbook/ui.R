@@ -43,17 +43,10 @@ shinyUI(dashboardPage(skin = "green",
 
     dashboardBody(
 
-
       tabItems(
 
-
-
         tabItem(tabName = "usm",
-
-
                 htmlOutput("usm")
-
-
         ),
 
 
@@ -139,17 +132,11 @@ shinyUI(dashboardPage(skin = "green",
                     br(),
                     code("Universidad Nacional Agraria la Molina, Lima, Perú")
                   ),
-
-
                   hr(),
 
                   p(strong("If you have any question, commment or sugestion you can write a email for us, enjoy FIELDBOOK!!"))
 
-
-
                 )
-
-
 
         ),
 
@@ -161,9 +148,11 @@ shinyUI(dashboardPage(skin = "green",
 
         tabItem(tabName = "fieldbook",
 
-##### #####
 
-#Begin fluidRow: fieldbook-select Importation
+
+# Begin fluidRow: fieldbook-select Importation -------
+#TODO: Fix the importation of data in case of selecting 'local' option.
+
 shiny::fluidRow(
 
         box( #begin box (fieldbook tab)
@@ -334,42 +323,28 @@ shiny::fluidRow(
           box(width = 10, background = "black",
 
                     column(width = 4,
-
                       uiOutput("bpy")
-
                     ),
 
 
                     column(width = 4,
-
                       uiOutput("bpx")
-
                     ),
 
 
                     column(width = 4,
-
                       uiOutput("bpz")
-
-
                     ),
 
 
 
                     column(width = 4,
-
                       textInput(inputId ="bply", label = "Y label", value = "")
-
-
                     ),
 
 
                     column(width = 4,
-
-
                       textInput(inputId ="bplx", label = "X label", value = "")
-
-
                     ),
 
 
@@ -864,6 +839,17 @@ shiny::fluidRow(
                       width = 12,
                       solidHeader = TRUE,
 
+
+                      radioButtons("tool_design", label = h4("Select Importation", style = "font-family: 'Arial', cursive;
+                                                 font-weight: 1000; line-height: 1.1"),
+                                   choices = c("Standard", "Special"),
+                                   selected = "Special"),
+                      br(),
+
+                # begin conditional panel1 ----
+                  conditionalPanel(
+                        condition = "input.tool_design == 'Standard'",
+
                     column(width = 8,
 
                       textInput("tool_f1", label = "Treatment 1", value = "")
@@ -887,7 +873,29 @@ shiny::fluidRow(
 
                       textInput("tool_lb2", label = "Label", value = "treat2")
 
-                    ),
+                    ) #,
+
+                  ), #end conditional panel
+
+                column(width = 8,
+                    conditionalPanel(
+
+                  #column(width = 12,
+                  condition = "input.tool_design == 'Special'",
+                  downloadButton(outputId = "download_sp_export", label = "Download Template"),
+                  br(),
+                  #br(),
+                  br(),
+                  fileInput(inputId = 'tool_sp_import',label =  'Step 2: Upload filled template',accept = ".csv")#,
+                      )
+                ) ,
+
+
+
+            # begin conditionaPanel 2
+                conditionalPanel(
+                  condition = "input.tool_design == 'Standard'|
+                               input.tool_design == 'Special'",
 
                     column(width = 12,
 
@@ -916,10 +924,12 @@ shiny::fluidRow(
 
                     )
 
+                 ) #, #end of conditionalPanel2
 
-                  )  #,
 
-                #  ) #, #end of   shinydashboard::tabBox(id = "fbookDesign
+               )  #,
+
+          #  ) #, #end of   shinydashboard::tabBox(id = "fbookDesign
 
               ),# end of
 
@@ -935,16 +945,12 @@ shiny::fluidRow(
 
                       #width = 6,
 
-
                     DT::dataTableOutput("fbdsg")
-
 
                   )
           )
 
-
-
-          ),
+      ),
 
 
 # Lineal Regression -------------------------------------------------------

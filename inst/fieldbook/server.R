@@ -9,12 +9,12 @@ library(dplyr)
 library(ggplot2)
 library(rhandsontable)
 library(fieldbook)
-
+library(stringr)
 
 shinyServer(function(input, output) {
 
 
-  # User Manual ------------------------------------------------------------
+# User Manual ------------------------------------------------------------
 
   output$usm <- renderUI({
 
@@ -59,8 +59,6 @@ data_fb <-  eventReactive(input$reload, {
    # fieldbook <- fieldbook
 
   }, ignoreNULL = FALSE)
-
-
 
 output$fbook <- renderUI({
 
@@ -150,7 +148,7 @@ output$filter_fact02 <- renderUI({
 })
 
 
-# Data analisys -----------------------------------------------------------
+# Data analysis -----------------------------------------------------------
 
 
 fb <- reactive({
@@ -348,7 +346,6 @@ output$crpt <- renderPlot({
 
 })
 
-
 output$pca <- renderPlot({
 
   file <- fb()
@@ -393,7 +390,6 @@ output$pca <- renderPlot({
 
 # Select factors
 
-
 output$stat_response <- renderUI({
 
   file <- fb()
@@ -406,7 +402,6 @@ output$stat_response <- renderUI({
   )
 
 })
-
 
 output$stat_factor <- renderUI({
 
@@ -421,8 +416,6 @@ output$stat_factor <- renderUI({
   )
 
 })
-
-
 
 output$stat_block <- renderUI({
 
@@ -813,48 +806,88 @@ output$download_plot <- downloadHandler(
 
 fdbk <- reactive({
 
-  validate(
-    need( input$tool_f1, "Insert levels for your experiment")
-  )
+  print(input$tool_design)
+  print(input$input$tool_sp_import)
 
-  trt1 <- input$tool_f1
-  trt2 <- input$tool_f2
-  dsg <-  input$tool_dsg
-  lbl1 <- input$tool_lb1
-  lbl2 <- input$tool_lb2
+  #When radio button selection is Standard
+  if(input$tool_design == 'Standard'){
+
+    validate(
+      need( input$tool_f1, "Insert levels for your experiment")
+    )
+
+    trt1 <- input$tool_f1
+    trt2 <- input$tool_f2
+    dsg <-  input$tool_dsg
+    lbl1 <- input$tool_lb1
+    lbl2 <- input$tool_lb2
+
+
+
+
+    if( trt2 == "" ){
+      trt2 <- NULL
+    } else {
+      trt2 <- input$tool_f2
+    }
+
+    if( trt1 == "" ){
+      trt1 <- NULL
+    } else {
+      trt1 <- input$tool_f1
+    }
+
+  }
+
+  #When radio button selection is Special
+  if(input$tool_design == 'Special'){
+  #else{
+
+  print("omar")
+
+    # validate(
+    #   need( input$input$tool_sp_import, "Please upload your template")
+    # )
+
+    fbook_csv_file <- input$tool_sp_import
+    print(fbook_csv_file)
+    print(fbook_csv_file$datapath)
+
+    if (is.null(fbook_csv_file)) {
+      return()
+    } else {
+      fb_csv <- read.csv(fbook_csv_file$datapath, header = TRUE, stringsAsFactors = FALSE)
+      #print(fb_csv)
+      trt1 <- stringr::str_trim(fb_csv[,1], side = "both")
+      trt1 <- trt1[trt1!=""]
+
+      trt2 <- stringr::str_trim(fb_csv[,2], side = "both")
+      trt2 <- trt2[trt2!=""]
+
+      dsg <-  input$tool_dsg
+
+      lbl1 <- "trt1"
+      lbl2 <- "trt2"
+      }
+
+  }
+
+  trt1 <- trt1
+  trt2 <- trt2
+  dsg <-  dsg
+
+  lbl1 <- lbl1
+  lbl2 <- lbl2
+
   r <- input$tool_rep
   int <- input$tool_eva
 
 
-  if( trt2 == "" ){
-
-    trt2 <- NULL
-
-  } else {
-
-    trt2 <- input$tool_f2
-
-  }
-
-  if( trt1 == "" ){
-
-    trt1 <- NULL
-
-  } else {
-
-    trt1 <- input$tool_f1
-
-  }
-
 
   if( input$tool_rep == "" ){
-
     r <- NULL
-
   } else {
-
     r <- input$tool_rep
-
   }
 
 
@@ -863,21 +896,19 @@ fdbk <- reactive({
     vars <- NULL
 
   } else {
-
     vars <- input$tool_var
-
   }
 
-
+  #Creation of fieldbook reactive expression
   fieldbook::design_fieldbook(
-    treat1 = trt1,
-    treat2 = trt2,
-    rep = r,
-    design = dsg,
-    lbl_treat1 = lbl1,
-    lbl_treat2 = lbl2,
-    variables = vars,
-    intime = int
+        treat1 = trt1,
+        treat2 = trt2,
+        rep = r,
+        design = dsg,
+        lbl_treat1 = lbl1,
+        lbl_treat2 = lbl2,
+        variables = vars,
+        intime = int
     )
 
 
@@ -927,7 +958,6 @@ DT::datatable(file,
 })
 
 
-
 # Lineal regression -------------------------------------------------------
 
 output$lrg_variable1 <- renderUI({
@@ -956,7 +986,6 @@ output$lrg_variable2 <- renderUI({
   )
 
 })
-
 
 
 output$lrg_grouped <- renderUI({
@@ -1087,7 +1116,6 @@ plot_lr <- reactive({
 })
 
 
-
 output$plot_regression <- renderPlot({
 
   plot <-  plot_lr()
@@ -1105,6 +1133,38 @@ output$download_plot_lr <- downloadHandler(
 
   }
 )
+
+
+output$download_sp_export <- downloadHandler(
+  filename = function() {
+    paste("fb_template", '.csv', sep='')
+  },
+  content = function(file) {
+    template <- fb_template
+    write.csv(template,file, row.names = FALSE)
+  }
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 })
