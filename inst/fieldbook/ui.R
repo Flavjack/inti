@@ -187,13 +187,9 @@ shiny::fluidRow(
 
             )#,
 
-
           ),
-
-
           conditionalPanel(
             condition = "input.fb_import == 'Local'",
-
 
             column(width = 6, #offset = 1,
               h4(icon("book"), "Excel file (.xlsx)", width = "100%"),
@@ -316,8 +312,9 @@ shiny::fluidRow(
         #   uiOutput("filter_fact02")
         #
         # )
-  ), # end tabItem: Fieldbook
 
+  ),
+# end TabItem: Fieldbook
 
 # outliers ----------------------------------------------------------------
 
@@ -329,38 +326,28 @@ shiny::fluidRow(
                       uiOutput("bpy")
                     ),
 
-
                     column(width = 4,
                       uiOutput("bpx")
                     ),
-
 
                     column(width = 4,
                       uiOutput("bpz")
                     ),
 
-
-
                     column(width = 4,
                       textInput(inputId ="bply", label = "Y label", value = "")
                     ),
-
 
                     column(width = 4,
                       textInput(inputId ="bplx", label = "X label", value = "")
                     ),
 
-
                     column(width = 4,
-
                       textInput(
                         inputId ="bplz",
                         label = "Legend label",
                         value = "")
-
-
                     )
-
           ),
 
 
@@ -385,22 +372,20 @@ shiny::fluidRow(
                 value = 2,
                 min = 0,
                 step = 0.1)
-
-
             )
 
-
-            ),
-
-
-          box(width = 12,
-
-          plotOutput("boxplot")
+          ),
 
 
-          )
+          shiny::fluidRow(
+          box(width = 12, height = NULL,
+            plotOutput("boxplot"),
+            br()#,
+          )#,
+          ),
 
-
+          br(),
+          br()#,
 
         ),
 
@@ -491,9 +476,6 @@ shiny::fluidRow(
               )
 
             )
-
-
-
           ),
 
 
@@ -573,22 +555,10 @@ shiny::fluidRow(
                 verbatimTextOutput("tbav")
 
               )
-
-
-
-
           ),
-
-
-
           box(width = 7,
-
-
             DT::dataTableOutput("mnc")
-
-
           )
-
 
         ),
 
@@ -868,15 +838,11 @@ shiny::fluidRow(
 
 
                     column(width = 8,
-
                       textInput("tool_f2", label = "Treatment 2", value = "")
-
                     ),
 
                     column(width = 4,
-
                       textInput("tool_lb2", label = "Label", value = "treat2")
-
                     ) #,
 
                   ), #end conditional panel
@@ -907,29 +873,22 @@ shiny::fluidRow(
                                input.tool_design == 'Special'",
 
                     column(width = 12,
-
                       textInput("tool_var", label = "Variables", value = "")
-
                     ),
 
                     column(width = 2,
-
                       numericInput("tool_rep",label = "Repetitions", value = 3, min = 2)
-
                     ),
 
 
                     column(width = 2,
-
                       numericInput("tool_eva",label = "Intime", value = 1, min = 1)
-
                     ),
 
                     column(width = 5,
 
                       radioButtons("tool_dsg", label = "Design",
                         choices = c("crd", "rcbd", "lsd"), selected = "crd", inline = TRUE)
-
 
                     )
 
