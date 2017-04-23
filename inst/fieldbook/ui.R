@@ -177,7 +177,7 @@ shiny::fluidRow(
             conditionalPanel(
               condition = "input.fb_import == 'GoogleDrive'",
 
-            column(width = 6, offset = 1,
+            column(width = 6, #offset = 1,
 
              h4(icon("book"), "Google SpreadSheet (URL)", width = "100%"),
              textInput("fbdt",
@@ -195,13 +195,19 @@ shiny::fluidRow(
             condition = "input.fb_import == 'Local'",
 
 
-            column(width = 6,
-
+            column(width = 6, #offset = 1,
               h4(icon("book"), "Excel file (.xlsx)", width = "100%"),
               fileInput('impdata',
                 label = NULL,
                 accept = c(".xlsx"))
-            ),
+            )#,
+
+          ),
+
+        shiny::conditionalPanel(
+          "input.fb_import == 'Local' |
+               input.fb_import == 'GoogleDrive'",
+
 
             column(width = 1, offset = 1,
               h4("Sheet", width = "100%"),
@@ -210,12 +216,10 @@ shiny::fluidRow(
             ),
 
             column(width = 1,
-
               h4( "Update", width = "100%"),
               actionButton(inputId = "reload", label = "", icon("refresh"), width = "100%")
 
             )
-
          )
 
             )#,
