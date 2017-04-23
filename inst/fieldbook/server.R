@@ -536,7 +536,7 @@ comp <- reactive({
 
 # Mean comparison table
 
-output$mnc = DT::renderDataTable({
+output$mnc = DT::renderDataTable(server = FALSE, {
 
   file <- comp()
 

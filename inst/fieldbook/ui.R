@@ -394,6 +394,8 @@ shiny::fluidRow(
 
         tabItem(tabName = "multv",
 
+               shiny::fluidRow(
+
          box(width = 6,
 
            column(width = 3,
@@ -492,7 +494,7 @@ shiny::fluidRow(
 
 
           )
-
+         )
         ),
 
 
@@ -500,7 +502,7 @@ shiny::fluidRow(
 
         tabItem(tabName = "stat",
 
-
+         shiny::fluidRow(
           box(width = 5, background = "black",
 
 
@@ -556,10 +558,14 @@ shiny::fluidRow(
 
               )
           ),
-          box(width = 7,
-            DT::dataTableOutput("mnc")
-          )
 
+          #shiny::fluidRow(
+            box(width = 7,
+              DT::dataTableOutput("mnc")
+            )
+          #)
+
+          )
         ),
 
 # graphics ----------------------------------------------------------------
@@ -567,11 +573,11 @@ shiny::fluidRow(
 
         tabItem(tabName = "graph",
 
+                shiny::fluidRow(
+
           box( width = 10,
 
-
             box(width = 5, title = NULL, background = "blue",
-
 
                       column(width = 12,
 
@@ -579,8 +585,6 @@ shiny::fluidRow(
                           inputId ="gply",
                           label = "Y label",
                           value = "")
-
-
                       ),
 
                       column(width = 4,
@@ -597,8 +601,6 @@ shiny::fluidRow(
 
 
                       column(width = 4,
-
-
                         numericInput(
                           inputId ="glmti",
                           label = "Limit (i)",
@@ -793,7 +795,7 @@ shiny::fluidRow(
 
           )
 
-
+        )
 
         ),
 
@@ -925,6 +927,7 @@ shiny::fluidRow(
 
         tabItem(tabName = "regression",
 
+
           box( width = 10,
 
 
@@ -1028,7 +1031,9 @@ shiny::fluidRow(
 
           ),
 
-          box(width = 2,
+          shiny::fluidRow(
+
+          box(width = 2, #begin second box
 
             column(width = 12,
 
@@ -1109,15 +1114,11 @@ shiny::fluidRow(
 
             )
 
-
-
-
-
-          )
-
-
+          ) #end second box
+         )
 
         )
+
 
       ),
       br(),
@@ -1125,8 +1126,6 @@ shiny::fluidRow(
       br()
 
     )
-
-
   )
 )
 
