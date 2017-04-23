@@ -817,7 +817,7 @@ shiny::fluidRow(
                       radioButtons("tool_design", label = h4("Select Importation", style = "font-family: 'Arial', cursive;
                                                  font-weight: 1000; line-height: 1.1"),
                                    choices = c("Standard", "Special"),
-                                   selected = "Special"),
+                                   selected = "Standard"),
                       #br(),
 
                 # begin conditional panel1 ----
