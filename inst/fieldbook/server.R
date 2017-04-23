@@ -918,7 +918,7 @@ fdbk <- reactive({
 
 # Fieldbook table ---------------------------------------------------------
 
-output$fbdsg = DT::renderDataTable({
+output$fbdsg = DT::renderDataTable( server = FALSE, {
 
 
 file <- fdbk()
@@ -930,7 +930,7 @@ DT::datatable(file,
   rownames = FALSE,
 
   options = list(
-
+    pageLength =  nrow(file),
     searchHighlight = TRUE,
     searching = TRUE,
 
@@ -940,6 +940,8 @@ DT::datatable(file,
       list(extend = 'csv', filename = "FieldBook"),
       list(extend = 'excel', filename = "FieldBook")
       ),
+
+    #buttons = c('copy', 'csv', 'excel'),
 
     autoWidth = TRUE,
     columnDefs = list(list(className = 'dt-center', targets ="_all")),
