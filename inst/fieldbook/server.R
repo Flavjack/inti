@@ -28,6 +28,50 @@ shinyServer(function(input, output) {
 
   })
 
+
+# Fieldbook table ---------------------------------------------------------
+
+output$fbdsg = DT::renderDataTable( server = FALSE, {
+
+
+    file <- fdbk()
+
+    DT::datatable(file,
+
+                  filter = 'top',
+                  extensions = c('Buttons', 'Scroller'),
+                  rownames = FALSE,
+
+                  options = list(
+                    pageLength =  nrow(file),
+                    searchHighlight = TRUE,
+                    searching = TRUE,
+
+                    dom = 'Bfrtip',
+                    buttons = list(
+                      'copy',
+                      list(extend = 'csv', filename = "FieldBook"),
+                      list(extend = 'excel', filename = "FieldBook")
+                    ),
+
+                    #buttons = c('copy', 'csv', 'excel'),
+
+                    autoWidth = TRUE,
+                    columnDefs = list(list(className = 'dt-center', targets ="_all")),
+                    deferRender=TRUE,
+                    scrollY = 400,
+                    scrollX = TRUE,
+                    scroller = TRUE,
+
+                    initComplete = DT::JS(
+                      "function(settings, json) {",
+                      "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
+                      "}")
+                  ))
+
+
+  })
+
 # import data -----------------------------------------------------------
 #
 # data_fb <-  eventReactive(input$reload, {
@@ -80,7 +124,7 @@ shinyServer(function(input, output) {
       }
     }
 
-    if(input$fb_import=="GoogleDrive"){
+    if(input$fb_import=="Google"){
 
       url <- input$fbdt
       if(is.null(url)){return()}
@@ -952,51 +996,6 @@ fdbk <- reactive({
 })
 
 
-
-# Fieldbook table ---------------------------------------------------------
-
-output$fbdsg = DT::renderDataTable( server = FALSE, {
-
-
-file <- fdbk()
-
-DT::datatable(file,
-
-  filter = 'top',
-  extensions = c('Buttons', 'Scroller'),
-  rownames = FALSE,
-
-  options = list(
-    pageLength =  nrow(file),
-    searchHighlight = TRUE,
-    searching = TRUE,
-
-    dom = 'Bfrtip',
-    buttons = list(
-      'copy',
-      list(extend = 'csv', filename = "FieldBook"),
-      list(extend = 'excel', filename = "FieldBook")
-      ),
-
-    #buttons = c('copy', 'csv', 'excel'),
-
-    autoWidth = TRUE,
-    columnDefs = list(list(className = 'dt-center', targets ="_all")),
-    deferRender=TRUE,
-    scrollY = 400,
-    scrollX = TRUE,
-    scroller = TRUE,
-
-    initComplete = DT::JS(
-      "function(settings, json) {",
-      "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
-      "}")
-  ))
-
-
-})
-
-
 # Lineal regression -------------------------------------------------------
 
 output$lrg_variable1 <- renderUI({
@@ -1183,25 +1182,6 @@ output$download_sp_export <- downloadHandler(
     write.csv(template,file, row.names = FALSE)
   }
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
