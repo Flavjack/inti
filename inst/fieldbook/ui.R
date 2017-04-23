@@ -209,13 +209,13 @@ shiny::fluidRow(
               h4("Sheet", width = "100%"),
               numericInput("sheetdt", label = NULL, value = 1, step = 1, min = 1)
 
-            ),
+            )#,
 
-            column(width = 1,
-              h4( "Update", width = "100%"),
-              actionButton(inputId = "reload", label = "", icon("refresh"), width = "100%")
-
-            )
+            # column(width = 1,
+            #   h4( "Update", width = "100%"),
+            #   #actionButton(inputId = "reload", label = "", icon("refresh"), width = "100%")
+            #
+            # )
          )
 
             )#,

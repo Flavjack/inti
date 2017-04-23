@@ -29,36 +29,72 @@ shinyServer(function(input, output) {
   })
 
 # import data -----------------------------------------------------------
+#
+# data_fb <-  eventReactive(input$reload, {
+#
+#   validate(
+#     need( input$fbdt, message = "Insert a Google spreadsheet URL or xlsx file" )
+#   )
+#   #if( input$fb_import=="Local"){
+#
+#     if(!is.null(input$impdata)){
+#
+#       xls <- input$impdata
+#       file.rename(xls$datapath, paste(xls$datapath, ".xlsx", sep = ""))
+#       fieldbook::getData(dir = paste(xls$datapath, ".xlsx", sep = ""), sheet = input$sheetdt)
+#       #print(fieldbook)
+#     #}
+#   #}
+#
+#   } else {
+#
+#   #if( input$fb_import=="GoogleDrive"){
+#
+#   #   if( !is.null(input$fbdt) ){
+#       url <- input$fbdt
+#       fieldbook::getData(dir = url)
+#      }
+#   #}
+#
+#    # fieldbook <- fieldbook
+#
+#   }, ignoreNULL = FALSE)
 
-data_fb <-  eventReactive(input$reload, {
+  data_fb <-  reactive({
 
-  validate(
-    need( input$fbdt, message = "Insert a Google spreadsheet URL or xlsx file" )
-  )
-  #if( input$fb_import=="Local"){
+    validate(
+      need( input$fbdt, message = "Insert a Google spreadsheet URL or xlsx file" )
+    )
 
-    if(!is.null(input$impdata)){
+    print(input$fb_import)
 
-      xls <- input$impdata
-      file.rename(xls$datapath, paste(xls$datapath, ".xlsx", sep = ""))
-      fieldbook::getData(dir = paste(xls$datapath, ".xlsx", sep = ""), sheet = input$sheetdt)
-      #print(fieldbook)
-    #}
-  #}
+    if( input$fb_import=="Local"){
 
-  } else {
+      if(is.null(input$impdata)){return()}
+      if(!is.null(input$impdata)){
 
-  #if( input$fb_import=="GoogleDrive"){
+        xls <- input$impdata
+        file.rename(xls$datapath, paste(xls$datapath, ".xlsx", sep = ""))
+        out <- fieldbook::getData(dir = paste(xls$datapath, ".xlsx", sep = ""), sheet = input$sheetdt)
 
-  #   if( !is.null(input$fbdt) ){
+      }
+    }
+
+    if(input$fb_import=="GoogleDrive"){
+
       url <- input$fbdt
-      fieldbook::getData(dir = url)
-     }
-  #}
+      if(is.null(url)){return()}
+      out <- fieldbook::getData(dir = url)
 
-   # fieldbook <- fieldbook
+    }
 
-  }, ignoreNULL = FALSE)
+print(out)
+
+
+  })
+
+
+
 
 output$fbook <- renderUI({
 
@@ -72,7 +108,8 @@ output$fbook <- renderUI({
 output$fbook_excel <- renderRHandsontable({
 
   req(input$impdata)
-  print(data_fb())
+  req(input$fbdt)
+  #print(data_fb())
   rhandsontable(data_fb(), width = 600, height = 500)
 
 
