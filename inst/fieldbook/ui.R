@@ -229,18 +229,19 @@ tabItem(tabName = "fieldbook",
 
                        #column(width = 12,
                        condition = "input.tool_design == 'Special'",
-                       HTML('<div>'),
-                       shiny::tags$b("Step 1: Download empty template"),
-                       br(),
-                       downloadButton(outputId = "download_sp_export", label = "Download Template"),
-                       HTML('</div>'),
+                       # HTML('<div>'),
+                       # shiny::tags$b("Step 1: Download empty template"),
+                       # br(),
+                       # downloadButton(outputId = "download_sp_export", label = "Download Template"),
+                       # HTML('</div>'),
 
-                       br(),
-                       #br(),
-                       br(),
-                       fileInput(inputId = 'tool_sp_import',label =  'Step 2: Upload filled template',accept = ".csv")#,
+                       # br(),
+                       # br(),
+                       # br(),
+                       fileInput(inputId = 'tool_sp_import',label =  'Upload factor levels', accept = ".csv")#,
                      )
-              ) ,
+
+                ) ,
 
 
 
@@ -284,7 +285,7 @@ shiny::fluidRow(#Begin fluidRow
 # begin tabItem: Fieldbook
 
 
-        tabItem(tabName = "import",
+tabItem(tabName = "import",
 
 
 
