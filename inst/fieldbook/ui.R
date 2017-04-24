@@ -213,7 +213,7 @@ shiny::fluidRow(
 
             # column(width = 1,
             #   h4( "Update", width = "100%"),
-            #   #actionButton(inputId = "reload", label = "", icon("refresh"), width = "100%")
+            #   actionButton(inputId = "reload", label = "", icon("refresh"), width = "100%")
             #
             # )
          )
