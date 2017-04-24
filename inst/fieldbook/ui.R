@@ -24,8 +24,8 @@ shinyUI(dashboardPage(skin = "green",
       sidebarMenu(
         menuItem("Presentacion", tabName = "intro", icon = icon("home")),
         menuItem("User Manual", tabName = "usm", icon = icon("book")),
-        menuItem("Tools", tabName = "tools", icon = icon("wrench")),
-        menuItem("Fieldbook", tabName = "fieldbook", icon = icon("leaf")),
+        menuItem("FieldBook", tabName = "fieldbook", icon = icon("wrench")),
+        menuItem("Import data", tabName = "import", icon = icon("leaf")),
         menuItem("Outliers", tabName = "outlier", icon = icon("search")),
         menuItem("Multivariate", tabName = "multv", icon = icon("paperclip")),
         menuItem("Regression", tabName = "regression", icon = icon("random")),
@@ -141,12 +141,151 @@ shinyUI(dashboardPage(skin = "green",
         ),
 
 
+# fieldbook -------------------------------------------------------------------
 
-# fieldbook -------------------------------------------------------------
+tabItem(tabName = "fieldbook",
+
+        shiny::fluidRow(
+
+          # shinydashboard::tabBox(id = "fbookDesign", height = NULL, width = 12,
+
+
+          box(title = "FieldBook Design",
+              status = "info",
+              width = 12,
+              solidHeader = TRUE,
+              collapsible = TRUE,
+
+              column(width = 2,
+
+                radioButtons("tool_design", label = h4("Select Importation", style = "font-family: 'Arial', cursive;
+                                                     font-weight: 1000; line-height: 1.1"),
+                             choices = c("Standard", "Special"),
+                             selected = "Standard")
+
+              ),
+
+
+              column(width = 10,
+
+
+               column(width = 7,
+                      textInput("tool_var", label = "Variables", value = "")
+               ),
+
+               column(width = 2,
+                      numericInput("tool_rep",label = "Repetitions", value = 3, min = 2)
+               ),
+
+
+               column(width = 2,
+                      numericInput("tool_eva",label = "Intime", value = 1, min = 1)
+               ),
+
+               column(width = 1,
+
+                      radioButtons("tool_dsg", label = "Design",
+                                   choices = c("crd", "rcbd", "lsd"), selected = "crd", inline = F)
+
+               )
+
+              ),
+
+
+              #br(),
+
+
+              # begin conditional panel1 ----
+              conditionalPanel(
+
+                condition = "input.tool_design == 'Standard'",
+
+                column(width = 8,
+
+                       textInput("tool_f1", label = "Factor levels", value = "")
+
+                ),
+
+                column(width = 4,
+
+                       textInput("tool_lb1", label = "Header", value = "Label")
+
+                ),
+
+
+                column(width = 8,
+                       textInput("tool_f2", label = "Factor levels", value = "")
+                ),
+
+                column(width = 4,
+                       textInput("tool_lb2", label = "Header", value = "Label")
+                ) #,
+
+              ), #end conditional panel
+
+              column(width = 8,
+
+                     conditionalPanel(
+
+                       #column(width = 12,
+                       condition = "input.tool_design == 'Special'",
+                       # HTML('<div>'),
+                       # shiny::tags$b("Step 1: Download empty template"),
+                       # br(),
+                       # downloadButton(outputId = "download_sp_export", label = "Download Template"),
+                       # HTML('</div>'),
+
+                       # br(),
+                       # br(),
+                       # br(),
+                       fileInput(inputId = 'tool_sp_import',label =  'Upload factor levels', accept = ".csv")#,
+                     )
+
+                ) ,
+
+
+
+              # begin conditionaPanel 2
+              conditionalPanel(
+
+                condition = "input.tool_design == 'Standard'|
+                input.tool_design == 'Special'"
+
+
+              ) #, #end of conditionalPanel2
+
+
+              )  #,
+
+          #  ) #, #end of   shinydashboard::tabBox(id = "fbookDesign
+
+),# end of
+
+
+shiny::fluidRow(#Begin fluidRow
+
+  box(title = "Fieldbook Preview",
+      status = "primary",
+      height = 900,
+      #width = NULL,
+      solidHeader = TRUE,
+      width = 12, collapsible = TRUE,
+
+      #width = 6,
+
+      DT::dataTableOutput("fbdsg")
+
+  )
+)
+
+        ),
+
+# import data -------------------------------------------------------------
 
 # begin tabItem: Fieldbook
 
-        tabItem(tabName = "fieldbook",
+
+tabItem(tabName = "import",
 
 
 
@@ -163,25 +302,26 @@ shiny::fluidRow(
             background = "black",
 
             fluidRow(
-              column(3,
+
+              column(2,
 
 
             radioButtons("fb_import", label = h4("Select Importation", style = "font-family: 'Arial', cursive;
                                                  font-weight: 1000; line-height: 1.1"),
-                         choices = c("Local", "GoogleDrive"),
-                         selected = "Local"),
+                         choices = c("Local", "Google"),
+                         selected = "Google"),
             br()#,
 
 ),
 
             conditionalPanel(
-              condition = "input.fb_import == 'GoogleDrive'",
+              condition = "input.fb_import == 'Google'",
 
-            column(width = 6, #offset = 1,
+            column(width = 10, #offset = 1,
 
              h4(icon("book"), "Google SpreadSheet (URL)", width = "100%"),
              textInput("fbdt",
-               label = NULL ,
+               label = NULL,
                width = "100%",
                value = "https://docs.google.com/spreadsheets/d/14sO81N50Zx1al5O3Iu3IPaz1_5CVncvtsx-_JRqJ_qE/edit#gid=172957346")
 
@@ -191,25 +331,24 @@ shiny::fluidRow(
           conditionalPanel(
             condition = "input.fb_import == 'Local'",
 
-            column(width = 6, #offset = 1,
+            column(width = 9, #offset = 1,
               h4(icon("book"), "Excel file (.xlsx)", width = "100%"),
               fileInput('impdata',
                 label = NULL,
                 accept = c(".xlsx"))
+            ),
+
+            column(width = 1,
+                   h4("Sheet", width = "100%"),
+                   numericInput("sheetdt", label = NULL, value = 1, step = 1, min = 1)
+
             )#,
 
           ),
 
         shiny::conditionalPanel(
           "input.fb_import == 'Local' |
-               input.fb_import == 'GoogleDrive'",
-
-
-            column(width = 1, offset = 1,
-              h4("Sheet", width = "100%"),
-              numericInput("sheetdt", label = NULL, value = 1, step = 1, min = 1)
-
-            )#,
+               input.fb_import == 'Google'"
 
             # column(width = 1,
             #   h4( "Update", width = "100%"),
@@ -235,7 +374,7 @@ shiny::fluidRow(
 
 
   conditionalPanel(
-    condition = "input.fb_import == 'GoogleDrive'",
+    condition = "input.fb_import == 'Google'",
 
         box(
 
@@ -799,128 +938,6 @@ shiny::fluidRow(
 
         ),
 
-
-# tools -------------------------------------------------------------------
-
-        tabItem(tabName = "tools",
-
-          shiny::fluidRow(
-
-            # shinydashboard::tabBox(id = "fbookDesign", height = NULL, width = 12,
-
-
-                  box(title = "FieldBook Design",
-                      status = "info",
-                      width = 12,
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-
-
-                      radioButtons("tool_design", label = h4("Select Importation", style = "font-family: 'Arial', cursive;
-                                                 font-weight: 1000; line-height: 1.1"),
-                                   choices = c("Standard", "Special"),
-                                   selected = "Standard"),
-                      #br(),
-
-                # begin conditional panel1 ----
-                  conditionalPanel(
-                        condition = "input.tool_design == 'Standard'",
-
-                    column(width = 8,
-
-                      textInput("tool_f1", label = "Treatment 1", value = "")
-
-                    ),
-
-                    column(width = 4,
-
-                      textInput("tool_lb1", label = "Label", value = "treat1")
-
-                    ),
-
-
-                    column(width = 8,
-                      textInput("tool_f2", label = "Treatment 2", value = "")
-                    ),
-
-                    column(width = 4,
-                      textInput("tool_lb2", label = "Label", value = "treat2")
-                    ) #,
-
-                  ), #end conditional panel
-
-                column(width = 8,
-                    conditionalPanel(
-
-                  #column(width = 12,
-                  condition = "input.tool_design == 'Special'",
-                  HTML('<div>'),
-                  shiny::tags$b("Step 1: Download empty template"),
-                  br(),
-                  downloadButton(outputId = "download_sp_export", label = "Download Template"),
-                  HTML('</div>'),
-
-                  br(),
-                  #br(),
-                  br(),
-                  fileInput(inputId = 'tool_sp_import',label =  'Step 2: Upload filled template',accept = ".csv")#,
-                      )
-                ) ,
-
-
-
-            # begin conditionaPanel 2
-                conditionalPanel(
-                  condition = "input.tool_design == 'Standard'|
-                               input.tool_design == 'Special'",
-
-                    column(width = 12,
-                      textInput("tool_var", label = "Variables", value = "")
-                    ),
-
-                    column(width = 2,
-                      numericInput("tool_rep",label = "Repetitions", value = 3, min = 2)
-                    ),
-
-
-                    column(width = 2,
-                      numericInput("tool_eva",label = "Intime", value = 1, min = 1)
-                    ),
-
-                    column(width = 5,
-
-                      radioButtons("tool_dsg", label = "Design",
-                        choices = c("crd", "rcbd", "lsd"), selected = "crd", inline = TRUE)
-
-                    )
-
-                 ) #, #end of conditionalPanel2
-
-
-               )  #,
-
-          #  ) #, #end of   shinydashboard::tabBox(id = "fbookDesign
-
-              ),# end of
-
-
-          shiny::fluidRow(#Begin fluidRow
-
-                  box(title = "Fieldbook Preview",
-                      status = "primary",
-                      height = 900,
-                      #width = NULL,
-                      solidHeader = TRUE,
-                      width = 12, collapsible = TRUE,
-
-                      #width = 6,
-
-                    DT::dataTableOutput("fbdsg")
-
-                  )
-          )
-
-      ),
 
 
 # Linear Regression -------------------------------------------------------
