@@ -35,11 +35,12 @@ shinyServer(function(input, output) {
 
 fdbk <- reactive({
 
-    print(input$tool_design)
-    print(input$input$tool_sp_import)
+    #print(input$tool_design)
+    print(input$tool_layout)
+    #print(input$input$tool_sp_import)
 
     #When radio button selection is Standard
-    if(input$tool_design == 'Standard'){
+    if(input$tool_layout == 'Standard'){
 
       validate(
         need( input$tool_f1, "Insert levels for your experiment")
@@ -66,7 +67,7 @@ fdbk <- reactive({
     }
 
     #When radio button selection is Special
-    if(input$tool_design == 'Special'){
+    if(input$tool_layout == 'Special'){
       #else{
 
       print("omar")

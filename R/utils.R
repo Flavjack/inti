@@ -43,7 +43,7 @@ test_comparison <- function( aov, comp, type = "snk", sig = 0.05){
 #' @param treat2 strign with the name of the level factor with only space
 #' @param rep number of repetition
 #' @param intime number of evaluation in time
-#' @param design experimental design c("rcbd","crd","lsd")
+#' @param design experimental design c("rcbd","crd","f2crd","f2rcbd","lsd")
 #' @param lbl_treat1 col label for treat 1
 #' @param lbl_treat2 col label for treat 2
 #' @param variables name of the variable evaluated in string with only space
@@ -66,6 +66,9 @@ design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime =
   tr1 <- treat1
   tr2 <- treat2
   dsg <- design
+
+  if(dsg == "f2crd") {dsg <- "crd"}
+  if(dsg == "f2rcbd") {dsg <- "rcbd"}
 
   if( !is.null(tr1) ) {
 
@@ -157,14 +160,14 @@ design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime =
   }
 
 
-  if (design == "crd"){
+  if (design == "crd"||design == "f2crd"){
 
     fb[,"r"] <- paste("r", fb[,"r"], sep = "")
     fb <- data.table::setnames(x = fb, "r", "rep")
     fb[,"rep"] <- as.factor(fb[,"rep"])
     fb
 
-  } else if ( design == "rcbd" ){
+  } else if ( design == "rcbd" || design == "f2rcbd"){
 
     fb[,"block"] <- paste("b", fb[,"block"], sep = "")
     fb[,"block"] <- as.factor(fb[,"block"])

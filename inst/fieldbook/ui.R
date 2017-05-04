@@ -1,3 +1,13 @@
+design_choices <- c(
+  "Completely Randomized Design (CRD)" = "crd",
+  "Randomized Complete Block Design (RCBD)" = "rcbd",
+  "Factorial Two-Way Design in CRD (F2CRD)" = "f2crd",
+  "Factorial Two-Way Design in RCBD (F2RCBD)" = "f2rcbd",
+  "Latin Square Design (LSD)" = "lsd"
+)
+#
+
+
 # fieldbook -----------------------------------------------------------------
 
 library(shiny)
@@ -62,7 +72,7 @@ shinyUI(dashboardPage(skin = "green",
                   status = "primary",
                   solidHeader = T,
 
-                p( strong(em("FieldBook")),"is a interactive application for exploratory data analisys and graphics for experimnetal designs"),
+                p( strong(em("Fieldbook")),"is a interactive application for exploratory data analisys and graphics for experimnetal designs"),
 
                   img(src = "agrinka.jpg",  width = "100%"),
 
@@ -145,9 +155,10 @@ shinyUI(dashboardPage(skin = "green",
 
 tabItem(tabName = "fieldbook",
 
+
         shiny::fluidRow(
 
-          # shinydashboard::tabBox(id = "fbookDesign", height = NULL, width = 12,
+
 
 
           box(title = "FieldBook Design",
@@ -156,110 +167,91 @@ tabItem(tabName = "fieldbook",
               solidHeader = TRUE,
               collapsible = TRUE,
 
-              column(width = 2,
 
-                radioButtons("tool_design", label = h4("Select Importation", style = "font-family: 'Arial', cursive;
-                                                     font-weight: 1000; line-height: 1.1"),
-                             choices = c("Standard", "Special"),
-                             selected = "Standard")
-
-              ),
+           #   list(
 
 
-              column(width = 10,
+                column(width = 12,
+
+                       radioButtons("tool_layout", label = h4("Type of layout", style = "font-family: 'Arial', cursive;
+                                                              font-weight: 1000; line-height: 1.1"),
+                                    choices = c("Standard", "Special"),inline = TRUE, selected = "Standard"),
+
+                       shiny::selectInput("tool_dsg", "Design", design_choices, selected = "crd", multiple = FALSE)#,
+                       #
+                       ),
+
+                conditionalPanel(
+
+                  condition = "input.tool_layout == 'Standard'",
 
 
-               column(width = 7,
-                      textInput("tool_var", label = "Variables", value = "")
-               ),
-
-               column(width = 2,
-                      numericInput("tool_rep",label = "Repetitions", value = 3, min = 2)
-               ),
-
-
-               column(width = 2,
-                      numericInput("tool_eva",label = "Intime", value = 1, min = 1)
-               ),
-
-               column(width = 1,
-
-                      radioButtons("tool_dsg", label = "Design",
-                                   choices = c("crd", "rcbd", "lsd"), selected = "crd", inline = F)
-
-               )
-
-              ),
+                  shiny::conditionalPanel(
+                    "input.tool_dsg == 'rcbd'  |
+                    input.tool_dsg ==  'crd'   |
+                    input.tool_dsg ==  'f2crd' |
+                    input.tool_dsg ==  'f2rcbd'|
+                    input.tool_dsg ==  'lsd'",
 
 
-              #br(),
+                    column(width = 8,
+                           textInput("tool_f1", label = "Factor levels", value = "")
+                    ),
+
+                    column(width = 4,
+                           textInput("tool_lb1", label = "Header", value = "Label")
+                    )#,
+
+                  ),
+
+                  shiny::conditionalPanel(
+                    "input.tool_dsg == 'f2crd'  |
+                    input.tool_dsg == 'f2rcbd'",
+
+                    column(width = 8,
+                           textInput("tool_f2", label = "Factor levels", value = "")
+                    ),
+
+                    column(width = 4,
+                           textInput("tool_lb2", label = "Header", value = "Label")
+                    ) #,
+
+                  ), #end conditional panel
+
+                  shiny::conditionalPanel(
+                    "input.tool_dsg == 'rcbd'  |
+                    input.tool_dsg  == 'crd'   |
+                    input.tool_dsg  == 'f2crd' |
+                    input.tool_dsg  == 'f2rcbd'|
+                    input.tool_dsg  == 'lsd'",
+
+                    #column(width = 12,
+
+                    column(width = 8,
+                           textInput("tool_var", label = "Variables", value = "")
+                    ),
+
+                    fluidRow(
+                      column(width = 2,
+                             numericInput("tool_rep",label = "Repetitions", value = 3, min = 2)
+                      ),
+
+                      column(width = 2,
+                             numericInput("tool_eva",label = "Intime", value = 1, min = 1)
+                      )#,
+                    )
+                    #)#,
+
+                  )
+
+                )#,
 
 
-              # begin conditional panel1 ----
-              conditionalPanel(
+              #)
 
-                condition = "input.tool_design == 'Standard'",
+        ) #end tabBox
+), #end fluidRow
 
-                column(width = 8,
-
-                       textInput("tool_f1", label = "Factor levels", value = "")
-
-                ),
-
-                column(width = 4,
-
-                       textInput("tool_lb1", label = "Header", value = "Label")
-
-                ),
-
-
-                column(width = 8,
-                       textInput("tool_f2", label = "Factor levels", value = "")
-                ),
-
-                column(width = 4,
-                       textInput("tool_lb2", label = "Header", value = "Label")
-                ) #,
-
-              ), #end conditional panel
-
-              column(width = 8,
-
-                     conditionalPanel(
-
-                       #column(width = 12,
-                       condition = "input.tool_design == 'Special'",
-                       # HTML('<div>'),
-                       # shiny::tags$b("Step 1: Download empty template"),
-                       # br(),
-                       # downloadButton(outputId = "download_sp_export", label = "Download Template"),
-                       # HTML('</div>'),
-
-                       # br(),
-                       # br(),
-                       # br(),
-                       fileInput(inputId = 'tool_sp_import',label =  'Upload factor levels', accept = ".csv")#,
-                     )
-
-                ) ,
-
-
-
-              # begin conditionaPanel 2
-              conditionalPanel(
-
-                condition = "input.tool_design == 'Standard'|
-                input.tool_design == 'Special'"
-
-
-              ) #, #end of conditionalPanel2
-
-
-              )  #,
-
-          #  ) #, #end of   shinydashboard::tabBox(id = "fbookDesign
-
-),# end of
 
 
 shiny::fluidRow(#Begin fluidRow
@@ -278,11 +270,15 @@ shiny::fluidRow(#Begin fluidRow
   )
 )
 
-        ),
+
+
+
+
+),
+
 
 # import data -------------------------------------------------------------
 
-# begin tabItem: Fieldbook
 
 
 tabItem(tabName = "import",
