@@ -10,8 +10,10 @@ library(ggplot2)
 library(rhandsontable)
 library(fieldbook)
 library(stringr)
+library(shinyBS)
 
-shinyServer(function(input, output) {
+
+shinyServer(function(input, output, session) {
 
 
 # User Manual ------------------------------------------------------------
@@ -70,7 +72,7 @@ fdbk <- reactive({
     if(input$tool_layout == 'Special'){
       #else{
 
-      print("omar")
+      #print("omar")
 
       # validate(
       #   need( input$input$tool_sp_import, "Please upload your template")

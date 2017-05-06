@@ -110,16 +110,18 @@ design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime =
 
   if ( !is.null(variables) ){
 
-    varst <- unlist(strsplit(variables, split = " "))
+    #varst <- unlist(strsplit(variables, split = " "))
+    varst <- unlist(strsplit(variables, split = ","))
     varfb <- factor(unique( varst[ varst != ""]))
     varfb <- as.character(varfb)
 
   }
 
+  # vc1 <- unlist(strsplit(tr1, split = " "))
+  # vc2 <- unlist(strsplit(tr2, split = " "))
 
-
-  vc1 <- unlist(strsplit(tr1, split = " "))
-  vc2 <- unlist(strsplit(tr2, split = " "))
+  vc1 <- unlist(strsplit(tr1, split = ","))
+  vc2 <- unlist(strsplit(tr2, split = ","))
 
   trt1 <- factor(unique( vc1[ vc1 != ""]))
   trt2 <- factor(unique( vc2[ vc2 != ""]))

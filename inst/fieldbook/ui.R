@@ -5,8 +5,10 @@ design_choices <- c(
   "Factorial Two-Way Design in RCBD (F2RCBD)" = "f2rcbd",
   "Latin Square Design (LSD)" = "lsd"
 )
-#
 
+#TODO: Agregar import fieldbook
+#      Separar por comas los valores ingresados en treatment y variables.
+#      Y si tienen espacios en blanco, agregar underscore.
 
 # fieldbook -----------------------------------------------------------------
 
@@ -20,7 +22,7 @@ library(ggplot2)
 library(rhandsontable)
 library(ggpubr)
 library(fieldbook)
-
+library(shinyBS)
 
 shinyUI(dashboardPage(skin = "green",
 
@@ -195,11 +197,15 @@ tabItem(tabName = "fieldbook",
 
 
                     column(width = 8,
-                           textInput("tool_f1", label = "Factor levels", value = "")
+                           textInput("tool_f1", label = "Factor levels (separated by commas (,))", value = ""),
+                           bsTooltip("tool_f1", "Enter your variables separated by commas [,]. Example: d0mg, d50mg, d100mg", options = list(container = "body"))
+
                     ),
 
                     column(width = 4,
-                           textInput("tool_lb1", label = "Header", value = "Label")
+                           textInput("tool_lb1", label = "Header", value = "Label"),
+                           bsTooltip("tool_lb1", "Enter the header of your Factor. Example: Fertilizer", options = list(container = "body"))
+
                     )#,
 
                   ),
@@ -209,11 +215,14 @@ tabItem(tabName = "fieldbook",
                     input.tool_dsg == 'f2rcbd'",
 
                     column(width = 8,
-                           textInput("tool_f2", label = "Factor levels", value = "")
+                           textInput("tool_f2", label = "Factor levels (separated by commas (,))", value = ""),
+                           bsTooltip("tool_f2", "Enter your factor levels separated by commas (,): normal, deficit", options = list(container = "body"))
+
                     ),
 
                     column(width = 4,
-                           textInput("tool_lb2", label = "Header", value = "Label")
+                           textInput("tool_lb2", label = "Header", value = "Label"),
+                           bsTooltip("tool_lb2", "Enter the header of your Factor. Example: Irrigation", options = list(container = "body"))
                     ) #,
 
                   ), #end conditional panel
@@ -228,16 +237,20 @@ tabItem(tabName = "fieldbook",
                     #column(width = 12,
 
                     column(width = 8,
-                           textInput("tool_var", label = "Variables", value = "")
+                           textInput("tool_var", label = "Variables (separated by commas (,))", value = ""),
+                           bsTooltip("tool_var", "Enter your variables separated by commas (,): height, weight, leafArea ", options = list(container = "body"))
+
                     ),
 
                     fluidRow(
                       column(width = 2,
-                             numericInput("tool_rep",label = "Repetitions", value = 3, min = 2)
+                             numericInput("tool_rep",label = "Replications", value = 3, min = 2),
+                             bsTooltip("tool_rep", "Enter the number of replications.", options = list(container = "body"))
                       ),
 
                       column(width = 2,
-                             numericInput("tool_eva",label = "Intime", value = 1, min = 1)
+                             numericInput("tool_eva",label = "Intime", value = 1, min = 1),
+                             bsTooltip("tool_eva", "Enter the evaluation in time", options = list(container = "body"))
                       )#,
                     )
                     #)#,
@@ -245,6 +258,7 @@ tabItem(tabName = "fieldbook",
                   )
 
                 )#,
+
 
 
               #)
@@ -1141,6 +1155,15 @@ shiny::fluidRow(
     )
   )
 )
+
+
+
+
+
+
+
+
+
 
 
 
