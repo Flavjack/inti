@@ -22,6 +22,7 @@ Imports:
     FactoMineR,
     shiny,
     shinydashboard,
+    shinyBS,
     ggplot2,
     readxl,
     tidyr,
