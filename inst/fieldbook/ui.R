@@ -34,7 +34,8 @@ shinyUI(dashboardPage(skin = "green",
     dashboardSidebar(
 
       sidebarMenu(
-        menuItem("Presentacion", tabName = "intro", icon = icon("home")),
+        menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+        menuItem("About", tabName = "about", icon = icon("home")),
         menuItem("User Manual", tabName = "usm", icon = icon("book")),
         menuItem("FieldBook", tabName = "fieldbook", icon = icon("wrench")),
         menuItem("Import data", tabName = "import", icon = icon("leaf")),
@@ -61,11 +62,64 @@ shinyUI(dashboardPage(skin = "green",
                 htmlOutput("usm")
         ),
 
+# dashboard
+
+######### dashboard #####
+tabItem(tabName = "dashboard",
+
+        #br(h2("Highly Interactive Data Analysis Platform")),
+        #br( p(class = "text-muted", style="text-align:right", "Highly Interactive Data Analysis Platform")),
+
+        # br(),
+        #img(src="potato.jpg", width = "100%"),
+        img(src="portada_fieldbook3.png", width = "100%"),
+
+        # h3("HIDAP v.1.0"),
+        # p(class = "text-muted", style="text-align:justify",
+        #   #paste("HiDAP is a Highly Interactive Data Analysis Platform originally meant to support clonal crop breeders at the <a href='http://www.cipotato.org' target='_new'>International Potato Center</a>. It is part of a continuous institutional effort to improve data collection, data quality, data analysis and open access publication. The recent iteration simultaneously also represents efforts to unify best practices from experiences in breeding data management of over 10 years, specifically with DataCollector and CloneSelector for potato and sweetpotato breeding, to address new demands for open access publishing and continue to improve integration with both corporate and community databases (such as biomart and sweetpotatobase) and platforms such as the <a href='https://research.cip.cgiar.org/gtdms/' target='_new'> Global Trial Data Management System (GTDMS)</a> at CIP. </br> One of the main new characteristics of the current software development platform established over the last two years is the web-based interface which provides also a highly interactive environment. It could be used both online and offline and on desktop as well as tablets and laptops. Key features include support for data capture, creation of field books, upload field books from and to accudatalogger, data access from breeding databases (e.g., <a href = 'http://germplasmdb.cip.cgiar.org/' target='_new'>CIP BioMart</a>, <a href='http://www.sweetpotatobase.org' target='_new'>sweetpotatobase</a> via <a href='http://docs.brapi.apiary.io/' target='_new'>breeding API</a>), data quality checks, single and multi-environmental data analysis, selection indices, and report generations. For users of DataCollector or CloneSelector many of the features are known but have been improved upon. Novel features include list management of breeding families, connection with the institutional pedigree database, interactive and linked graphs as well as reproducible reports. With the first full release by end of November 2016 we will include all characteristics from both DataCollector and CloneSelector. HIDAP, with additional support from <a href='https://sweetpotatogenomics.cals.ncsu.edu/' target='_new'>GT4SP</a>, <a href='http://www.rtb.cgiar.org/' target='_new'>RTB</a>, USAID, and <a href='http://cipotato.org/research/partnerships-and-special-projects/sasha-program/' target='_new'>SASHA</a>, is aimed to support the broader research community working on all aspects with primary focus on breeding, genetics, biotechnology, physiology and agronomy.")
+        #   shiny::includeHTML("www/about_hidap.txt")
+        # ),
+        #
+        # br(),
+        # br(),
+        #
+        # fluidRow(
+        #   box(
+        #     width = 2, style="background-color = #fff", height = "128px",
+        #     solidHeader = TRUE,
+        #     br(),
+        #     div(img(src="CIPlogo_RGB.png", width = "150px"), style="text-align: center;")
+        #   ),
+        #   box(
+        #     width = 2, style="background-color = #fff", height = "128px",
+        #     solidHeader = TRUE,
+        #     div(img(src="gt4sp.png", height = "108px"), style="text-align: center;")
+        #   ),
+        #   box(
+        #     width = 2, style="background-color = #fff", height = "128px",
+        #     solidHeader = TRUE,
+        #     br(),
+        #     div(img(src="usaid.png", width = "150px"), style="text-align: center;")
+        #   ),
+        #   box(
+        #     width = 2, style="background-color = #fff", height = "128px",
+        #     solidHeader = TRUE,
+        #     div(img(src="sasha.png"), style="text-align: center;")
+        #   ),
+        #   box(
+        #     width = 2, style="background-color = #fff", height = "128px",
+        #     solidHeader = TRUE,
+        #     br(),
+        #     div(img(src="rtb.png", width = "150px"), style="text-align: center;")
+        #   )
+        # ),
+        br()
+),
+
 
 # presentacion ------------------------------------------------------------
 
-
-        tabItem(tabName = "intro",
+        tabItem(tabName = "about",
 
 
                 box(
@@ -146,7 +200,7 @@ shinyUI(dashboardPage(skin = "green",
                   ),
                   hr(),
 
-                  p(strong("If you have any question, commment or sugestion you can write a email for us, enjoy FIELDBOOK!!"))
+                  p(strong("If you have any question, comment or sugestion you can write a email for us, enjoy FIELDBOOK!!"))
 
                 )
 
@@ -179,8 +233,13 @@ tabItem(tabName = "fieldbook",
                                                               font-weight: 1000; line-height: 1.1"),
                                     choices = c("Standard", "Special"),inline = TRUE, selected = "Standard"),
 
+                       #bsTooltip("tool_layout", "Press Standard to upload file from your computer. Press Google for connecting to Google SpreedShet", options = list(container = "body")),
+
                        shiny::selectInput("tool_dsg", "Design", design_choices, selected = "crd", multiple = FALSE)#,
-                       #
+
+
+
+
                        ),
 
                 conditionalPanel(
@@ -198,13 +257,13 @@ tabItem(tabName = "fieldbook",
 
                     column(width = 8,
                            textInput("tool_f1", label = "Factor levels (separated by commas (,))", value = ""),
-                           bsTooltip("tool_f1", "Enter your variables separated by commas [,]. Example: d0mg, d50mg, d100mg", options = list(container = "body"))
+                           bsTooltip("tool_f1", "Enter your factors separated by commas [,]. Example: d0mg, d50mg, d100mg. Whitespaces are filled with underscore (_)", options = list(container = "body"))
 
                     ),
 
                     column(width = 4,
                            textInput("tool_lb1", label = "Header", value = "Label"),
-                           bsTooltip("tool_lb1", "Enter the header of your Factor. Example: Fertilizer", options = list(container = "body"))
+                           bsTooltip("tool_lb1", "Enter the header of your factor. Example: Fertilizer. Whitespaces are filled with underscore (_)", options = list(container = "body"))
 
                     )#,
 
@@ -216,13 +275,13 @@ tabItem(tabName = "fieldbook",
 
                     column(width = 8,
                            textInput("tool_f2", label = "Factor levels (separated by commas (,))", value = ""),
-                           bsTooltip("tool_f2", "Enter your factor levels separated by commas (,): normal, deficit", options = list(container = "body"))
+                           bsTooltip("tool_f2", "Enter your factor levels separated by commas (,). Example: normal, deficit. Whitespaces are filled with underscore (_)", options = list(container = "body"))
 
                     ),
 
                     column(width = 4,
                            textInput("tool_lb2", label = "Header", value = "Label"),
-                           bsTooltip("tool_lb2", "Enter the header of your Factor. Example: Irrigation", options = list(container = "body"))
+                           bsTooltip("tool_lb2", "Enter the header of your Factor. Example: Irrigation. Whitespaces are filled with underscore (_)", options = list(container = "body"))
                     ) #,
 
                   ), #end conditional panel
@@ -319,7 +378,11 @@ shiny::fluidRow(
             radioButtons("fb_import", label = h4("Select Importation", style = "font-family: 'Arial', cursive;
                                                  font-weight: 1000; line-height: 1.1"),
                          choices = c("Local", "Google"),
-                         selected = "Google"),
+                         selected = "Local"),
+
+
+
+
             br()#,
 
 ),
@@ -415,7 +478,8 @@ shiny::fluidRow(
 
   ),
 
-  # filter ------------------------------------------------------------------
+
+# filter ------------------------------------------------------------------
 
   box(
 
@@ -434,7 +498,7 @@ shiny::fluidRow(
     uiOutput("filter_fact02")
 
   )
-  # End filter ---------------------------------------------------------------
+# End filter ---------------------------------------------------------------
 
 ) #end Box
 
@@ -484,18 +548,22 @@ shiny::fluidRow(
                     ),
 
                     column(width = 4,
-                      textInput(inputId ="bply", label = "Y label", value = "")
+                      textInput(inputId ="bply", label = "Y label", value = ""),
+                      bsTooltip("bply", "Enter the label of the response variable", options = list(container = "body"))
                     ),
 
-                    column(width = 4,
-                      textInput(inputId ="bplx", label = "X label", value = "")
-                    ),
+
 
                     column(width = 4,
-                      textInput(
-                        inputId ="bplz",
-                        label = "Legend label",
-                        value = "")
+                      textInput(inputId ="bplx", label = "X label", value = ""),
+                      bsTooltip("bplx", "Enter the label of the explanatory variable", options = list(container = "body"))
+                    ),
+
+
+
+                    column(width = 4,
+                      textInput(inputId ="bplz", label = "Legend label", value = ""),
+                      bsTooltip("bplz", "Enter the label fo the group variable", options = list(container = "body"))
                     )
           ),
 
@@ -505,22 +573,13 @@ shiny::fluidRow(
 
             column(width = 12,
 
-              numericInput(
-                inputId ="bpbrk",
-                label = "Axis brake",
-                value = NA)
-
+              numericInput(inputId ="bpbrk", label = "Axis brake", value = NA),
+              bsTooltip("bpbrk", "Enter the number of breaks", options = list(container = "body"))
             ),
 
 
             column(width = 12,
-
-              numericInput(
-                inputId ="bpsize",
-                label = "Size",
-                value = 2,
-                min = 0,
-                step = 0.1)
+              numericInput(inputId ="bpsize", label = "Size", value = 2, min = 0, step = 0.1)
             )
 
           ),
@@ -685,8 +744,8 @@ shiny::fluidRow(
                 value = 0.05,
                 min = 0,
                 max = 5,
-                step = 0.01)
-
+                step = 0.01),
+              bsTooltip("stsig", "The significance level (alpha)", options = list(container = "body"))
 
             ),
 
@@ -695,7 +754,8 @@ shiny::fluidRow(
               selectInput("stmc",
                 label = "Type",
                 choices = c("tukey", "duncan", "snk"),
-                selected = "snk")
+                selected = "snk"),
+              bsTooltip("stmc", "The type of test. There are three test: Tukey, Ducan and SNK", options = list(container = "body"))
 
 
             ),
@@ -970,16 +1030,16 @@ shiny::fluidRow(
 
               column(width = 8,
 
-                textInput("lr_lbv2", label = "Label", value = "")
-
+                textInput("lr_lbv2", label = "Label", value = ""),
+                bsTooltip("lr_lbv2", "Enter the label of the dependent variable", options = list(container = "body"))
 
               ),
 
 
               column(width = 4,
 
-                numericInput("lr_brk2", label = "Brakes", value = NA, min = 0)
-
+                numericInput("lr_brk2", label = "Brakes", value = NA, min = 0),
+                bsTooltip("lr_brk2", "Enter the number of breaks", options = list(container = "body"))
 
               )
 
@@ -1002,14 +1062,16 @@ shiny::fluidRow(
 
               column(width = 8,
 
-                textInput("lr_lbv1", label = "Label", value = "")
+                textInput("lr_lbv1", label = "Label", value = ""),
+                bsTooltip("lr_lbv1", "Enter the label of the independent variable", options = list(container = "body"))
 
 
               ),
 
               column(width = 4,
 
-                numericInput("lr_brk1", label = "Brakes", value = NA, min = 0)
+                numericInput("lr_brk1", label = "Brakes", value = NA, min = 0),
+                bsTooltip("lr_brk1", "Enter the number of breaks", options = list(container = "body"))
 
               )
 
@@ -1029,7 +1091,8 @@ shiny::fluidRow(
 
               column(width = 6,
 
-                textInput("lr_lbgp", label = "Legend", value = "")
+                textInput("lr_lbgp", label = "Legend", value = ""),
+                bsTooltip("lr_lbgp", "Enter name of group variable", options = list(container = "body"))
 
 
               ),
@@ -1071,20 +1134,25 @@ shiny::fluidRow(
                 value = 2,
                 min = 0,
                 step = 0.1
-              )
+              ),
+              bsTooltip("lr_font", "Enter the font size of the graphic", options = list(container = "body"))
+
 
             ),
 
 
             column(width = 12,
 
-
               radioButtons(
                 inputId ="lr_color",
                 label = "Color",
                 choices = c("yes", "no"),
                 selected = "yes",
-                inline = TRUE)
+                inline = TRUE),
+              bsTooltip("lr_color", "Select (YES) for colored graphics. (NO) for white and black", options = list(container = "body"))
+
+
+
             ),
 
 
@@ -1155,6 +1223,11 @@ shiny::fluidRow(
     )
   )
 )
+
+
+
+
+
 
 
 

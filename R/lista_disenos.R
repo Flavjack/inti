@@ -2,12 +2,14 @@
 #' @author quipo.org
 #' @description Differents types of statistical designs are related to customized inputs.
 #' @importFrom shiny selectInput conditionalPanel textInput br icon
-#' @importFrom shinydashboard infoBox
+#' @importFrom shinydashboard infoBox box
+#' @importFrom shiny column radioButtons h4 fluidRow numericInput
 #' @export
 
 
 design_conditional_panels <- function(){
 
+  design_choices <- NULL
 
   list(
 

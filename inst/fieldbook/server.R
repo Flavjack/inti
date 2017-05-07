@@ -422,6 +422,8 @@ output$bpx <- renderUI({
   )
 
 })
+addTooltip(session, "bpx", title = "Select your explanatory variable",  trigger = 'hover')
+
 
 output$bpy <- renderUI({
 
@@ -435,6 +437,8 @@ output$bpy <- renderUI({
   )
 
 })
+addTooltip(session, "bpy", title = "Select your response variable",  trigger = 'hover')
+
 
 output$bpz <- renderUI({
 
@@ -448,6 +452,9 @@ output$bpz <- renderUI({
   )
 
 })
+addTooltip(session, "bpz", title = "Select variable to group observations.",  trigger = 'hover')
+
+
 
 output$boxplot <- renderPlot({
 
@@ -592,6 +599,9 @@ output$stat_response <- renderUI({
   )
 
 })
+addTooltip(session, "stat_response", title = "Select the response variable",  trigger = 'hover')
+
+
 
 output$stat_factor <- renderUI({
 
@@ -606,6 +616,8 @@ output$stat_factor <- renderUI({
   )
 
 })
+addTooltip(session, "stat_factor", title = "Select the factor variable",  trigger = 'hover')
+
 
 output$stat_block <- renderUI({
 
@@ -620,6 +632,8 @@ output$stat_block <- renderUI({
   )
 
 })
+addTooltip(session, "stat_block", title = "Select this option if your design has Blocks. Example: Randomized Block Design",  trigger = 'hover')
+
 
 # ANOVA
 
@@ -997,28 +1011,22 @@ output$lrg_variable1 <- renderUI({
 
   file <- fb()
   fbn <- names(file)
-
-  selectInput(
-    inputId = "lrg_var1",
-    label = "Variable",
-    choices = c("choose" = "", fbn)
-  )
+  selectInput(inputId = "lrg_var1", label = "Variable", choices = c("choose" = "", fbn))
 
 })
+addTooltip(session, "lrg_variable1", title = "Select your independent variable",  trigger = 'hover')
+
 
 
 output$lrg_variable2 <- renderUI({
 
   file <- fb()
   fbn <- names(file)
-
-  selectInput(
-    inputId = "lrg_var2",
-    label = "Variable",
-    choices = c("choose" = "", fbn)
+  selectInput(inputId = "lrg_var2", label = "Variable", choices = c("choose" = "", fbn)
   )
 
 })
+addTooltip(session, "lrg_variable2", title = "Select your dependent variable",  trigger = 'hover')
 
 
 output$lrg_grouped <- renderUI({
@@ -1033,14 +1041,17 @@ output$lrg_grouped <- renderUI({
   )
 
 })
+addTooltip(session, "lrg_grouped", title = "Select variable to group regression lines",  trigger = 'hover')
+
+
 
 
 plot_lr <- reactive({
 
   validate(
 
-    need( input$lrg_var1, "Select your numeric variable"),
-    need( input$lrg_var2, "Select your numeric variable" )
+    need( input$lrg_var1, "Select your independent variable"),
+    need( input$lrg_var2, "Select your depedent variable" )
 
   )
 

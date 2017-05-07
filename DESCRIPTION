@@ -25,7 +25,8 @@ Imports:
     ggplot2,
     readxl,
     tidyr,
-    dplyr
+    dplyr,
+    stringr
 Depends:
     R (>= 3.2.2)
 License: MIT + file LICENSE

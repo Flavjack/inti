@@ -50,6 +50,7 @@ test_comparison <- function( aov, comp, type = "snk", sig = 0.05){
 #' @return Table with the experimental design
 #' @importFrom agricolae design.ab
 #' @importFrom data.table setnames
+#' @importFrom stringr str_trim
 #' @export
 
 
@@ -80,7 +81,8 @@ design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime =
 
     } else {
 
-      lbt1 <- gsub("\\s", "_", lbl_treat1)
+      lbl_treat1 <- stringr::str_trim(lbl_treat1, side = "both")
+      lbt1 <- gsub("\\s+", "_", lbl_treat1)
 
     }
 
@@ -101,7 +103,8 @@ design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime =
 
       } else {
 
-        lbt2 <- gsub("\\s", "_", lbl_treat2)
+        lbl_treat2 <- stringr::str_trim(lbl_treat2, side = "both")
+        lbt2 <- gsub("\\s+", "_", lbl_treat2)
 
       }
 
@@ -112,6 +115,10 @@ design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime =
 
     #varst <- unlist(strsplit(variables, split = " "))
     varst <- unlist(strsplit(variables, split = ","))
+
+    varst <- stringr::str_trim(varst, side = "both")
+    varst <- gsub("\\s+", "_", varst)
+
     varfb <- factor(unique( varst[ varst != ""]))
     varfb <- as.character(varfb)
 
@@ -123,13 +130,19 @@ design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime =
   vc1 <- unlist(strsplit(tr1, split = ","))
   vc2 <- unlist(strsplit(tr2, split = ","))
 
+  vc1 <- stringr::str_trim(vc1, side = "both")
+  vc1 <- gsub("\\s+","_", vc1)
+  vc2 <- stringr::str_trim(vc2, side = "both")
+  vc2 <- gsub("\\s+","_", vc2)
+
+
   trt1 <- factor(unique( vc1[ vc1 != ""]))
   trt2 <- factor(unique( vc2[ vc2 != ""]))
 
   lt1 <- length(trt1)
   lt2 <- length(trt2)
 
-  fact <-c( lt1, lt2)
+  fact <-c(lt1, lt2)
 
   table <- agricolae::design.ab(
     trt = fact,
@@ -210,7 +223,8 @@ design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime =
 
   } else { fb }
 
-
+  # names(fb) <- stringr::str_replace_all(names(fb),pattern = " ","_")
+  # fb
 
 }
 
