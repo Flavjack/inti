@@ -1,9 +1,9 @@
-design_choices <- c(
-  "Completely Randomized Design (CRD)" = "crd",
-  "Randomized Complete Block Design (RCBD)" = "rcbd",
-  "Factorial Two-Way Design in CRD (F2CRD)" = "f2crd",
-  "Factorial Two-Way Design in RCBD (F2RCBD)" = "f2rcbd",
-  "Latin Square Design (LSD)" = "lsd"
+design_options <- c(
+  "Completely randomized design" = "crd",
+  "Randomized complete block design" = "rcbd",
+  "Two-Way Factorial arrangement in completely randomized design" = "f2crd",
+  "Two-Way Factorial arrangement in complete block design" = "f2rcbd",
+  "Latin square design" = "lsd"
 )
 
 #TODO: Agregar import fieldbook
@@ -27,7 +27,7 @@ library(shinyBS)
 shinyUI(dashboardPage(skin = "green",
 
 
-    dashboardHeader(title = "FIELDBOOK"),
+    dashboardHeader(title = "FieldBook"),
 
 # Sider -------------------------------------------------------------------
 
@@ -55,6 +55,11 @@ shinyUI(dashboardPage(skin = "green",
 
 
     dashboardBody(
+
+      tags$head(
+        tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
+      ),
+
 
       tabItems(
 
@@ -179,7 +184,7 @@ tabItem(tabName = "dashboard",
                     br(),
                     a("< obacc07@gmail.com >"),
                     br(),
-                    code("Centro Internacional de la Papa (CIP)")
+                    code("Universidad Nacional Mayor de San Marcos (UNMSM)")
                   ),
 
                   p(
@@ -217,8 +222,9 @@ tabItem(tabName = "fieldbook",
 
 
 
-          box(title = "FieldBook Design",
-              status = "info",
+          box(title = "Experimental Design",
+              status = "success",
+              background = "navy",
               width = 12,
               solidHeader = TRUE,
               collapsible = TRUE,
@@ -229,13 +235,13 @@ tabItem(tabName = "fieldbook",
 
                 column(width = 12,
 
-                       radioButtons("tool_layout", label = h4("Type of layout", style = "font-family: 'Arial', cursive;
+                       radioButtons("tool_layout", label = h4("Layout", style = "font-family: 'Georgia', serif;
                                                               font-weight: 1000; line-height: 1.1"),
                                     choices = c("Standard", "Special"),inline = TRUE, selected = "Standard"),
 
                        #bsTooltip("tool_layout", "Press Standard to upload file from your computer. Press Google for connecting to Google SpreedShet", options = list(container = "body")),
 
-                       shiny::selectInput("tool_dsg", "Design", design_choices, selected = "crd", multiple = FALSE)#,
+                       shiny::selectInput("tool_dsg", "Design", design_options, selected = "crd", multiple = FALSE)#,
 
 
 
@@ -329,8 +335,8 @@ tabItem(tabName = "fieldbook",
 
 shiny::fluidRow(#Begin fluidRow
 
-  box(title = "Fieldbook Preview",
-      status = "primary",
+  box(title = "Visualization",
+      status = "success",
       height = 900,
       #width = NULL,
       solidHeader = TRUE,
