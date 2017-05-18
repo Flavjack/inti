@@ -336,7 +336,7 @@ tabItem(tabName = "fieldbook",
 shiny::fluidRow(#Begin fluidRow
 
   box(title = "Visualization",
-      status = "success",
+      #status = "success",
       height = 900,
       #width = NULL,
       solidHeader = TRUE,

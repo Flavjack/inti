@@ -6,8 +6,9 @@
 # fieldbook
 Data anlysis application for statistical industry: fertilizer, crop production, etc.
 
-# FRASES
+# Proverbios
 
-Los chismes pueden ser tan peligrosos, así que, si alguien te dice un chisme, ayudas en no transmitírselo a alguien más.
+(14) “Envió desde lo alto, me tomó, me sacó de las muchas aguas. Me libró de mi poderoso enemigo, y de los que me aborrecían; pues eran más fuertes que yo… pero me libró porque se agradó de mí” (Salmo 18:16,17,19b).
+
 
 
