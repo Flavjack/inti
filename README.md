@@ -4,23 +4,10 @@
 
 
 # fieldbook
-Data anlysis application for statistical research
+Data anlysis application for statistical industry: fertilizer, crop production, etc.
+
+# FRASES
+
+Los chismes pueden ser tan peligrosos, así que, si alguien te dice un chisme, ayudas en no transmitírselo a alguien más.
 
 
-# ToDo
-
-How to install:
-
-
-
-library(devtools)
-install_github("flavjack/fieldbook")
-
-#In case of some missing packages
-paquetes <- c("leaps", "scatterplot3d", "flashClust", "knitr","klar",
-                  "spedep", "AlgDesign", "DBI", "Rcpp","assertthat","tibble",
-                  "gtable", "scales", "ggrepel", "cellranger", "htmlwidgets",
-                  "httpuv", "xtable", "rhansontable", "ggpubr", "htmltools")
-                 
-fieldbook::fieldbook()
-  
