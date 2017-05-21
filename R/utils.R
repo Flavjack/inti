@@ -63,13 +63,13 @@ design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime =
 
   }
 
-
   tr1 <- treat1
   tr2 <- treat2
   dsg <- design
 
-  if(dsg == "f2crd") {dsg <- "crd"}
+  if(dsg == "f2crd")  {dsg <- "crd"}
   if(dsg == "f2rcbd") {dsg <- "rcbd"}
+  if(dsg == "f2lsd")  {dsg <- "lsd"}
 
   if( !is.null(tr1) ) {
 
@@ -188,7 +188,7 @@ design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime =
     fb[,"block"] <- as.factor(fb[,"block"])
     fb
 
-  } else if ( design == "lsd" ){
+  } else if ( design == "lsd" || design == "f2lsd"){
 
     fb[,"row"] <- paste("r", fb[,"row"], sep = "")
     fb[,"row"] <- as.factor(fb[,"row"])

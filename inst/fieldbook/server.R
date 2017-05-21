@@ -95,13 +95,13 @@ fdbk <- reactive({
       trt2 <- stringr::str_trim(fb_csv[,2], side = "both")
       trt2 <- trt2[!is.na(trt2)]
 
-      if(input$tool_dsg  == 'f2crd' ||  input$tool_dsg  == 'f2rcbd'){
+      if(input$tool_dsg  == 'f2crd' ||  input$tool_dsg  == 'f2rcbd' || input$tool_dsg  == 'f2lsd'){
 
             if(length(trt2)==0){
                  trt2 <- NULL
 
                  validate(
-                   need( !is.null(trt2), "Please fill the second treatment (trt2) in your template")
+                   need( !is.null(trt2), "Please fill the second column treatment (trt2) in your template")
                  )
 
 
@@ -1208,7 +1208,7 @@ output$tool_template_download <- downloadHandler(
     paste("fb_template", '.csv', sep='')
   },
   content = function(file) {
-    print("omar")
+    #print("omar")
     template <- fb_template
     write.csv(template,file, row.names = FALSE)
   }

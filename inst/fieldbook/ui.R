@@ -1,9 +1,10 @@
 design_options <- c(
   "Completely randomized design" = "crd",
   "Randomized complete block design" = "rcbd",
+  "Latin square design" = "lsd",
   "Two-Way Factorial arrangement in completely randomized design" = "f2crd",
-  "Two-Way Factorial arrangement in complete block design" = "f2rcbd",
-  "Latin square design" = "lsd"
+  "Two-Way Factorial arrangement in complete block design" = "f2rcbd"#,
+  #"Two-Way Factorial arragement in latin square design" = "f2lsd"
 )
 
 #TODO: Agregar import fieldbook
@@ -252,11 +253,12 @@ tabItem(tabName = "fieldbook",
 
 
                   shiny::conditionalPanel(
-                    "input.tool_dsg == 'rcbd'  |
-                    input.tool_dsg ==  'crd'   |
-                    input.tool_dsg ==  'f2crd' |
-                    input.tool_dsg ==  'f2rcbd'|
-                    input.tool_dsg ==  'lsd'",
+                    "input.tool_dsg ==  'rcbd'  |
+                     input.tool_dsg ==  'crd'   |
+                     input.tool_dsg ==  'lsd'   |
+                     input.tool_dsg ==  'f2crd' |
+                     input.tool_dsg ==  'f2rcbd'|
+                     input.tool_dsg ==  'f2lsd'",
 
 
                     column(width = 8,
@@ -275,7 +277,8 @@ tabItem(tabName = "fieldbook",
 
                   shiny::conditionalPanel(
                     "input.tool_dsg == 'f2crd'  |
-                    input.tool_dsg == 'f2rcbd'",
+                     input.tool_dsg == 'f2lsd'  |
+                     input.tool_dsg == 'f2rcbd'",
 
                     column(width = 8,
                            textInput("tool_f2", label = "Factor levels (separated by commas (,))", value = ""),
@@ -334,9 +337,10 @@ tabItem(tabName = "fieldbook",
             shiny::conditionalPanel(
              "input.tool_dsg == 'rcbd'  |
                     input.tool_dsg  == 'crd'   |
+                    input.tool_dsg  == 'lsd'   |
                     input.tool_dsg  == 'f2crd' |
                     input.tool_dsg  == 'f2rcbd'|
-                    input.tool_dsg  == 'lsd'",
+                    input.tool_dsg  == 'f2lsd'",
 
              #column(width = 12,
 
