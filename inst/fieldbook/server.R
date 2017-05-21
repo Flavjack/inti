@@ -69,16 +69,14 @@ fdbk <- reactive({
     }
 
     #When radio button selection is Special
-    if(input$tool_layout == 'Special'){
+    if(input$tool_layout == 'Template'){
       #else{
 
-      #print("omar")
+      validate(
+        need( input$tool_template_upload, "Please upload your template")
+      )
 
-      # validate(
-      #   need( input$input$tool_sp_import, "Please upload your template")
-      # )
-
-      fbook_csv_file <- input$tool_sp_import
+      fbook_csv_file <- input$tool_template_upload
       print(fbook_csv_file)
       print(fbook_csv_file$datapath)
 
@@ -91,9 +89,30 @@ fdbk <- reactive({
       }
 
       trt1 <- stringr::str_trim(fb_csv[,1], side = "both")
+      #print(trt1)
       trt1 <- trt1[!is.na(trt1)]
+      #In case trt2 is empty in csv template (trt2 vacio)
       trt2 <- stringr::str_trim(fb_csv[,2], side = "both")
       trt2 <- trt2[!is.na(trt2)]
+
+      if(input$tool_dsg  == 'f2crd' ||  input$tool_dsg  == 'f2rcbd'){
+
+            if(length(trt2)==0){
+                 trt2 <- NULL
+
+                 validate(
+                   need( !is.null(trt2), "Please fill the second treatment (trt2) in your template")
+                 )
+
+
+            } else {
+               trt2 <- trt2
+            }
+      } else{
+            trt2 <- NULL
+      }
+
+      #print(trt2)
       cln <- colnames(fb_csv)
       lbl1 <- cln[1]
       lbl2 <- cln[2]
@@ -121,6 +140,11 @@ fdbk <- reactive({
     } else {
       vars <- input$tool_var
     }
+
+    # validate(
+    #   need( length(trt1)>1, "Please fill vars")
+    # )
+
 
     #Creation of fieldbook reactive expression
     fieldbook::design_fieldbook(
@@ -1179,11 +1203,12 @@ output$download_plot_lr <- downloadHandler(
 )
 
 
-output$download_sp_export <- downloadHandler(
+output$tool_template_download <- downloadHandler(
   filename = function() {
     paste("fb_template", '.csv', sep='')
   },
   content = function(file) {
+    print("omar")
     template <- fb_template
     write.csv(template,file, row.names = FALSE)
   }

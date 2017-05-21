@@ -221,7 +221,7 @@ tabItem(tabName = "fieldbook",
 
 
 
-
+          #Begin box for "Experimental Design"
           box(title = "Experimental Design",
               status = "success",
               background = "navy",
@@ -237,17 +237,15 @@ tabItem(tabName = "fieldbook",
 
                        radioButtons("tool_layout", label = h4("Layout", style = "font-family: 'Georgia', serif;
                                                               font-weight: 1000; line-height: 1.1"),
-                                    choices = c("Standard", "Special"),inline = TRUE, selected = "Standard"),
+                                    choices = c("Standard", "Template"),inline = TRUE, selected = "Standard"),
 
                        #bsTooltip("tool_layout", "Press Standard to upload file from your computer. Press Google for connecting to Google SpreedShet", options = list(container = "body")),
 
                        shiny::selectInput("tool_dsg", "Design", design_options, selected = "crd", multiple = FALSE)#,
 
-
-
-
                        ),
 
+           #### begin for conditionalPanel == "Standard"  ####
                 conditionalPanel(
 
                   condition = "input.tool_layout == 'Standard'",
@@ -290,39 +288,87 @@ tabItem(tabName = "fieldbook",
                            bsTooltip("tool_lb2", "Enter the header of your Factor. Example: Irrigation. Whitespaces are filled with underscore (_)", options = list(container = "body"))
                     ) #,
 
-                  ), #end conditional panel
+                  )#, #end conditional panel
 
-                  shiny::conditionalPanel(
-                    "input.tool_dsg == 'rcbd'  |
+
+
+                ), ###, #end conditional Panel for Local or Standard
+
+
+           ### begin for conditionalPanel == 'Template' ######
+
+           conditionalPanel(
+
+             condition = "input.tool_layout == 'Template'",
+
+             # shiny::conditionalPanel(
+             #   "input.tool_dsg == 'rcbd'  |
+             #   input.tool_dsg ==  'crd'   |
+             #   input.tool_dsg ==  'f2crd' |
+             #   input.tool_dsg ==  'f2rcbd'|
+             #   input.tool_dsg ==  'lsd'",
+
+             #fluidRow(
+
+               column(width = 12,
+                         h4("Step 1: Download template file"),
+                         downloadButton("tool_template_download", label = "Download template file (.csv)"),
+                         br(),
+                         h4("Step 2: Upload template file"),
+                         shiny::fileInput("tool_template_upload",label = "Upload template file (.csv)")
+                      )
+                    #)
+               # )
+             ),
+
+
+
+           #Conditional Panel for writting: Variables, Replications and InTime
+
+           conditionalPanel(
+
+             condition = "input.tool_layout == 'Template'|
+                          input.tool_layout == 'Standard'",
+
+
+            shiny::conditionalPanel(
+             "input.tool_dsg == 'rcbd'  |
                     input.tool_dsg  == 'crd'   |
                     input.tool_dsg  == 'f2crd' |
                     input.tool_dsg  == 'f2rcbd'|
                     input.tool_dsg  == 'lsd'",
 
-                    #column(width = 12,
+             #column(width = 12,
 
-                    column(width = 8,
-                           textInput("tool_var", label = "Variables (separated by commas (,))", value = ""),
-                           bsTooltip("tool_var", "Enter your variables separated by commas (,): height, weight, leafArea ", options = list(container = "body"))
+             column(width = 8,
+                    textInput("tool_var", label = "Variables (separated by commas (,))", value = ""),
+                    bsTooltip("tool_var", "Enter your variables separated by commas (,): height, weight, leafArea ", options = list(container = "body"))
 
-                    ),
+             ),
 
-                    fluidRow(
-                      column(width = 2,
-                             numericInput("tool_rep",label = "Replications", value = 3, min = 2),
-                             bsTooltip("tool_rep", "Enter the number of replications.", options = list(container = "body"))
-                      ),
+             fluidRow(
+               column(width = 2,
+                      numericInput("tool_rep",label = "Replications", value = 3, min = 2),
+                      bsTooltip("tool_rep", "Enter the number of replications.", options = list(container = "body"))
+               ),
 
-                      column(width = 2,
-                             numericInput("tool_eva",label = "Intime", value = 1, min = 1),
-                             bsTooltip("tool_eva", "Enter the evaluation in time", options = list(container = "body"))
-                      )#,
-                    )
-                    #)#,
+               column(width = 2,
+                      numericInput("tool_eva",label = "Intime", value = 1, min = 1),
+                      bsTooltip("tool_eva", "Enter the evaluation in time", options = list(container = "body"))
+               )#,
+             )
+             #)#,
 
-                  )
+           ) #end variables, replications and InTime
 
-                )#,
+           )
+
+
+
+
+
+
+
 
 
 
@@ -354,6 +400,11 @@ shiny::fluidRow(#Begin fluidRow
 
 
 ),
+
+
+
+
+
 
 
 # import data -------------------------------------------------------------
