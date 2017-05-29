@@ -1,5 +1,6 @@
 # fieldbook -----------------------------------------------------------------
 
+
 library(shiny)
 library(shinydashboard)
 library(agricolae)
@@ -12,6 +13,7 @@ library(fieldbook)
 library(stringr)
 library(shinyBS)
 
+options(shiny.sanitize.errors = FALSE)
 
 shinyServer(function(input, output, session) {
 

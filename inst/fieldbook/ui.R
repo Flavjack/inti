@@ -1,3 +1,5 @@
+options(shiny.sanitize.errors = FALSE)
+
 design_options <- c(
   "Completely randomized design" = "crd",
   "Randomized complete block design" = "rcbd",
