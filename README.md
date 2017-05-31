@@ -35,6 +35,22 @@ apt-get install r-cran-dplyr
 
 ```
 
+## Errors 
+
+ERROR: An error has occurred. Check your logs or contact the app author for clarification.
+
+# Solution:
+
+Apparently sanitize error messages is true by default for my configuration. Add
+options(shiny.sanitize.errors = FALSE) to your app.
+
+In the configuration file, place
+
+sanitize_errors false;
+preserve_logs true;
+
+within server to resolve permanently.
+
 
 
 
