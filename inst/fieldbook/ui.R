@@ -182,13 +182,13 @@ tabItem(tabName = "dashboard",
                     code("Universidad Nacional Agraria la Molina, Lima, Perú")
                     ),
 
-                  p(
-                    strong("Omar Benites Alfaro"),
-                    br(),
-                    a("< obacc07@gmail.com >"),
-                    br(),
-                    code("Universidad Nacional Mayor de San Marcos (UNMSM)")
-                  ),
+                 # p(
+                  #  strong("Omar Benites Alfaro"),
+                  #  br(),
+                  #  a("< obacc07@gmail.com >"),
+                  #  br(),
+                  #  code("Universidad Nacional Mayor de San Marcos (UNMSM)")
+                  #),
 
                   p(
                     strong("Jimmy R. Gomez Carrion"),
