@@ -5,8 +5,8 @@ library(shinyURL)
 #pass: 123
 #credentials <- list("fieldbook" = "202cb962ac59075b964b07152d234b70")
 
-#pass: quipofb
-credentials <- list("fieldbook" = "12047853c0d5ea1ae827c3873441c6fe")
+#pass: quipo07
+credentials <- list("fieldbook" = "32a04706ce87ebef04a0d871e3874ad8")
 
 
 shinyServer(function(input, output) {
@@ -28,7 +28,7 @@ shinyServer(function(input, output) {
     if (!isTRUE(USER$Logged)) {
       fluidRow(column(width=4, offset = 4,
                       wellPanel(id = "login",
-                                titlePanel("Password protected Shiny app"),
+                                titlePanel("User and Password"),
                                 textInput(".username", "Username:"),
                                 passwordInput(".password", "Password:"),
                                 div(actionButton(".login", "Log in"), style="text-align: center;")
@@ -65,13 +65,19 @@ shinyServer(function(input, output) {
 
   output$usm <- renderUI({
 
-    getPage <- function() {
+    # getPage <- function() {
+    #
+    #
+    #
+    #   HTML('<iframe src="http://ec2-54-186-118-40.us-west-2.compute.amazonaws.com:3838/sample-apps/fieldbook" style="border: 0; position:fixed; top:50px; left:0; right:0; bottom:50px; width:100%; height:100%">')
+    #
+    # }
+    shinydashboard::box(title = "Fieldbook", width = 12, height = 12,
+    background = "green",
+    a("Click in FieldBook Link", href="http://ec2-54-186-118-40.us-west-2.compute.amazonaws.com:3838/sample-apps/fieldbook", target="_blank")
 
-      HTML('<iframe src="http://ec2-54-186-118-40.us-west-2.compute.amazonaws.com:3838/sample-apps/fieldbook" style="border: 0; position:fixed; top:50px; left:0; right:0; bottom:50px; width:100%; height:100%">')
-
-    }
-
-    getPage()
+    )
+    #getPage()
 
   })
 
