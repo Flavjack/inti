@@ -73,12 +73,12 @@ shinyUI(dashboardPage(skin = "green",
 ######### dashboard #####
 tabItem(tabName = "dashboard",
 
-     
+
         # br(),
         #img(src="potato.jpg", width = "100%"),
         img(src="portada_fieldbook3.png", width = "100%"),
 
-        
+
         # )
         # ),
         br()
@@ -734,29 +734,21 @@ shiny::fluidRow(
         tabItem(tabName = "stat",
 
          shiny::fluidRow(
+
           box(width = 5, background = "black",
 
 
             column(width = 12,
-
                    uiOutput("stat_factor")
-
             ),
 
-
-
             column(width = 6,
-
               uiOutput("stat_response")
-
             ),
 
 
             column(width = 6,
-
               uiOutput("stat_block")
-
-
             ),
 
 
@@ -768,7 +760,7 @@ shiny::fluidRow(
                 min = 0,
                 max = 5,
                 step = 0.01),
-              bsTooltip("stsig", "The significance level (alpha)", options = list(container = "body"))
+                bsTooltip("stsig", "The significance level (alpha)", options = list(container = "body"))
 
             ),
 
@@ -777,25 +769,82 @@ shiny::fluidRow(
               selectInput("stmc",
                 label = "Type",
                 choices = c("tukey", "duncan", "snk"),
-                selected = "snk"),
-              bsTooltip("stmc", "The type of test. There are three test: Tukey, Ducan and SNK", options = list(container = "body"))
+                selected = "tukey"),
+                bsTooltip("stmc", "The type of test. There are three test: Tukey, Ducan and SNK", options = list(container = "body"))
 
 
             ),
 
-
               column(width = 12,
-
                 verbatimTextOutput("tbav")
+              )#,
 
-              )
+              # column(width = 12,
+              #        tableOutput("stat_summary")
+              # )
+
+
+
           ),
 
           #shiny::fluidRow(
-            box(width = 7,
-              DT::dataTableOutput("mnc")
-            )
+            # box(width = 7,
+            #   DT::dataTableOutput("mnc")
+            # ),
           #)
+
+
+          box(width = 7,
+
+              box(title = "Summary table",
+                  solidHeader = T,
+                  width = 12,
+                  collapsible = T,
+                  collapsed = T,
+                  status = "primary",
+
+                  DT::dataTableOutput("mnc")
+
+              ),
+
+
+              box(title = "Assumptions",
+                  solidHeader = T,
+                  width = 12,
+                  collapsible = T,
+                  collapsed = T,
+                  status = "danger",
+
+                  shiny::HTML("<h5><b>Don't forget the assumptions of the model!</b></h5>"),
+
+                  shiny::HTML("<p>
+                              <ol>
+                              <li>The errors are independent.</li>
+                              <li>The variable should have a normal distribution.</li>
+                              <li>The variance should be the same for all treatments.</li>
+                              </ol>
+                              </p>"),
+
+                  hr(),
+
+                  shiny::HTML("<h5><b>The following plots can help you to evaluate the assumptions</b></h5>"),
+
+                  column(width = 12,
+
+                         plotOutput("assuption_plot01")
+
+                  ),
+
+
+                  p("Any trend in the residuals would violate the assumption of independence while a trend in the variability of the residuals -for instance a funnel shape- suggests heterogeneity of variances."),
+                  column(width = 12,
+                         plotOutput("assuption_plot02")
+
+                  ),
+
+                  p("Departures from the theoretical normal line are symptoms of lack of normality.")
+                  )
+              )
 
           )
         ),

@@ -189,11 +189,16 @@ sudo su - -c "R -e \"install.packages('magrittr', repos='http://cran.rstudio.com
 
 sudo su - -c "R -e \"install.packages('devtools', repos='http://cran.rstudio.com/')\""
 
+sudo su - -c "R -e \"install.packages('shinyjs', repos='http://cran.rstudio.com/')\""
+
 #Sin token
 #sudo su - -c "R -e \"devtools::install_github('flavjack/fieldbook')\""
 
 #Con token
 sudo su - -c "R -e \"devtools::install_github('Flavjack/fieldbook', auth_token =  'fbb416c167892bfe43c26fe07052bd8ce162951f')\""     
+
+#shinyURL
+sudo su - -c "R -e \"devtools::install_github('aoles/shinyURL', auth_token =  'fbb416c167892bfe43c26fe07052bd8ce162951f')\""     
 
 
 
@@ -206,8 +211,11 @@ sudo su - -c "R -e \"devtools::install_github('Flavjack/fieldbook', auth_token =
 [1] "/usr/local/lib/R/site-library" "/usr/lib/R/site-library"
 [3] "/usr/lib/R/library"
 
-
+##fieldbook app
 sudo cp -R /usr/local/lib/R/site-library/fieldbook/fieldbook/ /srv/shiny-server/sample-apps
+
+##fieldbook app with password
+sudo cp -R /usr/local/lib/R/site-library/fieldbook/fieldbookpass/ /srv/shiny-server/sample-apps
 
   
 ###sudo

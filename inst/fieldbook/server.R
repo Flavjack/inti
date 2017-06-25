@@ -716,6 +716,27 @@ output$tbav = renderPrint({
 })
 
 
+# varCal <- reactive({
+#   inFile <- fb()
+#   if (is.null(inFile )) return(NULL)
+#   #print(input$stat_fact)
+#   #print(input$stat_rsp)
+#
+#   GerminaR::ger_summary(SeedN =  input$filter_nm01 , evalName = input$filter_nm02 , data = inFile  )
+# })
+
+
+# descriptive Statistics
+
+# output$stat_summary = renderTable({
+#
+#   file <- av()
+#   dt <-  varCal()
+#
+#   stat_sm(file, dt)
+#
+# })
+
 # comparison test
 
 
@@ -805,6 +826,49 @@ output$mnc = DT::renderDataTable(server = FALSE, {
     ))
 
 })
+
+# Assumptions -------------------------------------------------------------
+
+
+assuption_homvar <- reactive({
+
+  plot(av(),
+       main = "Homogeneity of Variance",
+       # caption = "caption",
+       sub.caption = "",
+       which = 1)
+
+})
+
+output$assuption_plot01  <- renderPlot({
+
+  assuption_homvar ()
+
+})
+
+
+assuption_norm <- reactive({
+
+  plot(av(),
+       main = "Normal distribution plot",
+       # caption = "caption",
+       sub.caption = "",
+       which = 2)
+
+
+})
+
+output$assuption_plot02  <- renderPlot({
+
+  assuption_norm()
+
+})
+
+
+
+
+
+
 
 
 # graphics ----------------------------------------------------------------
