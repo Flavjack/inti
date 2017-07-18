@@ -45,3 +45,4 @@ Line regression plot
 \description{
 Function plot linea regression
 }
+

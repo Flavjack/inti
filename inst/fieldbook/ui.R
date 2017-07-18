@@ -777,11 +777,11 @@ shiny::fluidRow(
 
               column(width = 12,
                 verbatimTextOutput("tbav")
-              )#,
+              ),
 
-              # column(width = 12,
-              #        tableOutput("stat_summary")
-              # )
+              column(width = 12,
+                     tableOutput("stat_summary")
+              )
 
 
 

@@ -17,3 +17,4 @@ data frame
 \description{
 function to import information from google spreadsheet or xlsx file.
 }
+

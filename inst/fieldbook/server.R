@@ -239,13 +239,13 @@ output$fbdsg = DT::renderDataTable( server = FALSE, {
 #
 #   }, ignoreNULL = FALSE)
 
-  data_fb <-  reactive({
+data_fb <-  reactive({
 
     validate(
       need( input$fbdt, message = "Insert a Google spreadsheet URL or xlsx file" )
     )
 
-    print(input$fb_import)
+    #print(input$fb_import)
 
     if( input$fb_import=="Local"){
 
@@ -366,7 +366,6 @@ output$filter_fact02 <- renderUI({
 
 # Data analysis -----------------------------------------------------------
 
-
 fb <- reactive({
 
 
@@ -426,9 +425,7 @@ fb <- reactive({
 
   }
 
-
   dt
-
 
 })
 
@@ -716,26 +713,16 @@ output$tbav = renderPrint({
 })
 
 
-# varCal <- reactive({
-#   inFile <- fb()
-#   if (is.null(inFile )) return(NULL)
-#   #print(input$stat_fact)
-#   #print(input$stat_rsp)
-#
-#   GerminaR::ger_summary(SeedN =  input$filter_nm01 , evalName = input$filter_nm02 , data = inFile  )
-# })
-
-
 # descriptive Statistics
 
-# output$stat_summary = renderTable({
-#
-#   file <- av()
-#   dt <-  varCal()
-#
-#   stat_sm(file, dt)
-#
-# })
+output$stat_summary = renderTable({
+
+  file <- av()
+  dt <-  fb()
+
+  stat_sm(modelo = file, data = dt)
+
+})
 
 # comparison test
 
@@ -842,7 +829,7 @@ assuption_homvar <- reactive({
 
 output$assuption_plot01  <- renderPlot({
 
-  assuption_homvar ()
+  assuption_homvar()
 
 })
 
@@ -863,10 +850,6 @@ output$assuption_plot02  <- renderPlot({
   assuption_norm()
 
 })
-
-
-
-
 
 
 

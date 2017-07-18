@@ -17,3 +17,4 @@ data frame
 \description{
 Function to summary descriptive statistics from a model
 }
+
