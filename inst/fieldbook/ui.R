@@ -35,14 +35,14 @@ shinyUI(dashboardPage(skin = "green",
     dashboardSidebar(
 
       sidebarMenu(
-        menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+        menuItem("Welcome", tabName = "dashboard", icon = icon("dashboard")),
         menuItem("About", tabName = "about", icon = icon("home")),
         menuItem("User Manual", tabName = "usm", icon = icon("book")),
         menuItem("FieldBook", tabName = "fieldbook", icon = icon("wrench")),
         menuItem("Import data", tabName = "import", icon = icon("leaf")),
-        menuItem("Outliers", tabName = "outlier", icon = icon("search")),
-        menuItem("Multivariate", tabName = "multv", icon = icon("paperclip")),
+        menuItem("Exploratory Graphics", tabName = "outlier", icon = icon("search")),
         menuItem("Regression", tabName = "regression", icon = icon("random")),
+        menuItem("Multivariate", tabName = "multv", icon = icon("paperclip")),
         menuItem("Statistics", tabName = "stat", icon = icon("pie-chart")),
         menuItem("Graphics", tabName = "graph", icon = icon("tint"))#,
         # menuItem("Report", tabName = "report", icon = icon("book"))
@@ -89,16 +89,18 @@ tabItem(tabName = "dashboard",
 
         tabItem(tabName = "about",
 
+                fluidRow(
+                column(width = 12,
 
                 box(
                   title = "Presentacion",
-                  width = 4,
+                  width = NULL,
                   status = "primary",
                   solidHeader = T,
 
                 p( strong(em("Fieldbook")),"is a interactive application for exploratory data analisys and graphics for experimnetal designs"),
 
-                  img(src = "agrinka.jpg",  width = "100%"),
+                  #img(src = "agrinka.jpg",  width = "100%"),
 
 
                 HTML('<p style="text-align: right;"><span style="font-size:14px;"><span style="font-family:comic sans ms,cursive;">Powered by <span style="font-size:16px;"><span style="font-family:lucida sans unicode,lucida grande,sans-serif;"><strong><span style="color:#ff0000;">Q</span><span style="color:#a52a2a;">u</span><span style="color:#008000;">i</span><span style="color:#008080;">p</span><span style="color:#0000ff;">o</span></strong></span></span></span></span></p>')
@@ -109,7 +111,7 @@ tabItem(tabName = "dashboard",
 
                 box(
                   title = "Characteristics",
-                  width = 4,
+                  width = NULL,
                   status = "danger",
                   solidHeader = T,
 
@@ -129,18 +131,28 @@ tabItem(tabName = "dashboard",
                 ),
 
                 box(
-                  title = "Contributors",
+                  title = "Contact",
                   width = 4,
                   status = "success",
                   solidHeader = T,
 
                   p(
-                    strong("Flavio Lozano Isla "),
+                    strong("Quipo Group"),
                     br(),
-                    a("< flavjack@gmail.com >"),
+                    a("< quipo@gmail.com >"),
                     br(),
                     code("Universidad Nacional Agraria la Molina, Lima, Perú")
-                    ),
+                  ),
+
+
+
+                  # p(
+                  #   strong("Flavio Lozano Isla "),
+                  #   br(),
+                  #   a("< flavjack@gmail.com >"),
+                  #   br(),
+                  #   code("Universidad Nacional Agraria la Molina, Lima, Perú")
+                  #   ),
 
                  # p(
                   #  strong("Omar Benites Alfaro"),
@@ -150,28 +162,29 @@ tabItem(tabName = "dashboard",
                   #  code("Universidad Nacional Mayor de San Marcos (UNMSM)")
                   #),
 
-                  p(
-                    strong("Jimmy R. Gomez Carrion"),
-                    br(),
-                    a("< purmacana@gmail.com >"),
-                    br(),
-                    code("Universidad Nacional Agraria la Molina, Lima, Perú")
-                  ),
+                  # p(
+                  #   strong("Jimmy R. Gomez Carrion"),
+                  #   br(),
+                  #   a("< purmacana@gmail.com >"),
+                  #   br(),
+                  #   code("Universidad Nacional Agraria la Molina, Lima, Perú")
+                  # ),
 
 
-                  p(
-                    strong("Felipe de Mendiburu"),
-                    br(),
-                    a("<  fmendiburu@lamolina.edu.pe >"),
-                    br(),
-                    code("Universidad Nacional Agraria la Molina, Lima, Perú")
-                  ),
+                  # p(
+                  #   strong("Felipe de Mendiburu"),
+                  #   br(),
+                  #   a("<  fmendiburu@lamolina.edu.pe >"),
+                  #   br(),
+                  #   code("Universidad Nacional Agraria la Molina, Lima, Perú")
+                  # ),
                   hr(),
 
                   p(strong("If you have any question, comment or sugestion you can write a email for us, enjoy FIELDBOOK!!"))
 
                 )
-
+             ) #end column
+            )#end fluidrow
         ),
 
 
@@ -714,14 +727,14 @@ shiny::fluidRow(
 
           box(width = 6,
 
-            plotOutput("crpt", width = "580px", height = "520px")
+            plotOutput("crpt", width =  "auto", height = "520px")
 
           ),
 
           box(width = 6,
 
 
-            plotOutput("pca", width = "580px", height = "520px")
+            plotOutput("pca", width = "auto", height = "520px")
 
 
           )

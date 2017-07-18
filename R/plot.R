@@ -483,6 +483,9 @@ plot_PCA <- function(data, type = "biplot", quali.sup = NULL, lgl = NULL){
     graph = FALSE
     )
 
+  #pca <-  prcomp(data, center = T, scale. = T)
+
+
   if(type == "ind"){
 
   plot <- factoextra::fviz_pca_ind(
@@ -495,6 +498,9 @@ plot_PCA <- function(data, type = "biplot", quali.sup = NULL, lgl = NULL){
     theme_minimal()+
     scale_shape( lgl ) +
     scale_color_discrete( lgl )
+
+  #plot <- factoextra::fviz_pca(pca, repel = TRUE, title = "PCA")
+
 
   } else if (type == "var") {
 
