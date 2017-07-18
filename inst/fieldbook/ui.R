@@ -40,7 +40,7 @@ shinyUI(dashboardPage(skin = "green",
         menuItem("User Manual", tabName = "usm", icon = icon("book")),
         menuItem("FieldBook", tabName = "fieldbook", icon = icon("wrench")),
         menuItem("Import data", tabName = "import", icon = icon("leaf")),
-        menuItem("Exploratory Graphics", tabName = "outlier", icon = icon("search")),
+        menuItem("Exploratory Graphic", tabName = "outlier", icon = icon("search")),
         menuItem("Regression", tabName = "regression", icon = icon("random")),
         menuItem("Multivariate", tabName = "multv", icon = icon("paperclip")),
         menuItem("Statistics", tabName = "stat", icon = icon("pie-chart")),
@@ -110,7 +110,7 @@ tabItem(tabName = "dashboard",
 
 
                 box(
-                  title = "Characteristics",
+                  title = "Features",
                   width = NULL,
                   status = "danger",
                   solidHeader = T,
@@ -132,17 +132,18 @@ tabItem(tabName = "dashboard",
 
                 box(
                   title = "Contact",
-                  width = 4,
+                  width = NULL,
                   status = "success",
                   solidHeader = T,
 
                   p(
                     strong("Quipo Group"),
                     br(),
-                    a("< quipo@gmail.com >"),
-                    br(),
-                    code("Universidad Nacional Agraria la Molina, Lima, Perú")
-                  ),
+                    p("If you have any question, send us an e-mail to: ",  a("quipo@gmail.com"))#,
+                   #,
+                    #br(),
+                    #code("Universidad Nacional Agraria la Molina, Lima, Perú")
+                  )#,
 
 
 
@@ -178,9 +179,9 @@ tabItem(tabName = "dashboard",
                   #   br(),
                   #   code("Universidad Nacional Agraria la Molina, Lima, Perú")
                   # ),
-                  hr(),
+                 # hr(),
 
-                  p(strong("If you have any question, comment or sugestion you can write a email for us, enjoy FIELDBOOK!!"))
+
 
                 )
              ) #end column
