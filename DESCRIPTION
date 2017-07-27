@@ -28,6 +28,7 @@ Imports:
     tidyr,
     dplyr,
     stringr
+Remotes: omarbenites/shinysky
 Depends:
     R (>= 3.2.2)
 License: MIT + file LICENSE
