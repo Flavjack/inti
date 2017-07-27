@@ -161,17 +161,44 @@ fdbk <- reactive({
 
   })
 
-###
-# observe({
-#
-#   #req(input$impdata)
-#   dt <-   fdbk()
-#
-#   if(nrow(dt)==0){
-#     shinysky::showshinyalert(session, "alert_fb_done", paste("ERROR: You have not selected a material list. Please select/upload one"), styleclass = "danger")
-#   }
-#
-# })
+##
+observe({
+
+  if(input$tool_layout=="Template"){
+
+  if(is.null(input$tool_template_upload)  || length(input$tool_template_upload)==0) {
+
+
+  } else {
+
+      dtp <-   try(fdbk())
+      class_dtp <- class(dtp)
+      nr <- nrow(dtp)
+
+     if(class_dtp == "try-error"){
+
+      # print("case true")
+        shinysky::showshinyalert(session, "alert_tool_fbmsg",
+                                 paste("ERROR: Your fieldbook template is empty. Please fill it."),
+                                 styleclass = "danger")
+    #}
+     } else if(length(dt)==0){
+
+       shinysky::showshinyalert(session, "alert_tool_fbmsg",
+                                paste("ERROR: Your fieldbook template is empty. Please fill it."),
+                                styleclass = "danger")
+
+     } else {
+
+        shinysky::showshinyalert(session, "alert_tool_fbmsg",
+                                 paste("Fantastic: Your fieldbook template has been successfully uploaded."),
+                                 styleclass = "success")
+     }
+  }
+#print("omar")
+
+  }
+})
 
 
 # Fieldbook table ---------------------------------------------------------

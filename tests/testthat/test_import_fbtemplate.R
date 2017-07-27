@@ -48,14 +48,14 @@ test_that("No data in fdca/fdbca design in csv format", {
 
 })
 
-
-test_that("Just one header in fdca/fdbca design in csv format", {
-
-  #datos <- read.csv(file = "tests/testthat/datasets/no_header_fdbca.csv",header = TRUE)
-  datos <- read.csv(file = "datasets/no_header_fdbca.csv",header = TRUE)
-  n_rows <- ncol(datos)
-
-  testthat::expect_equal(n_rows, 1)
-
-})
+#
+# test_that("Just one header in fdca/fdbca design in csv format", {
+#
+#   #datos <- read.csv(file = "tests/testthat/datasets/no_header_fdbca.csv",header = TRUE)
+#   datos <- read.csv(file = "datasets/no_header_fdbca.csv",header = TRUE)
+#   n_rows <- ncol(datos)
+#
+#   testthat::expect_equal(n_rows, 1)
+#
+# })
 
