@@ -38,7 +38,7 @@ shinyUI(dashboardPage(skin = "green",
         menuItem("Welcome", tabName = "dashboard", icon = icon("dashboard")),
         menuItem("About", tabName = "about", icon = icon("home")),
         menuItem("User Manual", tabName = "usm", icon = icon("book")),
-        menuItem("FieldBook", tabName = "fieldbook", icon = icon("wrench")),
+        menuItem("FieldBook Plan", tabName = "fieldbook", icon = icon("wrench")),
         menuItem("Import data", tabName = "import", icon = icon("leaf")),
         menuItem("Exploratory Graphic", tabName = "outlier", icon = icon("search")),
         menuItem("Regression", tabName = "regression", icon = icon("random")),
@@ -139,7 +139,7 @@ tabItem(tabName = "dashboard",
                   p(
                     strong("Quipo Group"),
                     br(),
-                    p("If you have any question, send us an e-mail to: ",  a("quipo@gmail.com"))#,
+                    p("If you have any question, send us an e-mail to: ",  a("quipo.org@gmail.com"))#,
                    #,
                     #br(),
                     #code("Universidad Nacional Agraria la Molina, Lima, Perú")
@@ -215,6 +215,14 @@ tabItem(tabName = "fieldbook",
                        radioButtons("tool_layout", label = h4("Layout", style = "font-family: 'Georgia', serif;
                                                               font-weight: 1000; line-height: 1.1"),
                                     choices = c("Standard", "Template"),inline = TRUE, selected = "Standard"),
+
+
+                       # radioGroupButtons(inputId = "tool_layout", label = "Layout", status = "primary", size = "normal",
+                       #                   choices =  c("Standard", "Template"), justified = TRUE,selected = "Standard",
+                       #                   checkIcon = list(yes = icon("ok", lib = "glyphicon") )),
+
+
+
 
                        #bsTooltip("tool_layout", "Press Standard to upload file from your computer. Press Google for connecting to Google SpreedShet", options = list(container = "body")),
 
@@ -294,7 +302,7 @@ tabItem(tabName = "fieldbook",
                          downloadButton("tool_template_download", label = "Download template file (.csv)"),
                          br(),
                          h4("Step 2: Upload template file"),
-                         shiny::fileInput("tool_template_upload",label = "Upload template file (.csv)")
+                         shiny::fileInput("tool_template_upload",label = "Upload template file (.csv)",accept = ".csv")
                       )
                     #)
                # )
@@ -334,12 +342,18 @@ tabItem(tabName = "fieldbook",
 
                column(width = 2,
                       numericInput("tool_eva",label = "Intime", value = 1, min = 1),
-                      bsTooltip("tool_eva", "Enter the evaluation in time", options = list(container = "body"))
-               )#,
-             )
-             #)#,
+                      bsTooltip("tool_eva", "Enter the evaluation in time", options = list(container = "body"))#,
 
-           ) #end variables, replications and InTime
+              )#,
+
+              ),
+
+             column(width = 12,
+                    shiny::actionButton("tool_reset_page", label = "Refresh",icon = icon("refresh"))
+             )
+           )#, #end variables, replications and InTime
+
+
 
            )
 
@@ -369,6 +383,9 @@ shiny::fluidRow(#Begin fluidRow
       width = 12, collapsible = TRUE,
 
       #width = 6,
+
+      shinysky::shinyalert("alert_tool_fbmsg", FALSE, auto.close.after = 8),
+
 
       DT::dataTableOutput("fbdsg")
 

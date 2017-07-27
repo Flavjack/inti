@@ -20,7 +20,7 @@ shinyServer(function(input, output, session) {
 
 # User Manual ------------------------------------------------------------
 
-  output$usm <- renderUI({
+output$usm <- renderUI({
 
     getPage <- function() {
 
@@ -33,9 +33,7 @@ shinyServer(function(input, output, session) {
   })
 
 
-  # fieldbook design --------------------------------------------------------
-
-
+# fieldbook plan design --------------------------------------------------------
 
 fdbk <- reactive({
 
@@ -86,7 +84,7 @@ fdbk <- reactive({
         return()
       } else {
 
-        fb_csv <- read.csv(fbook_csv_file$datapath, header = TRUE, stringsAsFactors = FALSE)
+        fb_csv <- try(read.csv(fbook_csv_file$datapath, header = TRUE, stringsAsFactors = FALSE))
 
       }
 
@@ -163,6 +161,18 @@ fdbk <- reactive({
 
   })
 
+###
+# observe({
+#
+#   #req(input$impdata)
+#   dt <-   fdbk()
+#
+#   if(nrow(dt)==0){
+#     shinysky::showshinyalert(session, "alert_fb_done", paste("ERROR: You have not selected a material list. Please select/upload one"), styleclass = "danger")
+#   }
+#
+# })
+
 
 # Fieldbook table ---------------------------------------------------------
 
@@ -207,37 +217,12 @@ output$fbdsg = DT::renderDataTable( server = FALSE, {
 
   })
 
+shiny::observeEvent(input$tool_reset_page,{
+  session$reload()
+})
+
+
 # import data -----------------------------------------------------------
-#
-# data_fb <-  eventReactive(input$reload, {
-#
-#   validate(
-#     need( input$fbdt, message = "Insert a Google spreadsheet URL or xlsx file" )
-#   )
-#   #if( input$fb_import=="Local"){
-#
-#     if(!is.null(input$impdata)){
-#
-#       xls <- input$impdata
-#       file.rename(xls$datapath, paste(xls$datapath, ".xlsx", sep = ""))
-#       fieldbook::getData(dir = paste(xls$datapath, ".xlsx", sep = ""), sheet = input$sheetdt)
-#       #print(fieldbook)
-#     #}
-#   #}
-#
-#   } else {
-#
-#   #if( input$fb_import=="GoogleDrive"){
-#
-#   #   if( !is.null(input$fbdt) ){
-#       url <- input$fbdt
-#       fieldbook::getData(dir = url)
-#      }
-#   #}
-#
-#    # fieldbook <- fieldbook
-#
-#   }, ignoreNULL = FALSE)
 
 data_fb <-  reactive({
 
@@ -267,13 +252,10 @@ data_fb <-  reactive({
 
     }
 
-print(out)
+#print(out)
 
 
   })
-
-
-
 
 output$fbook <- renderUI({
 
@@ -288,6 +270,8 @@ output$fbook_excel <- renderRHandsontable({
 
   req(input$impdata)
   req(input$fbdt)
+
+
   #print(data_fb())
   rhandsontable(data_fb(), width = 600, height = 500)
 
