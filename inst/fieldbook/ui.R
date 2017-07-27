@@ -385,7 +385,7 @@ shiny::fluidRow(#Begin fluidRow
       #width = 6,
 
 
-      shinysky::shinyalert("alert_tool_fbmsg", FALSE, auto.close.after = 8),
+      shinysky::shinyalert("alert_tool_fbmsg", FALSE, auto.close.after = 4),
 
 
       DT::dataTableOutput("fbdsg")
