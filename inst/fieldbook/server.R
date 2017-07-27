@@ -278,7 +278,7 @@ data_fb <-  reactive({
       out <- fieldbook::getData(dir = url)
 
     }
-
+out
 #print(out)
 
 
