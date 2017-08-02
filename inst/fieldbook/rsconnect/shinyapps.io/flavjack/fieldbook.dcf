@@ -2,9 +2,9 @@ name: fieldbook
 title: fieldbook
 account: flavjack
 server: shinyapps.io
-appId: 149960
-bundleId: 800610
+appId: 201364
+bundleId: 924181
 url: https://flavjack.shinyapps.io/fieldbook/
-when: 1492987913.1904
+when: 1501650499.05389
 asMultiple: FALSE
 asStatic: FALSE
