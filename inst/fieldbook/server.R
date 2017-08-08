@@ -12,6 +12,7 @@ library(rhandsontable)
 library(fieldbook)
 library(stringr)
 library(shinyBS)
+library(openxlsx)
 
 options(shiny.sanitize.errors = FALSE)
 
@@ -76,24 +77,33 @@ fdbk <- reactive({
         need( input$tool_template_upload, "Please upload your template")
       )
 
-      fbook_csv_file <- input$tool_template_upload
-      print(fbook_csv_file)
-      print(fbook_csv_file$datapath)
+      fbook_xlsx_file <- input$tool_template_upload
+      print(fbook_xlsx_file)
+      print(fbook_xlsx_file$datapath)
 
-      if (is.null(fbook_csv_file)) {
+      if (is.null(fbook_xlsx_file)) {
         return()
       } else {
 
-        fb_csv <- try(read.csv(fbook_csv_file$datapath, header = TRUE, stringsAsFactors = FALSE))
+        xlsx <- input$tool_template_upload
+        file.rename(xlsx$datapath, paste(xlsx$datapath, ".xlsx", sep = ""))
+        fb_xlsx <- try(fieldbook::getData(dir = paste(xlsx$datapath, ".xlsx", sep = ""), sheet = 1))
+
+
+        #fb_xlsx <- try(readxl::read_excel(path = fbook_csv_file$datapath,sheet = 1 ))
 
       }
 
-      trt1 <- stringr::str_trim(fb_csv[,1], side = "both")
+      trt1 <- stringr::str_trim(fb_xlsx[,1], side = "both")
       #print(trt1)
       trt1 <- trt1[!is.na(trt1)]
+      print(trt1)
       #In case trt2 is empty in csv template (trt2 vacio)
-      trt2 <- stringr::str_trim(fb_csv[,2], side = "both")
-      trt2 <- trt2[!is.na(trt2)]
+      if(ncol(fb_xlsx)>=2){
+       trt2 <- stringr::str_trim(fb_xlsx[,2], side = "both")
+       trt2 <- trt2[!is.na(trt2)]
+       print(trt2)
+      }
 
       if(input$tool_dsg  == 'f2crd' ||  input$tool_dsg  == 'f2rcbd' || input$tool_dsg  == 'f2lsd'){
 
@@ -113,7 +123,7 @@ fdbk <- reactive({
       }
 
       #print(trt2)
-      cln <- colnames(fb_csv)
+      cln <- colnames(fb_xlsx)
       lbl1 <- cln[1]
       lbl2 <- cln[2]
 
@@ -1265,16 +1275,23 @@ output$download_plot_lr <- downloadHandler(
 
 output$tool_template_download <- downloadHandler(
   filename = function() {
-    paste("fb_template", '.csv', sep='')
+    paste("qfb_template", '.xlsx', sep='')
   },
   content = function(file) {
-    #print("omar")
+#print("omar")
+
+#shiny::observeEvent(input$tool_template_download,{
+
+
     template <- fb_template
-    write.csv(template,file, row.names = FALSE)
+    #file_xlsx_tp <- "qfb_template.xlsx"
+    #file_temp_XLSX <- system.file("exdata", "qfb_template.xlsx", package = "fieldbook")
+    #try(system(paste("open", file_temp_XLSX)))
+    openxlsx::write.xlsx(x = template, file)
+  #  try(system("open", file_temp_XLSX))
+
   }
 )
-
-
 
 
 })

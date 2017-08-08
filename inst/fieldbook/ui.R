@@ -299,10 +299,13 @@ tabItem(tabName = "fieldbook",
 
                column(width = 12,
                          h4("Step 1: Download template file"),
+
+                         #shiny::actionButton("tool_template_download", label = "Download template file (.xlsx)"),
                          downloadButton("tool_template_download", label = "Download template file (.csv)"),
+
                          br(),
                          h4("Step 2: Upload template file"),
-                         shiny::fileInput("tool_template_upload",label = "Upload template file (.csv)",accept = ".csv")
+                         shiny::fileInput("tool_template_upload",label = "Upload template file (.csv)",accept = ".xlsx")
                       )
                     #)
                # )

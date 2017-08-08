@@ -27,7 +27,8 @@ Imports:
     readxl,
     tidyr,
     dplyr,
-    stringr
+    stringr,
+    openxlsx
 Remotes: omarbenites/shinysky
 Depends:
     R (>= 3.2.2)
