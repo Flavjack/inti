@@ -19,7 +19,7 @@ citEntry(entry = "Article",
   url          = "http://www.quipo.org",
 
   textVersion  =
-  paste("Quipo Group Inc. (2016).", "QFieldBook:  An Interactive data analysis web platform for agricultural
+  paste("Quipo Group Inc. (2017).", "QFieldBook:  An Interactive data analysis web platform for agricultural
   production and research",
   "URL http://www.quipo.org")
 )
