@@ -1,8 +1,8 @@
-dtr_choices <- c("Logarithmic transformation log(y)"="logy",
-                 "Logarithmic transformation log(y + 1)"="logy1",
-                 "Square root transformation sqrt(y)"="sqrty",
-                 "Square root transformation sqrt(y + 0.5)"="sqrty1",
-                 "Arc-sine transformation arcsin"="arcsin"
+dtr_choices <- c("log(y)"="logy",
+                 "log(y+1)"="logy1",
+                 "Square root (y)"="sqrty",
+                 "Square root (y+0.5)"="sqrty1",
+                 "Arc-sine"="arcsin"
 )
 
 library(shinydashboard)
@@ -18,31 +18,20 @@ ui <- dashboardPage(
       shiny::fileInput(inputId = "dtr_fileInput", label = "Upload Fieldbook", multiple = FALSE,
                        accept = ".xlsx", placeholder = "Please select file"),
 
-      uiOutput("trait_dtr_sel"),
 
-      shiny::selectInput(inputId = "dtr_type", label = "Type of transformation", choices = dtr_choices, selected = 1, multiple = FALSE),
+      div(style="display: inline-block;vertical-align:top; width: 150px;",
+      uiOutput("trait_dtr_sel")),
 
-      #DT::dataTableOutput("fbdt_dtr"),
+      div(style="display: inline-block;vertical-align:top; width: 150px;",
+      shiny::selectInput(inputId = "dtr_type", label = "Type of transformation",
+                         choices = dtr_choices, selected = 1, multiple = FALSE)),
+
+      #Tabla de transformacion de variables.
       DT::dataTableOutput("fbdt_tempdtr")#,
 
-      # A static infoBox
-      #infoBox("New Orders", 10 * 2, icon = icon("credit-card")),
-      # Dynamic infoBoxes
-      #infoBoxOutput("progressBox"),
-      #infoBoxOutput("approvalBox")
     )#,
 
-    # infoBoxes with fill=TRUE
-    # fluidRow(
-    #   infoBox("New Orders", 10 * 2, icon = icon("credit-card"), fill = TRUE),
-    #   infoBoxOutput("progressBox2"),
-    #   infoBoxOutput("approvalBox2")
-    # ),
-    #
-    # fluidRow(
-    #   # Clicking this will increment the progress amount
-    #   box(width = 4, actionButton("count", "Increment progress"))
-    # )
+
   )
 )
 
@@ -51,13 +40,15 @@ server <- function(input, output) {
 
   fbdtr <- reactive({
 
-    req(input$dtr_fileInput)
-
+    #req(input$dtr_fileInput)
+    if(is.null(input$dtr_fileInput) || input$dtr_fileInput=="") {return(NULL)}
+    else{
     dtr_xlsx <- input$dtr_fileInput
     file.rename(from = dtr_xlsx$datapath, to = paste(dtr_xlsx$datapath, ".xlsx", sep = ""))
     fb_xlsx <- try(fieldbook::getData(dir = paste(dtr_xlsx$datapath, ".xlsx", sep = ""),
                                       sheet = 1))
-    fb_xlsx
+
+    fb_xlsx}
 
   })
 
@@ -154,32 +145,8 @@ server <- function(input, output) {
 
 
 
-  # output$progressBox <- renderInfoBox({
-  #   infoBox(
-  #     "Progress", paste0(25 + input$count, "%"), icon = icon("list"),
-  #     color = "purple"
-  #   )
-  # })
-  # output$approvalBox <- renderInfoBox({
-  #   infoBox(
-  #     "Approval", "80%", icon = icon("thumbs-up", lib = "glyphicon"),
-  #     color = "yellow"
-  #   )
-  # })
 
-  # Same as above, but with fill=TRUE
-  # output$progressBox2 <- renderInfoBox({
-  #   infoBox(
-  #     "Progress", paste0(25 + input$count, "%"), icon = icon("list"),
-  #     color = "purple", fill = TRUE
-  #   )
-  # })
-  # output$approvalBox2 <- renderInfoBox({
-  #   infoBox(
-  #     "Approval", "80%", icon = icon("thumbs-up", lib = "glyphicon"),
-  #     color = "yellow", fill = TRUE
-  #   )
-  # })
+
 }
 
 shinyApp(ui, server)
