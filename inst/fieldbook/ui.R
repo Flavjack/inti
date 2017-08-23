@@ -24,6 +24,7 @@ library(rhandsontable)
 library(ggpubr)
 library(fieldbook)
 library(shinyBS)
+library(shinysky)
 
 shinyUI(dashboardPage(skin = "green",
 

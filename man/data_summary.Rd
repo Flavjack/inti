@@ -15,4 +15,3 @@ Table with complete data for graphics
 \description{
 Function using resulting output from mean comparison test from agricolae package optimized for graphs.
 }
-
