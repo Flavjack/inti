@@ -24,6 +24,7 @@ library(rhandsontable)
 library(ggpubr)
 library(fieldbook)
 library(shinyBS)
+library(shinyWidgets)
 
 shinyUI(dashboardPage(skin = "green",
 
@@ -809,6 +810,26 @@ shiny::fluidRow(
 
 
             ),
+
+            ## Transformation of variables
+            column(width = 6,
+
+                   shinyWidgets::pickerInput(inputId = "sttrans",
+                    label = "Transformation",
+                    choices = paste("", c("log(y)","log(y+1)","Root Square(y)", "Root Square(y+0.5)","Arcsin"), sep = ""),
+                    options =  list(title = "Select transformation"),
+                    multiple = FALSE,
+                    choicesOpt = list(content = sprintf("<span class='label label-%s'>%s</span>",
+                                                 c("success", "success", "primary","primary", "warning"),
+                                                 paste("", c("log(y)","log(y+1)","Root Square(y)", "Root Square(y+0.5)","Arcsin"),
+                                                           sep = ""))))#,
+                   # bsTooltip("stmc", "The type of test. There are three test: Tukey, Ducan and SNK", options = list(container = "body"))
+
+
+            ),
+
+
+
 
               column(width = 12,
                 verbatimTextOutput("tbav")
