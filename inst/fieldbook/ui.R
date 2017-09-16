@@ -24,7 +24,8 @@ library(rhandsontable)
 library(ggpubr)
 library(fieldbook)
 library(shinyBS)
-library(shinyWidgets)
+#library(shinyWidgets)
+library(shinysky)
 
 shinyUI(dashboardPage(skin = "green",
 
@@ -38,10 +39,10 @@ shinyUI(dashboardPage(skin = "green",
       sidebarMenu(
         menuItem("Welcome", tabName = "dashboard", icon = icon("dashboard")),
         menuItem("About", tabName = "about", icon = icon("home")),
-        menuItem("User Manual", tabName = "usm", icon = icon("book")),
-        menuItem("FieldBook Plan", tabName = "fieldbook", icon = icon("wrench")),
+        menuItem("User manual", tabName = "usm", icon = icon("book")),
+        menuItem("FieldBook plan", tabName = "fieldbook", icon = icon("wrench")),
         menuItem("Import data", tabName = "import", icon = icon("leaf")),
-        menuItem("Exploratory Graphic", tabName = "outlier", icon = icon("search")),
+        menuItem("Exploratory graphic", tabName = "outlier", icon = icon("search")),
         menuItem("Regression", tabName = "regression", icon = icon("random")),
         menuItem("Multivariate", tabName = "multv", icon = icon("paperclip")),
         menuItem("Statistics", tabName = "stat", icon = icon("pie-chart")),
@@ -811,22 +812,22 @@ shiny::fluidRow(
 
             ),
 
-            ## Transformation of variables
-            column(width = 6,
-
-                   shinyWidgets::pickerInput(inputId = "sttrans",
-                    label = "Transformation",
-                    choices = paste("", c("log(y)","log(y+1)","Root Square(y)", "Root Square(y+0.5)","Arcsin"), sep = ""),
-                    options =  list(title = "Select transformation"),
-                    multiple = FALSE,
-                    choicesOpt = list(content = sprintf("<span class='label label-%s'>%s</span>",
-                                                 c("success", "success", "primary","primary", "warning"),
-                                                 paste("", c("log(y)","log(y+1)","Root Square(y)", "Root Square(y+0.5)","Arcsin"),
-                                                           sep = ""))))#,
-                   # bsTooltip("stmc", "The type of test. There are three test: Tukey, Ducan and SNK", options = list(container = "body"))
-
-
-            ),
+            # ## Transformation of variables
+            # column(width = 6,
+            #
+            #        shinyWidgets::pickerInput(inputId = "sttrans",
+            #         label = "Transformation",
+            #         choices = paste("", c("log(y)","log(y+1)","Root Square(y)", "Root Square(y+0.5)","Arcsin"), sep = ""),
+            #         options =  list(title = "Select transformation"),
+            #         multiple = FALSE,
+            #         choicesOpt = list(content = sprintf("<span class='label label-%s'>%s</span>",
+            #                                      c("success", "success", "primary","primary", "warning"),
+            #                                      paste("", c("log(y)","log(y+1)","Root Square(y)", "Root Square(y+0.5)","Arcsin"),
+            #                                                sep = ""))))#,
+            #        # bsTooltip("stmc", "The type of test. There are three test: Tukey, Ducan and SNK", options = list(container = "body"))
+            #
+            #
+            # ),
 
 
 
