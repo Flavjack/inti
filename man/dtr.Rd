@@ -60,4 +60,3 @@ dtr("Sepal.Length", "logy", data = iris)
 \author{
 Raul Eyzaguirre.
 }
-

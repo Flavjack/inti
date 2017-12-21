@@ -6,7 +6,7 @@ Authors@R: c(
            person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com", role = c("aut", "cre")),
            person("Jimmy R", "Gomez-Carrion", , "pumcarna@gmail.com", "aut"),
            person("Omar", "Benites-Alfaro", , "obacc07@gmail.com", "aut"),
-           person(family = "Quipo Inc", role = "cph")
+           person(family = "Quipo.org", role = "cph")
            )
 BugReports: https://github.com/flavjack/fieldbook/issues
 Description: The Fieldbook package deploys an interactive applicaction based in
@@ -28,13 +28,14 @@ Imports:
     tidyr,
     dplyr,
     stringr,
-    openxlsx
+    openxlsx,
+    tibble
 Remotes: omarbenites/shinysky
 Depends:
     R (>= 3.2.2)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Suggests:
     testthat

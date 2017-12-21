@@ -1,5 +1,4 @@
-# fieldbook -----------------------------------------------------------------
-
+# yupana ------------------------------------------------------------------
 
 library(shiny)
 library(shinydashboard)
@@ -34,7 +33,7 @@ output$usm <- renderUI({
   })
 
 
-# fieldbook plan design --------------------------------------------------------
+# fieldbook  --------------------------------------------------------
 
 fdbk <- reactive({
 
@@ -42,7 +41,8 @@ fdbk <- reactive({
     print(input$tool_layout)
     #print(input$input$tool_sp_import)
 
-    #When radio button selection is Standard
+    # When radio button selection is Standard
+
     if(input$tool_layout == 'Standard'){
 
       validate(
@@ -69,7 +69,8 @@ fdbk <- reactive({
 
     }
 
-    #When radio button selection is Special
+    # When radio button selection is Special
+
     if(input$tool_layout == 'Template'){
       #else{
 

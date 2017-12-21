@@ -1,11 +1,11 @@
-#' fieldbook
+#' yupana
 #'
 #' @description Data analisys app for research experiments.
 #' @family sapiens
 #' @importFrom shiny runApp
 #' @export
 
-fieldbook <- function() {
+yupana <- function() {
   appDir <- system.file("fieldbook", package = "fieldbook")
   if (appDir == "") {
     stop("Could not find example directory. Try re-installing `fieldbook`.",

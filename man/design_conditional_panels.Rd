@@ -12,4 +12,3 @@ Differents types of statistical designs are related to customized inputs.
 \author{
 quipo.org
 }
-

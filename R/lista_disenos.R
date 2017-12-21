@@ -17,8 +17,6 @@ design_conditional_panels <- function(){
     shiny::fluidRow(
 
 
-
-
       box(title = "FieldBook Design",
           status = "info",
           width = 12,
@@ -38,8 +36,6 @@ design_conditional_panels <- function(){
                  #bsTooltip("tool_layout", "Press Standard to upload file from your computer. Press Google for connecting to Google SpreedShet", options = list(container = "body")),
 
                  shiny::selectInput("tool_dsg", "Design", design_choices, selected = "crd", multiple = FALSE)#,
-
-
 
 
                  ),

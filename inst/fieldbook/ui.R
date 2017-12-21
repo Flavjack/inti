@@ -1,17 +1,16 @@
-options(shiny.sanitize.errors = FALSE)
+# fieldbook -----------------------------------------------------------------
+
+# fb tags -----------------------------------------------------------------
 
 design_options <- c(
   "Completely randomized design" = "crd",
   "Randomized complete block design" = "rcbd",
   "Latin square design" = "lsd",
   "Two-Way Factorial arrangement in completely randomized design" = "f2crd",
-  "Two-Way Factorial arrangement in complete block design" = "f2rcbd"#,
-  #"Two-Way Factorial arragement in latin square design" = "f2lsd"
+  "Two-Way Factorial arrangement in complete block design" = "f2rcbd"
 )
 
-#TODO: Arreglar la opcion de template en el modulo de diseno.
-
-# fieldbook -----------------------------------------------------------------
+# end fb tags -------------------------------------------------------------
 
 library(shiny)
 library(shinydashboard)
@@ -24,44 +23,44 @@ library(rhandsontable)
 library(ggpubr)
 library(fieldbook)
 library(shinyBS)
-#library(shinyWidgets)
+library(shinyWidgets)
 library(shinysky)
+
+options(shiny.sanitize.errors = FALSE)
 
 shinyUI(dashboardPage(skin = "green",
 
+  dashboardHeader(title = "Yupana"),
 
-    dashboardHeader(title = "FieldBook"),
-
-# Sider -------------------------------------------------------------------
+# Menu -------------------------------------------------------------------
 
     dashboardSidebar(
 
       sidebarMenu(
-        menuItem("Welcome", tabName = "dashboard", icon = icon("dashboard")),
-        menuItem("About", tabName = "about", icon = icon("home")),
+        menuItem("Welcome", tabName = "welcome", icon = icon("home")),
         menuItem("User manual", tabName = "usm", icon = icon("book")),
-        menuItem("FieldBook plan", tabName = "fieldbook", icon = icon("wrench")),
+        menuItem("FieldBook", tabName = "fieldbook", icon = icon("wrench")),
         menuItem("Import data", tabName = "import", icon = icon("leaf")),
         menuItem("Exploratory graphic", tabName = "outlier", icon = icon("search")),
         menuItem("Regression", tabName = "regression", icon = icon("random")),
         menuItem("Multivariate", tabName = "multv", icon = icon("paperclip")),
         menuItem("Statistics", tabName = "stat", icon = icon("pie-chart")),
-        menuItem("Graphics", tabName = "graph", icon = icon("tint"))#,
-        # menuItem("Report", tabName = "report", icon = icon("book"))
+        menuItem("Graphics", tabName = "graph", icon = icon("tint"))
       )
-
 
     ),
 
-
 # Iconos :: http://getbootstrap.com/components/#glyphicons-glyphs
 
+# end menu ----------------------------------------------------------------
 
     dashboardBody(
 
       tags$head(
         tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
       ),
+
+# user manual -------------------------------------------------------------
 
 
       tabItems(
@@ -70,122 +69,57 @@ shinyUI(dashboardPage(skin = "green",
                 htmlOutput("usm")
         ),
 
-# dashboard
-
-######### dashboard #####
-tabItem(tabName = "dashboard",
-
-
-        # br(),
-        #img(src="potato.jpg", width = "100%"),
-        img(src="portada_fieldbook3.png", width = "100%"),
-
-
-        # )
-        # ),
-        br()
-),
-
-
 # presentacion ------------------------------------------------------------
 
-        tabItem(tabName = "about",
+        tabItem(tabName = "welcome",
 
                 fluidRow(
                 column(width = 12,
 
                 box(
-                  title = "Presentacion",
-                  width = NULL,
-                  status = "primary",
-                  solidHeader = T,
+                  width = 8,
+                  background = "red",solidHeader = T,
 
-                p( strong(em("Fieldbook")),"is a interactive application for exploratory data analisys and graphics for experimnetal designs"),
+                  img(src = "bike.jpg",  width = "100%")
 
-                  #img(src = "agrinka.jpg",  width = "100%"),
+                  ),
 
+                  box(
+                    title = "Yupana",
+                    width = 4,
+                    status = "danger",
+                    solidHeader = T,
 
-                HTML('<p style="text-align: right;"><span style="font-size:14px;"><span style="font-family:comic sans ms,cursive;">Powered by <span style="font-size:16px;"><span style="font-family:lucida sans unicode,lucida grande,sans-serif;"><strong><span style="color:#ff0000;">Q</span><span style="color:#a52a2a;">u</span><span style="color:#008000;">i</span><span style="color:#008080;">p</span><span style="color:#0000ff;">o</span></strong></span></span></span></span></p>')
+                    p( strong(em("Yupana")),"is a interactive application for exploratory data analisys and graphics for experimental designs"),
 
+                    hr(),
 
-                ),
-
-
-                box(
-                  title = "Features",
-                  width = NULL,
-                  status = "danger",
-                  solidHeader = T,
-
-                  p("- Import data from excel files and google spreadsheet documents"),
-
-                  p("- Detection of outliers"),
-
-                  p("- Statistical analisys for experimental designs"),
-
-                  p("- Colored and gray scale graphics for publication"),
-
-                  p("- Multivariate analisys: PCA and correlation"),
-
-                  p("- Field book design generator")
-
-
-                ),
-
-                box(
-                  title = "Contact",
-                  width = NULL,
-                  status = "success",
-                  solidHeader = T,
-
-                  p(
-                    strong("Quipo Group"),
+                    strong("Features"),
                     br(),
-                    p("If you have any question, send us an e-mail to: ",  a("quipo.org@gmail.com"))#,
-                   #,
-                    #br(),
-                    #code("Universidad Nacional Agraria la Molina, Lima, Perú")
-                  )#,
 
+                    p("- Import data from excel files and google spreadsheet documents"),
 
+                    p("- Field book design generator"),
 
-                  # p(
-                  #   strong("Flavio Lozano Isla "),
-                  #   br(),
-                  #   a("< flavjack@gmail.com >"),
-                  #   br(),
-                  #   code("Universidad Nacional Agraria la Molina, Lima, Perú")
-                  #   ),
+                    p("- Exploratory Data"),
 
-                 # p(
-                  #  strong("Omar Benites Alfaro"),
-                  #  br(),
-                  #  a("< obacc07@gmail.com >"),
-                  #  br(),
-                  #  code("Universidad Nacional Mayor de San Marcos (UNMSM)")
-                  #),
+                    p("- Multivariate analisys: PCA and correlation"),
 
-                  # p(
-                  #   strong("Jimmy R. Gomez Carrion"),
-                  #   br(),
-                  #   a("< purmacana@gmail.com >"),
-                  #   br(),
-                  #   code("Universidad Nacional Agraria la Molina, Lima, Perú")
-                  # ),
+                    p("- Statistical analisys"),
 
+                    p("- Colored and gray scale graphics for publication"),
 
-                  # p(
-                  #   strong("Felipe de Mendiburu"),
-                  #   br(),
-                  #   a("<  fmendiburu@lamolina.edu.pe >"),
-                  #   br(),
-                  #   code("Universidad Nacional Agraria la Molina, Lima, Perú")
-                  # ),
-                 # hr(),
+                    hr(),
 
+                    strong("Contacto"),
+                    br(),
 
+                    p("If you have any question, send us an e-mail to ",  a("hola@quipo.org")),
 
-                )
+                    HTML('<p style="text-align: right;"><span style="font-size:14px;"><span style="font-family:comic sans ms,cursive;">Powered by <span style="font-size:16px;"><span style="font-family:lucida sans unicode,lucida grande,sans-serif;"><strong><span style="color:#ff0000;">Q</span><span style="color:#a52a2a;">u</span><span style="color:#008000;">i</span><span style="color:#008080;">p</span><span style="color:#0000ff;">o</span></strong></span></span></span></span></p>')
+
+                  )
+
              ) #end column
             )#end fluidrow
         ),
