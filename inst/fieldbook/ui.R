@@ -80,7 +80,7 @@ shinyUI(dashboardPage(skin = "green",
                   width = 8,
                   background = "red",solidHeader = T,
 
-                  img(src = "bike.jpg",  width = "100%")
+                  img(src = "bike.png",  width = "100%")
 
                   ),
 
@@ -148,14 +148,14 @@ tabItem(tabName = "fieldbook",
 
                 column(width = 12,
 
-                       radioButtons("tool_layout", label = h4("Layout", style = "font-family: 'Georgia', serif;
-                                                              font-weight: 1000; line-height: 1.1"),
-                                    choices = c("Standard", "Template"),inline = TRUE, selected = "Standard"),
+                       # radioButtons("tool_layout", label = h4("Layout", style = "font-family: 'Georgia', serif;
+                       #                                        font-weight: 1000; line-height: 1.1"),
+                       #              choices = c("Standard", "Template"),inline = TRUE, selected = "Standard"),
 
 
-                       # radioGroupButtons(inputId = "tool_layout", label = "Layout", status = "primary", size = "normal",
-                       #                   choices =  c("Standard", "Template"), justified = TRUE,selected = "Standard",
-                       #                   checkIcon = list(yes = icon("ok", lib = "glyphicon") )),
+                       radioGroupButtons(inputId = "tool_layout", label = "Layout", status = "primary", size = "normal",
+                                         choices =  c("Standard", "Template"), justified = TRUE, selected = "Standard",
+                                         checkIcon = list(yes = icon("ok", lib = "glyphicon") )),
 
 
 
@@ -182,8 +182,8 @@ tabItem(tabName = "fieldbook",
 
 
                     column(width = 8,
-                           textInput("tool_f1", label = "Factor levels (separated by commas (,))", value = ""),
-                           bsTooltip("tool_f1", "Enter your factors separated by commas [,]. Example: d0mg, d50mg, d100mg. Whitespaces are filled with underscore (_)", options = list(container = "body"))
+                           textInput("tool_f1", label = "Factor levels .: separated by commas (,)", value = ""),
+                           bsTooltip("tool_f1", "Enter your factors separated by commas (,). Example: d0mg, d50mg, d100mg. Whitespaces are filled with underscore (_)", options = list(container = "body"))
 
                     ),
 
@@ -201,7 +201,7 @@ tabItem(tabName = "fieldbook",
                      input.tool_dsg == 'f2rcbd'",
 
                     column(width = 8,
-                           textInput("tool_f2", label = "Factor levels (separated by commas (,))", value = ""),
+                           textInput("tool_f2", label = "Factor levels .: separated by commas (,)", value = ""),
                            bsTooltip("tool_f2", "Enter your factor levels separated by commas (,). Example: normal, deficit. Whitespaces are filled with underscore (_)", options = list(container = "body"))
 
                     ),
@@ -237,16 +237,15 @@ tabItem(tabName = "fieldbook",
                          h4("Step 1: Download template file"),
 
                          #shiny::actionButton("tool_template_download", label = "Download template file (.xlsx)"),
-                         downloadButton("tool_template_download", label = "Download template file (.csv)"),
+                         downloadButton("tool_template_download", label = "Download template (.xlsx)"),
 
                          br(),
                          h4("Step 2: Upload template file"),
-                         shiny::fileInput("tool_template_upload",label = "Upload template file (.csv)",accept = ".xlsx")
+                         shiny::fileInput("tool_template_upload", label = "Upload template (.xlsx)", accept = ".xlsx")
                       )
                     #)
                # )
              ),
-
 
 
            #Conditional Panel for writting: Variables, Replications and InTime
@@ -268,7 +267,7 @@ tabItem(tabName = "fieldbook",
              #column(width = 12,
 
              column(width = 8,
-                    textInput("tool_var", label = "Variables (separated by commas (,))", value = ""),
+                    textInput("tool_var", label = "Variables .: separated by commas (,)", value = ""),
                     bsTooltip("tool_var", "Enter your variables separated by commas (,): height, weight, leafArea ", options = list(container = "body"))
 
              ),
@@ -295,14 +294,6 @@ tabItem(tabName = "fieldbook",
 
 
            )
-
-
-
-
-
-
-
-
 
 
               #)
@@ -337,11 +328,6 @@ shiny::fluidRow(#Begin fluidRow
 
 
 ),
-
-
-
-
-
 
 
 # import data -------------------------------------------------------------

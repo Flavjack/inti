@@ -237,8 +237,6 @@ output$fbdsg = DT::renderDataTable( server = FALSE, {
                       list(extend = 'excel', filename = "FieldBook")
                     ),
 
-                    #buttons = c('copy', 'csv', 'excel'),
-
                     autoWidth = TRUE,
                     columnDefs = list(list(className = 'dt-center', targets ="_all")),
                     deferRender=TRUE,
@@ -1276,19 +1274,21 @@ output$download_plot_lr <- downloadHandler(
 
 output$tool_template_download <- downloadHandler(
   filename = function() {
-    paste("qfb_template", '.xlsx', sep='')
+    paste("fb_template", '.xlsx', sep='')
   },
   content = function(file) {
 #print("omar")
 
 #shiny::observeEvent(input$tool_template_download,{
 
+    hs <- createStyle(textDecoration = "BOLD", fontColour = "#FFFFFF", fontSize=11,
+                      fontName="Arial Narrow", fgFill = "#4F80BD")
 
     template <- fb_template
     #file_xlsx_tp <- "qfb_template.xlsx"
     #file_temp_XLSX <- system.file("exdata", "qfb_template.xlsx", package = "fieldbook")
     #try(system(paste("open", file_temp_XLSX)))
-    openxlsx::write.xlsx(x = template, file)
+    openxlsx::write.xlsx(x = template, file, headerStyle = hs, sheetName = "fb")
   #  try(system("open", file_temp_XLSX))
 
   }
