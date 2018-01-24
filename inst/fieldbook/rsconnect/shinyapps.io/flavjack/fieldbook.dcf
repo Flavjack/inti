@@ -1,10 +1,12 @@
 name: fieldbook
 title: fieldbook
+username:
 account: flavjack
 server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
 appId: 201364
-bundleId: 931455
+bundleId: 1161802
 url: https://flavjack.shinyapps.io/fieldbook/
-when: 1502132210.34586
+when: 1515081966.54992
 asMultiple: FALSE
 asStatic: FALSE
