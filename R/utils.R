@@ -235,7 +235,7 @@ design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime =
 #' @description Function using resulting output from mean comparison test from agricolae package optimized for graphs.
 #' @param meanComp Object list with the result from mean comparison test
 #' @return Table with complete data for graphics
-#' @importFrom dplyr mutate funs select rename group_by_ summarise full_join
+#' @importFrom dplyr mutate funs select rename rename_ group_by_ summarise full_join
 #' @importFrom tidyr separate
 #' @importFrom tibble rownames_to_column
 #' @export
