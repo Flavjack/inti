@@ -1,0 +1,13 @@
+name: yupana
+title: yupana
+username:
+account: flavjack
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 357871
+bundleId: 1419809
+url: https://flavjack.shinyapps.io/yupana/
+when: 1528499169.54692
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: qfb_template.xlsx

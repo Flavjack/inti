@@ -94,6 +94,18 @@ shinyUI(dashboardPage(skin = "green",
 
                     hr(),
 
+                    strong("Citation"),
+
+                    HTML('
+                        <div class="csl-bib-body" style="line-height: 1.35;">
+                        <div class="csl-entry" style="clear: left;">
+                        <div class="csl-right-inline" style="margin: 0 .4em 0 1.5em;">Lozano Isla, Flavio; Gomez Carrion, Jimmy; Benites Alfaro Omar, De Mendiburu, Felipe. <strong>Yupana: herramienta web interactiva para el análisis de datos en la investigación agropecuario e industrial</strong> [Internet]. Perú: Quipo.org; 2018. Disponible en: <a href="www.quipo.org">www.quipo.org</a></div>
+                        </div>
+                        </div>
+                         '),
+
+                    hr(),
+
                     strong("Features"),
                     br(),
 
@@ -376,7 +388,7 @@ shiny::fluidRow(
              textInput("fbdt",
                label = NULL,
                width = "100%",
-               value = "https://docs.google.com/spreadsheets/d/14sO81N50Zx1al5O3Iu3IPaz1_5CVncvtsx-_JRqJ_qE/edit#gid=172957346")
+               value = "")
 
             )#,
 
