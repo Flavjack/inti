@@ -32,10 +32,10 @@ Imports:
     tibble
 Remotes: omarbenites/shinysky
 Depends:
-    R (>= 3.2.2)
+    R (>= 3.5)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Suggests:
     testthat

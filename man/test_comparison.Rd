@@ -21,4 +21,3 @@ Table with complete data for graphics
 \description{
 Function analisis of variance for summary data.
 }
-

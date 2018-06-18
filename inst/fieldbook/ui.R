@@ -145,7 +145,6 @@ tabItem(tabName = "fieldbook",
         shiny::fluidRow(
 
 
-
           #Begin box for "Experimental Design"
           box(title = "Experimental Design",
               status = "success",
@@ -278,16 +277,22 @@ tabItem(tabName = "fieldbook",
 
              #column(width = 12,
 
-             column(width = 8,
+             column(width = 6,
                     textInput("tool_var", label = "Variables .: separated by commas (,)", value = ""),
                     bsTooltip("tool_var", "Enter your variables separated by commas (,): height, weight, leafArea ", options = list(container = "body"))
 
              ),
 
              fluidRow(
+
                column(width = 2,
                       numericInput("tool_rep",label = "Replications", value = 3, min = 2),
                       bsTooltip("tool_rep", "Enter the number of replications.", options = list(container = "body"))
+               ),
+
+               column(width = 2,
+                      numericInput("tool_smp",label = "Samples", value = 1, min = 1),
+                      bsTooltip("tool_smp", "Enter the number of samples.", options = list(container = "body"))
                ),
 
                column(width = 2,

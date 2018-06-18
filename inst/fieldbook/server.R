@@ -133,8 +133,8 @@ fdbk <- reactive({
 
     dsg <-  input$tool_dsg
     r <- input$tool_rep
+    smp <- input$tool_smp
     int <- input$tool_eva
-
 
 
     if( input$tool_rep == "" ){
@@ -166,6 +166,7 @@ fdbk <- reactive({
       lbl_treat1 = lbl1,
       lbl_treat2 = lbl2,
       variables = vars,
+      sample = smp,
       intime = int
     )
 

@@ -5,7 +5,7 @@
 \title{Field book design for data collection}
 \usage{
 design_fieldbook(treat1 = NULL, treat2 = NULL, rep = NULL, intime = 1,
-  design = "crd", lbl_treat1 = NULL, lbl_treat2 = NULL,
+  sample = 1, design = "crd", lbl_treat1 = NULL, lbl_treat2 = NULL,
   variables = NULL)
 }
 \arguments{
@@ -16,6 +16,8 @@ design_fieldbook(treat1 = NULL, treat2 = NULL, rep = NULL, intime = 1,
 \item{rep}{number of repetition}
 
 \item{intime}{number of evaluation in time}
+
+\item{sample}{number or samples for each plot}
 
 \item{design}{experimental design c("rcbd","crd","f2crd","f2rcbd","lsd")}
 
@@ -31,4 +33,3 @@ Table with the experimental design
 \description{
 Function to construct your field book for your experiment
 }
-

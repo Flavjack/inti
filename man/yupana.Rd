@@ -9,4 +9,3 @@ yupana()
 \description{
 Data analisys app for research experiments.
 }
-

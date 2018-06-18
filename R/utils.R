@@ -43,6 +43,7 @@ test_comparison <- function( aov, comp, type = "snk", sig = 0.05){
 #' @param treat2 strign with the name of the level factor with only space
 #' @param rep number of repetition
 #' @param intime number of evaluation in time
+#' @param sample number or samples for each plot
 #' @param design experimental design c("rcbd","crd","f2crd","f2rcbd","lsd")
 #' @param lbl_treat1 col label for treat 1
 #' @param lbl_treat2 col label for treat 2
@@ -54,7 +55,7 @@ test_comparison <- function( aov, comp, type = "snk", sig = 0.05){
 #' @export
 
 
-design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime = 1, design = "crd", lbl_treat1 = NULL, lbl_treat2 = NULL, variables = NULL){
+design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime = 1, sample = 1, design = "crd", lbl_treat1 = NULL, lbl_treat2 = NULL, variables = NULL){
 
 
   if( is.null(treat1) && is.null(treat2) && is.null(rep) ){
@@ -198,9 +199,24 @@ design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime =
 
   }
 
+  if(sample == 1){
+
+    fb
+
+  } else {
+
+
+    fk <- fb[rep(seq_len(nrow(fb)), each = sample),] # if add each = intime!! you can  use for sub sample
+    tm <- as.factor(1:sample)
+    fk[,"sample"] <- rep(tm, nrow(fb))
+    fk[,"sample"] <- paste("S", fk[,"sample"], sep = "")
+    fb <- fk
+
+  }
+
+
   if(intime == 1){
 
-    fb[,"ID"] <- paste("U", fb[,"ID"], sep = "")
     fb
 
   } else {
@@ -210,13 +226,12 @@ design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime =
     tm <- as.factor(1:intime)
     fk[,"intime"] <- rep(tm, each = nrow(fb))
     fk[,"intime"] <- paste("E", fk[,"intime"], sep = "")
-    fk[,"ID"] <- paste("U", fb[,"ID"], sep = "")
     fb <- fk
 
   }
 
 
-  if ( !is.null(variables) ){
+    if ( !is.null(variables) ){
 
     fb[, varfb ] <- ""
     fb
@@ -225,6 +240,9 @@ design_fieldbook <- function( treat1 = NULL, treat2 = NULL, rep = NULL, intime =
 
   # names(fb) <- stringr::str_replace_all(names(fb),pattern = " ","_")
   # fb
+
+  fb[,"ID"] <- paste("U", fb[,"ID"], sep = "")
+  fb
 
 }
 
