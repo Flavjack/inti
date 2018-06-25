@@ -393,7 +393,7 @@ shiny::fluidRow(
              textInput("fbdt",
                label = NULL,
                width = "100%",
-               value = "")
+               value = "https://docs.google.com/spreadsheets/d/14sO81N50Zx1al5O3Iu3IPaz1_5CVncvtsx-_JRqJ_qE/edit#gid=1625775871")
 
             )#,
 
