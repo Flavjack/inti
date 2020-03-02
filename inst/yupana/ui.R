@@ -146,15 +146,36 @@ shinyUI(dashboardPage(skin = "green",
 
                     hr(),
 
+                    strong("User manual"),
+                    br(),
+                    br(),
+
+                    HTML('
+                        <div class="csl-bib-body" style="line-height: 1.35;">
+                        <div class="csl-entry" style="clear: left;">
+                        <div class="csl-right-inline" style="margin: 0 .4em 0 1.5em;">
+                        Disponible en: <a href="https://flavjack.github.io/yupana-usm">https://flavjack.github.io/yupana-usm</a></div>
+                        </div>
+                        </div>
+                         '),
+
+
+                    hr(),
+
                     strong("Contact"),
                     br(),
                     br(),
 
-                    p("If you have any question, send us an e-mail: ",  a("hola@quipolab.com")),
-
-                    HTML('<p style="text-align: right;"><span style="font-size:14px;"><span style="font-family:comic sans ms,cursive;">Powered by <span style="font-size:16px;"><span style="font-family:lucida sans unicode,lucida grande,sans-serif;"><strong><span style="color:#ff0000;">Q</span><span style="color:#a52a2a;">u</span><span style="color:#008000;">i</span><span style="color:#008080;">p</span><span style="color:#0000ff;">o</span></strong></span></span></span></span></p>')
-
-                  )
+                    HTML('
+                        <div class="csl-bib-body" style="line-height: 1.35;">
+                        <div class="csl-entry" style="clear: left;">
+                        <div class="csl-right-inline" style="margin: 0 .4em 0 1.5em;">
+                        If you have any question, send us an email:
+                        <a href="mailto: hola@quipolab.com">hola@quipolab.com</a></div>
+                        </div>
+                        </div>
+                         ')
+                    )
 
              ) #end column
             )#end fluidrow

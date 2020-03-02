@@ -1,7 +1,7 @@
 Package: yupana
 Type: Package
 Title: Interactive app for data analysis
-Description: Yupana package deploys an interactive applicaction based in shiny for data analisys
+Description: Yupana package deploys an interactive applicaction based in shiny for data analisys.
 Version: 1.0.0
 Authors@R: c(
            person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com", role = c("aut", "cre")),

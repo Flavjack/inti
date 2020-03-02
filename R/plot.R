@@ -656,7 +656,7 @@ plot_linereg <- function(data, x, y, z, ylab = NULL, xlab = NULL, lgl = NULL,lgd
 
     }
 
-  rgl <- fieldbook::lm_eqn(x, y, data)
+  rgl <-  lm_eqn(x, y, data)
 
   if ( is.null(rlx) ){ rlx = -Inf } else { rlx = rlx }
   if ( is.null(rly) ){ rly = Inf } else { rly = rly }
@@ -686,7 +686,7 @@ plot_linereg <- function(data, x, y, z, ylab = NULL, xlab = NULL, lgl = NULL,lgd
 
   }
 
-    p + theme_bw()+
+    p + theme_bw() +
     theme(
       axis.title.x = element_text(size= 8*font),
       axis.title.y = element_text(size= 8*font, angle=90),

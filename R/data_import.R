@@ -14,11 +14,13 @@ getData <- function(dir, sheet = 1) {
 
   if (file.exists(dir) == TRUE) {
 
-    readxl::read_excel(path = dir, sheet = sheet) %>% as.data.frame()
+    readxl::read_excel(path = dir, sheet = sheet) %>%
+      as.data.frame()
 
   } else{
 
-    gsheet::gsheet2tbl(url = dir) %>% as.data.frame()
+    gsheet::gsheet2tbl(url = dir) %>%
+      as.data.frame()
 
   }
 

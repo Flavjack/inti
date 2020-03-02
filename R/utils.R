@@ -31,7 +31,7 @@ test_comparison <- function( aov, comp, type = "snk", sig = 0.05){
 
   }
 
-  fieldbook::data_summary(mc)
+  data_summary(mc)
 
 }
 

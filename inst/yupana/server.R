@@ -1253,7 +1253,6 @@ plot_lr <- reactive({
 
 })
 
-
 output$plot_regression <- renderPlot({
 
   plot <-  plot_lr()
