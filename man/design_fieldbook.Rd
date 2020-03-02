@@ -4,9 +4,17 @@
 \alias{design_fieldbook}
 \title{Field book design for data collection}
 \usage{
-design_fieldbook(treat1 = NULL, treat2 = NULL, rep = NULL, intime = 1,
-  sample = 1, design = "crd", lbl_treat1 = NULL, lbl_treat2 = NULL,
-  variables = NULL)
+design_fieldbook(
+  treat1 = NULL,
+  treat2 = NULL,
+  rep = NULL,
+  intime = 1,
+  sample = 1,
+  design = "crd",
+  lbl_treat1 = NULL,
+  lbl_treat2 = NULL,
+  variables = NULL
+)
 }
 \arguments{
 \item{treat1}{strign with the name of the level factor with only space}

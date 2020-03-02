@@ -4,8 +4,18 @@
 \alias{plot_box}
 \title{Boxplot graphic}
 \usage{
-plot_box(data, x, y, z, ylab = NULL, xlab = NULL, lgl = NULL,
-  lgd = "top", brk = NULL, font = 1)
+plot_box(
+  data,
+  x,
+  y,
+  z,
+  ylab = NULL,
+  xlab = NULL,
+  lgl = NULL,
+  lgd = "top",
+  brk = NULL,
+  font = 1
+)
 }
 \arguments{
 \item{data}{raw data}

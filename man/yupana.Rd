@@ -7,5 +7,6 @@
 yupana()
 }
 \description{
-Data analisys app for research experiments.
+Data analysis app for research experiments.
 }
+\concept{sapiens}

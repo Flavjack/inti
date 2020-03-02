@@ -4,9 +4,23 @@
 \alias{plot_linereg}
 \title{Plot line regression}
 \usage{
-plot_linereg(data, x, y, z, ylab = NULL, xlab = NULL, lgl = NULL,
-  lgd = "top", xbrk = NULL, ybrk = NULL, zbl = NULL, color = TRUE,
-  font = 1, rlx = NULL, rly = NULL)
+plot_linereg(
+  data,
+  x,
+  y,
+  z,
+  ylab = NULL,
+  xlab = NULL,
+  lgl = NULL,
+  lgd = "top",
+  xbrk = NULL,
+  ybrk = NULL,
+  zbl = NULL,
+  color = TRUE,
+  font = 1,
+  rlx = NULL,
+  rly = NULL
+)
 }
 \arguments{
 \item{data}{Output dtsm fuction}

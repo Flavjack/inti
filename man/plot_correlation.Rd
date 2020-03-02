@@ -4,8 +4,7 @@
 \alias{plot_correlation}
 \title{Correlation graphic}
 \usage{
-plot_correlation(data, method = "pearson", sig = 0.05, color = NULL,
-  font = 1)
+plot_correlation(data, method = "pearson", sig = 0.05, color = NULL, font = 1)
 }
 \arguments{
 \item{data}{matrix with numeric data}

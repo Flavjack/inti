@@ -4,9 +4,25 @@
 \alias{plot_brln}
 \title{Plot line or bar graphic}
 \usage{
-plot_brln(data, type = "bar", x, y, z, ylab = NULL, xlab = NULL,
-  lgl = NULL, lgd = "top", sig = NULL, erb = FALSE, lmt = NULL,
-  brk = NULL, xbl = NULL, zbl = NULL, color = TRUE, font = 1)
+plot_brln(
+  data,
+  type = "bar",
+  x,
+  y,
+  z,
+  ylab = NULL,
+  xlab = NULL,
+  lgl = NULL,
+  lgd = "top",
+  sig = NULL,
+  erb = FALSE,
+  lmt = NULL,
+  brk = NULL,
+  xbl = NULL,
+  zbl = NULL,
+  color = TRUE,
+  font = 1
+)
 }
 \arguments{
 \item{data}{Output dtsm fuction}
