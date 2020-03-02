@@ -21,7 +21,7 @@ library(dplyr)
 library(ggplot2)
 library(rhandsontable)
 library(ggpubr)
-library(fieldbook)
+library(yupana)
 library(shinyBS)
 library(shinyWidgets)
 library(shinysky)
@@ -69,15 +69,54 @@ shinyUI(dashboardPage(skin = "green",
                 htmlOutput("usm")
         ),
 
-# presentacion ------------------------------------------------------------
+# presentation ------------------------------------------------------------
 
         tabItem(tabName = "welcome",
 
                 fluidRow(
                 column(width = 12,
 
+                       box(
+                         title = "Yupana",
+                         width = 3,
+                         status = "primary",
+                         solidHeader = T,
+
+                         shiny::HTML(
+                           '
+                  <p>
+                  <strong>Yupana</strong>  is a interactive application for exploratory data analisys and graphics for experimental designs
+                  </p>
+                  '),
+
+                         shiny::HTML(
+                           '
+                    <center>
+                    <img src="logo.jpeg" width="70%">
+                    </center>
+                    '
+                         ),
+
+
+                         hr(),
+
+                         strong("Features"),
+
+                         br(),
+                         br(),
+
+                         p("- Import data from excel or Gsheet"),
+                         p("- Field book design (CRD, CRBD, SLD)"),
+                         p("- Exploratory Data Analysis"),
+                         p("- Multivariate analysis: PCA and correlation"),
+                         p("- Statistical analysis"),
+                         p("- Graphics for publication"),
+
+
+                       ),
+
                 box(
-                  width = 8,
+                  width = 6,
                   background = "red",solidHeader = T,
 
                   img(src = "bike.png",  width = "100%")
@@ -85,48 +124,33 @@ shinyUI(dashboardPage(skin = "green",
                   ),
 
                   box(
-                    title = "Yupana",
-                    width = 4,
+                    title = "App Info",
+                    width = 3,
                     status = "danger",
                     solidHeader = T,
 
-                    p( strong(em("Yupana")),"is a interactive application for exploratory data analisys and graphics for experimental designs"),
-
-                    hr(),
 
                     strong("Citation"),
+                    br(),
+                    br(),
 
                     HTML('
                         <div class="csl-bib-body" style="line-height: 1.35;">
                         <div class="csl-entry" style="clear: left;">
-                        <div class="csl-right-inline" style="margin: 0 .4em 0 1.5em;">Lozano Isla, Flavio; Gomez Carrion, Jimmy; Benites Alfaro Omar, De Mendiburu, Felipe. <strong>Yupana: herramienta web interactiva para el análisis de datos en la investigación agropecuario e industrial</strong> [Internet]. Perú: Quipo.org; 2018. Disponible en: <a href="www.quipo.org">www.quipo.org</a></div>
+                        <div class="csl-right-inline" style="margin: 0 .4em 0 1.5em;">Lozano-Isla, Flavio; Gomez Carrion, Jimmy; Benites Alfaro Omar, De Mendiburu, Felipe.
+                      <strong>Yupana: herramienta web interactiva para el análisis de datos en la investigación agropecuario e industrial</strong> [Internet]. 2018.
+                      Disponible en: <a href="www.quipolab.com">www.quipolab.com</a></div>
                         </div>
                         </div>
                          '),
 
                     hr(),
 
-                    strong("Features"),
+                    strong("Contact"),
+                    br(),
                     br(),
 
-                    p("- Import data from excel files and google spreadsheet documents"),
-
-                    p("- Field book design generator"),
-
-                    p("- Exploratory Data"),
-
-                    p("- Multivariate analisys: PCA and correlation"),
-
-                    p("- Statistical analisys"),
-
-                    p("- Colored and gray scale graphics for publication"),
-
-                    hr(),
-
-                    strong("Contacto"),
-                    br(),
-
-                    p("If you have any question, send us an e-mail to ",  a("hola@quipo.org")),
+                    p("If you have any question, send us an e-mail: ",  a("hola@quipolab.com")),
 
                     HTML('<p style="text-align: right;"><span style="font-size:14px;"><span style="font-family:comic sans ms,cursive;">Powered by <span style="font-size:16px;"><span style="font-family:lucida sans unicode,lucida grande,sans-serif;"><strong><span style="color:#ff0000;">Q</span><span style="color:#a52a2a;">u</span><span style="color:#008000;">i</span><span style="color:#008080;">p</span><span style="color:#0000ff;">o</span></strong></span></span></span></span></p>')
 
