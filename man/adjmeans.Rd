@@ -11,9 +11,9 @@ adjmeans(data, trait, treatment, fix.model)
 
 \item{trait}{Name of the trait.}
 
-\item{fix.model}{The fixed effects in the model. See examples.}
+\item{treatment}{Name of the treat.}
 
-\item{treat}{Name of the treat.}
+\item{fix.model}{The fixed effects in the model. See examples.}
 }
 \value{
 A data frame with the BLUEs.
@@ -26,13 +26,20 @@ The blues calculation is based in the pairwaise comparison and its could takes t
 }
 \examples{
 
+\dontrun{
+library(tidyverse)
+library(emmeans)
+library(lme4)
+library(lmerTest)
 library(agridat)
+
 adm <- adjmeans(data = john.alpha
                 , trait = "yield"
                 , treatment = "gen"
                 , fix.model = "rep + (1|rep:block) + gen"
                 )
 adm
+}
 
 }
 \author{

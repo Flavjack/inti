@@ -40,7 +40,7 @@
 #' data, a binomial regression model could be a better option.
 #' @return It returns the transformed trait.
 #' @examples
-#' dtr("Sepal.Length", "logy", data = iris)
+#' transformations("Sepal.Length", "logy", data = iris)
 #' @export
 
 transformations <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arcsin"),

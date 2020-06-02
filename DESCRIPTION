@@ -1,43 +1,47 @@
 Package: inti
 Type: Package
 Version: 2.0.0
-Title: Plant Science tools
+Title: Tools and Statistical Procedures in Plant Science
+Description: A collection of different applications and procedure used in plant breeding and experimental designs.
 Date: 2020-06-02
-Description: Tools and statistical procedures for experimentals designs and plant breeding
-Authors@R: c(
-           person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com", role = c("aut", "cre"))
-           )
+Author: Flavio Lozano-Isla
+Maintainer: Flavio Lozano-Isla <flavjack@gmail.com>
 URL: https://lozanoisla.com/
 BugReports: https://github.com/flavjack/inti/issues
 Imports:
     agricolae,
+    lme4,
+    lmerTest,
+    emmeans,
+    FactoMineR,
+    factoextra,
     corrplot,
-    data.table,
     DT,
+    data.table,
+    dplyr,
+    ggplot2,
     gsheet,
     gtools,
-    factoextra,
-    FactoMineR,
-    shiny,
-    shinydashboard,
     lubridate,
-    plotly,
-    zoo,
-    shinyBS,
-    ggplot2,
-    readxl,
-    tidyr,
-    dplyr,
-    stringr,
     openxlsx,
-    tibble
-Depends:
-    R (>= 3.5.0)
+    purrr,
+    readxl,
+    stringr,
+    tibble,
+    tidyr,
+    zoo,
+    shinydashboard,
+    shinyBS,
+    shiny
 Suggests:
+    plotly,
+    googlesheets4,
+    agridat,
+    tidyverse,
     testthat,
     knitr,
     rmarkdown
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
+LazyData: TRUE
 RoxygenNote: 7.1.0

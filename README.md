@@ -1,16 +1,34 @@
-# Yupana
+# Inti
 
-Yupana es una aplicación web (online) interactiva multiplataforma de interfaz amigable e intuitiva; que busca agilizar el desarrollo de investigación y validación de productos en las instituciones del sector agropecuario e industrial.
+Tools and statistical procedures for experimentals designs and plant breeding
 
-## WebApp
+## Install
+
+```{r eval=F}
+install.packages("devtools")
+devtools::install_github("flavjack/inti")
+```
+## Apps
+
+### Yupana
+
+```{r eval=F}
+inti::yupana()
+```
 
 Yupana .: <https://flavjack.shinyapps.io/yupana/>
 
-## User Manual
+User Manual .: <https://flavjack.github.io/yupana-usm>
 
-<https://flavjack.github.io/yupana-usm>
+Cita .: Lozano-Isla, Flavio, Gomez Carrion, Jimmy, Benites-Alfaro, Omar, & De Mendiburu, Felipe (2018). Yupana: Herramienta web interactiva para el análisis de datos en la investigación agropecuario e industrial. Quipo. <www.quipolab.com>
 
-## Como citar la app?
+### Pacha
 
-Lozano-Isla, Flavio, Gomez Carrion, Jimmy, Benites-Alfaro, Omar, & De Mendiburu, Felipe (2018). Yupana: Herramienta web interactiva para el análisis de datos en la investigación agropecuario e industrial. Quipo. <www.quipolab.com>
+```{r eval=F}
+inti::pacha()
+```
+### Yaku
 
+```{r eval=F}
+inti::yaku()
+```

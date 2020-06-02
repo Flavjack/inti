@@ -60,7 +60,7 @@ no transformation could be needed, and where some are on either the range 0 to 0
 data, a binomial regression model could be a better option.
 }
 \examples{
-dtr("Sepal.Length", "logy", data = iris)
+transformations("Sepal.Length", "logy", data = iris)
 }
 \author{
 Raul Eyzaguirre.

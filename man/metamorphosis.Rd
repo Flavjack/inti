@@ -34,16 +34,19 @@ The function requiere at least three colums.
 
 1. Original names (\code{from}).
 
-2. New names (\code{to}). 
+2. New names (\code{to}).
 
 3. Variable type (\code{index}).
 }
 \examples{
 
+\dontrun{
 library(googlesheets4)
 library(tidyverse)
 
-url <- "https://docs.google.com/spreadsheets/d/1gue-wSQcEu4nJigVZdUWsTfIIzhtxpDRdWAQiEHgKak/edit#gid=1981295232"
+url.1 <- "https://docs.google.com/spreadsheets/d/"
+url.2 <- "1gue-wSQcEu4nJigVZdUWsTfIIzhtxpDRdWAQiEHgKak/edit#gid=0"
+url <- paste0(url.1, url.2)
 gs <- as_sheets_id(url)
 # browseURL(url)
 
@@ -64,6 +67,7 @@ mtm <- metamorphosis(fieldbook = fb_old
                      )
 
 fb_new <- mtm$fieldbook
+}
 
 }
 \author{

@@ -47,7 +47,7 @@ H2cal(
 \item{blues}{Calculate the BLUEs (default = TRUE).}
 }
 \value{
-A list with three object: 
+A list with three object:
 
 1. Table with the variance components and heritability.
 
@@ -67,9 +67,9 @@ The function allows to made the calculation for individual or multi-environmenta
 
 For individual experiments is necessary provide the \code{trait}, \code{gen.name}, \code{rep.n}.
 
-For MET experiments you should \code{loc.n} and \code{loc.name} y/o \code{year.n} and \code{year.name} according your experiment. 
+For MET experiments you should \code{loc.n} and \code{loc.name} y/o \code{year.n} and \code{year.name} according your experiment.
 
-The blues calculation is based in the pairwise comparison and its could takes time according the number of the genotypes. 
+The blues calculation is based in the pairwise comparison and its could takes time according the number of the genotypes.
 
 You can specify as \code{blues = FALSE} for calculate the variance components and blups faster.
 
@@ -77,13 +77,14 @@ For more information review the references.
 }
 \examples{
 
+\dontrun{
 library(tidyverse)
 library(emmeans)
-library(lme4) 
+library(lme4)
 library(lmerTest)
-library(GerminaR)
 library(agridat)
- 
+library(inti)
+
  dt <- john.alpha
  hr <- H2cal(data = dt
             , blues = T
@@ -93,7 +94,8 @@ library(agridat)
             , fix.model = "rep + (1|rep:block) + gen"
             , ran.model = "rep + (1|rep:block) + (1|gen)"
 )
-hr$tabsmr 
+hr$tabsmr
+}
 
 }
 \references{

@@ -6,3 +6,5 @@
 ^README\.html$
 ^README_files/*
 ^cran-comments\.md$
+^inti/inst/quipu
+^inti/inst/tarpuy

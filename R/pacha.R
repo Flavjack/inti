@@ -1,12 +1,12 @@
-#' wanuy
+#' pacha
 #'
 #' Fertilization management app.
 #'
 #' @importFrom shiny runApp
 #' @export
 
-wanuy <- function() {
-    appDir <- system.file("wanuy", package = "inti")
+pacha <- function() {
+    appDir <- system.file("pacha", package = "inti")
     if (appDir == "") {
         stop("Could not find example directory. Try re-installing `inti`.",
             call. = FALSE)
