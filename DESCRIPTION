@@ -1,6 +1,6 @@
 Package: inti
 Type: Package
-Version: 1.0.0
+Version: 2.0.0
 Title: Statistical Analysis for Plant Breeding
 Description: Statistical procedures for experimentals designs and plant breeding
 Authors@R: c(

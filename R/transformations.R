@@ -1,7 +1,6 @@
 
 # Adapted from R.Eyzaguirre Package ---------------------------------------
 
-
 #' Data transformations
 #'
 #' This function performs different data transformations.
@@ -44,7 +43,7 @@
 #' dtr("Sepal.Length", "logy", data = iris)
 #' @export
 
-dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arcsin"),
+transformations <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arcsin"),
                 base = 10, n = NULL, data) {
 
   # match arguments
