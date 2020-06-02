@@ -88,7 +88,7 @@ fdbk <- reactive({
 
         xlsx <- input$tool_template_upload
         file.rename(xlsx$datapath, paste(xlsx$datapath, ".xlsx", sep = ""))
-        fb_xlsx <- try(yupana::getData(dir = paste(xlsx$datapath, ".xlsx", sep = ""), sheet = 1))
+        fb_xlsx <- try(inti::getData(dir = paste(xlsx$datapath, ".xlsx", sep = ""), sheet = 1))
 
 
         #fb_xlsx <- try(readxl::read_excel(path = fbook_csv_file$datapath,sheet = 1 ))
@@ -158,7 +158,7 @@ fdbk <- reactive({
 
 
     #Creation of fieldbook reactive expression
-    yupana::design_fieldbook(
+    inti::design_fieldbook(
       treat1 = trt1,
       treat2 = trt2,
       rep = r,
@@ -276,7 +276,7 @@ data_fb <-  reactive({
 
         xls <- input$impdata
         file.rename(xls$datapath, paste(xls$datapath, ".xlsx", sep = ""))
-        out <- yupana::getData(dir = paste(xls$datapath, ".xlsx", sep = ""), sheet = input$sheetdt)
+        out <- inti::getData(dir = paste(xls$datapath, ".xlsx", sep = ""), sheet = input$sheetdt)
 
       }
     }
@@ -285,7 +285,7 @@ data_fb <-  reactive({
 
       url <- input$fbdt
       if(is.null(url)){return()}
-      out <- yupana::getData(dir = url)
+      out <- inti::getData(dir = url)
 
     }
 out
@@ -552,7 +552,7 @@ output$boxplot <- renderPlot({
   } else { brks <- brk}
 
 
-  boxp <- yupana::plot_box(
+  boxp <- inti::plot_box(
 
     data = file,
     y = variable,
@@ -579,7 +579,7 @@ output$crpt <- renderPlot({
 
   file <- fb()
 
-  yupana::plot_correlation(
+  inti::plot_correlation(
     data = file,
     sig = input$corsig,
     color = input$corcol,
@@ -616,7 +616,7 @@ output$pca <- renderPlot({
 
 
 
-  yupana::plot_PCA(
+  inti::plot_PCA(
     data = file,
     type = input$pcatype,
     quali.sup = qs,
@@ -762,7 +762,7 @@ comp <- reactive({
 
   {
 
-    rs <- yupana::test_comparison(
+    rs <- inti::test_comparison(
       aov = file,
       comp = factor[1],
       type = test,
@@ -776,7 +776,7 @@ comp <- reactive({
 
   {
 
-    rs <- yupana::test_comparison(
+    rs <- inti::test_comparison(
       aov = file,
       comp = c( factor[1], factor[2] ),
       type = test,
@@ -1023,7 +1023,7 @@ if (gsig == "no"){
 
 if( length(factor) == 1 && !(variable == '') ){
 
-         pt <- yupana::plot_brln(data = df, type = gtype,
+         pt <- inti::plot_brln(data = df, type = gtype,
                              x = factor[1],
                              y = "mean",
                              z = factor[1],
@@ -1049,7 +1049,7 @@ else if( length(factor) >= 2  && !(variable == ''))
 {
 
 
-  pt <- yupana::plot_brln(data = df, type = gtype,
+  pt <- inti::plot_brln(data = df, type = gtype,
     x = factor[1],
     y = "mean",
     z = factor[2],
@@ -1232,7 +1232,7 @@ plot_lr <- reactive({
 
   }
 
-  yupana::plot_linereg(
+  inti::plot_linereg(
     data = file,
     y = yvr,
     x = xvr,
