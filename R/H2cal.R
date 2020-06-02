@@ -1,0 +1,278 @@
+#' Heritability in plant breeding on a genotype-difference basis
+#' 
+#' Function to calculate:
+#' 1. The variance components.
+#' 2. Heritability under three approaches: Standard, Cullis and Piepho.
+#' 3. Best Linear Unbiased Predictors (BLUPs).
+#' 4. Best Linear Unbiased Estimators (BLUEs).
+#'
+#' @param data Experimental design data frame with the factors and traits.
+#' @param trait Name of the trait.
+#' @param gen.name Name of the genotypes.
+#' @param rep.n Number of replications in the experiment.
+#' @param loc.name Name of the location (default = NULL). See details.
+#' @param year.name Name of the years (default = NULL). See details.
+#' @param loc.n Number of locations (default = 1). See details.
+#' @param year.n Number of years (default = 1). See details.
+#' @param fix.model The fixed effects in the model. See examples.
+#' @param ran.model The random effects in the model. See examples.
+#' @param blues Calculate the BLUEs (default = TRUE).
+#'
+#' @details The function allows to made the calculation for individual or multi-environmental trials (MET) using th fixed and random model.
+#' 
+#' For individual experiments is necessary provide the \code{trait}, \code{gen.name}, \code{rep.n}.
+#' 
+#' For MET experiments you should \code{loc.n} and \code{loc.name} y/o \code{year.n} and \code{year.name} according your experiment. 
+#' 
+#' The blues calculation is based in the pairwise comparison and its could takes time according the number of the genotypes. 
+#' 
+#' You can specify as \code{blues = FALSE} for calculate the variance components and blups faster.
+#' 
+#' For more information review the references.
+#' 
+#' @return A list with three object: 
+#' 
+#' 1. Table with the variance components and heritability.
+#' 
+#' 2. BLUPs.
+#' 
+#' 3. BLUEs.
+#'
+#' @author 
+#' 
+#' Maria Belen Kistner
+#' 
+#' Flavio Lozano-Isla
+#' 
+#' @references
+#' 
+#' Schmidt, P., J. Hartung, J. Bennewitz, and H.-P. Piepho. 2019. Heritability in Plant Breeding on a Genotype-Difference Basis. Genetics 212(4): 991–1008. doi: 10.1534/genetics.119.302134.
+#' 
+#' Schmidt, P., J. Hartung, J. Rath, and H.-P. Piepho. 2019. Estimating Broad-Sense Heritability with Unbalanced Data from Agricultural Cultivar Trials. Crop Science 59(2): 525–536. doi: 10.2135/cropsci2018.06.0376.
+#' 
+#' @source 
+#' 
+#' https://github.com/PaulSchmidtGit/Heritability/tree/master/Alternative%20Heritability%20Measures
+#' 
+#' https://stackoverflow.com/questions/38697477/mean-variance-of-a-difference-of-blues-or-blups-in-lme4
+#'
+#' @examples 
+#' 
+#' library(tidyverse)
+#' library(emmeans)
+#' library(lme4) 
+#' library(lmerTest)
+#' library(GerminaR)
+#' library(agridat)
+#'  
+#'  dt <- john.alpha
+#'  hr <- H2cal(data = dt
+#'             , blues = T
+#'             , trait = "yield"
+#'             , gen.name = "gen"
+#'             , rep.n = 3
+#'             , fix.model = "rep + (1|rep:block) + gen"
+#'             , ran.model = "rep + (1|rep:block) + (1|gen)"
+#' )
+#' hr$tabsmr 
+#' 
+#' @export
+
+H2cal <- function(data,
+                  trait, 
+                  gen.name, 
+                  rep.n,
+                  loc.name = NULL,
+                  year.name = NULL,
+                  loc.n = 1,
+                  year.n = 1,
+                  fix.model, 
+                  ran.model,
+                  blues = TRUE
+){
+  
+  # library(tidyverse)
+  # library(emmeans)
+  # library(lme4) 
+  # library(lmerTest) 
+  
+  print(trait)
+  
+  ### fit models
+  # random genotype effect
+  r.md <- as.formula(paste(trait, paste(ran.model, collapse = " + "), sep = " ~ "))
+  g.ran <- eval(bquote(lmer(.(r.md), data = data)))
+  
+  summary(g.ran) %>% print()
+  
+  plot(resid(g.ran), main = trait)
+  qqnorm(resid(g.ran), main = trait); qqline(resid(g.ran))
+  hist(resid(g.ran), main = trait)
+  
+  # fixed genotype effect
+  f.md <- as.formula(paste(trait, paste(fix.model, collapse = " + "), sep = " ~ "))
+  g.fix <- eval(bquote(lmer(.(f.md), data = data)))
+  # summary(g.fix)
+  
+  plot(resid(g.fix), main = trait)
+  qqnorm(resid(g.fix), main = trait); qqline(resid(g.fix))
+  hist(resid(g.fix), main = trait)
+  
+  ### handle model estimates
+  
+  # number of genotypes
+  gen.n <- g.ran %>% 
+    summary %>% 
+    pluck("ngrps") %>% 
+    .[gen.name]
+  
+  # genotypic variance component
+  vc.g <- g.ran %>% 
+    VarCorr %>% 
+    as_tibble %>% 
+    filter(grp == gen.name) %>% 
+    pull(vcov)
+  
+  # enviroment variance component
+  if(loc.n == 1){
+    vc.gxl <- 0  
+  } else {
+    gxl <- paste(gen.name, loc.name, sep = ":")
+    vc.gxl <- g.ran %>% 
+      VarCorr %>% 
+      as_tibble %>% 
+      filter(grp == gxl) %>%
+      pull(vcov) 
+  }
+  
+  # year variance component
+  if(year.n == 1){
+    vc.gxy <- 0  
+  } else {
+    gxy <- paste(gen.name, year.name, sep = ":")
+    vc.gxy <- g.ran %>% 
+      VarCorr %>% 
+      as_tibble %>% 
+      filter(grp == gxy) %>%
+      pull(vcov)
+  }
+  
+  # location x year variance componen (review in MET) 
+  if(year.n == 1 | loc.n == 1){
+    vc.gxlxy <- 0  
+  } else {
+    gxlxy <- paste(gen.name, loc.name, year.name, sep = ":")
+    vc.gxlxy <- g.ran %>% 
+      VarCorr %>% 
+      as_tibble %>% 
+      filter(grp == gxlxy) %>%
+      pull(vcov)
+  }
+  
+  # error variance component
+  vc.e <- g.ran %>% 
+    VarCorr %>% 
+    as_tibble %>% 
+    filter(grp == "Residual") %>% 
+    pull(vcov)
+  
+  if(blues == TRUE){
+    
+    ## Best Linear Unbiased Estimators (BLUE)
+    BLUE <- g.fix %>%
+      emmeans(as.formula(paste("pairwise", gen.name, sep = " ~ ")), )
+    
+    BLUEs <- BLUE %>%
+      pluck("emmeans") %>%
+      as_tibble %>% 
+      rename(!!trait := 'emmean')
+    
+    # mean variance of a difference between genotypes (BLUEs)
+    vdBLUE.avg <- BLUE %>%
+      pluck("contrasts") %>%
+      as_tibble %>%
+      mutate(Var=SE^2) %>%
+      pull(Var) %>%
+      mean(.) # vdBLUE.avg  
+    
+  } else if (blues == FALSE){
+    
+    BLUEs <- NULL
+    
+    count <- vcov(g.fix) %>% 
+      pluck("Dimnames") %>% 
+      pluck(1) %>% 
+      str_detect(gen.name) %>%
+      summary(.) %>% 
+      pluck("FALSE") 
+    
+    if(is.null(count)){
+      
+      vdBLUE.avg <- g.fix %>% 
+        vcov(.) %>% 
+        as.matrix(.) %>% 
+        diag(.) %>% 
+        as.vector() %>% 
+        mean(.)  
+      
+    } else if (count > 0) {
+      
+      vdBLUE.avg <- g.fix %>% 
+        vcov(.) %>% 
+        as.matrix(.) %>% 
+        diag(.) %>% 
+        as.vector() %>% 
+        .[-c(1:count)] %>% 
+        mean(.)  
+    }
+    
+  }
+  
+  ## Best Linear Unbiased Predictors (BLUP)
+  BLUPs <- g.ran %>%
+    coef() %>% 
+    pluck(gen.name) %>% 
+    rownames_to_column(gen.name) %>%
+    rename(!!trait := '(Intercept)') %>% 
+    as_tibble(.) %>% 
+    select(all_of(gen.name), all_of(trait))
+  
+  # mean variance of a difference between genotypes (BLUPs)
+  vdBLUP.avg <- g.ran %>% 
+    ranef(condVar = TRUE) %>% 
+    pluck(gen.name) %>% 
+    attr("postVar") %>% 
+    as_vector(.) %>% 
+    mean(.)*2
+  
+  ## Heretability
+  
+  # H2 Standard
+  (H2.s <- vc.g/(vc.g + vc.gxl/loc.n + vc.gxy/year.n + vc.gxlxy/(loc.n*year.n) + vc.e/(loc.n*year.n*rep.n)))
+  
+  # H2 Piepho
+  (H2.p <- vc.g/(vc.g + vdBLUE.avg/2))
+  
+  # H2 Cullis
+  (H2.c <- 1 - (vdBLUP.avg/2/vc.g))
+  
+  ## Results
+  rsl <- list(
+    tabsmr = tibble(
+      varible = trait,
+      geno = gen.n,
+      env = loc.n,
+      year = year.n,
+      V.g = vc.g,
+      V.gxl = vc.gxl,
+      V.gxy = vc.gxy,
+      V.e = vc.e,
+      h2.s = H2.s,
+      h2.c = H2.c,
+      h2.p = H2.p
+    ),
+    
+    blups = BLUPs,
+    blues = BLUEs
+  )
+}

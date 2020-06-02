@@ -4,7 +4,9 @@
 \name{fb_template}
 \alias{fb_template}
 \title{Field book template for Fieldbook Application}
-\format{A data frame data.frame which comes from importing csv-template files.}
+\format{
+A data frame data.frame which comes from importing csv-template files.
+}
 \source{
 Quipo Organization.
 }

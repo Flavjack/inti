@@ -1,15 +1,12 @@
-Package: yupana
+Package: inti
 Type: Package
-Title: Interactive app for data analysis
-Description: Yupana package deploys an interactive applicaction based in shiny for data analisys.
 Version: 1.0.0
+Title: Statistical Analysis for Plant Breeding
+Description: Statistical procedures for experimentals designs and plant breeding
 Authors@R: c(
-           person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com", role = c("aut", "cre")),
-           person("Jimmy R", "Gomez-Carrion", , "pumcarna@gmail.com", "aut"),
-           person("Omar", "Benites-Alfaro", , "obacc07@gmail.com", "aut"),
-           person(family = "quipolab.com", role = "cph")
+           person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com", role = c("aut", "cre"))
            )
-BugReports: https://github.com/flavjack/yupana/issues
+BugReports: https://github.com/flavjack/inti/issues
 Imports:
     agricolae,
     corrplot,
@@ -30,10 +27,12 @@ Imports:
     openxlsx,
     tibble
 Depends:
-    R (>= 3.5)
+    R (>= 3.5.0)
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
-Suggests:
-    testthat
+RoxygenNote: 7.1.0
