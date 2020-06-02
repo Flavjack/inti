@@ -1,0 +1,11 @@
+name: wanuy
+title: wanuy
+account: flavjack
+server: shinyapps.io
+appId: 130045
+bundleId: 580811
+url: https://flavjack.shinyapps.io/wanuy/
+when: 1475976564.07815
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .Rprofile|README.md

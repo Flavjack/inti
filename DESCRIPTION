@@ -1,11 +1,13 @@
 Package: inti
 Type: Package
 Version: 2.0.0
-Title: Statistical Analysis for Plant Breeding
-Description: Statistical procedures for experimentals designs and plant breeding
+Title: Plant Science tools
+Date: 2020-06-02
+Description: Tools and statistical procedures for experimentals designs and plant breeding
 Authors@R: c(
            person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com", role = c("aut", "cre"))
            )
+URL: https://lozanoisla.com/
 BugReports: https://github.com/flavjack/inti/issues
 Imports:
     agricolae,
@@ -18,6 +20,9 @@ Imports:
     FactoMineR,
     shiny,
     shinydashboard,
+    lubridate,
+    plotly,
+    zoo,
     shinyBS,
     ggplot2,
     readxl,
