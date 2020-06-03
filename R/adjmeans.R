@@ -38,6 +38,8 @@ adjmeans <- function(data
                      , fix.model
                      ){
 
+  emmean <- NULL
+
   print(trait)
 
   # fixed genotype effect

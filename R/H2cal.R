@@ -105,6 +105,8 @@ H2cal <- function(data,
   # library(lme4)
   # library(lmerTest)
 
+  grp <- emmean <- SE <- Var <-  NULL # avoid Undefined global functions or variables
+
   print(trait)
 
   ### fit models
