@@ -57,6 +57,8 @@
 #' @importFrom stringr str_detect
 #' @importFrom tibble rownames_to_column as_tibble tibble
 #' @importFrom lme4 ranef VarCorr
+#' @importFrom graphics abline par
+#' @importFrom stats fitted
 #'
 #' @source
 #'
@@ -112,26 +114,30 @@ H2cal <- function(data,
   print(trait)
 
   ### fit models
+
   # random genotype effect
   r.md <- as.formula(paste(trait, paste(ran.model, collapse = " + "), sep = " ~ "))
   g.ran <- eval(bquote(lmer(.(r.md), data = data)))
 
   summary(g.ran) %>% print()
 
-  par(mfrow=c(1,3))
-  plot(resid(g.ran), main = trait)
-  qqnorm(resid(g.ran), main = trait); qqline(resid(g.ran))
-  hist(resid(g.ran), main = trait)
-
   # fixed genotype effect
   f.md <- as.formula(paste(trait, paste(fix.model, collapse = " + "), sep = " ~ "))
   g.fix <- eval(bquote(lmer(.(f.md), data = data)))
   # summary(g.fix)
 
-  par(mfrow=c(1,3))
-  plot(resid(g.fix), main = trait)
-  qqnorm(resid(g.fix), main = trait); qqline(resid(g.fix))
+  ### Plot models
+
+  par(mfrow=c(2,4))
   hist(resid(g.fix), main = trait)
+  qqnorm(resid(g.fix), main = trait); qqline(resid(g.fix))
+  plot(fitted(g.fix), resid(g.fix, type = "pearson"), main = trait); abline(h=0)
+  plot(resid(g.fix), main = trait)
+  hist(resid(g.ran), main = trait)
+  qqnorm(resid(g.ran), main = trait); qqline(resid(g.ran))
+  plot(fitted(g.ran), resid(g.ran, type = "pearson"), main = trait); abline(h=0)
+  plot(resid(g.ran), main = trait)
+  par(mfrow=c(1,1))
 
   ### handle model estimates
 
