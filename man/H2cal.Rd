@@ -20,7 +20,8 @@ H2cal(
   year.n = 1,
   fix.model,
   ran.model,
-  blues = TRUE
+  blues = TRUE,
+  effects = FALSE
 )
 }
 \arguments{
@@ -45,6 +46,8 @@ H2cal(
 \item{ran.model}{The random effects in the model. See examples.}
 
 \item{blues}{Calculate the BLUEs (default = TRUE).}
+
+\item{effects}{Conditional modes of the random effects instead of the BLUPs.}
 }
 \value{
 A list with three object:

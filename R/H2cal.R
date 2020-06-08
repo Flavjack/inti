@@ -17,6 +17,7 @@
 #' @param fix.model The fixed effects in the model. See examples.
 #' @param ran.model The random effects in the model. See examples.
 #' @param blues Calculate the BLUEs (default = TRUE).
+#' @param effects Conditional modes of the random effects instead of the BLUPs.
 #'
 #' @details The function allows to made the calculation for individual or multi-environmental trials (MET) using th fixed and random model.
 #'
@@ -97,7 +98,8 @@ H2cal <- function(data,
                   year.n = 1,
                   fix.model,
                   ran.model,
-                  blues = TRUE
+                  blues = TRUE,
+                  effects = FALSE
 ){
 
   # library(tidyverse)
@@ -116,6 +118,7 @@ H2cal <- function(data,
 
   summary(g.ran) %>% print()
 
+  par(mfrow=c(1,3))
   plot(resid(g.ran), main = trait)
   qqnorm(resid(g.ran), main = trait); qqline(resid(g.ran))
   hist(resid(g.ran), main = trait)
@@ -125,6 +128,7 @@ H2cal <- function(data,
   g.fix <- eval(bquote(lmer(.(f.md), data = data)))
   # summary(g.fix)
 
+  par(mfrow=c(1,3))
   plot(resid(g.fix), main = trait)
   qqnorm(resid(g.fix), main = trait); qqline(resid(g.fix))
   hist(resid(g.fix), main = trait)
@@ -240,13 +244,28 @@ H2cal <- function(data,
   }
 
   ## Best Linear Unbiased Predictors (BLUP)
-  BLUPs <- g.ran %>%
-    stats::coef() %>%
-    purrr::pluck(gen.name) %>%
-    tibble::rownames_to_column(gen.name) %>%
-    dplyr::rename(!!trait := '(Intercept)') %>%
-    tibble::as_tibble(.) %>%
-    dplyr::select(all_of(gen.name), dplyr::all_of(trait))
+
+  if(effects == FALSE){
+
+    BLUPs <- g.ran %>%
+      stats::coef() %>%
+      purrr::pluck(gen.name) %>%
+      tibble::rownames_to_column(gen.name) %>%
+      dplyr::rename(!!trait := '(Intercept)') %>%
+      tibble::as_tibble(.) %>%
+      dplyr::select(all_of(gen.name), dplyr::all_of(trait))
+
+  } else {
+
+    BLUPs <- g.ran %>%
+      lme4::ranef() %>%
+      purrr::pluck(gen.name) %>%
+      tibble::rownames_to_column(gen.name) %>%
+      dplyr::rename(!!trait := '(Intercept)') %>%
+      tibble::as_tibble(.) %>%
+      dplyr::select(all_of(gen.name), dplyr::all_of(trait))
+
+  }
 
   # mean variance of a difference between genotypes (BLUPs)
   vdBLUP.avg <- g.ran %>%
