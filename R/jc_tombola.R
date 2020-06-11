@@ -52,6 +52,7 @@
 #'
 #' }
 #'
+#' @export
 
 jc_tombola <- function(data
                        , members
