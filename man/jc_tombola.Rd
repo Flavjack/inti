@@ -17,29 +17,65 @@ jc_tombola(
 )
 }
 \arguments{
-\item{data}{Data frame withe members and their information}
+\item{data}{Data frame withe members and their information.}
 
-\item{members}{Columns with the members names}
+\item{members}{Columns with the members names.}
 
-\item{group}{Column for arrange the group}
+\item{group}{Column for arrange the group.}
 
-\item{gr_lvl}{Levels in the groups for the arrange}
+\item{gr_lvl}{Levels in the groups for the arrange. See details.}
 
-\item{status}{Column with the status of the members}
+\item{status}{Column with the status of the members.}
 
-\item{st_lvl}{Level to confirm the assistance in the JC}
+\item{st_lvl}{Level to confirm the assistance in the JC. See details.}
 
-\item{frq}{Number of the day for each session}
+\item{frq}{Number of the day for each session.}
 
-\item{date}{Date when start the first session of JC}
+\item{date}{Date when start the first session of JC.}
 
-\item{seed}{Number for replicate the results}
+\item{seed}{Number for replicate the results (default = date).}
 }
 \value{
 data frame with the schedule for the JC
 }
 \description{
 Function for arrange journal club schedule
+}
+\details{
+The function could consider n levels for \code{gr_lvl}. In the case of two level the third level will be both.
+The suggested levels for \code{st_lvl} are: active or spectator. Only the active members will enter in the schedule.
+}
+\examples{
+
+\dontrun{
+
+library(inti)
+library(googlesheets4)
+
+url1 <- "https://docs.google.com/spreadsheets/d/"
+url2 <- "15TaF0lCCByg0dgOLqfoTlLbAWnau8IiLOklpS4cvm4M/edit#gid=272604925"
+url <- paste0(url1, url2)
+gs <- as_sheets_id(url)
+# browseURL(url)
+
+options(gargle_oauth_email = TRUE)
+
+jc <-  gs \%>\% range_read("members")
+
+jc \%>\% jc_tombola(data = .
+                  , members = "Member"
+                  , group = "Language"
+                  , gr_lvl = c("english", "spanish")
+                  , status = "Status"
+                  , st_lvl = "activo"
+                  , frq = 7
+                  , date = "2020-06-17"
+                  , seed = 2013
+                  ) \%>\%
+                  web_table(rnames = T, caption = "JC")
+
+}
+
 }
 \author{
 Flavio Lozano-Isla
