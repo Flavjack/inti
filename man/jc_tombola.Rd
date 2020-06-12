@@ -51,6 +51,7 @@ The suggested levels for \code{st_lvl} are: active or spectator. Only the active
 
 library(inti)
 library(googlesheets4)
+library(tidyverse)
 
 url1 <- "https://docs.google.com/spreadsheets/d/"
 url2 <- "15TaF0lCCByg0dgOLqfoTlLbAWnau8IiLOklpS4cvm4M/edit#gid=272604925"

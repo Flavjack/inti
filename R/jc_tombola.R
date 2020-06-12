@@ -27,6 +27,7 @@
 #'
 #' library(inti)
 #' library(googlesheets4)
+#' library(tidyverse)
 #'
 #' url1 <- "https://docs.google.com/spreadsheets/d/"
 #' url2 <- "15TaF0lCCByg0dgOLqfoTlLbAWnau8IiLOklpS4cvm4M/edit#gid=272604925"
@@ -100,7 +101,7 @@ tb <- jc %>%
   dplyr::mutate(grp = date + rep(seq(0, nrow(.)/length(gr_lvl)*frq, by = frq)
                                  , each = length(gr_lvl)
                                  , len = nrow(.))) %>%
-  dplyr::rename(Date = grp, Leader = dplyr::all_of(members))
+  dplyr::rename(Date = grp, Leader = members)
 
 tb
 
