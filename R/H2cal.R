@@ -281,6 +281,16 @@ H2cal <- function(data,
     purrr::as_vector(.) %>%
     mean(.)*2
 
+  ## Summary table based in BLUP's
+
+  smd <- BLUPs %>%
+    dplyr::summarise(
+      mean = mean(!!as.name(trait), na.rm = T)
+      , ste = sqrt(var(!!as.name(trait), na.rm = T)/n())
+      , min = min(!!as.name(trait))
+      , max = max(!!as.name(trait))
+    )
+
   ## Heretability
 
   # H2 Standard
@@ -295,17 +305,22 @@ H2cal <- function(data,
   ## Results
   rsl <- list(
     tabsmr = tibble::tibble(
-      varible = trait,
-      geno = gen.n,
-      env = loc.n,
-      year = year.n,
-      V.g = vc.g,
-      V.gxl = vc.gxl,
-      V.gxy = vc.gxy,
-      V.e = vc.e,
-      h2.s = H2.s,
-      h2.c = H2.c,
-      h2.p = H2.p
+      varible = trait
+      , rep = rep.n
+      , geno = gen.n
+      , env = loc.n
+      , year = year.n
+      , mean = smd$mean
+      , ste = smd$ste
+      , min = smd$min
+      , max = smd$max
+      , V.g = vc.g
+      , V.gxl = vc.gxl
+      , V.gxy = vc.gxy
+      , V.e = vc.e
+      , h2.s = H2.s
+      , h2.c = H2.c
+      , h2.p = H2.p
     ),
 
     blups = BLUPs,
