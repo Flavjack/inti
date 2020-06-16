@@ -15,13 +15,15 @@ H2cal(
   gen.name,
   rep.n,
   loc.name = NULL,
-  year.name = NULL,
   loc.n = 1,
+  year.name = NULL,
   year.n = 1,
   fix.model,
   ran.model,
-  blues = TRUE,
-  effects = FALSE
+  blues = FALSE,
+  effects = FALSE,
+  plot_diag = FALSE,
+  plot_dots = NULL
 )
 }
 \arguments{
@@ -35,9 +37,9 @@ H2cal(
 
 \item{loc.name}{Name of the location (default = NULL). See details.}
 
-\item{year.name}{Name of the years (default = NULL). See details.}
-
 \item{loc.n}{Number of locations (default = 1). See details.}
+
+\item{year.name}{Name of the years (default = NULL). See details.}
 
 \item{year.n}{Number of years (default = 1). See details.}
 
@@ -45,9 +47,13 @@ H2cal(
 
 \item{ran.model}{The random effects in the model. See examples.}
 
-\item{blues}{Calculate the BLUEs (default = TRUE).}
+\item{blues}{Calculate the BLUEs (default = FALSE).}
 
-\item{effects}{Conditional modes of the random effects instead of the BLUPs.}
+\item{effects}{Conditional modes of the random effects instead of the BLUPs (default = FALSE).}
+
+\item{plot_diag}{Show diagnostic plots (default = FALSE).}
+
+\item{plot_dots}{Show dotplot genotypes vs trait (default = NULL). See examples.}
 }
 \value{
 A list with three object:
@@ -81,23 +87,27 @@ For more information review the references.
 \examples{
 
 \dontrun{
+library(inti)
 library(tidyverse)
 library(emmeans)
 library(lme4)
 library(lmerTest)
 library(agridat)
-library(inti)
 
  dt <- john.alpha
  hr <- H2cal(data = dt
-            , blues = T
             , trait = "yield"
             , gen.name = "gen"
             , rep.n = 3
             , fix.model = "rep + (1|rep:block) + gen"
             , ran.model = "rep + (1|rep:block) + (1|gen)"
-)
-hr$tabsmr
+            , blues = T
+            , plot_diag = TRUE
+            , plot_dots = "rep"
+            )
+ hr$tabsmr
+ hr$blups
+ hr$blues
 }
 
 }

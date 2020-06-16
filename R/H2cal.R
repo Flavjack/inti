@@ -11,13 +11,15 @@
 #' @param gen.name Name of the genotypes.
 #' @param rep.n Number of replications in the experiment.
 #' @param loc.name Name of the location (default = NULL). See details.
-#' @param year.name Name of the years (default = NULL). See details.
 #' @param loc.n Number of locations (default = 1). See details.
+#' @param year.name Name of the years (default = NULL). See details.
 #' @param year.n Number of years (default = 1). See details.
 #' @param fix.model The fixed effects in the model. See examples.
 #' @param ran.model The random effects in the model. See examples.
-#' @param blues Calculate the BLUEs (default = TRUE).
-#' @param effects Conditional modes of the random effects instead of the BLUPs.
+#' @param blues Calculate the BLUEs (default = FALSE).
+#' @param effects Conditional modes of the random effects instead of the BLUPs (default = FALSE).
+#' @param plot_diag Show diagnostic plots (default = FALSE).
+#' @param plot_dots Show dotplot genotypes vs trait (default = NULL). See examples.
 #'
 #' @details The function allows to made the calculation for individual or multi-environmental trials (MET) using th fixed and random model.
 #'
@@ -58,7 +60,7 @@
 #' @importFrom tibble rownames_to_column as_tibble tibble
 #' @importFrom lme4 ranef VarCorr
 #' @importFrom graphics abline par
-#' @importFrom stats fitted
+#' @importFrom stats fitted var
 #'
 #' @source
 #'
@@ -69,40 +71,46 @@
 #' @examples
 #'
 #' \dontrun{
+#' library(inti)
 #' library(tidyverse)
 #' library(emmeans)
 #' library(lme4)
 #' library(lmerTest)
 #' library(agridat)
-#' library(inti)
 #'
 #'  dt <- john.alpha
 #'  hr <- H2cal(data = dt
-#'             , blues = T
 #'             , trait = "yield"
 #'             , gen.name = "gen"
 #'             , rep.n = 3
 #'             , fix.model = "rep + (1|rep:block) + gen"
 #'             , ran.model = "rep + (1|rep:block) + (1|gen)"
-#' )
-#' hr$tabsmr
+#'             , blues = T
+#'             , plot_diag = TRUE
+#'             , plot_dots = "rep"
+#'             )
+#'  hr$tabsmr
+#'  hr$blups
+#'  hr$blues
 #' }
 #'
 #' @export
 
-H2cal <- function(data,
-                  trait,
-                  gen.name,
-                  rep.n,
-                  loc.name = NULL,
-                  year.name = NULL,
-                  loc.n = 1,
-                  year.n = 1,
-                  fix.model,
-                  ran.model,
-                  blues = TRUE,
-                  effects = FALSE
-){
+H2cal <- function(data
+                  , trait
+                  , gen.name
+                  , rep.n
+                  , loc.name = NULL
+                  , loc.n = 1
+                  , year.name = NULL
+                  , year.n = 1
+                  , fix.model
+                  , ran.model
+                  , blues = FALSE
+                  , effects = FALSE
+                  , plot_diag = FALSE
+                  , plot_dots = NULL
+                  ){
 
   # library(tidyverse)
   # library(emmeans)
@@ -126,18 +134,35 @@ H2cal <- function(data,
   g.fix <- eval(bquote(lmer(.(f.md), data = data)))
   # summary(g.fix)
 
+  ### cleveland dot plots
+
+  if (!is.null(plot_dots)) {
+
+    p_dots <- data %>%
+      ggplot(aes(!!as.name(trait), !!as.name(gen.name))) +
+      geom_point(aes(color = !!as.name(plot_dots))) +
+      theme_minimal()
+
+    print(p_dots)
+
+  }
+
   ### Plot models
 
-  par(mfrow=c(2,4))
-  hist(resid(g.fix), main = trait)
-  qqnorm(resid(g.fix), main = trait); qqline(resid(g.fix))
-  plot(fitted(g.fix), resid(g.fix, type = "pearson"), main = trait); abline(h=0)
-  plot(resid(g.fix), main = trait)
-  hist(resid(g.ran), main = trait)
-  qqnorm(resid(g.ran), main = trait); qqline(resid(g.ran))
-  plot(fitted(g.ran), resid(g.ran, type = "pearson"), main = trait); abline(h=0)
-  plot(resid(g.ran), main = trait)
-  par(mfrow=c(1,1))
+  if (plot_diag == TRUE) {
+
+    par(mfrow=c(2,4))
+    hist(resid(g.fix), main = trait)
+    qqnorm(resid(g.fix), main = trait); qqline(resid(g.fix))
+    plot(fitted(g.fix), resid(g.fix, type = "pearson"), main = trait); abline(h=0)
+    plot(resid(g.fix), main = trait)
+    hist(resid(g.ran), main = trait)
+    qqnorm(resid(g.ran), main = trait); qqline(resid(g.ran))
+    plot(fitted(g.ran), resid(g.ran, type = "pearson"), main = trait); abline(h=0)
+    plot(resid(g.ran), main = trait)
+    par(mfrow=c(1,1))
+
+  }
 
   ### handle model estimates
 
@@ -286,7 +311,7 @@ H2cal <- function(data,
   smd <- BLUPs %>%
     dplyr::summarise(
       mean = mean(!!as.name(trait), na.rm = T)
-      , ste = sqrt(var(!!as.name(trait), na.rm = T)/n())
+      , std = sqrt(var(!!as.name(trait), na.rm = T))
       , min = min(!!as.name(trait))
       , max = max(!!as.name(trait))
     )
@@ -311,7 +336,7 @@ H2cal <- function(data,
       , env = loc.n
       , year = year.n
       , mean = smd$mean
-      , ste = smd$ste
+      , std = smd$std
       , min = smd$min
       , max = smd$max
       , V.g = vc.g
