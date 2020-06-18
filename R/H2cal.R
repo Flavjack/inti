@@ -100,10 +100,10 @@ H2cal <- function(data
                   , trait
                   , gen.name
                   , rep.n
-                  , loc.name = NULL
                   , loc.n = 1
-                  , year.name = NULL
                   , year.n = 1
+                  , loc.name = NULL
+                  , year.name = NULL
                   , fix.model
                   , ran.model
                   , blues = FALSE
@@ -167,64 +167,140 @@ H2cal <- function(data
   ### handle model estimates
 
   # number of genotypes
+
   gen.n <- g.ran %>%
     summary() %>%
     purrr::pluck("ngrps") %>%
     .[gen.name]
 
   # genotypic variance component
+
   vc.g <- g.ran %>%
     lme4::VarCorr() %>%
     tibble::as_tibble() %>%
     dplyr::filter(grp == gen.name) %>%
     dplyr::pull(vcov)
 
-  # enviroment variance component
-  if(loc.n == 1){
-    vc.gxl <- 0
-  } else {
+  # environment variance component
+
+  if(loc.n > 1){
+
     gxl <- paste(gen.name, loc.name, sep = ":")
+
     vc.gxl <- g.ran %>%
       lme4::VarCorr() %>%
       tibble::as_tibble() %>%
       dplyr::filter(grp == gxl) %>%
       dplyr::pull(vcov)
+
+    if( length(strsplit(gxl,":")[[1]]) < 2) {
+
+      message("You should include loc.name in the arguments")
+
+      vc.gxl <- 0
+
+    } else if (identical(vc.gxl, numeric(0))) {
+
+      message("You should include (1|genotype:location) interaction")
+
+      vc.gxl <- 0
+
+    }
+
+  } else if (!is.null(loc.name) && loc.n == 1) {
+
+    message("You should include loc.n in the arguments")
+
+    vc.gxl <- 0
+
+    } else if (loc.n == 1){
+
+    vc.gxl <- 0
+
   }
 
   # year variance component
-  if(year.n == 1){
-    vc.gxy <- 0
-  } else {
+
+  if(year.n > 1){
+
     gxy <- paste(gen.name, year.name, sep = ":")
+
     vc.gxy <- g.ran %>%
       lme4::VarCorr() %>%
       tibble::as_tibble() %>%
       dplyr::filter(grp == gxy) %>%
       dplyr::pull(vcov)
+
+    if( length(strsplit(gxy,":")[[1]]) < 2 ) {
+
+      message("You should include year.name in the arguments")
+
+      vc.gxy <- 0
+
+    } else if (identical(vc.gxy, numeric(0))) {
+
+      message("You should include (1|genotype:year) interaction")
+
+      vc.gxy <- 0
+
+    }
+
+  } else if (!is.null(year.name) && year.n == 1) {
+
+    message("You should include year.n in the arguments")
+
+    vc.gxy <- 0
+
+  } else if (year.n == 1){
+
+    vc.gxy <- 0
+
   }
 
-  # location x year variance componen (review in MET)
-  if(year.n == 1 | loc.n == 1){
-    vc.gxlxy <- 0
-  } else {
+  # location x year variance component (review in MET)
+
+  if(year.n > 1 && loc.n > 1){
+
     gxlxy <- paste(gen.name, loc.name, year.name, sep = ":")
+
     vc.gxlxy <- g.ran %>%
       lme4::VarCorr() %>%
       tibble::as_tibble() %>%
       dplyr::filter(grp == gxlxy) %>%
       dplyr::pull(vcov)
-  }
+
+    if( length(strsplit(gxlxy,":")[[1]]) < 3 ) {
+
+      message("You should include location/years arguments")
+
+      vc.gxlxy <- 0
+
+    } else if (identical(vc.gxlxy, numeric(0))) {
+
+      message("You should include (1|genotype:location:year) interaction")
+
+      vc.gxlxy <- 0
+
+    }
+
+  } else if (year.n == 1 && loc.n == 1){
+
+    vc.gxlxy <- 0
+
+  } else {vc.gxlxy <- 0}
 
   # error variance component
+
   vc.e <- g.ran %>%
     lme4::VarCorr() %>%
     tibble::as_tibble() %>%
     dplyr::filter(grp == "Residual") %>%
     dplyr::pull(vcov)
 
+  ## Best Linear Unbiased Estimators (BLUE)
+
   if(blues == TRUE){
 
-    ## Best Linear Unbiased Estimators (BLUE)
     BLUE <- g.fix %>%
       emmeans::emmeans(as.formula(paste("pairwise", gen.name, sep = " ~ ")), )
 
@@ -234,6 +310,7 @@ H2cal <- function(data
       dplyr::rename(!!trait := 'emmean')
 
     # mean variance of a difference between genotypes (BLUEs)
+
     vdBLUE.avg <- BLUE %>%
       purrr::pluck("contrasts") %>%
       tibble::as_tibble() %>%
@@ -271,7 +348,6 @@ H2cal <- function(data
         .[-c(1:count)] %>%
         mean(.)
     }
-
   }
 
   ## Best Linear Unbiased Predictors (BLUP)
@@ -295,10 +371,10 @@ H2cal <- function(data
       dplyr::rename(!!trait := '(Intercept)') %>%
       tibble::as_tibble(.) %>%
       dplyr::select(all_of(gen.name), dplyr::all_of(trait))
-
   }
 
   # mean variance of a difference between genotypes (BLUPs)
+
   vdBLUP.avg <- g.ran %>%
     lme4::ranef(condVar = TRUE) %>%
     purrr::pluck(gen.name) %>%
@@ -306,7 +382,7 @@ H2cal <- function(data
     purrr::as_vector(.) %>%
     mean(.)*2
 
-  ## Summary table based in BLUP's
+  ## Summary table based in BLUPs
 
   smd <- BLUPs %>%
     dplyr::summarise(
@@ -316,39 +392,45 @@ H2cal <- function(data
       , max = max(!!as.name(trait))
     )
 
-  ## Heretability
+  ## Heritability
 
   # H2 Standard
-  (H2.s <- vc.g/(vc.g + vc.gxl/loc.n + vc.gxy/year.n + vc.gxlxy/(loc.n*year.n) + vc.e/(loc.n*year.n*rep.n)))
+  H2.s <- vc.g/(vc.g + vc.gxl/loc.n + vc.gxy/year.n + vc.gxlxy/(loc.n*year.n) + vc.e/(loc.n*year.n*rep.n))
 
   # H2 Piepho
-  (H2.p <- vc.g/(vc.g + vdBLUE.avg/2))
+  H2.p <- vc.g/(vc.g + vdBLUE.avg/2)
 
   # H2 Cullis
-  (H2.c <- 1 - (vdBLUP.avg/2/vc.g))
+  H2.c <- 1 - (vdBLUP.avg/2/vc.g)
+
+  ## Summary table VC & H^2
+
+  vrcp <- dplyr::tibble(
+    varible = trait
+    , rep = rep.n
+    , geno = gen.n
+    , env = loc.n
+    , year = year.n
+    , mean = smd$mean
+    , std = smd$std
+    , min = smd$min
+    , max = smd$max
+    , V.g = vc.g
+    , V.gxl = vc.gxl
+    , V.gxy = vc.gxy
+    , V.e = vc.e
+    , h2.s = H2.s
+    , h2.c = H2.c
+    , h2.p = H2.p
+    )
 
   ## Results
-  rsl <- list(
-    tabsmr = tibble::tibble(
-      varible = trait
-      , rep = rep.n
-      , geno = gen.n
-      , env = loc.n
-      , year = year.n
-      , mean = smd$mean
-      , std = smd$std
-      , min = smd$min
-      , max = smd$max
-      , V.g = vc.g
-      , V.gxl = vc.gxl
-      , V.gxy = vc.gxy
-      , V.e = vc.e
-      , h2.s = H2.s
-      , h2.c = H2.c
-      , h2.p = H2.p
-    ),
 
-    blups = BLUPs,
-    blues = BLUEs
-  )
+  rsl <- list(
+    tabsmr = vrcp
+    , blups = BLUPs
+    , blues = BLUEs
+
+    )
 }
+
