@@ -31,7 +31,7 @@
 #'
 #' @export
 
-adjmeans <- function(data
+adjmeans_lm <- function(data
                      , trait
                      , lm.model
                      , comparison
@@ -48,8 +48,9 @@ adjmeans <- function(data
   # arguments
 
   trait <- as.name(trait)
-  plot_treat <- as.name(plot_treat)
-  plot_groups <- as.name(plot_groups)
+  if (!is.null(plot_treat)) { plot_treat <- as.name(plot_treat) }
+  if (!is.null(plot_groups)) { plot_groups <- as.name(plot_groups) }
+  if(is.null(sep)){sep = " + "}
 
   # Model
 
@@ -69,7 +70,7 @@ adjmeans <- function(data
       geom_point(aes(color = {{ plot_groups }} )) +
       theme_minimal()
 
-    p_dots
+    print(p_dots)
   }
 
   # Diagnostic plot
@@ -98,10 +99,11 @@ adjmeans <- function(data
     separate(treat, comparison, sep = ":") %>%
     arrange(desc({{trait}}))
 
+  if (is.null(tab_vars)) {
 
-  if (!is.null(tab_vars)) {
+    tb_smr
 
-    if(is.null(sep)){sep = " + "} else (sep = sep)
+  } else if ( tab_vars != trait ) {
 
     tb_smr <- tb_smr %>%
       select(
@@ -117,6 +119,16 @@ adjmeans <- function(data
         , {{tab_vars}}
         , sep = sep
       )
+
+  } else if (tab_vars == trait ) {
+
+    tb_smr <- tb_smr %>%
+      select(
+        comparison
+        , {{trait}}
+      ) %>%
+      arrange(desc({{trait}}))
+
   }
 
   # Results
