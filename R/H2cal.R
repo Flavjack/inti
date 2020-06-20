@@ -119,7 +119,9 @@ H2cal <- function(data
 
   grp <- emmean <- SE <- Var <-  NULL # avoid Undefined global functions or variables
 
-  print(trait)
+  print(paste("##>-----------------------------------------"))
+  print(paste("##>", trait))
+  print(paste("##>-----------------------------------------"))
 
   ### fit models
 

@@ -26,7 +26,7 @@
 #' @author Flavio Lozano-Isla
 #'
 #' @importFrom stats aov
-#' @importFrom dplyr across desc arrange
+#' @importFrom dplyr across desc arrange everything
 #' @importFrom tidyr unite
 #'
 #' @export
@@ -35,12 +35,12 @@ adjmeans_lm <- function(data
                      , trait
                      , lm.model
                      , comparison
-                     , digits = 3
-                     , tab_vars = NULL
-                     , sep = NULL
+                     , plot_diag = FALSE
                      , plot_treat = NULL
                      , plot_groups = NULL
-                     , plot_diag = FALSE
+                     , tab_vars = NULL
+                     , sep = NULL
+                     , digits = 3
                      ){
 
   treat <- NULL
@@ -52,6 +52,10 @@ adjmeans_lm <- function(data
   if (!is.null(plot_groups)) { plot_groups <- as.name(plot_groups) }
   if(is.null(sep)){sep = " + "}
 
+  print(paste("##>-----------------------------------------"))
+  print(paste("##>", trait))
+  print(paste("##>-----------------------------------------"))
+
   # Model
 
   model <- as.formula(paste(trait, lm.model, sep = " ~ "))
@@ -59,7 +63,7 @@ adjmeans_lm <- function(data
   lm <- data %>%
     aov(model, data = .)
 
-  anova(lm)
+  anova(lm) %>% print()
 
   # Dot plot
 
@@ -103,6 +107,15 @@ adjmeans_lm <- function(data
 
     tb_smr
 
+  } else if (tab_vars == "mean") {
+
+    tb_smr <- tb_smr %>%
+      select(
+        comparison
+        , {{trait}}
+      ) %>%
+      arrange(desc({{trait}}))
+
   } else if ( tab_vars != trait ) {
 
     tb_smr <- tb_smr %>%
@@ -120,21 +133,17 @@ adjmeans_lm <- function(data
         , sep = sep
       )
 
-  } else if (tab_vars == trait ) {
-
-    tb_smr <- tb_smr %>%
-      select(
-        comparison
-        , {{trait}}
-      ) %>%
-      arrange(desc({{trait}}))
-
   }
+
+  smr_stat <- mc %>%
+    pluck("statistics") %>%
+    dplyr::mutate(trait =  print(as.character(trait))) %>%
+    select(trait, dplyr::everything())
 
   # Results
 
   smr <- list(
-    statistics = mc %>% pluck("statistics")
+    statistics = smr_stat
     , means = tb_smr
   )
 

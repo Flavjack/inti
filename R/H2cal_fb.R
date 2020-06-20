@@ -53,15 +53,6 @@
 #'
 #' Schmidt, P., J. Hartung, J. Rath, and H.-P. Piepho. 2019. Estimating Broad-Sense Heritability with Unbalanced Data from Agricultural Cultivar Trials. Crop Science 59(2): 525–536. doi: 10.2135/cropsci2018.06.0376.
 #'
-#' @importFrom dplyr filter pull rename mutate all_of
-#' @importFrom purrr pluck as_vector
-#' @importFrom emmeans emmeans
-#' @importFrom stringr str_detect
-#' @importFrom tibble rownames_to_column as_tibble tibble
-#' @importFrom lme4 ranef VarCorr
-#' @importFrom graphics abline par
-#' @importFrom stats fitted var
-#'
 #' @source
 #'
 #' https://github.com/PaulSchmidtGit/Heritability/tree/master/Alternative%20Heritability%20Measures
@@ -103,20 +94,20 @@ H2cal_fb <- function(data
 
     trt <- data %>%
       inti::H2cal(data = .
-            , trait = colnames(.)[x]
-            , gen.name = gen.name
-            , rep.n = rep.n
-            , loc.name = loc.name
-            , loc.n = loc.n
-            , year.name = year.name
-            , year.n = year.n
-            , fix.model = fix.model
-            , ran.model = ran.model
-            , blues = blues
-            , effects = effects
-            , plot_diag = plot_diag
-            , plot_dots = plot_dots
-      )
+                  , trait = colnames(.)[x]
+                  , gen.name = gen.name
+                  , rep.n = rep.n
+                  , loc.name = loc.name
+                  , loc.n = loc.n
+                  , year.name = year.name
+                  , year.n = year.n
+                  , fix.model = fix.model
+                  , ran.model = ran.model
+                  , blues = blues
+                  , effects = effects
+                  , plot_diag = plot_diag
+                  , plot_dots = plot_dots
+                  )
   })
 
   h2cal <- do.call(rbind
