@@ -9,6 +9,7 @@ adjmeans_lm(
   trait,
   lm.model,
   comparison,
+  test = "SNK",
   plot_diag = FALSE,
   plot_treat = NULL,
   plot_groups = NULL,
@@ -25,6 +26,8 @@ adjmeans_lm(
 \item{lm.model}{The effects in the model. See examples.}
 
 \item{comparison}{Factor for the comparisons.}
+
+\item{test}{Test comparison (Default = SNK). Others: TUKEY & DUNCAN}
 
 \item{plot_diag}{Show diagnostic plots (default = FALSE).}
 

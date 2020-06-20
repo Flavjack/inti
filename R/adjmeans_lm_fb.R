@@ -33,6 +33,7 @@ adjmeans_lm_fb <- function(data
                      , trait
                      , lm.model
                      , comparison
+                     , test
                      , plot_diag = FALSE
                      , plot_treat = NULL
                      , plot_groups = NULL
@@ -63,6 +64,7 @@ adjmeans_lm_fb <- function(data
                         , trait = colnames(.)[x]
                         , lm.model = lm.model
                         , comparison = comparison
+                        , test = test
                         , digits = digits
                         , tab_vars = tab_vars
                         , sep = sep

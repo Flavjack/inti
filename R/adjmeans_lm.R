@@ -6,6 +6,7 @@
 #' @param trait Name of the trait.
 #' @param lm.model The effects in the model. See examples.
 #' @param comparison Factor for the comparisons.
+#' @param test Test comparison (Default = SNK). Others: TUKEY & DUNCAN
 #' @param tab_vars Specific the variables in the summary table (Default = NULL).
 #' @param sep Separator between the variables when use tab_vars. See details
 #' @param digits Number of digits in the table (Default = 3).
@@ -35,6 +36,7 @@ adjmeans_lm <- function(data
                      , trait
                      , lm.model
                      , comparison
+                     , test = "SNK"
                      , plot_diag = FALSE
                      , plot_treat = NULL
                      , plot_groups = NULL
@@ -91,10 +93,28 @@ adjmeans_lm <- function(data
 
   # Mean comparison
 
-  mc <- HSD.test(
-    y = lm
-    , trt = comparison
-  )
+  if (test == "SNK"){
+
+    mc <- SNK.test(
+      y = lm
+      , trt = comparison
+    )
+
+  } else if (test == "TUKEY") {
+
+    mc <- HSD.test(
+      y = lm
+      , trt = comparison
+    )
+
+  } else if (test == "DUNCAN") {
+
+    mc <- duncan.test(
+      y = lm
+      , trt = comparison
+    )
+
+  }
 
   tb_smr <- merge(
     mc %>% pluck("means") %>% rownames_to_column("treat")

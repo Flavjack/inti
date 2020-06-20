@@ -9,6 +9,7 @@ adjmeans_lm_fb(
   trait,
   lm.model,
   comparison,
+  test,
   plot_diag = FALSE,
   plot_treat = NULL,
   plot_groups = NULL,
