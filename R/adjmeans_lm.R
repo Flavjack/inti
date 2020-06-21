@@ -56,9 +56,15 @@ adjmeans_lm <- function(data
   if (!is.null(plot_groups)) { plot_groups <- as.name(plot_groups) }
   if(is.null(sep)){sep = " + "}
 
-  print(paste("##>-----------------------------------------"))
-  print(paste("##>", trait))
-  print(paste("##>-----------------------------------------"))
+  # Varible
+
+  if (anova == TRUE || plot_diag == TRUE) {
+
+    print(paste("##>-----------------------------------------"))
+    print(paste("##>", trait))
+    print(paste("##>-----------------------------------------"))
+
+  }
 
   # Model
 
@@ -73,18 +79,6 @@ adjmeans_lm <- function(data
 
   }
 
-  # Dot plot
-
-  if (!is.null(plot_treat) && !is.null(plot_groups)) {
-
-    p_dots <- data %>%
-      ggplot(aes( {{ trait }}, {{ plot_treat }} )) +
-      geom_point(aes(color = {{ plot_groups }} )) +
-      theme_minimal()
-
-    print(p_dots)
-  }
-
   # Diagnostic plot
 
   if (plot_diag == TRUE) {
@@ -95,6 +89,18 @@ adjmeans_lm <- function(data
     plot(fitted(lm), resid(lm, type = "pearson"), main = trait); abline(h=0)
     plot(resid(lm), main = trait)
 
+  }
+
+  # Dot plot
+
+  if (!is.null(plot_treat) && !is.null(plot_groups)) {
+
+    p_dots <- data %>%
+      ggplot(aes( {{ trait }}, {{ plot_treat }} )) +
+      geom_point(aes(color = {{ plot_groups }} )) +
+      theme_minimal()
+
+    print(p_dots)
   }
 
   # Mean comparison

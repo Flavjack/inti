@@ -121,9 +121,15 @@ H2cal <- function(data
 
   grp <- emmean <- SE <- Var <-  NULL # avoid Undefined global functions or variables
 
-  print(paste("##>-----------------------------------------"))
-  print(paste("##>", trait))
-  print(paste("##>-----------------------------------------"))
+  # Varible
+
+  if (summary == TRUE || plot_diag == TRUE || !is.null(plot_dots)) {
+
+    print(paste("##>-----------------------------------------"))
+    print(paste("##>", trait))
+    print(paste("##>-----------------------------------------"))
+
+  }
 
   ### fit models
 
@@ -131,7 +137,7 @@ H2cal <- function(data
   r.md <- as.formula(paste(trait, paste(ran.model, collapse = " + "), sep = " ~ "))
   g.ran <- eval(bquote(lmer(.(r.md), data = data)))
 
-  if (anova == TRUE) {
+  if (summary == TRUE) {
 
     summary(g.ran) %>% print()
 
@@ -141,19 +147,6 @@ H2cal <- function(data
   f.md <- as.formula(paste(trait, paste(fix.model, collapse = " + "), sep = " ~ "))
   g.fix <- eval(bquote(lmer(.(f.md), data = data)))
   # summary(g.fix)
-
-  ### cleveland dot plots
-
-  if (!is.null(plot_dots)) {
-
-    p_dots <- data %>%
-      ggplot(aes(!!as.name(trait), !!as.name(gen.name))) +
-      geom_point(aes(color = !!as.name(plot_dots))) +
-      theme_minimal()
-
-    print(p_dots)
-
-  }
 
   ### Plot models
 
@@ -169,6 +162,19 @@ H2cal <- function(data
     plot(fitted(g.ran), resid(g.ran, type = "pearson"), main = trait); abline(h=0)
     plot(resid(g.ran), main = trait)
     par(mfrow=c(1,1))
+
+  }
+
+  ### Dot plots
+
+  if (!is.null(plot_dots)) {
+
+    p_dots <- data %>%
+      ggplot(aes(!!as.name(trait), !!as.name(gen.name))) +
+      geom_point(aes(color = !!as.name(plot_dots))) +
+      theme_minimal()
+
+    print(p_dots)
 
   }
 
