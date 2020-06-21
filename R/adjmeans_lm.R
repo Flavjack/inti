@@ -6,12 +6,13 @@
 #' @param trait Name of the trait.
 #' @param lm.model The effects in the model. See examples.
 #' @param comparison Factor for the comparisons.
-#' @param test Test comparison (Default = SNK). Others: TUKEY & DUNCAN
-#' @param tab_vars Specific the variables in the summary table (Default = NULL).
-#' @param sep Separator between the variables when use tab_vars. See details
-#' @param digits Number of digits in the table (Default = 3).
-#' @param plot_treat Treat of comparison in dot plot (Default = NULL). See example.
-#' @param plot_groups Group of comparison in dot plot (Default = NULL). See example.
+#' @param test Test comparison (default = "SNK"). Others: "TUKEY" & "DUNCAN".
+#' @param anova ANOVA table (default = FALSE).
+#' @param tab_vars Specific the variables in the summary table (default = NULL).
+#' @param sep Separator between the variables when use tab_vars. See details.
+#' @param digits Number of digits in the table (default = 3).
+#' @param plot_treat Treat of comparison in dot plot (default = NULL). See example.
+#' @param plot_groups Group of comparison in dot plot (default = NULL). See example.
 #' @param plot_diag Show diagnostic plots (default = FALSE).
 #'
 #' @details
@@ -37,6 +38,7 @@ adjmeans_lm <- function(data
                      , lm.model
                      , comparison
                      , test = "SNK"
+                     , anova = FALSE
                      , plot_diag = FALSE
                      , plot_treat = NULL
                      , plot_groups = NULL
@@ -65,7 +67,11 @@ adjmeans_lm <- function(data
   lm <- data %>%
     aov(model, data = .)
 
-  anova(lm) %>% print()
+  if (anova == TRUE) {
+
+    anova(lm) %>% print()
+
+  }
 
   # Dot plot
 

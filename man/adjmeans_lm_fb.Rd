@@ -9,7 +9,8 @@ adjmeans_lm_fb(
   trait,
   lm.model,
   comparison,
-  test,
+  test = "SNK",
+  anova = FALSE,
   plot_diag = FALSE,
   plot_treat = NULL,
   plot_groups = NULL,
@@ -26,6 +27,10 @@ adjmeans_lm_fb(
 \item{lm.model}{The effects in the model. See examples.}
 
 \item{comparison}{Factor for the comparisons.}
+
+\item{test}{Test comparison (default = "SNK"). Others: "TUKEY" & "DUNCAN".}
+
+\item{anova}{ANOVA table (default = FALSE).}
 
 \item{plot_diag}{Show diagnostic plots (default = FALSE).}
 

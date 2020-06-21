@@ -6,6 +6,8 @@
 #' @param trait Name of the trait.
 #' @param lm.model The effects in the model. See examples.
 #' @param comparison Factor for the comparisons.
+#' @param test Test comparison (default = "SNK"). Others: "TUKEY" & "DUNCAN".
+#' @param anova ANOVA table (default = FALSE).
 #' @param tab_vars Specific the variables in the summary table (Default = NULL).
 #' @param sep Separator between the variables when use tab_vars. See details
 #' @param digits Number of digits in the table (Default = 3).
@@ -33,7 +35,8 @@ adjmeans_lm_fb <- function(data
                      , trait
                      , lm.model
                      , comparison
-                     , test
+                     , test = "SNK"
+                     , anova = FALSE
                      , plot_diag = FALSE
                      , plot_treat = NULL
                      , plot_groups = NULL
@@ -65,6 +68,7 @@ adjmeans_lm_fb <- function(data
                         , lm.model = lm.model
                         , comparison = comparison
                         , test = test
+                        , anova = anova
                         , digits = digits
                         , tab_vars = tab_vars
                         , sep = sep

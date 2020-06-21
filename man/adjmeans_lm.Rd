@@ -10,6 +10,7 @@ adjmeans_lm(
   lm.model,
   comparison,
   test = "SNK",
+  anova = FALSE,
   plot_diag = FALSE,
   plot_treat = NULL,
   plot_groups = NULL,
@@ -27,19 +28,21 @@ adjmeans_lm(
 
 \item{comparison}{Factor for the comparisons.}
 
-\item{test}{Test comparison (Default = SNK). Others: TUKEY & DUNCAN}
+\item{test}{Test comparison (default = "SNK"). Others: "TUKEY" & "DUNCAN".}
+
+\item{anova}{ANOVA table (default = FALSE).}
 
 \item{plot_diag}{Show diagnostic plots (default = FALSE).}
 
-\item{plot_treat}{Treat of comparison in dot plot (Default = NULL). See example.}
+\item{plot_treat}{Treat of comparison in dot plot (default = NULL). See example.}
 
-\item{plot_groups}{Group of comparison in dot plot (Default = NULL). See example.}
+\item{plot_groups}{Group of comparison in dot plot (default = NULL). See example.}
 
-\item{tab_vars}{Specific the variables in the summary table (Default = NULL).}
+\item{tab_vars}{Specific the variables in the summary table (default = NULL).}
 
-\item{sep}{Separator between the variables when use tab_vars. See details}
+\item{sep}{Separator between the variables when use tab_vars. See details.}
 
-\item{digits}{Number of digits in the table (Default = 3).}
+\item{digits}{Number of digits in the table (default = 3).}
 }
 \value{
 A list with two objects

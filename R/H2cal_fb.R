@@ -16,6 +16,7 @@
 #' @param year.n Number of years (default = 1). See details.
 #' @param fix.model The fixed effects in the model. See examples.
 #' @param ran.model The random effects in the model. See examples.
+#' @param summary Summary of the random model (default = TRUE).
 #' @param blues Calculate the BLUEs (default = FALSE).
 #' @param effects Conditional modes of the random effects instead of the BLUPs (default = FALSE).
 #' @param plot_diag Show diagnostic plots (default = FALSE).
@@ -71,6 +72,7 @@ H2cal_fb <- function(data
                      , year.n = 1
                      , fix.model
                      , ran.model
+                     , summary = FALSE
                      , blues = FALSE
                      , effects = FALSE
                      , plot_diag = FALSE
@@ -103,6 +105,7 @@ H2cal_fb <- function(data
                   , year.n = year.n
                   , fix.model = fix.model
                   , ran.model = ran.model
+                  , summary = summary
                   , blues = blues
                   , effects = effects
                   , plot_diag = plot_diag
