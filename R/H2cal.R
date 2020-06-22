@@ -396,15 +396,29 @@ H2cal <- function(data
     purrr::as_vector(.) %>%
     mean(.)*2
 
-  ## Summary table based in BLUPs
+  ## Summary table of adjusted means
 
-  smd <- BLUPs %>%
-    dplyr::summarise(
-      mean = mean(!!as.name(trait), na.rm = T)
-      , std = sqrt(var(!!as.name(trait), na.rm = T))
-      , min = min(!!as.name(trait))
-      , max = max(!!as.name(trait))
-    )
+  if (blues == TRUE) {
+
+    smd <- BLUEs %>%
+        dplyr::summarise(
+          mean = mean(!!as.name(trait), na.rm = T)
+          , std = sqrt(var(!!as.name(trait), na.rm = T))
+          , min = min(!!as.name(trait))
+          , max = max(!!as.name(trait))
+        )
+
+  } else if (blues == FALSE) {
+
+    smd <- BLUPs %>%
+      dplyr::summarise(
+        mean = mean(!!as.name(trait), na.rm = T)
+        , std = sqrt(var(!!as.name(trait), na.rm = T))
+        , min = min(!!as.name(trait))
+        , max = max(!!as.name(trait))
+      )
+
+  }
 
   ## Heritability
 
