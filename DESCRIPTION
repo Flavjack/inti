@@ -14,16 +14,16 @@ Depends:
     dplyr,
     tibble
 Imports:
+    lme4,
     FactoMineR,
     agricolae,
-    lme4,
+    emmeans,
+    corrplot,
     tidyr,
     purrr,
     stringr,
     readxl,
     lubridate,
-    emmeans,
-    corrplot,
     gsheet,
     data.table,
     factoextra,
@@ -41,6 +41,9 @@ Suggests:
     testthat,
     knitr,
     rmarkdown
+Remotes:
+    dreamRs/shinyWidgets
+    AnalytixWare/ShinySky
 VignetteBuilder: knitr
 License: MIT + file LICENSE
 Encoding: UTF-8
