@@ -32,7 +32,10 @@ Imports:
     openxlsx,
     zoo,
     shinydashboard,
-    shinyBS,
+    shinyBS
+Remotes:
+    dreamRs/shinyWidgets,
+    AnalytixWare/ShinySky
 Suggests:
     googlesheets4,
     plotly,
@@ -41,9 +44,6 @@ Suggests:
     testthat,
     knitr,
     rmarkdown
-Remotes:
-    dreamRs/shinyWidgets
-    AnalytixWare/ShinySky
 VignetteBuilder: knitr
 License: MIT + file LICENSE
 Encoding: UTF-8
