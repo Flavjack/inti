@@ -32,10 +32,8 @@ Imports:
     openxlsx,
     zoo,
     shinydashboard,
-    shinyBS
-Remotes:
-    dreamRs/shinyWidgets,
-    AnalytixWare/ShinySky
+    shinyBS,
+    shinyWidgets
 Suggests:
     googlesheets4,
     plotly,
