@@ -5,7 +5,7 @@
 #' @param data data frame.
 #' @param caption table caption. See details.
 #' @param notes footnotes for the table. See details.
-#' @param label label for start the footnote.
+#' @param label label for start the footnote (default = "__Note:__").
 #' @param notation notation for the symbols and footnotes (default = "number"). See details.
 #'
 #' @details
@@ -17,6 +17,9 @@
 #'
 #' @return Table with caption and footnotes
 #'
+#' @author
+#'
+#' Flavio Lozano-Isla
 #'
 #' @export
 
