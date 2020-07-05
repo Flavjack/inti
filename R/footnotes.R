@@ -55,7 +55,7 @@ footnotes <- function(table
 
   if (count.intablenote != 0 & count.note != count.intablenote) {
     warning(paste("You entered", count.note, "notes but you put",
-                  count.intablenote, "[note] in your table."))
+                  count.intablenote, "[notes] in your table."))
   }
 
   # Find out if there are any extra in-table notations needed to be corrected
