@@ -7,7 +7,7 @@
 include_figure(
   data,
   figure,
-  fig_list = "figure",
+  fig_list = "figures",
   path = "url",
   caption = "caption",
   notes = "notes",
