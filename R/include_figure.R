@@ -3,20 +3,20 @@
 #' Include figures with title and notes using a data base
 #'
 #' @param data data frame with the figures information. See details.
-#' @param figure name of the figure in the fig_list.
-#' @param fig_list column with the list of figures (default = "figures").
-#' @param path figure path or url (default = "url").
-#' @param caption column with the figure caption (default = "caption").
-#' @param notes column with the figure notes (default = "notes").
+#' @param figure name or path of the figure.
+#' @param caption manual figure caption (default = NULL).
+#' @param notes manual figure notes (default = NULL).
 #' @param label label for start the footnote (default = "__Source:__").
+#' @param table columns in the table (default = c("figures", "caption", "notes", "url")).
 #'
 #' @details
 #'
-#' The data frame should contain 4 columns:
-#' 1. \code{fig_list}
+#' The data frame should contain 4 columns specified in \code{table}:
+#' 1. \code{figures}
 #' 2. \code{caption}
 #' 3. \code{notes}
 #' 4. \code{path} or \code{url}
+#' If you don't use a a data frame you provide the information manually.
 #'
 #' @return Figure with caption and notes
 #'
@@ -94,34 +94,6 @@ include_figure <- function(data = NULL
 
   }
 
-  list(figure  = img, caption = cap)
+  list(figure = img, caption = cap)
 
 }
-
-
-source("http://lozanoisla.com/setup.r")
-url <- "https://docs.google.com/spreadsheets/d/1R-uHCH5vZk9S2IlCzDOEg4rdi1ZxhPYxSoX5v_ohB5Y/edit#gid=13226945"
-gs <- as_sheets_id(url)
-# browseURL(url)
-
-figure <- "zncl"
-
-fig <- gs %>%
-  range_read("fig") %>%
-  include_figure(data = .
-                 , figure = figure
-                 , table = c("figures", "caption", "notes", "links")
-                 )
-
-fig$caption
-fig$figure
-
-
-img <- "https://lh3.googleusercontent.com/BqPAuF0wNISKAuI6xutzldsJdWNWY_geZ4DHaAkl-I_2ZIs--N-vn3jY8LKxjOFFyRcBvnmiQAx6uRWoAtyRIiU9tquXzusZ8eGZsPO8qkBAzBJqWgr6_9kpoRnx4RpPI1Z8GmLOVUDkSOUqPJuQg-cO5TUPGwQJBj4aFef_7wHxijEmO-MVHF-4CA3vExARiQPwl_DY6cQrPtJ0H3aqjc09WntxFKEfAWl-gkN7Z9FwUznxFek4428cXoaPc1R3nwoOFZECi0gpWq4jYzr0XGZF-yw_uLytA1Y_jPUn5DYcCHoFYn042Ek-f_oZSHhGjOKbkTFHHwP4R0VB85Mh7r5BxTtu165GLwUmfQwkg9ieScJiPZDjhhkEzwEa-TCQB5MM4vb6YRheQOIqBNzTVuuzN-J1HxoALZzQ1aakUheomhH9vokAibA7mZajqgNdoDspyw6leBdRG0IaZCEYt0tk7hCJM3cRG1yMtIfVxuRlqgRvoR5tzYz4ueeEBZNXcmth8TgqR0Ab0jp5_C5X9S60BHs2POt1x0XNssq_Qtk0ypNVvO9jRaf5MF_BRnwxQCJg2-BysNGCS6W6Hjhhw_p7ImaLDg-joY9Wlx3xyNGYIm8w8aD_zhnITtzVQ3BkjfBJ2lS61KGvWUEduSacqnggDkGLqr61VUo9XZNrJ97jTrjW69Eih2xJkn27ioby_Y6DIU1LrKWKzBTyeA1vanYjvaxy2sJDUdoZxpShNNFIhBS5Lg=w591-h475-no" %>%
-  include_figure(figure = .
-                 # , caption = "titulo de"
-                 # , notes = "esto es"
-                 )
-
-img$figure
-img$caption

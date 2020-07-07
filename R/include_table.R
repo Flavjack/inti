@@ -3,8 +3,8 @@
 #' Include tables with notes and titles for word and html documents
 #'
 #' @param data data frame.
-#' @param caption table caption. See details.
-#' @param notes footnotes for the table. See details.
+#' @param caption table caption (default = NULL). See details.
+#' @param notes footnotes for the table (default = NULL). See details.
 #' @param label label for start the footnote (default = "__Note:__").
 #' @param notation notation for the symbols and footnotes (default = "number"). See details.
 #'
@@ -54,4 +54,3 @@ include_table <- function(data
     inti::footnotes(notes = notes, label = label, notation = notation)
 
 }
-

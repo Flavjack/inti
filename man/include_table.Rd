@@ -15,9 +15,9 @@ include_table(
 \arguments{
 \item{data}{data frame.}
 
-\item{caption}{table caption. See details.}
+\item{caption}{table caption (default = NULL). See details.}
 
-\item{notes}{footnotes for the table. See details.}
+\item{notes}{footnotes for the table (default = NULL). See details.}
 
 \item{label}{label for start the footnote (default = "__Note:__").}
 
