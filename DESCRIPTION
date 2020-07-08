@@ -12,16 +12,16 @@ Depends:
     shiny,
     ggplot2,
     dplyr,
+    tidyr,
     tibble
 Imports:
     lme4,
     FactoMineR,
     agricolae,
     emmeans,
-    corrplot,
-    tidyr,
     purrr,
     stringr,
+    corrplot,
     readxl,
     lubridate,
     gsheet,
@@ -33,7 +33,8 @@ Imports:
     zoo,
     shinydashboard,
     shinyBS,
-    shinyWidgets
+    shinyWidgets,
+    miniUI
 Suggests:
     googlesheets4,
     plotly,

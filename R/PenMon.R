@@ -13,9 +13,13 @@
 #' @param alt altitud (meters)
 #' @param Hws heigth of data collect for wind speed (meters).
 #' @param alb albedo
+#'
+#' @author Flavio Lozano-Isla
+#'
 #' @return data frame with daily evapotranspiration
 #' @importFrom lubridate yday
 #' @importFrom zoo as.Date
+#'
 #' @export
 
 

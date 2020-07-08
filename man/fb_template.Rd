@@ -3,7 +3,7 @@
 \docType{data}
 \name{fb_template}
 \alias{fb_template}
-\title{Field book template for Fieldbook Application}
+\title{Field book template for yupana application}
 \format{
 A data frame data.frame which comes from importing csv-template files.
 }
@@ -17,5 +17,5 @@ fb_template
 This dataset contains the template for field book generation
 }
 \references{
-This data is related to Fieldbook application
+This data is related to yupana application
 }

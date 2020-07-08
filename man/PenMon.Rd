@@ -50,3 +50,6 @@ data frame with daily evapotranspiration
 \description{
 Function for calculate the daily evapotranspiration.
 }
+\author{
+Flavio Lozano-Isla
+}

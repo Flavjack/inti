@@ -1,11 +1,15 @@
 #' Mean Comparison Table Summary
 #'
-#' @description Function using resulting output from mean comparison test from agricolae package optimized for graphs.
+#' Function using resulting output from mean comparison test from agricolae package optimized for graphs.
+#'
 #' @param meanComp Object list with the result from mean comparison test
+#'
 #' @return Table with complete data for graphics
+#'
 #' @importFrom dplyr mutate funs select rename rename_ group_by_ summarise full_join
 #' @importFrom tidyr separate
 #' @importFrom tibble rownames_to_column
+#'
 #' @export
 
 data_summary <- function(meanComp){

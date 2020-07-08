@@ -23,3 +23,6 @@ table in markdown format for html documents
 \description{
 Export tables with download, pasta and copy buttons
 }
+\author{
+Flavio Lozano-Isla
+}

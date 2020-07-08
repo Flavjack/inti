@@ -17,7 +17,7 @@ getData <- function(dir, sheet = 1) {
     readxl::read_excel(path = dir, sheet = sheet) %>%
       as.data.frame()
 
-  } else{
+  } else {
 
     gsheet::gsheet2tbl(url = dir) %>%
       as.data.frame()

@@ -11,9 +11,7 @@
 #'
 #' @return Vector with the selected values as NA's
 #'
-#' @author
-#'
-#' Flavio Lozano-Isla
+#' @author Flavio Lozano-Isla
 #'
 #' @importFrom dplyr mutate
 #'

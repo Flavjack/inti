@@ -1,11 +1,15 @@
-#' Regresion line equation
+#' Regression line equation
 #'
 #' @description Construction of the regression line equation
 #' @param x variable in the x axis
 #' @param y variable in the y axis
 #' @param data dataframe with the information
 #' @return regression equation
+#'
+#' @author Flavio Lozano-Isla
+#'
 #' @importFrom stats as.formula coef
+#'
 #' @export
 
 lm_eqn <- function(x, y, data) {

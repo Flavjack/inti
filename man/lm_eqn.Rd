@@ -2,7 +2,7 @@
 % Please edit documentation in R/lm_eqn.R
 \name{lm_eqn}
 \alias{lm_eqn}
-\title{Regresion line equation}
+\title{Regression line equation}
 \usage{
 lm_eqn(x, y, data)
 }
@@ -18,4 +18,7 @@ regression equation
 }
 \description{
 Construction of the regression line equation
+}
+\author{
+Flavio Lozano-Isla
 }
