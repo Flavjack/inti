@@ -1,31 +1,40 @@
-pkgs_cran <- c(
-  "shiny"
-  ,"miniUI"
-  , "shinyFiles"
-  , "utils"
-  , "fs"
-  )
+# # packages ----------------------------------------------------------------
+# # -------------------------------------------------------------------------
+#
+# pkgs_cran <- c(
+#   "shiny"
+#   ,"miniUI"
+#   , "shinyFiles"
+#   , "utils"
+#   , "fs"
+#   )
+#
+# installed_cran <- pkgs_cran %in% rownames(installed.packages())
+# if (any(installed_cran == FALSE)) {
+#   install.packages(pkgs_cran[!installed_cran])
+# }
+#
+# pkgs_git <- c(
+#   "inti" # Tools and Statistical Procedures in Plant Science
+#   , "inserttable" # Insert table with copy and paste
+#   , "citr"  # Use zotero for citations
+# )
+#
+# installed_git <- pkgs_git %in% rownames(installed.packages())
+# if (any(installed_git == FALSE)) {
+#   devtools::install_github("Flavjack/inti", upgrade = "always")
+#   devtools::install_github("lbusett/insert_table", upgrade = "always")
+#   devtools::install_github("crsh/citr", upgrade = "always")
+# }
+#
+# invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
+# rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
 
-installed_cran <- pkgs_cran %in% rownames(installed.packages())
-if (any(installed_cran == FALSE)) {
-  install.packages(pkgs_cran[!installed_cran])
-}
 
-pkgs_git <- c(
-  "inti" # Tools and Statistical Procedures in Plant Science
-  , "inserttable" # Insert table with copy and paste
-  , "citr"  # Use zotero for citations
-)
+articles <- function(){
 
-installed_git <- pkgs_git %in% rownames(installed.packages())
-if (any(installed_git == FALSE)) {
-  devtools::install_github("Flavjack/inti", upgrade = "always")
-  devtools::install_github("lbusett/insert_table", upgrade = "always")
-  devtools::install_github("crsh/citr", upgrade = "always")
-}
-
-invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
-rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
+# app ---------------------------------------------------------------------
+# -------------------------------------------------------------------------
 
 ui <- miniPage(
 
@@ -199,6 +208,8 @@ server <- function(input, output, session) {
 
 }
 
-viewer <- dialogViewer("lozanoisla.com", width = 500, height = 450)
+}
 
-runGadget(ui, server, viewer = viewer)
+# viewer <- dialogViewer("lozanoisla.com", width = 500, height = 450)
+#
+# runGadget(ui, server, viewer = viewer)

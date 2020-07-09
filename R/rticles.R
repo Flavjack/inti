@@ -17,7 +17,7 @@
 #' }
 #'
 #' @author Flavio Lozano-Isla
-#' @importFrom shiny runApp
+#' @importFrom shiny runApp dialogViewer runGadget
 #' @export
 
 rticles <- function() {
@@ -27,7 +27,9 @@ rticles <- function() {
          call. = FALSE)
   }
 
-  source(paste0(appDir, "/", "build_rticles.R"))
+  viewer <- dialogViewer("lozanoisla.com", width = 500, height = 450)
+
+  runGadget(runApp(appDir), viewer =  viewer)
 }
 
 
