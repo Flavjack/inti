@@ -1,0 +1,4 @@
+Name: Yupana app
+Description: Run inti::yupana() for data analysis.
+Binding: yupana
+Interactive: true

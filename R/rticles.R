@@ -21,15 +21,14 @@
 #' @export
 
 rticles <- function() {
-  appDir <- system.file("rstudio", package = "inti")
+  appDir <- system.file("rticles", package = "inti")
   if (appDir == "") {
     stop("Could not find example directory. Try re-installing `inti`.",
          call. = FALSE)
   }
 
-  viewer <- dialogViewer("lozanoisla.com", width = 500, height = 450)
+  shiny::runApp(appDir, display.mode = "normal", launch.browser = TRUE)
 
-  runGadget(runApp(appDir), viewer =  viewer)
 }
 
 

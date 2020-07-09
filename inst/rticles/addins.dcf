@@ -1,8 +1,3 @@
-Name: Yupana app
-Description: Run inti::yupana() for data analysis.
-Binding: yupana
-Interactive: true
-
 Name: Write rticles
 Description: Build markdown or bookdown document.
 Binding: rticles
