@@ -16,9 +16,9 @@ Depends:
     tibble
 Imports:
     lme4,
-    FactoMineR,
     agricolae,
     emmeans,
+    FactoMineR,
     purrr,
     stringr,
     corrplot,
@@ -30,11 +30,7 @@ Imports:
     DT,
     gtools,
     openxlsx,
-    zoo,
-    shinydashboard,
-    shinyBS,
-    shinyWidgets,
-    miniUI
+    zoo
 Suggests:
     googlesheets4,
     plotly,

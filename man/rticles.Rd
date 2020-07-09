@@ -24,3 +24,6 @@ Open the ".Rprj" and you should have the possibility to compile the book.
 }
 
 }
+\author{
+Flavio Lozano-Isla
+}

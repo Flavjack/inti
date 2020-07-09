@@ -1,6 +1,46 @@
-# fieldbook -----------------------------------------------------------------
+# Yupana ------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+# Packages ----------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+pkgs_cran <- c(
+  "shiny"
+  , "shinydashboard"
+  , "agricolae"
+  , "DT"
+  , "tidyr"
+  , "dplyr"
+  , "ggplot2"
+  , "rhandsontable"
+  , "ggpubr"
+  , "inti"
+  , "shinyBS"
+  , "shinyWidgets"
+  , "stringr"
+  , "openxlsx"
+  )
+
+installed_cran <- pkgs_cran %in% rownames(installed.packages())
+if (any(installed_cran == FALSE)) {
+  install.packages(pkgs_cran[!installed_cran])
+}
+
+pkgs_git <- c(
+  "shinysky"
+  )
+
+installed_git <- pkgs_git %in% rownames(installed.packages())
+if (any(installed_git == FALSE)) {
+  devtools::install_github("AnalytixWare/ShinySky", upgrade = "always")
+}
+
+invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
+rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
 
 # fb tags -----------------------------------------------------------------
+# -------------------------------------------------------------------------
+
 
 design_options <- c(
   "Completely randomized design" = "crd",
@@ -10,21 +50,8 @@ design_options <- c(
   "Two-Way Factorial arrangement in complete block design" = "f2rcbd"
 )
 
-# end fb tags -------------------------------------------------------------
-
-library(shiny)
-library(shinydashboard)
-library(agricolae)
-library(DT)
-library(tidyr)
-library(dplyr)
-library(ggplot2)
-library(rhandsontable)
-library(ggpubr)
-library(inti)
-library(shinyBS)
-library(shinyWidgets)
-library(shinysky)
+# App ---------------------------------------------------------------------
+# -------------------------------------------------------------------------
 
 options(shiny.sanitize.errors = FALSE)
 
