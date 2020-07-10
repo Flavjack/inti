@@ -1,4 +1,0 @@
-Name: Write rticles
-Description: Build markdown or bookdown document.
-Binding: rticles
-Interactive: true

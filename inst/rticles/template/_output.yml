@@ -1,0 +1,25 @@
+bookdown::gitbook:
+  css: files/style_rbooks.css
+  split_by: chapter # options: chapter or none
+  split_bib: TRUE
+  config:
+    toc:
+      collapse: section
+      scroll_highlight: yes
+      before: |
+        <li> <a href="https://www.linkedin.com/in/flavjack/" target="blank"> Flavio Lozano Isla </a> </li>
+      after:  |
+        <li> <a href="https://scholar.google.com/citations?user=3RAsRPAAAAAJ&hl=en&oi=ao" target="blank"> Google Scholar </a> </li>
+    fontsettings:
+      theme: white
+      family: sans
+      size: 2
+    search: yes
+    info: no
+    download: 
+      - ["rticles.docx", "word"]
+      - ["files.zip", "files"]
+    sharing:
+      github: yes
+      twitter: no
+      facebook: no

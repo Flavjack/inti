@@ -1,0 +1,27 @@
+book_filename: "rticles"
+view: https://github.com/flavjack/rticles/blob/master/%s
+clean: ["docs", "libs", "_book", "rticles.Rmd", "rticles.html"]
+output_dir: docs
+delete_merged_file: TRUE
+rmd_files: ["index.Rmd"]
+
+language:
+  label:
+    fig: 'Figure '
+    tab: 'Table '
+    eq: 'Equation '
+    thm: 'Theorem '
+    lem: 'Lemma '
+    cor: 'Corollary '
+    prp: 'Proposition '
+    cnj: 'Conjecture '
+    def: 'Definition '
+    exm: 'Example '
+    exr: 'Exercise '
+    proof: 'Proof. '
+    remark: 'Remark. '
+    solution: 'Solution. '
+  ui:
+    edit: Edit
+    chapter_name: ''
+    appendix_name: ''

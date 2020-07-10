@@ -31,6 +31,12 @@
   invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
   rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
 
+  library(shiny)
+  library(miniUI)
+  library(shinyFiles)
+  library(utils)
+  library(fs)
+
   # app ---------------------------------------------------------------------
   # -------------------------------------------------------------------------
 
@@ -40,9 +46,9 @@ fluidPage(
     tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
 
     fluidRow(
-      column(2),
+      column(1),
 
-      column(3,
+      column(4,
 
              h1("Rticles"),
 
@@ -74,9 +80,12 @@ fluidPage(
 
              shinyDirButton(
                "directory",
-               "Folder select",
+               "Select folder",
                "Please select a folder"
              ),
+
+             br(),
+             br(),
 
       gadgetTitleBar(
         title = "enjoy writing!  :)",
@@ -88,6 +97,8 @@ fluidPage(
         ))
 
              ),
+
+      column(1),
 
       column(5,
 
@@ -103,11 +114,11 @@ fluidPage(
                     </li>
                     <li><span style="color: #008000;">Selecciona el nombre para tú documento.</span></li>
                     <li><span style="color: #008000;">Selecciona el folder donde se exportará toda los documentos necesarios para ejecutar el ejemplo.</span></li>
-                    <li><span style="color: #008000;">Te recomiendo usar proyectos (Use a R project) ya que te permitirá organizar mejor tus trabajos</span></li>
+                    <li><span style="color: #008000;">Te recomiendo usar proyectos (Use a R project) ya que te permitirá organizar mejor tus trabajos.</span></li>
                     <li><span style="color: #008000;">Unas vez selecionado todos los parámetros crea las dependencias ("Create")</span></li>
-                    <li><span style="color: #008000;">Despúes de crear, ve al folder que seleccionates y abre el proyecto (.Rporj)</span></li>
+                    <li><span style="color: #008000;">Despúes de crear, ve al folder que seleccionates y abre el proyecto (.Rporj).</span></li>
                     <li><span style="color: #008000;">Compila el documento con Knitr</span></li>
-                    <li><span style="color: #008000;">Espera hasta que compile el documento</span></li>
+                    <li><span style="color: #008000;">Espera hasta que compile el documento.</span></li>
                     <li><span style="color: #008000;">Ahora con ese ejemplo puedes crear tú propio documento.</span></li>
                     <li><span style="color: #008000;">A escribir los manuscritos! :)</span></li>
                </ol>
@@ -119,7 +130,7 @@ fluidPage(
 
       ),
 
-      column(2)
+      column(1)
 
     )
   )

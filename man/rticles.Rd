@@ -2,27 +2,37 @@
 % Please edit documentation in R/rticles.R
 \name{rticles}
 \alias{rticles}
-\title{Build markdown o bookdown template}
+\title{Rticles template}
 \usage{
-rticles()
+rticles(
+  path,
+  type = c("markdown", "bookdown"),
+  name = "manuscript",
+  project = TRUE
+)
+}
+\arguments{
+\item{path}{directory for create the files.}
+
+\item{type}{document type (default = "markdown").}
+
+\item{name}{name of the main document (default = "manuscript").}
+
+\item{project}{create a R project (default = TRUE). See details.}
 }
 \value{
-Shiny app
+folder and files
 }
 \description{
-Invoke RStudio add-in to create markdown documents
+Create a complete example for markdown o bookdown documents
 }
 \details{
-Create all the files in the present work directory.
-It is recommended use ".Rproj" for bookdown documents.
-After create the ".Rproj" file.
-Open the ".Rprj" and you should have the possibility to compile the book.
-}
-\examples{
-\dontrun{
- rticles()
-}
-
+Create all the files in the path directory.
+It is recommended use ".Rproj".
+After create the project Open the ".Rprj" file.
+Compile the document and you will see the example.
+If you already have a folder and select such as "bookdown"
+is necessary change the main (.rmd) file to index.rmd
 }
 \author{
 Flavio Lozano-Isla
