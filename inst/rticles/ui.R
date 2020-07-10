@@ -76,25 +76,48 @@ fluidPage(
                inline = T
              ),
 
-             verbatimTextOutput("directorypath"),
+             conditionalPanel(
 
-             shinyDirButton(
-               "directory",
-               "Select folder",
-               "Please select a folder"
+               condition = 'output.web == "FALSE"',
+
+
+               downloadButton("downloadData", "Download")
+
+
              ),
 
              br(),
+
+             conditionalPanel(
+
+               condition = 'output.web == TRUE',
+
+               verbatimTextOutput("directorypath"),
+
+               shinyDirButton(
+                 "directory",
+                 "Select folder",
+                 "Please select a folder"
+               ),
+
+             ),
+
              br(),
 
-      gadgetTitleBar(
-        title = "enjoy writing!  :)",
-        left = miniTitleBarCancelButton(),
-        right = miniTitleBarButton(
-          inputId = "create",
-          label = "Create",
-          primary = TRUE
-        ))
+             conditionalPanel(
+
+               condition = 'output.web == TRUE',
+
+               gadgetTitleBar(
+                 title = "enjoy writing! :)",
+                 left = miniTitleBarCancelButton(),
+                 right = miniTitleBarButton(
+                   inputId = "create",
+                   label = "Create",
+                   primary = TRUE
+                 ))
+
+             )
 
              ),
 
@@ -103,27 +126,27 @@ fluidPage(
       column(5,
 
              HTML('
-                  <h1 style="text-align: justify;"><span style="color: #ff6600;">Instrucciones</span></h1>
-                    <p style="text-align: justify;"><span style="color: #008000;">La siguiente app te ayudara a crear tu primer documento usando R + markdown = Rmardown (.Rmd).</span></p>
-                    <ol style="text-align: justify;">
-                    <li><span style="color: #008000;">Elije que tipo de documento deseas crear.</span>
-                    <ul>
-                    <li><span style="color: #008000;">Markdown para articulos y tesis.</span></li>
-                    <li><span style="color: #008000;">Bookdown para manuales y libros.</span></li>
-                    </ul>
-                    </li>
-                    <li><span style="color: #008000;">Selecciona el nombre para tú documento.</span></li>
-                    <li><span style="color: #008000;">Selecciona el folder donde se exportará toda los documentos necesarios para ejecutar el ejemplo.</span></li>
-                    <li><span style="color: #008000;">Te recomiendo usar proyectos (Use a R project) ya que te permitirá organizar mejor tus trabajos.</span></li>
-                    <li><span style="color: #008000;">Unas vez selecionado todos los parámetros crea las dependencias ("Create")</span></li>
-                    <li><span style="color: #008000;">Despúes de crear, ve al folder que seleccionates y abre el proyecto (.Rporj).</span></li>
-                    <li><span style="color: #008000;">Compila el documento con Knitr</span></li>
-                    <li><span style="color: #008000;">Espera hasta que compile el documento.</span></li>
-                    <li><span style="color: #008000;">Ahora con ese ejemplo puedes crear tú propio documento.</span></li>
-                    <li><span style="color: #008000;">A escribir los manuscritos! :)</span></li>
-               </ol>
-               <p> </p>
-               <p> </p>
+                <h1 style="text-align: justify;"><span style="color: #ff6600;">Instrucciones</span></h1>
+                <p style="text-align: justify;"><span style="color: #008000;">La siguiente app te ayudara a crear tu primer documento usando R + markdown = Rmardown (.Rmd).</span></p>
+                <ol style="text-align: justify;">
+                <li><span style="color: #008000;">Elije que tipo de documento deseas crear.</span>
+                <ul>
+                <li><span style="color: #008000;">Markdown para articulos y tesis.</span></li>
+                <li><span style="color: #008000;">Bookdown para manuales y libros.</span></li>
+                </ul>
+                </li>
+                <li><span style="color: #008000;">Selecciona el nombre para tú documento.</span></li>
+                <li><span style="color: #008000;">Selecciona el folder donde se exportará toda los documentos necesarios para ejecutar el ejemplo.</span></li>
+                <li><span style="color: #008000;">Te recomiendo usar proyectos (use a R project) ya que te permitirá organizar mejor tus trabajos.</span></li>
+                <li><span style="color: #008000;">Unas vez selecionado todos los parámetros, crea las dependencias con el boton ("Create").</span></li>
+                <li><span style="color: #008000;">Despúes de crear, ve al folder que seleccionates y abre el proyecto (.Rporj)</span></li>
+                <li><span style="color: #008000;">Compila el documento usando el boton Knitr en Rstudio.<br /></span></li>
+                <li><span style="color: #008000;">Espera hasta que compile el documento.</span></li>
+                <li><span style="color: #008000;">Ahora con el ejemplo puedes crear tú propio documento.</span></li>
+                <li><span style="color: #008000;">A escribir los manuscritos! :)</span></li>
+                </ol>
+                <p> </p>
+                <p> </p>
                   '),
 
              br(),
@@ -136,5 +159,7 @@ fluidPage(
   )
 
   # viewer <- dialogViewer("lozanoisla.com", width = 500, height = 450)
-  #
+
   # runGadget("inst/rticles/app.R", server = server, viewer = viewer)
+
+  # browseURL("https://flavjack.shinyapps.io/rticles")

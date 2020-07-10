@@ -43,73 +43,71 @@
 
 shinyServer(function(input, output, session) {
 
-    # Export path -------------------------------------------------------------
-    # -------------------------------------------------------------------------
+  output$web <- reactive({
+    Sys.getenv("SHINY_PORT") == ""
+  })
 
-    # shinyFilesExample()
 
-    volumes <- c(
-      Home = fs::path_home(),
-      "R Installation" = R.home(),
-      getVolumes()()
+  # Export path -------------------------------------------------------------
+  # -------------------------------------------------------------------------
+
+  # shinyFilesExample()
+
+  volumes <- c(
+    Home = fs::path_home(),
+    "R Installation" = R.home(),
+    getVolumes()()
+  )
+
+  shinyDirChoose(input,
+    "directory",
+    roots = volumes,
+    session = session,
+    restrictions = system.file(package = "base")
+  )
+
+  output$directorypath <- renderPrint({
+    if (is.integer(input$directory)) {
+      cat("No directory has been selected")
+    } else {
+      parseDirPath(volumes, input$directory)
+    }
+  })
+
+  observe({
+    cat("Directory")
+    path <- paste0(parseDirPath(volumes, input$directory), "/")
+    print(path)
+  })
+
+  observeEvent(input$create, {
+    path <- paste0(parseDirPath(volumes, input$directory), "/")
+
+    type <- switch(input$type,
+      "Markdown" = "markdown",
+      "Bookdown" = "bookdown"
     )
 
-    shinyDirChoose(input,
-      "directory",
-      roots = volumes,
-      session = session,
-      restrictions = system.file(package = "base")
+    name <- stringr::str_replace_all(input$name, pattern = " ", repl = "_")
+
+    project <- switch(input$project,
+      "Yes" = TRUE,
+      "No" = FALSE
     )
 
-    output$directorypath <- renderPrint({
-      if (is.integer(input$directory)) {
-        cat("No directory has been selected")
-      } else {
-        parseDirPath(volumes, input$directory)
-      }
-    })
+    inti::rticles(
+      path = path,
+      type = type,
+      name = name,
+      project = project
+    )
+    stopApp()
+  })
 
-    observe({
-
-      cat("Directory")
-      path <- paste0(parseDirPath(volumes, input$directory), "/")
-      print(path)
-
-      is_local <- Sys.getenv('SHINY_PORT') == ""
-      print(is_local)
-
-    })
-
-    observeEvent(input$create, {
-
-      path <- paste0(parseDirPath(volumes, input$directory), "/")
-
-      type <- switch(input$type
-                     , "Markdown" = "markdown"
-                     , "Bookdown" = "bookdown"
-                     )
-
-      name <- stringr::str_replace_all(input$name, pattern=" ", repl="_")
-
-      project <- switch(input$project
-                     , "Yes" = TRUE
-                     , "No" = FALSE
-                     )
-
-      inti::rticles(path = path
-                    , type = type
-                    , name = name
-                    , project = project
-                    )
-      stopApp()
-
-      })
-
-    observeEvent(input$cancel, {
-      stopApp()
-    })
-  }
-)
+  observeEvent(input$cancel, {
+    stopApp()
+  })
+})
 
 # viewer <- dialogViewer("lozanoisla.com", width = 500, height = 450)
 # runGadget("inst/rticles/app.R", server = server, viewer = viewer)
