@@ -47,6 +47,25 @@ shinyServer(function(input, output, session) {
     stopApp()
   })
 
+  observeEvent(input$create, {
+    stopApp()
+  })
+
+  observe({
+
+    cat("Directory")
+    path <- paste0(parseDirPath(volumes, input$directory), "/")
+    print(path)
+
+    print(input$type)
+
+    print(input$name)
+
+    print(input$server)
+
+
+  })
+
   # Export path -------------------------------------------------------------
   # -------------------------------------------------------------------------
 
@@ -71,41 +90,29 @@ shinyServer(function(input, output, session) {
     }
   })
 
-  observe({
-    cat("Directory")
-    path <- paste0(parseDirPath(volumes, input$directory), "/")
-    print(path)
-
-    name <- stringr::str_replace_all(input$name, pattern = " ", repl = "_")
-
-    print(input$type)
-
-  })
+# rticles -----------------------------------------------------------------
+# -------------------------------------------------------------------------
 
   observeEvent(input$create, {
 
-    path <- paste0(parseDirPath(volumes, input$directory), "/")
-
     type <- input$type
-
-    name <- stringr::str_replace_all(input$name, pattern = " ", repl = "_")
+    name <- input$name
 
     project <- switch(input$project,
       "Yes" = TRUE,
       "No" = FALSE
     )
 
-    inti::rticles(
-      path = path,
-      type = type,
-      name = name,
-      project = project
-    )
-    stopApp()
+    inti::rticles(path = path
+                  , type = type
+                  , name = name
+                  , project = project
+                  )
   })
 
 # download data -----------------------------------------------------------
 # -------------------------------------------------------------------------
+
 
   output$downloadData <- downloadHandler(
 
@@ -113,37 +120,28 @@ shinyServer(function(input, output, session) {
       paste(input$name,"zip",sep=".")
     },
     content = function(content){
-      tmpdir <- system.file("rticles/template", package = "inti")
-      setwd(tmpdir)
 
-      if(input$type == "bookdown"){
+      project <- switch(input$project,
+                        "Yes" = TRUE,
+                        "No" = FALSE
+                        )
 
-        filesToSave <- list.files(tmpdir)
+      filelist <- inti:::rticles_files(name = input$name
+                                       , project = project
+                                       , type = input$type
+                                       )
 
-      } else if(input$type == "markdown") {
-
-        name <- stringr::str_replace_all(input$name, pattern = " ", repl = "_")
-
-        dir.create("tmp")
-        file.copy("files", "tmp", recursive = T)
-        file.copy("index.rmd", "tmp/index.rmd")
-
-        file <- list.files(tmpdir) %>%
-          purrr::keep(., .p = ~stringr::str_detect(.x,"rmd"))
-
-        file.rename(paste0("tmp/", file), paste0("tmp/", name, ".rmd"))
-
-        filesToSave <- list.files("tmp")
-
-      }
-
-      zip::zipr(zipfile = content, files = filesToSave)
+      zip::zipr(zipfile = content, files = filelist)
 
     },
 
     contentType = "application/zip"
 
   )
+
+
+# end ---------------------------------------------------------------------
+# -------------------------------------------------------------------------
 
 })
 

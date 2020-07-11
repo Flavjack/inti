@@ -145,7 +145,7 @@ fluidPage(
 
              HTML('
                 <h1 style="text-align: justify;"><span style="color: #ff6600;">Instrucciones</span></h1>
-                <p style="text-align: justify;"><span style="color: #008000;">La siguiente app te ayudara a crear tu primer documento usando R + markdown = Rmardown (.Rmd).</span></p>
+                <p style="text-align: justify;"><span style="color: #008000;">La siguiente app te ayudara a crear tu primer documento usando R + markdown = Rmarkdown (.Rmd).</span></p>
                 <ol style="text-align: justify;">
                 <li><span style="color: #008000;">Elije que tipo de documento deseas crear.</span>
                 <ul>
@@ -197,6 +197,7 @@ fluidPage(
              radioButtons(inputId = "server"
                           , label = "Server"
                           , choices = c("web", "local")
+                          , selected = "local"
                           , inline = TRUE
              )
 

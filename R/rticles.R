@@ -6,7 +6,6 @@
 #' @param type document type (default = "markdown").
 #' @param name name of the main document (default = "manuscript").
 #' @param project create a R project (default = TRUE). See details.
-#' @param server For run the shiny app (default = "local").
 #'
 #' @details
 #'
@@ -25,11 +24,10 @@
 #'
 #' @export
 
-rticles <- function(path
+rticles <- function(path = NULL
                     , type = c("markdown", "bookdown")
                     , name = "manuscript"
                     , project = TRUE
-                    , server = c("local", "web")
                     ){
 
   # arguments ---------------------------------------------------------------
@@ -38,10 +36,9 @@ rticles <- function(path
   type <- match.arg(type)
   name <- stringr::str_replace_all(name, pattern = " ", repl = "_")
   name.rmd <- paste0(name, ".rmd")
-  server <- match.arg(server)
 
-
-  if (server == "local") {
+  if ( is.null(path) ) { path <- getwd() }
+  path <- paste0(path, "/")
 
     # dependencies ------------------------------------------------------------
     # -------------------------------------------------------------------------
@@ -156,41 +153,7 @@ rticles <- function(path
         )
       }
 
-    } else if (server == "web") {
-
-      # dependencies ------------------------------------------------------------
-      # -------------------------------------------------------------------------
-
-      tmpdir <- system.file("rticles/template", package = "inti")
-      setwd(tmpdir)
-
-      dir.create("tmp")
-      file.copy("files", "tmp", recursive = T)
-      file.copy("index.rmd", "tmp/index.rmd")
-
-      if (project == TRUE) {
-
-        file.copy("rticles.Rproj", "tmp/rticles.Rproj")
-        file.copy("rticles.r", "tmp/rticles.Rproj")
-
-      }
-
-      if (type == "markdown") {
-
-        file.rename(from = "tmp/index.rmd", to = paste0("tmp/", name, ".rmd"))
-
-        file.remove("tmp/files/style_rbooks.css")
-
-      }
-
-      file.copy(from = "tmp", to = path)
-
-      unlink("tmp", recursive = TRUE)
-
     }
 
-  }
-
 }
-
 

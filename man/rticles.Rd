@@ -5,11 +5,10 @@
 \title{Rticles template}
 \usage{
 rticles(
-  path,
+  path = NULL,
   type = c("markdown", "bookdown"),
   name = "manuscript",
-  project = TRUE,
-  server = c("local", "web")
+  project = TRUE
 )
 }
 \arguments{
@@ -20,8 +19,6 @@ rticles(
 \item{name}{name of the main document (default = "manuscript").}
 
 \item{project}{create a R project (default = TRUE). See details.}
-
-\item{server}{For run the shiny app (default = "local").}
 }
 \value{
 folder and files
