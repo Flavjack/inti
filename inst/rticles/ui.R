@@ -179,7 +179,7 @@ fluidPage(
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://www.quipolab.com/">
-            <img src="https://lh4.googleusercontent.com/GBV8cfXs0itZKNWMlTFkQRNMsqiVPCCcjsOCEMsO1MAYWi2f4iyvlnQiJuOhbm4J0JHYMdvd=w16383" style="height:55px" title="quipo"></a>
+            <img src="https://lozanoisla.com/img/quipo.png" style="height:55px" title="quipo"></a>
             <span style="display:block;">quipolab.com</span>
             </p></div>
 
