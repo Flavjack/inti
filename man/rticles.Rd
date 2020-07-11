@@ -3,12 +3,16 @@
 \name{rticles}
 \alias{rticles}
 \title{Rticles template}
+\source{
+https://github.com/Flavjack/rticles
+}
 \usage{
 rticles(
   path = NULL,
   type = c("markdown", "bookdown"),
   name = "manuscript",
-  project = TRUE
+  project = TRUE,
+  server = c("local", "web")
 )
 }
 \arguments{
@@ -19,6 +23,8 @@ rticles(
 \item{name}{name of the main document (default = "manuscript").}
 
 \item{project}{create a R project (default = TRUE). See details.}
+
+\item{server}{How create the dependencies (default = "local").}
 }
 \value{
 folder and files

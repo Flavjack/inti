@@ -6,6 +6,7 @@
 #' @param type document type (default = "markdown").
 #' @param name name of the main document (default = "manuscript").
 #' @param project create a R project (default = TRUE). See details.
+#' @param server How create the dependencies (default = "local").
 #'
 #' @details
 #'
@@ -22,12 +23,17 @@
 #'
 #' @importFrom utils download.file
 #'
+#' @source
+#'
+#' https://github.com/Flavjack/rticles
+#'
 #' @export
 
 rticles <- function(path = NULL
                     , type = c("markdown", "bookdown")
                     , name = "manuscript"
                     , project = TRUE
+                    , server = c("local", "web")
                     ){
 
   # arguments ---------------------------------------------------------------
@@ -35,10 +41,13 @@ rticles <- function(path = NULL
 
   type <- match.arg(type)
   name <- stringr::str_replace_all(name, pattern = " ", repl = "_")
-  name.rmd <- paste0(name, ".rmd")
+  server <- match.arg(server)
 
-  if ( is.null(path) ) { path <- getwd() }
-  path <- paste0(path, "/")
+  if (server == "local") {
+
+    name.rmd <- paste0(name, ".rmd")
+    if ( is.null(path) ) { path <- getwd() }
+    path <- paste0(path, "/")
 
     # dependencies ------------------------------------------------------------
     # -------------------------------------------------------------------------
@@ -153,7 +162,91 @@ rticles <- function(path = NULL
         )
       }
 
+      path
+
     }
+
+# web ---------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+  } else if (server == "web") {
+
+    files.dir <- paste0(system.file("rticles/template", package = "inti"), "/")
+    tmp.dir <- paste0(tempdir(), "/")
+    path <- paste0(tmp.dir, name)
+
+    if (dir.exists(paste0(tmp.dir, name))) {
+
+      unlink(paste0(tmp.dir, name)
+             , recursive = T
+      )
+
+      dir.create(paste0(tmp.dir, name)
+                 , recursive = T
+      )
+
+    } else {
+
+      dir.create(paste0(tmp.dir, name)
+                 , recursive = T
+      )
+
+    }
+
+
+    file.copy(paste0(files.dir, "files")
+              , paste0(tmp.dir, name)
+              , recursive = T
+              , overwrite = T
+    )
+
+    file.copy(from = paste0(files.dir, "index.rmd")
+              , to = paste0(tmp.dir, name , "/", "index.rmd")
+              , overwrite = T
+    )
+
+    file.copy(from = paste0(files.dir, "_bookdown.yml")
+              , to = paste0(tmp.dir, name , "/", "_bookdown.yml")
+              , overwrite = T
+    )
+
+    file.copy(from = paste0(files.dir, "_output.yml")
+              , to = paste0(tmp.dir, name , "/", "_output.yml"))
+
+    if (project == TRUE) {
+
+      file.copy(paste0(files.dir, "rticles.Rproj")
+                , to = paste0(tmp.dir, name , "/", "rticles.Rproj")
+                , overwrite = T
+      )
+
+      file.copy(paste0(files.dir, "rticles.r")
+                , paste0(tmp.dir, name , "/", "rticles.Rproj")
+                , overwrite = T
+      )
+
+      file.copy(paste0(files.dir, "rticles.R")
+                , paste0(tmp.dir, name , "/", "rticles.Rproj")
+                , overwrite = T
+      )
+
+    }
+
+    if (type == "markdown") {
+
+      file.rename(from = paste0(tmp.dir, name , "/", "index.rmd")
+                  , to = paste0(tmp.dir, name, "/", name, ".rmd")
+      )
+
+      file.remove(paste0(tmp.dir, name, "/files/", "style_rbooks.css"))
+      file.remove(paste0(tmp.dir, name, "/" ,"_bookdown.yml"))
+      file.remove(paste0(tmp.dir, name, "/" ,"_output.yml"))
+
+    }
+
+    path
+
+  }
 
 }
 

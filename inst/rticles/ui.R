@@ -1,38 +1,37 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-pkgs_cran <- c(
-  "shiny"
-  ,"miniUI"
-  , "shinyFiles"
-  , "utils"
-  , "fs"
-  , "inti"
-)
-
-installed_cran <- pkgs_cran %in% rownames(utils::installed.packages())
-if (any(installed_cran == FALSE)) {
-  install.packages(pkgs_cran[!installed_cran])
-}
-
-invisible(lapply(c(pkgs_cran), library, character.only = TRUE))
-rm(pkgs_cran, installed_cran)
-
-# pkgs_git <- c(
-#   "inti" # Tools and Statistical Procedures in Plant Science
-#   , "inserttable" # Insert table with copy and paste
-#   , "citr"  # Use zotero for citations
-# )
+# pkgs_cran <- c(
+#   "shiny"
+#   , "miniUI"
+#   , "shinyFiles"
+#   , "utils"
+#   , "fs"
+#   )
 #
-# installed_git <- pkgs_git %in% rownames(utils::installed.packages())
-# if (any(installed_git == FALSE)) {
-#   devtools::install_github("Flavjack/inti", upgrade = "always")
-#   devtools::install_github("lbusett/insert_table", upgrade = "always")
-#   devtools::install_github("crsh/citr", upgrade = "always")
+# installed_cran <- pkgs_cran %in% rownames(installed.packages())
+# if (any(installed_cran == FALSE)) {
+#   install.packages(pkgs_cran[!installed_cran])
 # }
 #
-# rm(pkgs_git, installed_git)
+# pkgs_git <- c(
+#   "inti"
+# )
+#
+# installed_git <- pkgs_git %in% rownames(installed.packages())
+# if (any(installed_git == FALSE)) {
+#   devtools::install_github("flavjack/inti", upgrade = "always")
+# }
+#
+# invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
+# rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
 
+library(shiny)
+library(miniUI)
+library(shinyFiles)
+library(utils)
+library(fs)
+library(inti)
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -72,8 +71,7 @@ fluidPage(
              selectizeInput(
                inputId = "type",
                label = "Document type",
-               choices = c("Markdown" = "markdown", "Bookdown" = "bookdown"),
-               selected = "Markdown",
+               choices = c("markdown", "bookdown"),
                multiple = FALSE
              ),
 
@@ -193,7 +191,7 @@ fluidPage(
              radioButtons(inputId = "server"
                           , label = "Server"
                           , choices = c("web", "local")
-                          , selected = "local"
+                          , selected = "web"
                           , inline = TRUE
              )
 
