@@ -1,45 +1,32 @@
-#
-#   # packages ----------------------------------------------------------------
-#   # -------------------------------------------------------------------------
-#
-#   pkgs_cran <- c(
-#     "shiny"
-#     ,"miniUI"
-#     , "shinyFiles"
-#     , "utils"
-#     , "fs"
-#   )
-#
-#   installed_cran <- pkgs_cran %in% rownames(utils::installed.packages())
-#   if (any(installed_cran == FALSE)) {
-#     install.packages(pkgs_cran[!installed_cran])
-#   }
-#
-#   pkgs_git <- c(
-#     "inti" # Tools and Statistical Procedures in Plant Science
-#     , "inserttable" # Insert table with copy and paste
-#     , "citr"  # Use zotero for citations
-#   )
-#
-#   installed_git <- pkgs_git %in% rownames(utils::installed.packages())
-#   if (any(installed_git == FALSE)) {
-#     devtools::install_github("Flavjack/inti", upgrade = "always")
-#     devtools::install_github("lbusett/insert_table", upgrade = "always")
-#     devtools::install_github("crsh/citr", upgrade = "always")
-#   }
-#
-#   invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
-#   rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
+# packages ----------------------------------------------------------------
+# -------------------------------------------------------------------------
 
-  library(shiny)
-  library(miniUI)
-  library(shinyFiles)
-  library(utils)
-  library(fs)
-  library(inti)
+pkgs_cran <- c(
+  "shiny"
+  ,"miniUI"
+  , "shinyFiles"
+  , "utils"
+  , "fs"
+  , "inti"
+)
 
-  # app ---------------------------------------------------------------------
-  # -------------------------------------------------------------------------
+installed_cran <- pkgs_cran %in% rownames(utils::installed.packages())
+if (any(installed_cran == FALSE)) {
+  install.packages(pkgs_cran[!installed_cran])
+}
+
+invisible(lapply(c(pkgs_cran), library, character.only = TRUE))
+rm(pkgs_cran, installed_cran)
+
+# library(shiny)
+# library(miniUI)
+# library(shinyFiles)
+# library(utils)
+# library(fs)
+# library(inti)
+
+# app ---------------------------------------------------------------------
+# -------------------------------------------------------------------------
 
 shinyServer(function(input, output, session) {
 
