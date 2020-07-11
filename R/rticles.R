@@ -6,6 +6,7 @@
 #' @param type document type (default = "markdown").
 #' @param name name of the main document (default = "manuscript").
 #' @param project create a R project (default = TRUE). See details.
+#' @param server For run the shiny app (default = "local").
 #'
 #' @details
 #'
@@ -28,127 +29,168 @@ rticles <- function(path
                     , type = c("markdown", "bookdown")
                     , name = "manuscript"
                     , project = TRUE
+                    , server = c("local", "web")
                     ){
 
   # arguments ---------------------------------------------------------------
   # -------------------------------------------------------------------------
 
   type <- match.arg(type)
+  name <- stringr::str_replace_all(name, pattern = " ", repl = "_")
   name.rmd <- paste0(name, ".rmd")
+  server <- match.arg(server)
 
-  # dependencies ------------------------------------------------------------
-  # -------------------------------------------------------------------------
 
-  if (!dir.exists(paste0(path, "files"))) {
-    dir.create(paste0(path, "files"))
-  }
+  if (server == "local") {
 
-  if (!file.exists(paste0(path, "files/style_rticles.docx"))) {
-    download.file(
-      url = "https://github.com/Flavjack/rticles/raw/master/cnfg/style_rticles_tr.docx",
-      destfile = paste0(path, "files/style_rticles.docx"),
-      mode = "wb"
-    )
-  }
-
-  if (!file.exists(paste0(path, "files/style_thesis.docx"))) {
-    download.file(
-      url = "https://github.com/Flavjack/rticles/raw/master/cnfg/style_unalm.docx",
-      destfile = paste0(path, "files/style_thesis.docx"),
-      mode = "wb"
-    )
-  }
-
-  if (!file.exists(paste0(path, "files/logo.png"))) {
-    download.file(
-      url = "https://raw.githubusercontent.com/Flavjack/rticles/master/cnfg/icons/unalm.png",
-      destfile = paste0(path, "files/logo.png"),
-      mode = "wb"
-    )
-  }
-
-  if (!file.exists(paste0(path, "files/setup.r"))) {
-    download.file(
-      url = "https://lozanoisla.com/setup.r",
-      destfile = paste0(path, "files/setup.r"),
-      mode = "wb"
-    )
-  }
-
-  # citations ---------------------------------------------------------------
-  # -------------------------------------------------------------------------
-
-  if (!file.exists(paste0(path, "files/book.bib"))) {
-    download.file(
-      url = "https://raw.githubusercontent.com/Flavjack/rticles/master/cnfg/book.bib",
-      destfile = paste0(path, "files/book.bib"),
-      mode = "wb"
-    )
-  }
-
-  # Rproj -------------------------------------------------------------------
-  # -------------------------------------------------------------------------
-
-  if (project == TRUE) {
-    if (!file.exists(paste0(path, "rticles.Rproj"))) {
-      download.file(
-        url = "https://raw.githubusercontent.com/Flavjack/rticles/master/rticles.Rproj",
-        destfile = paste0(path, "rticles.Rproj"),
-        mode = "wb"
-      )
-    }
-  }
-
-  # markdown ----------------------------------------------------------------
-  # -------------------------------------------------------------------------
-
-  if (type == "markdown") {
-    if (!file.exists(paste0(path, name.rmd))) {
-      download.file(
-        url = "https://raw.githubusercontent.com/Flavjack/rticles/master/index.Rmd",
-        destfile = paste0(path, name.rmd),
-        mode = "wb"
-      )
-    }
-
-    # bookdown ----------------------------------------------------------------
+    # dependencies ------------------------------------------------------------
     # -------------------------------------------------------------------------
-  } else if (type == "bookdown") {
 
-    message("Change the name of your main markdown file to index.rmd")
+    if (!dir.exists(paste0(path, "files"))) {
+      dir.create(paste0(path, "files"))
+    }
 
-    if (!file.exists(paste0(path, "index.rmd"))) {
+    if (!file.exists(paste0(path, "files/style_rticles.docx"))) {
       download.file(
-        url = "https://raw.githubusercontent.com/Flavjack/rticles/master/index.Rmd",
-        destfile = paste0(path, "index.rmd"),
+        url = "https://github.com/Flavjack/rticles/raw/master/cnfg/style_rticles_tr.docx",
+        destfile = paste0(path, "files/style_rticles.docx"),
         mode = "wb"
       )
     }
 
-    if (!file.exists(paste0(path, "_bookdown.yml"))) {
+    if (!file.exists(paste0(path, "files/style_thesis.docx"))) {
       download.file(
-        url = "https://raw.githubusercontent.com/Flavjack/rticles/master/cnfg/bookdown.yml",
-        destfile = paste0(path, "_bookdown.yml"),
+        url = "https://github.com/Flavjack/rticles/raw/master/cnfg/style_unalm.docx",
+        destfile = paste0(path, "files/style_thesis.docx"),
         mode = "wb"
       )
     }
 
-    if (!file.exists(paste0(path, "_output.yml"))) {
+    if (!file.exists(paste0(path, "files/logo.png"))) {
       download.file(
-        url = "https://raw.githubusercontent.com/Flavjack/rticles/master/cnfg/output.yml",
-        destfile = paste0(path, "_output.yml"),
+        url = "https://raw.githubusercontent.com/Flavjack/rticles/master/cnfg/icons/unalm.png",
+        destfile = paste0(path, "files/logo.png"),
         mode = "wb"
       )
     }
 
-    if (!file.exists(paste0(path, "files/style_rbooks.css"))) {
+    if (!file.exists(paste0(path, "files/setup.r"))) {
       download.file(
-        url = "https://raw.githubusercontent.com/Flavjack/rticles/master/cnfg/style_rbooks.css",
-        destfile = paste0(path, "files/style_rbooks.css"),
+        url = "https://lozanoisla.com/setup.r",
+        destfile = paste0(path, "files/setup.r"),
         mode = "wb"
       )
     }
+
+    # citations ---------------------------------------------------------------
+    # -------------------------------------------------------------------------
+
+    if (!file.exists(paste0(path, "files/book.bib"))) {
+      download.file(
+        url = "https://raw.githubusercontent.com/Flavjack/rticles/master/cnfg/book.bib",
+        destfile = paste0(path, "files/book.bib"),
+        mode = "wb"
+      )
+    }
+
+    # Rproj -------------------------------------------------------------------
+    # -------------------------------------------------------------------------
+
+    if (project == TRUE) {
+      if (!file.exists(paste0(path, "rticles.Rproj"))) {
+        download.file(
+          url = "https://raw.githubusercontent.com/Flavjack/rticles/master/rticles.Rproj",
+          destfile = paste0(path, "rticles.Rproj"),
+          mode = "wb"
+        )
+      }
+    }
+
+    # markdown ----------------------------------------------------------------
+    # -------------------------------------------------------------------------
+
+    if (type == "markdown") {
+      if (!file.exists(paste0(path, name.rmd))) {
+        download.file(
+          url = "https://raw.githubusercontent.com/Flavjack/rticles/master/index.Rmd",
+          destfile = paste0(path, name.rmd),
+          mode = "wb"
+        )
+      }
+
+      # bookdown ----------------------------------------------------------------
+      # -------------------------------------------------------------------------
+    } else if (type == "bookdown") {
+
+      message("Change the name of your main markdown file to index.rmd")
+
+      if (!file.exists(paste0(path, "index.rmd"))) {
+        download.file(
+          url = "https://raw.githubusercontent.com/Flavjack/rticles/master/index.Rmd",
+          destfile = paste0(path, "index.rmd"),
+          mode = "wb"
+        )
+      }
+
+      if (!file.exists(paste0(path, "_bookdown.yml"))) {
+        download.file(
+          url = "https://raw.githubusercontent.com/Flavjack/rticles/master/cnfg/bookdown.yml",
+          destfile = paste0(path, "_bookdown.yml"),
+          mode = "wb"
+        )
+      }
+
+      if (!file.exists(paste0(path, "_output.yml"))) {
+        download.file(
+          url = "https://raw.githubusercontent.com/Flavjack/rticles/master/cnfg/output.yml",
+          destfile = paste0(path, "_output.yml"),
+          mode = "wb"
+        )
+      }
+
+      if (!file.exists(paste0(path, "files/style_rbooks.css"))) {
+        download.file(
+          url = "https://raw.githubusercontent.com/Flavjack/rticles/master/cnfg/style_rbooks.css",
+          destfile = paste0(path, "files/style_rbooks.css"),
+          mode = "wb"
+        )
+      }
+
+    } else if (server == "web") {
+
+      # dependencies ------------------------------------------------------------
+      # -------------------------------------------------------------------------
+
+      tmpdir <- system.file("rticles/template", package = "inti")
+      setwd(tmpdir)
+
+      dir.create("tmp")
+      file.copy("files", "tmp", recursive = T)
+      file.copy("index.rmd", "tmp/index.rmd")
+
+      if (project == TRUE) {
+
+        file.copy("rticles.Rproj", "tmp/rticles.Rproj")
+        file.copy("rticles.r", "tmp/rticles.Rproj")
+
+      }
+
+      if (type == "markdown") {
+
+        file.rename(from = "tmp/index.rmd", to = paste0("tmp/", name, ".rmd"))
+
+        file.remove("tmp/files/style_rbooks.css")
+
+      }
+
+      file.copy(from = "tmp", to = path)
+
+      unlink("tmp", recursive = TRUE)
+
+    }
+
   }
+
 }
 
 

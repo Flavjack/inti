@@ -1,41 +1,42 @@
-
-  # packages ----------------------------------------------------------------
-  # -------------------------------------------------------------------------
-
-  pkgs_cran <- c(
-    "shiny"
-    ,"miniUI"
-    , "shinyFiles"
-    , "utils"
-    , "fs"
-  )
-
-  installed_cran <- pkgs_cran %in% rownames(utils::installed.packages())
-  if (any(installed_cran == FALSE)) {
-    install.packages(pkgs_cran[!installed_cran])
-  }
-
-  pkgs_git <- c(
-    "inti" # Tools and Statistical Procedures in Plant Science
-    , "inserttable" # Insert table with copy and paste
-    , "citr"  # Use zotero for citations
-  )
-
-  installed_git <- pkgs_git %in% rownames(utils::installed.packages())
-  if (any(installed_git == FALSE)) {
-    devtools::install_github("Flavjack/inti", upgrade = "always")
-    devtools::install_github("lbusett/insert_table", upgrade = "always")
-    devtools::install_github("crsh/citr", upgrade = "always")
-  }
-
-  invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
-  rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
+#
+#   # packages ----------------------------------------------------------------
+#   # -------------------------------------------------------------------------
+#
+#   pkgs_cran <- c(
+#     "shiny"
+#     ,"miniUI"
+#     , "shinyFiles"
+#     , "utils"
+#     , "fs"
+#   )
+#
+#   installed_cran <- pkgs_cran %in% rownames(utils::installed.packages())
+#   if (any(installed_cran == FALSE)) {
+#     install.packages(pkgs_cran[!installed_cran])
+#   }
+#
+#   pkgs_git <- c(
+#     "inti" # Tools and Statistical Procedures in Plant Science
+#     , "inserttable" # Insert table with copy and paste
+#     , "citr"  # Use zotero for citations
+#   )
+#
+#   installed_git <- pkgs_git %in% rownames(utils::installed.packages())
+#   if (any(installed_git == FALSE)) {
+#     devtools::install_github("Flavjack/inti", upgrade = "always")
+#     devtools::install_github("lbusett/insert_table", upgrade = "always")
+#     devtools::install_github("crsh/citr", upgrade = "always")
+#   }
+#
+#   invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
+#   rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
 
   library(shiny)
   library(miniUI)
   library(shinyFiles)
   library(utils)
   library(fs)
+  library(inti)
 
   # app ---------------------------------------------------------------------
   # -------------------------------------------------------------------------
@@ -46,16 +47,36 @@ fluidPage(
     tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
 
     fluidRow(
-      column(1),
+      column(2,
 
-      column(4,
+             br(),
+             br(),
+
+             HTML('
+
+            <div id=footer style="width:100%; margin:auto;">
+
+            <div style="display:inline-block; width:100%">
+            <p style="text-align:center">
+            <a target="_blank" href="https://lozanoisla.com/">
+            <img src="https://raw.githubusercontent.com/Flavjack/lozanoisla/master/static/android-chrome-512x512.png?token=AB3ARRI5E4ZF7FLXM6CDQ7S7CHJ3K" style="height:55px" title="flozano"></a>
+            <span style="display:block;">lozanoisla.com</span>
+            </p></div>
+
+            </div>
+
+                  ')
+
+             ),
+
+      column(3,
 
              h1("Rticles"),
 
              selectizeInput(
                inputId = "type",
                label = "Document type",
-               choices = c("Markdown", "Bookdown"),
+               choices = c("Markdown" = "markdown", "Bookdown" = "bookdown"),
                selected = "Markdown",
                multiple = FALSE
              ),
@@ -66,7 +87,7 @@ fluidPage(
                value = "manuscript"
              ),
 
-             tags$p(),
+             p(),
 
              radioButtons(
                inputId = "project",
@@ -76,21 +97,20 @@ fluidPage(
                inline = T
              ),
 
-             conditionalPanel(
-
-               condition = 'output.web == "FALSE"',
-
-
-               downloadButton("downloadData", "Download")
-
-
-             ),
-
              br(),
 
              conditionalPanel(
 
-               condition = 'output.web == TRUE',
+               condition = "input.server == 'web'",
+
+               downloadButton(outputId = "downloadData"
+                              , label =  "Download")
+
+             ),
+
+             conditionalPanel(
+
+               condition = "input.server == 'local'",
 
                verbatimTextOutput("directorypath"),
 
@@ -106,7 +126,7 @@ fluidPage(
 
              conditionalPanel(
 
-               condition = 'output.web == TRUE',
+               condition = "input.server == 'local'",
 
                gadgetTitleBar(
                  title = "enjoy writing! :)",
@@ -120,8 +140,6 @@ fluidPage(
              )
 
              ),
-
-      column(1),
 
       column(5,
 
@@ -153,7 +171,36 @@ fluidPage(
 
       ),
 
-      column(1)
+      column(2,
+
+             br(),
+             br(),
+
+             HTML('
+
+            <div id=footer style="width:100%; margin:auto;">
+
+            <div style="display:inline-block; width:100%">
+            <p style="text-align:center">
+            <a target="_blank" href="https://www.quipolab.com/">
+            <img src="https://lh4.googleusercontent.com/GBV8cfXs0itZKNWMlTFkQRNMsqiVPCCcjsOCEMsO1MAYWi2f4iyvlnQiJuOhbm4J0JHYMdvd=w16383" style="height:55px" title="quipo"></a>
+            <span style="display:block;">quipolab.com</span>
+            </p></div>
+
+            </div>
+
+                  '),
+
+             br(),
+             br(),
+
+             radioButtons(inputId = "server"
+                          , label = "Server"
+                          , choices = c("web", "local")
+                          , inline = TRUE
+             )
+
+             ),
 
     )
   )
