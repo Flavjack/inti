@@ -12,6 +12,7 @@ pkgs_cran <- c(
   , "shinyFiles"
   , "utils"
   , "fs"
+  , "metathis"
   )
 
 installed_cran <- pkgs_cran %in% rownames(installed.packages())
@@ -31,13 +32,13 @@ if (any(installed_git == FALSE)) {
 invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
 rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
 
-library(shiny)
-library(miniUI)
-library(shinyFiles)
-library(utils)
-library(fs)
-library(inti)
-library(metathis)
+# library(shiny)
+# library(miniUI)
+# library(shinyFiles)
+# library(utils)
+# library(fs)
+# library(inti)
+# library(metathis)
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
