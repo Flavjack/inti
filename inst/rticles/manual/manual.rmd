@@ -1,5 +1,5 @@
 ---
-title: " "
+title: "&nbsp;"
 description: document template for scientific report
 favicon: files/logo.png
 github-repo: flavjack/rticles
@@ -42,7 +42,7 @@ Rticles te ayudara a crear tu primer documento completo usando R + markdown = Rm
 
 1. Te recomiendo usar proyectos (R project) por que te permitirá organizar mejor tus trabajos.
 
-1. Unas vez selecionada las opciones, descarga ("download") o crea ("Create") las dependencias.
+1. Unas vez selecionada las opciones, descarga ("Download") o crea ("Create") las dependencias.
 
 1. Ve al folder que seleccionates o descargaste los documentos,abre el archivo con extension .Rporj.
 

@@ -37,6 +37,7 @@ library(shinyFiles)
 library(utils)
 library(fs)
 library(inti)
+library(metathis)
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -45,6 +46,15 @@ fluidPage(
 
     tags$head(HTML('<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">')),
     tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
+
+    meta() %>%
+      meta_social(
+        title = "Rticles",
+        description = "create technical documents with markdown and bookdown",
+        url = "https://flavjack.shinyapps.io/rticles/",
+        image = "https://lozanoisla.com/img/quipo.png",
+        image_alt = "quipolab.com"
+      ),
 
     fluidRow(
       column(2,
