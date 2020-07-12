@@ -1,30 +1,30 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-# pkgs_cran <- c(
-#   "shiny"
-#   , "miniUI"
-#   , "shinyFiles"
-#   , "utils"
-#   , "fs"
-#   )
-#
-# installed_cran <- pkgs_cran %in% rownames(installed.packages())
-# if (any(installed_cran == FALSE)) {
-#   install.packages(pkgs_cran[!installed_cran])
-# }
-#
-# pkgs_git <- c(
-#   "inti"
-# )
-#
-# installed_git <- pkgs_git %in% rownames(installed.packages())
-# if (any(installed_git == FALSE)) {
-#   devtools::install_github("flavjack/inti", upgrade = "always")
-# }
-#
-# invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
-# rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
+pkgs_cran <- c(
+  "shiny"
+  , "miniUI"
+  , "shinyFiles"
+  , "utils"
+  , "fs"
+  )
+
+installed_cran <- pkgs_cran %in% rownames(installed.packages())
+if (any(installed_cran == FALSE)) {
+  install.packages(pkgs_cran[!installed_cran])
+}
+
+pkgs_git <- c(
+  "inti"
+)
+
+installed_git <- pkgs_git %in% rownames(installed.packages())
+if (any(installed_git == FALSE)) {
+  devtools::install_github("flavjack/inti", upgrade = "always")
+}
+
+invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
+rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
 
 library(shiny)
 library(miniUI)
@@ -95,7 +95,7 @@ fluidPage(
 
              conditionalPanel(
 
-               condition = "input.server == 'web'",
+               "output.server == 'web'",
 
                downloadButton(outputId = "downloadData"
                               , label =  "Download")
@@ -104,7 +104,7 @@ fluidPage(
 
              conditionalPanel(
 
-               condition = "input.server == 'local'",
+               "output.server == 'local'",
 
                verbatimTextOutput("directorypath"),
 
@@ -120,7 +120,7 @@ fluidPage(
 
              conditionalPanel(
 
-               condition = "input.server == 'local'",
+               "output.server == 'local'",
 
                gadgetTitleBar(
                  title = "enjoy writing! :)",
@@ -183,17 +183,7 @@ fluidPage(
 
             </div>
 
-                  '),
-
-             br(),
-             br(),
-
-             radioButtons(inputId = "server"
-                          , label = "Server"
-                          , choices = c("web", "local")
-                          , selected = "web"
-                          , inline = TRUE
-             )
+                  ')
 
              ),
 
