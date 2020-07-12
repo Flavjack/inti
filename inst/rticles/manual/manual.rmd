@@ -1,0 +1,55 @@
+---
+title: " "
+description: document template for scientific report
+favicon: files/logo.png
+github-repo: flavjack/rticles
+site: bookdown::bookdown_site
+documentclass: book
+bookdown::gitbook:
+output: 
+  # bookdown::word_document2: 
+  #   reference_docx: files/style_rticles.docx
+  bookdown::html_document2:
+    # toc: yes
+    number_sections: no
+    # toc_float: yes
+always_allow_html: yes
+link-citations: true
+colorlinks: yes
+# bibliography: [files/book.bib, files/pkgs.bib]
+csl: https://www.zotero.org/styles/apa
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include=FALSE}
+source("files/setup.r")
+```
+
+# Crea tu primer documento
+
+Rticles te ayudara a crear tu primer documento completo usando R + markdown = Rmarkdown (.Rmd). 
+
+1. Elije que tipo de documento deseas crear.
+
+    - Markdown: articulos y tesis.
+    - Bookdown: manuales y libros. 
+    <p>
+    
+1. Selecciona el nombre para tú documento.
+
+1. Selecciona el folder donde se exportará toda los documentos necesarios para ejecutar el ejemplo.
+
+1. Te recomiendo usar proyectos (R project) por que te permitirá organizar mejor tus trabajos.
+
+1. Unas vez selecionada las opciones, descarga ("download") o crea ("Create") las dependencias.
+
+1. Ve al folder que seleccionates o descargaste los documentos,abre el archivo con extension .Rporj.
+
+1. Se abrirá Rstudio, compila el documento usando el boton Knit.
+
+1. Espera hasta que compile el documento.
+
+1. Con el ejemplo puedes crear tú propios documentos. 
+
+1. A escribir los manuscritos! :)

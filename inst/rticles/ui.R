@@ -1,6 +1,8 @@
 # rticles -----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
+# https://flavjack.shinyapps.io/rticles/
+
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
@@ -69,7 +71,9 @@ fluidPage(
 
       column(3,
 
-             h1("Rticles"),
+             HTML('<h1><a target="_blank" href="https://flavjack.shinyapps.io/rticles/">Rticles</a></h1>'),
+
+             br(),
 
              selectizeInput(
                inputId = "type",
@@ -88,13 +92,13 @@ fluidPage(
 
              radioButtons(
                inputId = "project",
-               label = "Use a R project",
+               label = "R project",
                choices = c("Yes", "No"),
                selected = "Yes",
                inline = T
              ),
 
-             br(),
+             p(),
 
              conditionalPanel(
 
@@ -126,7 +130,7 @@ fluidPage(
                "output.server == 'local'",
 
                gadgetTitleBar(
-                 title = "enjoy writing! :)",
+                 title = "enjoy :)",
                  left = miniTitleBarCancelButton(),
                  right = miniTitleBarButton(
                    inputId = "create",
@@ -140,33 +144,9 @@ fluidPage(
 
       column(5,
 
-             HTML('
-                <h1 style="text-align: justify;"><span style="color: #ff6600;">Instrucciones</span></h1>
-                <p style="text-align: justify;"><span style="color: #008000;">La siguiente app te ayudara a crear tu primer documento usando R + markdown = Rmarkdown (.Rmd).</span></p>
-                <ol style="text-align: justify;">
-                <li><span style="color: #008000;">Elije que tipo de documento deseas crear.</span>
-                <ul>
-                <li><span style="color: #008000;">Markdown para articulos y tesis.</span></li>
-                <li><span style="color: #008000;">Bookdown para manuales y libros.</span></li>
-                </ul>
-                </li>
-                <li><span style="color: #008000;">Selecciona el nombre para tú documento.</span></li>
-                <li><span style="color: #008000;">Selecciona el folder donde se exportará toda los documentos necesarios para ejecutar el ejemplo.</span></li>
-                <li><span style="color: #008000;">Te recomiendo usar proyectos (use a R project) ya que te permitirá organizar mejor tus trabajos.</span></li>
-                <li><span style="color: #008000;">Unas vez selecionado todos los parámetros, crea las dependencias con el boton ("Create").</span></li>
-                <li><span style="color: #008000;">Despúes de crear, ve al folder que seleccionates y abre el proyecto (.Rporj)</span></li>
-                <li><span style="color: #008000;">Compila el documento usando el boton Knitr en Rstudio.<br /></span></li>
-                <li><span style="color: #008000;">Espera hasta que compile el documento.</span></li>
-                <li><span style="color: #008000;">Ahora con el ejemplo puedes crear tú propio documento.</span></li>
-                <li><span style="color: #008000;">A escribir los manuscritos! :)</span></li>
-                </ol>
-                <p> </p>
-                <p> </p>
-                  '),
+             includeHTML("manual/manual.html")
 
-             br(),
-
-      ),
+             ),
 
       column(2,
 
@@ -175,13 +155,95 @@ fluidPage(
 
              HTML('
 
+            <p> </p>
+            <p> </p>
+
+            <h4 style="text-align: center;"><span style="color: #0a0909;">Softwares</span></h4>
+
+            <p> </p>
+            <p> </p>
+            <p> </p>
+            <p> </p>
+
+            <div id=footer style="width:100%; margin:auto;">
+
+            <div style="display:inline-block; width:100%">
+
+            <p style="text-align:center; vertical-align:middle">
+            <a target="_blank" href="https://www.zotero.org/download/">
+            <img src="https://www.zotero.org/static/images/bs4theme/zotero-logo.1519312231.svg" style="height:40px" title="Zotero" alt="Zotero"></a>
+            </p>
+
+            </div>
+
+            <p> </p>
+
+            <div style="display:inline-block; width:100%">
+
+            <p style="text-align:center; vertical-align:middle">
+            <a target="_blank" href="https://cloud.r-project.org/">
+            <img src="https://cran.r-project.org/Rlogo.svg" style="height:40px" title="R cran" alt="R cran"></a>
+            </p>
+
+            </div>
+
+            <p> </p>
+
+            <div style="display:inline-block; width:100%">
+
+            <p style="text-align:center; vertical-align:middle">
+            <a target="_blank" href="https://rstudio.com/products/rstudio/download/">
+            <img src="https://d33wubrfki0l68.cloudfront.net/62bcc8535a06077094ca3c29c383e37ad7334311/a263f/assets/img/logo.svg" style="height:40px" title="Rstudio" alt="Rstudio"></a>
+            </p>
+
+            </div>
+
+            <p> </p>
+
+            <div style="display:inline-block; width:100%">
+
+            <p style="text-align:center; vertical-align:middle">
+            <a target="_blank" href="https://git-scm.com/downloads">
+            <img src="https://git-scm.com/images/logo@2x.png" style="height:40px" title="Git" alt="Git"></a>
+            </p>
+
+            </div>
+
+            </div>
+
+            <br> </br>
+
+            <h4 style="text-align: center;"><span style="color: #0a0909;">More info</span></h4>
+
+            <p> </p>
+            <p> </p>
+            <p> </p>
+            <p> </p>
+
+            <div id=footer style="width:100%; margin:auto;">
+
+            <div style="display:inline-block; width:45%">
+            <p style="text-align:center">
+            <a target="_blank" href="https://flavjack.github.io/plex/"><img src="https://bookdown.org/yihui/bookdown/images/logo.png" style="height:60px" title="PLEX" alt="PLEX"></a>
+            </p>
+            </div>
+
+            <div style="display:inline-block; width:45%">
+
+            <p style="text-align:center">
+            <a target="_blank" href="https://github.com/Flavjack/rticles"><img src="https://image.flaticon.com/icons/svg/25/25231.svg" style="height:60px" title="Rticles" alt="Rticles"></a>
+            </p>
+            </div>
+            </div>
+
+            <br> </br>
+
             <div id=footer style="width:100%; margin:auto;">
 
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://www.quipolab.com/">
             <img src="https://lozanoisla.com/img/quipo.png" style="height:55px" title="quipo"></a>
-            <span style="display:block;">quipolab.com</span>
             </p></div>
 
             </div>
