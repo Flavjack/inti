@@ -27,20 +27,36 @@ if (any(installed_cran == FALSE)) {
 }
 
 pkgs_git <- c(
-  "shinysky"
+  "inti"
+  , "shinysky"
   )
 
 installed_git <- pkgs_git %in% rownames(installed.packages())
 if (any(installed_git == FALSE)) {
+  devtools::install_github("flavjack/inti", upgrade = "always")
   devtools::install_github("AnalytixWare/ShinySky", upgrade = "always")
 }
 
 invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
 rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
 
+library("shiny")
+library("shinydashboard")
+library("agricolae")
+library("DT")
+library("tidyr")
+library("dplyr")
+library("ggplot2")
+library("rhandsontable")
+library("inti")
+library("shinyBS")
+library("shinyWidgets")
+library("stringr")
+library("openxlsx")
+
+
 # fb tags -----------------------------------------------------------------
 # -------------------------------------------------------------------------
-
 
 design_options <- c(
   "Completely randomized design" = "crd",
@@ -1361,20 +1377,5 @@ shiny::fluidRow(
     )
   )
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
