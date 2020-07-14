@@ -19,21 +19,20 @@ Imports:
     agricolae,
     emmeans,
     FactoMineR,
+    factoextra,
+    corrplot,
     purrr,
     stringr,
-    corrplot,
     readxl,
     lubridate,
     gsheet,
     data.table,
-    factoextra,
     DT,
     gtools,
     openxlsx,
     zoo
 Suggests:
     googlesheets4,
-    plotly,
     lmerTest,
     knitr,
     rmarkdown
