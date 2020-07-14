@@ -3,15 +3,16 @@ fieldbook_design <- function(data,
                              nFactors = NULL,
                              type = c(
                                "crd", "rcbd", "lattice",
-                               "split-crd", "split-rcbd",
+                               "split-crd", "split-rcbd"
                                ),
                              rep = NULL,
-                             series = 2,
+                             serie = 2,
                              seed = 0) {
 
-  # arguments ---------------------------------------------------------------
+# arguments ---------------------------------------------------------------
+# -------------------------------------------------------------------------
 
-  type <- match.arg(type)
+type <- match.arg(type)
 
 data_fb <- data %>%
   select_if(~ !all(is.na(.))) %>%
@@ -56,12 +57,12 @@ if ("rep" %in% names(arguments)) {
   rep
 }
 
-if ("series" %in% names(arguments)) {
-  series <- arguments %>%
-    pluck("series") %>%
+if ("serie" %in% names(arguments)) {
+  serie <- arguments %>%
+    pluck("serie") %>%
     as.numeric()
 } else {
-  series
+  serie
 }
 
 if ("seed" %in% names(arguments)) {
@@ -86,7 +87,7 @@ treat_fcts <- treatments_levels[treat_name]
               design <- agricolae::design.crd(
                 trt = onefact,
                 r = rep,
-                serie = series,
+                serie = serie,
                 seed = seed
               )
 
@@ -99,7 +100,23 @@ treat_fcts <- treatments_levels[treat_name]
               design <- agricolae::design.rcbd(
                 trt = onefact,
                 r = rep,
-                serie = series,
+                serie = serie,
+                seed = seed
+              )
+              result <- list(
+                design = design %>%
+                  pluck("book") %>%
+                  dplyr::rename({{ treat_name }} := "onefact"),
+                sketch = design %>% pluck("sketch")
+              )
+            }
+
+            if (type == "lsd") {
+
+              design <- agricolae::design.lsd(
+                trt = onefact,
+                r = rep,
+                serie = serie,
                 seed = seed
               )
               result <- list(
@@ -114,7 +131,7 @@ treat_fcts <- treatments_levels[treat_name]
               design <- agricolae::design.lattice(
                 trt = onefact,
                 r = rep,
-                serie = series,
+                serie = serie,
                 seed = seed
               )
 
@@ -123,12 +140,13 @@ treat_fcts <- treatments_levels[treat_name]
                 sketch = design$sketch %>% as.data.frame()
               )
             }
+
           }
 
 # Factor >= 2 -------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-        if(nFactors >= 2) {
+        if( nFactors == 2 & startsWith(type, "split") ) {
 
 # split-plot --------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -145,7 +163,7 @@ treat_fcts <- treatments_levels[treat_name]
               trt2 = fact2,
               r = rep,
               design = "crd",
-              serie = series,
+              serie = serie,
               seed = seed
             )
 
@@ -156,17 +174,12 @@ treat_fcts <- treatments_levels[treat_name]
 
           if (type == "split-rcbd") {
 
-            twofact_lvl <- treat_fcts[1:2]
-            treat_name <- twofact_lvl %>% names()
-            fact1 <- twofact_lvl %>% pluck(1)
-            fact2 <- twofact_lvl %>% pluck(2)
-
             design <- agricolae::design.split(
               trt1 = fact1,
               trt2 = fact2,
               r = rep,
               design = "rcbd",
-              serie = series,
+              serie = serie,
               seed = seed
             )
 
@@ -180,15 +193,14 @@ treat_fcts <- treatments_levels[treat_name]
 # factorial ---------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-        if (type == "factorial") {
-
+        if ( nFactors >= 2 && ( type == "crd" | type == "rcbd" | type == "lsd" ) ) {
 
           treat_lvls <- lengths(treat_fcts)
 
           design <- agricolae::design.ab(
             trt = treat_lvls,
             r = rep,
-            serie = series,
+            serie = serie,
             design = type,
             seed = seed
           )
@@ -234,7 +246,7 @@ treat_fcts <- treatments_levels[treat_name]
                   .,
                   by = 0) %>%
             dplyr::arrange(plots) %>%
-            select(-starts_with("Row"))
+            select(-Row.names)
           }
 
   # result ------------------------------------------------------------------
