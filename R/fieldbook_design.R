@@ -1,150 +1,256 @@
-source("http://lozanoisla.com/setup.r")
-url <- "https://docs.google.com/spreadsheets/d/1ilw0NHT7mihaM-3U48KzkuMt927xe8ukX6rNuIw2fT0/edit#gid=0"
-# browseURL(url)
-gs <- as_sheets_id(url)
 
-data <- gs %>%
-  range_read("design")
+fieldbook_design <- function(data,
+                             nFactors = NULL,
+                             type = c(
+                               "crd", "rcbd", "lattice",
+                               "split-crd", "split-rcbd",
+                               ),
+                             rep = NULL,
+                             series = 2,
+                             seed = 0) {
 
-fieldbook_design <- function(data
-                             , nfactors = NULL
-                             , type = c("crd", "rcbd", "lsd")
-                             , rep = NULL
-                             , series = 2
-                             , seed = 0
-                             ){
-
-# arguments ---------------------------------------------------------------
+  # arguments ---------------------------------------------------------------
 
   type <- match.arg(type)
 
-  data_fb <- data %>%
-    select(!starts_with("...")) %>%
-    rename_with(~str_replace_all(.,"\\s+|\\.", "_")) %>%
-    mutate(across(.cols = everything(), ~str_replace_all(.,"\\s+|\\.", "_")))
+data_fb <- data %>%
+  select_if(~ !all(is.na(.))) %>%
+  rename_with(~ gsub("\\s+|\\.", "_", .)) %>%
+  mutate(across(everything(), ~ gsub("\\s+|\\.", "_", .))) %>%
+  dplyr::tibble()
 
-  treatments_names <- data_fb %>%
-    select(!starts_with("[") | !ends_with("]")) %>%
-    names()
+treatments_names <- data_fb %>%
+  select(!starts_with("[") | !ends_with("]")) %>%
+  names()
 
-  treatments_levels <- data_fb %>%
-    select(treatments_names) %>%
-    as.list() %>%
-    map(discard, is.na)
+treatments_levels <- data_fb %>%
+  select({{ treatments_names }}) %>%
+  as.list() %>%
+  map(discard, is.na)
 
-  param_values <- data_fb %>%
-    select(starts_with("[") | ends_with("]")) %>%
-    rename_with(~str_replace_all(.,"\\[|\\]", "")) %>%
-    as.list() %>%
-    map(discard, is.na)
+arguments <- data_fb %>%
+  select(starts_with("[") | ends_with("]")) %>%
+  rename_with(~ str_replace_all(., "\\[|\\]", "")) %>%
+  drop_na() %>%
+  tibble::deframe()
 
-  if ( "nfactors" %in% names(param_values) ) {
+if ("nFactors" %in% names(arguments)) {
+  nFactors <- arguments %>%
+    pluck("nFactors") %>%
+    as.numeric()
+} else {
+  nFactors
+}
 
-    nfactors <- param_values %>% pluck("nfactors") %>% as.numeric()
+if ("type" %in% names(arguments)) {
+  type <- arguments %>% pluck("type")
+} else {
+  type
+}
 
-  }
+if ("rep" %in% names(arguments)) {
+  rep <- arguments %>%
+    pluck("rep") %>%
+    as.numeric()
+} else {
+  rep
+}
 
-  if ( "type" %in%  names(param_values) ) {
+if ("series" %in% names(arguments)) {
+  series <- arguments %>%
+    pluck("series") %>%
+    as.numeric()
+} else {
+  series
+}
 
-    type <- param_values %>% pluck("type")
+if ("seed" %in% names(arguments)) {
+  seed <- arguments %>%
+    pluck("seed") %>%
+    as.numeric()
+} else {
+  seed
+}
 
-  }
-
-  if ( "rep" %in%  names(param_values) ) {
-
-    rep <- param_values %>% pluck("rep") %>% as.numeric()
-
-  }
-
-  if ( "series" %in%  names(param_values) ) {
-
-    series <- param_values %>% pluck("series") %>% as.numeric()
-
-  }
-
-  if ( "seed" %in%  names(param_values) ) {
-
-    seed <- param_values %>% pluck("seed") %>% as.numeric()
-
-  }
+treat_name <- names(treatments_levels)[1:nFactors]
+treat_fcts <- treatments_levels[treat_name]
 
 # Factor = 1 --------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  if ( nfactors == 1 ) {
+          if (nFactors == 1) {
 
-    treat_name <- names(treatments_levels) %>% pluck(1)
-    treatments <- treatments_levels %>% pluck(1)
+            onefact <- treat_fcts %>% pluck(1)
 
-    if(type == "crd"){
+            if (type == "crd") {
+              design <- agricolae::design.crd(
+                trt = onefact,
+                r = rep,
+                serie = series,
+                seed = seed
+              )
 
-      design  <- agricolae::design.crd(trt = treatments
-                                   , r = rep
-                                   , serie = series
-                                   , seed = seed
-                                   , randomization = TRUE
-                                   )
+              result <- design %>%
+                pluck("book") %>%
+                dplyr::rename({{ treat_name }} := "onefact")
+            }
 
-     result <-  design %>%
-       pluck("book") %>%
-       dplyr::rename({{treat_name}} := treatments)
+            if (type == "rcbd") {
+              design <- agricolae::design.rcbd(
+                trt = onefact,
+                r = rep,
+                serie = series,
+                seed = seed
+              )
+              result <- list(
+                design = design %>%
+                  pluck("book") %>%
+                  dplyr::rename({{ treat_name }} := "onefact"),
+                sketch = design %>% pluck("sketch")
+              )
+            }
 
-    }
+            if (type == "lattice") {
+              design <- agricolae::design.lattice(
+                trt = onefact,
+                r = rep,
+                serie = series,
+                seed = seed
+              )
 
-    if(type == "rcbd"){
+              result <- list(
+                design = design$book,
+                sketch = design$sketch %>% as.data.frame()
+              )
+            }
+          }
 
-      design  <- agricolae::design.rcbd(trt = treatments
-                                       , r = rep
-                                       , serie = series
-                                       , seed = seed
-                                       , randomization = TRUE
-                                       )
-      result <- list(
-
-        design = design %>%
-          pluck("book") %>%
-          dplyr::rename({{treat_name}} := treatments)
-        , sketch = design %>% pluck("sketch")
-
-        )
-
-    }
-
-  }
-
-# Factor > 1 --------------------------------------------------------------
+# Factor >= 2 -------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  # if ( nfactors > 1 ) {
-  #
-  #   treat_name <- names(treatments_levels) %>% pluck(1)
-  #   treatments <- treatments_levels %>% pluck(1)
-  #
-  #   if(type == "crd"){
-  #
-  #     design  <- agricolae::design.crd(trt = treatments
-  #                                      , r = rep
-  #                                      , serie = series
-  #                                      , seed = seed
-  #                                      , randomization = TRUE
-  #     )
-  #
-  #     result <-  design %>% pluck("book")
-  #
-  #   }
-  #
-  #
-  # }
-  #
+        if(nFactors >= 2) {
 
-# result ------------------------------------------------------------------
+# split-plot --------------------------------------------------------------
 # -------------------------------------------------------------------------
+
+          twofact_lvl <- treat_fcts[1:2]
+          treat_name <- twofact_lvl %>% names()
+          fact1 <- twofact_lvl %>% pluck(1)
+          fact2 <- twofact_lvl %>% pluck(2)
+
+          if (type == "split-crd") {
+
+            design <- agricolae::design.split(
+              trt1 = fact1,
+              trt2 = fact2,
+              r = rep,
+              design = "crd",
+              serie = series,
+              seed = seed
+            )
+
+            result <- design %>%
+              pluck("book") %>%
+              rename_with(~ {{ treat_name }}, tail(names(.), 2))
+          }
+
+          if (type == "split-rcbd") {
+
+            twofact_lvl <- treat_fcts[1:2]
+            treat_name <- twofact_lvl %>% names()
+            fact1 <- twofact_lvl %>% pluck(1)
+            fact2 <- twofact_lvl %>% pluck(2)
+
+            design <- agricolae::design.split(
+              trt1 = fact1,
+              trt2 = fact2,
+              r = rep,
+              design = "rcbd",
+              serie = series,
+              seed = seed
+            )
+
+            result <- design %>%
+              pluck("book") %>%
+              rename_with(~ {{ treat_name }}, tail(names(.), 2))
+          }
+
+        }
+
+# factorial ---------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+        if (type == "factorial") {
+
+
+          treat_lvls <- lengths(treat_fcts)
+
+          design <- agricolae::design.ab(
+            trt = treat_lvls,
+            r = rep,
+            serie = series,
+            design = type,
+            seed = seed
+          )
+
+          # rename cols -------------------------------------------------------------
+          # -------------------------------------------------------------------------
+
+          col_rnm <- function(renamed_fb, treat, new_names) {
+            oldn <- renamed_fb %>%
+              select(treat) %>%
+              unique() %>%
+              as_vector()
+
+            names <- structure(as.character(new_names),
+                               names = as.character(oldn)
+            )
+
+            renamed_fb %>%
+              mutate_at({{ treat }}, ~ recode(., !!!names)) %>%
+              select({{ treat }})
+            }
+
+          # -------------------------------------------------------------------------
+
+          renamed_fb <- design %>%
+            pluck("book") %>%
+            rename_with(~ {{ treat_name }}, tail(names(.), nFactors))
+
+          ini <- length(renamed_fb) - nFactors + 1
+          fin <- length(renamed_fb)
+
+          fb_recoded <- lapply(ini:fin, function(x) {
+            renamed_fb %>%
+              col_rnm(.,
+                      treat = colnames(.)[x],
+                      new_names = treat_fcts[[colnames(.)[x]]]
+              )
+            })
+
+          result <- do.call(cbind, fb_recoded) %>%
+            tibble() %>%
+            merge(renamed_fb %>% select(-{{ treat_name }}),
+                  .,
+                  by = 0) %>%
+            dplyr::arrange(plots) %>%
+            select(-starts_with("Row"))
+          }
+
+  # result ------------------------------------------------------------------
+  # -------------------------------------------------------------------------
 
   return(result)
 
 }
 
-data <- gs %>%
-  range_read("design")
+source("http://lozanoisla.com/setup.r")
+url <- "https://docs.google.com/spreadsheets/d/1ilw0NHT7mihaM-3U48KzkuMt927xe8ukX6rNuIw2fT0/edit#gid=0"
+# browseURL(url)
+gs <- as_sheets_id(url)
+
+(data <- gs %>%
+  range_read("tarpuy"))
 
 data %>% fieldbook_design()
+
