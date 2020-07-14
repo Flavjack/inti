@@ -67,6 +67,34 @@ shinyServer(function(input, output, session) {
   })
 
 
+# design type -------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+  output$design_type <- renderUI({
+
+    if(input$nFactors == 1) {
+
+      type <- c("crd", "rcbd", "lsd", "lattice")
+
+    } else if (input$nFactors == 2) {
+
+      type <- c("crd", "rcbd", "lsd", "split-crd", "split-rcbd")
+
+    } else if (input$nFactors > 2) {
+
+      type <- c("crd", "rcbd", "lsd")
+
+    }
+
+    selectizeInput(
+      inputId = "type",
+      label = "Design type",
+      choices = type,
+      multiple = FALSE
+    )
+
+  })
+
 # test code ---------------------------------------------------------------
 # -------------------------------------------------------------------------
 
@@ -88,6 +116,9 @@ shinyServer(function(input, output, session) {
 
     cat("Seed")
     print(input$seed)
+
+    cat("Sheet name")
+    print(input$gsheet_name)
 
   })
 
@@ -117,6 +148,8 @@ shinyServer(function(input, output, session) {
         , seed = input$seed
       )
 
+
+
     })
 
 
@@ -128,29 +161,36 @@ shinyServer(function(input, output, session) {
 
       sheet_delete(gs, "sketch")
 
-      }
+    }
 
-    if (is.list(fb())) {
+    if ( "fb" %in% sheet_names(gs) ) {
 
-      fb()  %>%
-        pluck("design") %>%
-        sheet_write(ss = gs
-                    , sheet = "fb")
+      sheet_delete(gs, "fb")
 
-      fb()  %>%
-        pluck("sketch") %>%
-        as.data.frame() %>%
-        sheet_write(ss = gs
-                    , sheet = "sketch")
+    }
 
-    } else if (is.data.frame(fb())) {
+    if( length(fb()) == 2 ) {
 
       fb() %>%
+        pluck("design") %>%
         as.data.frame() %>%
-        sheet_write(ss =  gs
-                    , sheet = "fb")
+        write_sheet(ss = gs, sheet = "fb")
 
-      }
+      fb() %>%
+        pluck("sketch") %>%
+        as.data.frame() %>%
+        write_sheet(ss = gs, sheet = "sketch")
+
+    }
+
+    if( length(fb()) == 1 ) {
+
+      fb() %>%
+        pluck("design") %>%
+        as.data.frame() %>%
+        write_sheet(ss = gs, sheet = "fb")
+
+    }
 
   })
 

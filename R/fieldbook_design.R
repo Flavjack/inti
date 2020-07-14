@@ -169,9 +169,11 @@ treat_fcts <- treatments_levels[treat_name]
                 seed = seed
               )
 
-              result <- design %>%
+              result <- list(
+                design = design %>%
                 pluck("book") %>%
                 dplyr::rename({{ treat_name }} := "onefact")
+                )
             }
 
             if (type == "rcbd") {
@@ -245,9 +247,11 @@ treat_fcts <- treatments_levels[treat_name]
               seed = seed
             )
 
-            result <- design %>%
+            result <- list(
+              design = design %>%
               pluck("book") %>%
               rename_with(~ {{ treat_name }}, tail(names(.), 2))
+              )
           }
 
           if (type == "split-rcbd") {
@@ -261,9 +265,11 @@ treat_fcts <- treatments_levels[treat_name]
               seed = seed
             )
 
-            result <- design %>%
+            result <- list(
+              design = design %>%
               pluck("book") %>%
               rename_with(~ {{ treat_name }}, tail(names(.), 2))
+              )
           }
 
         }
@@ -318,13 +324,15 @@ treat_fcts <- treatments_levels[treat_name]
               )
             })
 
-          result <- do.call(cbind, fb_recoded) %>%
+          result <- list(
+            design = do.call(cbind, fb_recoded) %>%
             tibble() %>%
             merge(renamed_fb %>% select(-{{ treat_name }}),
                   .,
                   by = 0) %>%
             dplyr::arrange(plots) %>%
             select(-Row.names)
+            )
           }
 
   # result ------------------------------------------------------------------

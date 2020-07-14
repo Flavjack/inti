@@ -103,51 +103,7 @@ fluidPage(
                , min = 1
              ),
 
-             conditionalPanel(
-
-               "input.nFactors == '1'",
-
-               selectizeInput(
-                 inputId = "type",
-                 label = "Design type",
-                 choices = c("crd"
-                             ,"rcbd"
-                             , "lsd"
-                             , "lattice"),
-                 multiple = FALSE
-               ),
-             ),
-
-             conditionalPanel(
-
-               "input.nFactors == '2'",
-
-               selectizeInput(
-                 inputId = "type",
-                 label = "Design type",
-                 choices = c("crd"
-                             , "rcbd"
-                             , "lsd"
-                             ,"split-crd"
-                             , "split-rcbd"
-                             ),
-                 multiple = FALSE
-               ),
-             ),
-
-             conditionalPanel(
-
-               "input.nFactors > '2'",
-
-               selectizeInput(
-                 inputId = "type",
-                 label = "Design type",
-                 choices = c("crd"
-                             , "rcbd"
-                             , "lsd"),
-                 multiple = FALSE
-               ),
-             ),
+             uiOutput("design_type"),
 
              numericInput(inputId = "rep"
                           , label = "Replications"
