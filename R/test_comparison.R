@@ -1,9 +1,9 @@
 #' Multiple comparison test
 #'
-#' @description Function analisis of variance for summary data.
+#' @description Function analysis of variance for summary data.
 #' @param aov lm o aov result function.
 #' @param comp treatments will be compared.
-#' @param type method for made comparision analysis: c("snk", "tukey", "duncan").
+#' @param type method for made comparison analysis: c("snk", "tukey", "duncan").
 #' @param sig significance level. Default 0.05
 #' @return Table with complete data for graphics
 #' @importFrom agricolae SNK.test HSD.test duncan.test

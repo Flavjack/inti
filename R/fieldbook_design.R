@@ -1,13 +1,87 @@
+#' Field book experimental designs
+#'
+#' Function to deploy experimental designs based in agricolae package.
+#' 1. Field book for one and multiple factors
+#' 2. Sketch design.
+#'
+#' @param data Experimental design data frame with the factors and level. See examples.
+#' @param nFactors Number of factor in the experiment  (default = 1). See details.
+#' @param type Type of experimental arrange  (default = "crd"). See details.
+#' @param rep  Number of replications in the experiment (default = 3).
+#' @param serie Digits in the plot id (default = 2).
+#' @param seed Replicability of draw results (default = 0) ~ always random. See details.
+#'
+#' @details The function allows to include the arguments in the sheet that have the information of the design.
+#' You should include 2 columns in the sheet: "\code{[arguments]}" and "\code{[values]}". See examples.
+#' The information will be extracted automatically and deploy the design.
+#'
+#' nFactor = 1
+#' - crd
+#' - rcbd
+#' - lsd
+#' - lattice
+#'
+#' nFactor = 2 (factorial)
+#' - split-crd
+#' - split-rcbd
+#'
+#' nFactors >= 2 (factorial)
+#' factorial .: crd, rcbd, lsd
+#'
+#' @return A list with two objects:
+#'
+#' 1. fieldbook design
+#'
+#' 2. field design (sketch)
+#'
+#' @author
+#'
+#' Flavio Lozano-Isla
+#'
+#' @import dplyr
+#' @importFrom purrr pluck as_vector
+#' @importFrom stringr str_detect
+#' @importFrom tibble tibble
+#' @importFrom utils tail
+#' @importFrom purrr discard
+#'
+#' @source
+#'
+#' https://tarwi.lamolina.edu.pe/~fmendiburu/
+#'
+#' @examples
+#'
+#' \dontrun{
+#'
+#' library(inti)
+#' library(googlesheets4)
+#' library(tidyverse)
+#'
+#' url <- paste0("https://docs.google.com/spreadsheets/d/"
+#' , "1ilw0NHT7mihaM-3U48KzkuMt927xe8ukX6rNuIw2fT0/edit#gid=0")
+#' # browseURL(url)
+#' gs <- as_sheets_id(url)
+#'
+#' (data <- gs %>%
+#'     range_read("tarpuy"))
+#'
+#' data %>% fieldbook_design()
+#'
+#' }
+#'
+#' @export
 
 fieldbook_design <- function(data,
-                             nFactors = NULL,
+                             nFactors = 1,
                              type = c(
-                               "crd", "rcbd", "lattice",
+                               "crd", "rcbd", "lsd", "lattice",
                                "split-crd", "split-rcbd"
                                ),
-                             rep = NULL,
+                             rep = 3,
                              serie = 2,
                              seed = 0) {
+
+  plots <- Row.names <- NULL
 
 # arguments ---------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -27,7 +101,7 @@ treatments_names <- data_fb %>%
 treatments_levels <- data_fb %>%
   select({{ treatments_names }}) %>%
   as.list() %>%
-  map(discard, is.na)
+  purrr::map(discard, is.na)
 
 arguments <- data_fb %>%
   select(starts_with("[") | ends_with("]")) %>%
@@ -255,14 +329,4 @@ treat_fcts <- treatments_levels[treat_name]
   return(result)
 
 }
-
-source("http://lozanoisla.com/setup.r")
-url <- "https://docs.google.com/spreadsheets/d/1ilw0NHT7mihaM-3U48KzkuMt927xe8ukX6rNuIw2fT0/edit#gid=0"
-# browseURL(url)
-gs <- as_sheets_id(url)
-
-(data <- gs %>%
-  range_read("tarpuy"))
-
-data %>% fieldbook_design()
 

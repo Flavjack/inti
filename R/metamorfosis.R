@@ -9,7 +9,7 @@
 #' @param index Column of the dictionary with the type and level of the variables.
 #' @param colnames Character vector with the name of the columns.
 #'
-#' @details The function requiere at least three colums.
+#' @details The function require at least three columns.
 #'
 #' 1. Original names (\code{from}).
 #'
@@ -34,12 +34,12 @@
 #' @examples
 #'
 #' \dontrun{
+#'
 #' library(googlesheets4)
 #' library(tidyverse)
 #'
-#' url.1 <- "https://docs.google.com/spreadsheets/d/"
-#' url.2 <- "1gue-wSQcEu4nJigVZdUWsTfIIzhtxpDRdWAQiEHgKak/edit#gid=0"
-#' url <- paste0(url.1, url.2)
+#' url <- paste0("https://docs.google.com/spreadsheets/d/"
+#' , "1gue-wSQcEu4nJigVZdUWsTfIIzhtxpDRdWAQiEHgKak/edit#gid=0")
 #' gs <- as_sheets_id(url)
 #' # browseURL(url)
 #'
@@ -60,6 +60,7 @@
 #'                      )
 #'
 #' fb_new <- mtm$fieldbook
+#'
 #' }
 #'
 #' @export

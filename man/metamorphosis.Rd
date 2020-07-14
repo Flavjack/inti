@@ -30,7 +30,7 @@ List with two objects.
 Transform entire data frame (field book) according to data a dictionary.
 }
 \details{
-The function requiere at least three colums.
+The function require at least three columns.
 
 1. Original names (\code{from}).
 
@@ -41,12 +41,12 @@ The function requiere at least three colums.
 \examples{
 
 \dontrun{
+
 library(googlesheets4)
 library(tidyverse)
 
-url.1 <- "https://docs.google.com/spreadsheets/d/"
-url.2 <- "1gue-wSQcEu4nJigVZdUWsTfIIzhtxpDRdWAQiEHgKak/edit#gid=0"
-url <- paste0(url.1, url.2)
+url <- paste0("https://docs.google.com/spreadsheets/d/"
+, "1gue-wSQcEu4nJigVZdUWsTfIIzhtxpDRdWAQiEHgKak/edit#gid=0")
 gs <- as_sheets_id(url)
 # browseURL(url)
 
@@ -67,6 +67,7 @@ mtm <- metamorphosis(fieldbook = fb_old
                      )
 
 fb_new <- mtm$fieldbook
+
 }
 
 }

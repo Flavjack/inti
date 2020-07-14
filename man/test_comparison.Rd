@@ -11,7 +11,7 @@ test_comparison(aov, comp, type = "snk", sig = 0.05)
 
 \item{comp}{treatments will be compared.}
 
-\item{type}{method for made comparision analysis: c("snk", "tukey", "duncan").}
+\item{type}{method for made comparison analysis: c("snk", "tukey", "duncan").}
 
 \item{sig}{significance level. Default 0.05}
 }
@@ -19,5 +19,5 @@ test_comparison(aov, comp, type = "snk", sig = 0.05)
 Table with complete data for graphics
 }
 \description{
-Function analisis of variance for summary data.
+Function analysis of variance for summary data.
 }

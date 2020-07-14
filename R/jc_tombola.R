@@ -29,9 +29,8 @@
 #' library(googlesheets4)
 #' library(tidyverse)
 #'
-#' url1 <- "https://docs.google.com/spreadsheets/d/"
-#' url2 <- "15TaF0lCCByg0dgOLqfoTlLbAWnau8IiLOklpS4cvm4M/edit#gid=272604925"
-#' url <- paste0(url1, url2)
+#' url <- paste0("https://docs.google.com/spreadsheets/d/"
+#' , "15TaF0lCCByg0dgOLqfoTlLbAWnau8IiLOklpS4cvm4M/edit#gid=272604925")
 #' gs <- as_sheets_id(url)
 #' # browseURL(url)
 #'
