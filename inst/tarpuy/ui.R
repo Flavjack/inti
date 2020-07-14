@@ -13,7 +13,10 @@ pkgs_cran <- c(
   , "utils"
   , "fs"
   , "metathis"
-  )
+  , "googlesheets4"
+  , "googledrive"
+  , "dplyr"
+)
 
 installed_cran <- pkgs_cran %in% rownames(installed.packages())
 if (any(installed_cran == FALSE)) {
@@ -32,6 +35,8 @@ if (any(installed_git == FALSE)) {
 invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
 rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
 
+library(dplyr)
+library(purrr)
 library(shiny)
 library(miniUI)
 library(shinyFiles)
@@ -39,6 +44,10 @@ library(utils)
 library(fs)
 library(inti)
 library(metathis)
+library(googlesheets4)
+library(googledrive)
+library(dplyr)
+library(purrr)
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -58,7 +67,7 @@ fluidPage(
       ),
 
     fluidRow(
-      column(2,
+      column(1,
 
              br(),
              br(),
@@ -70,8 +79,8 @@ fluidPage(
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://lozanoisla.com/">
-            <img src="https://raw.githubusercontent.com/Flavjack/lozanoisla/master/static/android-chrome-512x512.png?token=AB3ARRI5E4ZF7FLXM6CDQ7S7CHJ3K" style="height:55px" title="flozano"></a>
-            <span style="display:block;">lozanoisla.com</span>
+            <img src="https://raw.githubusercontent.com/Flavjack/lozanoisla/master/static/android-chrome-512x512.png?token=AB3ARRI5E4ZF7FLXM6CDQ7S7CHJ3K" style="height:50px" title="flozano"></a>
+            <span style="display:block;"><small>lozanoisla.com</small></span>
             </p></div>
 
             </div>
@@ -82,7 +91,7 @@ fluidPage(
 
       column(2,
 
-             HTML('<h1><a target="_blank" href="https://flavjack.shinyapps.io/rticles/">Tarpuy</a></h1>'),
+             HTML('<h1><a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/">Tarpuy</a></h1>'),
 
              br(),
 
@@ -101,7 +110,10 @@ fluidPage(
                selectizeInput(
                  inputId = "type",
                  label = "Design type",
-                 choices = c("crd", "rcbd", "lsd", "lattice"),
+                 choices = c("crd"
+                             ,"rcbd"
+                             , "lsd"
+                             , "lattice"),
                  multiple = FALSE
                ),
              ),
@@ -113,8 +125,11 @@ fluidPage(
                selectizeInput(
                  inputId = "type",
                  label = "Design type",
-                 choices = c("crd", "rcbd", "lsd"
-                             ,"split-crd", "split-rcbd"
+                 choices = c("crd"
+                             , "rcbd"
+                             , "lsd"
+                             ,"split-crd"
+                             , "split-rcbd"
                              ),
                  multiple = FALSE
                ),
@@ -127,7 +142,9 @@ fluidPage(
                selectizeInput(
                  inputId = "type",
                  label = "Design type",
-                 choices = c("crd", "rcbd", "lsd"),
+                 choices = c("crd"
+                             , "rcbd"
+                             , "lsd"),
                  multiple = FALSE
                ),
              ),
@@ -150,53 +167,67 @@ fluidPage(
                           , value = 0
                           ),
 
+             textInput(inputId = "gsheet_name"
+                       , label = "Gsheet name"
+                       , value = "tarpuy"
+                       ),
+
+             actionButton(inputId = "export_fb"
+                          , label = "Export"
+                          )
+
              ),
 
-      column(6,
+      column(8,
 
              br(),
 
-             column(width = 12, #offset = 1,
+             column(width = 12,
 
                     h4(icon("book"), "Google SpreadSheet (URL)", width = "100%"),
-                    textInput("fbdt",
+                    textInput(inputId = "gsheet_url",
                               label = NULL,
                               width = "100%",
-                              value = "https://docs.google.com/spreadsheets/d/14sO81N50Zx1al5O3Iu3IPaz1_5CVncvtsx-_JRqJ_qE/edit#gid=1625775871")
-
-             )
+                              value = "https://docs.google.com/spreadsheets/d/1ilw0NHT7mihaM-3U48KzkuMt927xe8ukX6rNuIw2fT0/edit#gid=0")
 
              ),
 
-      column(2,
+             shinydashboard::box(
+
+               status = "danger",
+               solidHeader = T,
+               width = 12,
+
+               htmlOutput("gsheet_preview"),
+               br()
+
+             )
+
+
+             ),
+
+      column(1,
 
              br(),
              br(),
 
              HTML('
 
-            <p> </p>
-            <p> </p>
-
             <div id=footer style="width:100%; margin:auto;">
 
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://www.quipolab.com/">
-            <img src="https://lozanoisla.com/img/quipo.png" style="height:55px" title="quipo"></a>
+            <img src="https://lh3.googleusercontent.com/ovLKu9fnNmUfk4cG81KpwnL0w7tqZawlR93xzrNDCJRXYFZu6_uREKTgRI5u43N-pHe3Z6dt=w16383" style="height:50px" title="quipo"></a>
+            <span style="display:block;"><small>quipolab.com</small></span>
             </p></div>
 
             </div>
 
                   ')
 
-             ),
-
-    )
+             )
+      )
   )
 
-  # viewer <- dialogViewer("lozanoisla.com", width = 500, height = 450)
-
-  # runGadget("inst/rticles/app.R", server = server, viewer = viewer)
-
-  # browseURL("https://flavjack.shinyapps.io/rticles")
+# https://shiny.rstudio.com/tutorial/written-tutorial/lesson3/

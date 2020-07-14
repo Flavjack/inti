@@ -103,11 +103,15 @@ treatments_levels <- data_fb %>%
   as.list() %>%
   purrr::map(discard, is.na)
 
-arguments <- data_fb %>%
-  select(starts_with("[") | ends_with("]")) %>%
-  rename_with(~ str_replace_all(., "\\[|\\]", "")) %>%
-  drop_na() %>%
-  tibble::deframe()
+if ( "[argument]" %in% colnames(data_fb) ) {
+
+  arguments <- data_fb %>%
+    select(starts_with("[") | ends_with("]")) %>%
+    rename_with(~ gsub("\\[|\\]", "", .)) %>%
+    drop_na() %>%
+    tibble::deframe()
+
+  } else { arguments <- data.frame() }
 
 if ("nFactors" %in% names(arguments)) {
   nFactors <- arguments %>%

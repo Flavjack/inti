@@ -13,7 +13,10 @@ pkgs_cran <- c(
   , "utils"
   , "fs"
   , "metathis"
-  )
+  , "googlesheets4"
+  , "googledrive"
+  , "dplyr"
+)
 
 installed_cran <- pkgs_cran %in% rownames(installed.packages())
 if (any(installed_cran == FALSE)) {
@@ -38,6 +41,17 @@ library(shinyFiles)
 library(utils)
 library(fs)
 library(inti)
+library(metathis)
+library(googlesheets4)
+library(googledrive)
+library(dplyr)
+library(purrr)
+
+# auth --------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+googlesheets4::gs4_auth(T)
+googledrive::drive_auth(T)
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -52,24 +66,6 @@ shinyServer(function(input, output, session) {
     stopApp()
   })
 
-# arguments ---------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-  # project <- reactive({
-  #   if(input$project == "Yes") {TRUE} else {FALSE}
-  # })
-
-# server detect -----------------------------------------------------------
-# -------------------------------------------------------------------------
-
-  # output$server <- reactive({
-  #   if(Sys.getenv('SHINY_PORT') == "") {"local"} else {"web"}
-  # })
-  # outputOptions(output, "server", suspendWhenHidden = FALSE)
-  #
-  # server <- reactive({
-  #   if(Sys.getenv('SHINY_PORT') == "") {"local"} else {"web"}
-  # })
 
 # test code ---------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -95,79 +91,68 @@ shinyServer(function(input, output, session) {
 
   })
 
-# Export path -------------------------------------------------------------
-# -------------------------------------------------------------------------
+# import data -----------------------------------------------------------
 
-  # volumes <- c(
-  #   Home = fs::path_home(),
-  #   "R Installation" = R.home(),
-  #   getVolumes()()
-  #   )
-  #
-  # shinyDirChoose(input,
-  #   "directory",
-  #   roots = volumes,
-  #   session = session,
-  #   restrictions = system.file(package = "base")
-  # )
-  #
-  # output$directorypath <- renderPrint({
-  #   if (is.integer(input$directory)) {
-  #     cat("No directory has been selected")
-  #   } else {
-  #     parseDirPath(volumes, input$directory)
-  #   }
-  # })
-  #
-  # path <- reactive({
-  #   paste0(parseDirPath(volumes, input$directory), "/")
-  # })
+  output$gsheet_preview <- renderUI({
 
-# rticles -----------------------------------------------------------------
-# -------------------------------------------------------------------------
+    gss <- tags$iframe(src = input$gsheet_url,
+                       style="height:420px; width:100%; scrolling=no; zoom:1.2")
 
-  # observeEvent(input$create, {
-  #
-  #   inti::rticles(path = path()
-  #                 , type = input$type
-  #                 , name = input$name
-  #                 , project = project()
-  #                 , server = server()
-  #                 )
-  #   })
+  })
 
-# download data -----------------------------------------------------------
-# -------------------------------------------------------------------------
 
-  # output$downloadData <- downloadHandler(
-  #
-  #   filename = function() {
-  #
-  #     paste0(stringr::str_replace_all(input$name, pattern = " ", repl = "_"), ".zip")
-  #
-  #   },
-  #
-  #   content = function(content) {
-  #
-  #     filelist <- inti:::rticles(type = input$type
-  #                                , name = input$name
-  #                                , project = project()
-  #                                , server = server()
-  #                                )
-  #
-  #     zip::zipr(zipfile = content, files = filelist)
-  #
-  #   },
-  #
-  #   contentType = "application/zip"
-  #
-  # )
+  fb <- reactive  ({
 
-# end ---------------------------------------------------------------------
-# -------------------------------------------------------------------------
+    gs <- as_sheets_id(input$gsheet_url)
+
+    fb <- gs %>%
+      range_read(input$gsheet_name)
+
+    fbds <- fb %>%
+      inti::fieldbook_design(
+        nFactors = input$nFactors
+        , type = input$type
+        , rep = input$rep
+        , serie = input$serie
+        , seed = input$seed
+      )
+
+    })
+
+
+  observeEvent(input$export_fb, {
+
+    gs <- as_sheets_id(input$gsheet_url)
+
+    if ( "sketch" %in% sheet_names(gs) ) {
+
+      sheet_delete(gs, "sketch")
+
+      }
+
+    if (is.list(fb())) {
+
+      fb()  %>%
+        pluck("design") %>%
+        sheet_write(ss = gs
+                    , sheet = "fb")
+
+      fb()  %>%
+        pluck("sketch") %>%
+        as.data.frame() %>%
+        sheet_write(ss = gs
+                    , sheet = "sketch")
+
+    } else if (is.data.frame(fb())) {
+
+      fb() %>%
+        as.data.frame() %>%
+        sheet_write(ss =  gs
+                    , sheet = "fb")
+
+      }
+
+  })
 
 })
 
-# viewer <- dialogViewer("lozanoisla.com", width = 500, height = 450)
-# runGadget("inst/rticles/app.R", server = server, viewer = viewer)
-# browseURL("https://flavjack.shinyapps.io/rticles")
