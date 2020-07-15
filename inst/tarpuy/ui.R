@@ -6,48 +6,14 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-pkgs_cran <- c(
-  "shiny"
-  , "miniUI"
-  , "shinyFiles"
-  , "utils"
-  , "fs"
-  , "metathis"
-  , "googlesheets4"
-  , "googledrive"
-  , "dplyr"
-)
+if (file.exists("setup.r")) { source("setup.r") }
 
-installed_cran <- pkgs_cran %in% rownames(installed.packages())
-if (any(installed_cran == FALSE)) {
-  install.packages(pkgs_cran[!installed_cran])
-}
-
-pkgs_git <- c(
-  "inti"
-)
-
-installed_git <- pkgs_git %in% rownames(installed.packages())
-if (any(installed_git == FALSE)) {
-  devtools::install_github("flavjack/inti", upgrade = "always")
-}
-
-invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
-rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
-
-library(dplyr)
-library(purrr)
 library(shiny)
-library(miniUI)
-library(shinyFiles)
-library(utils)
-library(fs)
 library(inti)
 library(metathis)
 library(googlesheets4)
 library(googledrive)
-library(dplyr)
-library(purrr)
+library(tidyverse)
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------

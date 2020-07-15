@@ -6,46 +6,14 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-pkgs_cran <- c(
-  "shiny"
-  , "miniUI"
-  , "shinyFiles"
-  , "utils"
-  , "fs"
-  , "metathis"
-  , "googlesheets4"
-  , "googledrive"
-  , "dplyr"
-)
-
-installed_cran <- pkgs_cran %in% rownames(installed.packages())
-if (any(installed_cran == FALSE)) {
-  install.packages(pkgs_cran[!installed_cran])
-}
-
-pkgs_git <- c(
-  "inti"
-)
-
-installed_git <- pkgs_git %in% rownames(installed.packages())
-if (any(installed_git == FALSE)) {
-  devtools::install_github("flavjack/inti", upgrade = "always")
-}
-
-invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
-rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
+if (file.exists("setup.r")) { source("setup.r") }
 
 library(shiny)
-library(miniUI)
-library(shinyFiles)
-library(utils)
-library(fs)
 library(inti)
 library(metathis)
 library(googlesheets4)
 library(googledrive)
-library(dplyr)
-library(purrr)
+library(tidyverse)
 
 # auth --------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -131,8 +99,7 @@ shinyServer(function(input, output, session) {
 
   })
 
-
-  fb <- reactive  ({
+  observeEvent(input$export_fb, {
 
     gs <- as_sheets_id(input$gsheet_url)
 
@@ -148,38 +115,29 @@ shinyServer(function(input, output, session) {
         , seed = input$seed
       )
 
-
-
-    })
-
-
-  observeEvent(input$export_fb, {
-
-    gs <- as_sheets_id(input$gsheet_url)
-
     if ( "sketch" %in% sheet_names(gs) ) {
 
       sheet_delete(gs, "sketch")
 
     }
 
-    if( length(fb()) == 2 ) {
+    if( length(fbds) == 2 ) {
 
-      fb() %>%
+      fbds %>%
         pluck("design") %>%
         as.data.frame() %>%
         write_sheet(ss = gs, sheet = "fb")
 
-      fb() %>%
+      fbds %>%
         pluck("sketch") %>%
         as.data.frame() %>%
         write_sheet(ss = gs, sheet = "sketch")
 
     }
 
-    if( length(fb()) == 1 ) {
+    if( length(fbds) == 1 ) {
 
-      fb() %>%
+      fbds %>%
         pluck("design") %>%
         as.data.frame() %>%
         write_sheet(ss = gs, sheet = "fb")
