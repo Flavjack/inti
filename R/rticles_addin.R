@@ -13,7 +13,9 @@
 #'
 #' @examples
 #' \dontrun{
-#'  rticles()
+#'
+#'  inti::rticles()
+#'
 #' }
 #'
 #' @author Flavio Lozano-Isla

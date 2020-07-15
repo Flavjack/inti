@@ -1,9 +1,14 @@
-Name: Yupana app
-Description: Run inti::yupana() for data analysis.
+Name: Yupana
+Description: Interactive data analysis.
 Binding: yupana
 Interactive: true
 
-Name: Write rticles
-Description: Build markdown or bookdown document.
+Name: Rticles
+Description: Build markdown and bookdown documents.
 Binding: rticles_addin
+Interactive: true
+
+Name: Tarpuy
+Description: Field experimental designer.
+Binding: tarpuy
 Interactive: true

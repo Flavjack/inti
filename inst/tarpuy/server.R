@@ -163,12 +163,6 @@ shinyServer(function(input, output, session) {
 
     }
 
-    if ( "fb" %in% sheet_names(gs) ) {
-
-      sheet_delete(gs, "fb")
-
-    }
-
     if( length(fb()) == 2 ) {
 
       fb() %>%
