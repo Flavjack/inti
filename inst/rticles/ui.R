@@ -59,7 +59,7 @@ fluidPage(
         title = "Rticles",
         description = "create technical documents with markdown and bookdown",
         url = "https://flavjack.shinyapps.io/rticles/",
-        image = "https://lozanoisla.com/img/quipo.png",
+        image = "https://lozanoisla.com/img/quipoq.png",
         image_alt = "quipolab.com"
       ),
 
@@ -77,7 +77,7 @@ fluidPage(
             <p style="text-align:center">
             <a target="_blank" href="https://lozanoisla.com/">
             <img src="https://raw.githubusercontent.com/Flavjack/lozanoisla/master/static/android-chrome-512x512.png?token=AB3ARRI5E4ZF7FLXM6CDQ7S7CHJ3K" style="height:55px" title="flozano"></a>
-            <span style="display:block;">lozanoisla.com</span>
+            <span style="display:block;"><small>lozanoisla.com</small></span>
             </p></div>
 
             </div>
