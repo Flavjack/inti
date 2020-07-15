@@ -8,7 +8,7 @@ Tools and statistical procedures for experimentals designs and plant breeding
 install.packages("devtools")
 devtools::install_github("flavjack/inti")
 ```
-## Apps
+## Shiny apps
 
 ### Yupana
 
@@ -16,19 +16,22 @@ devtools::install_github("flavjack/inti")
 inti::yupana()
 ```
 
-Yupana .: <https://flavjack.shinyapps.io/yupana/>
-
-User Manual .: <https://flavjack.github.io/yupana-usm>
-
-Cita .: Lozano-Isla, Flavio, Gomez Carrion, Jimmy, Benites-Alfaro, Omar, & De Mendiburu, Felipe (2018). Yupana: Herramienta web interactiva para el análisis de datos en la investigación agropecuario e industrial. Quipo. <www.quipolab.com>
-
-### Pacha
+## Rticles
 
 ```{r eval=F}
-inti::pacha()
+inti::rticles_addin()
+```
+### Tarpuy
+
+```{r eval=F}
+inti::tarpuy()
 ```
 ### Yaku
 
 ```{r eval=F}
 inti::yaku()
 ```
+
+## More Info:
+
+https://lozanoisla.com/

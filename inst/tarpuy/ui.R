@@ -11,9 +11,9 @@ if (file.exists("setup.r")) { source("setup.r") }
 library(shiny)
 library(inti)
 library(metathis)
-library(googlesheets4)
-library(googledrive)
 library(tidyverse)
+library(googlesheets4)
+library(googleAuthR)
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -104,7 +104,23 @@ fluidPage(
 
              br(),
 
-             column(width = 12,
+             # -------------------------------------------------------------------------
+
+             sidebarLayout(
+               sidebarPanel(
+                 googleSignInUI("demo")
+               ),
+
+               mainPanel(
+                 with(tags, dl(dt("Name"), dd(textOutput("g_name")),
+                               dt("Email"), dd(textOutput("g_email")),
+                               dt("Image"), dd(uiOutput("g_image")) ))
+               )
+             ),
+
+             # -------------------------------------------------------------------------
+
+              column(width = 12,
 
                     h4(icon("book"), "Google SpreadSheet (URL)", width = "100%"),
                     textInput(inputId = "gsheet_url",
@@ -140,7 +156,7 @@ fluidPage(
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://www.quipolab.com/">
-            <img src="https://lh3.googleusercontent.com/ovLKu9fnNmUfk4cG81KpwnL0w7tqZawlR93xzrNDCJRXYFZu6_uREKTgRI5u43N-pHe3Z6dt=w16383" style="height:50px" title="quipo"></a>
+            <img src="https://lh5.googleusercontent.com/GNkWjm3nhhtxAViz3e_R152J9sbdgYGsF6BqwNKpukugY2pswqpl1C-uYKqokBzhT7sBQkC7=w16383" style="height:50px" title="quipo"></a>
             <span style="display:block;"><small>quipolab.com</small></span>
             </p></div>
 

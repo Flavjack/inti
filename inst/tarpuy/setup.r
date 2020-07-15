@@ -38,3 +38,4 @@ if (any(installed == FALSE)) {
 
 invisible(lapply(as.vector(unlist(pkgs)), library, character.only = TRUE))
 rm(pkgs, gitrepo, installed)
+
