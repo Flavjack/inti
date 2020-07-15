@@ -1,55 +1,62 @@
-# -------------------------------------------------------------------------
 # Info --------------------------------------------------------------------
 # -------------------------------------------------------------------------
 #> author .: Flavio Lozano Isla
 #> web    .: https://lozanoisla.com
-#> date   .: 2016-07-09
-# -------------------------------------------------------------------------
+#> date   .: 2020-07-15
 # -------------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-# -------------------------------------------------------------------------
 # Packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-pkgs_cran <- c(
-    "devtools" # Developer tools
-  , "bookdown" # Write articles and technical documents
-  , "knitr" # Base for markdown documents
-  , "tidyverse" # Data manipulation
-  , "googlesheets4" # Read/write google sheets docs
-  , "googledrive" # Download/Upload files from googledrive
-  , "agricolae" # Agriculture data analysis and designs
-  , "GerminaR" # Germination analysis
-  , "FactoMineR" # Multivariate data analysis
-  , "heatmaply" # Correlation plot
-  , "cowplot" # Layout for grid figures 
-  , "grid" # For merge figures 
-  , "png" # Import png files
-  , "jpeg" # Import jpg files
-  , "emmeans" # Estimated Marginal Means
-  , "lme4" # Linear Mixed-Effects Models (LMM)
-  , "lmerTest" # Tests in Linear Mixed Effects Models
+pkgs <- list(
+  
+  cran = c("devtools" # Developer tools
+           , "bookdown" # Write articles and technical documents
+           , "knitr" # Base for markdown documents
+           , "tidyverse" # Data manipulation
+           , "googlesheets4" # Read/write google sheets docs
+           , "googledrive" # Download/Upload files from googledrive
+           , "agricolae" # Agriculture data analysis and designs
+           , "GerminaR" # Germination analysis
+           , "FactoMineR" # Multivariate data analysis
+           , "heatmaply" # Correlation plot
+           , "cowplot" # Layout for grid figures 
+           , "grid" # For merge figures 
+           , "png" # Import png files
+           , "jpeg" # Import jpg files
+           , "emmeans" # Estimated Marginal Means
+           , "lme4" # Linear Mixed-Effects Models (LMM)
+           , "lmerTest" # Tests in Linear Mixed Effects Models
+           ),
+  
+  git = c("inti" # Tools and Statistical Procedures in Plant Science
+          , "citr"  # Use zotero for citations
+          )
   )
 
-installed_cran <- pkgs_cran %in% rownames(installed.packages())
-if (any(installed_cran == FALSE)) {
-  install.packages(pkgs_cran[!installed_cran])
-} 
+gitrepo <- c("Flavjack/inti", "crsh/citr")
 
-pkgs_git <- c(
-    "inti" # Tools and Statistical Procedures in Plant Science
-  , "citr"  # Use zotero for citations
-  )
+installed <- unlist(pkgs) %in% rownames(installed.packages())
 
-installed_git <- pkgs_git %in% rownames(installed.packages())
-if (any(installed_git == FALSE)) {
-  devtools::install_github("Flavjack/inti", upgrade = "always") 
-  devtools::install_github("crsh/citr", upgrade = "always") 
-  } 
+if (any(installed == FALSE)) {
 
-invisible(lapply(c(pkgs_cran, pkgs_git), library, character.only = TRUE))
-rm(pkgs_cran, installed_cran, pkgs_git, installed_git)
+  cran_missing <- pkgs[["cran"]] %in% as.vector(unlist(pkgs)[!installed == TRUE])
+  cran_install <- unlist(pkgs)[cran_missing == TRUE]
+  install.packages( cran_install )
+  
+  git_missing <- pkgs[["git"]] %in% as.vector(unlist(pkgs)[!installed == TRUE])
+  
+  if (any(git_missing == FALSE)) {
+    
+    invisible(lapply(gitrepo, devtools::install_github, character.only = TRUE))
+    
+  }
+
+} else {invisible(lapply(gitrepo, devtools::install_github, character.only = TRUE))}
+
+invisible(lapply(as.vector(unlist(pkgs)), library, character.only = TRUE))
+rm(pkgs, gitrepo, installed)
 
 # -------------------------------------------------------------------------
 # Knitr options -----------------------------------------------------------

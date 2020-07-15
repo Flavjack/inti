@@ -40,9 +40,9 @@ xl <- gs %>%
 
 fb <- xl %>% 
   readxl::read_excel("prosopis")  %>% 
-  select_all("tolower") %>% 
-  mutate_if(is.character, ~gsub("\\s+|\\.", "_", .)) %>% 
-  mutate_at(vars(rep, nacl, temp), as.factor)
+  rename_with(tolower) %>% 
+  mutate(across(c("rep", "nacl", "temp"), as.factor )) %>% 
+  mutate(across(where(is.factor), ~gsub("\\s+|\\.", "_", .) )) 
 # str(fb)
 ```
 

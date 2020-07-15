@@ -28,7 +28,7 @@ source("files/setup.r")
 
 # Crea tu primer documento
 
-Rticles te ayudara a crear tu primer documento completo usando R + markdown = Rmarkdown (.Rmd). 
+Rticles te ayudara a crear tu primer documento usando R + markdown = Rmarkdown (.Rmd). 
 
 1. Elije que tipo de documento deseas crear.
 
@@ -36,15 +36,15 @@ Rticles te ayudara a crear tu primer documento completo usando R + markdown = Rm
     - Bookdown: manuales y libros. 
     <p>
     
-1. Selecciona el nombre para tú documento.
+1. Para poder usar la plantilla debes tener instaldo R y RStudio. 
 
-1. Selecciona el folder donde se exportará toda los documentos necesarios para ejecutar el ejemplo.
+1. Selecciona el nombre para tú documento.
 
 1. Te recomiendo usar proyectos (R project) por que te permitirá organizar mejor tus trabajos.
 
 1. Unas vez selecionada las opciones, descarga ("Download") o crea ("Create") las dependencias.
 
-1. Ve al folder que seleccionates o descargaste los documentos,abre el archivo con extension .Rporj.
+1. Ve al folder que seleccionates o descargaste los documentos, abre el archivo con extension .Rporj.
 
 1. Se abrirá Rstudio, compila el documento usando el boton Knit.
 
