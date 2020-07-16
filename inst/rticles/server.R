@@ -141,6 +141,3 @@ shinyServer(function(input, output, session) {
 
 })
 
-# viewer <- dialogViewer("lozanoisla.com", width = 500, height = 450)
-# runGadget("inst/rticles/app.R", server = server, viewer = viewer)
-# browseURL("https://flavjack.shinyapps.io/rticles")

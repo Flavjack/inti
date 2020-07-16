@@ -24,11 +24,12 @@ fluidPage(
 
     tags$head(HTML('<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">')),
     tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
+    tags$head(includeHTML(("files/analytics.html"))),
 
     meta() %>%
       meta_social(
         title = "Tarpuy",
-        description = "create field book designs easy",
+        description = "create experimental field book designs",
         url = "https://flavjack.shinyapps.io/tarpuy/",
         image = "https://raw.githubusercontent.com/Flavjack/lozanoisla/master/static/android-chrome-512x512.png?token=AB3ARRI5E4ZF7FLXM6CDQ7S7CHJ3K",
         image_alt = "quipolab.com"
