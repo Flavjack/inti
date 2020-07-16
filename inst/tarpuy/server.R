@@ -14,8 +14,15 @@ library(shiny)
 library(inti)
 library(metathis)
 library(tidyverse)
+
 library(googlesheets4)
+
+library(googledrive)
+
 library(googleAuthR)
+
+googlesheets4::gs4_auth(T)
+googledrive::drive_auth(T)
 
 
 # auth --------------------------------------------------------------------
@@ -23,6 +30,7 @@ library(googleAuthR)
 
 options(googleAuthR.webapp.client_id = "593859286021-stvni3pmq7mrrl8l6dber27pscs1ebrs.apps.googleusercontent.com")
 
+# 593859286021-stvni3pmq7mrrl8l6dber27pscs1ebrs.apps.googleusercontent.com
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
