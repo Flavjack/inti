@@ -3,8 +3,6 @@
 
 # https://flavjack.shinyapps.io/tarpuy/
 
-# https://console.cloud.google.com/apis/credentials
-
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
@@ -14,52 +12,15 @@ library(shiny)
 library(inti)
 library(metathis)
 library(tidyverse)
-
 library(googlesheets4)
-
-library(googledrive)
-
 library(googleAuthR)
 
-googlesheets4::gs4_auth(T)
-googledrive::drive_auth(T)
-
-
-# auth --------------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-options(googleAuthR.webapp.client_id = "593859286021-stvni3pmq7mrrl8l6dber27pscs1ebrs.apps.googleusercontent.com")
-
-# 593859286021-stvni3pmq7mrrl8l6dber27pscs1ebrs.apps.googleusercontent.com
+gar_set_client(web_json = "files/tarpuy.json")
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
 shinyServer(function(input, output, session) {
-
-
-  # test --------------------------------------------------------------------
-  # -------------------------------------------------------------------------
-
-  sign_ins <- shiny::callModule(googleSignIn, "demo")
-
-  output$g_name = renderText({ sign_ins()$name })
-  output$g_email = renderText({ sign_ins()$email })
-  output$g_image = renderUI({ img(src=sign_ins()$image) })
-
-
-  # end test ----------------------------------------------------------------
-  # -------------------------------------------------------------------------
-
-
-  observeEvent(input$cancel, {
-    stopApp()
-  })
-
-  observeEvent(input$create, {
-    stopApp()
-  })
-
 
 # design type -------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -114,9 +75,13 @@ shinyServer(function(input, output, session) {
     cat("Sheet name")
     print(input$gsheet_name)
 
+    cat("access_token")
+    print(access_token())
+
   })
 
 # import data -----------------------------------------------------------
+# -------------------------------------------------------------------------
 
   output$gsheet_preview <- renderUI({
 
@@ -125,7 +90,23 @@ shinyServer(function(input, output, session) {
 
   })
 
+# auth --------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+gar_shiny_auth(session)
+
+access_token <- callModule(googleAuth_js, "js_token")
+
+# fieldbook design --------------------------------------------------------
+# -------------------------------------------------------------------------
+
   observeEvent(input$export_fb, {
+
+    gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
+             , cache = FALSE
+             , use_oob = TRUE
+             , token = access_token()
+             )
 
     gs <- as_sheets_id(input$gsheet_url)
 

@@ -12,15 +12,10 @@ library(shiny)
 library(inti)
 library(metathis)
 library(tidyverse)
-
 library(googlesheets4)
-
-library(googledrive)
-
 library(googleAuthR)
 
-googlesheets4::gs4_auth(T)
-googledrive::drive_auth(T)
+gar_set_client(web_json = "files/tarpuy.json")
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -35,7 +30,7 @@ fluidPage(
         title = "Tarpuy",
         description = "create field book designs easy",
         url = "https://flavjack.shinyapps.io/tarpuy/",
-        image = "https://lozanoisla.com/img/quipo.png",
+        image = "https://raw.githubusercontent.com/Flavjack/lozanoisla/master/static/android-chrome-512x512.png?token=AB3ARRI5E4ZF7FLXM6CDQ7S7CHJ3K",
         image_alt = "quipolab.com"
       ),
 
@@ -111,30 +106,6 @@ fluidPage(
 
              br(),
 
-
-# -------------------------------------------------------------------------
-
-
-
-             titlePanel("Sample Google Sign-In"),
-
-             sidebarLayout(
-               sidebarPanel(
-                 googleSignInUI("demo")
-               ),
-
-               mainPanel(
-                 with(tags, dl(dt("Name"), dd(textOutput("g_name")),
-                               dt("Email"), dd(textOutput("g_email")),
-                               dt("Image"), dd(uiOutput("g_image")) ))
-               )
-             ),
-
-
-# -------------------------------------------------------------------------
-
-
-
               column(width = 12,
 
                     h4(icon("book"), "Google SpreadSheet (URL)", width = "100%"),
@@ -164,6 +135,11 @@ fluidPage(
              br(),
              br(),
 
+             googleAuth_jsUI("js_token"),
+
+             br(),
+             br(),
+
              HTML('
 
             <div id=footer style="width:100%; margin:auto;">
@@ -171,7 +147,7 @@ fluidPage(
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://www.quipolab.com/">
-            <img src="https://lh5.googleusercontent.com/GNkWjm3nhhtxAViz3e_R152J9sbdgYGsF6BqwNKpukugY2pswqpl1C-uYKqokBzhT7sBQkC7=w16383" style="height:50px" title="quipo"></a>
+            <img src="https://lh5.googleusercontent.com/20IkG8-FMx1SH7xubyKHT37k2fkvPUYXixDdhm8C3y0ZyFXpn-0LVhpTybrtMEqojAQkY1vw=w16383" style="height:50px" title="quipo"></a>
             <span style="display:block;"><small>quipolab.com</small></span>
             </p></div>
 
@@ -182,5 +158,3 @@ fluidPage(
              )
       )
   )
-
-# https://shiny.rstudio.com/tutorial/written-tutorial/lesson3/
