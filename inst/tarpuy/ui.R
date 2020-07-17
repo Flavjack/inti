@@ -6,6 +6,8 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
+options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
+
 if (file.exists("setup.r")) { source("setup.r") }
 
 library(shiny)
@@ -29,7 +31,7 @@ fluidPage(
     meta() %>%
       meta_social(
         title = "Tarpuy",
-        description = "create experimental field book designs",
+        description = "Tarpuy helps to create experimental designs",
         url = "https://flavjack.shinyapps.io/tarpuy/",
         image = "https://raw.githubusercontent.com/Flavjack/lozanoisla/master/static/android-chrome-512x512.png?token=AB3ARRI5E4ZF7FLXM6CDQ7S7CHJ3K",
         image_alt = "quipolab.com"
@@ -94,7 +96,7 @@ fluidPage(
 
              textInput(inputId = "gsheet_name"
                        , label = "Gsheet name"
-                       , value = "tarpuy"
+                       , value = ""
                        ),
 
              actionButton(inputId = "export_fb"
@@ -113,7 +115,7 @@ fluidPage(
                     textInput(inputId = "gsheet_url",
                               label = NULL,
                               width = "100%",
-                              value = "https://docs.google.com/spreadsheets/d/1ilw0NHT7mihaM-3U48KzkuMt927xe8ukX6rNuIw2fT0/edit#gid=0")
+                              value = "")
 
              ),
 
@@ -140,6 +142,26 @@ fluidPage(
 
              br(),
              br(),
+             br(),
+             br(),
+
+             HTML('
+
+            <div id=footer style="width:100%; margin:auto;">
+
+            <div style="display:inline-block; width:100%">
+            <p style="text-align:center">
+            <a target="_blank" href="https://lozanoisla.com/">
+            <img src="files/youtube.png" style="height:50px" title="demo"></a>
+            <span style="display:block;"><small>demo</small></span>
+            </p></div>
+
+            </div>
+
+                  '),
+
+             br(),
+             br(),
 
              HTML('
 
@@ -148,7 +170,7 @@ fluidPage(
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://www.quipolab.com/">
-            <img src="https://lh5.googleusercontent.com/20IkG8-FMx1SH7xubyKHT37k2fkvPUYXixDdhm8C3y0ZyFXpn-0LVhpTybrtMEqojAQkY1vw=w16383" style="height:50px" title="quipo"></a>
+            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/files/tarpuy.jpeg" style="height:80px" title="quipo"></a>
             <span style="display:block;"><small>quipolab.com</small></span>
             </p></div>
 

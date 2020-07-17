@@ -6,6 +6,8 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
+options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
+
 if (file.exists("setup.r")) { source("setup.r") }
 
 library(shiny)
@@ -110,46 +112,51 @@ access_token <- callModule(googleAuth_js, "js_token")
 
     gs <- as_sheets_id(input$gsheet_url)
 
-    fb <- gs %>%
-      range_read(input$gsheet_name)
+    if ( input$gsheet_name %in% sheet_names(gs) ) {
 
-    fbds <- fb %>%
-      inti::fieldbook_design(
-        nFactors = input$nFactors
-        , type = input$type
-        , rep = input$rep
-        , serie = input$serie
-        , seed = input$seed
-      )
 
-    if ( "sketch" %in% sheet_names(gs) ) {
+      fb <- gs %>%
+        range_read(input$gsheet_name)
 
-      sheet_delete(gs, "sketch")
+      fbds <- fb %>%
+        inti::fieldbook_design(
+          nFactors = input$nFactors
+          , type = input$type
+          , rep = input$rep
+          , serie = input$serie
+          , seed = input$seed
+        )
 
-    }
+      if ( "sketch" %in% sheet_names(gs) ) {
 
-    if( length(fbds) == 2 ) {
+        sheet_delete(gs, "sketch")
 
-      fbds %>%
-        pluck("design") %>%
-        as.data.frame() %>%
-        write_sheet(ss = gs, sheet = "fb")
+      }
 
-      fbds %>%
-        pluck("sketch") %>%
-        as.data.frame() %>%
-        write_sheet(ss = gs, sheet = "sketch")
+      if( length(fbds) == 2 ) {
 
-    }
+        fbds %>%
+          pluck("design") %>%
+          as.data.frame() %>%
+          write_sheet(ss = gs, sheet = "fb")
 
-    if( length(fbds) == 1 ) {
+        fbds %>%
+          pluck("sketch") %>%
+          as.data.frame() %>%
+          write_sheet(ss = gs, sheet = "sketch")
 
-      fbds %>%
-        pluck("design") %>%
-        as.data.frame() %>%
-        write_sheet(ss = gs, sheet = "fb")
+      }
 
-    }
+      if( length(fbds) == 1 ) {
+
+        fbds %>%
+          pluck("design") %>%
+          as.data.frame() %>%
+          write_sheet(ss = gs, sheet = "fb")
+
+      }
+
+    } else { print("Sheet not found") }
 
   })
 

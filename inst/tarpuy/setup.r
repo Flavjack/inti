@@ -50,3 +50,7 @@ rm(pkgs, gitrepo, installed)
 # https://console.cloud.google.com/apis/credentials
 
 # https://shiny.rstudio.com/tutorial/written-tutorial/lesson3/
+
+# http://xip.io/
+
+# https://politicadeprivacidadplantilla.com/
