@@ -27,6 +27,7 @@ fluidPage(
     tags$head(HTML('<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">')),
     tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
     tags$head(includeHTML(("files/analytics.html"))),
+    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/lozanoisla/master/static/android-chrome-512x512.png?token=AB3ARRI5E4ZF7FLXM6CDQ7S7CHJ3K")),
 
     meta() %>%
       meta_social(
@@ -143,7 +144,6 @@ fluidPage(
              br(),
              br(),
              br(),
-             br(),
 
              HTML('
 
@@ -151,8 +151,8 @@ fluidPage(
 
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
-            <a target="_blank" href="https://lozanoisla.com/">
-            <img src="files/youtube.png" style="height:50px" title="demo"></a>
+            <a target="_blank" href="https://youtu.be/eD4Hi8slyjQ">
+            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/files/youtube.png" style="height:60px" title="demo"></a>
             <span style="display:block;"><small>demo</small></span>
             </p></div>
 
@@ -160,7 +160,6 @@ fluidPage(
 
                   '),
 
-             br(),
              br(),
 
              HTML('

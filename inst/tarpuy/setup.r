@@ -6,36 +6,30 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-pkgs <- list(
+cran <- c("shiny"
+         , "metathis"
+         , "tidyverse"
+         , "googlesheets4"
+         , "googleAuthR"
+         )
 
-  cran = c(
-    "shiny"
-    , "metathis"
-    , "tidyverse"
-    , "googlesheets4"
-    , "googleAuthR"
-  ),
-
-  git = c(
-    "inti" # Tools and Statistical Procedures in Plant Science
+git <- c(
+  "Flavjack/inti" # Tools and Statistical Procedures in Plant Science
   )
-)
 
-gitrepo <- c("Flavjack/inti")
-installed <- unlist(pkgs) %in% rownames(installed.packages())
+installed <- c(cran, sub(".*/", "", git)) %in% rownames(installed.packages())
 
 if (any(installed == FALSE)) {
 
-  cran_missing <- pkgs[["cran"]] %in% as.vector(unlist(pkgs)[!installed == TRUE])
-  cran_install <- unlist(pkgs)[cran_missing == TRUE]
+  cran_missing <- cran %in% c(cran, sub(".*/", "", git))[!installed == TRUE]
+  cran_install <- c(cran, sub(".*/", "", git))[cran_missing == TRUE]
   install.packages( cran_install )
 
-  }
+}
 
-invisible(lapply(gitrepo, devtools::install_github, character.only = TRUE))
-invisible(lapply(as.vector(unlist(pkgs)), library, character.only = TRUE))
-rm(pkgs, gitrepo, installed)
-
+invisible(lapply(git, devtools::install_github))
+invisible(lapply(c(cran, sub(".*/", "", git)), library, character.only = TRUE))
+rm(cran, git, installed)
 
 # References .:
 

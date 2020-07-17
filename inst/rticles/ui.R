@@ -6,7 +6,7 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-if (file.exists("setup.r")) { source("setup.r") }
+if ( file.exists("setup.r") ) { source("setup.r") }
 
 library(shiny)
 library(miniUI)
@@ -24,6 +24,7 @@ fluidPage(
     tags$head(HTML('<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">')),
     tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
     tags$head(includeHTML(("files/analytics.html"))),
+    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/lozanoisla/master/static/android-chrome-512x512.png?token=AB3ARRI5E4ZF7FLXM6CDQ7S7CHJ3K")),
 
     meta() %>%
       meta_social(
@@ -132,7 +133,7 @@ fluidPage(
 
       column(5,
 
-             includeHTML("manual/manual.html")
+             includeHTML("files/manual.html")
 
              ),
 
@@ -243,8 +244,5 @@ fluidPage(
     )
   )
 
-  # viewer <- dialogViewer("lozanoisla.com", width = 500, height = 450)
-
-  # runGadget("inst/rticles/app.R", server = server, viewer = viewer)
-
-  # browseURL("https://flavjack.shinyapps.io/rticles")
+# end ---------------------------------------------------------------------
+# -------------------------------------------------------------------------
