@@ -1,23 +1,23 @@
 ---
 title: "POLITICA DE PRIVACIDAD"
 description: politica de privacidad de la aplicación Tarpuy
-favicon: files/logo.png
-github-repo: flavjack/rticles
-site: bookdown::bookdown_site
-documentclass: book
-bookdown::gitbook:
-output: 
+# favicon: files/logo.png
+# github-repo: flavjack/rticles
+# site: bookdown::bookdown_site
+# documentclass: book
+# bookdown::gitbook:
+output: pdf_document
   # bookdown::word_document2: 
   #   reference_docx: files/style_rticles.docx
-  bookdown::html_document2:
+  # bookdown::html_document2:
     # toc: yes
     # number_sections: no
     # toc_float: yes
-always_allow_html: yes
-link-citations: true
-colorlinks: yes
+# always_allow_html: yes
+# link-citations: true
+# colorlinks: yes
 # bibliography: [files/book.bib, files/pkgs.bib]
-csl: https://www.zotero.org/styles/apa
+# csl: https://www.zotero.org/styles/apa
 editor_options: 
   chunk_output_type: console
 ---
