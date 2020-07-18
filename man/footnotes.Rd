@@ -7,7 +7,7 @@
 https://github.com/haozhu233/kableExtra/blob/master/R/add_footnote.R
 }
 \usage{
-footnotes(table, notes = NULL, label = "__Note:__", notation = "number")
+footnotes(table, notes = NULL, label = "__Note:__", notation = "alphabet")
 }
 \arguments{
 \item{table}{kable output in pandoc format.}
@@ -26,6 +26,6 @@ Include tables footnotes and symbols for kables in pandoc format
 }
 \details{
 You should use the pandoc format \code{kable(format = "pipe")}.
-You can add the footnote symbol using \code{[fn]} in your table.
+You can add the footnote symbol using \code{{-}} in your table.
 \code{notation} could be use: "alphabet", "number", "symbol", "none".
 }

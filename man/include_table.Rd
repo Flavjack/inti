@@ -9,7 +9,7 @@ include_table(
   caption = NULL,
   notes = NULL,
   label = "__Note:__",
-  notation = "number"
+  notation = "alphabet"
 )
 }
 \arguments{
@@ -30,10 +30,34 @@ Table with caption and footnotes
 Include tables with notes and titles for word and html documents
 }
 \details{
-For \code{caption} and \code{notes} you can include [caption] and [notes] in the last rows of your data frame.
+For \code{caption} and \code{notes} you can include {caption} and {notes} in the last rows of your data frame.
 Where the information will be extracted automatically for include in the formatted table.
-You can add the footnote symbol using \code{[fn]} in your table.
-\code{notation} could be use: "alphabet", "number", "symbol", "none".
+You can add the footnote symbol using \code{{-}} in your table.
+\code{notation} could be use: "alphabet", "number", "none".
+}
+\examples{
+
+\dontrun{
+
+library(googlesheets4)
+library(tidyverse)
+library(inti)
+
+url <- paste0("https://docs.google.com/spreadsheets/d/"
+              , "1ilw0NHT7mihaM-3U48KzkuMt927xe8ukX6rNuIw2fT0/edit#gid=1157916926")
+
+# browseURL(url)
+gs <- as_sheets_id(url)
+
+table <- gs \%>\%
+    range_read("footnotes")
+
+table \%>\% inti::include_table(label = "_Nota:_"
+                              , notation = "num"
+)
+
+}
+
 }
 \author{
 Flavio Lozano-Isla

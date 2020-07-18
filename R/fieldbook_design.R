@@ -91,23 +91,23 @@ type <- match.arg(type)
 data_fb <- data %>%
   select_if(~ !all(is.na(.))) %>%
   rename_with(~ gsub("\\s+|\\.", "_", .)) %>%
-  mutate(across(everything(), ~ gsub("\\s+|\\.", "_", .))) %>%
+  mutate(across(everything(), ~ gsub(" ", "_", .))) %>%
   dplyr::tibble()
 
 treatments_names <- data_fb %>%
-  select(!starts_with("[") | !ends_with("]")) %>%
+  select(!starts_with("{") | !ends_with("}")) %>%
   names()
 
 treatments_levels <- data_fb %>%
-  select({{ treatments_names }}) %>%
+  select( {{treatments_names}} ) %>%
   as.list() %>%
   purrr::map(discard, is.na)
 
 if ( "[argument]" %in% colnames(data_fb) ) {
 
   arguments <- data_fb %>%
-    select(starts_with("[") | ends_with("]")) %>%
-    rename_with(~ gsub("\\[|\\]", "", .)) %>%
+    select(starts_with("{") | ends_with("}")) %>%
+    rename_with(~ gsub("\\{|\\}", "", .)) %>%
     drop_na() %>%
     tibble::deframe()
 
@@ -208,6 +208,9 @@ treat_fcts <- treatments_levels[treat_name]
             }
 
             if (type == "lattice") {
+
+              if( rep > 3 ) { rep <- 3 }
+
               design <- agricolae::design.lattice(
                 trt = onefact,
                 r = rep,
@@ -219,6 +222,7 @@ treat_fcts <- treatments_levels[treat_name]
                 design = design$book,
                 sketch = design$sketch %>% as.data.frame()
               )
+
             }
 
           }
