@@ -48,3 +48,5 @@ rm(cran, git, installed)
 # http://xip.io/
 
 # https://politicadeprivacidadplantilla.com/
+
+# https://github.com/MarkEdmondson1234/googleAuthR/issues/111
