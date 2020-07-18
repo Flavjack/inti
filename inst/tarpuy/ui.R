@@ -80,7 +80,7 @@ fluidPage(
              numericInput(inputId = "rep"
                           , label = "Replications"
                           , value = 2
-                          , min = 1
+                          , min = 2
                           ),
 
              numericInput(inputId = "serie"

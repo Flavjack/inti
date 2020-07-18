@@ -12,7 +12,7 @@
 #' @param seed Replicability of draw results (default = 0) ~ always random. See details.
 #'
 #' @details The function allows to include the arguments in the sheet that have the information of the design.
-#' You should include 2 columns in the sheet: "\code{[arguments]}" and "\code{[values]}". See examples.
+#' You should include 2 columns in the sheet: "\code{{arguments}}" and "\code{{values}}". See examples.
 #' The information will be extracted automatically and deploy the design.
 #'
 #' nFactor = 1
@@ -63,9 +63,9 @@
 #' gs <- as_sheets_id(url)
 #'
 #' (data <- gs %>%
-#'     range_read("tarpuy"))
+#'     range_read("tarpuyr"))
 #'
-#' data %>% fieldbook_design()
+#' data %>% inti::fieldbook_design()
 #'
 #' }
 #'
@@ -73,10 +73,7 @@
 
 fieldbook_design <- function(data,
                              nFactors = 1,
-                             type = c(
-                               "crd", "rcbd", "lsd", "lattice",
-                               "split-crd", "split-rcbd"
-                               ),
+                             type = "crd",
                              rep = 3,
                              serie = 2,
                              seed = 0) {
@@ -86,7 +83,10 @@ fieldbook_design <- function(data,
 # arguments ---------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-type <- match.arg(type)
+type <- match.arg(type, c(
+  "crd", "rcbd", "lsd", "lattice"
+  , "split-crd", "split-rcbd"
+  ))
 
 data_fb <- data %>%
   select_if(~ !all(is.na(.))) %>%
@@ -103,7 +103,12 @@ treatments_levels <- data_fb %>%
   as.list() %>%
   purrr::map(discard, is.na)
 
-if ( "[argument]" %in% colnames(data_fb) ) {
+col_arg <- c(
+  "{argument}", "{arguments}", "{argumento}", "{argumentos}"
+  , "{parameter}", "{parameters}", "{parametro}", "{parametros}"
+  )
+
+if ( any( colnames(data_fb) %in% col_arg  ) ) {
 
   arguments <- data_fb %>%
     select(starts_with("{") | ends_with("}")) %>%
@@ -113,43 +118,51 @@ if ( "[argument]" %in% colnames(data_fb) ) {
 
   } else { arguments <- data.frame() }
 
-if ("nFactors" %in% names(arguments)) {
+nFactors <- c( "nFactor", "nFactors", "factors", "factor", "nfactors", "factores" )
+nfc_math <- names(arguments) %in% nFactors
+nfc_name <- names(arguments)[nfc_math == TRUE]
+
+if ( any( names(arguments) %in% nFactors  ) ) {
+
   nFactors <- arguments %>%
-    pluck("nFactors") %>%
+    pluck( nfc_name ) %>%
     as.numeric()
-} else {
-  nFactors
-}
+
+} else { nFactors }
 
 if ("type" %in% names(arguments)) {
-  type <- arguments %>% pluck("type")
-} else {
-  type
-}
 
-if ("rep" %in% names(arguments)) {
+  type <- arguments %>% pluck("type")
+
+} else { type }
+
+rep <- c( "r", "rep", "replication" )
+rep_math <- names(arguments) %in% rep
+rep_name <- names(arguments)[rep_math == TRUE]
+
+if ( any( names(arguments) %in% rep ) ) {
+
   rep <- arguments %>%
-    pluck("rep") %>%
+    pluck( rep_name ) %>%
     as.numeric()
-} else {
-  rep
-}
+
+} else { rep }
 
 if ("serie" %in% names(arguments)) {
+
   serie <- arguments %>%
     pluck("serie") %>%
     as.numeric()
-} else {
-  serie
-}
+
+} else { serie }
 
 if ("seed" %in% names(arguments)) {
+
   seed <- arguments %>%
     pluck("seed") %>%
     as.numeric()
-} else {
-  seed
-}
+
+} else { seed }
 
 treat_name <- names(treatments_levels)[1:nFactors]
 treat_fcts <- treatments_levels[treat_name]
