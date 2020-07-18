@@ -11,7 +11,7 @@ fieldbook_design(
   data,
   nFactors = 1,
   type = "crd",
-  rep = 3,
+  rep = 2,
   serie = 2,
   seed = 0
 )
@@ -73,7 +73,7 @@ url <- paste0("https://docs.google.com/spreadsheets/d/"
 gs <- as_sheets_id(url)
 
 (data <- gs \%>\%
-    range_read("tarpuyr"))
+    range_read("tarpuy"))
 
 data \%>\% inti::fieldbook_design()
 

@@ -63,7 +63,7 @@
 #' gs <- as_sheets_id(url)
 #'
 #' (data <- gs %>%
-#'     range_read("tarpuyr"))
+#'     range_read("tarpuy"))
 #'
 #' data %>% inti::fieldbook_design()
 #'
@@ -74,7 +74,7 @@
 fieldbook_design <- function(data,
                              nFactors = 1,
                              type = "crd",
-                             rep = 3,
+                             rep = 2,
                              serie = 2,
                              seed = 0) {
 
@@ -118,11 +118,11 @@ if ( any( colnames(data_fb) %in% col_arg  ) ) {
 
   } else { arguments <- data.frame() }
 
-nFactors <- c( "nFactor", "nFactors", "factors", "factor", "nfactors", "factores" )
-nfc_math <- names(arguments) %in% nFactors
+nfc_list <- c( "nFactor", "nFactors", "factors", "factor", "nfactors", "factores" )
+nfc_math <- names(arguments) %in% nfc_list
 nfc_name <- names(arguments)[nfc_math == TRUE]
 
-if ( any( names(arguments) %in% nFactors  ) ) {
+if ( any( names(arguments) %in% nfc_list  ) ) {
 
   nFactors <- arguments %>%
     pluck( nfc_name ) %>%
@@ -136,11 +136,11 @@ if ("type" %in% names(arguments)) {
 
 } else { type }
 
-rep <- c( "r", "rep", "replication" )
-rep_math <- names(arguments) %in% rep
+rep_list <- c( "r", "rep", "replication" )
+rep_math <- names(arguments) %in% rep_list
 rep_name <- names(arguments)[rep_math == TRUE]
 
-if ( any( names(arguments) %in% rep ) ) {
+if ( any( names(arguments) %in% rep_list ) ) {
 
   rep <- arguments %>%
     pluck( rep_name ) %>%
@@ -310,6 +310,7 @@ treat_fcts <- treatments_levels[treat_name]
           # -------------------------------------------------------------------------
 
           col_rnm <- function(renamed_fb, treat, new_names) {
+
             oldn <- renamed_fb %>%
               select(treat) %>%
               unique() %>%
