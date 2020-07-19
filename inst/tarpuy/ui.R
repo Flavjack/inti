@@ -96,9 +96,16 @@ fluidPage(
                           ),
 
              textInput(inputId = "gsheet_name"
-                       , label = "Gsheet name"
+                       , label = "Fieldbook sheet"
                        , value = ""
+                       , placeholder = "fieldbook info"
                        ),
+
+             textInput(inputId = "varlist_name"
+                       , label = "Variables"
+                       , value = ""
+                       , placeholder = "Variables info (optional)"
+             ),
 
              actionButton(inputId = "export_fb"
                           , label = "Export"

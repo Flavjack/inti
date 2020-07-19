@@ -115,7 +115,6 @@ access_token <- callModule(googleAuth_js, "js_token")
 
     if ( input$gsheet_name %in% sheet_names(gs) ) {
 
-
       fb <- gs %>%
         range_read(input$gsheet_name)
 
