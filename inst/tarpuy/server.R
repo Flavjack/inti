@@ -140,7 +140,7 @@ access_token <- callModule(googleAuth_js, "js_token")
           as.data.frame() %>%
           write_sheet(ss = gs, sheet = "fb")
 
-        fbds %>%
+        fb <- fbds %>%
           pluck("sketch") %>%
           as.data.frame() %>%
           write_sheet(ss = gs, sheet = "sketch")
@@ -149,10 +149,16 @@ access_token <- callModule(googleAuth_js, "js_token")
 
       if( length(fbds) == 1 ) {
 
-        fbds %>%
+        fb <- fbds %>%
           pluck("design") %>%
           as.data.frame() %>%
           write_sheet(ss = gs, sheet = "fb")
+
+        if ( input$varlist_name %in% sheet_names(gs) ) {
+
+
+
+        }
 
       }
 
@@ -161,4 +167,7 @@ access_token <- callModule(googleAuth_js, "js_token")
   })
 
 })
+
+
+
 

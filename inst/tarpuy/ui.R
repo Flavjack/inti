@@ -8,8 +8,6 @@
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
 
-if (file.exists("setup.r")) { source("setup.r") }
-
 library(shiny)
 library(inti)
 library(metathis)
@@ -102,9 +100,9 @@ fluidPage(
                        ),
 
              textInput(inputId = "varlist_name"
-                       , label = "Variables"
+                       , label = "Variables sheet"
                        , value = ""
-                       , placeholder = "Variables info (optional)"
+                       , placeholder = "Optional"
              ),
 
              actionButton(inputId = "export_fb"
