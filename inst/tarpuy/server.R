@@ -75,11 +75,11 @@ shinyServer(function(input, output, session) {
     cat("Seed")
     print(input$seed)
 
-    cat("Sheet name")
+    cat("Design sheet")
     print(input$gsheet_name)
 
-    cat("access_token")
-    print(access_token())
+    cat("Variable sheet")
+    print(input$gsheet_name)
 
   })
 
@@ -105,6 +105,9 @@ access_token <- callModule(googleAuth_js, "js_token")
 
   observeEvent(input$export_fb, {
 
+# auth and find -----------------------------------------------------------
+# -------------------------------------------------------------------------
+
     gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
              , cache = FALSE
              , use_oob = TRUE
@@ -112,6 +115,28 @@ access_token <- callModule(googleAuth_js, "js_token")
              )
 
     gs <- as_sheets_id(input$gsheet_url)
+
+# sketch delete -----------------------------------------------------------
+# -------------------------------------------------------------------------
+
+    if ( "sketch" %in% sheet_names(gs) ) {
+
+      sheet_delete(gs, "sketch")
+
+    }
+
+# varlist -----------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+    if ( input$varlist_name %in% sheet_names(gs) ) {
+
+      variables <- gs %>%
+        range_read(input$varlist_name)
+
+    }
+
+# fieldbook ---------------------------------------------------------------
+# -------------------------------------------------------------------------
 
     if ( input$gsheet_name %in% sheet_names(gs) ) {
 
@@ -125,13 +150,8 @@ access_token <- callModule(googleAuth_js, "js_token")
           , rep = input$rep
           , serie = input$serie
           , seed = input$seed
-        )
-
-      if ( "sketch" %in% sheet_names(gs) ) {
-
-        sheet_delete(gs, "sketch")
-
-      }
+        ) %>%
+        inti::fieldbook_varlist(variables)
 
       if( length(fbds) == 2 ) {
 

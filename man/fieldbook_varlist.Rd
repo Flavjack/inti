@@ -4,24 +4,12 @@
 \alias{fieldbook_varlist}
 \title{Field book variable list}
 \usage{
-fieldbook_varlist(
-  fieldbook,
-  varlist = NULL,
-  abbreviation = "abbreviation",
-  evaluation = "evaluation",
-  sampling = "sampling"
-)
+fieldbook_varlist(fieldbook, varlist)
 }
 \arguments{
 \item{fieldbook}{Data frame with the fieldbook.}
 
 \item{varlist}{Data frame with the variables information. See examples.}
-
-\item{abbreviation}{Column contain the variables abbreviations (default = "abbreviation"). See details.}
-
-\item{evaluation}{Column contain when the variables will be made (default = "evaluation").}
-
-\item{sampling}{Column contain the number of sampling in each experimental unit (default = "sampling"). See details.}
 }
 \value{
 data frame
@@ -44,21 +32,21 @@ library(googlesheets4)
 library(tidyverse)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1ilw0NHT7mihaM-3U48KzkuMt927xe8ukX6rNuIw2fT0/edit#gid=0")
+, "1a82XIbTeWPC4pwvu9Zjl4qrGitGQ_B-mf3-w67VS4-Q/edit#gid=0")
 # browseURL(url)
 gs <- as_sheets_id(url)
 
-(data <- gs \%>\%
-    range_read("tarpuyr"))
+(design <- gs \%>\%
+    range_read("design"))
 
-(varlits <- gs \%>\%
+(varlist <- gs \%>\%
     range_read("variables"))
 
-fb <- data \%>\%
+fieldbook <- design \%>\%
   inti::fieldbook_design() \%>\%
-  inti::fieldbook_varlist(varlist = varlist)
+  inti::fieldbook_varlist(varlist)
 
-fb$design
+fieldbook
 
 }
 

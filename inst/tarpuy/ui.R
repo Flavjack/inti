@@ -94,9 +94,9 @@ fluidPage(
                           ),
 
              textInput(inputId = "gsheet_name"
-                       , label = "Fieldbook sheet"
+                       , label = "Field book sheet"
                        , value = ""
-                       , placeholder = "fieldbook info"
+                       , placeholder = "Design info"
                        ),
 
              textInput(inputId = "varlist_name"
@@ -117,11 +117,13 @@ fluidPage(
 
               column(width = 12,
 
-                    h4(icon("book"), "Google SpreadSheet (URL)", width = "100%"),
+                    h4(icon("book"), "Google Sheets (URL)", width = "100%"),
                     textInput(inputId = "gsheet_url",
                               label = NULL,
                               width = "100%",
-                              value = "")
+                              value = ""
+                              , placeholder = "Insert google sheet link"
+                              )
 
              ),
 
@@ -156,7 +158,7 @@ fluidPage(
 
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
-            <a target="_blank" href="https://youtu.be/eD4Hi8slyjQ">
+            <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC">
             <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/files/youtube.png" style="height:60px" title="demo"></a>
             <span style="display:block;"><small>demo</small></span>
             </p></div>

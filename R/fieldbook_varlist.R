@@ -4,9 +4,6 @@
 #'
 #' @param fieldbook Data frame with the fieldbook.
 #' @param varlist Data frame with the variables information. See examples.
-#' @param abbreviation Column contain the variables abbreviations (default = "abbreviation"). See details.
-#' @param evaluation  Column contain when the variables will be made (default = "evaluation").
-#' @param sampling  Column contain the number of sampling in each experimental unit (default = "sampling"). See details.
 #'
 #' @details The function allows to include the arguments in the sheet that have the information of the variables.
 #' You should include 3 columns in the sheet: "\code{{abbreviation}}", "\code{{evaluation}}" and "\code{{sampling}}". See examples.
@@ -31,62 +28,73 @@
 #' library(tidyverse)
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "1ilw0NHT7mihaM-3U48KzkuMt927xe8ukX6rNuIw2fT0/edit#gid=0")
+#' , "1a82XIbTeWPC4pwvu9Zjl4qrGitGQ_B-mf3-w67VS4-Q/edit#gid=0")
 #' # browseURL(url)
 #' gs <- as_sheets_id(url)
 #'
-#' (data <- gs %>%
-#'     range_read("tarpuyr"))
+#' (design <- gs %>%
+#'     range_read("design"))
 #'
-#' (varlits <- gs %>%
+#' (varlist <- gs %>%
 #'     range_read("variables"))
 #'
-#' fb <- data %>%
+#' fieldbook <- design %>%
 #'   inti::fieldbook_design() %>%
-#'   inti::fieldbook_varlist(varlist = varlist)
+#'   inti::fieldbook_varlist(varlist)
 #'
-#' fb$design
+#' fieldbook
 #'
 #' }
 #'
 #' @export
 
 fieldbook_varlist <- function(fieldbook
-                              , varlist = NULL
-                              , abbreviation = "abbreviation"
-                              , evaluation = "evaluation"
-                              , sampling = "sampling"
+                              , varlist
                               ) {
 
-  blank <- Row.names <- varlits <- NULL
+  var_list <- Row.names <- NULL
 
-  abrv_match <- match.arg(abbreviation, c("abbreviation", "siglas"))
-  eval_match <- match.arg(evaluation, c("evaluation", "eval", "dap", "dat"))
-  smp_match <- match.arg(sampling, c("sampling", "sample", "subplot", "muestra"))
-
-  data <- varlits %>%
-    select( starts_with("{") |  ends_with("}") ) %>%
-    rename_with(~ gsub("\\{|\\}", "", .)) %>%
+  data <- varlist %>%
+    dplyr::select( starts_with("{") |  ends_with("}") ) %>%
+    dplyr::rename_with(~ gsub("\\{|\\}", "", .)) %>%
     drop_na()
 
-  if ( !all( c(abrv_match, eval_match, smp_match) %in% names(data) ) ) {
+# match names -------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+  abrv_opt <- c("abbreviation", "siglas")
+  eval_opt <- c("evaluation", "eval", "dap", "dat")
+  smp_opt <- c("sampling", "sample", "subplot", "muestra")
+
+  abrv_math <- names(data) %in% abrv_opt
+  abrv_name <- names(data)[abrv_math == TRUE]
+
+  eval_math <- names(data) %in% eval_opt
+  eval_name <- names(data)[eval_math == TRUE]
+
+  smp_math <- names(data) %in% smp_opt
+  smp_name <- names(data)[smp_math == TRUE]
+
+  if(length(abrv_name)  == 0 |  length(eval_name)  == 0 |  length(smp_name) == 0) {
 
     return(fieldbook)
 
   }
 
-  smp_n <- data[[smp_match]]
+# insert variables --------------------------------------------------------
+# -------------------------------------------------------------------------
 
-  var_list <- data %>%
+  smp_n <- data[[smp_name]]
+
+  var_cols <- data %>%
     tidyr::uncount(smp_n, .id = "sample") %>%
-    select(-sampling) %>%
-    unite("var_list", {{abrv_match}}, {{eval_match}}, sample , sep = "_") %>%
-    mutate(blank = NA) %>%
-    pivot_wider(names_from = var_list, values_from = blank)
+    dplyr::mutate({{smp_name}} := NA) %>%
+    unite("var_list", {{abrv_name}}, {{eval_name}}, sample , sep = "_") %>%
+    pivot_wider(names_from = var_list, values_from = {{smp_name}})
 
-  fieldbook[["design"]] <- merge(fieldbook[["design"]], var_list
+  fieldbook[["design"]] <- merge(fieldbook[["design"]], var_cols
                          , by = c("row.names"), all.x = T) %>%
-    select(-Row.names)
+    dplyr::select(!Row.names)
 
   fieldbook
 }
