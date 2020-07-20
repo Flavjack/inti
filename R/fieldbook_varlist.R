@@ -36,7 +36,7 @@
 #'     range_read("design"))
 #'
 #' (varlist <- gs %>%
-#'     range_read("variables"))
+#'     range_read("traits"))
 #'
 #' fieldbook <- design %>%
 #'   inti::fieldbook_design() %>%
@@ -52,7 +52,7 @@ fieldbook_varlist <- function(fieldbook
                               , varlist = NULL
                               ) {
 
-  var_list <- Row.names <- plots <- NULL
+  var_list <- Row.names <- plots <- blank <- NULL
 
   if ( is.null(varlist) ) { return(fieldbook) }
 
@@ -89,10 +89,10 @@ fieldbook_varlist <- function(fieldbook
   smp_n <- data[[smp_name]]
 
   var_cols <- data %>%
-    tidyr::uncount(smp_n, .id = "sample") %>%
-    dplyr::mutate({{smp_name}} := NA) %>%
-    unite("var_list", {{abrv_name}}, {{eval_name}}, sample , sep = "_") %>%
-    pivot_wider(names_from = var_list, values_from = {{smp_name}})
+    tidyr::uncount(smp_n, .id = {{smp_name}}) %>%
+    dplyr::mutate(blank := NA) %>%
+    unite("var_list", {{abrv_name}}, {{eval_name}}, {{smp_name}} , sep = "_") %>%
+    pivot_wider(names_from = var_list, values_from = blank)
 
   fieldbook[["design"]] <- merge(fieldbook[["design"]], var_cols
                          , by = c("row.names"), all.x = T) %>%
