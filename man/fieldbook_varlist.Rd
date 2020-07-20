@@ -4,7 +4,7 @@
 \alias{fieldbook_varlist}
 \title{Field book variable list}
 \usage{
-fieldbook_varlist(fieldbook, varlist)
+fieldbook_varlist(fieldbook, varlist = NULL)
 }
 \arguments{
 \item{fieldbook}{Data frame with the fieldbook.}

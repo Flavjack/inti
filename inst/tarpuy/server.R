@@ -133,7 +133,7 @@ access_token <- callModule(googleAuth_js, "js_token")
       variables <- gs %>%
         range_read(input$varlist_name)
 
-    }
+    } else { variables <- NULL }
 
 # fieldbook ---------------------------------------------------------------
 # -------------------------------------------------------------------------

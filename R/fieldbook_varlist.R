@@ -49,10 +49,12 @@
 #' @export
 
 fieldbook_varlist <- function(fieldbook
-                              , varlist
+                              , varlist = NULL
                               ) {
 
   var_list <- Row.names <- NULL
+
+  if ( is.null(varlist) ) { return(fieldbook) }
 
   data <- varlist %>%
     dplyr::select( starts_with("{") |  ends_with("}") ) %>%
