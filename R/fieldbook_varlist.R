@@ -52,7 +52,7 @@ fieldbook_varlist <- function(fieldbook
                               , varlist = NULL
                               ) {
 
-  var_list <- Row.names <- NULL
+  var_list <- Row.names <- plots <- NULL
 
   if ( is.null(varlist) ) { return(fieldbook) }
 
@@ -96,7 +96,8 @@ fieldbook_varlist <- function(fieldbook
 
   fieldbook[["design"]] <- merge(fieldbook[["design"]], var_cols
                          , by = c("row.names"), all.x = T) %>%
-    dplyr::select(!Row.names)
+    dplyr::select(!Row.names) %>%
+    dplyr::arrange(plots)
 
   fieldbook
 }
