@@ -5,17 +5,17 @@
 \title{Field book variable list}
 \usage{
 fieldbook_varlist(
-  varlits,
-  fblength,
+  fieldbook,
+  varlist = NULL,
   abbreviation = "abbreviation",
   evaluation = "evaluation",
   sampling = "sampling"
 )
 }
 \arguments{
-\item{varlits}{Data frame with the variables information. See examples.}
+\item{fieldbook}{Data frame with the fieldbook.}
 
-\item{fblength}{Number of row in the fieldbook  (default = NULL). See details.}
+\item{varlist}{Data frame with the variables information. See examples.}
 
 \item{abbreviation}{Column contain the variables abbreviations (default = "abbreviation"). See details.}
 
@@ -39,20 +39,26 @@ If you will be evaluate the experimental unit one time you should set 1.
 
 \dontrun{
 
+library(inti)
 library(googlesheets4)
 library(tidyverse)
-library(inti)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1ilw0NHT7mihaM-3U48KzkuMt927xe8ukX6rNuIw2fT0/edit#gid=4349630")
-
+              , "1ilw0NHT7mihaM-3U48KzkuMt927xe8ukX6rNuIw2fT0/edit#gid=0")
 # browseURL(url)
 gs <- as_sheets_id(url)
+
+(data <- gs \%>\%
+    range_read("tarpuyr"))
 
 (varlits <- gs \%>\%
     range_read("variables"))
 
-fb <- varlits \%>\% fieldbook_varlist(fblength = 30)
+fb <- data \%>\%
+  inti::fieldbook_design() \%>\%
+  inti::fieldbook_varlist(varlist = varlist)
+
+fb$design
 
 }
 

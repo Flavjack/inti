@@ -89,7 +89,7 @@ shinyServer(function(input, output, session) {
   output$gsheet_preview <- renderUI({
 
     gss <- tags$iframe(src = input$gsheet_url,
-                       style="height:420px; width:100%; scrolling=no; zoom:1.2")
+                       style="height:450px; width:100%; scrolling=no; zoom:1.2")
 
   })
 
@@ -153,12 +153,6 @@ access_token <- callModule(googleAuth_js, "js_token")
           pluck("design") %>%
           as.data.frame() %>%
           write_sheet(ss = gs, sheet = "fb")
-
-        if ( input$varlist_name %in% sheet_names(gs) ) {
-
-
-
-        }
 
       }
 

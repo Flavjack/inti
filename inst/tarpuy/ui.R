@@ -8,6 +8,8 @@
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
 
+if (file.exists("setup.r")) { source("setup.r") }
+
 library(shiny)
 library(inti)
 library(metathis)
@@ -62,8 +64,6 @@ fluidPage(
       column(2,
 
              HTML('<h1><a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/">Tarpuy</a></h1>'),
-
-             br(),
 
              numericInput(
                inputId = "nFactors"
