@@ -66,7 +66,9 @@ fieldbook_varlist <- function(fieldbook
 
   abrv_opt <- c("abbreviation", "siglas")
   eval_opt <- c("evaluation", "eval", "dap", "dat")
-  smp_opt <- c("sampling", "sample", "subplot", "muestra")
+  smp_opt <- c("sampling", "sample", "samples"
+               , "subplot", "subplots"
+               , "muestra", "muestras")
 
   abrv_math <- names(data) %in% abrv_opt
   abrv_name <- names(data)[abrv_math == TRUE]
@@ -77,7 +79,7 @@ fieldbook_varlist <- function(fieldbook
   smp_math <- names(data) %in% smp_opt
   smp_name <- names(data)[smp_math == TRUE]
 
-  if(length(abrv_name)  == 0 |  length(eval_name)  == 0 |  length(smp_name) == 0) {
+  if( length(abrv_name)  == 0 |  length(eval_name)  == 0 |  length(smp_name) == 0) {
 
     return(fieldbook)
 
@@ -99,5 +101,9 @@ fieldbook_varlist <- function(fieldbook
     dplyr::select(!Row.names) %>%
     dplyr::arrange(plots)
 
-  fieldbook
+# result ------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+return(fieldbook)
+
 }

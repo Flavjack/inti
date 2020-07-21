@@ -63,7 +63,7 @@
 #' gs <- as_sheets_id(url)
 #'
 #' (data <- gs %>%
-#'     range_read("tarpuy"))
+#'     range_read("tarpuyr"))
 #'
 #' data %>% inti::fieldbook_design()
 #'
@@ -80,7 +80,7 @@ fieldbook_design <- function(data,
 
   plots <- Row.names <- NULL
 
-# arguments ---------------------------------------------------------------
+# design type -------------------------------------------------------------
 # -------------------------------------------------------------------------
 
 type <- match.arg(type, c(
@@ -88,86 +88,110 @@ type <- match.arg(type, c(
   , "split-crd", "split-rcbd"
   ))
 
+# fix and clean data ------------------------------------------------------
+# -------------------------------------------------------------------------
+
 data_fb <- data %>%
+  select(!starts_with("{") | !ends_with("}")) %>%
   select_if(~ !all(is.na(.))) %>%
   rename_with(~ gsub("\\s+|\\.", "_", .)) %>%
   mutate(across(everything(), ~ gsub(" ", "_", .))) %>%
   dplyr::tibble()
 
-treatments_names <- data_fb %>%
-  select(!starts_with("{") | !ends_with("}")) %>%
-  names()
+treatments_names <- data_fb %>% names()
 
 treatments_levels <- data_fb %>%
   select( {{treatments_names}} ) %>%
   as.list() %>%
   purrr::map(discard, is.na)
 
+# extract arguments -------------------------------------------------------
+# -------------------------------------------------------------------------
+
+arguments <- data %>%
+  select(starts_with("{") | ends_with("}")) %>%
+  rename_with(~ gsub("\\{|\\}", "", .)) %>%
+  drop_na()
+
 col_arg <- c(
-  "{argument}", "{arguments}", "{argumento}", "{argumentos}"
-  , "{parameter}", "{parameters}", "{parametro}", "{parametros}"
+  "argument", "arguments", "argumento", "argumentos"
+  , "parameter", "parameters", "parametro", "parametros"
   )
 
-if ( any( colnames(data_fb) %in% col_arg  ) ) {
+col_math <- names(arguments) %in% col_arg
+col_name <- names(arguments)[col_math == TRUE]
 
-  arguments <- data_fb %>%
-    select(starts_with("{") | ends_with("}")) %>%
-    rename_with(~ gsub("\\{|\\}", "", .)) %>%
-    drop_na() %>%
+if ( length(col_name)  > 0  )  {
+
+  arguments_opt <- arguments %>%
     tibble::deframe()
 
-  } else { arguments <- data.frame() }
+} else { arguments <- data.frame() }
+
+# arguments values --------------------------------------------------------
+# -------------------------------------------------------------------------
 
 nfc_list <- c( "nFactor", "nFactors", "factors", "factor", "nfactors", "factores" )
-nfc_math <- names(arguments) %in% nfc_list
-nfc_name <- names(arguments)[nfc_math == TRUE]
+nfc_math <- names(arguments_opt) %in% nfc_list
+nfc_name <- names(arguments_opt)[nfc_math == TRUE]
 
-if ( any( names(arguments) %in% nfc_list  ) ) {
+if ( length(nfc_name)  > 0 ) {
 
-  nFactors <- arguments %>%
+  nFactors <- arguments_opt %>%
     pluck( nfc_name ) %>%
     as.numeric()
 
 } else { nFactors }
 
-if ("type" %in% names(arguments)) {
+# -------------------------------------------------------------------------
 
-  type <- arguments %>% pluck("type")
+if ( "type" %in% names(arguments_opt) ) {
+
+  type <- arguments_opt %>% pluck("type")
 
 } else { type }
 
-rep_list <- c( "r", "rep", "replication" )
-rep_math <- names(arguments) %in% rep_list
-rep_name <- names(arguments)[rep_math == TRUE]
+# -------------------------------------------------------------------------
 
-if ( any( names(arguments) %in% rep_list ) ) {
+rep_list <- c( "r", "rep", "replication", "replicates")
+rep_math <- names(arguments_opt) %in% rep_list
+rep_name <- names(arguments_opt)[rep_math == TRUE]
 
-  rep <- arguments %>%
+if ( length(rep_name)  > 0 ) {
+
+  rep <- arguments_opt %>%
     pluck( rep_name ) %>%
     as.numeric()
 
 } else { rep }
 
-if ("serie" %in% names(arguments)) {
+# -------------------------------------------------------------------------
 
-  serie <- arguments %>%
+if ( "serie" %in% names(arguments_opt) ) {
+
+  serie <- arguments_opt %>%
     pluck("serie") %>%
     as.numeric()
 
 } else { serie }
 
-if ("seed" %in% names(arguments)) {
+# -------------------------------------------------------------------------
 
-  seed <- arguments %>%
+if ( "seed" %in% names(arguments_opt) ) {
+
+  seed <- arguments_opt %>%
     pluck("seed") %>%
     as.numeric()
 
 } else { seed }
 
+# factor numbers ----------------------------------------------------------
+# -------------------------------------------------------------------------
+
 treat_name <- names(treatments_levels)[1:nFactors]
 treat_fcts <- treatments_levels[treat_name]
 
-# Factor = 1 --------------------------------------------------------------
+# nFactor = 1 -------------------------------------------------------------
 # -------------------------------------------------------------------------
 
           if (nFactors == 1) {
@@ -240,7 +264,7 @@ treat_fcts <- treatments_levels[treat_name]
 
           }
 
-# Factor >= 2 -------------------------------------------------------------
+# nFactor >= 2 ------------------------------------------------------------
 # -------------------------------------------------------------------------
 
         if( nFactors == 2 & startsWith(type, "split") ) {

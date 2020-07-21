@@ -91,6 +91,7 @@ fluidPage(
              numericInput(inputId = "seed"
                           , label = "Seed"
                           , value = 0
+                          , min = 0
                           ),
 
              textInput(inputId = "gsheet_name"

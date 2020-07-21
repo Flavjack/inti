@@ -30,8 +30,6 @@ footnotes <- function(table
                       , notation = "alphabet"
 ) {
 
-  # if ( is.null(notes) ) return(table)
-
   notation <- match.arg(notation, c("alphabet", "number", "none"))
 
   ids.ops <- read.csv(system.file("files/symbols.csv", package = "inti"))
@@ -67,12 +65,13 @@ footnotes <- function(table
       )[[1]],
       "[0-9]{1,2}")))
 
-  # Pandoc
+# pandoc docs -------------------------------------------------------------
+# -------------------------------------------------------------------------
 
   if (!attr(table, "format") %in% c("html", "latex")) {
 
-
 # In table notation -------------------------------------------------------
+# -------------------------------------------------------------------------
 
     if (count.intablenote != 0) {
 
@@ -90,6 +89,7 @@ footnotes <- function(table
     }
 
 # footnote label ----------------------------------------------------------
+# -------------------------------------------------------------------------
 
     for (i in extra.notation) {
       table <- gsub(paste0("\\{-", i, "\\}"),
@@ -102,6 +102,7 @@ footnotes <- function(table
     table[length(table) + 1] <- label
 
 # number in the notes -----------------------------------------------------
+# -------------------------------------------------------------------------
 
     if ( notation == "none" ) {
 
@@ -123,7 +124,9 @@ footnotes <- function(table
 
   attr(table, "kable_meta") <- NULL
 
+# result ------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
   return(table)
+
 }
-
-
