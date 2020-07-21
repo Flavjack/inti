@@ -73,7 +73,7 @@ url <- paste0("https://docs.google.com/spreadsheets/d/"
 gs <- as_sheets_id(url)
 
 (data <- gs \%>\%
-    range_read("tarpuyr"))
+    range_read("tarpuy"))
 
 data \%>\% inti::fieldbook_design()
 

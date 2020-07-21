@@ -63,7 +63,7 @@
 #' gs <- as_sheets_id(url)
 #'
 #' (data <- gs %>%
-#'     range_read("tarpuyr"))
+#'     range_read("tarpuy"))
 #'
 #' data %>% inti::fieldbook_design()
 #'
@@ -126,7 +126,7 @@ if ( length(col_name)  > 0  )  {
   arguments_opt <- arguments %>%
     tibble::deframe()
 
-} else { arguments <- data.frame() }
+} else { arguments_opt <- data.frame() }
 
 # arguments values --------------------------------------------------------
 # -------------------------------------------------------------------------
