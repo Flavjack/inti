@@ -1,8 +1,10 @@
 # tarpuy ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-# https://flavjack.shinyapps.io/tarpuy/
-# http://localhost:1221/
+# open https://flavjack.shinyapps.io/tarpuy/
+# runApp('inst/tarpuy', port = 1221)
+# browseURL("http://localhost:1221/")
+
 
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -79,7 +81,7 @@ shinyServer(function(input, output, session) {
     print(input$gsheet_name)
 
     cat("Variable sheet")
-    print(input$gsheet_name)
+    print(input$varlist_name)
 
   })
 
@@ -100,37 +102,37 @@ gar_shiny_auth(session)
 
 access_token <- callModule(googleAuth_js, "js_token")
 
-# fieldbook design --------------------------------------------------------
+gs <- reactive({
+
+  gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
+           , cache = FALSE
+           , use_oob = TRUE
+           , token = access_token())
+
+  as_sheets_id(input$gsheet_url)
+
+  })
+
+# export fieldbook --------------------------------------------------------
 # -------------------------------------------------------------------------
 
   observeEvent(input$export_fb, {
 
-# auth and find -----------------------------------------------------------
-# -------------------------------------------------------------------------
-
-    gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
-             , cache = FALSE
-             , use_oob = TRUE
-             , token = access_token()
-             )
-
-    gs <- as_sheets_id(input$gsheet_url)
-
 # sketch delete -----------------------------------------------------------
 # -------------------------------------------------------------------------
 
-    if ( "sketch" %in% sheet_names(gs) ) {
+    if ( "sketch" %in% sheet_names(gs()) ) {
 
-      sheet_delete(gs, "sketch")
+      sheet_delete(gs(), "sketch")
 
     }
 
-# varlist -----------------------------------------------------------------
+# variables ---------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-    if ( input$varlist_name %in% sheet_names(gs) ) {
+    if ( input$varlist_name %in% sheet_names(gs()) ) {
 
-      variables <- gs %>%
+      variables <- gs() %>%
         range_read(input$varlist_name)
 
     } else { variables <- NULL }
@@ -138,12 +140,18 @@ access_token <- callModule(googleAuth_js, "js_token")
 # fieldbook ---------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-    if ( input$gsheet_name %in% sheet_names(gs) ) {
+    if ( input$gsheet_name %in% sheet_names(gs()) ) {
 
-      fb <- gs %>%
+     fieldbook <-  gs() %>%
         range_read(input$gsheet_name)
 
-      fbds <- fb %>%
+    } else { fieldbook <- NULL }
+
+# -------------------------------------------------------------------------
+
+    if ( !is.null( fieldbook ) ) {
+
+      fbds <- fieldbook %>%
         inti::fieldbook_design(
           nFactors = input$nFactors
           , type = input$type
@@ -151,19 +159,19 @@ access_token <- callModule(googleAuth_js, "js_token")
           , serie = input$serie
           , seed = input$seed
         ) %>%
-        inti::fieldbook_varlist(variables)
+        inti::fieldbook_varlist(variables )
 
       if( length(fbds) == 2 ) {
 
         fbds %>%
           pluck("design") %>%
           as.data.frame() %>%
-          write_sheet(ss = gs, sheet = "fb")
+          write_sheet(ss = gs(), sheet = "fb")
 
         fb <- fbds %>%
           pluck("sketch") %>%
           as.data.frame() %>%
-          write_sheet(ss = gs, sheet = "sketch")
+          write_sheet(ss = gs(), sheet = "sketch")
 
       }
 
@@ -172,16 +180,12 @@ access_token <- callModule(googleAuth_js, "js_token")
         fb <- fbds %>%
           pluck("design") %>%
           as.data.frame() %>%
-          write_sheet(ss = gs, sheet = "fb")
+          write_sheet(ss = gs(), sheet = "fb")
 
       }
 
-    } else { print("Sheet not found") }
+    }
 
   })
 
 })
-
-
-
-
