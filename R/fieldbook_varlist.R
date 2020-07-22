@@ -65,7 +65,7 @@ fieldbook_varlist <- function(fieldbook
 # match names -------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  abrv_opt <- c("abbreviation", "siglas", "abbrev", "variable", "var")
+  abrv_opt <- c("abbreviation", "sigla", "siglas", "abbrev", "variable", "var")
   eval_opt <- c("evaluation", "eval", "dap", "dat", "when", "cuando", "evaluar", "evaluate")
   smp_opt <- c("sampling", "sample", "samples"
                , "subplot", "subplots"

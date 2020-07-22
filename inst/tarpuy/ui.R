@@ -2,7 +2,6 @@
 # -------------------------------------------------------------------------
 
 # open https://flavjack.shinyapps.io/tarpuy/
-# runApp('inst/tarpuy', port = 1221)
 # browseURL("http://localhost:1221/")
 
 # packages ----------------------------------------------------------------
@@ -20,6 +19,7 @@ library(googlesheets4)
 library(googleAuthR)
 
 gar_set_client(web_json = "www/tarpuy.json")
+options(shiny.port = 1221)
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -29,14 +29,14 @@ fluidPage(title = "Tarpuy",
     tags$head(HTML('<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">')),
     tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
     tags$head(includeHTML(("www/analytics.html"))),
-    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/files/quipo4c.png")),
+    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/quipo4c.png")),
 
     meta() %>%
       meta_social(
         title = "Tarpuy",
         description = "Tarpuy helps to create experimental designs",
         url = "https://flavjack.shinyapps.io/tarpuy/",
-        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/files/quipo4c.png",
+        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/quipo4c.png",
         image_alt = "quipolab.com"
       ),
 
@@ -163,7 +163,7 @@ fluidPage(title = "Tarpuy",
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC">
-            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/files/youtube.png" style="height:60px" title="demo"></a>
+            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/youtube.png" style="height:60px" title="demo"></a>
             <span style="display:block;"><small>demo</small></span>
             </p></div>
 
@@ -180,7 +180,7 @@ fluidPage(title = "Tarpuy",
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://www.quipolab.com/">
-            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/files/tarpuy.jpeg" style="height:80px" title="quipo"></a>
+            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/tarpuy.jpeg" style="height:80px" title="quipo"></a>
             <span style="display:block;"><small>quipolab.com</small></span>
             </p></div>
 
