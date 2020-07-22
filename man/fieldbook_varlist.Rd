@@ -40,7 +40,7 @@ gs <- as_sheets_id(url)
     range_read("design"))
 
 (varlist <- gs \%>\%
-    range_read("traits"))
+    range_read("variables"))
 
 fieldbook <- design \%>\%
   inti::fieldbook_design() \%>\%

@@ -1,0 +1,13 @@
+name: yupanapro
+title: yupanapro
+username:
+account: flavjack
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2600632
+bundleId: 3421406
+url: https://flavjack.shinyapps.io/yupanapro/
+when: 1595425228.30484
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: setup.r

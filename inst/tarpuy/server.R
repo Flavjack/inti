@@ -3,8 +3,7 @@
 
 # open https://flavjack.shinyapps.io/tarpuy/
 # runApp('inst/tarpuy', port = 1221)
-# browseURL("http://localhost:1221/")
-
+# open http://localhost:1221/
 
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -20,7 +19,7 @@ library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
 
-gar_set_client(web_json = "files/tarpuy.json")
+gar_set_client(web_json = "www/tarpuy.json")
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------

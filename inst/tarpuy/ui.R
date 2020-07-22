@@ -1,7 +1,9 @@
 # tarpuy ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-# https://flavjack.shinyapps.io/tarpuy/
+# open https://flavjack.shinyapps.io/tarpuy/
+# runApp('inst/tarpuy', port = 1221)
+# browseURL("http://localhost:1221/")
 
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -17,16 +19,16 @@ library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
 
-gar_set_client(web_json = "files/tarpuy.json")
+gar_set_client(web_json = "www/tarpuy.json")
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-fluidPage(
+fluidPage(title = "Tarpuy",
 
     tags$head(HTML('<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">')),
     tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
-    tags$head(includeHTML(("files/analytics.html"))),
+    tags$head(includeHTML(("www/analytics.html"))),
     tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/files/quipo4c.png")),
 
     meta() %>%
@@ -108,6 +110,7 @@ fluidPage(
 
              actionButton(inputId = "export_fb"
                           , label = "Export"
+                          , class = "btn btn-success"
                           )
 
              ),

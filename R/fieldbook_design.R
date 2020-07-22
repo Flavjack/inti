@@ -145,9 +145,13 @@ if ( length(nfc_name)  > 0 ) {
 
 # -------------------------------------------------------------------------
 
-if ( "type" %in% names(arguments_opt) ) {
+type_list <- c( "type", "design", "tipo" )
+type_math <- names(arguments_opt) %in% type_list
+type_name <- names(arguments_opt)[type_math == TRUE]
 
-  type <- arguments_opt %>% pluck("type")
+if ( length( type_name )  > 0 ) {
+
+  type <- arguments_opt %>% pluck( type_name )
 
 } else { type }
 
