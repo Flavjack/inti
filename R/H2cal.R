@@ -61,7 +61,8 @@
 #' @importFrom tibble rownames_to_column as_tibble tibble
 #' @importFrom lme4 ranef VarCorr
 #' @importFrom graphics abline par
-#' @importFrom stats fitted var
+#' @importFrom stats fitted var as.formula
+#' @importFrom ggplot2 ggplot aes geom_point theme_minimal
 #'
 #' @source
 #'

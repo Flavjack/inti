@@ -23,15 +23,15 @@ fluidPage(
 
     tags$head(HTML('<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">')),
     tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
-    tags$head(includeHTML(("files/analytics.html"))),
-    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/files/quipo4c.png")),
+    tags$head(includeHTML(("www/analytics.html"))),
+    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/quipo4c.png")),
 
     meta() %>%
       meta_social(
         title = "Rticles",
         description = "create technical documents with markdown and bookdown",
         url = "https://flavjack.shinyapps.io/rticles/",
-        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/files/quipo4c.png",
+        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/quipo4c.png",
         image_alt = "quipolab.com"
       ),
 
@@ -48,7 +48,7 @@ fluidPage(
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://lozanoisla.com/">
-            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/files/quipo4c.png" style="height:55px" title="flozano"></a>
+            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/quipo4c.png" style="height:55px" title="flozano"></a>
             <span style="display:block;"><small>lozanoisla.com</small></span>
             </p></div>
 
@@ -133,7 +133,7 @@ fluidPage(
 
       column(5,
 
-             includeHTML("files/manual.html")
+             includeHTML("www/manual.html")
 
              ),
 

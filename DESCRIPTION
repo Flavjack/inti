@@ -3,7 +3,7 @@ Type: Package
 Version: 2.0.0
 Title: Tools and Statistical Procedures in Plant Science
 Description: A collection of different applications and procedure used in plant breeding and experimental designs.
-Date: 2020-07-20
+Date: 2020-07-24
 Author: Flavio Lozano-Isla
 Maintainer: Flavio Lozano-Isla <flavjack@gmail.com>
 URL: https://lozanoisla.com/
@@ -18,19 +18,9 @@ Imports:
     lme4,
     agricolae,
     emmeans,
-    FactoMineR,
-    factoextra,
-    corrplot,
     purrr,
     stringr,
-    readxl,
-    lubridate,
-    gsheet,
-    data.table,
-    DT,
-    gtools,
-    openxlsx,
-    zoo
+    DT
 Suggests:
     googlesheets4,
     lmerTest,

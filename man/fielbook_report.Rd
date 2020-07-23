@@ -8,11 +8,12 @@ fielbook_report(
   data,
   fb_smr,
   variable,
-  comp_diag,
   model_facts,
   treat_comp,
   test_comp = "SNK",
-  sig_level = 0.05
+  sig_level = 0.05,
+  comp_diag = NULL,
+  model_diag = FALSE
 )
 }
 \arguments{
@@ -22,8 +23,6 @@ fielbook_report(
 
 \item{variable}{Model used for the experimental design.}
 
-\item{comp_diag}{Factors to compare. See details.}
-
 \item{model_facts}{Comparison test (default = "SNK"). Others: "TUKEY" & "DUNCAN".}
 
 \item{treat_comp}{Significance level for the analysis (default = 0.05).}
@@ -31,6 +30,10 @@ fielbook_report(
 \item{test_comp}{Significance level for the analysis (default = 0.05).}
 
 \item{sig_level}{Significance level for the analysis (default = 0.05).}
+
+\item{comp_diag}{Factors to compare. See details.}
+
+\item{model_diag}{Diagnostic for model (default = FALSE).}
 }
 \value{
 data frame
@@ -61,9 +64,15 @@ gs <- as_sheets_id(url)
 (fb_smr <- gs \%>\%
   range_read("fbsmr"))
 
+report <- fielbook_report(data
+                          , fb_smr = fb_smr
+                          , variable = "rendexportable"
+                          , comp_diag = T
+                          , model_diag = F
+                          )
+report
+
 }
-
-
 
 }
 \author{

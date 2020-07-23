@@ -27,8 +27,10 @@
 #'
 #' @author Flavio Lozano-Isla
 #'
+#' @import ggplot2
+#' @import agricolae
+#' @import dplyr
 #' @importFrom stats aov
-#' @importFrom dplyr across desc arrange everything
 #' @importFrom tidyr unite
 #'
 #' @export

@@ -21,7 +21,7 @@
 #' Flavio Lozano-Isla
 #'
 #' @import dplyr
-#' @importFrom tidyr pivot_wider
+#' @import tidyr
 #'
 #' @examples
 #'
@@ -59,6 +59,8 @@ fielbook_summary <- function(data
                              , test_comp = "SNK"
                              , sig_level = 0.05
                              ) {
+
+  variables <- values <- NULL
 
 # var list ----------------------------------------------------------------
 # -------------------------------------------------------------------------
