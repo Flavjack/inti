@@ -23,7 +23,7 @@
 #' Flavio Lozano-Isla
 #'
 #' @import dplyr
-#' @importFrom tibble enframe
+#' @importFrom tibble enframe deframe
 #' @importFrom rlang .data
 #' @importFrom agricolae SNK.test HSD.test duncan.test
 #'
@@ -54,6 +54,8 @@
 #'
 #' table <- mc$comparison
 #'
+#' table %>% write_sheet(ss = gs, sheet = "tabgraph")
+#'
 #' }
 #'
 #' @export
@@ -76,6 +78,10 @@ mean_comparison <- function(data
   factor_list <- fb_smr %>%
     filter(.data$type %in% "factor") %>%
     select(where(~!all(is.na(.))))
+
+  factor_opt <- factor_list %>%
+    select(!.data$type) %>%
+    deframe()
 
   vars_num <- fb_smr %>%
     filter(.data$type %in% "numeric")
@@ -182,6 +188,10 @@ mean_comparison <- function(data
   # test comparison ---------------------------------------------------------
   # -------------------------------------------------------------------------
 
+  treat_comp <- strsplit(treat_comp, ":") %>%
+    pluck(1) %>%
+    gsub(" ", "", ., fixed = TRUE)
+
   mean_comparison <- function(model_aov
                               , variable
                               , treat_comp
@@ -214,19 +224,27 @@ mean_comparison <- function(data
     }
 
     tb_mc <- merge(
-      mc %>% pluck("means") %>% rownames_to_column("treat")
-      ,  mc %>% pluck("groups") %>% rownames_to_column("treat")
+      mc %>% pluck("means") %>% rownames_to_column("treatments")
+      ,  mc %>% pluck("groups") %>% rownames_to_column("treatments")
       , all = TRUE) %>%
-      separate(.data$treat, {{treat_comp}}, sep = ":") %>%
+      rename_with(tolower, !c(.data$treatments, {{variable}})) %>%
       arrange(desc( {{variable}} )) %>%
       mutate(ste = .data$std/sqrt(.data$r), .after = .data$r) %>%
-      select(!c(.data$Q25, .data$Q50, .data$Q75))
+      select(!c(.data$q25, .data$q50, .data$q75)) %>%
+      rename("sig" = .data$groups)
+
+    if ( length(treat_comp) <= 2 ) {
+
+      tb_mc <- tb_mc %>%
+        separate(.data$treatments, {{treat_comp}}, sep = ":")
+
+    }
 
     smr_stat <- mc %>%
       pluck("statistics") %>%
       dplyr::mutate(variable =  {{variable}}, .before = "MSerror") %>%
       merge(mc$parameters, .) %>%
-      select(variable, everything())
+      select({{variable}}, everything())
 
     mean_comparison <- list(
       table = tb_mc
@@ -238,59 +256,66 @@ mean_comparison <- function(data
   # apply functions ---------------------------------------------------------
   # -------------------------------------------------------------------------
 
-  treat_comp <- strsplit(treat_comp, ":") %>%
-    pluck(1) %>%
-    gsub(" ", "", ., fixed = TRUE)
-
   model_aov <- model_aov(fb, variable, model_facts)
 
   comparison <- mean_comparison(model_aov
                                 , variable
                                 , treat_comp
                                 , sig_level
-  )
+                                )
 
   # graph table -------------------------------------------------------------
   # -------------------------------------------------------------------------
 
+  if ( length(treat_comp) >= 3 ){
+
+    x <- "treatments"
+    groups <- "treatments"
+    colors <-   rainbow( comparison$stats$ntr ) %>%
+      tibble('{colors}' = .)
+
+  }
+
   if ( length(treat_comp) == 2 ){
 
     x <- treat_comp[1]
-    group <- treat_comp[2]
-    colors <-  rainbow( length(treat_comp[2]) )
-
-
+    groups <- treat_comp[2]
+    colors <-  rainbow( factor_opt[treat_comp[1]] ) %>%
+      tibble('{colors}' = .)
   }
 
   if ( length(treat_comp) == 1 ){
 
     x <- treat_comp[1]
-    group <- treat_comp[1]
-    colors <-  rainbow( length(treat_comp[1]) )
+    groups <- treat_comp[1]
+    colors <-   rainbow( factor_opt[treat_comp[1]] ) %>%
+      tibble('{colors}' = .)
 
   }
 
-  if ( length(treat_comp) <= 2 & graph_opts == TRUE ) {
+  if ( graph_opts == TRUE ) {
 
     arguments <- c(type = "bar"
                    , x = x
                    , y = {{variable}}
-                   , group = group
-                   , lab_x = x
-                   , lab_y = {{variable}}
-                   , lab_group = group
+                   , groups = groups
+                   , xlab = x
+                   , ylab = {{variable}}
+                   , glab = groups
+                   , legend = "top"
                    , limits = NA
                    , brake = NA
-                   , sig = "sg"
+                   , sig = "sig"
                    , error = TRUE
                    , theme = "minimal"
     )
 
     opts_table <- enframe(arguments) %>%
       rename('{arguments}' = .data$name, '{values}' = .data$value) %>%
-      mutate('{color_groups}' = {{colors}}
-             , .before = '{arguments}')
-
+      merge(colors, ., by = 0, all = TRUE) %>%
+      mutate(across(.data$Row.names, as.numeric)) %>%
+      arrange(.data$Row.names) %>%
+      select(-.data$Row.names)
 
     comparison[["table"]]  <- merge( comparison[["table"]]
                                      , opts_table

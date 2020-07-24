@@ -66,7 +66,10 @@ mc <- mean_comparison(data
                      , variable = "aftotal"
                      , graph_opts = T
                      )
-mc
+
+table <- mc$comparison
+
+table \%>\% write_sheet(ss = gs, sheet = "tabgraph")
 
 }
 
