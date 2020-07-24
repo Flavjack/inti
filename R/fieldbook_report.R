@@ -4,12 +4,9 @@
 #'
 #' @param data Field book data.
 #' @param fb_smr Summary of the variables in the fieldbook.
-#' @param variable Model used for the experimental design.
-#' @param model_facts Comparison test (default = "SNK"). Others: "TUKEY" & "DUNCAN".
-#' @param comp_diag Factors to compare. See details.
-#' @param treat_comp Significance level for the analysis (default = 0.05).
-#' @param test_comp Significance level for the analysis (default = 0.05).
-#' @param sig_level Significance level for the analysis (default = 0.05).
+#' @param variable Response variable
+#' @param model_facts Model used for the experimental design.
+#' @param dotplot_groups Factors to compare. See details.
 #' @param model_diag Diagnostic for model (default = FALSE).
 #'
 #' @details
@@ -44,11 +41,11 @@
 #' (fb_smr <- gs %>%
 #'   range_read("fbsmr"))
 #'
-#' report <- fielbook_report(data
+#' report <- fieldbook_report(data
 #'                           , fb_smr = fb_smr
 #'                           , variable = "rendexportable"
-#'                           , comp_diag = T
-#'                           , model_diag = F
+#'                           , dotplot_groups = "bloque"
+#'                           , model_diag = T
 #'                           )
 #' report
 #'
@@ -56,14 +53,11 @@
 #'
 #' @export
 
-fielbook_report <- function(data
+fieldbook_report <- function(data
                             , fb_smr
                             , variable
                             , model_facts
-                            , treat_comp
-                            , test_comp = "SNK"
-                            , sig_level = 0.05
-                            , comp_diag = NULL
+                            , dotplot_groups = NULL
                             , model_diag = FALSE
                             ) {
 
@@ -92,32 +86,15 @@ fielbook_report <- function(data
 # fieldbook arguments -----------------------------------------------------
 # -------------------------------------------------------------------------
 
-  test_comp <- match.arg(test_comp, c("snk" , "SNK"
-                                      , "duncan", "DUNCAN"
-                                      , "hsd", "tukey", "TUKEY"))
-
-  if( test_comp %in% c("tukey", "snk", "tukey", "TUKEY") ) {
-
-    test_comp <- switch(test_comp,
-                        snk = "SNK"
-                        , tukey = "HSD"
-                        , TUKEY = "HSD"
-                        , DUNCAN = "duncan")
-  }
-
-# extract arguments -------------------------------------------------------
-# -------------------------------------------------------------------------
-
   arguments <- fb_smr %>%
     select(where(~!all(is.na(.)))) %>%
     filter(variables %in% {{variable}} )
 
-
 # -------------------------------------------------------------------------
 
   model_facts_opt <- c("model_facts", "model")
-  model_facts_math <- names(arguments) %in% model_facts_opt
-  model_facts_name <- names(arguments)[model_facts_math == TRUE]
+  model_facts_match <- names(arguments) %in% model_facts_opt
+  model_facts_name <- names(arguments)[model_facts_match == TRUE]
 
   if ( length(model_facts_name)  > 0  )  {
 
@@ -125,47 +102,6 @@ fielbook_report <- function(data
       select({{model_facts_name}}) %>%
       pluck(1)
 
-  }
-
-  # -------------------------------------------------------------------------
-
-  treat_comp_opt <- c("treat_comp", "comparison", "compare", "comparar")
-  treat_comp_math <- names(arguments) %in% treat_comp_opt
-  treat_comp_name <- names(arguments)[treat_comp_math == TRUE]
-
-  if ( length(treat_comp_name)  > 0  )  {
-
-    treat_comp <- arguments %>%
-      select({{treat_comp_name}}) %>%
-      pluck(1)
-
-  }
-
-  # -------------------------------------------------------------------------
-
-  test_comp_opt <- c("test_comp", "test_media", "test_comparison", "test_compare")
-  test_comp_math <- names(arguments) %in% test_comp_opt
-  test_comp_name <- names(arguments)[test_comp_math == TRUE]
-
-  if ( length(test_comp_name)  > 0  )  {
-
-    test_comp <- arguments %>%
-      select({{test_comp_name}}) %>%
-      pluck(1)
-
-  }
-
-  # -------------------------------------------------------------------------
-
-  sig_level_opt <- c("sig_level", "signicance", "alpha")
-  sig_level_math <- names(arguments) %in% sig_level_opt
-  sig_level_name <- names(arguments)[sig_level_math == TRUE]
-
-  if ( length(sig_level_name)  > 0  )  {
-
-    sig_level <- arguments %>%
-      select({{sig_level_name}}) %>%
-      pluck(1)
   }
 
 # anova -------------------------------------------------------------------
@@ -185,19 +121,19 @@ fielbook_report <- function(data
                     , model_diag
                     ){
 
-    model_aov <- aov(model_formula, fb)
+    model <- aov(model_formula, fb)
 
     if (model_diag == TRUE) {
 
       par(mfrow=c(2,2), no.readonly = FALSE)
-      hist(resid(model_aov), main = {{variable}})
-      qqnorm(resid(model_aov), main = {{variable}}); qqline(resid(model_aov))
-      plot(fitted(model_aov), resid(model_aov, type = "pearson"), main = {{variable}}); abline(h=0)
-      plot(resid(model_aov), main = {{variable}})
+      hist(resid(model), main = {{variable}})
+      qqnorm(resid(model), main = {{variable}}); qqline(resid(model))
+      plot(fitted(model), resid(model, type = "pearson"), main = {{variable}}); abline(h=0)
+      plot(resid(model), main = {{variable}})
 
       }
 
-    model_aov
+    model
 
     }
 
@@ -206,77 +142,15 @@ fielbook_report <- function(data
 
   dotplot <- function(fb
                       , variable
-                      , treat_comp
-                      , comp_diag
+                      , dotplot_groups
                       ){
 
-    if ( !is.null(comp_diag) ) {
-
-      compare <- strsplit(treat_comp,  ":")[[1]][[1]]
-
       plot <- fb %>%
-        ggplot(aes( .data[[variable]], .data[[compare]] )) +
-        geom_point( aes(color = .data[[compare]]) ) +
+        ggplot(aes( .data[[variable]], .data[[dotplot_groups]] )) +
+        geom_point( aes(color = .data[[dotplot_groups]]) ) +
         theme_minimal()
-      }
 
     }
-
-# mean comparison ---------------------------------------------------------
-# -------------------------------------------------------------------------
-
-  mean_comparison <- function(model_aov
-                              , variable
-                              , treat_comp
-                              , sig_level
-                              ){
-
-   compare <- strsplit(treat_comp,  ":")[[1]][[1]]
-
-   if (test_comp == "SNK"){
-
-     mc <- SNK.test(
-       y = model_aov
-       , trt = compare
-       , alpha = sig_level
-     )
-
-   } else if (test_comp == "HSD") {
-
-     mc <- HSD.test(
-       y = model_aov
-       , trt = compare
-       , alpha = sig_level
-     )
-
-   } else if (test_comp == "DUNCAN") {
-
-     mc <- duncan.test(
-       y = model_aov
-       , trt = compare
-       , alpha = sig_level
-     )
-   }
-
-   tb_mc <- merge(
-     mc %>% pluck("means") %>% rownames_to_column("treat")
-     ,  mc %>% pluck("groups") %>% rownames_to_column("treat")
-     , all = TRUE) %>%
-     separate(treat, compare, sep = ":") %>%
-     arrange(desc( {{variable}} )) %>%
-     mutate(ste = std/sqrt(r), .after = r)
-
-   smr_stat <- mc %>%
-     pluck("statistics") %>%
-     dplyr::mutate(variable =  {{variable}}, .before = "MSerror")
-
-
-   mean_comparison <- list(
-     table = tb_mc
-     , stats = smr_stat
-   )
-
-  }
 
 # apply functions ---------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -285,13 +159,11 @@ fielbook_report <- function(data
 
   model_aov <- model_aov(fb, variable, model_formula, model_diag)
 
-  dotplot <- dotplot(fb, variable, treat_comp, comp_diag)
+  if ( !is.null(dotplot_groups) ) {
 
-  mean_comparison <- mean_comparison(model_aov
-                                     , variable
-                                     , treat_comp
-                                     , sig_level
-                                     )
+    dotplot_diag <- dotplot(fb, variable, dotplot_groups)
+
+  } else { dotplot_diag <- NULL }
 
 # results -----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -299,9 +171,7 @@ fielbook_report <- function(data
   fb_report = list(
     formula = model_formula
     , anova = model_aov
-    , diag_plot = dotplot
-    , table_summary = mean_comparison[["table"]]
-    , stat_summary = mean_comparison[["stats"]]
-  )
+    , dotplot = dotplot_diag
+    )
 
 }

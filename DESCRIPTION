@@ -20,6 +20,7 @@ Imports:
     emmeans,
     purrr,
     stringr,
+    rlang,
     DT
 Suggests:
     googlesheets4,

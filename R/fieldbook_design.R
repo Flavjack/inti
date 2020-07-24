@@ -5,7 +5,7 @@
 #' 2. Sketch design.
 #'
 #' @param data Experimental design data frame with the factors and level. See examples.
-#' @param nFactors Number of factor in the experiment  (default = 1). See details.
+#' @param n_factors Number of factor in the experiment  (default = 1). See details.
 #' @param type Type of experimental arrange  (default = "crd"). See details.
 #' @param rep  Number of replications in the experiment (default = 3).
 #' @param serie Digits in the plot id (default = 2).
@@ -15,17 +15,17 @@
 #' You should include 2 columns in the sheet: "\code{{arguments}}" and "\code{{values}}". See examples.
 #' The information will be extracted automatically and deploy the design.
 #'
-#' nFactor = 1
+#' n_factor = 1
 #' - crd
 #' - rcbd
 #' - lsd
 #' - lattice
 #'
-#' nFactor = 2 (factorial)
+#' n_factor = 2 (factorial)
 #' - split-crd
 #' - split-rcbd
 #'
-#' nFactors >= 2 (factorial)
+#' n_factors >= 2 (factorial)
 #' factorial .: crd, rcbd, lsd
 #'
 #' @return A list with two objects:
@@ -72,7 +72,7 @@
 #' @export
 
 fieldbook_design <- function(data,
-                             nFactors = 1,
+                             n_factors = 1,
                              type = "crd",
                              rep = 2,
                              serie = 2,
@@ -118,8 +118,8 @@ col_arg <- c(
   , "parameter", "parameters", "parametro", "parametros"
   )
 
-col_math <- names(arguments) %in% col_arg
-col_name <- names(arguments)[col_math == TRUE]
+col_match <- names(arguments) %in% col_arg
+col_name <- names(arguments)[col_match == TRUE]
 
 if ( length(col_name)  > 0  )  {
 
@@ -132,22 +132,22 @@ if ( length(col_name)  > 0  )  {
 # -------------------------------------------------------------------------
 
 nfc_list <- c( "nFactor", "nFactors", "factors", "factor", "nfactors", "factores" )
-nfc_math <- names(arguments_opt) %in% nfc_list
-nfc_name <- names(arguments_opt)[nfc_math == TRUE]
+nfc_match <- names(arguments_opt) %in% nfc_list
+nfc_name <- names(arguments_opt)[nfc_match == TRUE]
 
 if ( length(nfc_name)  > 0 ) {
 
-  nFactors <- arguments_opt %>%
+  n_factors <- arguments_opt %>%
     pluck( nfc_name ) %>%
     as.numeric()
 
-} else { nFactors }
+} else { n_factors }
 
 # -------------------------------------------------------------------------
 
 type_list <- c( "type", "design", "tipo" )
-type_math <- names(arguments_opt) %in% type_list
-type_name <- names(arguments_opt)[type_math == TRUE]
+type_match <- names(arguments_opt) %in% type_list
+type_name <- names(arguments_opt)[type_match == TRUE]
 
 if ( length( type_name )  > 0 ) {
 
@@ -158,8 +158,8 @@ if ( length( type_name )  > 0 ) {
 # -------------------------------------------------------------------------
 
 rep_list <- c( "r", "rep", "replication", "replicates")
-rep_math <- names(arguments_opt) %in% rep_list
-rep_name <- names(arguments_opt)[rep_math == TRUE]
+rep_match <- names(arguments_opt) %in% rep_list
+rep_name <- names(arguments_opt)[rep_match == TRUE]
 
 if ( length(rep_name)  > 0 ) {
 
@@ -171,7 +171,11 @@ if ( length(rep_name)  > 0 ) {
 
 # -------------------------------------------------------------------------
 
-if ( "serie" %in% names(arguments_opt) ) {
+serie_list <- c("serie", "series", "digits", "pdigits", "plotdigits")
+serie_match <- names(arguments_opt) %in% serie_list
+serie_name <- names(arguments_opt)[serie_match == TRUE]
+
+if ( length(serie_name)  > 0 ) {
 
   serie <- arguments_opt %>%
     pluck("serie") %>%
@@ -181,7 +185,11 @@ if ( "serie" %in% names(arguments_opt) ) {
 
 # -------------------------------------------------------------------------
 
-if ( "seed" %in% names(arguments_opt) ) {
+seed_list <- c("seed", "Seed", "seeds", "semilla")
+seed_match <- names(arguments_opt) %in% seed_list
+seed_name <- names(arguments_opt)[seed_match == TRUE]
+
+if ( length(seed_name)  > 0  ) {
 
   seed <- arguments_opt %>%
     pluck("seed") %>%
@@ -192,13 +200,13 @@ if ( "seed" %in% names(arguments_opt) ) {
 # factor numbers ----------------------------------------------------------
 # -------------------------------------------------------------------------
 
-treat_name <- names(treatments_levels)[1:nFactors]
+treat_name <- names(treatments_levels)[1:n_factors]
 treat_fcts <- treatments_levels[treat_name]
 
 # nFactor = 1 -------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-          if (nFactors == 1) {
+          if (n_factors == 1) {
 
             onefact <- treat_fcts %>% pluck(1)
 
@@ -271,7 +279,7 @@ treat_fcts <- treatments_levels[treat_name]
 # nFactor >= 2 ------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-        if( nFactors == 2 & startsWith(type, "split") ) {
+        if( n_factors == 2 & startsWith(type, "split") ) {
 
 # split-plot --------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -322,7 +330,7 @@ treat_fcts <- treatments_levels[treat_name]
 # factorial ---------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-        if ( nFactors >= 2 && ( type == "crd" | type == "rcbd" | type == "lsd" ) ) {
+        if ( n_factors >= 2 && ( type == "crd" | type == "rcbd" | type == "lsd" ) ) {
 
           treat_lvls <- lengths(treat_fcts)
 
@@ -357,9 +365,9 @@ treat_fcts <- treatments_levels[treat_name]
 
           renamed_fb <- design %>%
             pluck("book") %>%
-            rename_with(~ {{ treat_name }}, tail(names(.), nFactors))
+            rename_with(~ {{ treat_name }}, tail(names(.), n_factors))
 
-          ini <- length(renamed_fb) - nFactors + 1
+          ini <- length(renamed_fb) - n_factors + 1
           fin <- length(renamed_fb)
 
           fb_recoded <- lapply(ini:fin, function(x) {

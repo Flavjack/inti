@@ -53,7 +53,7 @@ fluidPage(title = "Tarpuy",
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://lozanoisla.com/">
-            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/files/quipo4c.png" style="height:50px" title="flozano"></a>
+            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/quipo4c.png" style="height:50px" title="flozano"></a>
             <span style="display:block;"><small>lozanoisla.com</small></span>
             </p></div>
 

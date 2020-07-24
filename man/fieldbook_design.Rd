@@ -9,7 +9,7 @@ https://tarwi.lamolina.edu.pe/~fmendiburu/
 \usage{
 fieldbook_design(
   data,
-  nFactors = 1,
+  n_factors = 1,
   type = "crd",
   rep = 2,
   serie = 2,
@@ -19,7 +19,7 @@ fieldbook_design(
 \arguments{
 \item{data}{Experimental design data frame with the factors and level. See examples.}
 
-\item{nFactors}{Number of factor in the experiment  (default = 1). See details.}
+\item{n_factors}{Number of factor in the experiment  (default = 1). See details.}
 
 \item{type}{Type of experimental arrange  (default = "crd"). See details.}
 
@@ -46,17 +46,17 @@ The function allows to include the arguments in the sheet that have the informat
 You should include 2 columns in the sheet: "\code{{arguments}}" and "\code{{values}}". See examples.
 The information will be extracted automatically and deploy the design.
 
-nFactor = 1
+n_factor = 1
 - crd
 - rcbd
 - lsd
 - lattice
 
-nFactor = 2 (factorial)
+n_factor = 2 (factorial)
 - split-crd
 - split-rcbd
 
-nFactors >= 2 (factorial)
+n_factors >= 2 (factorial)
 factorial .: crd, rcbd, lsd
 }
 \examples{

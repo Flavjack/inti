@@ -39,7 +39,7 @@
 #' (data <- gs %>%
 #'     range_read("fb"))
 #'
-#' smrfb <- fielbook_summary(data
+#' smrfb <- fieldbook_summary(data
 #'                  , last_factor = "dosis"
 #'                  , model_facts = "bloque + cultivar*fuenteN*dosis"
 #'                  , treat_comp = "cultivar:fuenteN:dosis"
@@ -52,7 +52,7 @@
 #'
 #' @export
 
-fielbook_summary <- function(data
+fieldbook_summary <- function(data
                              , last_factor
                              , model_facts
                              , treat_comp
