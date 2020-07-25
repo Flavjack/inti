@@ -19,7 +19,7 @@ library(inti)
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-fluidPage(
+fluidPage(title = "Rticles",
 
     tags$head(HTML('<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">')),
     tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
