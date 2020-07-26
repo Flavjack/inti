@@ -20,10 +20,11 @@ Imports:
     emmeans,
     purrr,
     stringr,
-    rlang,
     DT
 Suggests:
     googlesheets4,
+    FactoMineR,
+    corrplot,
     lmerTest,
     knitr,
     rmarkdown

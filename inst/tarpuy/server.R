@@ -31,15 +31,15 @@ shinyServer(function(input, output, session) {
 
   output$design_type <- renderUI({
 
-    if(input$nFactors == 1) {
+    if(input$n_factors == 1) {
 
       type <- c("crd", "rcbd", "lsd", "lattice")
 
-    } else if (input$nFactors == 2) {
+    } else if (input$n_factors == 2) {
 
       type <- c("crd", "rcbd", "lsd", "split-crd", "split-rcbd")
 
-    } else if (input$nFactors > 2) {
+    } else if (input$n_factors > 2) {
 
       type <- c("crd", "rcbd", "lsd")
 
@@ -62,7 +62,7 @@ shinyServer(function(input, output, session) {
     cat("--------------------------------------------------\n")
 
     cat("Factores")
-    print(input$nFactors)
+    print(input$n_factors)
 
     cat("Design type")
     print(input$type)
@@ -152,7 +152,7 @@ gs <- reactive({
 
       fbds <- fieldbook %>%
         inti::fieldbook_design(
-          nFactors = input$nFactors
+          n_factors = input$n_factors
           , type = input$type
           , rep = input$rep
           , serie = input$serie

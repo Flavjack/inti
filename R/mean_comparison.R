@@ -24,8 +24,8 @@
 #'
 #' @import dplyr
 #' @importFrom tibble enframe deframe
-#' @importFrom rlang .data
 #' @importFrom agricolae SNK.test HSD.test duncan.test
+#' @importFrom grDevices gray.colors
 #'
 #' @examples
 #'
@@ -271,7 +271,9 @@ mean_comparison <- function(data
 
     x <- "treatments"
     groups <- "treatments"
-    colors <-   rainbow( comparison$stats$ntr ) %>%
+    colors <-   gray.colors(n = factor_opt[treat_comp[2]]
+                            , start = 0.3
+                            , end = 0.9)
       tibble('{colors}' = .)
 
   }
@@ -280,7 +282,9 @@ mean_comparison <- function(data
 
     x <- treat_comp[1]
     groups <- treat_comp[2]
-    colors <-  rainbow( factor_opt[treat_comp[1]] ) %>%
+    colors <- gray.colors(n = factor_opt[treat_comp[2]]
+                          , start = 0.3
+                          , end = 0.9) %>%
       tibble('{colors}' = .)
   }
 
@@ -288,10 +292,32 @@ mean_comparison <- function(data
 
     x <- treat_comp[1]
     groups <- treat_comp[1]
-    colors <-   rainbow( factor_opt[treat_comp[1]] ) %>%
+    colors <- gray.colors(n = factor_opt[treat_comp[1]]
+                          , start = 0.3
+                          , end = 0.9) %>%
       tibble('{colors}' = .)
 
   }
+
+  if ( min(comparison$table$min) > 0 &  max(comparison$table$max) > 0 ) {
+
+    limits <- paste(0, round(max(comparison$table$max)*1.25),  sep = ":")
+    brakes <- round(abs(max(comparison$table$max)*1.25/5))
+
+  } else if ( min(comparison$table$min) < 0 &  max(comparison$table$max) > 0 ) {
+
+    limits <- paste(round(min(comparison$table$min)*1.25)
+                    , round(max(comparison$table$max)*1.25),  sep = ":")
+    brakes <- round(abs(max(comparison$table$max)*1.25/5))
+
+  } else if ( min(comparison$table$min) < 0 &  max(comparison$table$max) < 0 ) {
+
+    limits <- paste(round(min(comparison$table$min))*1.25
+                    , 0,  sep = ":")
+    brakes <- round(abs(min(comparison$table$min)*1.25/5))
+
+  }
+
 
   if ( graph_opts == TRUE ) {
 
@@ -303,8 +329,8 @@ mean_comparison <- function(data
                    , ylab = {{variable}}
                    , glab = groups
                    , legend = "top"
-                   , limits = NA
-                   , brake = NA
+                   , limits = limits
+                   , brake = brakes
                    , sig = "sig"
                    , error = TRUE
                    , theme = "minimal"

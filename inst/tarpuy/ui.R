@@ -68,7 +68,7 @@ fluidPage(title = "Tarpuy",
              HTML('<h1><a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/">Tarpuy</a></h1>'),
 
              numericInput(
-               inputId = "nFactors"
+               inputId = "n_factors"
                , label = "Factors"
                , value = 1
                , max = 5
