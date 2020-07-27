@@ -125,7 +125,7 @@ glab <- graph_opts[["glab"]] %>%
 glab <- eval(expression(parse(text = glab)))
 limits <- graph_opts[["limits"]] %>%
   strsplit(., "x") %>% deframe() %>% as.numeric()
-brakes <- (limits[1]:limits[2]) * graph_opts[["brakes"]]
+brakes <- (limits[1]:limits[2]) * as.numeric(graph_opts[["brakes"]])
 sig <- graph_opts[["sig"]]
 error <- graph_opts[["error"]]
 legend <- graph_opts[["legend"]]

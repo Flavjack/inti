@@ -44,7 +44,7 @@
 #'     range_read("fb"))
 #'
 #' (fb_smr <- gs %>%
-#'   range_read("fbsmr"))
+#'   range_read("fbsm"))
 #'
 #' mc <- mean_comparison(data
 #'                      , fb_smr = fb_smr
