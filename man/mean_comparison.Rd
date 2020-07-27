@@ -69,7 +69,7 @@ mc <- mean_comparison(data
 
 table <- mc$comparison
 
-table \%>\% write_sheet(ss = gs, sheet = "tabgraph")
+table \%>\% sheet_write(ss = gs, sheet = "plot")
 
 }
 

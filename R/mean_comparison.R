@@ -54,7 +54,7 @@
 #'
 #' table <- mc$comparison
 #'
-#' table %>% write_sheet(ss = gs, sheet = "tabgraph")
+#' table %>% sheet_write(ss = gs, sheet = "plot")
 #'
 #' }
 #'
@@ -271,9 +271,9 @@ mean_comparison <- function(data
 
     x <- "treatments"
     groups <- "treatments"
-    colors <-   gray.colors(n = factor_opt[treat_comp[2]]
-                            , start = 0.3
-                            , end = 0.9)
+    colors <-   gray.colors(n = comparison$stats$ntr
+                            , start = 0.8
+                            , end = 0.3) %>%
       tibble('{colors}' = .)
 
   }
@@ -283,8 +283,8 @@ mean_comparison <- function(data
     x <- treat_comp[1]
     groups <- treat_comp[2]
     colors <- gray.colors(n = factor_opt[treat_comp[2]]
-                          , start = 0.3
-                          , end = 0.9) %>%
+                          , start = 0.8
+                          , end = 0.3) %>%
       tibble('{colors}' = .)
   }
 
@@ -293,50 +293,48 @@ mean_comparison <- function(data
     x <- treat_comp[1]
     groups <- treat_comp[1]
     colors <- gray.colors(n = factor_opt[treat_comp[1]]
-                          , start = 0.3
-                          , end = 0.9) %>%
+                          , start = 0.8
+                          , end = 0.3) %>%
       tibble('{colors}' = .)
 
   }
 
-  if ( min(comparison$table$min) > 0 &  max(comparison$table$max) > 0 ) {
+  if ( min(comparison$table$min) >= 0 &  max(comparison$table$max) >= 0 ) {
 
-    limits <- paste(0, round(max(comparison$table$max)*1.25),  sep = ":")
-    brakes <- round(abs(max(comparison$table$max)*1.25/5))
+    limits <- paste(0, round(max(comparison$table$max)*1.10),  sep = "x")
+    brakes <- abs(round(max(comparison$table$max)*1.10))/5
 
-  } else if ( min(comparison$table$min) < 0 &  max(comparison$table$max) > 0 ) {
+  } else if ( min(comparison$table$min) <= 0 &  max(comparison$table$max) >= 0 ) {
 
-    limits <- paste(round(min(comparison$table$min)*1.25)
-                    , round(max(comparison$table$max)*1.25),  sep = ":")
-    brakes <- round(abs(max(comparison$table$max)*1.25/5))
+    limits <- paste(round(min(comparison$table$min)*1.10)
+                    , round(max(comparison$table$max)*1.10),  sep = "x")
+    brakes <- abs(round(max(comparison$table$max)*1.10))/5
 
-  } else if ( min(comparison$table$min) < 0 &  max(comparison$table$max) < 0 ) {
+  } else if ( min(comparison$table$min) <= 0 &  max(comparison$table$max) <= 0 ) {
 
-    limits <- paste(round(min(comparison$table$min))*1.25
-                    , 0,  sep = ":")
-    brakes <- round(abs(min(comparison$table$min)*1.25/5))
+    limits <- paste(round(min(comparison$table$min))*1.10, 0,  sep = "x")
+    brakes <- abs(round(max(comparison$table$min)*1.10))/5
 
   }
 
 
   if ( graph_opts == TRUE ) {
 
-    arguments <- c(type = "bar"
+    graph_opts <- c(type = "bar"
                    , x = x
                    , y = {{variable}}
                    , groups = groups
                    , xlab = x
                    , ylab = {{variable}}
                    , glab = groups
-                   , legend = "top"
                    , limits = limits
-                   , brake = brakes
+                   , brakes = brakes
                    , sig = "sig"
-                   , error = TRUE
-                   , theme = "minimal"
-    )
+                   , error = "ste"
+                   , legend = "top"
+                   )
 
-    opts_table <- enframe(arguments) %>%
+    opts_table <- enframe(graph_opts) %>%
       rename('{arguments}' = .data$name, '{values}' = .data$value) %>%
       merge(colors, ., by = 0, all = TRUE) %>%
       mutate(across(.data$Row.names, as.numeric)) %>%
