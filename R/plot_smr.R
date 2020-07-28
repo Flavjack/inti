@@ -76,22 +76,6 @@ plot_smr <- function(data
                      , legend = NULL
                      ) {
 
-
-# -------------------------------------------------------------------------
-
-  print("from function ---------------")
-  print(type)
-  print(x)
-  print(y)
-  print(xlab)
-  print(ylab)
-  print(glab)
-  print(limits)
-  print(brakes)
-  print(sig)
-  print(error)
-  print(legend)
-
 # data --------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
@@ -233,21 +217,6 @@ if ( is.null(color_grps) ) {
   }
 
 legend <- match.arg(legend, c("top", "left", "right", "bottom", "none"))
-
-# ------------------------------------------------------------------------
-
-print("for use ---------------------")
-print(type)
-print(x)
-print(y)
-print(xlab)
-print(ylab)
-print(glab)
-print(limits)
-print(brakes)
-print(sig)
-print(error)
-print(legend)
 
 # bar plot ----------------------------------------------------------------
 # -------------------------------------------------------------------------
