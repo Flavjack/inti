@@ -46,26 +46,51 @@
 #' (data <- gs %>%
 #'     range_read("plot"))
 #'
-#' plot_smr(data, type = "bar")
+#' plot_smr(data)
+#'
+#' plot_smr(data
+#'          , type = "bar"
+#'          , limits = c(0,1000)
+#'          , brakes = 200
+#'          , sig = "sig"
+#'          , error = "ste"
+#'          , legend = "top"
+#'          )
 #'
 #' }
 #'
 #' @export
 
 plot_smr <- function(data
-                     , type = c("bar", "line")
-                     , x
-                     , y
-                     , groups
-                     , xlab
-                     , ylab
-                     , glab
-                     , limits
-                     , brakes
-                     , sig
-                     , error
-                     , legend = "top"
+                     , type = NULL
+                     , x = NULL
+                     , y = NULL
+                     , groups = NULL
+                     , xlab = NULL
+                     , ylab = NULL
+                     , glab = NULL
+                     , limits = NULL
+                     , brakes = NULL
+                     , sig = NULL
+                     , error = NULL
+                     , legend = NULL
                      ) {
+
+
+# -------------------------------------------------------------------------
+
+  print("from function ---------------")
+  print(type)
+  print(x)
+  print(y)
+  print(xlab)
+  print(ylab)
+  print(glab)
+  print(limits)
+  print(brakes)
+  print(sig)
+  print(error)
+  print(legend)
 
 # data --------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -83,24 +108,60 @@ arg_dt <- data %>%
   select_if(~ !all(is.na(.))) %>%
   rename_with(~ gsub("\\{|\\}", "", .))
 
-if ( "colors" %in% names(arg_dt)  ) {
+# -------------------------------------------------------------------------
 
-  color_grps <- arg_dt %>%
-    select(colors) %>%
-    drop_na() %>%
+if ( length(arg_dt) >= 2 ) {
+
+  graph_opts <- arg_dt %>%
+    select(.data$arguments, .data$values) %>%
     deframe()
 
-} else { color_grps <- NULL }
+  if ( "colors" %in% names(arg_dt)  ) {
 
-graph_opts <- arg_dt %>%
-  select(.data$arguments, .data$values) %>%
-  deframe()
+    color_grps <- arg_dt %>%
+      select(colors) %>%
+      drop_na() %>%
+      deframe()
+
+  } else { color_grps <- NULL }
+
+}
 
 # -------------------------------------------------------------------------
 
-x <- graph_opts[["x"]]
-y <- graph_opts[["y"]]
-groups <- graph_opts[["groups"]]
+  if ( is.na(graph_opts[["type"]]) & is.null(type) ) { type <- "bar" }
+  if ( !is.na(graph_opts[["type"]]) & !is.null(type) ) { type <- type }
+  if ( !is.na(graph_opts[["type"]]) & is.null(type) ) { type <- graph_opts[["type"]] }
+  type <- match.arg(type, c("bar", "line"))
+
+# -------------------------------------------------------------------------
+
+  if ( is.na(graph_opts[["sig"]]) & is.null(sig) ) { sig <- "sig" }
+  if ( !is.na(graph_opts[["sig"]]) & !is.null(sig) ) { sig <- sig }
+  if ( !is.na(graph_opts[["sig"]]) & is.null(sig) ) { sig <- graph_opts[["sig"]] }
+
+# -------------------------------------------------------------------------
+
+  if ( is.na(graph_opts[["error"]]) & is.null(error) ) { error <- "ste" }
+  if ( !is.na(graph_opts[["error"]]) & !is.null(error) ) { error <- error }
+  if ( !is.na(graph_opts[["error"]]) & is.null(error) ) { error <- graph_opts[["error"]] }
+
+# -------------------------------------------------------------------------
+
+if ( is.na(graph_opts[["legend"]]) & is.null(legend) ) { legend <- "top" }
+if ( !is.na(graph_opts[["legend"]]) & !is.null(legend) ) { legend <- legend }
+if ( !is.na(graph_opts[["legend"]]) & is.null(legend) ) { legend <- graph_opts[["legend"]] }
+
+# -------------------------------------------------------------------------
+
+if ( is.null(x) ) { x <- graph_opts[["x"]] }
+
+if ( is.null(y) ) { y <- graph_opts[["y"]] }
+
+if ( is.null(groups) ) { #
+  groups <- graph_opts[["groups"]] } else { groups <- x }
+
+# -------------------------------------------------------------------------
 
 if ( is.null(color_grps) ) {
 
@@ -112,24 +173,81 @@ if ( is.null(color_grps) ) {
       , "#FE6673" # red
     ))(length(plot_dt[[groups]]))
 
-} else { color_grps <- color_grps }
+  }
 
-xlab <- graph_opts[["xlab"]] %>%
-  gsub(pattern = " ", "~", .)
-xlab <- eval(expression(parse(text = xlab)))
-ylab <- graph_opts[["ylab"]] %>%
-  gsub(pattern = " ", "~", .)
-ylab <- eval(expression(parse(text = ylab)))
-glab <- graph_opts[["glab"]] %>%
-  gsub(pattern = " ", "~", .)
-glab <- eval(expression(parse(text = glab)))
-limits <- graph_opts[["limits"]] %>%
-  strsplit(., "x") %>% deframe() %>% as.numeric()
-brakes <- (limits[1]:limits[2]) * as.numeric(graph_opts[["brakes"]])
-sig <- graph_opts[["sig"]]
-error <- graph_opts[["error"]]
-legend <- graph_opts[["legend"]]
+# -------------------------------------------------------------------------
 
+  if ( is.null(xlab) ) { #
+
+    xlab <- graph_opts[["xlab"]] %>%
+      gsub(pattern = " ", "~", .)
+    xlab <- eval(expression(parse(text = xlab)))
+
+    }
+
+  if ( is.null(ylab) ) { #
+
+    ylab <- graph_opts[["ylab"]] %>%
+      gsub(pattern = " ", "~", .)
+    ylab <- eval(expression(parse(text = ylab)))
+
+    }
+
+  if ( is.null(glab) ) {
+
+    glab <- graph_opts[["glab"]] %>%
+      gsub(pattern = " ", "~", .)
+    glab <- eval(expression(parse(text = glab)))
+
+    }
+
+  if ( is.null(limits) ) {
+
+    limits <- graph_opts[["limits"]] %>%
+      strsplit(., "x") %>% deframe() %>% as.numeric()
+
+    }
+
+  if ( is.null(brakes) ) {
+
+    brakes <- as.numeric(graph_opts[["brakes"]])
+
+    }
+
+  if ( is.null(sig) ) {
+
+    sig <- graph_opts[["sig"]]
+
+    }
+
+  if ( is.null(error) ) {
+
+    error <- graph_opts[["error"]]
+
+  }
+
+  if ( is.null(legend) ) {
+
+    legend <- graph_opts[["legend"]]
+
+  }
+
+legend <- match.arg(legend, c("top", "left", "right", "bottom", "none"))
+
+# ------------------------------------------------------------------------
+
+print("for use ---------------------")
+print(type)
+print(x)
+print(y)
+print(xlab)
+print(ylab)
+print(glab)
+print(limits)
+print(brakes)
+print(sig)
+print(error)
+print(legend)
 
 # bar plot ----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -158,7 +276,7 @@ legend <- graph_opts[["legend"]]
       labs(x = xlab, y = ylab, fill = glab) +
 
       scale_y_continuous(limits = limits
-                         , breaks = brakes
+                         , breaks = (limits[1]:limits[2]) * brakes
                          , expand = c(0,0)) +
 
       scale_fill_manual(values = color_grps) +
@@ -174,7 +292,7 @@ legend <- graph_opts[["legend"]]
                 , vjust = -0.5
                 , hjust = 0.5
                 , angle = 0)
-    }
+  }
 
 # line plot ---------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -212,7 +330,7 @@ legend <- graph_opts[["legend"]]
                      ) ,  size = 1 ) +
 
       scale_y_continuous(limits = limits
-                         , breaks = brakes
+                         , breaks = (limits[1]:limits[2]) * brakes
                          , expand = c(0,0)) +
 
       scale_color_manual(values = color_grps) +
@@ -230,21 +348,9 @@ legend <- graph_opts[["legend"]]
 # apply functions----------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  barplot <- barplot(plot_dt
-                     , x
-                     , y
-                     , groups
-                     , xlab
-                     , ylab
-                     , glab
-                     , limits
-                     , brakes
-                     , sig
-                     , error
-                     , legend = "top"
-                     )
+  if ( type == "bar" ) {
 
-  lineplot <- lineplot(plot_dt
+    plot <- barplot(plot_dt
                        , x
                        , y
                        , groups
@@ -257,10 +363,23 @@ legend <- graph_opts[["legend"]]
                        , error
                        , legend = "top"
                        )
+    }
 
-  if ( type == "bar" ) { plot <- barplot }
+  if ( type == "line" ) {
 
-  if ( type == "line" ) { plot <- lineplot }
+    plot <- lineplot(plot_dt
+                     , x
+                     , y
+                     , groups
+                     , xlab
+                     , ylab
+                     , glab
+                     , limits
+                     , brakes
+                     , sig
+                     , error
+                     , legend = "top")
+    }
 
 # results -----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -275,6 +394,5 @@ legend <- graph_opts[["legend"]]
       legend.background = element_rect(fill = "transparent"),
       legend.box.background = element_rect(fill = "transparent"),
       legend.position = legend
-    )
-
+      )
 }

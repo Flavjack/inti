@@ -6,18 +6,18 @@
 \usage{
 plot_smr(
   data,
-  type = c("bar", "line"),
-  x,
-  y,
-  groups,
-  xlab,
-  ylab,
-  glab,
-  limits,
-  brakes,
-  sig,
-  error,
-  legend = "top"
+  type = NULL,
+  x = NULL,
+  y = NULL,
+  groups = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  glab = NULL,
+  limits = NULL,
+  brakes = NULL,
+  sig = NULL,
+  error = NULL,
+  legend = NULL
 )
 }
 \arguments{
@@ -73,7 +73,16 @@ gs <- as_sheets_id(url)
 (data <- gs \%>\%
     range_read("plot"))
 
-plot_smr(data, type = "bar")
+plot_smr(data)
+
+plot_smr(data
+         , type = "bar"
+         , limits = c(0,1000)
+         , brakes = 200
+         , sig = "sig"
+         , error = "ste"
+         , legend = "top"
+         )
 
 }
 
