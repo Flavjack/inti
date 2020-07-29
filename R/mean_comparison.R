@@ -6,7 +6,7 @@
 #' @param fb_smr Summary of the variables in the fieldbook.
 #' @param variable Model used for the experimental design.
 #' @param model_facts Comparison test (default = "SNK"). Others: "TUKEY" & "DUNCAN".
-#' @param treat_comp Significance level for the analysis (default = 0.05).
+#' @param comp_facts Significance level for the analysis (default = 0.05).
 #' @param test_comp Significance level for the analysis (default = 0.05).
 #' @param sig_level Significance level for the analysis (default = 0.05).
 #' @param graph_opts Include option in the table for graphs (default = FALSE)
@@ -64,7 +64,7 @@ mean_comparison <- function(data
                             , fb_smr
                             , variable
                             , model_facts
-                            , treat_comp
+                            , comp_facts
                             , test_comp = "SNK"
                             , sig_level = 0.05
                             , graph_opts = FALSE
@@ -146,14 +146,14 @@ mean_comparison <- function(data
 
   # -------------------------------------------------------------------------
 
-  treat_comp_opt <- c("treat_comp", "comparison", "compare", "comparar")
-  treat_comp_match <- names(arguments) %in% treat_comp_opt
-  treat_comp_name <- names(arguments)[treat_comp_match == TRUE]
+  comp_facts_opt <- c("comp_facts", "treat_comp", "comparison", "compare", "comparar")
+  comp_facts_match <- names(arguments) %in% comp_facts_opt
+  comp_facts_name <- names(arguments)[comp_facts_match == TRUE]
 
-  if ( length(treat_comp_name)  > 0  )  {
+  if ( length(comp_facts_name)  > 0  )  {
 
-    treat_comp <- arguments %>%
-      select({{treat_comp_name}}) %>%
+    comp_facts <- arguments %>%
+      select({{comp_facts_name}}) %>%
       pluck(1)
 
   }
@@ -188,13 +188,13 @@ mean_comparison <- function(data
   # test comparison ---------------------------------------------------------
   # -------------------------------------------------------------------------
 
-  treat_comp <- strsplit(treat_comp, ":") %>%
+  comp_facts <- strsplit(comp_facts, ":") %>%
     pluck(1) %>%
     gsub(" ", "", ., fixed = TRUE)
 
   mean_comparison <- function(model_aov
                               , variable
-                              , treat_comp
+                              , comp_facts
                               , sig_level
                               ){
 
@@ -202,7 +202,7 @@ mean_comparison <- function(data
 
       mc <- SNK.test(
         y = model_aov
-        , trt = treat_comp
+        , trt = comp_facts
         , alpha = sig_level
       )
 
@@ -210,7 +210,7 @@ mean_comparison <- function(data
 
       mc <- HSD.test(
         y = model_aov
-        , trt = treat_comp
+        , trt = comp_facts
         , alpha = sig_level
       )
 
@@ -218,7 +218,7 @@ mean_comparison <- function(data
 
       mc <- duncan.test(
         y = model_aov
-        , trt = treat_comp
+        , trt = comp_facts
         , alpha = sig_level
       )
     }
@@ -233,10 +233,10 @@ mean_comparison <- function(data
       select(!c(.data$q25, .data$q50, .data$q75)) %>%
       rename("sig" = .data$groups)
 
-    if ( length(treat_comp) <= 2 ) {
+    if ( length(comp_facts) <= 2 ) {
 
       tb_mc <- tb_mc %>%
-        separate(.data$treatments, {{treat_comp}}, sep = ":")
+        separate(.data$treatments, {{comp_facts}}, sep = ":")
 
     }
 
@@ -260,14 +260,14 @@ mean_comparison <- function(data
 
   comparison <- mean_comparison(model_aov
                                 , variable
-                                , treat_comp
+                                , comp_facts
                                 , sig_level
                                 )
 
   # graph table -------------------------------------------------------------
   # -------------------------------------------------------------------------
 
-  if ( length(treat_comp) >= 3 ){
+  if ( length(comp_facts) >= 3 ){
 
     x <- "treatments"
     groups <- "treatments"
@@ -278,21 +278,21 @@ mean_comparison <- function(data
 
   }
 
-  if ( length(treat_comp) == 2 ){
+  if ( length(comp_facts) == 2 ){
 
-    x <- treat_comp[1]
-    groups <- treat_comp[2]
-    colors <- gray.colors(n = factor_opt[treat_comp[2]]
+    x <- comp_facts[1]
+    groups <- comp_facts[2]
+    colors <- gray.colors(n = factor_opt[comp_facts[2]]
                           , start = 0.8
                           , end = 0.3) %>%
       tibble('{colors}' = .)
   }
 
-  if ( length(treat_comp) == 1 ){
+  if ( length(comp_facts) == 1 ){
 
-    x <- treat_comp[1]
-    groups <- treat_comp[1]
-    colors <- gray.colors(n = factor_opt[treat_comp[1]]
+    x <- comp_facts[1]
+    groups <- comp_facts[1]
+    colors <- gray.colors(n = factor_opt[comp_facts[1]]
                           , start = 0.8
                           , end = 0.3) %>%
       tibble('{colors}' = .)

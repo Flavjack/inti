@@ -19,6 +19,7 @@ library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
 library(bootstraplib)
+library(DT)
 
 gar_set_client(web_json = "www/yupanapro.json")
 
@@ -26,16 +27,6 @@ gar_set_client(web_json = "www/yupanapro.json")
 # -------------------------------------------------------------------------
 
 shinyServer(function(input, output, session) {
-
-# import data -----------------------------------------------------------
-# -------------------------------------------------------------------------
-
-  output$gsheet_preview <- renderUI({
-
-    gss <- tags$iframe(src = input$fieldbook_url,
-                       style="height:420px; width:100%; scrolling=no; zoom:1.2")
-
-  })
 
 # auth --------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -59,18 +50,49 @@ gs <- reactive({
   })
 
 # -------------------------------------------------------------------------
+
+fb_url <- reactive({
+
+  info <- gs4_get(gs())
+
+  url <-  info$spreadsheet_url
+
+  id <- info$sheets %>%
+    filter(name == input$fieldbook_gsheet) %>%
+    pluck("id")
+
+  fb_url <- paste(url, id, sep = "#gid=")
+
+})
+
 # -------------------------------------------------------------------------
 
+fbsm_url <- reactive({
 
-# module: data ------------------------------------------------------------
+  info <- gs4_get(gs())
+
+  url <- info$spreadsheet_url
+
+  id <- info$sheets %>%
+    filter(name == input$fbsmrvars_gsheet) %>%
+    pluck("id")
+
+  fbsm_url  <- paste(url, id, sep = "#gid=")
+
+})
+
+# Yupana: Fieldbook -------------------------------------------------------
 # -------------------------------------------------------------------------
 
 observe({
 
-  cat("--------------------------------------------------\n")
+  cat("Fieldbook --------------------------------------------------\n")
 
-  cat("fbsmr_gsheet")
-  print(input$fbsmr_gsheet)
+  cat("fieldbook_gsheet")
+  print(input$fieldbook_gsheet)
+
+  cat("fbsmrvars_gsheet")
+  print(input$fbsmrvars_gsheet)
 
   cat("last_factor")
   print(input$last_factor)
@@ -87,23 +109,42 @@ observe({
   cat("sig_level")
   print(input$sig_level)
 
+})
+
+# -------------------------------------------------------------------------
+
+output$fieldbook_preview <- renderUI({
+
+  tags$iframe(src = fb_url()
+              , style="height:450px; width:100%; scrolling=no; zoom:1.2")
 
 })
 
-
-# fieldbook summary -------------------------------------------------------
 # -------------------------------------------------------------------------
 
 fieldbook <- reactive({
 
-  if ( input$fbsmr_gsheet %in% sheet_names(gs()) & input$fbsmr_gsheet != "" ) {
+  if ( input$fieldbook_gsheet %in% sheet_names(gs()) ) {
 
     gs() %>%
-      range_read(input$fbsmr_gsheet)
+      range_read( input$fieldbook_gsheet )
 
     } else { fieldbook <- NULL }
 
   })
+
+fbsmrvar <- reactive({
+
+  if ( input$fbsmrvars_gsheet %in% sheet_names(gs()) ) {
+
+    gs() %>%
+      range_read( input$fbsmrvars_gsheet )
+
+  } else { fbsmrvar <- NULL }
+
+})
+
+# -------------------------------------------------------------------------
 
 output$last_factor <- renderUI({
 
@@ -121,6 +162,8 @@ output$last_factor <- renderUI({
     } else { print ("Insert sheet name") }
 
 })
+
+# -------------------------------------------------------------------------
 
 output$comp_facts <- renderUI({
 
@@ -141,6 +184,9 @@ output$comp_facts <- renderUI({
 
 })
 
+
+# -------------------------------------------------------------------------
+
 observeEvent(input$fbsmr_generate, {
 
   if ( !is.null(fieldbook()) && input$last_factor != "" )  {
@@ -154,11 +200,11 @@ observeEvent(input$fbsmr_generate, {
                              )
 
 
-  if ( !"fbsmr" %in% sheet_names(gs()) ) {
+  if ( !"fbsm" %in% sheet_names(gs()) ) {
 
-    sheet_add(ss = gs(), .after = input$fbsmr_gsheet, sheet = "fbsmr")
+    sheet_add(ss = gs(), .after = input$fieldbook_gsheet, sheet = "fbsm")
 
-    fbsmr %>% sheet_write(ss = gs(), sheet = "fbsmr")
+    fbsmr %>% sheet_write(ss = gs(), sheet = "fbsm")
 
   } else { print ("sheet already exist") }
 
@@ -167,12 +213,245 @@ observeEvent(input$fbsmr_generate, {
   })
 
 
-# fieldbook report --------------------------------------------------------
+# Yupana: Analysis --------------------------------------------------------
 # -------------------------------------------------------------------------
 
+observe({
+
+  cat("Analysis --------------------------------------------------\n")
+
+  cat("rpt_variable")
+  print(input$rpt_variable)
+
+  cat("rpt_dotplot_groups")
+  print(input$rpt_dotplot_groups)
+
+  cat("rpt_preview_opt")
+  print(input$rpt_preview_opt)
+
+})
+
+# -------------------------------------------------------------------------
+
+output$rpt_variable <- renderUI({
+
+  if ( !is.null(fbsmrvar()) ) {
+
+    rpt_variable_names <- fbsmrvar() %>%
+      filter(!type %in% c("factor", "factores", "factors")) %>%
+      select(variables) %>%
+      deframe()
+
+    selectInput(inputId = "rpt_variable"
+                , label = "Variable"
+                , choices = c("choose" = ""
+                              , rpt_variable_names)
+    )
+
+  } else { print ("Insert fieldbook summary") }
+
+})
+
+# -------------------------------------------------------------------------
+
+output$rpt_dotplot_groups <- renderUI({
+
+  if ( !is.null(fbsmrvar()) ) {
+
+    rpt_dotplot_groups_names <- fbsmrvar() %>%
+      filter(type %in% c("factor", "factores", "factors")) %>%
+      select(variables) %>%
+      deframe()
+
+    selectInput(inputId = "rpt_dotplot_groups"
+                , label = "Dotplot"
+                , choices = c("choose" = ""
+                              , rpt_dotplot_groups_names)
+    )
+
+  } else { print ("Insert fieldbook summary") }
+
+})
+
+# -------------------------------------------------------------------------
+
+report <- reactive({
+
+  if ( !is.null( fieldbook() ) & !is.null( fbsmrvar() ) )  {
+
+  rslt <- fieldbook_report(data = fieldbook()
+                           , fb_smr = fbsmrvar()
+                           , variable = input$rpt_variable
+                           , dotplot_groups = input$rpt_dotplot_groups
+                           , model_diag = TRUE
+                           )
+  }
+
+})
+
+output$anova <- renderPrint({ summary(report()$anova) })
+
+output$dotplot <- renderPlot({ report()$dotplot })
+
+# -------------------------------------------------------------------------
+
+mean_comp <- reactive({
+
+  if ( !is.null( fieldbook() ) & !is.null( fbsmrvar() ) )  {
+
+    mc <- mean_comparison(data = fieldbook()
+                          , fb_smr = fbsmrvar()
+                          , variable = input$rpt_variable
+                          , graph_opts = T
+                          )
+  }
+
+})
+
+output$mc_table <- DT::renderDataTable(server = FALSE, {
+
+  mean_comp()$comparison %>%
+    select(!c("{colors}", "{arguments}", "{values}")) %>%
+    inti::web_table()
+
+})
+
+output$mc_stats <- renderTable({
+
+  mean_comp()$stats %>%
+    select(!c(name.t, MSerror, Df))
+
+})
+
+# export meancomparison table ---------------------------------------------
+
+observeEvent(input$export_mctab, {
+
+  if ( !input$rpt_variable %in% sheet_names(gs()) ) {
+
+    sheet_add(ss = gs()
+              , .after = input$rpt_fbsmr_gsheet
+              , sheet = input$rpt_variable)
+
+    mean_comp()$comparison %>% sheet_write(ss = gs(), sheet = input$rpt_variable)
+
+  } else { print ("sheet already exist") }
 
 
+})
 
+
+# -------------------------------------------------------------------------
+
+output$rpt_preview <- renderUI({
+
+  if ( input$rpt_preview_opt == "Gsheet" ) {
+
+    tagList(
+
+      tags$iframe(src = fbsm_url(),
+            style="height:450px; width:100%; scrolling=no; zoom:1.2")
+
+    )
+
+  } else if ( input$rpt_preview_opt == "Model" ) {
+
+    tagList(
+
+      fluidRow(
+
+
+      column(width = 5,
+
+             HTML('<h4><strong>Analysis of Variance</strong></h4>'),
+
+             verbatimTextOutput("anova"),
+
+             br(),
+
+             HTML('<h4><strong>Statistics</strong></h4>'),
+
+             tableOutput("mc_stats")
+
+      ),
+
+      column(width = 7,
+
+             HTML('<h4><strong>Mean Comparison</strong></h4>'),
+
+               DT::dataTableOutput("mc_table"),
+
+             )
+      )
+
+    )
+
+  } else if ( input$rpt_preview_opt == "Plots" ) {
+
+    tagList(
+
+      fluidRow(
+
+      column(width = 6,
+
+             HTML('<h4><strong>Model Diagnostic</strong></h4>'),
+
+             verbatimTextOutput("anova")
+
+      ),
+
+      column(width = 6,
+
+             HTML('<h4><strong>Variable Distribution</strong></h4>'),
+
+             plotOutput("dotplot", width =  "auto", height = "500px")
+
+      )
+
+      )
+
+    )
+
+  }
+
+})
+
+# Yupana: Graphics --------------------------------------------------------
+# -------------------------------------------------------------------------
+
+output$graph_preview <- renderUI({
+
+  if ( input$grp_preview_opt == "Gsheet" ) {
+
+    tagList(
+
+      tags$iframe(src = fbsm_url(),
+                  style="height:450px; width:100%; scrolling=no; zoom:1.2")
+
+    )
+
+  } else if ( input$rp_preview_opt == "Plots" ) {
+
+    tagList(
+
+      fluidRow(
+
+        shinydashboard::box(title = "Figure output"
+                            , width = 12
+                            ,
+
+               print("plot here!!")
+
+        )
+
+
+      )
+
+    )
+
+  }
+
+})
 
 
 
@@ -181,3 +460,5 @@ observeEvent(input$fbsmr_generate, {
 # -------------------------------------------------------------------------
 
 })
+
+
