@@ -148,7 +148,7 @@ observeEvent(input$fbsmr_generate, {
   fbsmr <- fieldbook_summary(data = fieldbook()
                              , last_factor = input$last_factor
                              , model_facts = input$model_facts
-                             , treat_comp = paste0(input$comp_facts, collapse = ":")
+                             , comp_facts = paste0(input$comp_facts, collapse = ":")
                              , test_comp = input$test_comp
                              , sig_level = input$sig_level
                              )

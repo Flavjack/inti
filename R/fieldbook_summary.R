@@ -5,7 +5,7 @@
 #' @param data Field book data.
 #' @param last_factor The last factor in your fieldbook.
 #' @param model_facts Model used for the experimental design.
-#' @param treat_comp Factors to compare. See details.
+#' @param comp_facts Factors to compare. See details.
 #' @param test_comp Comparison test (default = "SNK"). Others: "TUKEY" & "DUNCAN".
 #' @param sig_level Significance level for the analysis (default = 0.05).
 #'
@@ -42,7 +42,7 @@
 #' smrfb <- fieldbook_summary(data
 #'                  , last_factor = "dosis"
 #'                  , model_facts = "bloque + cultivar*fuenteN*dosis"
-#'                  , treat_comp = "cultivar:fuenteN:dosis"
+#'                  , comp_facts = "cultivar:fuenteN:dosis"
 #'                  )
 #' smrfb
 #'
@@ -55,7 +55,7 @@
 fieldbook_summary <- function(data
                              , last_factor
                              , model_facts
-                             , treat_comp
+                             , comp_facts
                              , test_comp = "SNK"
                              , sig_level = 0.05
                              ) {
@@ -89,7 +89,7 @@ fieldbook_summary <- function(data
       NAs = sum(is.na(values)),
       ) %>%
     mutate(model_facts = {{model_facts}} ) %>%
-    mutate(treat_comp = {{treat_comp}}) %>%
+    mutate(comp_facts = {{comp_facts}}) %>%
     mutate(test_comp =  {{test_comp}} ) %>%
     mutate(sig_level = {{sig_level}} ) %>%
     mutate(type = "numeric", .after = "variables")

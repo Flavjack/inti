@@ -8,7 +8,7 @@ fieldbook_summary(
   data,
   last_factor,
   model_facts,
-  treat_comp,
+  comp_facts,
   test_comp = "SNK",
   sig_level = 0.05
 )
@@ -20,7 +20,7 @@ fieldbook_summary(
 
 \item{model_facts}{Model used for the experimental design.}
 
-\item{treat_comp}{Factors to compare. See details.}
+\item{comp_facts}{Factors to compare. See details.}
 
 \item{test_comp}{Comparison test (default = "SNK"). Others: "TUKEY" & "DUNCAN".}
 
@@ -55,7 +55,7 @@ gs <- as_sheets_id(url)
 smrfb <- fieldbook_summary(data
                  , last_factor = "dosis"
                  , model_facts = "bloque + cultivar*fuenteN*dosis"
-                 , treat_comp = "cultivar:fuenteN:dosis"
+                 , comp_facts = "cultivar:fuenteN:dosis"
                  )
 smrfb
 
