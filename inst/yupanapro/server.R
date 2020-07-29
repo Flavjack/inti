@@ -32,7 +32,7 @@ shinyServer(function(input, output, session) {
 
   output$gsheet_preview <- renderUI({
 
-    gss <- tags$iframe(src = input$gsheet_url,
+    gss <- tags$iframe(src = input$fieldbook_url,
                        style="height:420px; width:100%; scrolling=no; zoom:1.2")
 
   })
@@ -46,12 +46,15 @@ access_token <- callModule(googleAuth_js, "js_token")
 
 gs <- reactive({
 
-  gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
-           , cache = FALSE
-           , use_oob = TRUE
-           , token = access_token())
+  gs4_auth(T)
 
-  as_sheets_id(input$gsheet_url)
+  # gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
+  #          , cache = FALSE
+  #          , use_oob = TRUE
+  #          , token = access_token()
+  #          )
+
+  as_sheets_id(input$fieldbook_url)
 
   })
 
@@ -66,29 +69,115 @@ observe({
 
   cat("--------------------------------------------------\n")
 
-  cat("Factores")
-  print(input$nFactors)
+  cat("fbsmr_gsheet")
+  print(input$fbsmr_gsheet)
 
-  cat("Design type")
-  print(input$type)
+  cat("last_factor")
+  print(input$last_factor)
 
-  cat("Replication")
-  print(input$rep)
+  cat("model_facts")
+  print(input$model_facts)
 
-  cat("Plot digits")
-  print(input$serie)
+  cat("comp_facts")
+  print(input$comp_facts)
 
-  cat("Seed")
-  print(input$seed)
+  cat("test_comp")
+  print(input$test_comp)
 
-  cat("Design sheet")
-  print(input$gsheet_name)
+  cat("sig_level")
+  print(input$sig_level)
 
-  cat("Variable sheet")
-  print(input$varlist_name)
 
 })
 
 
+# fieldbook summary -------------------------------------------------------
+# -------------------------------------------------------------------------
+
+fieldbook <- reactive({
+
+  if ( input$fbsmr_gsheet %in% sheet_names(gs()) & input$fbsmr_gsheet != "" ) {
+
+    gs() %>%
+      range_read(input$fbsmr_gsheet)
+
+    } else { fieldbook <- NULL }
+
+  })
+
+output$last_factor <- renderUI({
+
+  if ( !is.null(fieldbook()) ) {
+
+    fieldbook_names <- fieldbook() %>%
+      names()
+
+    selectInput(inputId = "last_factor"
+                , label = "Last factor"
+                , choices = c("choose" = ""
+                              , fieldbook_names)
+                )
+
+    } else { print ("Insert sheet name") }
+
+})
+
+output$comp_facts <- renderUI({
+
+  if ( !is.null(fieldbook()) && input$last_factor != ""  ) {
+
+  fieldbook_fctr_names <- fieldbook() %>%
+    select( 1:input$last_factor ) %>%
+    names()
+
+  selectInput(inputId = "comp_facts"
+              , label = "Comparison factors"
+              , multiple = TRUE
+              , choices = c("choose" = ""
+                            , fieldbook_fctr_names)
+              )
+
+  } else { print("Insert last factor") }
+
+})
+
+observeEvent(input$fbsmr_generate, {
+
+  if ( !is.null(fieldbook()) && input$last_factor != "" )  {
+
+  fbsmr <- fieldbook_summary(data = fieldbook()
+                             , last_factor = input$last_factor
+                             , model_facts = input$model_facts
+                             , treat_comp = paste0(input$comp_facts, collapse = ":")
+                             , test_comp = input$test_comp
+                             , sig_level = input$sig_level
+                             )
+
+
+  if ( !"fbsmr" %in% sheet_names(gs()) ) {
+
+    sheet_add(ss = gs(), .after = input$fbsmr_gsheet, sheet = "fbsmr")
+
+    fbsmr %>% sheet_write(ss = gs(), sheet = "fbsmr")
+
+  } else { print ("sheet already exist") }
+
+  }
+
+  })
+
+
+# fieldbook report --------------------------------------------------------
+# -------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+# end yupana --------------------------------------------------------------
+# -------------------------------------------------------------------------
 
 })

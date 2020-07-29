@@ -1,7 +1,7 @@
 # tarpuy ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-# https://flavjack.shinyapps.io/tarpuy/
+# https://flavjack.shinyapps.io/yupanapro/
 
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -33,20 +33,5 @@ rm(cran, git, installed)
 
 # References .:
 
-# https://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#gar_shiny_-functions-example
-
-# https://github.com/MarkEdmondson1234/googleAuthR/issues/169
-
-# https://code.markedmondson.me/googleAuthR/reference/with_shiny.html
-
-# https://googlesheets4.tidyverse.org/reference/sheets_auth.html
-
-# https://console.cloud.google.com/apis/credentials
-
 # https://shiny.rstudio.com/tutorial/written-tutorial/lesson3/
 
-# http://xip.io/
-
-# https://politicadeprivacidadplantilla.com/
-
-# https://github.com/MarkEdmondson1234/googleAuthR/issues/111

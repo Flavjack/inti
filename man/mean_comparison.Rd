@@ -63,7 +63,7 @@ gs <- as_sheets_id(url)
 
 mc <- mean_comparison(data
                      , fb_smr = fb_smr
-                     , variable = "aftotal"
+                     , variable = "sbulbo"
                      , graph_opts = T
                      )
 

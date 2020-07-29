@@ -48,7 +48,7 @@
 #'
 #' mc <- mean_comparison(data
 #'                      , fb_smr = fb_smr
-#'                      , variable = "aftotal"
+#'                      , variable = "sbulbo"
 #'                      , graph_opts = T
 #'                      )
 #'
@@ -299,24 +299,26 @@ mean_comparison <- function(data
 
   }
 
-  if ( min(comparison$table$min) >= 0 &  max(comparison$table$max) >= 0 ) {
+  min_value <- min(comparison$table$min)
+  max_value <- max(comparison$table$max)
 
-    limits <- paste(0, round(max(comparison$table$max)*1.10),  sep = "x")
-    brakes <- abs(round(max(comparison$table$max)*1.10))/5
+  if ( min_value >= 0 & max_value > 0 ) {
 
-  } else if ( min(comparison$table$min) <= 0 &  max(comparison$table$max) >= 0 ) {
+    limits <- paste(0, round(max_value*1.2, 1),  sep = "x")
+    brakes <- abs(round(max_value*1.2, 1))/5
 
-    limits <- paste(round(min(comparison$table$min)*1.10)
-                    , round(max(comparison$table$max)*1.10),  sep = "x")
-    brakes <- abs(round(max(comparison$table$max)*1.10))/5
+  } else if ( min_value < 0 &  max_value > 0 ) {
 
-  } else if ( min(comparison$table$min) <= 0 &  max(comparison$table$max) <= 0 ) {
+    limits <- paste(round(min_value*1.2, 1)
+                    , round(max_value*1.2, 1),  sep = "x")
+    brakes <- abs(round(max_value*1.2, 1))/5
 
-    limits <- paste(round(min(comparison$table$min))*1.10, 0,  sep = "x")
-    brakes <- abs(round(max(comparison$table$min)*1.10))/5
+  } else if ( min_value < 0 &  max_value <= 0 ) {
+
+    limits <- paste( round(min_value*1.2, 1), 0,  sep = "x")
+    brakes <- abs(round(min_value*1.2, 1))/5
 
   }
-
 
   if ( graph_opts == TRUE ) {
 

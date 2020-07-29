@@ -76,6 +76,9 @@ plot_smr <- function(data
                      , legend = NULL
                      ) {
 
+  # type <- x <- y <- groups <- xlab <- ylab <- NULL
+  # glab <- limits <- brakes <- sig <- error <- legend <- NULL
+
 # data --------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
@@ -245,7 +248,7 @@ legend <- match.arg(legend, c("top", "left", "right", "bottom", "none"))
       labs(x = xlab, y = ylab, fill = glab) +
 
       scale_y_continuous(limits = limits
-                         , breaks = (limits[1]:limits[2]) * brakes
+                         , breaks = ((limits[1]*20):(limits[2]*20)) * brakes
                          , expand = c(0,0)) +
 
       scale_fill_manual(values = color_grps) +
@@ -299,7 +302,7 @@ legend <- match.arg(legend, c("top", "left", "right", "bottom", "none"))
                      ) ,  size = 1 ) +
 
       scale_y_continuous(limits = limits
-                         , breaks = (limits[1]:limits[2]) * brakes
+                         , breaks = ((limits[1]*20):(limits[2]*20)) * brakes
                          , expand = c(0,0)) +
 
       scale_color_manual(values = color_grps) +

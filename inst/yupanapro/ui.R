@@ -28,7 +28,7 @@ bs_theme_new(version = "4+3", bootswatch = NULL)
 navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/">Yupana</a></strong></h3>')
            , windowTitle = "Yupana 2.0"
            , theme = "bootstrap_sandstone.css"
-           , selected = "Data",
+           , selected = "Fieldbook",
 
            tabPanel("",
 
@@ -48,60 +48,47 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
            ),
 
-           tabPanel("Data",
+           tabPanel("Fieldbook",
 
-# data init ---------------------------------------------------------------
+# Fieldbook summary -------------------------------------------------------
 # -------------------------------------------------------------------------
 
                     fluidRow(
 
                       column(2,
 
-                             numericInput(
-                               inputId = "nFactors"
-                               , label = "Factors"
-                               , value = 1
-                               , max = 5
-                               , min = 1
-                             ),
+                             textInput(inputId = "fbsmr_gsheet"
+                                       , label = "Fieldbook sheet"
+                                       , value = ""
+                                       , placeholder = "Field book data"
+                                       ),
 
-                             uiOutput("design_type"),
+                             uiOutput("last_factor"),
 
-                             numericInput(inputId = "rep"
-                                          , label = "Replications"
-                                          , value = 2
-                                          , min = 2
-                             ),
+                             textInput(inputId = "model_facts"
+                                       , label = "Model factors"
+                                       , value = ""
+                                       , placeholder = "block + factor1*factor2"
+                                       ),
 
-                             numericInput(inputId = "serie"
-                                          , label = "Plot digits"
-                                          , value = 2
-                                          , max = 3
-                                          , min = 1
-                             ),
+                             uiOutput("comp_facts"),
 
-                             numericInput(inputId = "seed"
-                                          , label = "Seed"
-                                          , value = 0
+                             selectInput(inputId = "test_comp"
+                                         , label = "Mean comparison test"
+                                         , choices = c("SNK", "TUKEY", "DUNCAN")
+                                         ),
+
+                             numericInput(inputId = "sig_level"
+                                          , label = "Significance level"
+                                          , value = 0.05
+                                          , step = 0.01
                                           , min = 0
-                             ),
+                                          ),
 
-                             textInput(inputId = "gsheet_name"
-                                       , label = "Field book sheet"
-                                       , value = ""
-                                       , placeholder = "Design info"
-                             ),
-
-                             textInput(inputId = "varlist_name"
-                                       , label = "Variables sheet"
-                                       , value = ""
-                                       , placeholder = "Optional"
-                             ),
-
-                             actionButton(inputId = "export_fb"
-                                          , label = "Export"
+                             actionButton(inputId = "fbsmr_generate"
+                                          , label = "Generate"
                                           , class = "btn btn-warning"
-                             )
+                                          )
 
                       ),
 
@@ -109,10 +96,10 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                              column(width = 12,
 
-                                    textInput(inputId = "gsheet_url",
+                                    textInput(inputId = "fieldbook_url",
                                               label = NULL,
                                               width = "100%",
-                                              value = ""
+                                              value = "https://docs.google.com/spreadsheets/d/15uwCgQRtR01B3FJaZBE8t_0bOC_8Bbey9ccwVlZH0jg/edit#gid=56711214"
                                               , placeholder = "Insert google sheet url"
                                     )
 
