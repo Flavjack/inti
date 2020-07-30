@@ -19,7 +19,7 @@ library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
 library(bootstraplib)
-library(DT)
+library(shinydashboard)
 
 gar_set_client(web_json = "www/yupanapro.json")
 
@@ -167,7 +167,7 @@ output$last_factor <- renderUI({
 
 output$comp_facts <- renderUI({
 
-  if ( !is.null(fieldbook()) && input$last_factor != ""  ) {
+  if ( !is.null( fieldbook() ) && input$last_factor != ""  ) {
 
   fieldbook_fctr_names <- fieldbook() %>%
     select( 1:input$last_factor ) %>%
@@ -189,7 +189,7 @@ output$comp_facts <- renderUI({
 
 observeEvent(input$fbsmr_generate, {
 
-  if ( !is.null(fieldbook()) && input$last_factor != "" )  {
+  if ( !is.null( fieldbook() ) && input$last_factor != "" )  {
 
   fbsmr <- fieldbook_summary(data = fieldbook()
                              , last_factor = input$last_factor
@@ -211,7 +211,6 @@ observeEvent(input$fbsmr_generate, {
   }
 
   })
-
 
 # Yupana: Analysis --------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -235,7 +234,7 @@ observe({
 
 output$rpt_variable <- renderUI({
 
-  if ( !is.null(fbsmrvar()) ) {
+  if ( !is.null( fbsmrvar() ) ) {
 
     rpt_variable_names <- fbsmrvar() %>%
       filter(!type %in% c("factor", "factores", "factors")) %>%
@@ -256,7 +255,7 @@ output$rpt_variable <- renderUI({
 
 output$rpt_dotplot_groups <- renderUI({
 
-  if ( !is.null(fbsmrvar()) ) {
+  if ( !is.null( fbsmrvar() ) ) {
 
     rpt_dotplot_groups_names <- fbsmrvar() %>%
       filter(type %in% c("factor", "factores", "factors")) %>%
@@ -310,7 +309,7 @@ mean_comp <- reactive({
 
 output$mc_table <- DT::renderDataTable(server = FALSE, {
 
-  mean_comp()$comparison %>%
+  mc <- mean_comp()$comparison %>%
     select(!c("{colors}", "{arguments}", "{values}")) %>%
     inti::web_table()
 
@@ -318,7 +317,7 @@ output$mc_table <- DT::renderDataTable(server = FALSE, {
 
 output$mc_stats <- renderTable({
 
-  mean_comp()$stats %>%
+  mc <- mean_comp()$stats %>%
     select(!c(name.t, MSerror, Df))
 
 })
@@ -330,7 +329,7 @@ observeEvent(input$export_mctab, {
   if ( !input$rpt_variable %in% sheet_names(gs()) ) {
 
     sheet_add(ss = gs()
-              , .after = input$rpt_fbsmr_gsheet
+              , .after = input$fbsmrvars_gsheet
               , sheet = input$rpt_variable)
 
     mean_comp()$comparison %>% sheet_write(ss = gs(), sheet = input$rpt_variable)
@@ -348,6 +347,8 @@ output$rpt_preview <- renderUI({
   if ( input$rpt_preview_opt == "Gsheet" ) {
 
     tagList(
+
+
 
       tags$iframe(src = fbsm_url(),
             style="height:450px; width:100%; scrolling=no; zoom:1.2")
@@ -380,6 +381,13 @@ output$rpt_preview <- renderUI({
              HTML('<h4><strong>Mean Comparison</strong></h4>'),
 
                DT::dataTableOutput("mc_table"),
+
+             br(),
+
+             actionButton(inputId = "export_mctab"
+                          , label = "Export table"
+                          , class = "btn btn-warning"
+                          )
 
              )
       )
@@ -419,42 +427,99 @@ output$rpt_preview <- renderUI({
 # Yupana: Graphics --------------------------------------------------------
 # -------------------------------------------------------------------------
 
+observe({
+
+  cat("Analysis --------------------------------------------------\n")
+
+  cat("rpt_variable")
+  print(input$rpt_variable)
+
+  cat("rpt_dotplot_groups")
+  print(input$rpt_dotplot_groups)
+
+  cat("rpt_preview_opt")
+  print(input$rpt_preview_opt)
+
+})
+
+
+# -------------------------------------------------------------------------
+
+output$graph_sheets <- renderUI({
+
+  sheet_names <- sheet_names(gs())
+
+  selectInput(inputId = "graph_sheets"
+              , label = "Graph sheet"
+              , choices = c(sheet_names)
+    )
+
+})
+
+
+# -------------------------------------------------------------------------
+
+plot_url <- reactive({
+
+  info <- gs4_get(gs())
+
+  url <- info$spreadsheet_url
+
+  id <- info$sheets %>%
+    filter(name == input$graph_sheets) %>%
+    pluck("id")
+
+  plot_url  <- paste(url, id, sep = "#gid=")
+
+})
+
+
+# -------------------------------------------------------------------------
+
+plotgr <- NULL
+makeReactiveBinding("plotgr")
+
+observeEvent(input$graph_create, {
+
+  if ( input$graph_sheets %in% sheet_names(gs()) ) {
+
+    plot_table <- gs() %>%
+      range_read( input$graph_sheets )
+
+  }
+
+  plotgr <<- plot_smr(plot_table)
+
+})
+
+# -------------------------------------------------------------------------
+
+output$plotgr <- renderPlot({ plotgr })
+
+# -------------------------------------------------------------------------
+
 output$graph_preview <- renderUI({
 
   if ( input$grp_preview_opt == "Gsheet" ) {
 
     tagList(
 
-      tags$iframe(src = fbsm_url(),
+      tags$iframe(src = plot_url(),
                   style="height:450px; width:100%; scrolling=no; zoom:1.2")
 
     )
 
-  } else if ( input$rp_preview_opt == "Plots" ) {
+  } else if ( input$grp_preview_opt == "Plots" ) {
 
     tagList(
 
-      fluidRow(
-
-        shinydashboard::box(title = "Figure output"
-                            , width = 12
-                            ,
-
-               print("plot here!!")
-
-        )
-
-
-      )
+      plotOutput("plotgr", width =  "auto", height = "500px")
 
     )
 
   }
 
 })
-
-
-
 
 # end yupana --------------------------------------------------------------
 # -------------------------------------------------------------------------

@@ -29,7 +29,7 @@ bs_theme_new(version = "4+3", bootswatch = NULL)
 navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/">Yupana</a></strong></h3>')
            , windowTitle = "Yupana 2.0"
            , theme = "bootstrap_sandstone.css"
-           , selected = "Analysis",
+           , selected = "Intro",
 
            tabPanel("",
 
@@ -86,7 +86,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                  textInput(inputId = "fieldbook_url",
                                            label = NULL
                                            , width = "100%"
-                                           , value = "https://docs.google.com/spreadsheets/d/15uwCgQRtR01B3FJaZBE8t_0bOC_8Bbey9ccwVlZH0jg/edit#gid=56711214"
+                                           , value = "https://docs.google.com/spreadsheets/d/15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346"
                                            , placeholder = "Insert google sheet link"
                                  )
 
@@ -98,7 +98,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                  textInput(inputId = "fieldbook_gsheet"
                                            , label = "Fieldbook sheet"
-                                           , value = "fb"
+                                           , value = "wue"
                                            , placeholder = "Fieldbook data"
                                  ),
 
@@ -199,15 +199,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                       column(width = 10,
 
-                             shinydashboard::box(
-
-                               status = "danger",
-                               solidHeader = T,
-                               width = 12,
-
                                htmlOutput("fieldbook_preview"),
-
-                             )
 
                       ),
 
@@ -236,12 +228,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                               uiOutput("rpt_variable"),
 
-                              uiOutput("rpt_dotplot_groups"),
-
-                              actionButton(inputId = "export_mctab"
-                                           , label = "Export table"
-                                           , class = "btn btn-warning"
-                              )
+                              uiOutput("rpt_dotplot_groups")
 
                               ),
 
@@ -282,37 +269,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                              ),
 
-                             textInput(inputId = "grp_gsheet"
-                                       , label = "Graph sheet"
-                                       , value = "plot"
-                                       , placeholder = "Table for graph"
-                             ),
-
-
-                             radioButtons(inputId = "grp_type"
-                                          , label = "Graph type"
-                                          , choices = c("bar"
-                                                        , "line"
-                                                        )
-                                          , inline = TRUE
-
-                             ),
-
-                             uiOutput("grp_xvar"),
-
-                             uiOutput("grp_ybar"),
-
-                             uiOutput("grp_gvar"),
-
-                             selectInput(inputId = "grp_legend"
-                                         , label = "Legend position"
-                                         , choices = c("top"
-                                                       , "left"
-                                                       , "right"
-                                                       , "bottom"
-                                                       , "none"
-                                                       )
-                             ),
+                             uiOutput("graph_sheets"),
 
                              actionButton(inputId = "graph_create"
                                           , label = "Create Graph"

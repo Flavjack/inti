@@ -11,10 +11,12 @@ cran <- c("shiny"
          , "tidyverse"
          , "googlesheets4"
          , "googleAuthR"
+         , "shinydashboard"
          )
 
 git <- c(
   "Flavjack/inti" # Tools and Statistical Procedures in Plant Science
+  , "rstudio/bootstraplib"
   )
 
 installed <- c(cran, sub(".*/", "", git)) %in% rownames(installed.packages())
