@@ -253,9 +253,9 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                    HTML('
 
-                                   1. Antes de iniciar a usar yupana, es bueno que guardes una copia de seguridad de tú trabajo.
-                                   Para eso debes ir a tú hoja de cálculo: Historial de versiones > Asignar un nombre a la
-                                   versión actual. Con eso podras tener multiples copias de tu base de datos, sin crear
+                                   1. Antes de iniciar a usar yupana, es recomendable que crees una copia de seguridad de tú trabajo.
+                                   Para eso debes ir a tú hoja de cálculo: Archivo > Historial de versiones > Asignar un nombre a la
+                                   versión actual. De esa manera puedes crear multiples copias de tu base de datos, sin crear
                                    multiples documentos.
 
                                    2. Es recomendable solo tener una libro de campo "fieldbook" por cada experimento.
@@ -385,7 +385,12 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                               uiOutput("rpt_variable"),
 
-                              uiOutput("rpt_dotplot_groups")
+                              uiOutput("rpt_dotplot_groups"),
+
+                              actionButton(inputId = "model_generate"
+                                           , label = "Refresh"
+                                           , class = "btn btn-success"
+                              )
 
                               ),
 
@@ -429,8 +434,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                              uiOutput("graph_sheets"),
 
                              actionButton(inputId = "graph_create"
-                                          , label = "Create Graph"
-                                          , class = "btn btn-warning"
+                                          , label = "Create"
+                                          , class = "btn btn-info"
                              )
 
                       ),

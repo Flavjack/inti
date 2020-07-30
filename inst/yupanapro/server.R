@@ -37,12 +37,17 @@ access_token <- callModule(googleAuth_js, "js_token")
 
 gs <- reactive({
 
-  gs4_auth(T)
+  if(Sys.getenv('SHINY_PORT') == "") {
 
-  # gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
-  #          , cache = FALSE
-  #          , use_oob = TRUE
-  #          , token = access_token())
+    gs4_auth(T)
+
+  } else {
+
+    gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
+             , cache = FALSE
+             , use_oob = TRUE
+             , token = access_token())
+    }
 
   as_sheets_id(input$fieldbook_url)
 
@@ -132,14 +137,19 @@ fieldbook <- reactive({
 
   })
 
-fbsmrvar <- reactive({
+# make reactive!
+
+fbsmrvar <- NULL
+makeReactiveBinding("fbsmrvar")
+
+observeEvent(input$model_generate, {
 
   if ( input$fbsmrvars_gsheet %in% sheet_names(gs()) ) {
 
-    gs() %>%
+    fbsmrvar <<- gs() %>%
       range_read( input$fbsmrvars_gsheet )
 
-  } else { fbsmrvar <- NULL }
+  } else { fbsmrvar <<- NULL }
 
 })
 
@@ -233,9 +243,9 @@ observe({
 
 output$rpt_variable <- renderUI({
 
-  if ( !is.null( fbsmrvar() ) ) {
+  if ( !is.null( fbsmrvar ) ) {
 
-    rpt_variable_names <- fbsmrvar() %>%
+    rpt_variable_names <- fbsmrvar %>%
       filter(!type %in% c("factor", "factores", "factors")) %>%
       select(variables) %>%
       deframe()
@@ -254,9 +264,9 @@ output$rpt_variable <- renderUI({
 
 output$rpt_dotplot_groups <- renderUI({
 
-  if ( !is.null( fbsmrvar() ) ) {
+  if ( !is.null( fbsmrvar ) ) {
 
-    rpt_dotplot_groups_names <- fbsmrvar() %>%
+    rpt_dotplot_groups_names <- fbsmrvar %>%
       filter(type %in% c("factor", "factores", "factors")) %>%
       select(variables) %>%
       deframe()
@@ -275,10 +285,10 @@ output$rpt_dotplot_groups <- renderUI({
 
 report <- reactive({
 
-  if ( !is.null( fieldbook() ) & !is.null( fbsmrvar() ) )  {
+  if ( !is.null( fieldbook() ) & !is.null( fbsmrvar ) )  {
 
   rslt <- fieldbook_report(data = fieldbook()
-                           , fb_smr = fbsmrvar()
+                           , fb_smr = fbsmrvar
                            , variable = input$rpt_variable
                            , dotplot_groups = input$rpt_dotplot_groups
                            , model_diag = FALSE
@@ -307,10 +317,10 @@ output$dotplot <- renderPlot({ report()$dotplot })
 
 mean_comp <- reactive({
 
-  if ( !is.null( fieldbook() ) & !is.null( fbsmrvar() ) )  {
+  if ( !is.null( fieldbook() ) & !is.null( fbsmrvar ) )  {
 
     mc <- mean_comparison(data = fieldbook()
-                          , fb_smr = fbsmrvar()
+                          , fb_smr = fbsmrvar
                           , variable = input$rpt_variable
                           , graph_opts = T
                           )
@@ -329,7 +339,8 @@ output$mc_table <- DT::renderDataTable(server = FALSE, {
 output$mc_stats <- renderTable({
 
   mc <- mean_comp()$stats %>%
-    select(!c(name.t, MSerror, Df))
+    select(!c(name.t, MSerror, Df)) %>%
+    select(!intersect(names(.), c("StudentizedRange", "MSD")))
 
 })
 
@@ -358,8 +369,6 @@ output$rpt_preview <- renderUI({
   if ( input$rpt_preview_opt == "Gsheet" ) {
 
     tagList(
-
-
 
       tags$iframe(src = fbsm_url(),
             style="height:450px; width:100%; scrolling=no; zoom:1.2")
@@ -453,12 +462,13 @@ observe({
 
 })
 
-
 # -------------------------------------------------------------------------
 
 output$graph_sheets <- renderUI({
 
   sheet_names <- sheet_names(gs())
+  sheet_exclude <- c(input$fieldbook_gsheet, input$fbsmrvars_gsheet)
+  sheet_names <- sheet_names[!(sheet_names %in% sheet_exclude)]
 
   selectInput(inputId = "graph_sheets"
               , label = "Graph sheet"
@@ -466,7 +476,6 @@ output$graph_sheets <- renderUI({
     )
 
 })
-
 
 # -------------------------------------------------------------------------
 
@@ -477,7 +486,7 @@ plot_url <- reactive({
   url <- info$spreadsheet_url
 
   id <- info$sheets %>%
-    filter(name == input$graph_sheets) %>%
+    filter(name %in% input$graph_sheets) %>%
     pluck("id")
 
   plot_url  <- paste(url, id, sep = "#gid=")

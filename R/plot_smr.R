@@ -127,7 +127,7 @@ if ( length(arg_dt) >= 2 ) {
 
   if ( !is.null(graph_opts[["sig"]]) & !is.null(sig) ) {
     sig <- sig
-  } else if ( is.null(graph_opts[["sig"]]) ) {
+  } else if ( is.null(graph_opts[["sig"]]) | graph_opts[["sig"]] == "" ) {
       sig <- sig
       } else if ( !is.null(graph_opts[["sig"]]) ) { sig <- graph_opts[["sig"]] }
 
