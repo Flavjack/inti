@@ -28,6 +28,7 @@ bs_theme_new(version = "4+3", bootswatch = NULL)
 
 navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/">Yupana</a></strong></h3>')
            , windowTitle = "Yupana 2.0"
+           , position = "fixed-top"
            , theme = "bootstrap_sandstone.css"
            , selected = "Intro",
 
@@ -36,7 +37,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                     bootstrap(), # allow use the new bootstrap
 
                     tags$head(includeHTML(("www/analytics.html"))),
-                    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/files/quipo4c.png")),
+                    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/quipo4c.png")),
 
                     meta() %>%
                       meta_social(
@@ -75,52 +76,208 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                       ),
 
-                      column(width = 10,
+
+                      column(width = 3,
 
 
-                             box(title = h4(icon("book"), "Fieldbook Google Sheets (URL)")
-                                 , width = 10
+                             box(title = "Presentacion"
                                  , solidHeader = T
+                                 , background = "green"
+                                 , width = 12
                                  , status = "primary",
 
-                                 textInput(inputId = "fieldbook_url",
-                                           label = NULL
-                                           , width = "100%"
-                                           , value = "https://docs.google.com/spreadsheets/d/15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346"
-                                           , placeholder = "Insert google sheet link"
-                                 )
+                                 HTML('
 
+                                 Yupana es una plataforma interactiva para el análisis y gráfica de datos
+                                 de diseños experimentales. Esta desarrollada con la finalidad de del uso
+                                 de las buenas prácticas en la colecta, análisis y manipulación de datos
+                                 en la investigación.
+
+                                 Yupana tiene el objetivo de continuidad entre el uso de la app y el software
+                                 R. Los resultados pueden ser reproducidos en cualquiera de las 2 plataformas.
+
+                                      '),
                              ),
 
-                             box(title = "Info fieldbook"
-                                 , width = 2
-                                 , solidHeader = T,
+                             br(),
 
-                                 textInput(inputId = "fieldbook_gsheet"
-                                           , label = "Fieldbook sheet"
-                                           , value = "wue"
-                                           , placeholder = "Fieldbook data"
-                                 ),
-
-
-                                 textInput(inputId = "fbsmrvars_gsheet"
-                                           , label = "Fieldbook summary"
-                                           , value = "fbsm"
-                                           , placeholder = "Variables information"
-                                 )
-
-                             ),
-
-                             box(title = "Auth"
-                                 , width = 2
+                             box(title = "Caracteristicas"
                                  , solidHeader = T
+                                 , background = "green"
+                                 , width = 12
                                  , status = "primary",
 
-                                 googleAuth_jsUI("js_token")
+                                 HTML('
 
+                                 Yupana esta pensando en la reproducción de los resultados. Por lo que cada
+                                 análisis realizado puede almacenarse en la hojas de cálculo privada de cada
+                                 usuario permitiendo acceder a ellos en cualquier momento.
+
+                                 La app esta basada en el paquete inti desarrollado en sofware estadistico R.
+                                 Los mismo resultados pueden ser producidos en R usando los output de yupana.
+
+                                 Yupana ademas permite:
+
+                                 1. Estadistica descriptiva.
+                                 2. Pruebas de comparación de medias
+                                 3. Tabla con resumen de los datos.
+                                 4. Gráficos interactivo con opciones de personalización.
+
+                                      '),
                              ),
+
+                             br(),
+
+                             box(title = "Info"
+                                 , solidHeader = T
+                                 , background = "green"
+                                 , width = 12
+                                 , status = "primary",
+
+                                 HTML('
+
+                                 Actualmnete esta versión de Yupana está en modo de desarrollo.
+                                 Por lo que la interface y las opciones iran cambiando.
+                                 La app esta basada en el paquete inti (Tools and statistical procedures
+                                 for experimentals designs and plant breeding).
+
+                                 https://github.com/Flavjack/inti
+
+                                      '),
+                             ),
+
+
+                             br(),
+                             br(),
+
 
                       ),
+
+                      column(width = 7,
+
+                             fluidRow(
+
+                               box(title = h4(icon("google"), "Fieldbook Google Sheets (URL)")
+                                   , width = 12
+                                   , solidHeader = T
+                                   , status = "primary",
+
+                                   textInput(inputId = "fieldbook_url",
+                                             label = NULL
+                                             , width = "100%"
+                                             , value = "https://docs.google.com/spreadsheets/d/15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346"
+                                             , placeholder = "Insert google sheet link"
+                                   )
+
+                               ),
+
+                             ),
+
+
+                             fluidRow(
+
+                               box(title = h5("Fieldbook data")
+                                   , width = 4
+                                   , solidHeader = T,
+
+                                   textInput(inputId = "fieldbook_gsheet"
+                                             , label = NULL
+                                             , value = "fb"
+                                             , placeholder = "Sheet name ('fb')"
+                                   )
+                               ),
+
+                               box(title = h5("Fieldbook summary")
+                                   , width = 4
+                                   , solidHeader = T,
+
+                                   textInput(inputId = "fbsmrvars_gsheet"
+                                             , label = NULL
+                                             , value = "fbsm"
+                                             , placeholder = "Sheet name ('fbsm')"
+                                   )
+                               ),
+
+                               box(title =  h5("Gsheet access")
+                                   , width = 4
+                                   , solidHeader = T
+                                   , status = "primary",
+
+                                   googleAuth_jsUI("js_token")
+
+                               )
+                             ),
+
+                             br(),
+
+                             fluidRow(
+
+                               box(title = "Como usar yupana?"
+                                   , width = 6
+                                   , solidHeader = T
+                                   , height = "200px"
+                                   , status = "primary",
+
+
+                                   HTML('
+
+                                 Para usar yupana es necesario tener una tus datos en una hoja de calculo de google.
+
+                                 1. Introduce el URL de tu documento.
+
+                                 2. Coloca el nombre de la hoja donde está tu base de datos.
+
+                                 3. Coloca el nombre de la hoja donde donde esta el resumen de tus datos.
+                                 Si no tiene aún puedes generar en la pestaña "Fieldbook" de la app.
+
+                                 4. Debes autentificar los permisos, ya que tu hoja es privada y para poder
+                                 leer y exportar la información debes dar los permisos correspondientes.
+                                 Más información en la politicas de privacidad: https://lozanoisla.com/policy/
+
+                                 5. Cuando accedas el boton de "LOG IN" estará de color rojo. Lo que te permite
+                                 interactuar con tu información y analizar tus datos.
+
+                                 6. Cualquier problema o sugerencia puedes escribir en el rastreador de problemas.
+                                 https://github.com/Flavjack/inti/issues
+
+                                      '),
+
+                               ),
+
+                               box(title = "Recomendaciones"
+                                   , width = 6
+                                   , solidHeader = T
+                                   , height = "200px"
+                                   , status = "primary",
+
+
+                                   HTML('
+
+                                   1. Antes de iniciar a usar yupana, es bueno que guardes una copia de seguridad de tú trabajo.
+                                   Para eso puedes ir a tú hoja de google: Historial de versiones > Asignar un nombre a la
+                                   versión actual. Con eso podras tener multiples copias de tu base de datos, sin crear
+                                   multiples hojas de calculo.
+
+                                   2. Es recomendable solo tener una libro de campo "fieldbook" por cada experimento.
+                                   Si tienes muchas pestañas que dificultan tú trabajo, puedes ir ocultandolas
+                                   (click derecho en la pestaña > Ocultar hoja). Al momento de usar la app puedes
+                                   especificar que hoja deseas utilizar y la app extrae la información de la hoja indicada.
+
+                                   3. Si deseas crear un diseño experimental que luego puede ser usado de forma rápida en
+                                   yupana, puedes usar la app Tarpuy (https://flavjack.shinyapps.io/tarpuy/).
+
+                                   4. Mayor información: https://lozanoisla.com/projects/
+
+                                      '),
+
+
+                               )
+
+                             ),
+
+
+                             ),
+
 
                       column(1,
 
@@ -131,7 +288,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
             <div id=footer style="width:100%; margin:auto;">
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
-            <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC">
+            <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9sTx5Dbff9O0g6KCU4pwCQ">
             <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/youtube.png" style="height:60px" title="demo"></a>
             <span style="display:block;"><small>demo</small></span>
             </p></div>
@@ -145,7 +302,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://www.quipolab.com/">
-            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/tarpuy.jpeg" style="height:80px" title="quipo"></a>
+            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/www/yupana.png" style="height:80px" title="quipo"></a>
             <span style="display:block;"><small>quipolab.com</small></span>
             </p></div>
             </div>

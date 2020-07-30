@@ -37,13 +37,12 @@ access_token <- callModule(googleAuth_js, "js_token")
 
 gs <- reactive({
 
-  gs4_auth(T)
+  # gs4_auth(T)
 
-  # gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
-  #          , cache = FALSE
-  #          , use_oob = TRUE
-  #          , token = access_token()
-  #          )
+  gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
+           , cache = FALSE
+           , use_oob = TRUE
+           , token = access_token())
 
   as_sheets_id(input$fieldbook_url)
 

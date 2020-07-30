@@ -9,7 +9,7 @@ mean_comparison(
   fb_smr,
   variable,
   model_facts,
-  treat_comp,
+  comp_facts,
   test_comp = "SNK",
   sig_level = 0.05,
   graph_opts = FALSE
@@ -24,7 +24,7 @@ mean_comparison(
 
 \item{model_facts}{Comparison test (default = "SNK"). Others: "TUKEY" & "DUNCAN".}
 
-\item{treat_comp}{Significance level for the analysis (default = 0.05).}
+\item{comp_facts}{Significance level for the analysis (default = 0.05).}
 
 \item{test_comp}{Significance level for the analysis (default = 0.05).}
 
