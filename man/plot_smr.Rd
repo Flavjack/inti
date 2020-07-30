@@ -66,19 +66,19 @@ library(googlesheets4)
 library(tidyverse)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "15uwCgQRtR01B3FJaZBE8t_0bOC_8Bbey9ccwVlZH0jg/edit#gid=56711214")
+              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
 # browseURL(url)
 gs <- as_sheets_id(url)
 
 (data <- gs \%>\%
-    range_read("plot"))
+    range_read("LA"))
 
 plot_smr(data)
 
 plot_smr(data
-         , type = "bar"
-         , limits = c(0,1000)
-         , brakes = 200
+         , type = "line"
+         , limits = c(0, 14000)
+         , brakes = 2000
          , sig = "sig"
          , error = "ste"
          , legend = "top"

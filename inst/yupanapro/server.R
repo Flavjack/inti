@@ -39,10 +39,10 @@ gs <- reactive({
 
   gs4_auth(T)
 
-  gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
-           , cache = FALSE
-           , use_oob = TRUE
-           , token = access_token())
+  # gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
+  #          , cache = FALSE
+  #          , use_oob = TRUE
+  #          , token = access_token())
 
   as_sheets_id(input$fieldbook_url)
 
@@ -283,21 +283,21 @@ report <- reactive({
                            , dotplot_groups = input$rpt_dotplot_groups
                            , model_diag = FALSE
                            )
+
   }
 
 })
 
 output$anova <- renderPrint({ summary(report()$anova) })
 
-output$diag <- renderPlot({
+output$dfreq <- renderPlot({
 
-  report()$diagplot$freq
+  p1 <- report()$diagplot$freq
+  p2 <- report()$diagplot$qqnorm
+  p3 <- report()$diagplot$resid
+  p4 <- report()$diagplot$sresid
 
-  report()$diagplot$qqnorm
-
-  report()$diagplot$resid
-
-  report()$diagplot$sresid
+  ggarrange(p1, p2, p3, p4, ncol = 2, nrow = 2)
 
 })
 
@@ -415,7 +415,7 @@ output$rpt_preview <- renderUI({
 
              HTML('<h4><strong>Model Diagnostic</strong></h4>'),
 
-             plotOutput("diag", width =  "auto", height = "500px")
+             plotOutput("dfreq", width =  "auto", height = "500px")
 
       ),
 

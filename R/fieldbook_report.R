@@ -156,7 +156,7 @@ diagplot <- function( model ) {
       geom_hline(yintercept=0, col="red", linetype="dashed") +
       xlab("Fitted values") +
       ylab("Residuals") +
-      ggtitle("Residual vs Fitted Plot") +
+      ggtitle("Residual vs Fitted") +
       theme_bw()
 
     p3 <- ggplot(model, aes(sample = rstandard(model))) +

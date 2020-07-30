@@ -39,19 +39,19 @@
 #' library(tidyverse)
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15uwCgQRtR01B3FJaZBE8t_0bOC_8Bbey9ccwVlZH0jg/edit#gid=56711214")
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
 #' # browseURL(url)
 #' gs <- as_sheets_id(url)
 #'
 #' (data <- gs %>%
-#'     range_read("plot"))
+#'     range_read("LA"))
 #'
 #' plot_smr(data)
 #'
 #' plot_smr(data
-#'          , type = "bar"
-#'          , limits = c(0,1000)
-#'          , brakes = 200
+#'          , type = "line"
+#'          , limits = c(0, 14000)
+#'          , brakes = 2000
 #'          , sig = "sig"
 #'          , error = "ste"
 #'          , legend = "top"
@@ -123,9 +123,13 @@ if ( length(arg_dt) >= 2 ) {
 
 # -------------------------------------------------------------------------
 
-  if ( is.na(graph_opts[["sig"]]) & is.null(sig) ) { sig <- "sig" }
-  if ( !is.na(graph_opts[["sig"]]) & !is.null(sig) ) { sig <- sig }
-  if ( !is.na(graph_opts[["sig"]]) & is.null(sig) ) { sig <- graph_opts[["sig"]] }
+  # conditional!
+
+  if ( !is.null(graph_opts[["sig"]]) & !is.null(sig) ) {
+    sig <- sig
+  } else if ( is.null(graph_opts[["sig"]]) ) {
+      sig <- sig
+      } else if ( !is.null(graph_opts[["sig"]]) ) { sig <- graph_opts[["sig"]] }
 
 # -------------------------------------------------------------------------
 
@@ -245,10 +249,8 @@ legend <- match.arg(legend, c("top", "left", "right", "bottom", "none"))
                 , size=.4
                 , na.rm = TRUE) +
 
-      labs(x = xlab, y = ylab, fill = glab) +
-
       scale_y_continuous(limits = limits
-                         , breaks = ((limits[1]*20):(limits[2]*20)) * brakes
+                         , breaks = ((limits[1]*-20):(limits[2]*+20)) * brakes
                          , expand = c(0,0)) +
 
       scale_fill_manual(values = color_grps) +
@@ -258,12 +260,14 @@ legend <- match.arg(legend, c("top", "left", "right", "bottom", "none"))
                     , position = position_dodge(0.9)
                     , width = 0.15) +
 
-      geom_text(aes(label = .data[[sig]], y = .data[[y]] + .data[[error]])
+      {if (!is.null(sig))  geom_text(aes(label = .data[[sig]], y = .data[[y]] + .data[[error]])
                 , position = position_dodge(0.9)
                 , colour = "black"
                 , vjust = -0.5
                 , hjust = 0.5
-                , angle = 0)
+                , angle = 0) } +
+
+      labs(x = xlab, y = ylab, fill = glab)
   }
 
 # line plot ---------------------------------------------------------------
@@ -289,8 +293,6 @@ legend <- match.arg(legend, c("top", "left", "right", "bottom", "none"))
                    , colour = .data[[groups]]
                    ) ) +
 
-      labs(x = xlab, y = ylab, group = glab) +
-
       geom_point( aes(group =  .data[[groups]]
                       , shape = .data[[groups]]
                       , color = .data[[groups]]
@@ -302,7 +304,7 @@ legend <- match.arg(legend, c("top", "left", "right", "bottom", "none"))
                      ) ,  size = 1 ) +
 
       scale_y_continuous(limits = limits
-                         , breaks = ((limits[1]*20):(limits[2]*20)) * brakes
+                         , breaks = ((limits[1]*-20):(limits[2]*+20)) * brakes
                          , expand = c(0,0)) +
 
       scale_color_manual(values = color_grps) +
@@ -310,11 +312,16 @@ legend <- match.arg(legend, c("top", "left", "right", "bottom", "none"))
       geom_errorbar(aes(ymin = .data[[y]] - .data[[error]]
                         , ymax = .data[[y]] + .data[[error]])
                     , width = 0.08) +
-      geom_text(aes(label = .data[[sig]], y = .data[[y]] + .data[[error]])
-                , colour = "black"
-                , vjust = -0.5
-                , hjust = 0.5
-                , angle = 0)
+
+      {if (!is.null(sig))  geom_text(aes(label = .data[[sig]], y = .data[[y]] + .data[[error]])
+                      , colour = "black"
+                      , vjust = -0.5
+                      , hjust = 0.5
+                      , angle = 0) } +
+
+      labs(x = xlab, y = ylab
+           , shape = glab, color = glab, linetype = glab)
+
     }
 
 # apply functions----------------------------------------------------------
