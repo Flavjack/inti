@@ -49,12 +49,12 @@
 #' plot_smr(data)
 #'
 #' plot_smr(data
-#'          , type = "line"
+#'          , type = "bar"
 #'          , limits = c(0, 14000)
 #'          , brakes = 2000
 #'          , sig = "sig"
 #'          , error = "ste"
-#'          , legend = "top"
+#'          , legend = "left"
 #'          )
 #'
 #' }
@@ -116,32 +116,43 @@ if ( length(arg_dt) >= 2 ) {
 
 # -------------------------------------------------------------------------
 
-  if ( is.na(graph_opts[["type"]]) & is.null(type) ) { type <- "bar" }
-  if ( !is.na(graph_opts[["type"]]) & !is.null(type) ) { type <- type }
-  if ( !is.na(graph_opts[["type"]]) & is.null(type) ) { type <- graph_opts[["type"]] }
+if ( !is.na(graph_opts[["type"]]) & !is.null(type) ) {
+  type <- type
+} else if ( is.na(graph_opts[["type"]]) ) {
+  type <- type
+} else if ( !is.na(graph_opts[["type"]]) ) {
+  type <- graph_opts[["type"]]
+  } else { type <- "bar"}
+
   type <- match.arg(type, c("bar", "line"))
 
 # -------------------------------------------------------------------------
 
-  # conditional!
-
-  if ( !is.null(graph_opts[["sig"]]) & !is.null(sig) ) {
+  if ( !is.na(graph_opts[["sig"]]) & !is.null(sig) ) {
     sig <- sig
-  } else if ( is.null(graph_opts[["sig"]]) | graph_opts[["sig"]] == "" ) {
+  } else if ( is.na(graph_opts[["sig"]]) ) {
       sig <- sig
-      } else if ( !is.null(graph_opts[["sig"]]) ) { sig <- graph_opts[["sig"]] }
+      } else if ( !is.na(graph_opts[["sig"]]) ) { sig <- graph_opts[["sig"]] }
 
 # -------------------------------------------------------------------------
 
-  if ( is.na(graph_opts[["error"]]) & is.null(error) ) { error <- "ste" }
-  if ( !is.na(graph_opts[["error"]]) & !is.null(error) ) { error <- error }
-  if ( !is.na(graph_opts[["error"]]) & is.null(error) ) { error <- graph_opts[["error"]] }
+  if ( !is.na(graph_opts[["error"]]) & !is.null(error) ) {
+    error <- error
+  } else if ( is.na(graph_opts[["error"]]) ) {
+    error <- error
+  } else if ( !is.na(graph_opts[["error"]]) ) { error <- graph_opts[["error"]] }
 
 # -------------------------------------------------------------------------
 
-if ( is.na(graph_opts[["legend"]]) & is.null(legend) ) { legend <- "top" }
-if ( !is.na(graph_opts[["legend"]]) & !is.null(legend) ) { legend <- legend }
-if ( !is.na(graph_opts[["legend"]]) & is.null(legend) ) { legend <- graph_opts[["legend"]] }
+  if ( !is.na(graph_opts[["legend"]]) & !is.null(legend) ) {
+    legend <- legend
+  } else if ( is.na(graph_opts[["legend"]]) ) {
+    legend <- legend
+  } else if ( !is.na(graph_opts[["legend"]]) ) {
+    legend <- graph_opts[["legend"]]
+  } else { legend <- "top" }
+
+  legend <- match.arg(legend, c("top", "left", "right", "bottom", "none"))
 
 # -------------------------------------------------------------------------
 
@@ -158,8 +169,8 @@ if ( is.null(color_grps) ) {
 
   color_grps <- colorRampPalette(
     c("#86CD80"   # green
-      , "#F3BB00" # yellow
       , "#F4CB8C" # orange
+      , "#F3BB00" # yellow
       , "#0198CD" # blue
       , "#FE6673" # red
     ))(length(plot_dt[[groups]]))
@@ -204,26 +215,6 @@ if ( is.null(color_grps) ) {
     brakes <- as.numeric(graph_opts[["brakes"]])
 
     }
-
-  if ( is.null(sig) ) {
-
-    sig <- graph_opts[["sig"]]
-
-    }
-
-  if ( is.null(error) ) {
-
-    error <- graph_opts[["error"]]
-
-  }
-
-  if ( is.null(legend) ) {
-
-    legend <- graph_opts[["legend"]]
-
-  }
-
-legend <- match.arg(legend, c("top", "left", "right", "bottom", "none"))
 
 # bar plot ----------------------------------------------------------------
 # -------------------------------------------------------------------------

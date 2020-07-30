@@ -76,12 +76,12 @@ gs <- as_sheets_id(url)
 plot_smr(data)
 
 plot_smr(data
-         , type = "line"
+         , type = "bar"
          , limits = c(0, 14000)
          , brakes = 2000
          , sig = "sig"
          , error = "ste"
-         , legend = "top"
+         , legend = "left"
          )
 
 }
