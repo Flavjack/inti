@@ -21,6 +21,7 @@
 #' Flavio Lozano-Isla
 #'
 #' @import dplyr
+#' @importFrom stats rstandard
 #'
 #' @examples
 #'
@@ -31,7 +32,7 @@
 #' library(tidyverse)
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15uwCgQRtR01B3FJaZBE8t_0bOC_8Bbey9ccwVlZH0jg/edit#gid=56711214")
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
 #' # browseURL(url)
 #' gs <- as_sheets_id(url)
 #'
@@ -39,12 +40,12 @@
 #'     range_read("fb"))
 #'
 #' (fb_smr <- gs %>%
-#'   range_read("fbsmr"))
+#'   range_read("fbsm"))
 #'
 #' report <- fieldbook_report(data
 #'                           , fb_smr = fb_smr
-#'                           , variable = "rendexportable"
-#'                           , dotplot_groups = "bloque"
+#'                           , variable = "LA"
+#'                           , dotplot_groups = "genotypes"
 #'                           , model_diag = T
 #'                           )
 #' report
@@ -125,19 +126,59 @@ fieldbook_report <- function(data
 
     if (model_diag == TRUE) {
 
-      par(mfrow=c(2,2), no.readonly = FALSE)
+      par(mfrow=c(2,2))
       hist(resid(model), main = {{variable}})
       qqnorm(resid(model), main = {{variable}}); qqline(resid(model))
       plot(fitted(model), resid(model, type = "pearson"), main = {{variable}}); abline(h=0)
       plot(resid(model), main = {{variable}})
 
-      }
+    }
 
     model
 
     }
 
 # diagnostic plot ---------------------------------------------------------
+# -------------------------------------------------------------------------
+
+diagplot <- function( model ) {
+
+    p1 <- ggplot(model , aes(rstandard(model))) +
+      geom_histogram(bins = 30) +
+      xlab("Residuals") +
+      ylab("Frequency") +
+      ggtitle("Frequency vs Residuals") +
+      theme_bw()
+
+    p2 <- ggplot(model, aes(fitted(model), resid(model))) +
+      geom_point() +
+      stat_smooth(method="loess", formula = 'y ~ x') +
+      geom_hline(yintercept=0, col="red", linetype="dashed") +
+      xlab("Fitted values") +
+      ylab("Residuals") +
+      ggtitle("Residual vs Fitted Plot") +
+      theme_bw()
+
+    p3 <- ggplot(model, aes(sample = rstandard(model))) +
+      geom_qq() +
+      stat_qq_line() +
+      xlab("Theoretical Quantiles") +
+      ylab("Standardized Residuals") +
+      ggtitle("Normal Q-Q") +
+      theme_bw()
+
+    p4 <- ggplot(model, aes(fitted(model), sqrt(abs(resid(model))))) +
+      geom_point(na.rm=TRUE) +
+      stat_smooth(method="loess", na.rm = TRUE, formula = 'y ~ x') +
+      xlab("Fitted Value") +
+      ylab(expression(sqrt("|Standardized residuals|"))) +
+      ggtitle("Scale-Location") +
+      theme_bw()
+
+    return(list( freq = p1, qqnorm = p2, resid = p3, sresid = p4))
+
+    }
+
 # -------------------------------------------------------------------------
 
   dotplot <- function(fb
@@ -148,7 +189,8 @@ fieldbook_report <- function(data
       plot <- fb %>%
         ggplot(aes( .data[[variable]], .data[[dotplot_groups]] )) +
         geom_point( aes(color = .data[[dotplot_groups]]) ) +
-        theme_minimal()
+        theme_bw() +
+        theme(legend.position = "none")
 
     }
 
@@ -158,6 +200,8 @@ fieldbook_report <- function(data
   model_formula <- model_formula(variable, model_facts)
 
   model_aov <- model_aov(fb, variable, model_formula, model_diag)
+
+  diag_plot <- diagplot(model_aov)
 
   if ( !is.null(dotplot_groups) ) {
 
@@ -171,6 +215,7 @@ fieldbook_report <- function(data
   fb_report = list(
     formula = model_formula
     , anova = model_aov
+    , diagplot = diag_plot
     , dotplot = dotplot_diag
     )
 

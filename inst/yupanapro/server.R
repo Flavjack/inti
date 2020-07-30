@@ -37,7 +37,7 @@ access_token <- callModule(googleAuth_js, "js_token")
 
 gs <- reactive({
 
-  # gs4_auth(T)
+  gs4_auth(T)
 
   gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
            , cache = FALSE
@@ -281,13 +281,25 @@ report <- reactive({
                            , fb_smr = fbsmrvar()
                            , variable = input$rpt_variable
                            , dotplot_groups = input$rpt_dotplot_groups
-                           , model_diag = TRUE
+                           , model_diag = FALSE
                            )
   }
 
 })
 
 output$anova <- renderPrint({ summary(report()$anova) })
+
+output$diag <- renderPlot({
+
+  report()$diagplot$freq
+
+  report()$diagplot$qqnorm
+
+  report()$diagplot$resid
+
+  report()$diagplot$sresid
+
+})
 
 output$dotplot <- renderPlot({ report()$dotplot })
 
@@ -403,7 +415,7 @@ output$rpt_preview <- renderUI({
 
              HTML('<h4><strong>Model Diagnostic</strong></h4>'),
 
-             verbatimTextOutput("anova")
+             plotOutput("diag", width =  "auto", height = "500px")
 
       ),
 

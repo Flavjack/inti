@@ -45,7 +45,7 @@ library(googlesheets4)
 library(tidyverse)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "15uwCgQRtR01B3FJaZBE8t_0bOC_8Bbey9ccwVlZH0jg/edit#gid=56711214")
+              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
 # browseURL(url)
 gs <- as_sheets_id(url)
 
@@ -53,12 +53,12 @@ gs <- as_sheets_id(url)
     range_read("fb"))
 
 (fb_smr <- gs \%>\%
-  range_read("fbsmr"))
+  range_read("fbsm"))
 
 report <- fieldbook_report(data
                           , fb_smr = fb_smr
-                          , variable = "rendexportable"
-                          , dotplot_groups = "bloque"
+                          , variable = "LA"
+                          , dotplot_groups = "genotypes"
                           , model_diag = T
                           )
 report

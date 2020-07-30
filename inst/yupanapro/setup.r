@@ -12,6 +12,7 @@ cran <- c("shiny"
          , "googlesheets4"
          , "googleAuthR"
          , "shinydashboard"
+         , "ggpubr"
          )
 
 git <- c(
@@ -36,4 +37,6 @@ rm(cran, git, installed)
 # References .:
 
 # https://shiny.rstudio.com/tutorial/written-tutorial/lesson3/
+
+# https://rpubs.com/therimalaya/43190
 
