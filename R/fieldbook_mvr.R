@@ -89,7 +89,7 @@ fieldbook_mvr <- function(data
 
   quali_ncol <- which(names(fb) %in% {{quali_sup}})
 
-  pca <- fb %>%
+  pca_info <- fb %>%
     PCA(X = .
         , scale.unit = T
         , quali.sup = quali_ncol
@@ -98,13 +98,15 @@ fieldbook_mvr <- function(data
 # hcpc --------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  clt <- pca %>%
-    HCPC(., nb.clust=-1, graph = FALSE)
+  clt_info <- pca_info %>%
+    HCPC(res = .
+         , nb.clust=-1
+         , graph = FALSE)
 
 
 # results -----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  multvr = list(pca = pca, hcpc = clt, fb_mvr = fb)
+  multvr = list(pca = pca_info, hcpc = clt_info, fb_mvr = fb)
 
 }

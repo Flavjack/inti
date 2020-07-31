@@ -599,12 +599,13 @@ output$mvr_facts <- renderUI({
 
 mvr <- reactive({
 
-  quali.sup <- input$mvr_facts %>% as.vector()
-
   mvr <- fieldbook_mvr(data = fieldbook()
                        , fb_smr = fbsmrvar
-                       , quali_sup = quali.sup
+                       , quali_sup = input$mvr_facts
                        )
+
+  plot.PCA(mvr$pca)
+
   })
 
 
@@ -626,6 +627,7 @@ output$pca <- renderImage({
 
 }, deleteFile = TRUE)
 
+# -------------------------------------------------------------------------
 
 output$hcpc <- renderImage({
 
@@ -644,8 +646,6 @@ output$hcpc <- renderImage({
   list(src = outfile)
 
 }, deleteFile = TRUE)
-
-
 
 # -------------------------------------------------------------------------
 
@@ -669,10 +669,6 @@ output$mvr_preview <- renderUI({
     )
   }
 })
-
-
-
-
 
 # end yupana --------------------------------------------------------------
 # -------------------------------------------------------------------------
