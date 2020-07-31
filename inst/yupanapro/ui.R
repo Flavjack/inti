@@ -8,7 +8,7 @@
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
 
-# if (file.exists("setup.r")) { source("setup.r") }
+if (file.exists("setup.r")) { source("setup.r") }
 
 library(shiny)
 library(inti)
@@ -19,6 +19,7 @@ library(googleAuthR)
 library(bootstraplib)
 library(shinydashboard)
 library(ggpubr)
+library(FactoMineR)
 
 gar_set_client(web_json = "www/yupanapro.json")
 
@@ -56,13 +57,9 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
            tabPanel("Intro",
 
-
                     fluidRow(
 
                       column(width = 1,
-
-                             br(),
-                             br(),
 
                              HTML('
             <div id=footer style="width:100%; margin:auto;">
@@ -149,7 +146,6 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
 
                              br(),
-                             br(),
 
 
                       ),
@@ -158,7 +154,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                              fluidRow(
 
-                               box(title = h4(icon("google"), "Fieldbook Google Sheets (URL)")
+                               box(title = div(h4(icon("google"), "Fieldbook Google Sheets (URL)"), align = "center")
                                    , width = 12
                                    , solidHeader = T
                                    , status = "primary",
@@ -199,14 +195,19 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                    )
                                ),
 
-                               box(title =  h5("Gsheet access")
-                                   , width = 4
-                                   , solidHeader = T
-                                   , status = "primary",
+                               box(width = 1),
 
-                                   googleAuth_jsUI("js_token")
+                               box(title = div(h4(icon("key")), align = "center")
+                                   , width = 2,
 
-                               )
+                                   div(
+                                     googleAuth_jsUI("js_token")
+                                     , align = "center")
+
+                               ),
+
+                               box(width = 1)
+
                              ),
 
                              br(),
@@ -281,9 +282,6 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
 
                       column(1,
-
-                             br(),
-                             br(),
 
                              HTML('
               <div id=footer style="width:100%; margin:auto;">
@@ -401,7 +399,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                               uiOutput("rpt_dotplot_groups"),
 
-                              actionButton(inputId = "model_generate"
+                              actionButton(inputId = "fbsm_refresh"
                                            , label = "Refresh"
                                            , class = "btn btn-success"
                               )
@@ -485,10 +483,70 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                     )
 
 
-                )
+                ),
 
-)
+        tabPanel("Multivariate",
+
+
+                 fluidRow(
+
+                   column(2,
+
+                          radioButtons(inputId = "mvr_module"
+                                       , label = "Modules"
+                                       , choices = c("PCA"
+                                                     , "HCPC")
+                                       , inline = TRUE
+
+                          ),
+
+                          uiOutput("mvr_facts"),
+
+                          numericInput(inputId = "mvr_width"
+                                       , label = "Width (cm)"
+                                       , value = 15
+                                       , step = 5
+                                       , min = 5
+                          ),
+
+                          numericInput(inputId = "mvr_height"
+                                       , label = "Height (cm)"
+                                       , value = 10
+                                       , step = 5
+                                       , min = 5
+                          ),
+
+                          numericInput(inputId = "mvr_dpi"
+                                       , label = "Resolution"
+                                       , value = 100
+                                       , step = 50
+                                       , min = 100
+                          ),
+
+
+                          actionButton(inputId = "mvr_refresh"
+                                       , label = "Refresh"
+                                       , class = "btn btn-success"
+                          )
+                   ),
+
+
+                   column(width = 10,
+
+                          htmlOutput("mvr_preview")
+
+                   ),
+
+                 )
+
+
+        )
 
 
 # Yupana end code ---------------------------------------------------------
 # -------------------------------------------------------------------------
+
+
+)
+
+

@@ -29,6 +29,7 @@ Compute and plot information for multivarite analysis
 library(inti)
 library(googlesheets4)
 library(tidyverse)
+library(FactoMineR)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
@@ -42,7 +43,11 @@ gs <- as_sheets_id(url)
   range_read("fbsm"))
 
 
-mvr <- fieldbook_mvr(data, fb_smr, quali_sup = c("genotype", "treat"))
+mvr <- fieldbook_mvr(data, fb_smr
+, quali_sup = c("genotype", "treat"))
+
+FactoMineR::plot.PCA(mvr$pca)
+FactoMineR::plot.HCPC(mvr$hcpc)
 
 }
 

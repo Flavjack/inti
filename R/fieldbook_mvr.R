@@ -26,6 +26,7 @@
 #' library(inti)
 #' library(googlesheets4)
 #' library(tidyverse)
+#' library(FactoMineR)
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
 #'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
@@ -39,7 +40,11 @@
 #'   range_read("fbsm"))
 #'
 #'
-#' mvr <- fieldbook_mvr(data, fb_smr, quali_sup = c("genotype", "treat"))
+#' mvr <- fieldbook_mvr(data, fb_smr
+#' , quali_sup = c("genotype", "treat"))
+#'
+#' FactoMineR::plot.PCA(mvr$pca)
+#' FactoMineR::plot.HCPC(mvr$hcpc)
 #'
 #' }
 #'
@@ -82,7 +87,7 @@ fieldbook_mvr <- function(data
 # pca ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  quali_ncol <- which(names(fb) %in% quali_sup)
+  quali_ncol <- which(names(fb) %in% {{quali_sup}})
 
   pca <- fb %>%
     PCA(X = .
@@ -94,7 +99,7 @@ fieldbook_mvr <- function(data
 # -------------------------------------------------------------------------
 
   clt <- pca %>%
-    HCPC(., nb.clust=-1, graph = F)
+    HCPC(., nb.clust=-1, graph = FALSE)
 
 
 # results -----------------------------------------------------------------

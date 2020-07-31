@@ -21,6 +21,7 @@ library(googleAuthR)
 library(bootstraplib)
 library(shinydashboard)
 library(ggpubr)
+library(FactoMineR)
 
 gar_set_client(web_json = "www/yupanapro.json")
 
@@ -138,12 +139,16 @@ fieldbook <- reactive({
 
   })
 
+refresh <- reactive({
+  list(input$fbsm_refresh,input$mvr_refresh)
+})
+
 # make reactive!
 
 fbsmrvar <- NULL
 makeReactiveBinding("fbsmrvar")
 
-observeEvent(input$model_generate, {
+observeEvent( refresh(), {
 
   if ( input$fbsmrvars_gsheet %in% sheet_names(gs()) ) {
 
@@ -193,7 +198,6 @@ output$comp_facts <- renderUI({
   } else { print("Insert last factor") }
 
 })
-
 
 # -------------------------------------------------------------------------
 
@@ -544,6 +548,131 @@ output$graph_preview <- renderUI({
     )
   }
 })
+
+# Yupana: Multivariate-----------------------------------------------------
+# -------------------------------------------------------------------------
+
+observe({
+
+  cat("Multivariate --------------------------------------------------\n")
+
+  cat("mvr_width")
+  print(input$mvr_width)
+
+  cat("mvr_height")
+  print(input$mvr_height)
+
+  cat("mvr_dpi")
+  print(input$mvr_dpi)
+
+  cat("mvr_format")
+  print(input$mvr_format)
+
+  cat("mvr_variable")
+  print(input$mvr_variable)
+
+})
+
+# -------------------------------------------------------------------------
+
+output$mvr_facts <- renderUI({
+
+  if ( !is.null( fieldbook() ) && !is.null( fbsmrvar ) ) {
+
+    mvr_variable_names <- fbsmrvar %>%
+      filter(type %in% c("factor", "factores", "factors")) %>%
+      select(variables) %>%
+      deframe()
+
+    selectInput(inputId = "mvr_facts"
+                , label = "Variable"
+                , multiple = T
+                , choices = c("choose" = ""
+                              , mvr_variable_names)
+    )
+
+  } else { print ("Insert fieldbook summary") }
+
+})
+
+# -------------------------------------------------------------------------
+
+mvr <- reactive({
+
+  quali.sup <- input$mvr_facts %>% as.vector()
+
+  mvr <- fieldbook_mvr(data = fieldbook()
+                       , fb_smr = fbsmrvar
+                       , quali_sup = quali.sup
+                       )
+  })
+
+
+output$pca <- renderImage({
+
+  dpi <- input$mvr_dpi
+  ancho <- input$mvr_width
+  alto <- input$mvr_height
+
+  outfile <- tempfile(fileext = ".png")
+
+  png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
+
+  FactoMineR::plot.PCA(mvr()$pca)
+
+  dev.off()
+
+  list(src = outfile)
+
+}, deleteFile = TRUE)
+
+
+output$hcpc <- renderImage({
+
+  dpi <- input$mvr_dpi
+  ancho <- input$mvr_width
+  alto <- input$mvr_height
+
+  outfile <- tempfile(fileext = ".png")
+
+  png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
+
+  FactoMineR::plot.HCPC(mvr()$hcpc)
+
+  dev.off()
+
+  list(src = outfile)
+
+}, deleteFile = TRUE)
+
+
+
+# -------------------------------------------------------------------------
+
+output$mvr_preview <- renderUI({
+
+  if ( input$mvr_module == "PCA" ) {
+
+    tagList(
+
+      div(imageOutput("pca"), align = "center")
+
+    )
+
+
+  } else if ( input$mvr_module == "HCPC" ) {
+
+    tagList(
+
+      div(imageOutput("hcpc"), align = "center")
+
+    )
+  }
+})
+
+
+
+
 
 # end yupana --------------------------------------------------------------
 # -------------------------------------------------------------------------
