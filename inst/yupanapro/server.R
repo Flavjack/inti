@@ -20,6 +20,7 @@ library(googlesheets4)
 library(googleAuthR)
 library(bootstraplib)
 library(shinydashboard)
+library(ggpubr)
 
 gar_set_client(web_json = "www/yupanapro.json")
 
@@ -361,19 +362,14 @@ observeEvent(input$export_mctab, {
 
 })
 
-
 # -------------------------------------------------------------------------
 
 output$rpt_preview <- renderUI({
 
   if ( input$rpt_preview_opt == "Gsheet" ) {
 
-    tagList(
-
       tags$iframe(src = fbsm_url(),
             style="height:450px; width:100%; scrolling=no; zoom:1.2")
-
-    )
 
   } else if ( input$rpt_preview_opt == "Model" ) {
 
@@ -408,10 +404,8 @@ output$rpt_preview <- renderUI({
                           , label = "Export table"
                           , class = "btn btn-warning"
                           )
-
              )
       )
-
     )
 
   } else if ( input$rpt_preview_opt == "Plots" ) {
@@ -435,13 +429,9 @@ output$rpt_preview <- renderUI({
              plotOutput("dotplot", width =  "auto", height = "500px")
 
       )
-
       )
-
     )
-
   }
-
 })
 
 # Yupana: Graphics --------------------------------------------------------
@@ -449,16 +439,22 @@ output$rpt_preview <- renderUI({
 
 observe({
 
-  cat("Analysis --------------------------------------------------\n")
+  cat("Graphics --------------------------------------------------\n")
 
-  cat("rpt_variable")
-  print(input$rpt_variable)
+  cat("graph_sheets")
+  print(input$graph_sheets)
 
-  cat("rpt_dotplot_groups")
-  print(input$rpt_dotplot_groups)
+  cat("graph_width")
+  print(input$graph_width)
 
-  cat("rpt_preview_opt")
-  print(input$rpt_preview_opt)
+  cat("graph_height")
+  print(input$graph_height)
+
+  cat("graph_dpi")
+  print(input$graph_dpi)
+
+  cat("grp_format")
+  print(input$grp_format)
 
 })
 
@@ -514,7 +510,21 @@ observeEvent(input$graph_create, {
 
 # -------------------------------------------------------------------------
 
-output$plotgr <- renderPlot({ plotgr })
+output$plotgr <- renderImage({
+
+  dpi <- input$graph_dpi
+  ancho <- input$graph_width
+  alto <- input$graph_height
+
+  outfile <- tempfile(fileext = ".png")
+
+    png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
+    print(plotgr)
+    dev.off()
+
+    list(src = outfile)
+
+}, deleteFile = TRUE)
 
 # -------------------------------------------------------------------------
 
@@ -522,23 +532,17 @@ output$graph_preview <- renderUI({
 
   if ( input$grp_preview_opt == "Gsheet" ) {
 
-    tagList(
-
       tags$iframe(src = plot_url(),
                   style="height:450px; width:100%; scrolling=no; zoom:1.2")
-
-    )
 
   } else if ( input$grp_preview_opt == "Plots" ) {
 
     tagList(
 
-      plotOutput("plotgr", width =  "auto", height = "500px")
+      div(imageOutput("plotgr"), align = "center")
 
     )
-
   }
-
 })
 
 # end yupana --------------------------------------------------------------

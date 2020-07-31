@@ -17,6 +17,7 @@ library(metathis)
 library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
+library(shinydashboard)
 
 gar_set_client(web_json = "www/tarpuy.json")
 options(shiny.port = 1221)
@@ -41,6 +42,7 @@ fluidPage(title = "Tarpuy",
       ),
 
     fluidRow(
+
       column(1,
 
              br(),
@@ -69,7 +71,7 @@ fluidPage(title = "Tarpuy",
 
              numericInput(
                inputId = "n_factors"
-               , label = "Factors"
+               , label = "Factors number"
                , value = 1
                , max = 5
                , min = 1
@@ -97,19 +99,19 @@ fluidPage(title = "Tarpuy",
                           ),
 
              textInput(inputId = "gsheet_name"
-                       , label = "Field book sheet"
+                       , label = "Design factors"
                        , value = ""
-                       , placeholder = "Design info"
+                       , placeholder = "Sheet name"
                        ),
 
              textInput(inputId = "varlist_name"
-                       , label = "Variables sheet"
+                       , label = "Variables (optional)"
                        , value = ""
-                       , placeholder = "Optional"
+                       , placeholder = "Sheet name"
              ),
 
              actionButton(inputId = "export_fb"
-                          , label = "Export"
+                          , label = "Generate"
                           , class = "btn btn-success"
                           )
 
@@ -117,31 +119,34 @@ fluidPage(title = "Tarpuy",
 
       column(8,
 
-             br(),
+             fluidRow(
 
-              column(width = 12,
+               box(title = div(h4(icon("key")), align = "right")
+                   , width = 1,
 
-                    h4(icon("book"), "Google Sheets (URL)", width = "100%"),
-                    textInput(inputId = "gsheet_url",
-                              label = NULL,
-                              width = "100%",
-                              value = ""
-                              , placeholder = "Insert google sheet link"
-                              )
+                   div(
+                     googleAuth_jsUI("js_token")
+                     , align = "center")
 
-             ),
+               ),
 
-             shinydashboard::box(
 
-               status = "danger",
-               solidHeader = T,
-               width = 12,
+               box(title = div(h4(icon("google"), "Fieldbook Google Sheets (URL)"), align = "center")
+                   , width = 11,
 
-               htmlOutput("gsheet_preview"),
+                 textInput(inputId = "gsheet_url",
+                           label = NULL,
+                           width = "100%",
+                           value = ""
+                           , placeholder = "Insert google sheet link"
+                           ),
+                  ),
+
+               ),
+
+             htmlOutput("gsheet_preview"),
+
                br()
-
-             )
-
 
              ),
 
@@ -150,11 +155,6 @@ fluidPage(title = "Tarpuy",
              br(),
              br(),
 
-             googleAuth_jsUI("js_token"),
-
-             br(),
-             br(),
-             br(),
 
              HTML('
 
@@ -179,9 +179,26 @@ fluidPage(title = "Tarpuy",
 
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
+            <a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/">
+            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/www/yupana.png" style="height:80px" title="yupana"></a>
+            <span style="display:block;"><small>Yupana</small></span>
+            </p></div>
+
+            </div>
+
+                  '),
+
+             br(),
+
+             HTML('
+
+            <div id=footer style="width:100%; margin:auto;">
+
+            <div style="display:inline-block; width:100%">
+            <p style="text-align:center">
             <a target="_blank" href="https://www.quipolab.com/">
             <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/tarpuy.jpeg" style="height:80px" title="quipo"></a>
-            <span style="display:block;"><small>quipolab.com</small></span>
+            <span style="display:block;"><small>quipolab</small></span>
             </p></div>
 
             </div>

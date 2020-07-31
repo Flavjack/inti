@@ -11,6 +11,7 @@ cran <- c("shiny"
          , "tidyverse"
          , "googlesheets4"
          , "googleAuthR"
+         , "shinydashboard"
          )
 
 git <- c(

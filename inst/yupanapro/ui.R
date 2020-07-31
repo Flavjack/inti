@@ -8,7 +8,7 @@
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
 
-if (file.exists("setup.r")) { source("setup.r") }
+# if (file.exists("setup.r")) { source("setup.r") }
 
 library(shiny)
 library(inti)
@@ -18,6 +18,7 @@ library(googlesheets4)
 library(googleAuthR)
 library(bootstraplib)
 library(shinydashboard)
+library(ggpubr)
 
 gar_set_client(web_json = "www/yupanapro.json")
 
@@ -234,7 +235,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                  y para poder leer y exportar la información debes dar los permisos correspondientes.
                                  Más información en la politicas de privacidad: https://lozanoisla.com/policy/
 
-                                 5. Cuando hagas des los permisos el boton de "LOG IN" cambiara a color rojo.
+                                 5. Cuando des los permisos el boton de "LOG IN" cambiara a color rojo.
                                  Lo que te permite interactuar con tu información y analizar tus datos.
 
                                  6. Cualquier problema o sugerencia puedes escribir en el rastreador de problemas.
@@ -285,15 +286,28 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                              br(),
 
                              HTML('
-            <div id=footer style="width:100%; margin:auto;">
-            <div style="display:inline-block; width:100%">
-            <p style="text-align:center">
-            <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9sTx5Dbff9O0g6KCU4pwCQ">
-            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/youtube.png" style="height:60px" title="demo"></a>
-            <span style="display:block;"><small>demo</small></span>
-            </p></div>
-            </div>
-                  '),
+              <div id=footer style="width:100%; margin:auto;">
+              <div style="display:inline-block; width:100%">
+              <p style="text-align:center">
+              <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9sTx5Dbff9O0g6KCU4pwCQ">
+              <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/youtube.png" style="height:60px" title="demo"></a>
+              <span style="display:block;"><small>demo</small></span>
+              </p></div>
+              </div>
+                    '),
+
+                             br(),
+
+                             HTML('
+              <div id=footer style="width:100%; margin:auto;">
+              <div style="display:inline-block; width:100%">
+              <p style="text-align:center">
+              <a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/">
+              <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/tarpuy.jpeg" style="height:80px" title="tarpuy"></a>
+              <span style="display:block;"><small>Tarpuy</small></span>
+              </p></div>
+              </div>
+                    '),
 
                              br(),
 
@@ -303,7 +317,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
             <p style="text-align:center">
             <a target="_blank" href="https://www.quipolab.com/">
             <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/www/yupana.png" style="height:80px" title="quipo"></a>
-            <span style="display:block;"><small>quipolab.com</small></span>
+            <span style="display:block;"><small>quipolab</small></span>
             </p></div>
             </div>
                   ')
@@ -397,15 +411,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                        column(width = 10,
 
-                              shinydashboard::box(
-
-                                status = "danger",
-                                solidHeader = T,
-                                width = 12,
-
-                                htmlOutput("rpt_preview"),
-
-                              )
+                                htmlOutput("rpt_preview")
 
                        ),
 
@@ -433,6 +439,35 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                              uiOutput("graph_sheets"),
 
+                             numericInput(inputId = "graph_width"
+                                          , label = "Width (cm)"
+                                          , value = 15
+                                          , step = 5
+                                          , min = 5
+                             ),
+
+                             numericInput(inputId = "graph_height"
+                                          , label = "Height (cm)"
+                                          , value = 10
+                                          , step = 5
+                                          , min = 5
+                             ),
+
+                             numericInput(inputId = "graph_dpi"
+                                          , label = "Resolution"
+                                          , value = 100
+                                          , step = 50
+                                          , min = 100
+                             ),
+
+                             # radioButtons(inputId = "grp_format"
+                             #              , label = "Format"
+                             #              , choices = c("png" = ".png"
+                             #                            , "bmp" = ".bmp")
+                             #              , inline = TRUE
+                             #
+                             # ),
+
                              actionButton(inputId = "graph_create"
                                           , label = "Create"
                                           , class = "btn btn-info"
@@ -443,15 +478,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                       column(width = 10,
 
-                             shinydashboard::box(
-
-                               status = "danger",
-                               solidHeader = T,
-                               width = 12,
-
-                               htmlOutput("graph_preview"),
-
-                             )
+                               htmlOutput("graph_preview")
 
                       ),
 

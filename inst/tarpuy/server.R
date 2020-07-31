@@ -2,7 +2,6 @@
 # -------------------------------------------------------------------------
 
 # open https://flavjack.shinyapps.io/tarpuy/
-# open http://localhost:1221/
 
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -17,14 +16,39 @@ library(metathis)
 library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
+library(shinydashboard)
 
 gar_set_client(web_json = "www/tarpuy.json")
-options(shiny.port = 1221)
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
 shinyServer(function(input, output, session) {
+
+# auth --------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+gar_shiny_auth(session)
+
+access_token <- callModule(googleAuth_js, "js_token")
+
+gs <- reactive({
+
+  if(Sys.getenv('SHINY_PORT') == "") {
+
+    gs4_auth(T)
+
+  } else {
+
+    gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
+             , cache = FALSE
+             , use_oob = TRUE
+             , token = access_token())
+  }
+
+  as_sheets_id(input$gsheet_url)
+
+})
 
 # design type -------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -94,23 +118,6 @@ shinyServer(function(input, output, session) {
 
   })
 
-# auth --------------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-gar_shiny_auth(session)
-
-access_token <- callModule(googleAuth_js, "js_token")
-
-gs <- reactive({
-
-  gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
-           , cache = FALSE
-           , use_oob = TRUE
-           , token = access_token())
-
-  as_sheets_id(input$gsheet_url)
-
-  })
 
 # export fieldbook --------------------------------------------------------
 # -------------------------------------------------------------------------
