@@ -18,12 +18,12 @@ Imports:
     lme4,
     agricolae,
     emmeans,
+    FactoMineR,
     purrr,
     stringr,
     DT
 Suggests:
     googlesheets4,
-    FactoMineR,
     corrplot,
     lmerTest,
     knitr,
