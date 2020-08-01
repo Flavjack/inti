@@ -87,17 +87,15 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                  HTML('
 
-                                 Yupana es una plataforma interactiva para el análisis y gráfica de datos
-                                 de diseños experimentales. Esta desarrollada con la finalidad de promover
-                                 las buenas prácticas en la colecta, análisis y manipulación de datos.
-
-                                 Yupana tiene el objetivo de "continuidad" entre el uso de la app y el software
-                                 estadictico R. Los resultados pueden ser reproducidos en cualquiera de las 2 plataformas.
+                                 <p>
+                                 Yupana es una plataforma interactiva para el análisis y gráfica de datos de diseños experimentales.
+                                 Está desarrollada con la finalidad de promover las buenas prácticas en la colecta, análisis y manipulación de datos.
+                                 Yupana tiene el objetivo de "continuidad" entre el uso de la aplicación y el software estadístico R.
+                                 Yupana está basada en el paquete <strong><em>inti</em></strong>:
+                                 “<em>Tools and statistical procedures for experimentals designs and plant breeding</em>”. </p>
 
                                       '),
                              ),
-
-                             br(),
 
                              box(title = "Caracteristicas"
                                  , solidHeader = T
@@ -107,47 +105,27 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                  HTML('
 
-                                 Yupana esta pensando en la reproducción de los resultados. Por lo que cada
-                                 análisis realizado puede almacenarse en la hojas de cálculo privadas de cada
-                                 usuario, permitiendo acceder a ellos en cualquier momento.
+                                  <p>
+                                  Yupana está pensando en la reproductibilidad de los resultados.
+                                  Los análisis realizados se almacenará en la hojas de cálculo privadas de cada usuario.
+                                  Los resultados de yupana pueden ser usados en R o viceversa. Yupana además permite:
+                                  </p>
+                                  <ul>
 
-                                 La app esta basada en el paquete inti desarrollado en sofware estadistico R.
-                                 Los mismo resultados pueden ser producidos en R usando los output de yupana.
+                                  <li>Estadística descriptiva y con resumen de los datos.
 
-                                 Yupana ademas permite:
+                                  <li>Pruebas de comparación de medias.
 
-                                 1. Estadistica descriptiva.
-                                 2. Pruebas de comparación de medias
-                                 3. Tablas con resumen de los datos.
-                                 4. Gráficos de diagnostico de los modelos.
-                                 5. Gráficos interactivo con opciones de personalización.
+                                  <li>Gráficos de diagnóstico de los modelos.
 
-                                      '),
-                             ),
+                                  <li>Gráficos interactivo con opciones de personalización.
 
-                             br(),
-
-                             box(title = "Info"
-                                 , solidHeader = T
-                                 , background = "green"
-                                 , width = 12
-                                 , status = "primary",
-
-                                 HTML('
-
-                                 Actualmente esta versión de Yupana está en desarrollo.
-                                 Por lo que la interface y las opciones iran cambiando.
-                                 La app esta basada en el paquete inti (Tools and statistical procedures
-                                 for experimentals designs and plant breeding).
-
-                                 https://github.com/Flavjack/inti
+                                  <li>Análisis multivariados
+                                  </li>
+                                  </ul>
 
                                       '),
                              ),
-
-
-                             br(),
-
 
                       ),
 
@@ -181,7 +159,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                    textInput(inputId = "fieldbook_gsheet"
                                              , label = NULL
                                              , value = ""
-                                             , placeholder = "Sheet name ('fb')"
+                                             , placeholder = "Sheet name (fb)"
                                    )
                                ),
 
@@ -192,7 +170,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                    textInput(inputId = "fbsmrvars_gsheet"
                                              , label = NULL
                                              , value = ""
-                                             , placeholder = "Sheet name ('fbsm')"
+                                             , placeholder = "Sheet name (fbsm)"
                                    )
                                ),
 
@@ -224,24 +202,28 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                    HTML('
 
-                                 Para usar yupana es necesario que tus datos esten en una hoja de calculo de google.
+                                    <p>
+                                    Para usar yupana es necesario que tus datos esten en una hoja de cálculo de google.
+                                    </p>
+                                    <ol>
 
-                                 1. Introduce el URL de tu documento.
+                                    <li>Introduce el URL de tu documento y coloca el nombre de la hoja donde está tu base de datos
+                                    (información mínima requerida para usar la app).
 
-                                 2. Coloca el nombre de la hoja donde está tu base de datos.
+                                    <li>Introduce el nombre de la hoja donde donde esta el resumen de tus datos.
+                                    Si no tiene aún, puedes generarla en la pestaña "Fieldbook" de la app.
 
-                                 3. Coloca el nombre de la hoja donde donde esta el resumen de tus datos.
-                                 Si no lo tiene aún, puedes generarla en la pestaña "Fieldbook" de la app.
+                                    <li>Debes dar los permisos para editar las hojas haciendo “LOG IN”;
+                                    ya que la app requiere los permisos correspondientes para leer y exportar la información generada.
+                                    Más información en la politicas de privacidad: <a href="https://lozanoisla.com/policy/">https://lozanoisla.com/policy/</a>
 
-                                 4. Debes dar los permisos para editar las hojas(LOG IN); ya que tu documento es privado
-                                 y para poder leer y exportar la información debes dar los permisos correspondientes.
-                                 Más información en la politicas de privacidad: https://lozanoisla.com/policy/
+                                    <li>Cuando des los permisos el botón de "LOG IN" cambiará a color rojo “LOG OUT”.
+                                    Lo que te permitirá interactuar con tu información y analizar tus datos.
 
-                                 5. Cuando des los permisos el boton de "LOG IN" cambiara a color rojo.
-                                 Lo que te permite interactuar con tu información y analizar tus datos.
-
-                                 6. Cualquier problema o sugerencia puedes escribir en el rastreador de problemas.
-                                 https://github.com/Flavjack/inti/issues
+                                    <li>Cualquier problema o sugerencia puedes escribir en el rastreador de problemas.
+                                    <a href="https://github.com/Flavjack/inti/issues">https://github.com/Flavjack/inti/issues</a>
+                                    </li>
+                                    </ol>
 
                                       '),
 
@@ -256,29 +238,26 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                    HTML('
 
-                                   1. Antes de iniciar a usar yupana, es recomendable que crees una copia de seguridad de tú trabajo.
-                                   Para eso debes ir a tú hoja de cálculo: Archivo > Historial de versiones > Asignar un nombre a la
-                                   versión actual. De esa manera puedes crear multiples copias de tu base de datos, sin crear
-                                   multiples documentos.
+                                  <p>
+                                  Antes de iniciar a usar yupana ten en cuenta las siguientes recomendaciones.
+                                  </p>
+                                  <ul>
 
-                                   2. Es recomendable solo tener una libro de campo "fieldbook" por cada experimento.
-                                   Si tienes muchas pestañas que dificultan tú trabajo, puedes ir ocultandolas
-                                   (click derecho en la pestaña > Ocultar hoja). Al momento de usar la app puedes
-                                   especificar que hoja deseas utilizar y la app extrae la información de la hoja indicada.
+                                  <li>Crea una copia de seguridad de tu documento.
+                                  Vé a tu hoja de cálculo: <em>Archivo > Historial de versiones > Asignar un nombre a la versión actual</em>.
+                                  De esa manera puedes crear múltiples copias de seguridad de tu base de datos, sin crear múltiples documentos.
 
-                                   3. Si deseas crear un diseño experimental que luego puede ser usado de forma rápida en
-                                   yupana, puedes usar la app Tarpuy (https://flavjack.shinyapps.io/tarpuy/).
+                                  <li>Es recomendable solo tener una libro de campo "fieldbook" por cada experimento.
+                                  Si tienes muchas pestañas que dificultan tu trabajo, puedes ir ocultandolas (<em>click derecho en la pestaña > Ocultar hoja</em>).
+                                  Al momento de usar la app puedes especificar qué hoja deseas utilizar y la app extrae la información de la hoja indicada.
 
-                                   4. Mayor información: https://lozanoisla.com/projects/
-
+                                  <li>Si deseas crear un diseño experimental que luego puede ser usado de forma rápida en yupana,
+                                  puedes usar la app Tarpuy: <a href="https://flavjack.shinyapps.io/tarpuy/">https://flavjack.shinyapps.io/tarpuy/</a>
+                                  </li>
+                                  </ul>
                                       '),
-
-
                                )
-
                              ),
-
-
                              ),
 
 

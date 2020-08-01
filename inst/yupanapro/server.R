@@ -391,7 +391,7 @@ output$rpt_preview <- renderUI({
       tags$iframe(src = fbsm_url(),
             style="height:450px; width:100%; scrolling=no; zoom:1.2")
 
-  } else if ( input$rpt_preview_opt == "Model" & input$rpt_variable != "" ) {
+  } else if ( input$rpt_preview_opt == "Model" & !is.null(input$rpt_variable) ) {
 
     tagList(
 
@@ -428,7 +428,7 @@ output$rpt_preview <- renderUI({
       )
     )
 
-  } else if ( input$rpt_preview_opt == "Plots" & input$rpt_variable != "" ) {
+  } else if ( input$rpt_preview_opt == "Plots" & !is.null(input$rpt_variable) ) {
 
     tagList(
 

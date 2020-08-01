@@ -116,11 +116,11 @@ if ( length(arg_dt) >= 2 ) {
 
 # -------------------------------------------------------------------------
 
-if ( !is.na(graph_opts[["type"]]) & !is.null(type) ) {
+if ( !is.null(graph_opts[["type"]]) & !is.null(type) ) {
   type <- type
-} else if ( is.na(graph_opts[["type"]]) ) {
+} else if ( is.null(graph_opts[["type"]]) ) {
   type <- type
-} else if ( !is.na(graph_opts[["type"]]) ) {
+} else if ( !is.null(graph_opts[["type"]]) ) {
   type <- graph_opts[["type"]]
   } else { type <- "bar"}
 
@@ -128,27 +128,31 @@ if ( !is.na(graph_opts[["type"]]) & !is.null(type) ) {
 
 # -------------------------------------------------------------------------
 
-  if ( !is.na(graph_opts[["sig"]]) & !is.null(sig) ) {
+  if ( !is.null(graph_opts[["sig"]]) & !is.null(sig) ) {
     sig <- sig
-  } else if ( is.na(graph_opts[["sig"]]) ) {
+  } else if ( !is.null(sig) ) {
       sig <- sig
-      } else if ( !is.na(graph_opts[["sig"]]) ) { sig <- graph_opts[["sig"]] }
+  } else if ( !is.null(graph_opts[["sig"]]) ) {
+        sig <- graph_opts[["sig"]]
+        } else { sig <- NULL}
 
 # -------------------------------------------------------------------------
 
-  if ( !is.na(graph_opts[["error"]]) & !is.null(error) ) {
+  if ( !is.null(graph_opts[["error"]]) & !is.null(error) ) {
     error <- error
-  } else if ( is.na(graph_opts[["error"]]) ) {
+  } else if ( !is.null(error) ) {
     error <- error
-  } else if ( !is.na(graph_opts[["error"]]) ) { error <- graph_opts[["error"]] }
+  } else if ( !is.null(graph_opts[["error"]]) ) {
+    error <- graph_opts[["error"]]
+    } else { error <- "ste" }
 
 # -------------------------------------------------------------------------
 
-  if ( !is.na(graph_opts[["legend"]]) & !is.null(legend) ) {
+  if ( !is.null(graph_opts[["legend"]]) & !is.null(legend) ) {
     legend <- legend
-  } else if ( is.na(graph_opts[["legend"]]) ) {
+  } else if ( !is.null(legend) ) {
     legend <- legend
-  } else if ( !is.na(graph_opts[["legend"]]) ) {
+  } else if ( !is.null(graph_opts[["legend"]]) ) {
     legend <- graph_opts[["legend"]]
   } else { legend <- "top" }
 
@@ -191,6 +195,7 @@ if ( is.null(color_grps) ) {
 
     ylab <- graph_opts[["ylab"]] %>%
       gsub(pattern = " ", "~", .)
+
     ylab <- eval(expression(parse(text = ylab)))
 
     }
@@ -241,7 +246,7 @@ if ( is.null(color_grps) ) {
                 , na.rm = TRUE) +
 
       scale_y_continuous(limits = limits
-                         , breaks = ((limits[1]*-20):(limits[2]*+20)) * brakes
+                         , breaks = ((limits[1]*-50):(limits[2]*+50)) * brakes
                          , expand = c(0,0)) +
 
       scale_fill_manual(values = color_grps) +
@@ -258,7 +263,10 @@ if ( is.null(color_grps) ) {
                 , hjust = 0.5
                 , angle = 0) } +
 
-      labs(x = xlab, y = ylab, fill = glab)
+      labs(x = xlab
+           , y = ylab
+           , fill = glab
+           )
   }
 
 # line plot ---------------------------------------------------------------
@@ -295,7 +303,7 @@ if ( is.null(color_grps) ) {
                      ) ,  size = 1 ) +
 
       scale_y_continuous(limits = limits
-                         , breaks = ((limits[1]*-20):(limits[2]*+20)) * brakes
+                         , breaks = ((limits[1]*-50):(limits[2]*+50)) * brakes
                          , expand = c(0,0)) +
 
       scale_color_manual(values = color_grps) +
