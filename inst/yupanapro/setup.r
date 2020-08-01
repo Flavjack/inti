@@ -14,6 +14,7 @@ cran <- c("shiny"
          , "shinydashboard"
          , "ggpubr"
          , "FactoMineR"
+         , "corrplot"
          )
 
 git <- c(

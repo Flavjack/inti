@@ -20,6 +20,7 @@ library(bootstraplib)
 library(shinydashboard)
 library(ggpubr)
 library(FactoMineR)
+library(corrplot)
 
 gar_set_client(web_json = "www/yupanapro.json")
 
@@ -162,7 +163,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                    textInput(inputId = "fieldbook_url",
                                              label = NULL
                                              , width = "100%"
-                                             , value = "https://docs.google.com/spreadsheets/d/15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346"
+                                             , value = ""
                                              , placeholder = "Insert google sheet link"
                                    )
 
@@ -179,7 +180,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                    textInput(inputId = "fieldbook_gsheet"
                                              , label = NULL
-                                             , value = "fb"
+                                             , value = ""
                                              , placeholder = "Sheet name ('fb')"
                                    )
                                ),
@@ -190,7 +191,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                    textInput(inputId = "fbsmrvars_gsheet"
                                              , label = NULL
-                                             , value = "fbsm"
+                                             , value = ""
                                              , placeholder = "Sheet name ('fbsm')"
                                    )
                                ),
@@ -458,14 +459,6 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                           , min = 100
                              ),
 
-                             # radioButtons(inputId = "grp_format"
-                             #              , label = "Format"
-                             #              , choices = c("png" = ".png"
-                             #                            , "bmp" = ".bmp")
-                             #              , inline = TRUE
-                             #
-                             # ),
-
                              actionButton(inputId = "graph_create"
                                           , label = "Create"
                                           , class = "btn btn-info"
@@ -504,6 +497,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                           uiOutput("mvr_facts"),
 
+                          uiOutput("mvr_groups"),
+
                           numericInput(inputId = "mvr_width"
                                        , label = "Width (cm)"
                                        , value = 15
@@ -523,12 +518,12 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                        , value = 100
                                        , step = 50
                                        , min = 100
-                          )#,
+                          ),
 
-                          # actionButton(inputId = "mvr_refresh"
-                          #              , label = "Refresh"
-                          #              , class = "btn btn-success"
-                          # )
+                          actionButton(inputId = "mvr_refresh"
+                                       , label = "Refresh"
+                                       , class = "btn btn-success"
+                          )
                    ),
 
 

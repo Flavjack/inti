@@ -22,6 +22,7 @@ library(bootstraplib)
 library(shinydashboard)
 library(ggpubr)
 library(FactoMineR)
+library(corrplot)
 
 gar_set_client(web_json = "www/yupanapro.json")
 
@@ -37,6 +38,21 @@ gar_shiny_auth(session)
 
 access_token <- callModule(googleAuth_js, "js_token")
 
+
+# -------------------------------------------------------------------------
+
+fieldbook_url <- reactive({
+
+  if ( input$fieldbook_url == "" ) {
+
+    fieldbook_url <- "https://docs.google.com/spreadsheets/d/15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346"
+
+  } else { input$fieldbook_url }
+
+})
+
+# -------------------------------------------------------------------------
+
 gs <- reactive({
 
   if(Sys.getenv('SHINY_PORT') == "") {
@@ -51,7 +67,7 @@ gs <- reactive({
              , token = access_token())
     }
 
-  as_sheets_id(input$fieldbook_url)
+  as_sheets_id( fieldbook_url() )
 
   })
 
@@ -59,15 +75,15 @@ gs <- reactive({
 
 fb_url <- reactive({
 
-  info <- gs4_get(gs())
+    info <- gs4_get(gs())
 
-  url <-  info$spreadsheet_url
+    url <-  info$spreadsheet_url
 
-  id <- info$sheets %>%
-    filter(name == input$fieldbook_gsheet) %>%
-    pluck("id")
+    id <- info$sheets %>%
+      filter(name == input$fieldbook_gsheet) %>%
+      pluck("id")
 
-  fb_url <- paste(url, id, sep = "#gid=")
+    fb_url <- paste(url, id, sep = "#gid=")
 
 })
 
@@ -87,12 +103,46 @@ fbsm_url <- reactive({
 
 })
 
+# -------------------------------------------------------------------------
+
+fieldbook <- reactive({
+
+  if ( input$fieldbook_gsheet %in% sheet_names(gs()) ) {
+
+    gs() %>%
+      range_read( input$fieldbook_gsheet )
+
+  } else { fieldbook <- NULL }
+
+})
+
+refresh <- reactive({ list(input$fbsm_refresh, input$mvr_refresh) })
+
+# make reactive!
+
+fbsmrvar <- NULL
+makeReactiveBinding("fbsmrvar")
+
+observeEvent( refresh(), {
+
+  if ( input$fbsmrvars_gsheet %in% sheet_names(gs()) ) {
+
+    fbsmrvar <<- gs() %>%
+      range_read( input$fbsmrvars_gsheet )
+
+  } else { fbsmrvar <<- NULL }
+
+})
+
 # Yupana: Fieldbook -------------------------------------------------------
 # -------------------------------------------------------------------------
 
 observe({
 
   cat("Fieldbook --------------------------------------------------\n")
+
+  cat("fieldbook_url")
+  print(input$fieldbook_url)
 
   cat("fieldbook_gsheet")
   print(input$fieldbook_gsheet)
@@ -121,41 +171,8 @@ observe({
 
 output$fieldbook_preview <- renderUI({
 
-  tags$iframe(src = fb_url()
-              , style="height:450px; width:100%; scrolling=no; zoom:1.2")
-
-})
-
-# -------------------------------------------------------------------------
-
-fieldbook <- reactive({
-
-  if ( input$fieldbook_gsheet %in% sheet_names(gs()) ) {
-
-    gs() %>%
-      range_read( input$fieldbook_gsheet )
-
-    } else { fieldbook <- NULL }
-
-  })
-
-refresh <- reactive({
-  list(input$fbsm_refresh, input$mvr_refresh)
-})
-
-# make reactive!
-
-fbsmrvar <- NULL
-makeReactiveBinding("fbsmrvar")
-
-observeEvent( refresh(), {
-
-  if ( input$fbsmrvars_gsheet %in% sheet_names(gs()) ) {
-
-    fbsmrvar <<- gs() %>%
-      range_read( input$fbsmrvars_gsheet )
-
-  } else { fbsmrvar <<- NULL }
+    tags$iframe(src = fb_url()
+                , style="height:450px; width:100%; scrolling=no; zoom:1.2")
 
 })
 
@@ -278,8 +295,7 @@ output$rpt_dotplot_groups <- renderUI({
 
     selectInput(inputId = "rpt_dotplot_groups"
                 , label = "Dotplot"
-                , choices = c("choose" = ""
-                              , rpt_dotplot_groups_names)
+                , choices = c(rpt_dotplot_groups_names)
     )
 
   } else { print ("Insert fieldbook summary") }
@@ -375,7 +391,7 @@ output$rpt_preview <- renderUI({
       tags$iframe(src = fbsm_url(),
             style="height:450px; width:100%; scrolling=no; zoom:1.2")
 
-  } else if ( input$rpt_preview_opt == "Model" ) {
+  } else if ( input$rpt_preview_opt == "Model" & input$rpt_variable != "" ) {
 
     tagList(
 
@@ -412,7 +428,7 @@ output$rpt_preview <- renderUI({
       )
     )
 
-  } else if ( input$rpt_preview_opt == "Plots" ) {
+  } else if ( input$rpt_preview_opt == "Plots" & input$rpt_variable != "" ) {
 
     tagList(
 
@@ -594,16 +610,30 @@ output$mvr_facts <- renderUI({
 
 # -------------------------------------------------------------------------
 
+output$mvr_groups <- renderUI({
+
+
+  if ( !is.null(input$mvr_facts) ) {
+
+    selectInput(inputId = "mvr_groups"
+                , label = "Groups"
+                , choices = c(input$mvr_facts)
+                )
+
+  } else { print ("Insert summary variables") }
+
+})
+
+# -------------------------------------------------------------------------
+
 mvr <- reactive({
 
-  quali <- input$mvr_facts
-
- mvr <- fieldbook_mvr(data = fieldbook()
-                       , fb_smr = fbsmrvar
-                       , quali_sup = quali
-                       )
-
-  })
+    mvr <- fieldbook_mvr(data = fieldbook()
+                         , fb_smr = fbsmrvar
+                         , summary_by = input$mvr_facts
+                         , groups = input$mvr_groups
+                         )
+    })
 
 
 # -------------------------------------------------------------------------
@@ -620,6 +650,8 @@ output$pca_var <- renderImage({
 
   plot.PCA(x = mvr()$pca
            , choix = "var"
+           , autoLab = "auto"
+           , shadowtext = T
            ) %>% print()
 
   graphics.off()
@@ -642,7 +674,10 @@ output$pca_ind <- renderImage({
 
   plot.PCA(x = mvr()$pca
            , choice = "ind"
-           , habillage = 1
+           , habillage = mvr()$param$groups_n
+           , invisible = "quali"
+           , autoLab = "auto"
+           , shadowtext = T
            ) %>% print()
 
   graphics.off()
@@ -697,11 +732,36 @@ output$hcpc_map <- renderImage({
 
 }, deleteFile = TRUE)
 
+
+# -------------------------------------------------------------------------
+
+output$correlation <- renderImage({
+
+  dpi <- input$mvr_dpi
+  ancho <- input$mvr_width + 5
+  alto <- input$mvr_height + 5
+
+  outfile <- tempfile(fileext = ".png")
+
+  png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
+
+  corrplot(mvr()$corr$correlation
+           , method="number"
+           , tl.col="black"
+           , tl.srt=45
+           )
+
+  graphics.off()
+
+  list(src = outfile)
+
+}, deleteFile = TRUE)
+
 # -------------------------------------------------------------------------
 
 output$mvr_preview <- renderUI({
 
-  if ( input$mvr_module == "PCA" ) {
+  if ( input$mvr_module == "PCA" & !is.null(input$mvr_facts) ) {
 
     tagList(
 
@@ -723,7 +783,7 @@ output$mvr_preview <- renderUI({
 
     )
 
-  } else if ( input$mvr_module == "HCPC" ) {
+  } else if ( input$mvr_module == "HCPC" & !is.null(input$mvr_facts) ) {
 
     tagList(
 
@@ -744,6 +804,23 @@ output$mvr_preview <- renderUI({
       )
 
     )
+
+  } else if (input$mvr_module == "CORR" & !is.null(input$mvr_facts) ) {
+
+    tagList(
+
+      fluidRow(
+
+        box(width = 12,
+
+            div(imageOutput("correlation", width = "100%"), align = "center")
+
+        )
+
+      )
+
+    )
+
 
   }
 })
