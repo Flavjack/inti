@@ -140,7 +140,7 @@ fieldbook <- reactive({
   })
 
 refresh <- reactive({
-  list(input$fbsm_refresh,input$mvr_refresh)
+  list(input$fbsm_refresh, input$mvr_refresh)
 })
 
 # make reactive!
@@ -596,35 +596,19 @@ output$mvr_facts <- renderUI({
 
 mvr <- reactive({
 
- fieldbook_mvr(data = fieldbook()
+  quali <- input$mvr_facts
+
+ mvr <- fieldbook_mvr(data = fieldbook()
                        , fb_smr = fbsmrvar
-                       , quali_sup = input$mvr_facts
+                       , quali_sup = quali
                        )
 
   })
 
 
-output$pcaplot <- renderImage({
-
-  # dpi <- input$mvr_dpi
-  # ancho <- input$mvr_width
-  # alto <- input$mvr_height
-
-  outfile <- tempfile(fileext = ".png")
-
-  png(outfile, width = 15, height = 15, units = "cm", res = 150)
-
-  FactoMineR::plot.PCA(mvr()$pca, choix="var")
-
-  graphics.off()
-
-  list(src = outfile)
-
-}, deleteFile = TRUE)
-
 # -------------------------------------------------------------------------
 
-output$hcpc <- renderImage({
+output$pca_var <- renderImage({
 
   dpi <- input$mvr_dpi
   ancho <- input$mvr_width
@@ -634,7 +618,78 @@ output$hcpc <- renderImage({
 
   png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
 
-  FactoMineR::plot.HCPC(mvr()$hcpc)
+  plot.PCA(x = mvr()$pca
+           , choix = "var"
+           ) %>% print()
+
+  graphics.off()
+
+  list(src = outfile)
+
+}, deleteFile = TRUE)
+
+# -------------------------------------------------------------------------
+
+output$pca_ind <- renderImage({
+
+  dpi <- input$mvr_dpi
+  ancho <- input$mvr_width
+  alto <- input$mvr_height
+
+  outfile <- tempfile(fileext = ".png")
+
+  png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
+
+  plot.PCA(x = mvr()$pca
+           , choice = "ind"
+           , habillage = 1
+           ) %>% print()
+
+  graphics.off()
+
+  list(src = outfile)
+
+}, deleteFile = TRUE)
+
+
+# -------------------------------------------------------------------------
+
+output$hcpc_tree <- renderImage({
+
+  dpi <- input$mvr_dpi
+  ancho <- input$mvr_width
+  alto <- input$mvr_height
+
+  outfile <- tempfile(fileext = ".png")
+
+  png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
+
+  plot.HCPC(x = mvr()$hcpc, choice = "tree")
+
+  graphics.off()
+
+  list(src = outfile)
+
+}, deleteFile = TRUE)
+
+# -------------------------------------------------------------------------
+
+output$hcpc_map <- renderImage({
+
+  dpi <- input$mvr_dpi
+  ancho <- input$mvr_width
+  alto <- input$mvr_height
+
+  outfile <- tempfile(fileext = ".png")
+
+  png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
+
+  plot.HCPC(x = mvr()$hcpc
+            , choice = "map"
+            , legend = list(bty = "y"
+                            , x = "topright")
+            , draw.tree = F
+            )
 
   graphics.off()
 
@@ -650,18 +705,46 @@ output$mvr_preview <- renderUI({
 
     tagList(
 
-      div(imageOutput("pcaplot"), align = "center")
+      fluidRow(
+
+        box(width = 6,
+
+        div(imageOutput("pca_var"), align = "center"),
+
+        ),
+
+        box(width = 6,
+
+        div(imageOutput("pca_ind"), align = "center")
+
+        )
+
+      )
 
     )
-
 
   } else if ( input$mvr_module == "HCPC" ) {
 
     tagList(
 
-      div(imageOutput("hcpc"), align = "center")
+      fluidRow(
+
+        box(width = 6,
+
+            div(imageOutput("hcpc_tree", width = "100%"), align = "center"),
+
+            ),
+
+        box(width = 6,
+
+            div(imageOutput("hcpc_map", width = "100%"), align = "center")
+
+        )
+
+      )
 
     )
+
   }
 })
 

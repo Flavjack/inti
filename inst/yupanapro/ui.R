@@ -495,7 +495,9 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                           radioButtons(inputId = "mvr_module"
                                        , label = "Modules"
                                        , choices = c("PCA"
-                                                     , "HCPC")
+                                                     , "HCPC"
+                                                     , "CORR"
+                                                     )
                                        , inline = TRUE
 
                           ),
@@ -511,7 +513,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                           numericInput(inputId = "mvr_height"
                                        , label = "Height (cm)"
-                                       , value = 10
+                                       , value = 15
                                        , step = 5
                                        , min = 5
                           ),
@@ -521,13 +523,12 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                        , value = 100
                                        , step = 50
                                        , min = 100
-                          ),
+                          )#,
 
-
-                          actionButton(inputId = "mvr_refresh"
-                                       , label = "Refresh"
-                                       , class = "btn btn-success"
-                          )
+                          # actionButton(inputId = "mvr_refresh"
+                          #              , label = "Refresh"
+                          #              , class = "btn btn-success"
+                          # )
                    ),
 
 
@@ -536,6 +537,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                           htmlOutput("mvr_preview")
 
                    ),
+
+                  br()
 
                  )
 
