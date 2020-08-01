@@ -565,11 +565,8 @@ observe({
   cat("mvr_dpi")
   print(input$mvr_dpi)
 
-  cat("mvr_format")
-  print(input$mvr_format)
-
-  cat("mvr_variable")
-  print(input$mvr_variable)
+  cat("mvr_facts")
+  print(input$mvr_facts)
 
 })
 
@@ -577,7 +574,7 @@ observe({
 
 output$mvr_facts <- renderUI({
 
-  if ( !is.null( fieldbook() ) && !is.null( fbsmrvar ) ) {
+  if ( !is.null( fieldbook() ) & !is.null( fbsmrvar ) ) {
 
     mvr_variable_names <- fbsmrvar %>%
       filter(type %in% c("factor", "factores", "factors")) %>%
@@ -599,29 +596,27 @@ output$mvr_facts <- renderUI({
 
 mvr <- reactive({
 
-  mvr <- fieldbook_mvr(data = fieldbook()
+ fieldbook_mvr(data = fieldbook()
                        , fb_smr = fbsmrvar
                        , quali_sup = input$mvr_facts
                        )
 
-  plot.PCA(mvr$pca)
-
   })
 
 
-output$pca <- renderImage({
+output$pcaplot <- renderImage({
 
-  dpi <- input$mvr_dpi
-  ancho <- input$mvr_width
-  alto <- input$mvr_height
+  # dpi <- input$mvr_dpi
+  # ancho <- input$mvr_width
+  # alto <- input$mvr_height
 
   outfile <- tempfile(fileext = ".png")
 
-  png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
+  png(outfile, width = 15, height = 15, units = "cm", res = 150)
 
-  FactoMineR::plot.PCA(mvr()$pca)
+  FactoMineR::plot.PCA(mvr()$pca, choix="var")
 
-  dev.off()
+  graphics.off()
 
   list(src = outfile)
 
@@ -641,7 +636,7 @@ output$hcpc <- renderImage({
 
   FactoMineR::plot.HCPC(mvr()$hcpc)
 
-  dev.off()
+  graphics.off()
 
   list(src = outfile)
 
@@ -655,7 +650,7 @@ output$mvr_preview <- renderUI({
 
     tagList(
 
-      div(imageOutput("pca"), align = "center")
+      div(imageOutput("pcaplot"), align = "center")
 
     )
 

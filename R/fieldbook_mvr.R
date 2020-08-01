@@ -77,7 +77,7 @@ fieldbook_mvr <- function(data
   fb <- data %>%
     select(where(~!all(is.na(.)))) %>%
     mutate(across( factor_list[["variables"]], as.character)) %>%
-    mutate(across( factor_list[["variables"]], as.factor)) %>%
+    # mutate(across( factor_list[["variables"]], as.factor)) %>%
     mutate(across( vars_num[["variables"]], as.numeric)) %>%
     mutate(across( vars_cha[["variables"]], as.character)) %>%
     select({{quali_sup}}, vars_num[["variables"]]) %>%
@@ -100,7 +100,7 @@ fieldbook_mvr <- function(data
 
   clt_info <- pca_info %>%
     HCPC(res = .
-         , nb.clust=-1
+         , nb.clust = -1
          , graph = FALSE)
 
 

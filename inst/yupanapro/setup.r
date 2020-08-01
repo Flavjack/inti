@@ -13,6 +13,7 @@ cran <- c("shiny"
          , "googleAuthR"
          , "shinydashboard"
          , "ggpubr"
+         , "FactoMineR"
          )
 
 git <- c(
