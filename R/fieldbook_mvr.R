@@ -4,7 +4,8 @@
 #'
 #' @param data Field book data.
 #' @param fb_smr Summary of the variables in the fieldbook.
-#' @param quali_sup Variables for group the analysis.
+#' @param summary_by Variables for group the analysis.
+#' @param groups groups for color in PCA
 #'
 #' @details
 #'
@@ -18,6 +19,7 @@
 #'
 #' @import dplyr
 #' @importFrom FactoMineR HCPC PCA
+#' @importFrom tibble column_to_rownames
 #'
 #' @examples
 #'
@@ -41,9 +43,14 @@
 #'
 #'
 #' mvr <- fieldbook_mvr(data, fb_smr
-#' , quali_sup = c("genotype", "treat"))
+#' , summary_by = c("genotype", "treat"), groups = "treat")
 #'
-#' FactoMineR::plot.PCA(mvr$pca)
+#' FactoMineR::plot.PCA(mvr$pca
+#'                      , choix = "ind"
+#'                      , habillage = mvr$param$groups_n
+#'                      , invisible = "quali"
+#' )
+#'
 #' FactoMineR::plot.HCPC(mvr$hcpc)
 #'
 #' }
@@ -52,13 +59,14 @@
 
 fieldbook_mvr <- function(data
                           , fb_smr
-                          , quali_sup
+                          , summary_by
+                          , groups
                             ) {
 
   where <- NULL
 
-  # fieldbook structure -----------------------------------------------------
-  # -------------------------------------------------------------------------
+# fieldbook structure -----------------------------------------------------
+# -------------------------------------------------------------------------
 
   factor_list <- fb_smr %>%
     filter(.data$type %in% "factor") %>%
@@ -77,23 +85,36 @@ fieldbook_mvr <- function(data
   fb <- data %>%
     select(where(~!all(is.na(.)))) %>%
     mutate(across( factor_list[["variables"]], as.character)) %>%
-    # mutate(across( factor_list[["variables"]], as.factor)) %>%
     mutate(across( vars_num[["variables"]], as.numeric)) %>%
     mutate(across( vars_cha[["variables"]], as.character)) %>%
-    select({{quali_sup}}, vars_num[["variables"]]) %>%
-    group_by( across( {{quali_sup}} )) %>%
-    summarize(across(everything(),  ~ mean(., na.rm = TRUE) ))
+    select({{summary_by}}, vars_num[["variables"]]) %>%
+    group_by( across( {{summary_by}} )) %>%
+    summarize(across(everything(),  ~ mean(., na.rm = TRUE) )) %>%
+    unite("rnames", {{summary_by}} , sep = "_", remove = F) %>%
+    column_to_rownames("rnames")
+
+# parameters --------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+quali_ncol <- which(names(fb) %in% {{summary_by}})
+
+groups_ncol <- which(names(fb) %in% {{groups}})
+
+par <- list(quali = summary_by
+            , quali_n = quali_ncol
+            , groups = groups
+            , groups_n = groups_ncol
+            )
 
 # pca ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
-
-  quali_ncol <- which(names(fb) %in% {{quali_sup}})
 
   pca_info <- fb %>%
     PCA(X = .
         , scale.unit = T
         , quali.sup = quali_ncol
-        , graph = FALSE)
+        , graph = FALSE
+        )
 
 # hcpc --------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -101,12 +122,23 @@ fieldbook_mvr <- function(data
   clt_info <- pca_info %>%
     HCPC(res = .
          , nb.clust = -1
-         , graph = FALSE)
+         , graph = FALSE
+         )
 
+# Correlation -------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+cor <- fb %>%
+  select(where(is.numeric)) %>%
+  correlation(method = "pearson")
 
 # results -----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  multvr = list(pca = pca_info, hcpc = clt_info, fb_mvr = fb)
+  multvr = list(pca = pca_info
+                , hcpc = clt_info
+                , corr = cor
+                , data = fb
+                , param = par)
 
 }

@@ -4,14 +4,16 @@
 \alias{fieldbook_mvr}
 \title{Multivariate Analysis}
 \usage{
-fieldbook_mvr(data, fb_smr, quali_sup)
+fieldbook_mvr(data, fb_smr, summary_by, groups)
 }
 \arguments{
 \item{data}{Field book data.}
 
 \item{fb_smr}{Summary of the variables in the fieldbook.}
 
-\item{quali_sup}{Variables for group the analysis.}
+\item{summary_by}{Variables for group the analysis.}
+
+\item{groups}{groups for color in PCA}
 }
 \value{
 result and plots
@@ -44,9 +46,14 @@ gs <- as_sheets_id(url)
 
 
 mvr <- fieldbook_mvr(data, fb_smr
-, quali_sup = c("genotype", "treat"))
+, summary_by = c("genotype", "treat"), groups = "treat")
 
-FactoMineR::plot.PCA(mvr$pca)
+FactoMineR::plot.PCA(mvr$pca
+                     , choix = "ind"
+                     , habillage = mvr$param$groups_n
+                     , invisible = "quali"
+)
+
 FactoMineR::plot.HCPC(mvr$hcpc)
 
 }
