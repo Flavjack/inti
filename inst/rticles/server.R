@@ -6,7 +6,7 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-if ( file.exists("setup.R") ) { source("setup.R") }
+if ( file.exists("setup.r") ) { source("setup.r") }
 
 library(shiny)
 library(miniUI)

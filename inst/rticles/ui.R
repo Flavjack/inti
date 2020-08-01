@@ -6,7 +6,7 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-if ( file.exists("setup.R") ) { source("setup.R") }
+if ( file.exists("setup.r") ) { source("setup.r") }
 
 library(shiny)
 library(miniUI)
@@ -38,7 +38,6 @@ fluidPage(title = "Rticles",
     fluidRow(
       column(2,
 
-             br(),
              br(),
 
              HTML('
@@ -140,16 +139,39 @@ fluidPage(title = "Rticles",
       column(2,
 
              br(),
+
+             HTML('
+
+            <div id=footer style="width:100%; margin:auto;">
+            <div style="display:inline-block; width:100%">
+            <p style="text-align:center">
+            <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9HTZNed2-q3WpQfIGraA1V">
+            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/youtube.png" style="height:60px" title="demo"></a>
+            <span style="display:block;"><small>demo</small></span>
+            </p></div>
+            </div>
+
+                  '),
+
              br(),
 
              HTML('
 
-            <p> </p>
-            <p> </p>
+            <div id=footer style="width:100%; margin:auto;">
+            <div style="display:inline-block; width:100%">
+            <p style="text-align:center">
+            <a target="_blank" href="https://github.com/Flavjack/rticles">
+            <img src="https://image.flaticon.com/icons/svg/25/25231.svg" style="height:60px" title="demo"></a>
+            <span style="display:block;"><small>Github</small></span>
+            </p></div>
+            </div>
+
+                  '),
+
+             HTML('
 
             <h4 style="text-align: center;"><span style="color: #0a0909;">Softwares</span></h4>
 
-            <p> </p>
             <p> </p>
             <p> </p>
             <p> </p>
@@ -200,47 +222,23 @@ fluidPage(title = "Rticles",
 
             </div>
 
-            <br> </br>
+                '),
 
-            <h4 style="text-align: center;"><span style="color: #0a0909;">More info</span></h4>
+             br(),
 
-            <p> </p>
-            <p> </p>
-            <p> </p>
-            <p> </p>
+             HTML('
 
             <div id=footer style="width:100%; margin:auto;">
-
-            <div style="display:inline-block; width:45%">
-            <p style="text-align:center">
-            <a target="_blank" href="https://flavjack.github.io/plex/"><img src="https://bookdown.org/yihui/bookdown/images/logo.png" style="height:60px" title="PLEX" alt="PLEX"></a>
-            </p>
-            </div>
-
-            <div style="display:inline-block; width:45%">
-
-            <p style="text-align:center">
-            <a target="_blank" href="https://github.com/Flavjack/rticles"><img src="https://image.flaticon.com/icons/svg/25/25231.svg" style="height:60px" title="Rticles" alt="Rticles"></a>
-            </p>
-            </div>
-            </div>
-
-            <br> </br>
-
-            <div id=footer style="width:100%; margin:auto;">
-
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://www.quipolab.com/">
-            <img src="https://lozanoisla.com/img/quipo.png" style="height:55px" title="quipo"></a>
+            <img src="https://lozanoisla.com/img/quipo.png" style="height:60px" title="demo"></a>
             </p></div>
-
             </div>
 
                   ')
 
              ),
-
     )
   )
 
