@@ -83,7 +83,6 @@ plot_smr(data
          , error = "ste"
          , legend = "left"
          )
-
 }
 
 }
