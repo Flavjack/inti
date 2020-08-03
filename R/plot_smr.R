@@ -241,7 +241,7 @@ if ( is.null(color_grps) ) {
                 , na.rm = TRUE) +
 
       scale_y_continuous(limits = limits
-                         , breaks = ((limits[1]*-50):(limits[2]*+50)) * brakes
+                         , breaks = ((limits[1]*100):(limits[2]*100)) * brakes
                          , expand = c(0,0)) +
 
       scale_fill_manual(values = color_grps) +
@@ -298,7 +298,7 @@ if ( is.null(color_grps) ) {
                      ) ,  size = 1 ) +
 
       scale_y_continuous(limits = limits
-                         , breaks = ((limits[1]*-50):(limits[2]*+50)) * brakes
+                         , breaks = ((limits[1]*100):(limits[2]*100)) * brakes
                          , expand = c(0,0)) +
 
       scale_color_manual(values = color_grps) +
