@@ -108,7 +108,6 @@ if ( length(arg_dt) >= 2 ) {
 
     color_grps <- arg_dt %>%
       select(colors) %>%
-      drop_na() %>%
       deframe()
 
   } else { color_grps <- NULL }
