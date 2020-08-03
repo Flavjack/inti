@@ -112,7 +112,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                   </p>
                                   <ul>
 
-                                  <li>Estadística descriptiva y con resumen de los datos.
+                                  <li>Estadística descriptiva y resumen de los datos.
 
                                   <li>Pruebas de comparación de medias.
 
@@ -120,7 +120,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                   <li>Gráficos interactivo con opciones de personalización.
 
-                                  <li>Análisis multivariados
+                                  <li>Análisis multivariados.
                                   </li>
                                   </ul>
 
