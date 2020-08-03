@@ -120,10 +120,8 @@ if ( length(arg_dt) >= 2 ) {
 if ( !is.null(type) ) {
   type <- type
   } else if ( !is.na(graph_opts[["type"]]) ) {
-    type <- type
-    } else if ( !is.na(graph_opts[["type"]]) ) {
-      type <- graph_opts[["type"]]
-      } else { type <- "bar"}
+    type <- graph_opts[["type"]]
+    } else { type <- "bar" }
 
   type <- match.arg(type, c("bar", "line"))
 
@@ -133,7 +131,7 @@ if ( !is.null(type) ) {
     legend <- legend
   } else if ( !is.na(graph_opts[["legend"]]) ) {
     legend <- graph_opts[["legend"]]
-  } else { legend <- "top" }
+  } else { legend <-  "top" }
 
   legend <- match.arg(legend, c("top", "left", "right", "bottom", "none"))
 
