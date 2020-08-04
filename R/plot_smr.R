@@ -44,7 +44,7 @@
 #' gs <- as_sheets_id(url)
 #'
 #' (data <- gs %>%
-#'     range_read("LA"))
+#'     range_read("HI"))
 #'
 #' plot_smr(data)
 #'
@@ -203,6 +203,8 @@ if ( is.null(color_grps) ) {
 
     }
 
+# -------------------------------------------------------------------------
+
   if ( is.null(limits) ) {
 
     limits <- graph_opts[["limits"]] %>%
@@ -212,9 +214,23 @@ if ( is.null(color_grps) ) {
 
   if ( is.null(brakes) ) {
 
-    brakes <- as.numeric(graph_opts[["brakes"]])
+    brakes <- abs(as.numeric(graph_opts[["brakes"]]))
 
-    }
+  }
+
+  if ( limits[1] >= 0 & limits[2] >= 0 ) {
+
+    limits_brk <- ((limits[1]*-100):(limits[2]*+100)) * brakes
+
+  } else if ( limits[1] <= 0 &  limits[2] <= 0 ) {
+
+    limits_brk <- ((limits[1]*+100):(limits[2]*-100)) * brakes
+
+  } else if ( limits[1] <= 0 & limits[2] >= 0 ) {
+
+    limits_brk <- ((limits[1]*+100):(limits[2]*+100)) * brakes
+
+  }
 
 # bar plot ----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -241,7 +257,7 @@ if ( is.null(color_grps) ) {
                 , na.rm = TRUE) +
 
       scale_y_continuous(limits = limits
-                         , breaks = ((limits[1]*100):(limits[2]*100)) * brakes
+                         , breaks = limits_brk
                          , expand = c(0,0)) +
 
       scale_fill_manual(values = color_grps) +
@@ -298,7 +314,7 @@ if ( is.null(color_grps) ) {
                      ) ,  size = 1 ) +
 
       scale_y_continuous(limits = limits
-                         , breaks = ((limits[1]*100):(limits[2]*100)) * brakes
+                         , breaks = limits_brk
                          , expand = c(0,0)) +
 
       scale_color_manual(values = color_grps) +
