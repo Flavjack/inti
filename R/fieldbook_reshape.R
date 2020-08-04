@@ -1,0 +1,85 @@
+#' Field book reshape
+#'
+#' Function to reshape fieldbook according a separation character
+#'
+#' @param data Field book raw data.
+#' @param last_factor the last factor in your field book.
+#' @param sep character that separates the last value.
+#' @param new_colname The new name for the column created.
+#' @param last_var the last variable in case you want to exclude several variables.
+#' @param exc_factors factor to exclude during the reshape.
+#'
+#' @details
+#'
+#' If you variable name is variable_evaluation_rep.
+#' The reshape function will help to create the column "rep"
+#' and the new variable name will be variable_evaluation
+#'
+#' @return data frame
+#'
+#' @author
+#'
+#' Flavio Lozano-Isla
+#'
+#' @importFrom dplyr select
+#' @importFrom tidyr pivot_wider pivot_longer
+#'
+#' @examples
+#'
+#' \dontrun{
+#'
+#' library(inti)
+#' library(googlesheets4)
+#' library(tidyverse)
+#'
+#' url <- paste0("https://docs.google.com/spreadsheets/d/"
+#'               , "1gue-wSQcEu4nJigVZdUWsTfIIzhtxpDRdWAQiEHgKak/edit#gid=56106366")
+#' # browseURL(url)
+#' gs <- as_sheets_id(url)
+#'
+#' (data <- gs %>%
+#'     range_read("fb"))
+#'
+#' fbrs <- fieldbook_reshape(data = data
+#'                           , last_factor = "imbt"
+#'                           , sep = "_"
+#'                           , new_colname = "rep"
+#'                           , last_var = "swc_0_1"
+#'                           , exc_factors = "bar_code"
+#'                           )
+#'
+#' }
+#'
+#' @export
+
+fieldbook_reshape <- function(data
+                              , last_factor
+                              , sep
+                              , new_colname
+                              , last_var = NULL
+                              , exc_factors = FALSE
+                             ) {
+
+  where <- NULL
+
+  if ( is.null(last_var) ) {
+
+    last_var <- length(data)
+
+  } else { last_var <- last_var }
+
+  fb <- data %>%
+    select(1:{{last_var}}) %>%
+    {if (!isFALSE(exc_factors)) select(., !{{exc_factors}} ) else .}  %>%
+    select(where(~!all(is.na(.)))) %>%
+    pivot_longer(cols = !c(1:{{last_factor}}),
+                 names_to = c("variables", {{new_colname}}),
+                 names_sep = paste0("_(?!.*",{{sep}},")"),
+                 values_to = c("values")) %>%
+    pivot_wider(names_from = .data$variables, values_from = .data$values)
+
+# result ------------------------------------------------------------------
+
+  return(fb)
+
+}
