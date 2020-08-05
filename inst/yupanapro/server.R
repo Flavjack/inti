@@ -302,7 +302,7 @@ output$last_factor_rs <- renderUI({
 
 output$from_var_rs <- renderUI({
 
-  if ( !is.null(fieldbook()) ) {
+  if ( !is.null(fieldbook()) && input$last_factor_rs != "" ) {
 
     fieldbook_varnames <- fieldbook() %>%
       select( !c(1:input$last_factor_rs)  ) %>%
@@ -314,13 +314,13 @@ output$from_var_rs <- renderUI({
                               , fieldbook_varnames)
     )
 
-  } else { print ("Insert sheet name") }
+  } else { print ("Insert last factor") }
 
 })
 
 output$to_var_rs <- renderUI({
 
-  if ( !is.null(fieldbook()) ) {
+  if ( !is.null(fieldbook()) && input$last_factor_rs != "" ) {
 
     fieldbook_varnames <- fieldbook() %>%
       select( !c(1:input$last_factor_rs)  ) %>%
@@ -332,7 +332,7 @@ output$to_var_rs <- renderUI({
                               , fieldbook_varnames)
     )
 
-  } else { print ("Insert sheet name") }
+  } else { print ("Insert last factor") }
 
 })
 
