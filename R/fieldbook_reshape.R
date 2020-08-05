@@ -6,7 +6,8 @@
 #' @param last_factor the last factor in your field book.
 #' @param sep character that separates the last value.
 #' @param new_colname The new name for the column created.
-#' @param last_var the last variable in case you want to exclude several variables.
+#' @param from_var the first variable in case you want to exclude several variables.
+#' @param to_var the last variable in case you want to exclude several variables.
 #' @param exc_factors factor to exclude during the reshape.
 #'
 #' @details
@@ -44,7 +45,8 @@
 #'                           , last_factor = "imbt"
 #'                           , sep = "_"
 #'                           , new_colname = "rep"
-#'                           , last_var = "swc_0_1"
+#'                           , from_var = "sch_0_1"
+#'                           , to_var = "swc_0_1"
 #'                           , exc_factors = "bar_code"
 #'                           )
 #'
@@ -56,21 +58,28 @@ fieldbook_reshape <- function(data
                               , last_factor
                               , sep
                               , new_colname
-                              , last_var = NULL
-                              , exc_factors = FALSE
+                              , from_var = NULL
+                              , to_var = NULL
+                              , exc_factors = NULL
                              ) {
 
   where <- NULL
 
-  if ( is.null(last_var) ) {
+  if ( is.null(from_var) ) {
 
-    last_var <- length(data)
+    from_var <- 1
 
-  } else { last_var <- last_var }
+  } else { from_var <- from_var }
+
+  if ( is.null(to_var) ) {
+
+    to_var <- length(to_var)
+
+  } else { to_var <- to_var }
 
   fb <- data %>%
-    select(1:{{last_var}}) %>%
-    {if (!isFALSE(exc_factors)) select(., !{{exc_factors}} ) else .}  %>%
+    {if (!is.null(exc_factors)) select(., !{{exc_factors}} ) else .}  %>%
+    select(1:{{last_factor}}, {{from_var}}:{{to_var}}) %>%
     select(where(~!all(is.na(.)))) %>%
     pivot_longer(cols = !c(1:{{last_factor}}),
                  names_to = c("variables", {{new_colname}}),

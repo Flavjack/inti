@@ -307,7 +307,6 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
            ),
 
-
            tabPanel("Fieldbook",
 
 # Yupana Fieldbook --------------------------------------------------------
@@ -317,38 +316,21 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                       column(2,
 
-                             uiOutput("last_factor"),
+                             radioButtons(inputId = "fb_preview_opt"
+                                          , label = "Modules"
+                                          , choices = c("Summary"
+                                                        , "Reshape")
+                                          , inline = TRUE
 
-                             textInput(inputId = "model_facts"
-                                       , label = "Model factors"
-                                       , value = ""
-                                       , placeholder = "block + factor1*factor2"
-                                       ),
+                             ),
 
-                             uiOutput("comp_facts"),
+                             uiOutput("fb_modules")
 
-                             selectInput(inputId = "test_comp"
-                                         , label = "Mean comparison test"
-                                         , choices = c("SNK", "TUKEY", "DUNCAN")
-                                         ),
-
-                             numericInput(inputId = "sig_level"
-                                          , label = "Significance level"
-                                          , value = 0.05
-                                          , step = 0.01
-                                          , min = 0
-                                          ),
-
-                             actionButton(inputId = "fbsmr_generate"
-                                          , label = "Generate"
-                                          , class = "btn btn-warning"
-                                          )
-
-                      ),
+                             ),
 
                       column(width = 10,
 
-                               htmlOutput("fieldbook_preview"),
+                             htmlOutput("fieldbook_preview")
 
                       ),
 

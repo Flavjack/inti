@@ -163,6 +163,9 @@ observe({
   cat("sig_level")
   print(input$sig_level)
 
+  cat("exclude_factor")
+  print(input$exc_fact_rs )
+
 })
 
 # -------------------------------------------------------------------------
@@ -174,7 +177,7 @@ output$fieldbook_preview <- renderUI({
 
 })
 
-# -------------------------------------------------------------------------
+# summary module ----------------------------------------------------------
 
 output$last_factor <- renderUI({
 
@@ -187,9 +190,9 @@ output$last_factor <- renderUI({
                 , label = "Last factor"
                 , choices = c("choose" = ""
                               , fieldbook_names)
-                )
+    )
 
-    } else { print ("Insert sheet name") }
+  } else { print ("Insert sheet name") }
 
 })
 
@@ -199,18 +202,55 @@ output$comp_facts <- renderUI({
 
   if ( !is.null( fieldbook() ) && input$last_factor != ""  ) {
 
-  fieldbook_fctr_names <- fieldbook() %>%
-    select( 1:input$last_factor ) %>%
-    names()
+    fieldbook_fctr_names <- fieldbook() %>%
+      select( 1:input$last_factor ) %>%
+      names()
 
-  selectInput(inputId = "comp_facts"
-              , label = "Comparison factors"
-              , multiple = TRUE
-              , choices = c("choose" = ""
-                            , fieldbook_fctr_names)
-              )
+    selectInput(inputId = "comp_facts"
+                , label = "Comparison factors"
+                , multiple = TRUE
+                , choices = c("choose" = ""
+                              , fieldbook_fctr_names)
+    )
 
   } else { print("Insert last factor") }
+
+})
+
+# -------------------------------------------------------------------------
+
+output$fb_smr <- renderUI({
+
+  tagList(
+
+  uiOutput("last_factor"),
+
+  textInput(inputId = "model_facts"
+            , label = "Model factors"
+            , value = ""
+            , placeholder = "block + factor1*factor2"
+            ),
+
+  uiOutput("comp_facts"),
+
+  selectInput(inputId = "test_comp"
+              , label = "Mean comparison test"
+              , choices = c("SNK", "TUKEY", "DUNCAN")
+              ),
+
+  numericInput(inputId = "sig_level"
+               , label = "Significance level"
+               , value = 0.05
+               , step = 0.01
+               , min = 0
+               ),
+
+  actionButton(inputId = "fbsmr_generate"
+               , label = "Generate"
+               , class = "btn btn-warning"
+               )
+
+  )
 
 })
 
@@ -220,26 +260,163 @@ observeEvent(input$fbsmr_generate, {
 
   if ( !is.null( fieldbook() ) && input$last_factor != "" )  {
 
-  fbsmr <- fieldbook_summary(data = fieldbook()
-                             , last_factor = input$last_factor
-                             , model_facts = input$model_facts
-                             , comp_facts = paste0(input$comp_facts, collapse = ":")
-                             , test_comp = input$test_comp
-                             , sig_level = input$sig_level
-                             )
+    fbsmr <- fieldbook_summary(data = fieldbook()
+                               , last_factor = input$last_factor
+                               , model_facts = input$model_facts
+                               , comp_facts = paste0(input$comp_facts, collapse = ":")
+                               , test_comp = input$test_comp
+                               , sig_level = input$sig_level
+    )
 
 
-  if ( !"fbsm" %in% sheet_names(gs()) ) {
+    if ( !"fbsm" %in% sheet_names(gs()) ) {
 
-    sheet_add(ss = gs(), .after = input$fieldbook_gsheet, sheet = "fbsm")
+      sheet_add(ss = gs(), .after = input$fieldbook_gsheet, sheet = "fbsm")
 
-    fbsmr %>% sheet_write(ss = gs(), sheet = "fbsm")
+      fbsmr %>% sheet_write(ss = gs(), sheet = "fbsm")
 
-  } else { print ("sheet already exist") }
+    } else { print ("sheet already exist") }
 
   }
 
-  })
+})
+
+
+# reshape module ----------------------------------------------------------
+
+output$last_factor_rs <- renderUI({
+
+  if ( !is.null(fieldbook()) ) {
+
+    fieldbook_names <- fieldbook() %>%
+      names()
+
+    selectInput(inputId = "last_factor_rs"
+                , label = "Last factor"
+                , choices = c("choose" = ""
+                              , fieldbook_names)
+    )
+
+  } else { print ("Insert sheet name") }
+
+})
+
+output$last_var_rs <- renderUI({
+
+  if ( !is.null(fieldbook()) ) {
+
+    lastvar <- fieldbook() %>% select(tail(names(.), 1)) %>% names()
+
+    fieldbook_varnames <- fieldbook() %>%
+      select( input$last_factor_rs : lastvar ) %>%
+      names()
+
+    selectInput(inputId = "last_var_rs"
+                , label = "Last Variable"
+                , choices = c("choose" = ""
+                              , fieldbook_varnames)
+    )
+
+  } else { print ("Insert sheet name") }
+
+})
+
+output$exc_fact_rs <- renderUI({ #
+
+  if ( !is.null( fieldbook() ) && input$last_factor_rs != ""  ) {
+
+    exc_fact_rs <- fieldbook() %>%
+      select( 1:input$last_factor_rs ) %>%
+      names()
+
+    selectInput(inputId = "exc_fact_rs"
+                , label = "Exclude Factors"
+                , multiple = TRUE
+                , choices = c("choose" = ""
+                              , exc_fact_rs)
+    )
+
+  } else { print("Insert last factor") }
+
+})
+
+
+
+# -------------------------------------------------------------------------
+
+output$fb_rsp <- renderUI({
+
+  tagList(
+
+    uiOutput("last_factor_rs"),
+
+    textInput(inputId = "fbrs_sep"
+              , label = "Separator"
+              , value = ""
+              , placeholder = "e.g: '_' '-' '.' "
+    ),
+
+    textInput(inputId = "fbrs_newcol"
+              , label = "New column"
+              , value = ""
+              , placeholder = "Column name"
+    ),
+
+
+    uiOutput("last_var_rs"),
+
+    uiOutput("exc_fact_rs"),
+
+    actionButton(inputId = "fbrs_generate"
+                 , label = "Generate"
+                 , class = "btn btn-warning"
+    )
+
+  )
+
+})
+
+# -------------------------------------------------------------------------
+
+observeEvent(input$fbrs_generate, {
+
+  if ( !is.null( fieldbook() ) && input$last_factor_rs != "" )  {
+
+    fbrs <- fieldbook_reshape(data = fieldbook()
+                              , last_factor = input$last_factor_rs
+                              , sep = input$fbrs_sep
+                              , new_colname = input$fbrs_newcol
+                              , last_var = input$last_var_rs
+                              , exc_factors = input$exc_fact_rs
+                              )
+
+    if ( !"fbrs" %in% sheet_names(gs()) ) {
+
+      sheet_add(ss = gs(), .after = input$fieldbook_gsheet, sheet = "fbrs")
+
+      fbrs %>% sheet_write(ss = gs(), sheet = "fbrs")
+
+    } else { print ("sheet already exist") }
+
+  }
+
+})
+
+# modules linked ----------------------------------------------------------
+
+output$fb_modules <- renderUI({
+
+  if ( input$fb_preview_opt == "Summary" ) {
+
+      uiOutput("fb_smr")
+
+  } else if ( input$fb_preview_opt == "Reshape" ) {
+
+    uiOutput("fb_rsp")
+
+  }
+
+})
 
 # Yupana: Analysis --------------------------------------------------------
 # -------------------------------------------------------------------------

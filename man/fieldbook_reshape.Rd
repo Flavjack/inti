@@ -9,8 +9,9 @@ fieldbook_reshape(
   last_factor,
   sep,
   new_colname,
-  last_var = NULL,
-  exc_factors = FALSE
+  from_var = NULL,
+  to_var = NULL,
+  exc_factors = NULL
 )
 }
 \arguments{
@@ -22,7 +23,9 @@ fieldbook_reshape(
 
 \item{new_colname}{The new name for the column created.}
 
-\item{last_var}{the last variable in case you want to exclude several variables.}
+\item{from_var}{the first variable in case you want to exclude several variables.}
+
+\item{to_var}{the last variable in case you want to exclude several variables.}
 
 \item{exc_factors}{factor to exclude during the reshape.}
 }
@@ -57,7 +60,8 @@ fbrs <- fieldbook_reshape(data = data
                           , last_factor = "imbt"
                           , sep = "_"
                           , new_colname = "rep"
-                          , last_var = "swc_0_1"
+                          , from_var = "sch_0_1"
+                          , to_var = "swc_0_1"
                           , exc_factors = "bar_code"
                           )
 
