@@ -60,9 +60,9 @@ fbrs <- fieldbook_reshape(data = data
                           , last_factor = "imbt"
                           , sep = "_"
                           , new_colname = "rep"
-                          , from_var = "sch_0_1"
-                          , to_var = "swc_0_1"
-                          , exc_factors = "bar_code"
+                          #, from_var = "sch_0_1"
+                          #, to_var = "swc_0_1"
+                          #, exc_factors = "bar_code"
                           )
 
 }

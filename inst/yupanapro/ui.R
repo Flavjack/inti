@@ -324,7 +324,9 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                              ),
 
-                             uiOutput("fb_modules")
+                             uiOutput("fb_modules"),
+
+                             br(),
 
                              ),
 

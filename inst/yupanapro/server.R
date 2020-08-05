@@ -268,7 +268,6 @@ observeEvent(input$fbsmr_generate, {
                                , sig_level = input$sig_level
     )
 
-
     if ( !"fbsm" %in% sheet_names(gs()) ) {
 
       sheet_add(ss = gs(), .after = input$fieldbook_gsheet, sheet = "fbsm")
@@ -301,18 +300,34 @@ output$last_factor_rs <- renderUI({
 
 })
 
-output$last_var_rs <- renderUI({
+output$from_var_rs <- renderUI({
 
   if ( !is.null(fieldbook()) ) {
 
-    lastvar <- fieldbook() %>% select(tail(names(.), 1)) %>% names()
-
     fieldbook_varnames <- fieldbook() %>%
-      select( input$last_factor_rs : lastvar ) %>%
+      select( !c(1:input$last_factor_rs)  ) %>%
       names()
 
     selectInput(inputId = "last_var_rs"
-                , label = "Last Variable"
+                , label = "From variable"
+                , choices = c("choose" = ""
+                              , fieldbook_varnames)
+    )
+
+  } else { print ("Insert sheet name") }
+
+})
+
+output$to_var_rs <- renderUI({
+
+  if ( !is.null(fieldbook()) ) {
+
+    fieldbook_varnames <- fieldbook() %>%
+      select( !c(1:input$last_factor_rs)  ) %>%
+      names()
+
+    selectInput(inputId = "to_var_rs"
+                , label = "To variable"
                 , choices = c("choose" = ""
                               , fieldbook_varnames)
     )
@@ -330,7 +345,7 @@ output$exc_fact_rs <- renderUI({ #
       names()
 
     selectInput(inputId = "exc_fact_rs"
-                , label = "Exclude Factors"
+                , label = "Exclude Factors (optional)"
                 , multiple = TRUE
                 , choices = c("choose" = ""
                               , exc_fact_rs)
@@ -339,8 +354,6 @@ output$exc_fact_rs <- renderUI({ #
   } else { print("Insert last factor") }
 
 })
-
-
 
 # -------------------------------------------------------------------------
 
@@ -362,8 +375,9 @@ output$fb_rsp <- renderUI({
               , placeholder = "Column name"
     ),
 
+    uiOutput("from_var_rs"),
 
-    uiOutput("last_var_rs"),
+    uiOutput("to_var_rs"),
 
     uiOutput("exc_fact_rs"),
 
@@ -371,7 +385,6 @@ output$fb_rsp <- renderUI({
                  , label = "Generate"
                  , class = "btn btn-warning"
     )
-
   )
 
 })
@@ -386,7 +399,8 @@ observeEvent(input$fbrs_generate, {
                               , last_factor = input$last_factor_rs
                               , sep = input$fbrs_sep
                               , new_colname = input$fbrs_newcol
-                              , last_var = input$last_var_rs
+                              , from_var = input$from_var_rs
+                              , to_var = input$to_var_rs
                               , exc_factors = input$exc_fact_rs
                               )
 

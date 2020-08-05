@@ -45,9 +45,9 @@
 #'                           , last_factor = "imbt"
 #'                           , sep = "_"
 #'                           , new_colname = "rep"
-#'                           , from_var = "sch_0_1"
-#'                           , to_var = "swc_0_1"
-#'                           , exc_factors = "bar_code"
+#'                           #, from_var = "sch_0_1"
+#'                           #, to_var = "swc_0_1"
+#'                           #, exc_factors = "bar_code"
 #'                           )
 #'
 #' }
@@ -78,9 +78,9 @@ fieldbook_reshape <- function(data
   } else { to_var <- to_var }
 
   fb <- data %>%
-    {if (!is.null(exc_factors)) select(., !{{exc_factors}} ) else .}  %>%
     select(1:{{last_factor}}, {{from_var}}:{{to_var}}) %>%
     select(where(~!all(is.na(.)))) %>%
+    {if (!is.null(exc_factors)) select(., !{{exc_factors}} ) else .}  %>%
     pivot_longer(cols = !c(1:{{last_factor}}),
                  names_to = c("variables", {{new_colname}}),
                  names_sep = paste0("_(?!.*",{{sep}},")"),
