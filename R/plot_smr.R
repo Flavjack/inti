@@ -122,7 +122,7 @@ if ( !is.null(type) ) {
     type <- graph_opts[["type"]]
     } else { type <- "bar" }
 
-  type <- match.arg(type, c("bar", "line"))
+  type <- match.arg(type, c("linea", "barra"))
 
 # -------------------------------------------------------------------------
 
@@ -250,11 +250,16 @@ if ( is.null(color_grps) ) {
                       ) {
 
     plot_dt %>%
+
+      complete( .data[[x]] , .data[[groups]], fill = list(n = 0)) %>%
+
       ggplot( aes( .data[[x]] , .data[[y]], fill = .data[[groups]] ) ) +
-      geom_col(position = position_dodge2(0.9, preserve = "single")
+      geom_col(
+               position = position_dodge2()
                 , colour="black"
                 , size=.4
-                , na.rm = TRUE) +
+               , na.rm = T
+               ) +
 
       scale_y_continuous(limits = limits
                          , breaks = limits_brk
@@ -262,17 +267,24 @@ if ( is.null(color_grps) ) {
 
       scale_fill_manual(values = color_grps) +
 
-      geom_errorbar(aes(ymin = .data[[y]] - .data[[error]]
-                        , ymax = .data[[y]] + .data[[error]])
-                    , position = position_dodge(0.9)
-                    , width = 0.15) +
+      geom_errorbar(
+                    aes(ymin = .data[[y]] - .data[[error]]
+                        , ymax = .data[[y]] + .data[[error]] )
+                    , position = position_dodge(width = 0.9)
+                    , width = 0.15
+                    , na.rm = T
+                    ) +
 
-      {if (!is.null(sig))  geom_text(aes(label = .data[[sig]], y = .data[[y]] + .data[[error]])
-                , position = position_dodge(0.9)
+      {if (!is.null(sig))  geom_text(
+                                     aes(label = .data[[sig]],
+                                         y = .data[[y]] + .data[[error]]  )
+                , position = position_dodge(width = 0.9)
+                , na.rm = T
                 , colour = "black"
                 , vjust = -0.5
                 , hjust = 0.5
-                , angle = 0) } +
+                , angle = 0
+                ) } +
 
       labs(x = xlab
            , y = ylab
@@ -337,7 +349,7 @@ if ( is.null(color_grps) ) {
 # apply functions----------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  if ( type == "bar" ) {
+  if ( type == "barra" ) {
 
     plot <- barplot(plot_dt
                        , x
@@ -354,7 +366,7 @@ if ( is.null(color_grps) ) {
                        )
     }
 
-  if ( type == "line" ) {
+  if ( type == "linea" ) {
 
     plot <- lineplot(plot_dt
                      , x
