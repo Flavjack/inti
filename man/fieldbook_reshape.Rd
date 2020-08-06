@@ -65,6 +65,13 @@ fbrs <- fieldbook_reshape(data = data
                           #, exc_factors = "bar_code"
                           )
 
+fbrs <- fieldbook_reshape(data = data
+                          , last_factor = "geno"
+                          , sep = "_"
+                          , new_colname = "smp"
+                          , exc_factors = "bar_code"
+                          )
+
 }
 
 }

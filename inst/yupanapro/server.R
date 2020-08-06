@@ -164,7 +164,16 @@ observe({
   print(input$sig_level)
 
   cat("exclude_factor")
-  print(input$exc_fact_rs )
+  print(input$exc_fact_rs)
+
+  cat("from_var_rs")
+  print(input$from_var_rs)
+
+  cat("to_var_rs")
+  print(input$to_var_rs)
+
+  cat("exc_fact_rs")
+  print(input$exc_fact_rs)
 
 })
 
@@ -308,7 +317,7 @@ output$from_var_rs <- renderUI({
       select( !c(1:input$last_factor_rs)  ) %>%
       names()
 
-    selectInput(inputId = "last_var_rs"
+    selectInput(inputId = "from_var_rs"
                 , label = "From variable (optional)"
                 , choices = c("choose" = ""
                               , fieldbook_varnames)

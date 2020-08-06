@@ -50,6 +50,13 @@
 #'                           #, exc_factors = "bar_code"
 #'                           )
 #'
+#' fbrs <- fieldbook_reshape(data = data
+#'                           , last_factor = "geno"
+#'                           , sep = "_"
+#'                           , new_colname = "smp"
+#'                           , exc_factors = "bar_code"
+#'                           )
+#'
 #' }
 #'
 #' @export
@@ -65,13 +72,13 @@ fieldbook_reshape <- function(data
 
   where <- NULL
 
-  if ( is.null(from_var) ) {
+  if ( is.null(from_var) | from_var == "") {
 
     from_var <- 1
 
   } else { from_var <- from_var }
 
-  if ( is.null(to_var) ) {
+  if ( is.null(to_var) | to_var == "" ) {
 
     to_var <- ncol(data)
 
