@@ -44,7 +44,7 @@
 #' gs <- as_sheets_id(url)
 #'
 #' (data <- gs %>%
-#'     range_read("HI"))
+#'     range_read("BIOMDW"))
 #'
 #' plot_smr(data)
 #'
@@ -251,7 +251,7 @@ if ( is.null(color_grps) ) {
 
     plot_dt %>%
 
-      {if (groups != x ) complete( .data[[x]] , .data[[groups]], fill = list(n = 0)) else . } %>%
+      # {if (groups != x ) tidyr::complete( {{groups}}, {{x}} ) else . } %>%
 
       ggplot( aes( .data[[x]] , .data[[y]], fill = .data[[groups]] ) ) +
       geom_col(

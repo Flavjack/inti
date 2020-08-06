@@ -71,7 +71,7 @@ url <- paste0("https://docs.google.com/spreadsheets/d/"
 gs <- as_sheets_id(url)
 
 (data <- gs \%>\%
-    range_read("HI"))
+    range_read("BIOMDW"))
 
 plot_smr(data)
 
