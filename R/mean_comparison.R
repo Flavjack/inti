@@ -36,7 +36,7 @@
 #' library(tidyverse)
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15uwCgQRtR01B3FJaZBE8t_0bOC_8Bbey9ccwVlZH0jg/edit#gid=56711214")
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=1414357945")
 #' # browseURL(url)
 #' gs <- as_sheets_id(url)
 #'
@@ -48,7 +48,7 @@
 #'
 #' mc <- mean_comparison(data
 #'                      , fb_smr = fb_smr
-#'                      , variable = "sbulbo"
+#'                      , variable = "BIOMDW"
 #'                      , graph_opts = T
 #'                      )
 #'
@@ -346,8 +346,8 @@ mean_comparison <- function(data
     comparison[["table"]]  <- merge( comparison[["table"]]
                                      , opts_table
                                      , by = 0
-                                     , all.y = T
-    )  %>%
+                                     , all = TRUE
+                                     )  %>%
       mutate(across(.data$Row.names, as.numeric)) %>%
       arrange(.data$Row.names) %>%
       select(-.data$Row.names)

@@ -251,7 +251,7 @@ if ( is.null(color_grps) ) {
 
     plot_dt %>%
 
-      complete( .data[[x]] , .data[[groups]], fill = list(n = 0)) %>%
+      {if (groups != x ) complete( .data[[x]] , .data[[groups]], fill = list(n = 0)) else . } %>%
 
       ggplot( aes( .data[[x]] , .data[[y]], fill = .data[[groups]] ) ) +
       geom_col(
