@@ -44,7 +44,7 @@
 #' gs <- as_sheets_id(url)
 #'
 #' (data <- gs %>%
-#'     range_read("HI"))
+#'     range_read("plot"))
 #'
 #' plot_smr(data)
 #'
@@ -251,7 +251,7 @@ if ( is.null(color_grps) ) {
 
     plot_dt %>%
 
-      {if ({{x}} == {{groups}}) {.} else { complete(., .data[[groups]], .data[[x]] ) } } %>%
+      {if ( x != groups ) complete(., .data[[groups]], .data[[x]] ) else . } %>%
 
       ggplot( aes( .data[[x]] , .data[[y]], fill = .data[[groups]] ) ) +
       geom_col(
