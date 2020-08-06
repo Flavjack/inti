@@ -73,7 +73,7 @@ fieldbook_reshape <- function(data
 
   if ( is.null(to_var) ) {
 
-    to_var <- length(to_var)
+    to_var <- ncol(data)
 
   } else { to_var <- to_var }
 

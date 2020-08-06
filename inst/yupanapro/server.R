@@ -309,7 +309,7 @@ output$from_var_rs <- renderUI({
       names()
 
     selectInput(inputId = "last_var_rs"
-                , label = "From variable"
+                , label = "From variable (optional)"
                 , choices = c("choose" = ""
                               , fieldbook_varnames)
     )
@@ -327,7 +327,7 @@ output$to_var_rs <- renderUI({
       names()
 
     selectInput(inputId = "to_var_rs"
-                , label = "To variable"
+                , label = "To variable (optional)"
                 , choices = c("choose" = ""
                               , fieldbook_varnames)
     )
