@@ -2,7 +2,6 @@
 # -------------------------------------------------------------------------
 
 # open https://flavjack.shinyapps.io/tarpuy/
-# browseURL("http://localhost:1221/")
 
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -17,194 +16,475 @@ library(metathis)
 library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
+library(bootstraplib)
 library(shinydashboard)
 
 gar_set_client(web_json = "www/tarpuy.json")
-options(shiny.port = 1221)
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-fluidPage(title = "Tarpuy",
+bs_theme_new(version = "4+3", bootswatch = NULL)
 
-    tags$head(HTML('<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">')),
-    tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
-    tags$head(includeHTML(("www/analytics.html"))),
-    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/quipo4c.png")),
+navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/">Tarpuy</a></strong></h3>')
+           , windowTitle = "Tarpuy"
+           , position = "fixed-top"
+           , theme = "bootstrap_sandstone.css"
+           , selected = "Intro",
 
-    meta() %>%
-      meta_social(
-        title = "Tarpuy",
-        description = "Tarpuy helps to create experimental designs",
-        url = "https://flavjack.shinyapps.io/tarpuy/",
-        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/quipo4c.png",
-        image_alt = "quipolab.com"
-      ),
+           tabPanel("",
 
-    fluidRow(
+                    bootstrap(), # allow use the new bootstrap
 
-      column(1,
+                    tags$head(includeHTML(("www/analytics.html"))),
+                    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/quipo4c.png")),
 
-             br(),
-             br(),
+                    meta() %>%
+                      meta_social(
+                        title = "Yupana",
+                        description = "Yupana: platform for statistical data analysis",
+                        url = "https://flavjack.shinyapps.io/tarpuy/",
+                        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/files/quipo4c.png",
+                        image_alt = "quipolab.com"
+                      )
 
-             HTML('
+           ),
 
+           # Yupana Info -------------------------------------------------------------
+           # -------------------------------------------------------------------------
+
+           tabPanel("Intro",
+
+                    fluidRow(
+
+                      column(width = 1,
+
+                             HTML('
             <div id=footer style="width:100%; margin:auto;">
-
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://lozanoisla.com/">
             <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/quipo4c.png" style="height:50px" title="flozano"></a>
             <span style="display:block;"><small>lozanoisla.com</small></span>
             </p></div>
-
             </div>
-
                   ')
 
-             ),
+                      ),
 
-      column(2,
+                      column(width = 3,
 
-             HTML('<h1><a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/">Tarpuy</a></h1>'),
+                             box(title = "Presentación"
+                                 , solidHeader = T
+                                 , background = "green"
+                                 , width = 12
+                                 , status = "primary",
 
-             numericInput(
-               inputId = "n_factors"
-               , label = "Factors number"
-               , value = 1
-               , max = 5
-               , min = 1
-             ),
+                                 HTML('
+                                 <p>
+                                 Tarpuy es una plataforma interactiva para la el planeamiento de experimentos (PLEX).
+                                 Está desarrollada con la finalidad de promover las buenas prácticas en la colecta, análisis y manipulación de datos.
+                                 Tarpuy tiene el objetivo de "continuidad" entre el uso de la aplicación y el software estadístico R.
+                                 Tarpuy está basada en el paquete <strong><em>inti</em></strong>:
+                                 “<em>Tools and statistical procedures for experimentals designs and plant breeding</em>”.
+</p>                                      '),
+                             ),
 
-             uiOutput("design_type"),
+                             box(title = "Características"
+                                 , solidHeader = T
+                                 , background = "green"
+                                 , width = 12
+                                 , status = "primary",
 
-             numericInput(inputId = "rep"
-                          , label = "Replications"
-                          , value = 2
-                          , min = 2
-                          ),
+                                 HTML('
+                                 <p>
+                                 Tarpuy está pensando en la elaboración de proyectos experimentales de forma rápida e intuitiva.
+                                 Los resultados se almacenará en la hojas de cálculo privadas de cada usuario.Tarpuy además permite:
+                                 </p>
+                                 <ul>
+                                 <li>Genera la información mínima del proyecto de investigación.
+                                 <li>Generación de libreta de campo (fieldbook) para colecta de datos.
+                                 <li>Diseños de campo para su establecimiento.
+                                 <li>Lista de variables a evaluar en los experimentos.
+                                 </li>
+                                 </ul>
+                                      '),
+                             ),
 
-             numericInput(inputId = "serie"
-                          , label = "Plot digits"
-                          , value = 2
-                          , max = 3
-                          , min = 1
-                          ),
+                      ),
 
-             numericInput(inputId = "seed"
-                          , label = "Seed"
-                          , value = 0
-                          , min = 0
-                          ),
+                      column(width = 7,
 
-             textInput(inputId = "gsheet_name"
-                       , label = "Design factors"
-                       , value = ""
-                       , placeholder = "Sheet name"
-                       ),
+                             fluidRow(
 
-             textInput(inputId = "varlist_name"
-                       , label = "Variables (optional)"
-                       , value = ""
-                       , placeholder = "Sheet name"
-             ),
+                               box(title = div(h4(icon("google"), "Fieldbook Google Sheets (URL)"), align = "center")
+                                   , width = 12
+                                   , solidHeader = T
+                                   , status = "primary",
 
-             actionButton(inputId = "export_fb"
-                          , label = "Generate"
-                          , class = "btn btn-success"
-                          )
+                                   textInput(inputId = "gsheet_url",
+                                             label = NULL,
+                                             width = "100%",
+                                             value = ""
+                                             , placeholder = "Insert google sheet link"
+                                   )
 
-             ),
+                               ),
 
-      column(8,
-
-             fluidRow(
-
-               box(title = div(h4(icon("key")), align = "right")
-                   , width = 1,
-
-                   div(
-                     googleAuth_jsUI("js_token")
-                     , align = "center")
-
-               ),
+                             ),
 
 
-               box(title = div(h4(icon("google"), "Fieldbook Google Sheets (URL)"), align = "center")
-                   , width = 11,
+                             fluidRow(
 
-                 textInput(inputId = "gsheet_url",
-                           label = NULL,
-                           width = "100%",
-                           value = ""
-                           , placeholder = "Insert google sheet link"
-                           ),
-                  ),
+                               box(title = h5("Info")
+                                   , width = 3
+                                   , solidHeader = T,
 
-               ),
+                                   textInput(inputId = "gsheet_info"
+                                             , label = NULL
+                                             , value = "info"
+                                             , placeholder = "Sheet name"
+                                   )
+                               ),
 
-             htmlOutput("gsheet_preview"),
+                               box(title = h5("Design")
+                                   , width = 3
+                                   , solidHeader = T,
 
-               br()
+                                   textInput(inputId = "gsheet_design"
+                                             , label = NULL
+                                             , value = "dsg"
+                                             , placeholder = "Sheet name"
+                                   ),
 
-             ),
+                               ),
 
-      column(1,
+                               box(title = h5("Varibles")
+                                   , width = 3
+                                   , solidHeader = T,
 
-             br(),
-             br(),
+                                   textInput(inputId = "gsheet_varlist"
+                                             , label = NULL
+                                             , value = "var"
+                                             , placeholder = "Sheet name"
+                                   ),
+
+                               ),
+
+                               box(title = div(h4(icon("key")), align = "center")
+                                   , width = 3,
+
+                                   div(
+                                     googleAuth_jsUI("js_token")
+                                     , align = "center")
+
+                               ),
+
+                               box(width = 1)
+
+                             ),
+
+                             br(),
+
+                             fluidRow(
+
+                               box(title = "Cómo usar Tarpuy?"
+                                   , width = 6
+                                   , solidHeader = T
+                                   , height = "200px"
+                                   , status = "primary",
 
 
-             HTML('
+                                   HTML('
+                                   <p>
+                                   Para usar Tarpuy es necesario tener una hoja de cálculo de google vacía.
+                                   </p>
+                                   <ol>
+                                   <li>Introduce el URL de tu documento de google spreadsheets.
+                                   <li>Introduce el nombre de la hoja donde donde se creará/cargará la información.
+                                   <li>Debes dar los permisos para editar las hojas haciendo “LOG IN”;
+                                   ya que la app requiere los permisos correspondientes para leer y exportar la información generada.
+                                   Más información en la politicas de privacidad: <a href="https://inkaverse.com/policy/">https://inkaverse.com/policy/</a>
+                                   <li>Cuando des los permisos el botón de "LOG IN" cambiará a color rojo “LOG OUT”.
+                                   Lo que te permitirá interactuar con tu información y analizar tus datos.
+                                   <li>Cualquier problema o sugerencia puedes escribir en el rastreador de problemas.
+                                   <a href="https://github.com/Flavjack/inti/issues">https://github.com/flavjack/inti/issues</a>
+                                   </li>
+                                   </ol>
+                                      '),
 
-            <div id=footer style="width:100%; margin:auto;">
+                               ),
 
-            <div style="display:inline-block; width:100%">
-            <p style="text-align:center">
-            <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC">
-            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/youtube.png" style="height:60px" title="demo"></a>
-            <span style="display:block;"><small>demo</small></span>
-            </p></div>
+                               box(title = "Recomendaciones"
+                                   , width = 6
+                                   , solidHeader = T
+                                   , height = "200px"
+                                   , status = "primary",
 
-            </div>
 
-                  '),
+                                   HTML('
+                                  <p>
+                                  Antes de iniciar a usar Tarpuy ten en cuenta las siguientes recomendaciones.
+                                  </p>
+                                  <ul>
+                                  <li>Si tu hoja ya contiene información. Crea una copia de seguridad de tu documento.
+                                  Vé a tu hoja de cálculo: <em>Archivo > Historial de versiones > Asignar un nombre a la versión actual</em>.
+                                  De esa manera puedes crear múltiples copias de seguridad de tu base de datos, sin crear múltiples documentos.
+                                  <li>Es recomendable solo tener una libro de campo "fieldbook" por cada experimento.
+                                  Si tienes muchas pestañas que dificultan tu trabajo, puedes ir ocultandolas (<em>click derecho en la pestaña > Ocultar hoja</em>).
+                                  Al momento de usar la app puedes especificar qué hoja deseas utilizar y la app extrae la información de la hoja indicada.
+                                  <li>Si deseas analizar los datos experimentales de tu proyecto, puedes usar la app Yupana
+                                  (<a href="https://flavjack.shinyapps.io/yupanapro/">https://flavjack.shinyapps.io/yupanapro/</a>)
+                                  </li>
+                                  </ul>
+                                  <p>
+                                      '),
+                               )
+                             ),
+                      ),
 
-             br(),
 
-             HTML('
+                      column(1,
 
-            <div id=footer style="width:100%; margin:auto;">
+                              HTML('
 
-            <div style="display:inline-block; width:100%">
-            <p style="text-align:center">
-            <a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/">
-            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/www/yupana.png" style="height:80px" title="yupana"></a>
-            <span style="display:block;"><small>Yupana</small></span>
-            </p></div>
+                             <div id=footer style="width:100%; margin:auto;">
 
-            </div>
+                             <div style="display:inline-block; width:100%">
+                             <p style="text-align:center">
+                             <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC">
+                             <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/youtube.png" style="height:60px" title="demo"></a>
+                             <span style="display:block;"><small>demo</small></span>
+                             </p></div>
 
-                  '),
+                             </div>
 
-             br(),
+                                   '),
 
-             HTML('
+                              br(),
 
-            <div id=footer style="width:100%; margin:auto;">
+                              HTML('
 
-            <div style="display:inline-block; width:100%">
-            <p style="text-align:center">
-            <a target="_blank" href="https://www.quipolab.com/">
-            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/tarpuy.jpeg" style="height:80px" title="quipo"></a>
-            <span style="display:block;"><small>quipolab</small></span>
-            </p></div>
+                             <div id=footer style="width:100%; margin:auto;">
 
-            </div>
+                             <div style="display:inline-block; width:100%">
+                             <p style="text-align:center">
+                             <a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/">
+                             <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/www/yupana.png" style="height:80px" title="yupana"></a>
+                             <span style="display:block;"><small>Yupana</small></span>
+                             </p></div>
 
-                  ')
+                             </div>
 
-             )
-      )
-  )
+                                   '),
+
+                              br(),
+
+                              HTML('
+
+                             <div id=footer style="width:100%; margin:auto;">
+
+                             <div style="display:inline-block; width:100%">
+                             <p style="text-align:center">
+                             <a target="_blank" href="https://www.quipolab.com/">
+                             <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/tarpuy.jpeg" style="height:80px" title="quipo"></a>
+                             <span style="display:block;"><small>quipolab</small></span>
+                             </p></div>
+
+                             </div>
+
+                                   ')
+
+                      )
+
+                    )
+
+
+           ),
+
+           tabPanel("Plex",
+
+                    # Yupana Fieldbook --------------------------------------------------------
+                    # -------------------------------------------------------------------------
+
+                    fluidRow(
+
+                      column(width = 2,
+
+                             checkboxGroupInput(inputId = "plex_fields"
+                                                , label = "Fieldbook fields"
+                                                , choices = c("location"
+                                                              , "dates"
+                                                              , "about"
+                                                              , "fieldbook"
+                                                              , "evaluators"
+                                                              , "environment"
+                                                              , "institutions"
+                                                              , "researchers"
+                                                              , "altitude"
+                                                              , "georeferencing"
+                                                              , "album"
+                                                              , "github"
+                                                              )
+                                                , selected = c("location"
+                                                               , "dates"
+                                                               , "about"
+                                                               , "fieldbook"
+                                                               , "evaluators"
+                                                               , "enviroment"
+                                                               )
+                                                ),
+
+                             actionButton(inputId = "plex_generate"
+                                          , label = "Generate"
+                                          , class = "btn btn-success"
+                             )
+
+                             ),
+
+                      column(width = 3,
+
+
+                             uiOutput("plex_fields")
+
+                      ),
+
+                      column(width = 5,
+
+                             textAreaInput(inputId = "plex_idea"
+                                           , label = "Idea"
+                                           , placeholder = "How the idea was born."
+                                           , width = "180%"
+                             ),
+
+                             textAreaInput(inputId = "plex_goal"
+                                           , label = "Goal"
+                                           , placeholder = "The main goal of the project."
+                                           , width = "180%"
+                             ),
+
+                             textAreaInput(inputId = "plex_hypothesis"
+                                           , label = "Hypothesis"
+                                           , placeholder = "What are the expected results."
+                                           , width = "180%"
+                             ),
+
+                             textAreaInput(inputId = "plex_rationale"
+                                           , label = "Rationale"
+                                           , placeholder = "Based in which evidence is planned the experiment."
+                                           , width = "180%"
+
+                             ),
+
+                             textAreaInput(inputId = "plex_objectives"
+                                           , label = "Objectives"
+                                           , placeholder = "Objectives of the project."
+                                           , width = "180%"
+                             ),
+
+                             textAreaInput(inputId = "plex_plan"
+                                           , label = "Project plan"
+                                           , placeholder = "General plan description of the project (M & M)."
+                                           , width = "180%"
+                             )
+
+                      ),
+
+                      column(width = 2,
+
+                             numericInput(
+                               inputId = "plex_nfactors"
+                               , label = "Factors number"
+                               , value = 1
+                               , max = 5
+                               , min = 1
+                             ),
+
+                             uiOutput("plex_design"),
+
+                             numericInput(inputId = "plex_rep"
+                                          , label = "Replications"
+                                          , value = 2
+                                          , min = 2
+                             ),
+
+                             numericInput(inputId = "plex_serie"
+                                          , label = "Plot digits"
+                                          , value = 2
+                                          , max = 3
+                                          , min = 1
+                             ),
+
+                             numericInput(inputId = "plex_seed"
+                                          , label = "Seed"
+                                          , value = 0
+                                          , min = 0
+                             )
+
+
+                      )
+
+                    )
+
+# Tarpuy design -----------------------------------------------------------
+# -------------------------------------------------------------------------
+
+           ),
+
+           tabPanel("Design",
+
+                    fluidRow(
+
+                      column(2,
+
+                             numericInput(
+                               inputId = "design_nfactors"
+                               , label = "Factors number"
+                               , value = 1
+                               , max = 5
+                               , min = 1
+                             ),
+
+                             uiOutput("design_type"),
+
+                             numericInput(inputId = "design_rep"
+                                          , label = "Replications"
+                                          , value = 2
+                                          , min = 2
+                                          ),
+
+                             numericInput(inputId = "design_serie"
+                                          , label = "Plot digits"
+                                          , value = 2
+                                          , max = 3
+                                          , min = 1
+                                          ),
+
+                             numericInput(inputId = "design_seed"
+                                          , label = "Seed"
+                                          , value = 0
+                                          , min = 0
+                                          ),
+
+                             actionButton(inputId = "export_fb"
+                                          , label = "Generate"
+                                          , class = "btn btn-success"
+                                          )
+
+                             ),
+
+                      column(10,
+
+                             htmlOutput("gsheet_preview"),
+
+                             br(),
+                             br()
+
+                             )
+                      )
+           )
+
+# Tarpuy end code ---------------------------------------------------------
+# -------------------------------------------------------------------------
+
+)

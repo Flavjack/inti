@@ -6,7 +6,8 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-cran <- c("shiny"
+cran <- c("devtools"
+         , "shiny"
          , "metathis"
          , "tidyverse"
          , "googlesheets4"
@@ -44,7 +45,7 @@ rm(cran, git, installed)
 
 # https://console.cloud.google.com/apis/credentials
 
-# https://shiny.rstudio.com/tutorial/written-tutorial/lesson3/
+# open https://shiny.rstudio.com/tutorial/written-tutorial/lesson3/
 
 # http://xip.io/
 
