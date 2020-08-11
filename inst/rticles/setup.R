@@ -34,3 +34,7 @@ if (any(installed == FALSE)) {
 invisible(lapply(git, devtools::install_github))
 invisible(lapply(c(cran, sub(".*/", "", git)), library, character.only = TRUE))
 rm(cran, git, installed)
+
+# References
+
+# open https://realfavicongenerator.net/

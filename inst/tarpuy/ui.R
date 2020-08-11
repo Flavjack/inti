@@ -37,15 +37,16 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                     bootstrap(), # allow use the new bootstrap
 
                     tags$head(includeHTML(("www/analytics.html"))),
-                    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/tarpuy.jpeg")),
+                    tags$head(tags$link(rel="shortcut icon"
+                                        , href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/favicon/android-chrome-512x512.png")),
 
                     meta() %>%
                       meta_social(
-                        title = "Yupana",
-                        description = "Yupana: platform for statistical data analysis",
+                        title = "Tarpuy",
+                        description = "Tarpuy: Easy way to create fieldbook experimental designs.",
                         url = "https://flavjack.shinyapps.io/tarpuy/",
-                        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/files/quipo4c.png",
-                        image_alt = "quipolab.com"
+                        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/favicon/android-chrome-512x512.png",
+                        image_alt = "inkaverse.com"
                       )
 
            ),

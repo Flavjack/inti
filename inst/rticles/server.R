@@ -16,6 +16,15 @@ library(fs)
 library(metathis)
 library(inti)
 
+# update template ---------------------------------------------------------
+# -------------------------------------------------------------------------
+
+# unlink("inst/rticles/template", recursive = T)
+# dir.create("inst/rticles/template")
+# inti::rticles(path = "inst/rticles/template", type = "book")
+# file.rename(from = "inst/rticles/template/rticles.Rproj"
+#             , to = "inst/rticles/template/rticles.proj")
+
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 

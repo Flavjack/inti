@@ -40,14 +40,14 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                     bootstrap(), # allow use the new bootstrap
 
                     tags$head(includeHTML(("www/analytics.html"))),
-                    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/www/yupana.png")),
+                    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/www/favicon/android-chrome-512x512.png")),
 
                     meta() %>%
                       meta_social(
                         title = "Yupana",
                         description = "Yupana: platform for statistical data analysis",
                         url = "https://flavjack.shinyapps.io/tarpuy/",
-                        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/files/quipo4c.png",
+                        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/www/favicon/android-chrome-512x512.png",
                         image_alt = "quipolab.com"
                       )
 

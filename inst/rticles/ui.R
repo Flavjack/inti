@@ -24,14 +24,14 @@ fluidPage(title = "Rticles",
     tags$head(HTML('<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">')),
     tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
     tags$head(includeHTML(("www/analytics.html"))),
-    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/quipo4c.png")),
+    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/favicon/android-chrome-512x512.png")),
 
     meta() %>%
       meta_social(
         title = "Rticles",
-        description = "create technical documents with markdown and bookdown",
+        description = "Rticles: create technical documents with markdown and bookdown",
         url = "https://flavjack.shinyapps.io/rticles/",
-        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/quipo4c.png",
+        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/favicon/android-chrome-512x512.png",
         image_alt = "quipolab.com"
       ),
 

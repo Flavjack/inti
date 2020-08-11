@@ -93,7 +93,7 @@ rticles <- function(path = NULL
 
     if (!file.exists(paste0(path, "files/book.bib"))) {
       download.file(
-        url = "https://raw.githubusercontent.com/Flavjack/rticles/master/cnfg/book.bib",
+        url = "https://raw.githubusercontent.com/Flavjack/rticles/master/files/book.bib",
         destfile = paste0(path, "files/book.bib"),
         mode = "wb"
       )
@@ -193,7 +193,6 @@ rticles <- function(path = NULL
 
     }
 
-
     file.copy(paste0(files.dir, "files")
               , paste0(tmp.dir, name)
               , recursive = T
@@ -220,13 +219,8 @@ rticles <- function(path = NULL
                 , overwrite = T
       )
 
-      file.copy(paste0(files.dir, "rticles.r")
-                , paste0(tmp.dir, name , "/", "rticles.Rproj")
-                , overwrite = T
-      )
-
-      file.copy(paste0(files.dir, "rticles.R")
-                , paste0(tmp.dir, name , "/", "rticles.Rproj")
+      file.copy(paste0(files.dir, "rticles.proj")
+                , to = paste0(tmp.dir, name , "/", "rticles.Rproj")
                 , overwrite = T
       )
 

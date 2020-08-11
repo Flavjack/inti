@@ -43,3 +43,5 @@ rm(cran, git, installed)
 
 # https://rpubs.com/therimalaya/43190
 
+# open https://realfavicongenerator.net/
+
