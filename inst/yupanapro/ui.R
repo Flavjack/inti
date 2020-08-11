@@ -40,7 +40,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                     bootstrap(), # allow use the new bootstrap
 
                     tags$head(includeHTML(("www/analytics.html"))),
-                    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/quipo4c.png")),
+                    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/www/yupana.png")),
 
                     meta() %>%
                       meta_social(
