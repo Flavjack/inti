@@ -14,7 +14,7 @@ fieldbook_plex(
   plan = NULL,
   institutions = NULL,
   researchers = NULL,
-  evaluators = NULL,
+  manager = NULL,
   location = NULL,
   altitude = NULL,
   georeferencing = NULL,
@@ -51,7 +51,7 @@ fieldbook_plex(
 
 \item{researchers}{Persons involved in the project.}
 
-\item{evaluators}{Persons responsible of the collection of the data.}
+\item{manager}{Persons responsible of the collection of the data.}
 
 \item{location}{Location of the project.}
 

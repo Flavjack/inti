@@ -18,6 +18,7 @@ library(googlesheets4)
 library(googleAuthR)
 library(bootstraplib)
 library(shinydashboard)
+library(googledrive)
 
 gar_set_client(web_json = "www/tarpuy.json")
 
@@ -314,27 +315,26 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                              checkboxGroupInput(inputId = "plex_fields"
                                                 , label = "Fieldbook fields"
-                                                , choices = c("location"
+                                                , choices = c("manager"
+                                                              , "location"
                                                               , "dates"
                                                               , "about"
-                                                              , "fieldbook"
-                                                              , "evaluators"
                                                               , "environment"
                                                               , "institutions"
                                                               , "researchers"
                                                               , "altitude"
                                                               , "georeferencing"
+                                                              , "fieldbook"
                                                               , "album"
                                                               , "github"
                                                               )
-                                                , selected = c("location"
+                                                , selected = c("manager"
+                                                               , "location"
                                                                , "dates"
                                                                , "about"
-                                                               , "fieldbook"
-                                                               , "evaluators"
-                                                               , "enviroment"
+                                                               , "environment"
                                                                )
-                                                ),
+                             ),
 
                              actionButton(inputId = "plex_generate"
                                           , label = "Generate"
@@ -345,9 +345,133 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                       column(width = 3,
 
+                             # conditional panel "%in%" --> .includes("values")
 
-                             uiOutput("plex_fields")
+                             conditionalPanel(condition =  ' input["plex_fields"].includes("manager") ',
 
+                                              textInput(inputId = "plex_manager"
+                                                        , label = "Project manager"
+                                                        , width = "100%"
+                                                        , value = NA
+                                              )
+
+                             ),
+
+                             conditionalPanel(condition = ' input["plex_fields"].includes("location") ',
+
+                                              textInput(inputId = "plex_location"
+                                                        , label = "Location"
+                                                        , width = "100%"
+                                                        , value = NA
+                                              )
+
+                             ),
+
+                             conditionalPanel(condition =  " input.plex_fields.includes('dates') ",
+
+                                              dateRangeInput(inputId = "plex_dates"
+                                                             , label = "Experiment dates (start/end)"
+                                                             , end = NA
+                                                             , width = "100%"
+                                              )
+                             ),
+
+                             conditionalPanel(condition =  ' input["plex_fields"].includes("about") ',
+
+                                              textInput(inputId = "plex_about"
+                                                        , label = "About"
+                                                        , width = "100%"
+                                                        , placeholder = "Short project description"
+                                                        , value = NA
+                                              )
+
+                             ),
+
+                             conditionalPanel(condition =  ' input["plex_fields"].includes("environment") ',
+
+                                              selectInput(inputId = "plex_environment"
+                                                        , label = "Environment"
+                                                        , choices = c(""
+                                                                      , "Field"
+                                                                      , "Greenhouse"
+                                                                      , "Laboratory"
+                                                                      )
+                                                        , width = "100%"
+                                                        )
+
+                             ),
+
+                             conditionalPanel(condition =  ' input["plex_fields"].includes("institutions") ',
+
+                                                textInput(inputId = "plex_institutions"
+                                                          , label = "Institutions"
+                                                          , width = "100%"
+                                                          , value = NA
+                                                )
+
+                             ),
+
+                             conditionalPanel(condition =  ' input["plex_fields"].includes("researchers") ',
+
+                                                textInput(inputId = "plex_researchers"
+                                                          , label = "Researchers"
+                                                          , width = "100%"
+                                                          , value = NA
+                                                )
+
+                             ),
+
+                             conditionalPanel(condition = ' input["plex_fields"].includes("altitude") ',
+
+                                              textInput(inputId = "plex_altitude"
+                                                        , label = "Altitude (m.a.s.l)"
+                                                        , width = "100%"
+                                                        , value = NA
+                                              )
+
+                             ),
+
+                             conditionalPanel(condition =  ' input["plex_fields"].includes("georeferencing") ',
+
+                                              textInput(inputId = "plex_georeferencing"
+                                                        , label = "Georeferencing"
+                                                        , width = "100%"
+                                                        , value = NA
+                                              )
+
+                             ),
+
+                             conditionalPanel(condition =  ' input["plex_fields"].includes("fieldbook") ',
+
+                                              textInput(inputId = "plex_fieldbook"
+                                                        , label = "Fieldbook name"
+                                                        , value = NA
+                                                        , width = "100%"
+                                              )
+
+                             ),
+
+                             conditionalPanel(condition =  ' input["plex_fields"].includes("album") ',
+
+                                              textInput(inputId = "plex_album"
+                                                        , label = "Album"
+                                                        , width = "100%"
+                                                        , placeholder = "url or link"
+                                                        , value = NA
+                                              )
+
+                             ),
+
+                             conditionalPanel(condition =  ' input["plex_fields"].includes("github") ',
+
+                                              textInput(inputId = "plex_github"
+                                                        , label = "Github"
+                                                        , width = "100%"
+                                                        , placeholder = "url or link"
+                                                        , value = NA
+                                              )
+
+                             )
                       ),
 
                       column(width = 5,
@@ -445,6 +569,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                , max = 5
                                , min = 1
                              ),
+
+                             uiOutput("plex_location"),
 
                              uiOutput("design_type"),
 

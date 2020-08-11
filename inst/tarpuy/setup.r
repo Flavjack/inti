@@ -13,10 +13,11 @@ cran <- c("devtools"
          , "googlesheets4"
          , "googleAuthR"
          , "shinydashboard"
+         , "googledrive"
          )
 
 git <- c(
-  "Flavjack/inti" # Tools and Statistical Procedures in Plant Science
+  # "Flavjack/inti" # Tools and Statistical Procedures in Plant Science
   )
 
 installed <- c(cran, sub(".*/", "", git)) %in% rownames(installed.packages())
@@ -54,3 +55,5 @@ rm(cran, git, installed)
 # https://github.com/MarkEdmondson1234/googleAuthR/issues/111
 
 # open https://realfavicongenerator.net/
+
+# https://googlesheets4.tidyverse.org/articles/articles/drive-and-sheets.html

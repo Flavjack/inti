@@ -29,7 +29,7 @@ fluidPage(title = "Rticles",
     meta() %>%
       meta_social(
         title = "Rticles",
-        description = "Rticles: create technical documents with markdown and bookdown",
+        description = "Rticles: Create technical documents with markdown and bookdown",
         url = "https://flavjack.shinyapps.io/rticles/",
         image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/favicon/android-chrome-512x512.png",
         image_alt = "quipolab.com"

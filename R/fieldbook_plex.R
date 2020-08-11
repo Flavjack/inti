@@ -11,7 +11,7 @@
 #' @param plan General description of the project (M & M).
 #' @param institutions Institutions involved in the project.
 #' @param researchers Persons involved in the project.
-#' @param evaluators Persons responsible of the collection of the data.
+#' @param manager Persons responsible of the collection of the data.
 #' @param location Location of the project.
 #' @param altitude Altitude of the experiment (m.a.s.l).
 #' @param georeferencing Georeferencing information.
@@ -75,7 +75,7 @@ fieldbook_plex <- function(data = NULL
                           , plan = NULL
                           , institutions = NULL
                           , researchers = NULL
-                          , evaluators = NULL
+                          , manager = NULL
                           , location = NULL
                           , altitude = NULL
                           , georeferencing = NULL
@@ -94,7 +94,7 @@ fieldbook_plex <- function(data = NULL
                          ) {
 
   # idea <- goal <- hypothesis <-  rationale <- objectives <-  plan <- NA
-  # institutions <- researchers <- evaluators <- location <- altitude <- NA
+  # institutions <- researchers <- manager <- location <- altitude <- NA
   # georeferencing <- environment <- start <- end <- album <- github <- NA
   # fieldbook <- NA
   # nfactor = 1
@@ -118,7 +118,7 @@ if ( is.null(data) ) {
              , PLAN = plan
              , INSTITUTIONS = institutions
              , RESEARCHERS = researchers
-             , EVALUATOR = evaluators
+             , MANAGER = manager
              , LOCATION = location
              , ALTITUDE = altitude
              , GEOREFERENCING = georeferencing

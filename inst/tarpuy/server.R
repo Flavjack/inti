@@ -17,6 +17,7 @@ library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
 library(shinydashboard)
+library(googledrive)
 
 gar_set_client(web_json = "www/tarpuy.json")
 
@@ -49,10 +50,12 @@ gs <- reactive({
   if(Sys.getenv('SHINY_PORT') == "") {
 
     gs4_auth(T)
+    drive_auth(T)
 
   } else {
 
-    gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
+    gs4_auth(scopes = c("https://www.googleapis.com/auth/spreadsheets"
+                        , "https://www.googleapis.com/auth/drive")
              , cache = FALSE
              , use_oob = TRUE
              , token = access_token())
@@ -61,6 +64,10 @@ gs <- reactive({
   as_sheets_id( gsheet_url() )
 
 })
+
+# drive auth --------------------------------------------------------------
+
+# drive_auth(token = gs())
 
 # tarpuy plex -------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -71,134 +78,23 @@ observe({
 
   cat("--------------------------------------------------\n")
 
-  cat("input$plex_fields")
-  print(input$plex_fields)
+  cat("input$plex_fieldbook")
+  print(input$plex_fieldbook)
+
+  cat("input$plex_location")
+  print(input$plex_location)
+
+  cat("input$plex_dates[1]")
+  print(input$plex_dates[1])
+
+  cat("input$plex_dates[2]")
+  print(input$plex_dates[2])
+
+  cat("input$plex_about")
+  print(input$plex_about)
+
 
 })
-
-
-# conditional panel -------------------------------------------------------
-
-output$plex_fields <- renderUI({
-
-  tagList(
-
-  if("location" %in% input$plex_fields ){
-
-    textInput(inputId = "plex_location"
-              , label = "Location"
-              , width = "100%"
-    )
-
-  },
-
-  if("dates" %in% input$plex_fields ){
-
-    dateRangeInput(inputId = "plex_dates"
-                   , label = "Experiment dates (start / end)"
-                   , end = NA
-                   , width = "100%"
-    )
-
-  },
-
-  if("about" %in% input$plex_fields ){
-
-    textInput(inputId = "plex_about"
-              , label = "About"
-              , width = "100%"
-              , placeholder = "Short project description"
-              )
-
-  },
-
-  if("fieldbook" %in% input$plex_fields ){
-
-    textInput(inputId = "plex_fieldbook"
-              , label = "Fieldbook name"
-              , width = "100%"
-    )
-
-  },
-
-  if("evaluators" %in% input$plex_fields ){
-
-    textInput(inputId = "plex_evaluators"
-              , label = "Evaluators"
-              , width = "100%"
-    )
-
-  },
-
-  if("environment" %in% input$plex_fields ){
-
-    textInput(inputId = "plex_environment"
-              , label = "Environment"
-              , width = "100%"
-    )
-
-  },
-
-  if("institutions" %in% input$plex_fields ){
-
-    textInput(inputId = "plex_institutions"
-              , label = "Institutions"
-              , width = "100%"
-    )
-
-  },
-
-  if("researchers" %in% input$plex_fields ){
-
-    textInput(inputId = "plex_researchers"
-              , label = "Researchers"
-              , width = "100%"
-    )
-
-  },
-
-  if("altitude" %in% input$plex_fields ){
-
-    textInput(inputId = "plex_altitude"
-              , label = "Altitude (m.a.s.l)"
-              , width = "100%"
-    )
-
-  },
-
-  if("georeferencing" %in% input$plex_fields ){
-
-    textInput(inputId = "plex_georeferencing"
-              , label = "Georeferencing"
-              , width = "100%"
-    )
-
-  },
-
-  if("album" %in% input$plex_fields ){
-
-    textInput(inputId = "plex_album"
-              , label = "Album"
-              , width = "100%"
-              , placeholder = "url or link"
-    )
-
-  },
-
-  if("github" %in% input$plex_fields ){
-
-    textInput(inputId = "plex_github"
-              , label = "Github"
-              , width = "100%"
-              , placeholder = "url or link"
-    )
-
-  }
-
-)
-
-})
-
 
 # design type -------------------------------------------------------------
 
@@ -240,7 +136,7 @@ plex <- reactive({
                         , plan = input$plex_plan
                         , institutions = input$plex_institutions
                         , researchers = input$plex_researchers
-                        , evaluators = input$plex_evaluators
+                        , manager = input$plex_manager
                         , location = input$plex_location
                         , altitude = input$plex_altitude
                         , georeferencing = input$plex_georeferencing
@@ -279,6 +175,28 @@ observeEvent(input$plex_generate, {
     plex()$design %>% sheet_write(ss = gs(), sheet = input$gsheet_design)
 
   } else { print ("sheet already exist") }
+
+  if( input$plex_fieldbook == "" &
+      input$plex_location != "" &
+      !is.na(input$plex_dates[1]) &
+      input$plex_about != "") {
+
+    fbname <- paste( word(input$plex_location, 1)
+                     , as.character(input$plex_dates[1])
+                     , input$plex_about
+                     , sep = " "
+                     ) %>%
+      str_remove_all(pattern = ",") %>%
+      stringi::stri_trans_general("Latin-ASCII") %>%
+      str_to_upper()
+
+    drive_rename(file = gs(), fbname, overwrite = TRUE)
+
+  } else if ( input$plex_fieldbook != "" ) {
+
+    drive_rename(file = gs(), input$plex_fieldbook, overwrite = TRUE)
+
+  }
 
 })
 
@@ -327,7 +245,7 @@ gsheet_design <- reactive({
 output$gsheet_preview <- renderUI({
 
   tags$iframe(src = gsheet_design(),
-              style="height:550px; width:100%; scrolling=no")
+              style="height:580px; width:100%; scrolling=no")
 
 })
 
