@@ -167,7 +167,7 @@ observeEvent(input$plex_generate, {
 
   if ( !input$gsheet_info %in% sheet_names(gs()) ) {
 
-    sheet_add(ss = gs(), sheet = input$gsheet_info, .before = 1)
+    sheet_add(ss = gs(), sheet = input$gsheet_info)
 
     plex()$plex %>% sheet_write(ss = gs(), sheet = input$gsheet_info)
 
@@ -182,8 +182,6 @@ observeEvent(input$plex_generate, {
     plex()$variables %>% sheet_write(ss = gs(), sheet = input$gsheet_varlist)
 
   } else { print ("sheet already exist") }
-
-})
 
 # -------------------------------------------------------------------------
 

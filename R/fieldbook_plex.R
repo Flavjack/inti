@@ -143,13 +143,16 @@ if ( is.null(data) ) {
 
 # variables ---------------------------------------------------------------
 
-var_list <- c(variable = NA
-              , '{siglas}' = NA # abbreviation
-              , '{evaluation}' = NA # evaluation, eval dap dat
-              , '{sampling}' = NA # sampling sample subplot muestra
-              , units = NA
-              , description = NA
-              )
+var_list <- tibble(variable = NA
+                   , siglas = NA # abbreviation
+                   , evaluation = NA # evaluation, eval dap dat
+                   , sampling = NA # sampling sample subplot muestra
+                   , units = NA
+                   , description = NA
+                   ) %>%
+  rename('{siglas}' = .data$siglas
+         , '{evaluation}' = .data$evaluation
+         , '{sampling}' = .data$sampling)
 
 # design ------------------------------------------------------------------
 
