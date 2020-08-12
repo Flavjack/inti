@@ -30,7 +30,7 @@ gar_set_client(web_json = "www/yupanapro.json")
 bs_theme_new(version = "4+3", bootswatch = NULL)
 
 navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/">Yupana</a></strong></h3>')
-           , windowTitle = "Yupana 2.0"
+           , windowTitle = "Yupana"
            , position = "fixed-top"
            , theme = "bootstrap_sandstone.css"
            , selected = "Intro",
@@ -158,8 +158,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                    textInput(inputId = "fieldbook_gsheet"
                                              , label = NULL
-                                             , value = ""
-                                             , placeholder = "Sheet name (fb)"
+                                             , value = "fb"
+                                             , placeholder = "Sheet name"
                                    )
                                ),
 
@@ -169,8 +169,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                    textInput(inputId = "fbsmrvars_gsheet"
                                              , label = NULL
-                                             , value = ""
-                                             , placeholder = "Sheet name (fbsm)"
+                                             , value = "fbsm"
+                                             , placeholder = "Sheet name"
                                    )
                                ),
 

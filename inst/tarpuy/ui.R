@@ -155,7 +155,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                    textInput(inputId = "gsheet_design"
                                              , label = NULL
-                                             , value = "dsg"
+                                             , value = "design"
                                              , placeholder = "Sheet name"
                                    ),
 
@@ -167,7 +167,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                    textInput(inputId = "gsheet_varlist"
                                              , label = NULL
-                                             , value = "var"
+                                             , value = "varlist"
                                              , placeholder = "Sheet name"
                                    ),
 

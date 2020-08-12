@@ -182,7 +182,7 @@ observe({
 output$fieldbook_preview <- renderUI({
 
     tags$iframe(src = fb_url()
-                , style="height:450px; width:100%; scrolling=no; zoom:1.2")
+                , style="height:580px; width:100%; scrolling=no")
 
 })
 
@@ -277,11 +277,11 @@ observeEvent(input$fbsmr_generate, {
                                , sig_level = input$sig_level
     )
 
-    if ( !"fbsm" %in% sheet_names(gs()) ) {
+    if ( !input$fbsmrvars_gsheet %in% sheet_names(gs()) ) {
 
-      sheet_add(ss = gs(), .after = input$fieldbook_gsheet, sheet = "fbsm")
+      sheet_add(ss = gs(), .after = input$fieldbook_gsheet, sheet = input$fbsmrvars_gsheet)
 
-      fbsmr %>% sheet_write(ss = gs(), sheet = "fbsm")
+      fbsmr %>% sheet_write(ss = gs(), sheet = input$fbsmrvars_gsheet)
 
     } else { print ("sheet already exist") }
 
@@ -569,14 +569,11 @@ observeEvent(input$export_mctab, {
 
   if ( !input$rpt_variable %in% sheet_names(gs()) ) {
 
-    sheet_add(ss = gs()
-              , .after = input$fbsmrvars_gsheet
-              , sheet = input$rpt_variable)
+    sheet_add(ss = gs(), sheet = input$rpt_variable)
 
     mean_comp()$comparison %>% sheet_write(ss = gs(), sheet = input$rpt_variable)
 
   } else { print ("sheet already exist") }
-
 
 })
 
@@ -587,7 +584,7 @@ output$rpt_preview <- renderUI({
   if ( input$rpt_preview_opt == "Gsheet" ) {
 
       tags$iframe(src = fbsm_url(),
-            style="height:450px; width:100%; scrolling=no; zoom:1.2")
+                  style="height:580px; width:100%; scrolling=no")
 
   } else if ( input$rpt_preview_opt == "Model" & !is.null(input$rpt_variable) ) {
 
@@ -751,7 +748,7 @@ output$graph_preview <- renderUI({
   if ( input$grp_preview_opt == "Gsheet" ) {
 
       tags$iframe(src = plot_url(),
-                  style="height:450px; width:100%; scrolling=no; zoom:1.2")
+                  style="height:580px; width:100%; scrolling=no")
 
   } else if ( input$grp_preview_opt == "Plots" ) {
 
