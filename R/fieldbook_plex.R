@@ -32,7 +32,7 @@
 #'
 #' It´s not necessary to provide all the information.
 #'
-#' @return data frame or list of arguments
+#' @return data frame or list of arguments (info, variables, design)
 #'
 #' @author
 #'
@@ -133,13 +133,23 @@ if ( is.null(data) ) {
     enframe() %>%
     rename('PLEX' = .data$name, 'INFORMATION' = .data$value)
 
-} else if ( !is.null(data) ) {
+} else if ( !is.null(data) ) { # for import to the app?
 
   plex <- data %>%
     mutate(across(.data$PLEX, tolower)) %>%
     mutate(PLEX = word(PLEX, 1)) %>%
     deframe()
 }
+
+# variables ---------------------------------------------------------------
+
+var_list <- c(variable = NA
+              , '{siglas}' = NA # abbreviation
+              , '{evaluation}' = NA # evaluation, eval dap dat
+              , '{sampling}' = NA # sampling sample subplot muestra
+              , units = NA
+              , description = NA
+              )
 
 # design ------------------------------------------------------------------
 
@@ -160,6 +170,7 @@ if ( is.null(data) ) {
 
 list(plex = plex
      , design = dsg_info
+     , variables = var_list
      )
 
 }

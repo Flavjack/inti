@@ -18,7 +18,7 @@ library(googlesheets4)
 library(googleAuthR)
 library(bootstraplib)
 library(shinydashboard)
-library(googledrive)
+library(stringi)
 
 gar_set_client(web_json = "www/tarpuy.json")
 
@@ -529,7 +529,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                              numericInput(inputId = "plex_rep"
                                           , label = "Replications"
-                                          , value = 2
+                                          , value = 3
                                           , min = 2
                              ),
 
@@ -576,7 +576,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                              numericInput(inputId = "design_rep"
                                           , label = "Replications"
-                                          , value = 2
+                                          , value = 3
                                           , min = 2
                                           ),
 

@@ -17,7 +17,7 @@ library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
 library(shinydashboard)
-library(googledrive)
+library(stringi)
 
 gar_set_client(web_json = "www/tarpuy.json")
 
@@ -41,33 +41,27 @@ shinyServer(function(input, output, session) {
 # auth --------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-gar_shiny_auth(session)
+  gar_shiny_auth(session)
 
-access_token <- callModule(googleAuth_js, "js_token")
+  access_token <- callModule(googleAuth_js, "js_token")
 
-gs <- reactive({
+  gs <- reactive({
 
-  if(Sys.getenv('SHINY_PORT') == "") {
+    if(Sys.getenv('SHINY_PORT') == "") {
 
-    gs4_auth(T)
-    drive_auth(T)
+      gs4_auth(T)
 
-  } else {
+    } else {
 
-    gs4_auth(scopes = c("https://www.googleapis.com/auth/spreadsheets"
-                        , "https://www.googleapis.com/auth/drive")
-             , cache = FALSE
-             , use_oob = TRUE
-             , token = access_token())
-  }
+      gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
+               , cache = FALSE
+               , use_oob = TRUE
+               , token = access_token())
+    }
 
-  as_sheets_id( gsheet_url() )
+    as_sheets_id( gsheet_url() )
 
-})
-
-# drive auth --------------------------------------------------------------
-
-# drive_auth(token = gs())
+  })
 
 # tarpuy plex -------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -127,6 +121,19 @@ output$plex_design <- renderUI({
 
 plex <- reactive({
 
+  if( input$plex_fieldbook == "" &
+      input$plex_location != "" & !is.na(input$plex_dates[1]) & input$plex_about != "") {
+
+    fbname <- paste(strsplit(input$plex_location, ",") %>% unlist() %>% pluck(1)
+                    , as.character(input$plex_dates[1])
+                    , input$plex_about
+                    , sep = " "
+                    ) %>%
+      stringi::stri_trans_general("Latin-ASCII") %>%
+      str_to_upper()
+
+  } else ( fbname <- input$plex_fieldbook )
+
   plex <- fieldbook_plex(data = NULL
                         , idea = input$plex_idea
                         , goal = input$plex_goal
@@ -144,7 +151,7 @@ plex <- reactive({
                         , start = as.character(input$plex_dates[1])
                         , end = as.character(input$plex_dates[2])
                         , about = input$plex_about
-                        , fieldbook = input$plex_fieldbook
+                        , fieldbook = fbname
                         , album = input$plex_album
                         , github = input$plex_github
                         , nfactor = input$plex_nfactors
@@ -168,35 +175,25 @@ observeEvent(input$plex_generate, {
 
 # -------------------------------------------------------------------------
 
+  if ( !input$gsheet_varlist %in% sheet_names(gs()) ) {
+
+    sheet_add(ss = gs(), sheet = input$gsheet_varlist, .after = input$gsheet_info)
+
+    plex()$variables %>% sheet_write(ss = gs(), sheet = input$gsheet_varlist)
+
+  } else { print ("sheet already exist") }
+
+})
+
+# -------------------------------------------------------------------------
+
   if ( !input$gsheet_design %in% sheet_names(gs()) ) {
 
-    sheet_add(ss = gs(), sheet = input$gsheet_design, .after = input$gsheet_info)
+    sheet_add(ss = gs(), sheet = input$gsheet_design, .after = input$gsheet_varlist)
 
     plex()$design %>% sheet_write(ss = gs(), sheet = input$gsheet_design)
 
   } else { print ("sheet already exist") }
-
-  if( input$plex_fieldbook == "" &
-      input$plex_location != "" &
-      !is.na(input$plex_dates[1]) &
-      input$plex_about != "") {
-
-    fbname <- paste( word(input$plex_location, 1)
-                     , as.character(input$plex_dates[1])
-                     , input$plex_about
-                     , sep = " "
-                     ) %>%
-      str_remove_all(pattern = ",") %>%
-      stringi::stri_trans_general("Latin-ASCII") %>%
-      str_to_upper()
-
-    drive_rename(file = gs(), fbname, overwrite = TRUE)
-
-  } else if ( input$plex_fieldbook != "" ) {
-
-    drive_rename(file = gs(), input$plex_fieldbook, overwrite = TRUE)
-
-  }
 
 })
 
