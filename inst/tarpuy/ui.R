@@ -162,7 +162,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                ),
 
                                box(title = h5("Varibles")
-                                   , width = 3
+                                   , width = 2
                                    , solidHeader = T,
 
                                    textInput(inputId = "gsheet_varlist"
@@ -173,16 +173,26 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                ),
 
+                               box(title = h5("Sketch")
+                                   , width = 2
+                                   , solidHeader = T,
+
+                                   textInput(inputId = "gsheet_sketch"
+                                             , label = NULL
+                                             , value = "fb"
+                                             , placeholder = "Sheet name"
+                                   ),
+
+                               ),
+
                                box(title = div(h4(icon("key")), align = "center")
-                                   , width = 3,
+                                   , width = 2,
 
                                    div(
                                      googleAuth_jsUI("js_token")
                                      , align = "center")
 
                                ),
-
-                               box(width = 1)
 
                              ),
 
@@ -551,12 +561,12 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                     )
 
-# Tarpuy design -----------------------------------------------------------
+# Tarpuy fb  --------------------------------------------------------------
 # -------------------------------------------------------------------------
 
            ),
 
-           tabPanel("Design",
+           tabPanel("Fieldbook",
 
                     fluidRow(
 
@@ -593,7 +603,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                           , min = 0
                                           ),
 
-                             actionButton(inputId = "export_fb"
+                             actionButton(inputId = "export_design"
                                           , label = "Generate"
                                           , class = "btn btn-success"
                                           )
@@ -602,16 +612,78 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                       column(10,
 
-                             htmlOutput("gsheet_preview"),
+                             htmlOutput("gsheet_preview_design"),
 
                              br(),
                              br()
 
                              )
                       )
+
+
+# Tarpuy sketch -----------------------------------------------------------
+# -------------------------------------------------------------------------
+
+           ),
+
+tabPanel("Sketch",
+
+         fluidRow(
+
+           column(2,
+
+                  radioButtons(inputId = "sketch_preview_opt"
+                               , label = "Modules"
+                               , choices = c("Gsheet"
+                                             , "Sketch")
+                               , inline = TRUE
+                               ),
+
+                  htmlOutput("sketch_options"),
+
+                  numericInput(inputId = "sketch_dim1"
+                                 , label = "Columns"
+                                 , value = NA
+                                 , min = 0
+                                 , step = 5
+                    ),
+
+                    numericInput(inputId = "sketch_dim2"
+                                 , label = "Rows"
+                                 , value = NA
+                                 , min = 0
+                                 , step = 5
+                    ),
+
+                  actionButton(inputId = "generate_sketch"
+                               , label = "Generate"
+                               , class = "btn btn-success"
+                  )
+
+           ),
+
+           column(10,
+
+                  htmlOutput("sketch_modules"),
+
+                  br(),
+                  br()
+
            )
+
+           ),
+
+
+         )
 
 # Tarpuy end code ---------------------------------------------------------
 # -------------------------------------------------------------------------
 
 )
+
+
+
+
+
+
+

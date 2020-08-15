@@ -70,7 +70,7 @@ plot_design <- function(data
 
   if (is.null(xlab)) { xlab <-  "Experimental Units" }
   if (is.null(ylab)) { ylab <-  "Blocks" }
-  if (is.null(glab)) { glab <-  factors[[1]] }
+  if (is.null(glab)) { glab <-  colour }
 
   if ( !is.null(colour) ) {
 

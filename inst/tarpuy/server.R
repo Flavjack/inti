@@ -237,7 +237,7 @@ gsheet_design <- reactive({
 
 })
 
-output$gsheet_preview <- renderUI({
+output$gsheet_preview_design <- renderUI({
 
   tags$iframe(src = gsheet_design(),
               style="height:580px; width:100%; scrolling=no")
@@ -273,16 +273,7 @@ output$design_type <- renderUI({
 
 # export fieldbook --------------------------------------------------------
 
-  observeEvent(input$export_fb, {
-
-# sketch delete -----------------------------------------------------------
-# -------------------------------------------------------------------------
-
-    if ( "sketch" %in% sheet_names(gs()) ) {
-
-      sheet_delete(gs(), "sketch")
-
-    }
+  observeEvent(input$export_design, {
 
 # variables ---------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -316,33 +307,234 @@ output$design_type <- renderUI({
           , serie = input$design_serie
           , seed = input$design_seed
         ) %>%
-        inti::fieldbook_varlist(variables )
-
-      if( length(fbds) == 2 ) {
+        inti::fieldbook_varlist( variables )
 
         fbds %>%
           pluck("design") %>%
           as.data.frame() %>%
           write_sheet(ss = gs(), sheet = "fb")
 
-        fb <- fbds %>%
-          pluck("sketch") %>%
-          as.data.frame() %>%
-          write_sheet(ss = gs(), sheet = "sketch")
-
-      }
-
-      if( length(fbds) == 1 ) {
-
-        fb <- fbds %>%
-          pluck("design") %>%
-          as.data.frame() %>%
-          write_sheet(ss = gs(), sheet = "fb")
-
-      }
-
     }
 
   })
 
+# tarpuy sketch -----------------------------------------------------------
+# -------------------------------------------------------------------------
+
+# test args ---------------------------------------------------------------
+
+observe({
+
+  cat("--------------------------------------------------\n")
+
+  cat("input$sketch_xlab")
+  print(input$sketch_xlab)
+
+
 })
+
+# preview sketch ----------------------------------------------------------
+
+gsheet_sketch <- reactive({
+
+  info <- gs4_get(gs())
+
+  url <- info$spreadsheet_url
+
+  id <- info$sheets %>%
+    filter(name %in% input$gsheet_sketch) %>%
+    pluck("id")
+
+  sketch_url  <- paste(url, id, sep = "#gid=")
+
+})
+
+output$gsheet_preview_sketch <- renderUI({
+
+  tags$iframe(src = gsheet_sketch(),
+              style="height:580px; width:100%; scrolling=no")
+
+})
+
+
+# options -----------------------------------------------------------------
+
+output$sketch_options <- renderUI({
+
+  factors <- gs() %>%
+    range_read( input$gsheet_sketch ) %>%
+    names()
+
+  tagList(
+
+    selectInput(inputId = "sketch_factors"
+                , label = "Factors"
+                , multiple = TRUE
+                , choices = c(""
+                              , factors)
+                , width = "100%"
+    ),
+
+
+    selectInput(inputId = "sketch_colour"
+                , label = "Color"
+                , multiple = FALSE
+                , choices = c(""
+                              , factors)
+                , width = "100%"
+    ),
+
+    selectInput(inputId = "sketch_fill"
+                , label = "Fill factor"
+                , multiple = FALSE
+                , selected = "plots"
+                , choices = c(""
+                              , factors)
+                , width = "100%"
+    ),
+
+    selectInput(inputId = "sketch_dim"
+                , label = "Block factor"
+                , multiple = FALSE
+                , choices = c(""
+                              , factors)
+                , width = "100%"
+    )
+
+  )
+
+})
+
+# plot --------------------------------------------------------------------
+
+plot_sketch <- NULL
+makeReactiveBinding("plot_sketch")
+
+observeEvent(input$generate_sketch, {
+
+  if ( input$sketch_xlab == "" ){ sketch_xlab <- NULL } else {sketch_xlab <- input$sketch_xlab}
+  if ( input$sketch_ylab == "" ){ sketch_ylab <- NULL } else {sketch_ylab <- input$sketch_ylab}
+  if ( input$sketch_glab == "" ){ sketch_glab <- NULL } else {sketch_glab <- input$sketch_glab}
+
+
+  if ( input$gsheet_sketch %in% sheet_names(gs()) ) {
+
+    fb_sketch <- gs() %>%
+      range_read( input$gsheet_sketch )
+
+  }
+
+  plot_sketch <<-  plot_design(data = fb_sketch
+                               , factors = input$sketch_factors
+                               , dim = input$sketch_dim
+                               , colour = input$sketch_colour
+                               , fill = input$sketch_fill
+                               , xlab = sketch_xlab
+                               , ylab = sketch_ylab
+                               , glab = sketch_glab
+                               )
+
+})
+
+# -------------------------------------------------------------------------
+
+output$plot_sketch <- renderImage({
+
+  dpi <- input$sketch_dpi
+  ancho <- input$sketch_width
+  alto <- input$sketch_height
+
+  outfile <- tempfile(fileext = ".png")
+
+  png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
+  print(plot_sketch)
+  dev.off()
+
+  list(src = outfile)
+
+}, deleteFile = TRUE)
+
+# options panel -----------------------------------------------------------
+
+output$sketch_modules <- renderUI({
+
+  if ( input$sketch_preview_opt == "Gsheet" ) {
+
+    uiOutput("gsheet_preview_sketch")
+
+  } else if ( input$sketch_preview_opt == "Sketch" ) {
+
+    tagList(
+
+      fluidRow(
+
+        box(width = 2,
+
+            textInput(inputId = "sketch_xlab"
+                      , label = "Label X"
+                      , value = NA
+                      , placeholder = "Exp. Units"
+                      )
+        ),
+
+        box(width = 2,
+
+            textInput(inputId = "sketch_ylab"
+                      , label = "Label Y"
+                      , value = NA
+                      , placeholder = "Blocks"
+                      )
+        ),
+
+        box(width = 2,
+
+            textInput(inputId = "sketch_glab"
+                      , label = "Label Groups"
+                      , value = NA
+                      , placeholder = "Groups"
+                      )
+        ),
+
+        box(width = 2,
+
+        numericInput(inputId = "sketch_width"
+                     , label = "Width (cm)"
+                     , value = 20
+                     , step = 5
+                     , min = 5)
+        ),
+
+        box(width = 2,
+
+        numericInput(inputId = "sketch_height"
+                     , label = "Height (cm)"
+                     , value = 10
+                     , step = 5
+                     , min = 5)
+        ),
+
+        box(width = 2,
+
+        numericInput(inputId = "sketch_dpi"
+                     , label = "Resolution"
+                     , value = 100
+                     , step = 50
+                     , min = 100)
+        )
+
+      ),
+
+
+      div(imageOutput("plot_sketch"), align = "center")
+
+    )
+
+  }
+
+})
+
+# end app -----------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+})
+
