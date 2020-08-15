@@ -30,16 +30,11 @@ fieldbook_design(
 \item{seed}{Replicability of draw results (default = 0) ~ always random. See details.}
 }
 \value{
-A list with two objects:
-
-1. fieldbook design
-
-2. field design (sketch)
+A list with fieldbook design
 }
 \description{
 Function to deploy experimental designs based in agricolae package.
 1. Field book for one and multiple factors
-2. Sketch design.
 }
 \details{
 The function allows to include the arguments in the sheet that have the information of the design.

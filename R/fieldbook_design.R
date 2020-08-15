@@ -2,7 +2,6 @@
 #'
 #' Function to deploy experimental designs based in agricolae package.
 #' 1. Field book for one and multiple factors
-#' 2. Sketch design.
 #'
 #' @param data Experimental design data frame with the factors and level. See examples.
 #' @param n_factors Number of factor in the experiment  (default = 1). See details.
@@ -28,11 +27,7 @@
 #' n_factors >= 2 (factorial)
 #' factorial .: crd, rcbd, lsd
 #'
-#' @return A list with two objects:
-#'
-#' 1. fieldbook design
-#'
-#' 2. field design (sketch)
+#' @return A list with fieldbook design
 #'
 #' @author
 #'
@@ -232,11 +227,11 @@ treat_fcts <- treatments_levels[treat_name]
                 serie = serie,
                 seed = seed
               )
+
               result <- list(
                 design = design %>%
                   pluck("book") %>%
-                  dplyr::rename({{ treat_name }} := "onefact"),
-                sketch = design %>% pluck("sketch")
+                  dplyr::rename({{ treat_name }} := "onefact")
               )
             }
 
@@ -251,12 +246,11 @@ treat_fcts <- treatments_levels[treat_name]
               result <- list(
                 design = design %>%
                   pluck("book") %>%
-                  dplyr::rename({{ treat_name }} := "onefact"),
-                sketch = design %>% pluck("sketch")
+                  dplyr::rename({{ treat_name }} := "onefact")
               )
             }
 
-            if (type == "lattice") {
+            if (type == "lattice") { # fix rename column?
 
               if( rep > 3 ) { rep <- 3 }
 
@@ -268,8 +262,9 @@ treat_fcts <- treatments_levels[treat_name]
               )
 
               result <- list(
-                design = design$book,
-                sketch = design$sketch %>% as.data.frame()
+                design = design %>%
+                  pluck("book") %>%
+                  dplyr::rename({{ treat_name }} := "trt")
               )
 
             }
