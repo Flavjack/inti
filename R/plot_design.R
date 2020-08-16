@@ -3,10 +3,9 @@
 #' Function to plot the fieldbook design
 #'
 #' @param data Experimental design data frame with the factors and level. See examples.
-#' @param factors Vector with the name of the columns with the factors.
+#' @param factor Vector with the name of the columns with the factors.
 #' @param dim Dimension for reshape the design arrangement.
 #' @param fill  Value for fill the experimental units (default = "plots").
-#' @param colour Color for the experimental units (default = first factor).
 #' @param xlab Title for x axis
 #' @param ylab Title for y axis
 #' @param glab Title for group axis
@@ -43,13 +42,18 @@
 #' (fb <- gs %>%
 #'     range_read("tarpuy"))
 #'
-#' data <- fb %>% inti::fieldbook_design(n_factors = 3
+#' data <- fb %>% inti::fieldbook_design(n_factors = 2
 #'                                       , type = "rcbd"
 #'                                       , rep = 3) %>% pluck("design")
+#'
 #' plot_design(data
-#'             , factors = c("temp", "prof", "condición")
+#'             , factor = "temp"
 #'             , dim = "block"
-#'             , glab = "Temperature"
+#'             )
+#'
+#' plot_design(data
+#'             , factor = "temp"
+#'             , dim = "9x5"
 #'             )
 #'
 #' }
@@ -57,10 +61,9 @@
 #' @export
 
 plot_design <- function(data
-                        , factors
+                        , factor
                         , dim = NULL
                         , fill = "plots"
-                        , colour = NULL
                         , xlab = NULL
                         , ylab = NULL
                         , glab = NULL
@@ -68,22 +71,19 @@ plot_design <- function(data
 
 # -------------------------------------------------------------------------
 
+  # xlab <- ylab <- glab <- NULL
+  # fill <- "plots"
+
   if (is.null(xlab)) { xlab <-  "Experimental Units" }
   if (is.null(ylab)) { ylab <-  "Blocks" }
-  if (is.null(glab)) { glab <-  colour }
+  if (is.null(glab)) { glab <- factor }
 
-  if ( !is.null(colour) ) {
-
-    factors <- colour
-
-  } else { factors <- factors[[1]] }
-
-  if ( is.numeric(dim) ) {
+ if ( is.numeric(dim) ) {
 
     ncols <- dim[1]
     nrows <- dim[2]
 
-  } else if ( is.character(dim) ) {
+  } else if ( any(dim %in% names(data)) ) {
 
     nrows <- data %>%
       select(.data[[dim]]) %>%
@@ -93,7 +93,15 @@ plot_design <- function(data
     ncols <- data %>%
       nrow() / nrows
 
-    }
+  }  else if ( is.character(dim) ) {
+
+    dim <- dim %>%
+      strsplit(., "x") %>% deframe() %>% as.numeric()
+
+    ncols <- dim[1]
+    nrows <- dim[2]
+
+  }
 
   dsg <- data %>%
     mutate(cols = rep(1:ncols, times = nrow(.)/ncols )) %>%
@@ -101,13 +109,21 @@ plot_design <- function(data
 
 # plot --------------------------------------------------------------------
 
+ color_grps <- colorRampPalette(
+      c("#86CD80"   # green
+        , "#F4CB8C" # orange
+        , "#F3BB00" # yellow
+        , "#0198CD" # blue
+        , "#FE6673" # red
+      ))(length(data[[factor]] %>% unique()))
+
 plot <- dsg %>%
-  ggplot(aes(x = .data$cols, y = .data$rows, fill = .data[[factors]])) +
+  ggplot(aes(x = .data$cols, y = .data$rows, fill = .data[[factor]])) +
   geom_tile(color = "black", size = 0.5) +
   geom_text(aes(label = .data[[fill]])) +
   scale_x_continuous(expand = c(0, 0), n.breaks = ncols) +
   scale_y_continuous(expand = c(0, 0), n.breaks = nrows, trans = 'reverse') +
-  scale_fill_brewer(palette = "Set3") +
+  scale_fill_manual(values = color_grps) +
   labs(x = xlab, y = ylab, fill = glab) +
   theme_bw() +
   theme(legend.position = "top")

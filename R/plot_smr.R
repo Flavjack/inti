@@ -172,7 +172,7 @@ if ( is.null(color_grps) ) {
       , "#F3BB00" # yellow
       , "#0198CD" # blue
       , "#FE6673" # red
-    ))(length(plot_dt[[groups]]))
+    ))(length(plot_dt[[groups]] %>% unique()))
 
   }
 

@@ -6,10 +6,9 @@
 \usage{
 plot_design(
   data,
-  factors,
+  factor,
   dim = NULL,
   fill = "plots",
-  colour = NULL,
   xlab = NULL,
   ylab = NULL,
   glab = NULL
@@ -18,13 +17,11 @@ plot_design(
 \arguments{
 \item{data}{Experimental design data frame with the factors and level. See examples.}
 
-\item{factors}{Vector with the name of the columns with the factors.}
+\item{factor}{Vector with the name of the columns with the factors.}
 
 \item{dim}{Dimension for reshape the design arrangement.}
 
 \item{fill}{Value for fill the experimental units (default = "plots").}
-
-\item{colour}{Color for the experimental units (default = first factor).}
 
 \item{xlab}{Title for x axis}
 
@@ -58,13 +55,18 @@ gs <- as_sheets_id(url)
 (fb <- gs \%>\%
     range_read("tarpuy"))
 
-data <- fb \%>\% inti::fieldbook_design(n_factors = 3
+data <- fb \%>\% inti::fieldbook_design(n_factors = 2
                                       , type = "rcbd"
                                       , rep = 3) \%>\% pluck("design")
+
 plot_design(data
-            , factors = c("temp", "prof", "condiciÃ³n")
+            , factor = "temp"
             , dim = "block"
-            , glab = "Temperature"
+            )
+
+plot_design(data
+            , factor = "temp"
+            , dim = "9x5"
             )
 
 }
