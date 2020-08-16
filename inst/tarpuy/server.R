@@ -276,7 +276,6 @@ output$design_type <- renderUI({
   observeEvent(input$export_design, {
 
 # variables ---------------------------------------------------------------
-# -------------------------------------------------------------------------
 
     if ( input$gsheet_varlist %in% sheet_names(gs()) ) {
 
@@ -286,7 +285,6 @@ output$design_type <- renderUI({
     } else { variables <- NULL }
 
 # fieldbook ---------------------------------------------------------------
-# -------------------------------------------------------------------------
 
     if ( input$gsheet_design %in% sheet_names(gs()) ) {
 
@@ -312,9 +310,17 @@ output$design_type <- renderUI({
         fbds %>%
           pluck("design") %>%
           as.data.frame() %>%
-          write_sheet(ss = gs(), sheet = input$gsheet_sketch)
+          write_sheet(ss = gs(), sheet = input$gsheet_fb)
 
     }
+
+# -------------------------------------------------------------------------
+
+    if ( !"sketch" %in% sheet_names(gs()) ) {
+
+      sheet_add(ss = gs(), sheet = "sketch", .after = input$gsheet_fb)
+
+    } else { print ("sheet already exist") }
 
   })
 
@@ -340,14 +346,14 @@ observe({
 
 # preview sketch ----------------------------------------------------------
 
-gsheet_sketch <- reactive({
+gsheet_fb <- reactive({
 
   info <- gs4_get(gs())
 
   url <- info$spreadsheet_url
 
   id <- info$sheets %>%
-    filter(name %in% input$gsheet_sketch) %>%
+    filter(name %in% input$gsheet_fb) %>%
     pluck("id")
 
   sketch_url  <- paste(url, id, sep = "#gid=")
@@ -357,7 +363,7 @@ gsheet_sketch <- reactive({
 
 output$gsheet_preview_sketch <- renderUI({
 
-  tags$iframe(src = gsheet_sketch(),
+  tags$iframe(src = gsheet_fb(),
               style="height:580px; width:100%; scrolling=no")
 
 })
@@ -367,7 +373,7 @@ output$gsheet_preview_sketch <- renderUI({
 fb_factors <- eventReactive(input$update_sketch, {
 
   factors <- gs() %>%
-    range_read( input$gsheet_sketch ) %>% names()
+    range_read( input$gsheet_fb ) %>% names()
 
 })
 
@@ -420,10 +426,10 @@ plot_sketch <- reactive({
   validate( need( input$sketch_factor, "Select your design factor") )
   validate( need( input$sketch_dim, "Select your blocking factor") )
 
-  if ( input$gsheet_sketch %in% sheet_names(gs()) ) {
+  if ( input$gsheet_fb %in% sheet_names(gs()) ) {
 
     fb_sketch <- gs() %>%
-      range_read( input$gsheet_sketch )
+      range_read( input$gsheet_fb )
 
   }
 

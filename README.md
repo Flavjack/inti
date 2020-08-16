@@ -1,6 +1,6 @@
 # Inti
 
-Tools and statistical procedures for experimentals designs and plant breeding
+A collection of different applications and procedures used in plant breeding and experimental designs.
 
 ## Install
 
@@ -15,23 +15,20 @@ devtools::install_github("flavjack/inti")
 ```{r eval=F}
 inti::yupana()
 ```
-
-## Rticles
-
-```{r eval=F}
-inti::rticles_addin()
-```
 ### Tarpuy
 
 ```{r eval=F}
 inti::tarpuy()
 ```
-### Yaku
+
+### Rticles
 
 ```{r eval=F}
-inti::yaku()
+inti::rticles_addin()
 ```
 
 ## More Info:
+
+https://inkaverse.com/
 
 https://lozanoisla.com/

@@ -89,7 +89,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                  Tarpuy tiene el objetivo de "continuidad" entre el uso de la aplicación y el software estadístico R.
                                  Tarpuy está basada en el paquete <strong><em>inti</em></strong>:
                                  “<em>Tools and statistical procedures for experimentals designs and plant breeding</em>”.
-</p>                                      '),
+                                      </p>
+                                      '),
                              ),
 
                              box(title = "Características"
@@ -139,7 +140,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                              fluidRow(
 
                                box(title = h5("Info")
-                                   , width = 3
+                                   , width = 2
                                    , solidHeader = T,
 
                                    textInput(inputId = "gsheet_info"
@@ -150,7 +151,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                ),
 
                                box(title = h5("Design")
-                                   , width = 3
+                                   , width = 2
                                    , solidHeader = T,
 
                                    textInput(inputId = "gsheet_design"
@@ -173,11 +174,11 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                ),
 
-                               box(title = h5("Sketch")
+                               box(title = h5("Fieldbook")
                                    , width = 2
                                    , solidHeader = T,
 
-                                   textInput(inputId = "gsheet_sketch"
+                                   textInput(inputId = "gsheet_fb"
                                              , label = NULL
                                              , value = "fb"
                                              , placeholder = "Sheet name"
@@ -186,7 +187,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                ),
 
                                box(title = div(h4(icon("key")), align = "center")
-                                   , width = 2,
+                                   , width = 4,
 
                                    div(
                                      googleAuth_jsUI("js_token")
