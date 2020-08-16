@@ -312,7 +312,7 @@ output$design_type <- renderUI({
         fbds %>%
           pluck("design") %>%
           as.data.frame() %>%
-          write_sheet(ss = gs(), sheet = "fb")
+          write_sheet(ss = gs(), sheet = input$gsheet_sketch)
 
     }
 
@@ -330,6 +330,11 @@ observe({
   cat("input$sketch_xlab")
   print(input$sketch_xlab)
 
+  cat("input$sketch_dim")
+  print(input$sketch_dim)
+
+  cat("input$sketch_dim2")
+  print(input$sketch_dim2)
 
 })
 
@@ -349,6 +354,7 @@ gsheet_sketch <- reactive({
 
 })
 
+
 output$gsheet_preview_sketch <- renderUI({
 
   tags$iframe(src = gsheet_sketch(),
@@ -356,28 +362,31 @@ output$gsheet_preview_sketch <- renderUI({
 
 })
 
-
 # options -----------------------------------------------------------------
+
+fb_factors <- eventReactive(input$update_sketch, {
+
+  factors <- gs() %>%
+    range_read( input$gsheet_sketch ) %>% names()
+
+})
 
 output$sketch_options <- renderUI({
 
-  factors <- gs() %>%
-    range_read( input$gsheet_sketch ) %>%
-    names()
+  factors <- fb_factors()
 
   tagList(
 
-    selectInput(inputId = "sketch_factors"
-                , label = "Factors"
-                , multiple = TRUE
+    selectInput(inputId = "sketch_factor"
+                , label = "Factor"
+                , multiple = FALSE
                 , choices = c(""
                               , factors)
                 , width = "100%"
     ),
 
-
-    selectInput(inputId = "sketch_colour"
-                , label = "Color"
+    selectInput(inputId = "sketch_dim"
+                , label = "Block factor"
                 , multiple = FALSE
                 , choices = c(""
                               , factors)
@@ -393,12 +402,11 @@ output$sketch_options <- renderUI({
                 , width = "100%"
     ),
 
-    selectInput(inputId = "sketch_dim"
-                , label = "Block factor"
-                , multiple = FALSE
-                , choices = c(""
-                              , factors)
-                , width = "100%"
+    textInput(inputId = "sketch_dim2"
+              , label = "Block factor (optional)"
+              , value = NA
+              , placeholder = "NcolxNrow"
+              , width = "100%"
     )
 
   )
@@ -407,15 +415,10 @@ output$sketch_options <- renderUI({
 
 # plot --------------------------------------------------------------------
 
-plot_sketch <- NULL
-makeReactiveBinding("plot_sketch")
+plot_sketch <- reactive({
 
-observeEvent(input$generate_sketch, {
-
-  if ( input$sketch_xlab == "" ){ sketch_xlab <- NULL } else {sketch_xlab <- input$sketch_xlab}
-  if ( input$sketch_ylab == "" ){ sketch_ylab <- NULL } else {sketch_ylab <- input$sketch_ylab}
-  if ( input$sketch_glab == "" ){ sketch_glab <- NULL } else {sketch_glab <- input$sketch_glab}
-
+  validate( need( input$sketch_factor, "Select your design factor") )
+  validate( need( input$sketch_dim, "Select your blocking factor") )
 
   if ( input$gsheet_sketch %in% sheet_names(gs()) ) {
 
@@ -424,17 +427,21 @@ observeEvent(input$generate_sketch, {
 
   }
 
-  plot_sketch <<-  plot_design(data = fb_sketch
-                               , factors = input$sketch_factors
-                               , dim = input$sketch_dim
-                               , colour = input$sketch_colour
-                               , fill = input$sketch_fill
-                               , xlab = sketch_xlab
-                               , ylab = sketch_ylab
-                               , glab = sketch_glab
-                               )
+  if ( input$sketch_xlab == "" | is.null(input$sketch_xlab) ){ sketch_xlab <- NULL } else {sketch_xlab <- input$sketch_xlab}
+  if ( input$sketch_ylab == "" | is.null(input$sketch_ylab) ){ sketch_ylab <- NULL } else {sketch_ylab <- input$sketch_ylab}
+  if ( input$sketch_glab == "" | is.null(input$sketch_glab) ){ sketch_glab <- NULL } else {sketch_glab <- input$sketch_glab}
 
-})
+  if ( input$sketch_dim2 != "" ) { blocking <- input$sketch_dim2 } else { blocking <- input$sketch_dim }
+
+  plot_sketch <-  plot_design(data = fb_sketch
+                             , factor = input$sketch_factor
+                             , dim = blocking
+                             , fill = input$sketch_fill
+                             , xlab = sketch_xlab
+                             , ylab = sketch_ylab
+                             , glab = sketch_glab
+                             )
+  })
 
 # -------------------------------------------------------------------------
 
@@ -447,7 +454,7 @@ output$plot_sketch <- renderImage({
   outfile <- tempfile(fileext = ".png")
 
   png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
-  print(plot_sketch)
+  print(plot_sketch())
   dev.off()
 
   list(src = outfile)
@@ -474,7 +481,7 @@ output$sketch_modules <- renderUI({
                       , label = "Label X"
                       , value = NA
                       , placeholder = "Exp. Units"
-                      )
+            )
         ),
 
         box(width = 2,
@@ -483,7 +490,7 @@ output$sketch_modules <- renderUI({
                       , label = "Label Y"
                       , value = NA
                       , placeholder = "Blocks"
-                      )
+            )
         ),
 
         box(width = 2,
@@ -492,34 +499,34 @@ output$sketch_modules <- renderUI({
                       , label = "Label Groups"
                       , value = NA
                       , placeholder = "Groups"
-                      )
+            )
         ),
 
         box(width = 2,
 
-        numericInput(inputId = "sketch_width"
-                     , label = "Width (cm)"
-                     , value = 20
-                     , step = 5
-                     , min = 5)
+            numericInput(inputId = "sketch_width"
+                         , label = "Width (cm)"
+                         , value = 20
+                         , step = 5
+                         , min = 5)
         ),
 
         box(width = 2,
 
-        numericInput(inputId = "sketch_height"
-                     , label = "Height (cm)"
-                     , value = 10
-                     , step = 5
-                     , min = 5)
+            numericInput(inputId = "sketch_height"
+                         , label = "Height (cm)"
+                         , value = 10
+                         , step = 5
+                         , min = 5)
         ),
 
         box(width = 2,
 
-        numericInput(inputId = "sketch_dpi"
-                     , label = "Resolution"
-                     , value = 100
-                     , step = 50
-                     , min = 100)
+            numericInput(inputId = "sketch_dpi"
+                         , label = "Resolution"
+                         , value = 100
+                         , step = 50
+                         , min = 100)
         )
 
       ),

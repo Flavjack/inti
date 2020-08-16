@@ -637,28 +637,15 @@ tabPanel("Sketch",
                                , choices = c("Gsheet"
                                              , "Sketch")
                                , inline = TRUE
+                               , selected = "Sketch"
                                ),
 
                   htmlOutput("sketch_options"),
 
-                  numericInput(inputId = "sketch_dim1"
-                                 , label = "Columns"
-                                 , value = NA
-                                 , min = 0
-                                 , step = 5
-                    ),
-
-                    numericInput(inputId = "sketch_dim2"
-                                 , label = "Rows"
-                                 , value = NA
-                                 , min = 0
-                                 , step = 5
-                    ),
-
-                  actionButton(inputId = "generate_sketch"
-                               , label = "Generate"
+                  actionButton(inputId = "update_sketch"
+                               , label = "Refresh"
                                , class = "btn btn-success"
-                  )
+                               )
 
            ),
 
