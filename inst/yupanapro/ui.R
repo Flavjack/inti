@@ -133,7 +133,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                              fluidRow(
 
-                               box(title = div(h4(icon("key")), align = "center")
+                               box(title = div(h4(icon("key")), align = "right")
                                    , width = 1,
 
                                    div(
@@ -184,6 +184,17 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                              , value = "fbsm"
                                              , placeholder = "Sheet name"
                                    )
+                               ),
+
+                               box(title = div(h5("Open GS"), align = "center")
+                                   , width = 6
+                                   , solidHeader = T,
+
+                                   div(
+
+                                     htmlOutput("open_url")
+
+                                     , align = "center")
                                )
 
                              ),

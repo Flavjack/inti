@@ -132,6 +132,31 @@ observeEvent( refresh(), {
 
 })
 
+# open url ----------------------------------------------------------------
+
+output$open_url <- renderUI({
+
+  if ( fieldbook_url() == "" ) {
+
+    link <- "https://docs.google.com/spreadsheets/u/0/"
+
+  } else {
+
+    link <- fieldbook_url()
+
+  }
+
+  open <- paste0("window.open('", link, "', '_blank')")
+
+  actionButton(inputId = "open_sheet"
+               , label = "Open"
+               , class = "btn btn-success"
+               , onclick = open
+  )
+
+})
+
+
 # Yupana: Fieldbook -------------------------------------------------------
 # -------------------------------------------------------------------------
 
@@ -375,7 +400,7 @@ output$fb_rsp <- renderUI({
     textInput(inputId = "fbrs_sep"
               , label = "Separator"
               , value = ""
-              , placeholder = "e.g: '_' '-' '.' "
+              , placeholder = "e.g: var_flw --> '_'"
     ),
 
     textInput(inputId = "fbrs_newcol"
@@ -493,7 +518,8 @@ output$rpt_dotplot_groups <- renderUI({
 
     selectInput(inputId = "rpt_dotplot_groups"
                 , label = "Dotplot"
-                , choices = c(rpt_dotplot_groups_names)
+                , choices = c("choose" = ""
+                              , rpt_dotplot_groups_names)
     )
 
   } else { print ("Insert fieldbook summary") }
@@ -503,6 +529,8 @@ output$rpt_dotplot_groups <- renderUI({
 # -------------------------------------------------------------------------
 
 report <- reactive({
+
+  validate( need( input$rpt_variable, "Choose your variable") )
 
   if ( !is.null( fieldbook() ) & !is.null( fbsmrvar ) )  {
 
@@ -530,11 +558,19 @@ output$dfreq <- renderPlot({
 
 })
 
-output$dotplot <- renderPlot({ report()$dotplot })
+output$dotplot <- renderPlot({
+
+  validate( need( input$rpt_dotplot_groups, "Choose your groups") )
+
+  report()$dotplot
+
+  })
 
 # -------------------------------------------------------------------------
 
 mean_comp <- reactive({
+
+  validate( need( input$rpt_variable, "Choose your variable") )
 
   if ( !is.null( fieldbook() ) & !is.null( fbsmrvar ) )  {
 

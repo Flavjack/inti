@@ -137,7 +137,12 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                    , solidHeader = T
                                    , status = "primary",
 
-                                   htmlOutput("url_preview")
+                                   textInput(inputId = "gsheet_url",
+                                             label = NULL,
+                                             width = "100%",
+                                             value = ""
+                                             , placeholder = "Insert google sheet link"
+                                   )
 
                                ),
 
@@ -215,12 +220,6 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                        , solidHeader = T,
 
                                    div(
-
-                                       # actionButton(inputId = "open_sheet"
-                                       #              , label = "Open"
-                                       #              , class = "btn btn-success"
-                                       #              , onclick = "window.open('https://docs.google.com/spreadsheets/u/0/', '_blank')"
-                                       # )
 
                                      htmlOutput("open_url")
 

@@ -26,17 +26,13 @@ gar_set_client(web_json = "www/tarpuy.json")
 
 shinyServer(function(input, output, session) {
 
-# -------------------------------------------------------------------------
-
 # auth --------------------------------------------------------------------
 
   gar_shiny_auth(session)
 
   access_token <- callModule(googleAuth_js, "js_token")
 
-# sheet identification ----------------------------------------------------
-
-  gs <- reactive({
+ gs <- reactive({
 
     if(Sys.getenv('SHINY_PORT') == "") {
 
@@ -54,11 +50,31 @@ shinyServer(function(input, output, session) {
 
   })
 
+# create new sheet ---------------------------------------------------------
+
+  gs_created <- NULL
+  makeReactiveBinding("gs_created")
+  observeEvent( input$create_sheet, {
+
+    # if ( gs4_has_token() ) {
+
+      gs_created <<- gs4_create(
+        name = paste("Tarpuy", format(Sys.time(), '%Y-%m-%d  %H:%M'))
+        , sheets = "tarpuy")
+
+    # }
+
+  })
+
 # generate sheet url ------------------------------------------------------
 
-gsheet_url <- reactive({
+  gsheet_url <- reactive({
 
-  if ( !is.null(gs_created) ) {
+    if ( input$gsheet_url != "" ) {
+
+    gsheet_url <- input$gsheet_url
+
+    } else if ( !is.null(gs_created) ) {
 
     url <- "https://docs.google.com/spreadsheets/d/"
 
@@ -66,57 +82,10 @@ gsheet_url <- reactive({
 
     gsheet_url  <- paste0(url, id)
 
-  } else if ( input$gsheet_url != "" ) {
-
-    gsheet_url <- input$gsheet_url
-
-  } else if ( Sys.getenv('SHINY_PORT') == "" & input$gsheet_url == "" ) {
+    } else {
 
     gsheet_url <- "https://docs.google.com/spreadsheets/d/1a82XIbTeWPC4pwvu9Zjl4qrGitGQ_B-mf3-w67VS4-Q/edit#gid=1664155282"
 
-  } else if ( Sys.getenv('SHINY_PORT') != "" & input$gsheet_url == "" )  {
-
-    url <- "https://docs.google.com/spreadsheets/u/0/"
-
-  }
-
-  })
-
-# create new sheet ---------------------------------------------------------
-
-  gs_gs_created <- NULL
-  makeReactiveBinding("gs_created")
-  observeEvent( input$create_sheet, {
-
-    validate( need( gs(), "Need Auth") )
-
-    gs_created <<- gs4_create(
-      name = paste("Tarpuy", format(Sys.time(), '%Y-%m-%d  %H:%M'))
-      , sheets = "tarpuy")
-
-  })
-
-# show sheet url ----------------------------------------------------------
-
-output$url_preview <- renderUI({
-
-  if ( is.null(gs_created) ) {
-
-    textInput(inputId = "gsheet_url",
-              label = NULL,
-              width = "100%",
-              value = ""
-              , placeholder = "Insert google sheet link"
-    )
-
-  } else {
-
-    textInput(inputId = "gsheet_url",
-              label = NULL,
-              width = "100%",
-              value = gsheet_url()
-              , placeholder = "Insert google sheet link"
-              )
     }
 
   })
@@ -125,16 +94,15 @@ output$url_preview <- renderUI({
 
 output$open_url <- renderUI({
 
-  url <- gsheet_url()
+  link <- gsheet_url()
 
-  link <- paste0("window.open('", url, "', '_blank')")
+  open <- paste0("window.open('", link, "', '_blank')")
 
   actionButton(inputId = "open_sheet"
                , label = "Open"
                , class = "btn btn-success"
-               , onclick = link
+               , onclick = open
                )
-
 })
 
 # tarpuy plex -------------------------------------------------------------
@@ -146,8 +114,8 @@ observe({
 
   cat("--------------------------------------------------\n")
 
-  cat("input$js_token")
-  print(input$js_token)
+  cat("input$gsheet_url")
+  print(input$gsheet_url)
 
   cat("input$plex_fieldbook")
   print(input$plex_fieldbook)
@@ -388,15 +356,15 @@ output$design_type <- renderUI({
           as.data.frame() %>%
           write_sheet(ss = gs(), sheet = input$gsheet_fb)
 
-    }
+    } else { "Create your design" }
 
 # -------------------------------------------------------------------------
 
-    if ( !"sketch" %in% sheet_names(gs()) ) {
+    if ( !"sketch" %in% sheet_names(gs()) & input$gsheet_fb %in% sheet_names(gs()) ) {
 
-      sheet_add(ss = gs(), sheet = "sketch", .after = input$gsheet_fb)
+      sheet_add(ss = gs(), sheet = "sketch" )
 
-    } else { print ("sheet already exist") }
+    }
 
   })
 
@@ -447,6 +415,10 @@ output$gsheet_preview_sketch <- renderUI({
 # options -----------------------------------------------------------------
 
 fb_factors <- eventReactive(input$update_sketch, {
+
+  validate( need( input$gsheet_fb %in% sheet_names(gs())
+                  , "Create your fieldbook") )
+
 
   factors <- gs() %>%
     range_read( input$gsheet_fb ) %>% names()
