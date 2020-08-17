@@ -120,17 +120,24 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                              fluidRow(
 
+                               box(title = div(h4(icon("key")), align = "right")
+                                   , width = 1,
+
+                                   div(
+                                     googleAuth_jsUI("js_token"
+                                                     , login_text = "LogIn"
+                                                     , logout_text = "LogOut"
+                                                     )
+                                     , align = "center")
+
+                               ),
+
                                box(title = div(h4(icon("google"), "Fieldbook Google Sheets (URL)"), align = "center")
-                                   , width = 12
+                                   , width = 11
                                    , solidHeader = T
                                    , status = "primary",
 
-                                   textInput(inputId = "gsheet_url",
-                                             label = NULL,
-                                             width = "100%",
-                                             value = ""
-                                             , placeholder = "Insert google sheet link"
-                                   )
+                                   htmlOutput("url_preview")
 
                                ),
 
@@ -186,14 +193,40 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                ),
 
-                               box(title = div(h4(icon("key")), align = "center")
-                                   , width = 4,
+                               box(title = div(h5("Create GS"), align = "center")
+                                   , width = 2
+                                   , solidHeader = T,
 
                                    div(
-                                     googleAuth_jsUI("js_token")
+
+
+                                     actionButton(inputId = "create_sheet"
+                                                  , label =  "Create"
+                                                  , class = "btn btn-success"
+                                                  )
+
                                      , align = "center")
 
-                               ),
+
+                                   ),
+
+                               box(title = div(h5("Open GS"), align = "center")
+                                       , width = 2
+                                       , solidHeader = T,
+
+                                   div(
+
+                                       # actionButton(inputId = "open_sheet"
+                                       #              , label = "Open"
+                                       #              , class = "btn btn-success"
+                                       #              , onclick = "window.open('https://docs.google.com/spreadsheets/u/0/', '_blank')"
+                                       # )
+
+                                     htmlOutput("open_url")
+
+                                    , align = "center")
+
+                             ),
 
                              ),
 

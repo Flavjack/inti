@@ -133,8 +133,20 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                              fluidRow(
 
+                               box(title = div(h4(icon("key")), align = "center")
+                                   , width = 1,
+
+                                   div(
+                                     googleAuth_jsUI("js_token"
+                                                     , login_text = "LogIn"
+                                                     , logout_text = "LogOut"
+                                     )
+                                     , align = "center")
+
+                               ),
+
                                box(title = div(h4(icon("google"), "Fieldbook Google Sheets (URL)"), align = "center")
-                                   , width = 12
+                                   , width = 11
                                    , solidHeader = T
                                    , status = "primary",
 
@@ -153,7 +165,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                              fluidRow(
 
                                box(title = h5("Fieldbook data")
-                                   , width = 4
+                                   , width = 3
                                    , solidHeader = T,
 
                                    textInput(inputId = "fieldbook_gsheet"
@@ -164,7 +176,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                ),
 
                                box(title = h5("Fieldbook summary")
-                                   , width = 4
+                                   , width = 3
                                    , solidHeader = T,
 
                                    textInput(inputId = "fbsmrvars_gsheet"
@@ -172,20 +184,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                              , value = "fbsm"
                                              , placeholder = "Sheet name"
                                    )
-                               ),
-
-                               box(width = 1),
-
-                               box(title = div(h4(icon("key")), align = "center")
-                                   , width = 2,
-
-                                   div(
-                                     googleAuth_jsUI("js_token")
-                                     , align = "center")
-
-                               ),
-
-                               box(width = 1)
+                               )
 
                              ),
 

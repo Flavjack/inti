@@ -28,22 +28,13 @@ shinyServer(function(input, output, session) {
 
 # -------------------------------------------------------------------------
 
-  gsheet_url <- reactive({
-
-    if ( input$gsheet_url == "" ) {
-
-      gsheet_url <- "https://docs.google.com/spreadsheets/d/1a82XIbTeWPC4pwvu9Zjl4qrGitGQ_B-mf3-w67VS4-Q/edit#gid=1664155282"
-
-    } else { input$gsheet_url }
-
-  })
-
 # auth --------------------------------------------------------------------
-# -------------------------------------------------------------------------
 
   gar_shiny_auth(session)
 
   access_token <- callModule(googleAuth_js, "js_token")
+
+# sheet identification ----------------------------------------------------
 
   gs <- reactive({
 
@@ -63,6 +54,89 @@ shinyServer(function(input, output, session) {
 
   })
 
+# generate sheet url ------------------------------------------------------
+
+gsheet_url <- reactive({
+
+  if ( !is.null(gs_created) ) {
+
+    url <- "https://docs.google.com/spreadsheets/d/"
+
+    id <- gs_created %>% pluck(1)
+
+    gsheet_url  <- paste0(url, id)
+
+  } else if ( input$gsheet_url != "" ) {
+
+    gsheet_url <- input$gsheet_url
+
+  } else if ( Sys.getenv('SHINY_PORT') == "" & input$gsheet_url == "" ) {
+
+    gsheet_url <- "https://docs.google.com/spreadsheets/d/1a82XIbTeWPC4pwvu9Zjl4qrGitGQ_B-mf3-w67VS4-Q/edit#gid=1664155282"
+
+  } else if ( Sys.getenv('SHINY_PORT') != "" & input$gsheet_url == "" )  {
+
+    url <- "https://docs.google.com/spreadsheets/u/0/"
+
+  }
+
+  })
+
+# create new sheet ---------------------------------------------------------
+
+  gs_gs_created <- NULL
+  makeReactiveBinding("gs_created")
+  observeEvent( input$create_sheet, {
+
+    validate( need( gs(), "Need Auth") )
+
+    gs_created <<- gs4_create(
+      name = paste("Tarpuy", format(Sys.time(), '%Y-%m-%d  %H:%M'))
+      , sheets = "tarpuy")
+
+  })
+
+# show sheet url ----------------------------------------------------------
+
+output$url_preview <- renderUI({
+
+  if ( is.null(gs_created) ) {
+
+    textInput(inputId = "gsheet_url",
+              label = NULL,
+              width = "100%",
+              value = ""
+              , placeholder = "Insert google sheet link"
+    )
+
+  } else {
+
+    textInput(inputId = "gsheet_url",
+              label = NULL,
+              width = "100%",
+              value = gsheet_url()
+              , placeholder = "Insert google sheet link"
+              )
+    }
+
+  })
+
+# open url ----------------------------------------------------------------
+
+output$open_url <- renderUI({
+
+  url <- gsheet_url()
+
+  link <- paste0("window.open('", url, "', '_blank')")
+
+  actionButton(inputId = "open_sheet"
+               , label = "Open"
+               , class = "btn btn-success"
+               , onclick = link
+               )
+
+})
+
 # tarpuy plex -------------------------------------------------------------
 # -------------------------------------------------------------------------
 
@@ -71,6 +145,9 @@ shinyServer(function(input, output, session) {
 observe({
 
   cat("--------------------------------------------------\n")
+
+  cat("input$js_token")
+  print(input$js_token)
 
   cat("input$plex_fieldbook")
   print(input$plex_fieldbook)
@@ -86,7 +163,6 @@ observe({
 
   cat("input$plex_about")
   print(input$plex_about)
-
 
 })
 
