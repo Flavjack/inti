@@ -2,11 +2,13 @@
 # -------------------------------------------------------------------------
 
 # open https://flavjack.shinyapps.io/tarpuy/
+# open http://localhost:1221/
 
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
+options(shiny.port = 1221 )
 
 if (file.exists("setup.r")) { source("setup.r") }
 
@@ -32,7 +34,7 @@ shinyServer(function(input, output, session) {
 
   access_token <- callModule(googleAuth_js, "js_token")
 
- gs <- reactive({
+gs <- reactive({
 
     if(Sys.getenv('SHINY_PORT') == "") {
 
@@ -41,12 +43,15 @@ shinyServer(function(input, output, session) {
     } else {
 
       gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
-               , cache = FALSE
                , use_oob = TRUE
-               , token = access_token())
+               , cache = FALSE
+               , token = access_token()
+             )
     }
 
-    as_sheets_id( gsheet_url() )
+  validate( need( gsheet_url(), "Insert Url" ) )
+
+  gs <- as_sheets_id( gsheet_url() )
 
   })
 
@@ -56,15 +61,13 @@ shinyServer(function(input, output, session) {
   makeReactiveBinding("gs_created")
   observeEvent( input$create_sheet, {
 
-    # if ( gs4_has_token() ) {
+    validate( need( gs4_has_token(), "LogIn" ) )
 
       gs_created <<- gs4_create(
         name = paste("Tarpuy", format(Sys.time(), '%Y-%m-%d  %H:%M'))
         , sheets = "tarpuy")
 
-    # }
-
-  })
+      })
 
 # generate sheet url ------------------------------------------------------
 
@@ -84,7 +87,7 @@ shinyServer(function(input, output, session) {
 
     } else {
 
-    gsheet_url <- "https://docs.google.com/spreadsheets/d/1a82XIbTeWPC4pwvu9Zjl4qrGitGQ_B-mf3-w67VS4-Q/edit#gid=1664155282"
+    gsheet_url <- NULL
 
     }
 
@@ -94,7 +97,15 @@ shinyServer(function(input, output, session) {
 
 output$open_url <- renderUI({
 
-  link <- gsheet_url()
+  if ( is.null(gsheet_url() )) {
+
+    link <- "https://docs.google.com/spreadsheets/u/0/"
+
+  } else {
+
+    link <- gsheet_url()
+
+  }
 
   open <- paste0("window.open('", link, "', '_blank')")
 
@@ -404,7 +415,6 @@ gsheet_fb <- reactive({
 
 })
 
-
 output$gsheet_preview_sketch <- renderUI({
 
   tags$iframe(src = gsheet_fb(),
@@ -418,7 +428,6 @@ fb_factors <- eventReactive(input$update_sketch, {
 
   validate( need( input$gsheet_fb %in% sheet_names(gs())
                   , "Create your fieldbook") )
-
 
   factors <- gs() %>%
     range_read( input$gsheet_fb ) %>% names()
@@ -462,7 +471,6 @@ output$sketch_options <- renderUI({
               , placeholder = "NcolxNrow"
               , width = "100%"
     )
-
   )
 
 })
@@ -478,7 +486,6 @@ plot_sketch <- reactive({
 
     fb_sketch <- gs() %>%
       range_read( input$gsheet_fb )
-
   }
 
   if ( input$sketch_xlab == "" | is.null(input$sketch_xlab) ){ sketch_xlab <- NULL } else {sketch_xlab <- input$sketch_xlab}
@@ -582,9 +589,7 @@ output$sketch_modules <- renderUI({
                          , step = 50
                          , min = 100)
         )
-
       ),
-
 
       div(imageOutput("plot_sketch"), align = "center")
 

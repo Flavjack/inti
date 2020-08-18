@@ -36,7 +36,7 @@ rm(cran, git, installed)
 
 # References .:
 
-# https://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#gar_shiny_-functions-example
+# open https://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#gar_shiny_-functions-example
 
 # https://github.com/MarkEdmondson1234/googleAuthR/issues/169
 
@@ -59,5 +59,3 @@ rm(cran, git, installed)
 # open https://googlesheets4.tidyverse.org/articles/articles/drive-and-sheets.html
 
 # open https://search.google.com/
-
-
