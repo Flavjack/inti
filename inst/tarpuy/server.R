@@ -7,7 +7,8 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
+options("googleAuthR.scopes.selected", scopes = c("https://www.googleapis.com/auth/spreadsheets"))
+
 options(shiny.port = 1221 )
 
 if (file.exists("setup.r")) { source("setup.r") }
@@ -20,6 +21,8 @@ library(googlesheets4)
 library(googleAuthR)
 library(shinydashboard)
 library(stringi)
+
+options(gargle_oob_default = TRUE)
 
 gar_set_client(web_json = "www/tarpuy.json")
 
@@ -34,28 +37,16 @@ shinyServer(function(input, output, session) {
 
   access_token <- callModule(googleAuth_js, "js_token")
 
-gs <- reactive({
+observe({
 
-    if(Sys.getenv('SHINY_PORT') == "") {
-
-      gs4_auth(T)
-
-    } else {
-
-      gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
-               , use_oob = TRUE
-               , cache = FALSE
+      gs4_auth(scopes = c("https://www.googleapis.com/auth/spreadsheets")
                , token = access_token()
-             )
-    }
-
-  validate( need( gsheet_url(), "Insert Url" ) )
-
-  gs <- as_sheets_id( gsheet_url() )
-
+               )
   })
 
-# create new sheet ---------------------------------------------------------
+gs <- reactive({ as_sheets_id( gsheet_url() ) })
+
+# # create new sheet ---------------------------------------------------------
 
   gs_created <- NULL
   makeReactiveBinding("gs_created")

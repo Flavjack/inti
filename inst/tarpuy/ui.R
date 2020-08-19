@@ -2,11 +2,12 @@
 # -------------------------------------------------------------------------
 
 # open https://flavjack.shinyapps.io/tarpuy/
+# open http://localhost:1221/
 
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
+options("googleAuthR.scopes.selected", scopes = c("https://www.googleapis.com/auth/spreadsheets"))
 
 if (file.exists("setup.r")) { source("setup.r") }
 
@@ -19,6 +20,8 @@ library(googleAuthR)
 library(bootstraplib)
 library(shinydashboard)
 library(stringi)
+
+options(gargle_oob_default = TRUE)
 
 gar_set_client(web_json = "www/tarpuy.json")
 

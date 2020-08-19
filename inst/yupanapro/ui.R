@@ -2,6 +2,7 @@
 # -------------------------------------------------------------------------
 
 # https://flavjack.shinyapps.io/yupanapro/
+# open http://localhost:1221/
 
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -21,6 +22,8 @@ library(shinydashboard)
 library(ggpubr)
 library(FactoMineR)
 library(corrplot)
+
+options(gargle_oob_default = TRUE)
 
 gar_set_client(web_json = "www/yupanapro.json")
 
@@ -154,7 +157,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                              label = NULL
                                              , width = "100%"
                                              , value = ""
-                                             , placeholder = "Insert google sheet link"
+                                             , placeholder = "Insert google sheet url"
                                    )
 
                                ),
@@ -366,6 +369,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                                          , "Model"
                                                          , "Plots")
                                            , inline = TRUE
+                                           , selected = "Model"
 
                               ),
 

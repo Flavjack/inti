@@ -2,11 +2,13 @@
 # -------------------------------------------------------------------------
 
 # open https://flavjack.shinyapps.io/yupanapro/
+# open http://localhost:1221/
 
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
+options(shiny.port = 1221)
 
 if (file.exists("setup.r")) { source("setup.r") }
 
@@ -22,6 +24,8 @@ library(ggpubr)
 library(FactoMineR)
 library(corrplot)
 
+options(gargle_oob_default = TRUE)
+
 gar_set_client(web_json = "www/yupanapro.json")
 
 # app ---------------------------------------------------------------------
@@ -30,44 +34,65 @@ gar_set_client(web_json = "www/yupanapro.json")
 shinyServer(function(input, output, session) {
 
 # auth --------------------------------------------------------------------
-# -------------------------------------------------------------------------
 
 gar_shiny_auth(session)
 
 access_token <- callModule(googleAuth_js, "js_token")
 
+observe({
+
+  gs4_auth(scopes = c("https://www.googleapis.com/auth/spreadsheets")
+           , token = access_token()
+           )
+})
+
+gs <- reactive({
+
+  validate( need( fieldbook_url(), "LogIn" ) )
+
+  as_sheets_id( fieldbook_url() )
+
+  })
 
 # -------------------------------------------------------------------------
 
 fieldbook_url <- reactive({
 
-  if ( input$fieldbook_url == "" ) {
+  if ( input$fieldbook_url != "" ) {
 
-    fieldbook_url <- "https://docs.google.com/spreadsheets/d/15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346"
-
-  } else { input$fieldbook_url }
-
-})
-
-# -------------------------------------------------------------------------
-
-gs <- reactive({
-
-  if(Sys.getenv('SHINY_PORT') == "") {
-
-    gs4_auth(T)
+    fieldbook_url <- input$fieldbook_url
 
   } else {
 
-    gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
-             , cache = FALSE
-             , use_oob = TRUE
-             , token = access_token())
-    }
+    fieldbook_url <- NULL
 
-  as_sheets_id( fieldbook_url() )
+  }
 
-  })
+})
+
+# open url ----------------------------------------------------------------
+
+output$open_url <- renderUI({
+
+  if ( is.null(fieldbook_url()) ) {
+
+    link <- "https://docs.google.com/spreadsheets/u/0/"
+
+  } else {
+
+    link <- fieldbook_url()
+
+  }
+
+  open <- paste0("window.open('", link, "', '_blank')")
+
+  actionButton(inputId = "open_sheet"
+               , label = "Open"
+               , class = "btn btn-success"
+               , onclick = open
+  )
+
+})
 
 # -------------------------------------------------------------------------
 
@@ -131,31 +156,6 @@ observeEvent( refresh(), {
   } else { fbsmrvar <<- NULL }
 
 })
-
-# open url ----------------------------------------------------------------
-
-output$open_url <- renderUI({
-
-  if ( fieldbook_url() == "" ) {
-
-    link <- "https://docs.google.com/spreadsheets/u/0/"
-
-  } else {
-
-    link <- fieldbook_url()
-
-  }
-
-  open <- paste0("window.open('", link, "', '_blank')")
-
-  actionButton(inputId = "open_sheet"
-               , label = "Open"
-               , class = "btn btn-success"
-               , onclick = open
-  )
-
-})
-
 
 # Yupana: Fieldbook -------------------------------------------------------
 # -------------------------------------------------------------------------

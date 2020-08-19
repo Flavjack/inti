@@ -2,6 +2,7 @@
 # -------------------------------------------------------------------------
 
 # https://flavjack.shinyapps.io/tarpuy/
+# open http://localhost:1221/
 
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -48,14 +49,11 @@ rm(cran, git, installed)
 
 # open https://shiny.rstudio.com/tutorial/written-tutorial/lesson3/
 
-# http://xip.io/
-
-# https://politicadeprivacidadplantilla.com/
-
 # https://github.com/MarkEdmondson1234/googleAuthR/issues/111
 
 # open https://realfavicongenerator.net/
 
 # open https://googlesheets4.tidyverse.org/articles/articles/drive-and-sheets.html
 
-# open https://search.google.com/
+# https://support.rstudio.com/hc/en-us/articles/217952868-Generating-OAuth-tokens-for-a-server-using-httr
+
