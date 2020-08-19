@@ -9,6 +9,8 @@
 
 options("googleAuthR.scopes.selected", scopes = c("https://www.googleapis.com/auth/spreadsheets"))
 
+options(shiny.port = 1221 )
+
 if (file.exists("setup.r")) { source("setup.r") }
 
 library(shiny)
@@ -224,7 +226,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                    div(
 
-                                     htmlOutput("open_url")
+                                     uiOutput("open_url")
 
                                     , align = "center")
 
@@ -648,7 +650,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                       column(10,
 
-                             htmlOutput("gsheet_preview_design"),
+                             uiOutput("gsheet_preview_design"),
 
                              br(),
                              br()
@@ -676,7 +678,7 @@ tabPanel("Sketch",
                                , selected = "Sketch"
                                ),
 
-                  htmlOutput("sketch_options"),
+                  uiOutput("sketch_options"),
 
                   actionButton(inputId = "update_sketch"
                                , label = "Refresh"
@@ -687,7 +689,7 @@ tabPanel("Sketch",
 
            column(10,
 
-                  htmlOutput("sketch_modules"),
+                  uiOutput("sketch_modules"),
 
                   br(),
                   br()
@@ -703,10 +705,3 @@ tabPanel("Sketch",
 # -------------------------------------------------------------------------
 
 )
-
-
-
-
-
-
-

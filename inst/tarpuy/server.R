@@ -19,6 +19,7 @@ library(metathis)
 library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
+library(bootstraplib)
 library(shinydashboard)
 library(stringi)
 
@@ -46,7 +47,7 @@ observe({
 
 gs <- reactive({ as_sheets_id( gsheet_url() ) })
 
-# # create new sheet ---------------------------------------------------------
+# create new sheet ---------------------------------------------------------
 
   gs_created <- NULL
   makeReactiveBinding("gs_created")
@@ -58,27 +59,49 @@ gs <- reactive({ as_sheets_id( gsheet_url() ) })
         name = paste("Tarpuy", format(Sys.time(), '%Y-%m-%d  %H:%M'))
         , sheets = "tarpuy")
 
+  # updt link ---------------------------------------------------------------
+
+        url <- "https://docs.google.com/spreadsheets/d/"
+
+        id <- gs_created %>% pluck(1)
+
+        gsheet_url  <- paste0(url, id)
+
+      updateTextInput(session, "gsheet_url", value = gsheet_url)
+
       })
 
 # generate sheet url ------------------------------------------------------
 
   gsheet_url <- reactive({
 
-    if ( input$gsheet_url != "" ) {
+    if( input$gsheet_url == "" ) {
 
-    gsheet_url <- input$gsheet_url
+      gsheet_url <- NULL
+
+    } else if ( !is.null(gs_created) & input$gsheet_url == "" ) {
+
+      url <- "https://docs.google.com/spreadsheets/d/"
+
+      id <- gs_created %>% pluck(1)
+
+      gsheet_url  <- paste0(url, id)
+
+    } else if ( input$gsheet_url != "" ) {
+
+      gsheet_url <- input$gsheet_url
 
     } else if ( !is.null(gs_created) ) {
 
-    url <- "https://docs.google.com/spreadsheets/d/"
+      url <- "https://docs.google.com/spreadsheets/d/"
 
-    id <- gs_created %>% pluck(1)
+      id <- gs_created %>% pluck(1)
 
-    gsheet_url  <- paste0(url, id)
+      gsheet_url  <- paste0(url, id)
 
-    } else {
+    } else  {
 
-    gsheet_url <- NULL
+      gsheet_url <- NULL
 
     }
 
@@ -88,7 +111,7 @@ gs <- reactive({ as_sheets_id( gsheet_url() ) })
 
 output$open_url <- renderUI({
 
-  if ( is.null(gsheet_url() )) {
+  if ( is.null( gsheet_url() )) {
 
     link <- "https://docs.google.com/spreadsheets/u/0/"
 
@@ -211,6 +234,8 @@ plex <- reactive({
 
 observeEvent(input$plex_generate, {
 
+  validate( need( input$gsheet_url, "Insert url" ) )
+
   if ( !input$gsheet_info %in% sheet_names(gs()) ) {
 
     sheet_add(ss = gs(), sheet = input$gsheet_info)
@@ -267,7 +292,7 @@ observe({
 
 })
 
-# preview data -----------------------------------------------------------
+# preview design -----------------------------------------------------------
 
 gsheet_design <- reactive({
 
@@ -284,6 +309,8 @@ gsheet_design <- reactive({
 })
 
 output$gsheet_preview_design <- renderUI({
+
+  validate( need( input$gsheet_url, "Insert url o create google sheet document" ) )
 
   tags$iframe(src = gsheet_design(),
               style="height:580px; width:100%; scrolling=no")
@@ -320,6 +347,8 @@ output$design_type <- renderUI({
 # export fieldbook --------------------------------------------------------
 
   observeEvent(input$export_design, {
+
+    validate( need( input$gsheet_url, "Insert url o create google sheet document" ) )
 
 # variables ---------------------------------------------------------------
 
@@ -408,6 +437,8 @@ gsheet_fb <- reactive({
 
 output$gsheet_preview_sketch <- renderUI({
 
+  validate( need( input$gsheet_url, "Insert url o create google sheet document" ) )
+
   tags$iframe(src = gsheet_fb(),
               style="height:580px; width:100%; scrolling=no")
 
@@ -416,6 +447,8 @@ output$gsheet_preview_sketch <- renderUI({
 # options -----------------------------------------------------------------
 
 fb_factors <- eventReactive(input$update_sketch, {
+
+  validate( need( input$gsheet_url, "Insert url o create google sheet document" ) )
 
   validate( need( input$gsheet_fb %in% sheet_names(gs())
                   , "Create your fieldbook") )
@@ -470,6 +503,7 @@ output$sketch_options <- renderUI({
 
 plot_sketch <- reactive({
 
+  validate( need( input$gsheet_url, "Insert url o create google sheet document" ) )
   validate( need( input$sketch_factor, "Select your design factor") )
   validate( need( input$sketch_dim, "Select your blocking factor") )
 

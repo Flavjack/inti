@@ -1,7 +1,8 @@
-# tarpuy ------------------------------------------------------------------
+# yupana ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-# https://flavjack.shinyapps.io/yupanapro/
+# open https://flavjack.shinyapps.io/yupanapro/
+# open http://localhost:1221/
 
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -44,4 +45,6 @@ rm(cran, git, installed)
 # https://rpubs.com/therimalaya/43190
 
 # open https://realfavicongenerator.net/
+
+# https://googlesheets4.tidyverse.org/reference/sheets_auth.html
 

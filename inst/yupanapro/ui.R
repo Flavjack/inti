@@ -7,7 +7,9 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
+options("googleAuthR.scopes.selected", scopes = c("https://www.googleapis.com/auth/spreadsheets"))
+
+options(shiny.port = 1221)
 
 if (file.exists("setup.r")) { source("setup.r") }
 
@@ -53,7 +55,6 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                         image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/www/favicon/android-chrome-512x512.png",
                         image_alt = "quipolab.com"
                       )
-
            ),
 
  # Yupana Info -------------------------------------------------------------
@@ -164,7 +165,6 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                              ),
 
-
                              fluidRow(
 
                                box(title = h5("Fieldbook data")
@@ -195,7 +195,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                    div(
 
-                                     htmlOutput("open_url")
+                                     uiOutput("open_url")
 
                                      , align = "center")
                                )
@@ -273,7 +273,6 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                              ),
                              ),
 
-
                       column(1,
 
                              HTML('
@@ -317,7 +316,6 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                     )
 
-
            ),
 
            tabPanel("Fieldbook",
@@ -345,7 +343,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                       column(width = 10,
 
-                             htmlOutput("fieldbook_preview")
+                             uiOutput("fieldbook_preview")
 
                       ),
 
@@ -387,7 +385,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                        column(width = 10,
 
-                                htmlOutput("rpt_preview")
+                                uiOutput("rpt_preview")
 
                        ),
 
@@ -399,7 +397,6 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
             ),
 
            tabPanel("Graphics",
-
 
                     fluidRow(
 
@@ -443,15 +440,13 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                       ),
 
-
                       column(width = 10,
 
-                               htmlOutput("graph_preview")
+                               uiOutput("graph_preview")
 
                       ),
 
                     )
-
 
                 ),
 
@@ -503,25 +498,18 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                           )
                    ),
 
-
                    column(width = 10,
 
-                          htmlOutput("mvr_preview")
+                          uiOutput("mvr_preview")
 
                    ),
 
                   br()
 
                  )
-
-
         )
-
 
 # Yupana end code ---------------------------------------------------------
 # -------------------------------------------------------------------------
 
-
 )
-
-

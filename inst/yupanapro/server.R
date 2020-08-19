@@ -7,7 +7,8 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
+options("googleAuthR.scopes.selected", scopes = c("https://www.googleapis.com/auth/spreadsheets"))
+
 options(shiny.port = 1221)
 
 if (file.exists("setup.r")) { source("setup.r") }
@@ -141,8 +142,7 @@ fieldbook <- reactive({
 
 refresh <- reactive({ list(input$fbsm_refresh, input$mvr_refresh) })
 
-# make reactive!
-
+# make var reactive!
 fbsmrvar <- NULL
 makeReactiveBinding("fbsmrvar")
 
@@ -313,7 +313,6 @@ observeEvent(input$fbsmr_generate, {
   }
 
 })
-
 
 # reshape module ----------------------------------------------------------
 
@@ -540,7 +539,6 @@ report <- reactive({
                            , dotplot_groups = input$rpt_dotplot_groups
                            , model_diag = FALSE
                            )
-
   }
 
 })
@@ -597,7 +595,7 @@ output$mc_stats <- renderTable({
     select(!c(name.t, MSerror, Df)) %>%
     select(!intersect(names(.), c("StudentizedRange", "MSD")))
 
-})
+  })
 
 # export meancomparison table ---------------------------------------------
 
@@ -627,7 +625,6 @@ output$rpt_preview <- renderUI({
     tagList(
 
       fluidRow(
-
 
       column(width = 5,
 
@@ -866,7 +863,6 @@ mvr <- reactive({
                          )
     })
 
-
 # -------------------------------------------------------------------------
 
 output$pca_var <- renderImage({
@@ -962,7 +958,6 @@ output$hcpc_map <- renderImage({
   list(src = outfile)
 
 }, deleteFile = TRUE)
-
 
 # -------------------------------------------------------------------------
 
@@ -1060,5 +1055,3 @@ output$mvr_preview <- renderUI({
 # -------------------------------------------------------------------------
 
 })
-
-
