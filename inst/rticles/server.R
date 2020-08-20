@@ -30,6 +30,20 @@ library(inti)
 
 shinyServer(function(input, output, session) {
 
+# close auto local session ------------------------------------------------
+
+  observe({
+
+    if(Sys.getenv('SHINY_PORT') == "") {
+
+      session$onSessionEnded(stopApp)
+
+    }
+
+  })
+
+# close app ---------------------------------------------------------------
+
   observeEvent(input$cancel, {
     stopApp()
   })

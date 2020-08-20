@@ -8,7 +8,6 @@
 # -------------------------------------------------------------------------
 
 options("googleAuthR.scopes.selected", scopes = c("https://www.googleapis.com/auth/spreadsheets"))
-
 options(shiny.port = 1221 )
 
 if (file.exists("setup.r")) { source("setup.r") }
@@ -24,7 +23,6 @@ library(shinydashboard)
 library(stringi)
 
 options(gargle_oob_default = TRUE)
-
 gar_set_client(web_json = "www/tarpuy.json")
 
 # app ---------------------------------------------------------------------
@@ -32,46 +30,63 @@ gar_set_client(web_json = "www/tarpuy.json")
 
 shinyServer(function(input, output, session) {
 
+# close auto local session ------------------------------------------------
+
+  observe({
+
+    if(Sys.getenv('SHINY_PORT') == "") {
+
+      session$onSessionEnded(stopApp)
+
+    }
+
+  })
+
 # auth --------------------------------------------------------------------
 
   gar_shiny_auth(session)
 
   access_token <- callModule(googleAuth_js, "js_token")
 
-observe({
+  gs <- reactive({
 
-      gs4_auth(scopes = c("https://www.googleapis.com/auth/spreadsheets")
-               , token = access_token()
-               )
-  })
+    gs4_auth(scopes = c("https://www.googleapis.com/auth/spreadsheets")
+             , token = access_token())
 
-gs <- reactive({ as_sheets_id( gsheet_url() ) })
+    validate( need( gs4_has_token(), "LogIn and create or insert a url" ) )
 
-# create new sheet ---------------------------------------------------------
+    as_sheets_id( gsheet_url() )
+
+    })
+
+  # create new sheet ---------------------------------------------------------
 
   gs_created <- NULL
   makeReactiveBinding("gs_created")
   observeEvent( input$create_sheet, {
 
-    validate( need( gs4_has_token(), "LogIn" ) )
+    gs4_auth(scopes = c("https://www.googleapis.com/auth/spreadsheets")
+             , token = access_token())
 
-      gs_created <<- gs4_create(
-        name = paste("Tarpuy", format(Sys.time(), '%Y-%m-%d  %H:%M'))
-        , sheets = "tarpuy")
+    validate( need( gs4_has_token(), "LogIn and create or insert a url" ) )
 
-  # updt link ---------------------------------------------------------------
+    gs_created <<- gs4_create(
+      name = paste("Tarpuy", format(Sys.time(), '%Y-%m-%d  %H:%M'))
+      , sheets = "tarpuy")
 
-        url <- "https://docs.google.com/spreadsheets/d/"
+    # updt link ---------------------------------------------------------------
 
-        id <- gs_created %>% pluck(1)
+    url <- "https://docs.google.com/spreadsheets/d/"
 
-        gsheet_url  <- paste0(url, id)
+    id <- gs_created %>% pluck(1)
 
-      updateTextInput(session, "gsheet_url", value = gsheet_url)
+    gsheet_url  <- paste0(url, id)
 
-      })
+    updateTextInput(session, "gsheet_url", value = gsheet_url)
 
-# generate sheet url ------------------------------------------------------
+  })
+
+  # generate sheet url ------------------------------------------------------
 
   gsheet_url <- reactive({
 
@@ -107,250 +122,250 @@ gs <- reactive({ as_sheets_id( gsheet_url() ) })
 
   })
 
-# open url ----------------------------------------------------------------
+  # open url ----------------------------------------------------------------
 
-output$open_url <- renderUI({
+  output$open_url <- renderUI({
 
-  if ( is.null( gsheet_url() )) {
+    if ( is.null( gsheet_url() )) {
 
-    link <- "https://docs.google.com/spreadsheets/u/0/"
+      link <- "https://docs.google.com/spreadsheets/u/0/"
 
-  } else {
+    } else {
 
-    link <- gsheet_url()
+      link <- gsheet_url()
 
-  }
+    }
 
-  open <- paste0("window.open('", link, "', '_blank')")
+    open <- paste0("window.open('", link, "', '_blank')")
 
-  actionButton(inputId = "open_sheet"
-               , label = "Open"
-               , class = "btn btn-success"
-               , onclick = open
-               )
-})
+    actionButton(inputId = "open_sheet"
+                 , label = "Open"
+                 , class = "btn btn-success"
+                 , onclick = open
+    )
+  })
 
-# tarpuy plex -------------------------------------------------------------
-# -------------------------------------------------------------------------
+  # tarpuy plex -------------------------------------------------------------
+  # -------------------------------------------------------------------------
 
-# test args ---------------------------------------------------------------
+  # test args ---------------------------------------------------------------
 
-observe({
+  observe({
 
-  cat("--------------------------------------------------\n")
+    cat("--------------------------------------------------\n")
 
-  cat("input$gsheet_url")
-  print(input$gsheet_url)
+    cat("input$gsheet_url")
+    print(input$gsheet_url)
 
-  cat("input$plex_fieldbook")
-  print(input$plex_fieldbook)
+    cat("input$plex_fieldbook")
+    print(input$plex_fieldbook)
 
-  cat("input$plex_location")
-  print(input$plex_location)
+    cat("input$plex_location")
+    print(input$plex_location)
 
-  cat("input$plex_dates[1]")
-  print(input$plex_dates[1])
+    cat("input$plex_dates[1]")
+    print(input$plex_dates[1])
 
-  cat("input$plex_dates[2]")
-  print(input$plex_dates[2])
+    cat("input$plex_dates[2]")
+    print(input$plex_dates[2])
 
-  cat("input$plex_about")
-  print(input$plex_about)
+    cat("input$plex_about")
+    print(input$plex_about)
 
-})
+  })
 
-# design type -------------------------------------------------------------
+  # design type -------------------------------------------------------------
 
-output$plex_design <- renderUI({
+  output$plex_design <- renderUI({
 
-  if(input$plex_nfactors == 1) {
+    if(input$plex_nfactors == 1) {
 
-    type <- c("crd", "rcbd", "lsd", "lattice")
+      type <- c("crd", "rcbd", "lsd", "lattice")
 
-  } else if (input$plex_nfactors == 2) {
+    } else if (input$plex_nfactors == 2) {
 
-    type <- c("crd", "rcbd", "lsd", "split-crd", "split-rcbd")
+      type <- c("crd", "rcbd", "lsd", "split-crd", "split-rcbd")
 
-  } else if (input$plex_nfactors > 2) {
+    } else if (input$plex_nfactors > 2) {
 
-    type <- c("crd", "rcbd", "lsd")
+      type <- c("crd", "rcbd", "lsd")
 
-  }
+    }
 
-  selectizeInput(
-    inputId = "plex_design",
-    label = "Design type",
-    choices = type,
-    multiple = FALSE
-  )
+    selectizeInput(
+      inputId = "plex_design",
+      label = "Design type",
+      choices = type,
+      multiple = FALSE
+    )
 
-})
+  })
 
-# -------------------------------------------------------------------------
+  # -------------------------------------------------------------------------
 
-plex <- reactive({
+  plex <- reactive({
 
-  if( input$plex_fieldbook == "" &
-      input$plex_location != "" & !is.na(input$plex_dates[1]) & input$plex_about != "") {
+    if( input$plex_fieldbook == "" &
+        input$plex_location != "" & !is.na(input$plex_dates[1]) & input$plex_about != "") {
 
-    fbname <- paste(strsplit(input$plex_location, ",") %>% unlist() %>% pluck(1)
-                    , as.character(input$plex_dates[1])
-                    , input$plex_about
-                    , sep = " "
-                    ) %>%
-      stringi::stri_trans_general("Latin-ASCII") %>%
-      str_to_upper()
+      fbname <- paste(strsplit(input$plex_location, ",") %>% unlist() %>% pluck(1)
+                      , as.character(input$plex_dates[1])
+                      , input$plex_about
+                      , sep = " "
+      ) %>%
+        stringi::stri_trans_general("Latin-ASCII") %>%
+        str_to_upper()
 
-  } else ( fbname <- input$plex_fieldbook )
+    } else ( fbname <- input$plex_fieldbook )
 
-  plex <- fieldbook_plex(data = NULL
-                        , idea = input$plex_idea
-                        , goal = input$plex_goal
-                        , hypothesis = input$plex_hypothesis
-                        , rationale = input$plex_rationale
-                        , objectives = input$plex_objectives
-                        , plan = input$plex_plan
-                        , institutions = input$plex_institutions
-                        , researchers = input$plex_researchers
-                        , manager = input$plex_manager
-                        , location = input$plex_location
-                        , altitude = input$plex_altitude
-                        , georeferencing = input$plex_georeferencing
-                        , environment = input$plex_environment
-                        , start = as.character(input$plex_dates[1])
-                        , end = as.character(input$plex_dates[2])
-                        , about = input$plex_about
-                        , fieldbook = fbname
-                        , album = input$plex_album
-                        , github = input$plex_github
-                        , nfactor = input$plex_nfactors
-                        , design = input$plex_design
-                        , rep = input$plex_rep
-                        , serie = input$plex_serie
-                        , seed = input$plex_seed
-                        )
+    plex <- fieldbook_plex(data = NULL
+                           , idea = input$plex_idea
+                           , goal = input$plex_goal
+                           , hypothesis = input$plex_hypothesis
+                           , rationale = input$plex_rationale
+                           , objectives = input$plex_objectives
+                           , plan = input$plex_plan
+                           , institutions = input$plex_institutions
+                           , researchers = input$plex_researchers
+                           , manager = input$plex_manager
+                           , location = input$plex_location
+                           , altitude = input$plex_altitude
+                           , georeferencing = input$plex_georeferencing
+                           , environment = input$plex_environment
+                           , start = as.character(input$plex_dates[1])
+                           , end = as.character(input$plex_dates[2])
+                           , about = input$plex_about
+                           , fieldbook = fbname
+                           , album = input$plex_album
+                           , github = input$plex_github
+                           , nfactor = input$plex_nfactors
+                           , design = input$plex_design
+                           , rep = input$plex_rep
+                           , serie = input$plex_serie
+                           , seed = input$plex_seed
+    )
 
-})
+  })
 
-observeEvent(input$plex_generate, {
+  observeEvent(input$plex_generate, {
 
-  validate( need( input$gsheet_url, "Insert url" ) )
+    validate( need( input$gsheet_url, "LogIn and create or insert a url" ) )
 
-  if ( !input$gsheet_info %in% sheet_names(gs()) ) {
+    if ( !input$gsheet_info %in% sheet_names(gs()) ) {
 
-    sheet_add(ss = gs(), sheet = input$gsheet_info)
+      sheet_add(ss = gs(), sheet = input$gsheet_info)
 
-    plex()$plex %>% sheet_write(ss = gs(), sheet = input$gsheet_info)
+      plex()$plex %>% sheet_write(ss = gs(), sheet = input$gsheet_info)
 
-  } else { print ("sheet already exist") }
+    } else { print ("sheet already exist") }
 
-# -------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
-  if ( !input$gsheet_varlist %in% sheet_names(gs()) ) {
+    if ( !input$gsheet_varlist %in% sheet_names(gs()) ) {
 
-    sheet_add(ss = gs(), sheet = input$gsheet_varlist, .after = input$gsheet_info)
+      sheet_add(ss = gs(), sheet = input$gsheet_varlist, .after = input$gsheet_info)
 
-    plex()$variables %>% sheet_write(ss = gs(), sheet = input$gsheet_varlist)
+      plex()$variables %>% sheet_write(ss = gs(), sheet = input$gsheet_varlist)
 
-  } else { print ("sheet already exist") }
+    } else { print ("sheet already exist") }
 
-# -------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
-  if ( !input$gsheet_design %in% sheet_names(gs()) ) {
+    if ( !input$gsheet_design %in% sheet_names(gs()) ) {
 
-    sheet_add(ss = gs(), sheet = input$gsheet_design, .after = input$gsheet_varlist)
+      sheet_add(ss = gs(), sheet = input$gsheet_design, .after = input$gsheet_varlist)
 
-    plex()$design %>% sheet_write(ss = gs(), sheet = input$gsheet_design)
+      plex()$design %>% sheet_write(ss = gs(), sheet = input$gsheet_design)
 
-  } else { print ("sheet already exist") }
+    } else { print ("sheet already exist") }
 
-})
+  })
 
-# tarpuy design -----------------------------------------------------------
-# -------------------------------------------------------------------------
+  # tarpuy design -----------------------------------------------------------
+  # -------------------------------------------------------------------------
 
-# test args ---------------------------------------------------------------
+  # test args ---------------------------------------------------------------
 
-observe({
+  observe({
 
-  cat("--------------------------------------------------\n")
+    cat("--------------------------------------------------\n")
 
-  cat("Factores")
-  print(input$design_nfactors)
+    cat("Factores")
+    print(input$design_nfactors)
 
-  cat("Design type")
-  print(input$design_type)
+    cat("Design type")
+    print(input$design_type)
 
-  cat("Replication")
-  print(input$design_rep)
+    cat("Replication")
+    print(input$design_rep)
 
-  cat("Plot digits")
-  print(input$design_serie)
+    cat("Plot digits")
+    print(input$design_serie)
 
-  cat("Seed")
-  print(input$design_seed)
+    cat("Seed")
+    print(input$design_seed)
 
-})
+  })
 
-# preview design -----------------------------------------------------------
+  # preview design -----------------------------------------------------------
 
-gsheet_design <- reactive({
+  gsheet_design <- reactive({
 
-  info <- gs4_get(gs())
+    info <- gs4_get(gs())
 
-  url <- info$spreadsheet_url
+    url <- info$spreadsheet_url
 
-  id <- info$sheets %>%
-    filter(name %in% input$gsheet_design) %>%
-    pluck("id")
+    id <- info$sheets %>%
+      filter(name %in% input$gsheet_design) %>%
+      pluck("id")
 
-  plot_url  <- paste(url, id, sep = "#gid=")
+    plot_url  <- paste(url, id, sep = "#gid=")
 
-})
+  })
 
-output$gsheet_preview_design <- renderUI({
+  output$gsheet_preview_design <- renderUI({
 
-  validate( need( input$gsheet_url, "Insert url o create google sheet document" ) )
+    validate( need( input$gsheet_url, "LogIn and create or insert a url" ) )
 
-  tags$iframe(src = gsheet_design(),
-              style="height:580px; width:100%; scrolling=no")
+    tags$iframe(src = gsheet_design(),
+                style="height:580px; width:100%; scrolling=no")
 
-})
+  })
 
-# design type -------------------------------------------------------------
+  # design type -------------------------------------------------------------
 
-output$design_type <- renderUI({
+  output$design_type <- renderUI({
 
-  if(input$design_nfactors == 1) {
+    if(input$design_nfactors == 1) {
 
-    type <- c("crd", "rcbd", "lsd", "lattice")
+      type <- c("crd", "rcbd", "lsd", "lattice")
 
-  } else if (input$design_nfactors == 2) {
+    } else if (input$design_nfactors == 2) {
 
-    type <- c("crd", "rcbd", "lsd", "split-crd", "split-rcbd")
+      type <- c("crd", "rcbd", "lsd", "split-crd", "split-rcbd")
 
-  } else if (input$design_nfactors > 2) {
+    } else if (input$design_nfactors > 2) {
 
-    type <- c("crd", "rcbd", "lsd")
+      type <- c("crd", "rcbd", "lsd")
 
-  }
+    }
 
-  selectizeInput(
-    inputId = "design_type",
-    label = "Design type",
-    choices = type,
-    multiple = FALSE
-  )
+    selectizeInput(
+      inputId = "design_type",
+      label = "Design type",
+      choices = type,
+      multiple = FALSE
+    )
 
-})
+  })
 
-# export fieldbook --------------------------------------------------------
+  # export fieldbook --------------------------------------------------------
 
   observeEvent(input$export_design, {
 
-    validate( need( input$gsheet_url, "Insert url o create google sheet document" ) )
+    validate( need( input$gsheet_url, "LogIn and create or insert a url" ) )
 
-# variables ---------------------------------------------------------------
+    # variables ---------------------------------------------------------------
 
     if ( input$gsheet_varlist %in% sheet_names(gs()) ) {
 
@@ -359,16 +374,16 @@ output$design_type <- renderUI({
 
     } else { variables <- NULL }
 
-# fieldbook ---------------------------------------------------------------
+    # fieldbook ---------------------------------------------------------------
 
     if ( input$gsheet_design %in% sheet_names(gs()) ) {
 
-     fieldbook <-  gs() %>%
+      fieldbook <-  gs() %>%
         range_read(input$gsheet_design)
 
     } else { fieldbook <- NULL }
 
-# -------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     if ( !is.null( fieldbook ) ) {
 
@@ -382,14 +397,14 @@ output$design_type <- renderUI({
         ) %>%
         inti::fieldbook_varlist( variables )
 
-        fbds %>%
-          pluck("design") %>%
-          as.data.frame() %>%
-          write_sheet(ss = gs(), sheet = input$gsheet_fb)
+      fbds %>%
+        pluck("design") %>%
+        as.data.frame() %>%
+        write_sheet(ss = gs(), sheet = input$gsheet_fb)
 
     } else { "Create your design" }
 
-# -------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     if ( !"sketch" %in% sheet_names(gs()) & input$gsheet_fb %in% sheet_names(gs()) ) {
 
@@ -399,233 +414,232 @@ output$design_type <- renderUI({
 
   })
 
-# tarpuy sketch -----------------------------------------------------------
-# -------------------------------------------------------------------------
+  # tarpuy sketch -----------------------------------------------------------
+  # -------------------------------------------------------------------------
 
-# test args ---------------------------------------------------------------
+  # test args ---------------------------------------------------------------
 
-observe({
+  observe({
 
-  cat("--------------------------------------------------\n")
+    cat("--------------------------------------------------\n")
 
-  cat("input$sketch_xlab")
-  print(input$sketch_xlab)
+    cat("input$sketch_xlab")
+    print(input$sketch_xlab)
 
-  cat("input$sketch_dim")
-  print(input$sketch_dim)
+    cat("input$sketch_dim")
+    print(input$sketch_dim)
 
-  cat("input$sketch_dim2")
-  print(input$sketch_dim2)
+    cat("input$sketch_dim2")
+    print(input$sketch_dim2)
 
-})
-
-# preview sketch ----------------------------------------------------------
-
-gsheet_fb <- reactive({
-
-  info <- gs4_get(gs())
-
-  url <- info$spreadsheet_url
-
-  id <- info$sheets %>%
-    filter(name %in% input$gsheet_fb) %>%
-    pluck("id")
-
-  sketch_url  <- paste(url, id, sep = "#gid=")
-
-})
-
-output$gsheet_preview_sketch <- renderUI({
-
-  validate( need( input$gsheet_url, "Insert url o create google sheet document" ) )
-
-  tags$iframe(src = gsheet_fb(),
-              style="height:580px; width:100%; scrolling=no")
-
-})
-
-# options -----------------------------------------------------------------
-
-fb_factors <- eventReactive(input$update_sketch, {
-
-  validate( need( input$gsheet_url, "Insert url o create google sheet document" ) )
-
-  validate( need( input$gsheet_fb %in% sheet_names(gs())
-                  , "Create your fieldbook") )
-
-  factors <- gs() %>%
-    range_read( input$gsheet_fb ) %>% names()
-
-})
-
-output$sketch_options <- renderUI({
-
-  factors <- fb_factors()
-
-  tagList(
-
-    selectInput(inputId = "sketch_factor"
-                , label = "Factor"
-                , multiple = FALSE
-                , choices = c(""
-                              , factors)
-                , width = "100%"
-    ),
-
-    selectInput(inputId = "sketch_dim"
-                , label = "Block factor"
-                , multiple = FALSE
-                , choices = c(""
-                              , factors)
-                , width = "100%"
-    ),
-
-    selectInput(inputId = "sketch_fill"
-                , label = "Fill factor"
-                , multiple = FALSE
-                , selected = "plots"
-                , choices = c(""
-                              , factors)
-                , width = "100%"
-    ),
-
-    textInput(inputId = "sketch_dim2"
-              , label = "Block factor (optional)"
-              , value = NA
-              , placeholder = "NcolxNrow"
-              , width = "100%"
-    )
-  )
-
-})
-
-# plot --------------------------------------------------------------------
-
-plot_sketch <- reactive({
-
-  validate( need( input$gsheet_url, "Insert url o create google sheet document" ) )
-  validate( need( input$sketch_factor, "Select your design factor") )
-  validate( need( input$sketch_dim, "Select your blocking factor") )
-
-  if ( input$gsheet_fb %in% sheet_names(gs()) ) {
-
-    fb_sketch <- gs() %>%
-      range_read( input$gsheet_fb )
-  }
-
-  if ( input$sketch_xlab == "" | is.null(input$sketch_xlab) ){ sketch_xlab <- NULL } else {sketch_xlab <- input$sketch_xlab}
-  if ( input$sketch_ylab == "" | is.null(input$sketch_ylab) ){ sketch_ylab <- NULL } else {sketch_ylab <- input$sketch_ylab}
-  if ( input$sketch_glab == "" | is.null(input$sketch_glab) ){ sketch_glab <- NULL } else {sketch_glab <- input$sketch_glab}
-
-  if ( input$sketch_dim2 != "" ) { blocking <- input$sketch_dim2 } else { blocking <- input$sketch_dim }
-
-  plot_sketch <-  plot_design(data = fb_sketch
-                             , factor = input$sketch_factor
-                             , dim = blocking
-                             , fill = input$sketch_fill
-                             , xlab = sketch_xlab
-                             , ylab = sketch_ylab
-                             , glab = sketch_glab
-                             )
   })
 
-# -------------------------------------------------------------------------
+  # preview sketch ----------------------------------------------------------
 
-output$plot_sketch <- renderImage({
+  gsheet_fb <- reactive({
 
-  dpi <- input$sketch_dpi
-  ancho <- input$sketch_width
-  alto <- input$sketch_height
+    info <- gs4_get(gs())
 
-  outfile <- tempfile(fileext = ".png")
+    url <- info$spreadsheet_url
 
-  png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
-  print(plot_sketch())
-  dev.off()
+    id <- info$sheets %>%
+      filter(name %in% input$gsheet_fb) %>%
+      pluck("id")
 
-  list(src = outfile)
+    sketch_url  <- paste(url, id, sep = "#gid=")
 
-}, deleteFile = TRUE)
+  })
 
-# options panel -----------------------------------------------------------
+  output$gsheet_preview_sketch <- renderUI({
 
-output$sketch_modules <- renderUI({
+    validate( need( input$gsheet_url, "LogIn and create or insert a url" ) )
 
-  if ( input$sketch_preview_opt == "Gsheet" ) {
+    tags$iframe(src = gsheet_fb(),
+                style="height:580px; width:100%; scrolling=no")
 
-    uiOutput("gsheet_preview_sketch")
+  })
 
-  } else if ( input$sketch_preview_opt == "Sketch" ) {
+  # options -----------------------------------------------------------------
+
+  fb_factors <- eventReactive(input$update_sketch, {
+
+    validate( need( input$gsheet_url, "LogIn and create or insert a url" ) )
+
+    validate( need( input$gsheet_fb %in% sheet_names(gs())
+                    , "Create your fieldbook") )
+
+    factors <- gs() %>%
+      range_read( input$gsheet_fb ) %>% names()
+
+  })
+
+  output$sketch_options <- renderUI({
+
+    factors <- fb_factors()
 
     tagList(
 
-      fluidRow(
-
-        box(width = 2,
-
-            textInput(inputId = "sketch_xlab"
-                      , label = "Label X"
-                      , value = NA
-                      , placeholder = "Exp. Units"
-            )
-        ),
-
-        box(width = 2,
-
-            textInput(inputId = "sketch_ylab"
-                      , label = "Label Y"
-                      , value = NA
-                      , placeholder = "Blocks"
-            )
-        ),
-
-        box(width = 2,
-
-            textInput(inputId = "sketch_glab"
-                      , label = "Label Groups"
-                      , value = NA
-                      , placeholder = "Groups"
-            )
-        ),
-
-        box(width = 2,
-
-            numericInput(inputId = "sketch_width"
-                         , label = "Width (cm)"
-                         , value = 20
-                         , step = 5
-                         , min = 5)
-        ),
-
-        box(width = 2,
-
-            numericInput(inputId = "sketch_height"
-                         , label = "Height (cm)"
-                         , value = 10
-                         , step = 5
-                         , min = 5)
-        ),
-
-        box(width = 2,
-
-            numericInput(inputId = "sketch_dpi"
-                         , label = "Resolution"
-                         , value = 100
-                         , step = 50
-                         , min = 100)
-        )
+      selectInput(inputId = "sketch_factor"
+                  , label = "Factor"
+                  , multiple = FALSE
+                  , choices = c(""
+                                , factors)
+                  , width = "100%"
       ),
 
-      div(imageOutput("plot_sketch"), align = "center")
+      selectInput(inputId = "sketch_dim"
+                  , label = "Block factor"
+                  , multiple = FALSE
+                  , choices = c(""
+                                , factors)
+                  , width = "100%"
+      ),
 
+      selectInput(inputId = "sketch_fill"
+                  , label = "Fill factor"
+                  , multiple = FALSE
+                  , selected = "plots"
+                  , choices = c(""
+                                , factors)
+                  , width = "100%"
+      ),
+
+      textInput(inputId = "sketch_dim2"
+                , label = "Block factor (optional)"
+                , value = NA
+                , placeholder = "NcolxNrow"
+                , width = "100%"
+      )
     )
 
-  }
+  })
+
+  # plot --------------------------------------------------------------------
+
+  plot_sketch <- reactive({
+
+    validate( need( input$gsheet_url, "LogIn and create or insert a url" ) )
+    validate( need( input$sketch_factor, "Select your design factor") )
+    validate( need( input$sketch_dim, "Select your blocking factor") )
+
+    if ( input$gsheet_fb %in% sheet_names(gs()) ) {
+
+      fb_sketch <- gs() %>%
+        range_read( input$gsheet_fb )
+    }
+
+    if ( input$sketch_xlab == "" | is.null(input$sketch_xlab) ){ sketch_xlab <- NULL } else {sketch_xlab <- input$sketch_xlab}
+    if ( input$sketch_ylab == "" | is.null(input$sketch_ylab) ){ sketch_ylab <- NULL } else {sketch_ylab <- input$sketch_ylab}
+    if ( input$sketch_glab == "" | is.null(input$sketch_glab) ){ sketch_glab <- NULL } else {sketch_glab <- input$sketch_glab}
+
+    if ( input$sketch_dim2 != "" ) { blocking <- input$sketch_dim2 } else { blocking <- input$sketch_dim }
+
+    plot_sketch <-  plot_design(data = fb_sketch
+                                , factor = input$sketch_factor
+                                , dim = blocking
+                                , fill = input$sketch_fill
+                                , xlab = sketch_xlab
+                                , ylab = sketch_ylab
+                                , glab = sketch_glab
+    )
+  })
+
+  # -------------------------------------------------------------------------
+
+  output$plot_sketch <- renderImage({
+
+    dpi <- input$sketch_dpi
+    ancho <- input$sketch_width
+    alto <- input$sketch_height
+
+    outfile <- tempfile(fileext = ".png")
+
+    png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
+    print(plot_sketch())
+    dev.off()
+
+    list(src = outfile)
+
+  }, deleteFile = TRUE)
+
+  # options panel -----------------------------------------------------------
+
+  output$sketch_modules <- renderUI({
+
+    if ( input$sketch_preview_opt == "Gsheet" ) {
+
+      uiOutput("gsheet_preview_sketch")
+
+    } else if ( input$sketch_preview_opt == "Sketch" ) {
+
+      tagList(
+
+        fluidRow(
+
+          box(width = 2,
+
+              textInput(inputId = "sketch_xlab"
+                        , label = "Label X"
+                        , value = NA
+                        , placeholder = "Exp. Units"
+              )
+          ),
+
+          box(width = 2,
+
+              textInput(inputId = "sketch_ylab"
+                        , label = "Label Y"
+                        , value = NA
+                        , placeholder = "Blocks"
+              )
+          ),
+
+          box(width = 2,
+
+              textInput(inputId = "sketch_glab"
+                        , label = "Label Groups"
+                        , value = NA
+                        , placeholder = "Groups"
+              )
+          ),
+
+          box(width = 2,
+
+              numericInput(inputId = "sketch_width"
+                           , label = "Width (cm)"
+                           , value = 20
+                           , step = 5
+                           , min = 5)
+          ),
+
+          box(width = 2,
+
+              numericInput(inputId = "sketch_height"
+                           , label = "Height (cm)"
+                           , value = 10
+                           , step = 5
+                           , min = 5)
+          ),
+
+          box(width = 2,
+
+              numericInput(inputId = "sketch_dpi"
+                           , label = "Resolution"
+                           , value = 100
+                           , step = 50
+                           , min = 100)
+          )
+        ),
+
+        div(imageOutput("plot_sketch"), align = "center")
+
+      )
+
+    }
+
+  })
+
+  # end app -----------------------------------------------------------------
+  # -------------------------------------------------------------------------
 
 })
-
-# end app -----------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-})
-

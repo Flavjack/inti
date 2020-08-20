@@ -15,13 +15,17 @@
 #' @export
 
 yupana <- function() {
-  appDir <- system.file("yupana", package = "inti")
+  appDir <- system.file("yupanapro", package = "inti")
   if (appDir == "") {
     stop("Could not find example directory. Try re-installing `inti`.",
          call. = FALSE)
   }
 
-  shiny::runApp(appDir, display.mode = "normal", launch.browser = TRUE)
+  shiny::runApp(appDir
+                , display.mode = "normal"
+                , launch.browser = TRUE
+                , port = 1221
+                )
 }
 
 

@@ -61,6 +61,18 @@ options(shiny.sanitize.errors = FALSE)
 
 shinyServer(function(input, output, session) {
 
+# close auto local session ------------------------------------------------
+
+observe({
+
+  if(Sys.getenv('SHINY_PORT') == "") {
+
+    session$onSessionEnded(stopApp)
+
+  }
+
+})
+
 # User Manual ------------------------------------------------------------
 
 output$usm <- renderUI({

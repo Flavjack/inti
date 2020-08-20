@@ -40,9 +40,9 @@ rm(cran, git, installed)
 
 # open https://code.markedmondson.me/googleAuthR/articles/google-authentication-types.html#gar_shiny_-functions-example
 
-# https://github.com/MarkEdmondson1234/googleAuthR/issues/169
+# open https://github.com/MarkEdmondson1234/googleAuthR/issues/169
 
-# https://code.markedmondson.me/googleAuthR/reference/with_shiny.html
+# open https://code.markedmondson.me/googleAuthR/reference/with_shiny.html
 
 # https://googlesheets4.tidyverse.org/reference/sheets_auth.html
 

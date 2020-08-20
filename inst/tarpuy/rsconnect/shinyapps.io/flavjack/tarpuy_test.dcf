@@ -1,13 +1,13 @@
-name: yupanapro
-title: yupanapro
+name: tarpuy_test
+title: tarpuy_test
 username:
 account: flavjack
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
-appId: 2600632
-bundleId: 3537140
-url: https://flavjack.shinyapps.io/yupanapro/
-when: 1597914050.0051
+appId: 2687016
+bundleId: 3536882
+url: https://flavjack.shinyapps.io/tarpuy_test/
+when: 1597907903.01104
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: setup.r
