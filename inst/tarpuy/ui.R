@@ -8,8 +8,7 @@
 # -------------------------------------------------------------------------
 
 options("googleAuthR.scopes.selected", scopes = c("https://www.googleapis.com/auth/spreadsheets"))
-
-options(shiny.port = 1221 )
+options(shiny.port = 1221)
 
 if (file.exists("setup.r")) { source("setup.r") }
 
@@ -24,7 +23,6 @@ library(shinydashboard)
 library(stringi)
 
 options(gargle_oob_default = TRUE)
-
 gar_set_client(web_json = "www/tarpuy.json")
 
 # app ---------------------------------------------------------------------
@@ -142,7 +140,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                    , solidHeader = T
                                    , status = "primary",
 
-                                   textInput(inputId = "gsheet_url",
+                                   textInput(inputId = "fieldbook_url",
                                              label = NULL,
                                              width = "100%",
                                              value = ""

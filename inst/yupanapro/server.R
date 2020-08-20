@@ -55,7 +55,7 @@ observe({
     gs4_auth(scopes = c("https://www.googleapis.com/auth/spreadsheets")
              , token = access_token())
 
-    validate( need( gs4_has_token(), "LogIn and create or insert a url" ) )
+    validate( need( gs4_has_token(), "LogIn and insert a url" ) )
 
     as_sheets_id( fieldbook_url() )
 
@@ -65,9 +65,14 @@ observe({
 
   fieldbook_url <- reactive({
 
-    validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
+    validate( need( input$fieldbook_url, "LogIn and insert a url" ) )
+
+    if ( input$fieldbook_url != "" ) {
 
       fieldbook_url <- input$fieldbook_url
+
+    }
+
   })
 
 # open url ----------------------------------------------------------------
@@ -293,7 +298,7 @@ observe({
 
   observeEvent(input$fbsmr_generate, {
 
-    validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
+    validate( need( input$fieldbook_url, "LogIn and insert a url" ) )
 
     if ( !is.null( fieldbook() ) && input$last_factor != "" )  {
 
@@ -429,7 +434,7 @@ observe({
 
   observeEvent(input$fbrs_generate, {
 
-    validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
+    validate( need( input$fieldbook_url, "LogIn and insert a url" ) )
 
     if ( !is.null( fieldbook() ) && input$last_factor_rs != "" )  {
 

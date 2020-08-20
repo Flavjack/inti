@@ -8,7 +8,7 @@
 # -------------------------------------------------------------------------
 
 options("googleAuthR.scopes.selected", scopes = c("https://www.googleapis.com/auth/spreadsheets"))
-options(shiny.port = 1221 )
+options(shiny.port = 1221)
 
 if (file.exists("setup.r")) { source("setup.r") }
 
@@ -55,7 +55,21 @@ shinyServer(function(input, output, session) {
 
     validate( need( gs4_has_token(), "LogIn and create or insert a url" ) )
 
-    as_sheets_id( gsheet_url() )
+    as_sheets_id( fieldbook_url() )
+
+  })
+
+  # generate sheet url ------------------------------------------------------
+
+  fieldbook_url <- reactive({
+
+    validate( need( input$fieldbook_url, "LogIn and insert a url" ) )
+
+    if ( input$fieldbook_url != "" ) {
+
+      fieldbook_url <- input$fieldbook_url
+
+    }
 
     })
 
@@ -82,43 +96,7 @@ shinyServer(function(input, output, session) {
 
     gsheet_url  <- paste0(url, id)
 
-    updateTextInput(session, "gsheet_url", value = gsheet_url)
-
-  })
-
-  # generate sheet url ------------------------------------------------------
-
-  gsheet_url <- reactive({
-
-    if( input$gsheet_url == "" ) {
-
-      gsheet_url <- NULL
-
-    } else if ( !is.null(gs_created) & input$gsheet_url == "" ) {
-
-      url <- "https://docs.google.com/spreadsheets/d/"
-
-      id <- gs_created %>% pluck(1)
-
-      gsheet_url  <- paste0(url, id)
-
-    } else if ( input$gsheet_url != "" ) {
-
-      gsheet_url <- input$gsheet_url
-
-    } else if ( !is.null(gs_created) ) {
-
-      url <- "https://docs.google.com/spreadsheets/d/"
-
-      id <- gs_created %>% pluck(1)
-
-      gsheet_url  <- paste0(url, id)
-
-    } else  {
-
-      gsheet_url <- NULL
-
-    }
+    updateTextInput(session, inputId = "fieldbook_url", value = gsheet_url)
 
   })
 
@@ -126,13 +104,13 @@ shinyServer(function(input, output, session) {
 
   output$open_url <- renderUI({
 
-    if ( is.null( gsheet_url() )) {
+    if ( input$fieldbook_url == "" ) {
 
       link <- "https://docs.google.com/spreadsheets/u/0/"
 
     } else {
 
-      link <- gsheet_url()
+      link <- fieldbook_url()
 
     }
 
@@ -143,6 +121,7 @@ shinyServer(function(input, output, session) {
                  , class = "btn btn-success"
                  , onclick = open
     )
+
   })
 
   # tarpuy plex -------------------------------------------------------------
@@ -154,8 +133,8 @@ shinyServer(function(input, output, session) {
 
     cat("--------------------------------------------------\n")
 
-    cat("input$gsheet_url")
-    print(input$gsheet_url)
+    cat("input$fieldbook_url")
+    print(input$fieldbook_url)
 
     cat("input$plex_fieldbook")
     print(input$plex_fieldbook)
@@ -249,7 +228,7 @@ shinyServer(function(input, output, session) {
 
   observeEvent(input$plex_generate, {
 
-    validate( need( input$gsheet_url, "LogIn and create or insert a url" ) )
+    validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
 
     if ( !input$gsheet_info %in% sheet_names(gs()) ) {
 
@@ -325,7 +304,7 @@ shinyServer(function(input, output, session) {
 
   output$gsheet_preview_design <- renderUI({
 
-    validate( need( input$gsheet_url, "LogIn and create or insert a url" ) )
+    validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
 
     tags$iframe(src = gsheet_design(),
                 style="height:580px; width:100%; scrolling=no")
@@ -363,7 +342,7 @@ shinyServer(function(input, output, session) {
 
   observeEvent(input$export_design, {
 
-    validate( need( input$gsheet_url, "LogIn and create or insert a url" ) )
+    validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
 
     # variables ---------------------------------------------------------------
 
@@ -452,7 +431,7 @@ shinyServer(function(input, output, session) {
 
   output$gsheet_preview_sketch <- renderUI({
 
-    validate( need( input$gsheet_url, "LogIn and create or insert a url" ) )
+    validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
 
     tags$iframe(src = gsheet_fb(),
                 style="height:580px; width:100%; scrolling=no")
@@ -463,7 +442,7 @@ shinyServer(function(input, output, session) {
 
   fb_factors <- eventReactive(input$update_sketch, {
 
-    validate( need( input$gsheet_url, "LogIn and create or insert a url" ) )
+    validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
 
     validate( need( input$gsheet_fb %in% sheet_names(gs())
                     , "Create your fieldbook") )
@@ -518,7 +497,7 @@ shinyServer(function(input, output, session) {
 
   plot_sketch <- reactive({
 
-    validate( need( input$gsheet_url, "LogIn and create or insert a url" ) )
+    validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
     validate( need( input$sketch_factor, "Select your design factor") )
     validate( need( input$sketch_dim, "Select your blocking factor") )
 
