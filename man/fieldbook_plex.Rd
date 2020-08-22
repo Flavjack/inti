@@ -84,7 +84,8 @@ fieldbook_plex(
 \item{seed}{Seed for the randomization}
 }
 \value{
-data frame or list of arguments (info, variables, design)
+data frame or list of arguments
+(info, variables, design, logbook, timetable, budget)
 }
 \description{
 Information for build a plan for an experiment (PLEX)

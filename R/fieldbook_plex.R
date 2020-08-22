@@ -32,7 +32,8 @@
 #'
 #' It´s not necessary to provide all the information.
 #'
-#' @return data frame or list of arguments (info, variables, design)
+#' @return data frame or list of arguments
+#' (info, variables, design, logbook, timetable, budget)
 #'
 #' @author
 #'
@@ -103,12 +104,11 @@ fieldbook_plex <- function(data = NULL
   # serie = 2
   # seed = 0
 
-  PLEX <- INFORMATION <- NULL
+  PLEX <- INFORMATION <- DAI <- NULL
 
 # plex -----------------------------------------------------------------------
 
 if ( is.null(data) ) {
-
 
   plex <-  c(IDEA = idea
              , GOAL = goal
@@ -143,12 +143,12 @@ if ( is.null(data) ) {
 
 # variables ---------------------------------------------------------------
 
-var_list <- tibble(variable = NA
-                   , siglas = NA # abbreviation
-                   , evaluation = NA # evaluation, eval dap dat
-                   , sampling = NA # sampling sample subplot muestra
-                   , units = NA
-                   , description = NA
+var_list <- tibble(variable = rep(NA, 5)
+                   , siglas = rep(NA, 5) # abbreviation
+                   , evaluation = rep(NA, 5) # evaluation, eval dap dat
+                   , sampling = rep(NA, 5) # sampling sample subplot muestra
+                   , units = rep(NA, 5)
+                   , description = rep(NA, 5)
                    ) %>%
   rename('{siglas}' = .data$siglas
          , '{evaluation}' = .data$evaluation
@@ -156,24 +156,83 @@ var_list <- tibble(variable = NA
 
 # design ------------------------------------------------------------------
 
-    factors <- c(paste0("factor", 1:nfactor))
+factors <- c(paste0("factor", 1:nfactor))
 
-    dsg_info <-  c(nfactors = nfactor
-                  , type = design
-                  , rep = rep
-                  , serie = serie
-                  , seed = seed
-                  ) %>%
-      enframe() %>%
-      rename('{arguments}' = .data$name, '{values}' = .data$value)
+dsg_info <-  c(nfactors = nfactor
+              , type = design
+              , rep = rep
+              , serie = serie
+              , seed = seed
+              ) %>%
+  enframe() %>%
+  rename('{arguments}' = .data$name, '{values}' = .data$value)
 
-      dsg_info[,factors] <- NA
+  dsg_info[,factors] <- NA
+
+# timetable ---------------------------------------------------------------
+
+init  <-  start %>% as.Date()
+
+if ( !is.null(end) ) {
+
+fin  <-  end %>% as.Date()
+
+} else { fin <- init + 60 }
+
+days <- fin - init
+
+first_col <- c("Activities (DAI)"
+               , "Material Preparation"
+               , rep(NA, 5)
+               , "Evaluation"
+               , rep(NA, 5)
+               , "Data processing"
+               ) %>%
+  enframe(value = "Dates") %>% select(!.data$name)
+
+ttable <- c(DAI = seq.int(from = -15, to = days, by = 5)) %>%
+  enframe() %>%
+  mutate(date =  format( .data$value + init, "%d/%b")) %>%
+  select(date, DAI = .data$value) %>%
+  pivot_wider(names_from = date, values_from = DAI)
+
+timetable <- merge( first_col
+                    , ttable
+                    , by = 0
+                    , all = TRUE
+                    )  %>%
+  mutate(across(.data$Row.names, as.numeric)) %>%
+  arrange(.data$Row.names) %>%
+  select(!.data$Row.names)
+
+# logbook -----------------------------------------------------------------
+
+desc <- "Day After Initiation (DAI) of experiment."
+
+logbook <- tibble(Date = c(rep(NA, 3), start, rep(NA, 3))
+               , DAI = c(rep(NA, 3), 0, rep(NA, 3))
+               , Activity = c(rep(NA, 3), "Init experiment", rep(NA, 3))
+               , Description = c(rep(NA, 3), desc, rep(NA, 3))
+               )
+
+# budget ------------------------------------------------------------------
+
+budget <- tibble("Material/Service" = rep(NA, 5)
+                 , Unit = rep(NA, 5)
+                 , Price = rep(NA, 5)
+                 , Quantity = rep(NA, 5)
+                 , Total = rep(NA, 5)
+                 , Description = rep(NA, 5)
+                 )
 
 # result ------------------------------------------------------------------
 
 list(plex = plex
      , design = dsg_info
      , variables = var_list
+     , logbook = logbook
+     , timetable = timetable
+     , budget = budget
      )
 
 }
