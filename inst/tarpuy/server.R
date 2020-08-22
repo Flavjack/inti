@@ -53,7 +53,7 @@ shinyServer(function(input, output, session) {
     gs4_auth(scopes = c("https://www.googleapis.com/auth/spreadsheets")
              , token = access_token())
 
-    validate( need( gs4_has_token(), "LogIn and create or insert a url" ) )
+    validate( need( gs4_has_token(), "LogIn and insert a url" ) )
 
     as_sheets_id( fieldbook_url() )
 
@@ -82,7 +82,7 @@ shinyServer(function(input, output, session) {
     gs4_auth(scopes = c("https://www.googleapis.com/auth/spreadsheets")
              , token = access_token())
 
-    validate( need( gs4_has_token(), "LogIn and create or insert a url" ) )
+    validate( need( gs4_has_token(), "LogIn and insert a url" ) )
 
     gs_created <<- gs4_create(
       name = paste("Tarpuy", format(Sys.time(), '%Y-%m-%d  %H:%M'))
@@ -193,9 +193,10 @@ shinyServer(function(input, output, session) {
                       , sep = " "
       ) %>%
         stringi::stri_trans_general("Latin-ASCII") %>%
+
         str_to_upper()
 
-    } else ( fbname <- input$plex_fieldbook )
+      } else ( fbname <- input$plex_fieldbook )
 
     plex <- fieldbook_plex(data = NULL
                            , idea = input$plex_idea
@@ -230,6 +231,9 @@ shinyServer(function(input, output, session) {
 
     validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
 
+
+# info --------------------------------------------------------------------
+
     if ( !input$gsheet_info %in% sheet_names(gs()) ) {
 
       sheet_add(ss = gs(), sheet = input$gsheet_info)
@@ -238,7 +242,8 @@ shinyServer(function(input, output, session) {
 
     } else { print ("sheet already exist") }
 
-    # -------------------------------------------------------------------------
+
+# varlist -----------------------------------------------------------------
 
     if ( !input$gsheet_varlist %in% sheet_names(gs()) ) {
 
@@ -248,7 +253,8 @@ shinyServer(function(input, output, session) {
 
     } else { print ("sheet already exist") }
 
-    # -------------------------------------------------------------------------
+
+# design ------------------------------------------------------------------
 
     if ( !input$gsheet_design %in% sheet_names(gs()) ) {
 
@@ -257,6 +263,36 @@ shinyServer(function(input, output, session) {
       plex()$design %>% sheet_write(ss = gs(), sheet = input$gsheet_design)
 
     } else { print ("sheet already exist") }
+
+# logbook -----------------------------------------------------------------
+
+    if ( !input$plex_logbook %in% sheet_names(gs()) & input$plex_logbook != "" ) {
+
+      sheet_add(ss = gs(), sheet = input$plex_logbook)
+
+      plex()$logbook %>% sheet_write(ss = gs(), sheet = input$plex_logbook)
+
+    } else { print ("unselected") }
+
+# timetable ---------------------------------------------------------------
+
+    if ( !input$plex_timetable %in% sheet_names(gs()) & input$plex_timetable != ""  ) {
+
+      sheet_add(ss = gs(), sheet = input$plex_timetable)
+
+      plex()$timetable %>% sheet_write(ss = gs(), sheet = input$plex_timetable)
+
+    } else { print ("unselected") }
+
+# budget ------------------------------------------------------------------
+
+    if ( !input$plex_budget %in% sheet_names(gs()) & input$plex_budget != ""  ) {
+
+      sheet_add(ss = gs(), sheet = input$plex_budget)
+
+      plex()$budget %>% sheet_write(ss = gs(), sheet = input$plex_budget)
+
+    } else { print ("unselected") }
 
   })
 
@@ -376,6 +412,12 @@ shinyServer(function(input, output, session) {
         ) %>%
         inti::fieldbook_varlist( variables )
 
+      if ( !input$gsheet_fb %in% sheet_names(gs()) ) {
+
+        sheet_add(ss = gs(), sheet = input$gsheet_fb, .after = input$gsheet_design)
+
+      }
+
       fbds %>%
         pluck("design") %>%
         as.data.frame() %>%
@@ -387,7 +429,7 @@ shinyServer(function(input, output, session) {
 
     if ( !"sketch" %in% sheet_names(gs()) & input$gsheet_fb %in% sheet_names(gs()) ) {
 
-      sheet_add(ss = gs(), sheet = "sketch" )
+      sheet_add(ss = gs(), sheet = "sketch", .after = input$gsheet_fb)
 
     }
 

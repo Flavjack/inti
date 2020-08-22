@@ -360,7 +360,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                       column(width = 2,
 
                              checkboxGroupInput(inputId = "plex_fields"
-                                                , label = "Fieldbook fields"
+                                                , label = h5(icon("file-signature"), "Fieldbook fields")
                                                 , choices = c("manager"
                                                               , "location"
                                                               , "dates"
@@ -382,6 +382,27 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                                                )
                              ),
 
+                             textInput(inputId = "plex_logbook"
+                                       , label = "Logbook"
+                                       , width = "100%"
+                                       , value = NA
+                                       , placeholder = "sheet name"
+                             ),
+
+                             textInput(inputId = "plex_timetable"
+                                       , label = "Timetable"
+                                       , width = "100%"
+                                       , value = NA
+                                       , placeholder = "sheet name"
+                             ),
+
+                             textInput(inputId = "plex_budget"
+                                       , label = "Budget"
+                                       , width = "100%"
+                                       , value = NA
+                                       , placeholder = "sheet name"
+                             ),
+
                              actionButton(inputId = "plex_generate"
                                           , label = "Generate"
                                           , class = "btn btn-success"
@@ -390,6 +411,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                              ),
 
                       column(width = 3,
+
+                             h5(icon("feather-alt"), "Information"),
 
                              # conditional panel "%in%" --> .includes("values")
 
@@ -522,6 +545,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                       column(width = 5,
 
+                             h5(icon("flask"), "Experimental plan"),
+
                              textAreaInput(inputId = "plex_idea"
                                            , label = "Idea"
                                            , placeholder = "How the idea was born."
@@ -562,6 +587,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                       ),
 
                       column(width = 2,
+
+                             h5(icon("pencil-ruler"), "Experimental design"),
 
                              numericInput(
                                inputId = "plex_nfactors"
@@ -607,6 +634,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                     fluidRow(
 
                       column(2,
+
+                             h5(icon("pencil-ruler"), "Experimental design"),
 
                              numericInput(
                                inputId = "design_nfactors"
@@ -667,6 +696,8 @@ tabPanel("Sketch",
          fluidRow(
 
            column(2,
+
+                  div(h5(icon("drafting-compass"), "Skecth design")),
 
                   radioButtons(inputId = "sketch_preview_opt"
                                , label = "Modules"

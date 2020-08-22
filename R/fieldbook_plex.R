@@ -106,6 +106,16 @@ fieldbook_plex <- function(data = NULL
 
   PLEX <- INFORMATION <- DAI <- NULL
 
+# arguments ---------------------------------------------------------------
+
+  # start <- "2020-08-15" ; end <- "2020-12-03"
+
+  start  <-  start %>% as.Date(format = "%Y-%m-%d")
+
+  if ( is.null(end) | is.na(end) | end == "") {
+
+    end  <-  NULL } else { end <- end %>% as.Date(format = "%Y-%m-%d") }
+
 # plex -----------------------------------------------------------------------
 
 if ( is.null(data) ) {
@@ -123,8 +133,8 @@ if ( is.null(data) ) {
              , ALTITUDE = altitude
              , GEOREFERENCING = georeferencing
              , ENVIRONMENT = environment
-             , "START EXPERIMENT" = start
-             , "END EXPERIMENT" = end
+             , "START EXPERIMENT" = as.character.Date(start)
+             , "END EXPERIMENT" = as.character.Date(end)
              , ABOUT = about
              , "FIELDBOOK NAME" = fieldbook
              , GITHUB = github
@@ -171,15 +181,7 @@ dsg_info <-  c(nfactors = nfactor
 
 # timetable ---------------------------------------------------------------
 
-init  <-  start %>% as.Date()
-
-if ( !is.null(end) ) {
-
-fin  <-  end %>% as.Date()
-
-} else { fin <- init + 60 }
-
-days <- fin - init
+  if ( !is.null(end) ) { finish <- end - start } else { finish <-  60 }
 
 first_col <- c("Activities (DAI)"
                , "Material Preparation"
@@ -190,9 +192,9 @@ first_col <- c("Activities (DAI)"
                ) %>%
   enframe(value = "Dates") %>% select(!.data$name)
 
-ttable <- c(DAI = seq.int(from = -15, to = days, by = 5)) %>%
+ttable <- c(DAI = seq.int(from = -15, to = finish, by = 5)) %>%
   enframe() %>%
-  mutate(date =  format( .data$value + init, "%d/%b")) %>%
+  mutate(date =  format( .data$value + start, "%d/%b")) %>%
   select(date, DAI = .data$value) %>%
   pivot_wider(names_from = date, values_from = DAI)
 
@@ -209,7 +211,7 @@ timetable <- merge( first_col
 
 desc <- "Day After Initiation (DAI) of experiment."
 
-logbook <- tibble(Date = c(rep(NA, 3), start, rep(NA, 3))
+logbook <- tibble(Date = c(rep(NA, 3), as.character.Date(start), rep(NA, 3))
                , DAI = c(rep(NA, 3), 0, rep(NA, 3))
                , Activity = c(rep(NA, 3), "Init experiment", rep(NA, 3))
                , Description = c(rep(NA, 3), desc, rep(NA, 3))
