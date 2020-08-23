@@ -7,9 +7,6 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-options("googleAuthR.scopes.selected", scopes = c("https://www.googleapis.com/auth/spreadsheets"))
-options(shiny.port = 1221)
-
 if (file.exists("setup.r")) { source("setup.r") }
 
 library(shiny)
@@ -22,8 +19,10 @@ library(bootstraplib)
 library(shinydashboard)
 library(stringi)
 
+options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
 options(gargle_oob_default = TRUE)
-gar_set_client(web_json = "www/tarpuy.json")
+options(shiny.port = 1221)
+gar_set_client(web_json = "www/cloud.json")
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------

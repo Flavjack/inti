@@ -3,7 +3,7 @@ Type: Package
 Version: 2.0.0
 Title: Tools and Statistical Procedures in Plant Science
 Description: A collection of different applications and procedures used in plant breeding and experimental designs.
-Date: 2020-08-20
+Date: 2020-08-24
 Author: Flavio Lozano-Isla
 Maintainer: Flavio Lozano-Isla <flavjack@gmail.com>
 URL: https://lozanoisla.com/

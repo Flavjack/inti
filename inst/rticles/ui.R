@@ -153,21 +153,6 @@ fluidPage(title = "Rticles",
 
                   '),
 
-             br(),
-
-             HTML('
-
-            <div id=footer style="width:100%; margin:auto;">
-            <div style="display:inline-block; width:100%">
-            <p style="text-align:center">
-            <a target="_blank" href="https://github.com/Flavjack/rticles">
-            <img src="https://image.flaticon.com/icons/svg/25/25231.svg" style="height:60px" title="demo"></a>
-            <span style="display:block;"><small>Github</small></span>
-            </p></div>
-            </div>
-
-                  '),
-
              HTML('
 
             <h4 style="text-align: center;"><span style="color: #0a0909;">Softwares</span></h4>
@@ -220,6 +205,17 @@ fluidPage(title = "Rticles",
 
             </div>
 
+            <p> </p>
+
+            <div style="display:inline-block; width:100%">
+
+            <p style="text-align:center; vertical-align:middle">
+            <a target="_blank" href="https://retorque.re/zotero-better-bibtex/">
+            <img src="https://ctan.org/teaser/pkg/bibtex" style="height:40px" title="Git" alt="Git"></a>
+            </p>
+
+            </div>
+
             </div>
 
                 '),
@@ -231,8 +227,21 @@ fluidPage(title = "Rticles",
             <div id=footer style="width:100%; margin:auto;">
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
+            <a target="_blank" href="https://github.com/Flavjack/rticles">
+            <img src="https://image.flaticon.com/icons/svg/25/25231.svg" style="height:50px" title="demo"></a>
+            <span style="display:block;"><small>Github</small></span>
+            </p></div>
+            </div>
+
+                  '),
+
+             HTML('
+
+            <div id=footer style="width:100%; margin:auto;">
+            <div style="display:inline-block; width:100%">
+            <p style="text-align:center">
             <a target="_blank" href="https://www.quipolab.com/">
-            <img src="https://lozanoisla.com/img/quipo.png" style="height:60px" title="demo"></a>
+            <img src="https://lozanoisla.com/img/quipo.png" style="height:50px" title="demo"></a>
             </p></div>
             </div>
 

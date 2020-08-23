@@ -7,9 +7,6 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-options("googleAuthR.scopes.selected", scopes = c("https://www.googleapis.com/auth/spreadsheets"))
-options(shiny.port = 1221)
-
 if (file.exists("setup.r")) { source("setup.r") }
 
 library(shiny)
@@ -24,8 +21,10 @@ library(ggpubr)
 library(FactoMineR)
 library(corrplot)
 
+options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
 options(gargle_oob_default = TRUE)
-gar_set_client(web_json = "www/yupanapro.json")
+options(shiny.port = 1221)
+gar_set_client(web_json = "www/cloud.json")
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -52,8 +51,11 @@ observe({
 
   gs <- reactive({
 
-    gs4_auth(scopes = c("https://www.googleapis.com/auth/spreadsheets")
-             , token = access_token())
+    gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
+             , cache = FALSE
+             , use_oob = TRUE
+             , token = access_token()
+             )
 
     validate( need( gs4_has_token(), "LogIn and insert a url" ) )
 
