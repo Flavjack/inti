@@ -382,21 +382,21 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                              ),
 
                              textInput(inputId = "plex_logbook"
-                                       , label = "Logbook"
+                                       , label = "Logbook (optinal)"
                                        , width = "100%"
                                        , value = NA
                                        , placeholder = "sheet name"
                              ),
 
                              textInput(inputId = "plex_timetable"
-                                       , label = "Timetable"
+                                       , label = "Timetable (optional)"
                                        , width = "100%"
                                        , value = NA
                                        , placeholder = "sheet name"
                              ),
 
                              textInput(inputId = "plex_budget"
-                                       , label = "Budget"
+                                       , label = "Budget (optional)"
                                        , width = "100%"
                                        , value = NA
                                        , placeholder = "sheet name"
@@ -437,11 +437,13 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                              conditionalPanel(condition =  " input.plex_fields.includes('dates') ",
 
+                                              tags$div(tags$style(HTML( ".dropdown-menu{z-index:10000 !important;}"))),
+
                                               dateRangeInput(inputId = "plex_dates"
                                                              , label = "Experiment dates (start/end)"
                                                              , end = NA
                                                              , width = "100%"
-                                              )
+                                                             )
                              ),
 
                              conditionalPanel(condition =  ' input["plex_fields"].includes("about") ',
