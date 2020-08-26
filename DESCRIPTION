@@ -21,7 +21,8 @@ Imports:
     FactoMineR,
     purrr,
     stringr,
-    DT
+    DT,
+    multtest
 Suggests:
     googlesheets4,
     corrplot,

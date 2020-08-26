@@ -21,6 +21,7 @@
 #' @param effects Conditional modes of the random effects instead of the BLUPs (default = FALSE).
 #' @param plot_diag Show diagnostic plots (default = FALSE).
 #' @param plot_dots Show dotplot genotypes vs trait (default = NULL). See examples.
+#' @param outliers.rm Remove outliers (default = FALSE)
 #'
 #' @details The function allows to made the calculation for individual or multi-environmental trials (MET) using th fixed and random model.
 #'
@@ -53,6 +54,8 @@
 #' Schmidt, P., J. Hartung, J. Bennewitz, and H.-P. Piepho. 2019. Heritability in Plant Breeding on a Genotype-Difference Basis. Genetics 212(4): 991–1008. doi: 10.1534/genetics.119.302134.
 #'
 #' Schmidt, P., J. Hartung, J. Rath, and H.-P. Piepho. 2019. Estimating Broad-Sense Heritability with Unbalanced Data from Agricultural Cultivar Trials. Crop Science 59(2): 525–536. doi: 10.2135/cropsci2018.06.0376.
+#'
+#' Bernal-Vasquez, Angela-Maria, et al. “Outlier Detection Methods for Generalized Lattices: A Case Study on the Transition from ANOVA to REML.” Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016, pp. 787–804. Springer Link, doi:10.1007/s00122-016-2666-6.
 #'
 #' @importFrom dplyr filter pull rename mutate all_of
 #' @importFrom purrr pluck as_vector
@@ -113,6 +116,7 @@ H2cal <- function(data
                   , effects = FALSE
                   , plot_diag = FALSE
                   , plot_dots = NULL
+                  , outliers.rm = FALSE
                   ){
 
   # library(tidyverse)
@@ -132,11 +136,33 @@ H2cal <- function(data
 
   }
 
-  ### fit models
+  # outliers remove ---------------------------------------------------------
+
+  if ( outliers.rm == TRUE ) {
+
+    dt.rm <- data %>% outliers_remove(data = .
+                                     , trait = trait
+                                     , model = ran.model
+                                     ) %>% pluck(1)
+
+    dt.fm <- data %>% outliers_remove(data = .
+                                       , trait = trait
+                                       , model = fix.model
+                                       ) %>% pluck(1)
+
+  } else {
+
+    dt.rm <- data
+
+    dt.fm <- data
+
+  }
+
+# fit models --------------------------------------------------------------
 
   # random genotype effect
   r.md <- as.formula(paste(trait, paste(ran.model, collapse = " + "), sep = " ~ "))
-  g.ran <- eval(bquote(lmer(.(r.md), data = data)))
+  g.ran <- eval(bquote(lmer(.(r.md), data = dt.rm)))
 
   if (summary == TRUE) {
 
@@ -146,10 +172,10 @@ H2cal <- function(data
 
   # fixed genotype effect
   f.md <- as.formula(paste(trait, paste(fix.model, collapse = " + "), sep = " ~ "))
-  g.fix <- eval(bquote(lmer(.(f.md), data = data)))
+  g.fix <- eval(bquote(lmer(.(f.md), data = dt.fm)))
   # summary(g.fix)
 
-  ### Plot models
+# Plot models -------------------------------------------------------------
 
   if (plot_diag == TRUE) {
 
@@ -170,7 +196,7 @@ H2cal <- function(data
 
   if (!is.null(plot_dots)) {
 
-    p_dots <- data %>%
+    p_dots <- dt.rm %>%
       ggplot(aes(!!as.name(trait), !!as.name(gen.name))) +
       geom_point(aes(color = !!as.name(plot_dots))) +
       theme_minimal()
