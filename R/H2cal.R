@@ -16,7 +16,6 @@
 #' @param year.n Number of years (default = 1). See details.
 #' @param fix.model The fixed effects in the model. See examples.
 #' @param ran.model The random effects in the model. See examples.
-#' @param summary Summary of the random model (default = TRUE).
 #' @param blues Calculate the BLUEs (default = FALSE).
 #' @param effects Conditional modes of the random effects instead of the BLUPs (default = FALSE).
 #' @param plot_diag Show diagnostic plots (default = FALSE).
@@ -111,7 +110,6 @@ H2cal <- function(data
                   , year.name = NULL
                   , fix.model
                   , ran.model
-                  , summary = FALSE
                   , blues = FALSE
                   , effects = FALSE
                   , plot_diag = FALSE
@@ -160,12 +158,6 @@ H2cal <- function(data
   r.md <- as.formula(paste(trait, paste(ran.model, collapse = " + "), sep = " ~ "))
   g.ran <- eval(bquote(lmer(.(r.md), data = dt.rm)))
 
-  if (summary == TRUE) {
-
-    summary(g.ran) %>% print()
-
-  }
-
   # fixed genotype effect
   f.md <- as.formula(paste(trait, paste(fix.model, collapse = " + "), sep = " ~ "))
   g.fix <- eval(bquote(lmer(.(f.md), data = dt.fm)))
@@ -196,8 +188,6 @@ H2cal <- function(data
       ggplot(aes(!!as.name(trait), !!as.name(gen.name))) +
       geom_point(aes(color = !!as.name(plot_dots))) +
       theme_minimal()
-
-    print(p_dots)
 
   }
 
@@ -481,7 +471,9 @@ H2cal <- function(data
     tabsmr = vrcp
     , blups = BLUPs
     , blues = BLUEs
+    , model = g.ran
     , outliers = outliers
+    , dotplot = p_dots
     )
 }
 
