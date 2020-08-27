@@ -142,7 +142,7 @@ H2cal <- function(data
                                        )
     dt.fm <- out.fm %>% pluck(1)
 
-    outliers <- list(random = dt.rm$outliers, fixed = dt.fm$outliers)
+    outliers <- list(random = out.rm$outliers, fixed = out.fm$outliers)
 
   } else {
 
