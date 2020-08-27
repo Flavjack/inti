@@ -59,7 +59,7 @@ H2cal(
 
 \item{plot_dots}{Show dotplot genotypes vs trait (default = NULL). See examples.}
 
-\item{outliers.rm}{Remove outliers (default = FALSE)}
+\item{outliers.rm}{Remove outliers (default = FALSE). See references.}
 }
 \value{
 A list with three object:

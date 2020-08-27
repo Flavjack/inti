@@ -21,7 +21,7 @@
 #' @param effects Conditional modes of the random effects instead of the BLUPs (default = FALSE).
 #' @param plot_diag Show diagnostic plots (default = FALSE).
 #' @param plot_dots Show dotplot genotypes vs trait (default = NULL). See examples.
-#' @param outliers.rm Remove outliers (default = FALSE)
+#' @param outliers.rm Remove outliers (default = FALSE). See references.
 #'
 #' @details The function allows to made the calculation for individual or multi-environmental trials (MET) using th fixed and random model.
 #'
@@ -130,15 +130,17 @@ H2cal <- function(data
 
   if ( outliers.rm == TRUE ) {
 
-    dt.rm <- data %>% outliers_remove(data = .
+    out.rm <- data %>% outliers_remove(data = .
                                      , trait = trait
                                      , model = ran.model
-                                     ) %>% pluck(1)
+                                     )
+    dt.rm <- out.rm %>% pluck(1)
 
-    dt.fm <- data %>% outliers_remove(data = .
+    out.fm <- data %>% outliers_remove(data = .
                                        , trait = trait
                                        , model = fix.model
-                                       ) %>% pluck(1)
+                                       )
+    dt.fm <- out.fm %>% pluck(1)
 
     outliers <- list(random = dt.rm$outliers, fixed = dt.fm$outliers)
 
