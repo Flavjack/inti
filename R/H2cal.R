@@ -189,7 +189,7 @@ H2cal <- function(data
       geom_point(aes(color = !!as.name(plot_dots))) +
       theme_minimal()
 
-  }
+  } else { p_dots <- NULL }
 
   ### handle model estimates
 
