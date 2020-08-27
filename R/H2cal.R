@@ -126,16 +126,6 @@ H2cal <- function(data
 
   grp <- emmean <- SE <- Var <-  NULL # avoid Undefined global functions or variables
 
-  # Varible
-
-  if (summary == TRUE || plot_diag == TRUE || !is.null(plot_dots)) {
-
-    print(paste("##>-----------------------------------------"))
-    print(paste("##>", trait))
-    print(paste("##>-----------------------------------------"))
-
-  }
-
   # outliers remove ---------------------------------------------------------
 
   if ( outliers.rm == TRUE ) {
@@ -150,11 +140,15 @@ H2cal <- function(data
                                        , model = fix.model
                                        ) %>% pluck(1)
 
+    outliers <- list(random = dt.rm$outliers, fixed = dt.fm$outliers)
+
   } else {
 
     dt.rm <- data
 
     dt.fm <- data
+
+    outliers <- NULL
 
   }
 
@@ -485,7 +479,7 @@ H2cal <- function(data
     tabsmr = vrcp
     , blups = BLUPs
     , blues = BLUEs
-
+    , outliers = outliers
     )
 }
 
