@@ -8,3 +8,7 @@
 ^cran-comments\.md$
 ^\.secrets$
 [.]json$
+^inst/icons$
+^inst/yupana$
+^inst/pacha$
+^inst/yaku$
