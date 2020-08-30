@@ -53,6 +53,8 @@ include_table <- function(data
                         , notation = "alphabet"
 ) {
 
+  # data <- table
+
   first_col <- names(data[1]) %>% as.symbol()
   col_list <- data[[first_col]]
   col_capt <- c("{caption}", "{title}", "{titulo}")
@@ -74,10 +76,18 @@ include_table <- function(data
     col_math <- col_list %in% col_note
     col_note <- col_list[col_math == TRUE]
 
-    notes <- data %>%
-      filter( {{first_col}}  == {{col_note}} ) %>%
-      pluck(2) %>%
-      as_vector()
+    if ( length(col_note) == 0 ) {
+
+      note <- NULL
+
+    } else {
+
+      notes <- data %>%
+        filter( {{first_col}}  == {{col_note}} ) %>%
+        pluck(2) %>%
+        as_vector()
+
+    }
 
   }
 
