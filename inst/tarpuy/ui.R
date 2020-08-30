@@ -339,7 +339,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                              <div style="display:inline-block; width:100%">
                              <p style="text-align:center">
                              <a target="_blank" href="https://www.quipolab.com/">
-                             <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/quipo_logo.png" style="height:80px" title="quipo"></a>
+                             <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/favicon_rticles/android-chrome-512x512.png" style="height:70px" title="quipo"></a>
                              <span style="display:block;"><small>quipolab</small></span>
                              </p></div>
 

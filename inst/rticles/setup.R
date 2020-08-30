@@ -14,6 +14,7 @@ cran <-  c(
   , "utils"
   , "fs"
   , "metathis"
+  , "BiocManager"
   )
 
 git <-  c(

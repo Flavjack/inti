@@ -52,11 +52,19 @@ shinyServer(function(input, output, session) {
 
   gs <- reactive({
 
+    if(Sys.getenv('SHINY_PORT') == "") {
+
+      gs4_auth(T)
+
+    } else {
+
     gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
              , cache = FALSE
              , use_oob = TRUE
              , token = access_token()
              )
+
+    }
 
     validate( need( gs4_has_token(), "LogIn and insert a url" ) )
 

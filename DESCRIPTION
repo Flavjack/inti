@@ -4,9 +4,9 @@ Version: 0.1.0
 Title: Tools and Statistical Procedures in Plant Science
 Description: A collection of different applications and procedures used in plant breeding and experimental designs.
 Date: 2020-08-30
-Author: Flavio Lozano-Isla
-Maintainer: Flavio Lozano-Isla <flavjack@gmail.com>
-URL: https://lozanoisla.com/
+Authors@R: person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com",
+                  role = c("aut", "cre"))
+URL: https://inkaverse.com/
 BugReports: https://github.com/flavjack/inti/issues
 Depends:
     shiny,

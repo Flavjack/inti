@@ -15,6 +15,7 @@ cran <- c("devtools"
          , "googleAuthR"
          , "shinydashboard"
          , "stringi"
+         , "BiocManager"
          )
 
 git <- c(

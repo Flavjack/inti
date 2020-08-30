@@ -15,6 +15,9 @@ library(utils)
 library(fs)
 library(metathis)
 library(inti)
+library(BiocManager)
+
+options(repos = BiocManager::repositories())
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
