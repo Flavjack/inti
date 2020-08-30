@@ -47,14 +47,14 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                     bootstrap(), # allow use the new bootstrap
 
                     tags$head(includeHTML(("www/analytics.html"))),
-                    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/www/favicon/android-chrome-512x512.png")),
+                    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/favicon_yupana/android-chrome-512x512.png")),
 
                     meta() %>%
                       meta_social(
                         title = "Yupana",
                         description = "Yupana: platform for statistical data analysis",
                         url = "https://flavjack.shinyapps.io/tarpuy/",
-                        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/www/favicon/android-chrome-512x512.png",
+                        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/favicon_yupana/android-chrome-512x512.png",
                         image_alt = "quipolab.com"
                       )
            ),
@@ -73,7 +73,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://lozanoisla.com/">
-            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/www/quipo4c.png" style="height:50px" title="flozano"></a>
+            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/quipo4c.png" style="height:50px" title="flozano"></a>
             <span style="display:block;"><small>lozanoisla.com</small></span>
             </p></div>
             </div>
@@ -282,7 +282,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
               <div style="display:inline-block; width:100%">
               <p style="text-align:center">
               <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9sTx5Dbff9O0g6KCU4pwCQ">
-              <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/youtube.png" style="height:60px" title="demo"></a>
+              <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/youtube.png" style="height:60px" title="demo"></a>
               <span style="display:block;"><small>demo</small></span>
               </p></div>
               </div>
@@ -295,7 +295,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
               <div style="display:inline-block; width:100%">
               <p style="text-align:center">
               <a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/">
-              <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/www/tarpuy.jpeg" style="height:80px" title="tarpuy"></a>
+              <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/favicon_tarpuy/android-chrome-512x512.png" style="height:80px" title="tarpuy"></a>
               <span style="display:block;"><small>Tarpuy</small></span>
               </p></div>
               </div>
@@ -308,7 +308,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://www.quipolab.com/">
-            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/www/yupana.png" style="height:80px" title="quipo"></a>
+            <img src="https://github.com/Flavjack/inti/blob/master/inst/icons/quipo_logo.png" style="height:80px" title="quipo"></a>
             <span style="display:block;"><small>quipolab</small></span>
             </p></div>
             </div>
