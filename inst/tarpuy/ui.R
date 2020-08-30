@@ -18,6 +18,9 @@ library(googleAuthR)
 library(bootstraplib)
 library(shinydashboard)
 library(stringi)
+library(BiocManager)
+
+options(repos = BiocManager::repositories())
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
 options(gargle_oob_default = TRUE)
@@ -33,7 +36,9 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
            , windowTitle = "Tarpuy"
            , position = "fixed-top"
            , theme = "bootstrap_sandstone.css"
-           , selected = "Intro",
+           , selected = "Intro"
+
+           , includeCSS("www/custom.css"),
 
            tabPanel("",
 
@@ -170,7 +175,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                    textInput(inputId = "gsheet_design"
                                              , label = NULL
-                                             , value = "design"
+                                             , value = "dsg"
                                              , placeholder = "Sheet name"
                                    ),
 
@@ -182,7 +187,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                                    textInput(inputId = "gsheet_varlist"
                                              , label = NULL
-                                             , value = "varlist"
+                                             , value = "var"
                                              , placeholder = "Sheet name"
                                    ),
 
@@ -437,8 +442,6 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                              conditionalPanel(condition =  " input.plex_fields.includes('dates') ",
 
-                                              tags$div(tags$style(HTML( ".dropdown-menu{z-index:10000 !important;}"))),
-
                                               dateRangeInput(inputId = "plex_dates"
                                                              , label = "Experiment dates (start/end)"
                                                              , end = NA
@@ -551,38 +554,33 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                              textAreaInput(inputId = "plex_idea"
                                            , label = "Idea"
                                            , placeholder = "How the idea was born."
-                                           , width = "180%"
+                                           , width = "100%"
                              ),
 
                              textAreaInput(inputId = "plex_goal"
                                            , label = "Goal"
                                            , placeholder = "The main goal of the project."
-                                           , width = "180%"
                              ),
 
                              textAreaInput(inputId = "plex_hypothesis"
                                            , label = "Hypothesis"
                                            , placeholder = "What are the expected results."
-                                           , width = "180%"
                              ),
 
                              textAreaInput(inputId = "plex_rationale"
                                            , label = "Rationale"
                                            , placeholder = "Based in which evidence is planned the experiment."
-                                           , width = "180%"
 
                              ),
 
                              textAreaInput(inputId = "plex_objectives"
                                            , label = "Objectives"
                                            , placeholder = "Objectives of the project."
-                                           , width = "180%"
                              ),
 
                              textAreaInput(inputId = "plex_plan"
                                            , label = "Project plan"
                                            , placeholder = "General plan description of the project (M & M)."
-                                           , width = "180%"
                              )
 
                       ),

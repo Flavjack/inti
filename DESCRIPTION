@@ -14,6 +14,7 @@ Depends:
     dplyr,
     tidyr,
     tibble
+biocViews:
 Imports:
     lme4,
     agricolae,

@@ -20,6 +20,9 @@ library(shinydashboard)
 library(ggpubr)
 library(FactoMineR)
 library(corrplot)
+library(BiocManager)
+
+options(repos = BiocManager::repositories())
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
 options(gargle_oob_default = TRUE)
@@ -35,7 +38,9 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
            , windowTitle = "Yupana"
            , position = "fixed-top"
            , theme = "bootstrap_sandstone.css"
-           , selected = "Intro",
+           , selected = "Intro"
+
+           , includeCSS("www/custom.css"),
 
            tabPanel("",
 
