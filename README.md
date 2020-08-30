@@ -1,3 +1,7 @@
+  <!-- badges: start -->
+  [![Travis build status](https://travis-ci.com/Flavjack/inti.svg?branch=master)](https://travis-ci.com/Flavjack/inti)
+  <!-- badges: end -->
+
 # Inti
 
 A collection of different applications and procedures used in plant breeding and experimental designs.
