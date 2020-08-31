@@ -32,6 +32,7 @@
 #' @import dplyr
 #' @importFrom stats aov
 #' @importFrom tidyr unite
+#' @importFrom graphics plot
 #'
 #' @export
 
