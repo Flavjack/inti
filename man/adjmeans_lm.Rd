@@ -58,5 +58,5 @@ Function to calculate the adjusted means using Linear models (lm or aov).
 Using \code{tab_vars} select the variables shown the adjusted mean table with the \code{sep}.
 }
 \author{
-Flavio Lozano-Isla
+Flavio Lozano Isla
 }

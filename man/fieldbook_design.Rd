@@ -39,20 +39,10 @@ Function to deploy experimental designs based in agricolae package.
 \details{
 The function allows to include the arguments in the sheet that have the information of the design.
 You should include 2 columns in the sheet: "\code{{arguments}}" and "\code{{values}}". See examples.
-The information will be extracted automatically and deploy the design.
-
-n_factor = 1
-- crd
-- rcbd
-- lsd
-- lattice
-
-n_factor = 2 (factorial)
-- split-crd
-- split-rcbd
-
-n_factors >= 2 (factorial)
-factorial .: crd, rcbd, lsd
+The information will be extracted automatically and deploy the design. 
+n_factor = 1: crd, rcbd, lsd, lattice.
+n_factor = 2 (factorial): split-crd, split-rcbd
+n_factors >= 2 (factorial): crd, rcbd, lsd
 }
 \examples{
 

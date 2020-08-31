@@ -10,7 +10,7 @@ tarpuy()
 Shiny app
 }
 \description{
-Invoke RStudio add-in to create field book designs
+Invoke RStudio addin to create field book designs
 }
 \details{
 Tarpuy allow to create experimental designs under an interactive app.

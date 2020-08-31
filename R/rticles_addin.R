@@ -1,6 +1,6 @@
 #' Build markdown o bookdown template
 #'
-#' Invoke RStudio add-in to create markdown documents
+#' Invoke RStudio addin to create markdown documents
 #'
 #' @details
 #'

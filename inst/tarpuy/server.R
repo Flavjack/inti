@@ -92,15 +92,26 @@ shinyServer(function(input, output, session) {
   makeReactiveBinding("gs_created")
   observeEvent( input$create_sheet, {
 
-    gs4_auth(scopes = c("https://www.googleapis.com/auth/spreadsheets")
-             , token = access_token())
+    if(Sys.getenv('SHINY_PORT') == "") {
+      
+      gs4_auth(T)
+      
+    } else {
+      
+      gs4_auth(scopes = "https://www.googleapis.com/auth/spreadsheets"
+               , cache = FALSE
+               , use_oob = TRUE
+               , token = access_token()
+      )
+      
+    }
 
     validate( need( gs4_has_token(), "LogIn and insert a url" ) )
-
+    
     gs_created <<- gs4_create(
       name = paste("Tarpuy", format(Sys.time(), '%Y-%m-%d  %H:%M'))
       , sheets = "tarpuy")
-
+    
     # updt link ---------------------------------------------------------------
 
     url <- "https://docs.google.com/spreadsheets/d/"

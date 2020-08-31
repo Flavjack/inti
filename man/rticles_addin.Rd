@@ -10,7 +10,7 @@ rticles_addin()
 Shiny app
 }
 \description{
-Invoke RStudio add-in to create markdown documents
+Invoke RStudio addin to create markdown documents
 }
 \details{
 Create all the files in the present work directory.

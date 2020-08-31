@@ -1,4 +1,4 @@
-#' Heritability in plant breeding on a genotype-difference basis
+#' Heritability in plant breeding on a genotype difference basis
 #'
 #' Function to calculate:
 #' 1. The variance components.
@@ -50,9 +50,9 @@
 #'
 #' @references
 #'
-#' Schmidt, P., J. Hartung, J. Bennewitz, and H.-P. Piepho. 2019. Heritability in Plant Breeding on a Genotype-Difference Basis. Genetics 212(4): 991–1008. doi: 10.1534/genetics.119.302134.
+#' Schmidt, P., J. Hartung, J. Bennewitz, and H.P. Piepho. 2019. Heritability in Plant Breeding on a Genotype-Difference Basis. Genetics 212(4): 991–1008. doi: 10.1534/genetics.119.302134.
 #'
-#' Schmidt, P., J. Hartung, J. Rath, and H.-P. Piepho. 2019. Estimating Broad-Sense Heritability with Unbalanced Data from Agricultural Cultivar Trials. Crop Science 59(2): 525–536. doi: 10.2135/cropsci2018.06.0376.
+#' Schmidt, P., J. Hartung, J. Rath, and H.P. Piepho. 2019. Estimating Broad-Sense Heritability with Unbalanced Data from Agricultural Cultivar Trials. Crop Science 59(2): 525–536. doi: 10.2135/cropsci2018.06.0376.
 #'
 #' Bernal-Vasquez, Angela-Maria, et al. “Outlier Detection Methods for Generalized Lattices: A Case Study on the Transition from ANOVA to REML.” Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016, pp. 787–804. Springer Link, doi:10.1007/s00122-016-2666-6.
 #'

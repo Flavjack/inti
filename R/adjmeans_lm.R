@@ -25,7 +25,7 @@
 #'
 #'  2. Adjusted means with the mean comparisons under HSD test (p<0.05)
 #'
-#' @author Flavio Lozano-Isla
+#' @author Flavio Lozano Isla
 #'
 #' @import ggplot2
 #' @import agricolae

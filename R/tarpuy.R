@@ -1,6 +1,6 @@
 #' Field book experimental designs
 #'
-#' Invoke RStudio add-in to create field book designs
+#' Invoke RStudio addin to create field book designs
 #'
 #' @details
 #'
