@@ -1,14 +1,13 @@
 #' Field book experimental designs
 #'
 #' Function to deploy experimental designs based in agricolae package.
-#' 1. Field book for one and multiple factors
 #'
 #' @param data Experimental design data frame with the factors and level. See examples.
 #' @param n_factors Number of factor in the experiment  (default = 1). See details.
 #' @param type Type of experimental arrange  (default = "crd"). See details.
 #' @param rep  Number of replications in the experiment (default = 3).
 #' @param serie Digits in the plot id (default = 2).
-#' @param seed Replicability of draw results (default = 0) ~ always random. See details.
+#' @param seed Replicability of draw results (default = 0) always random. See details.
 #'
 #' @details The function allows to include the arguments in the sheet that have the information of the design.
 #' You should include 2 columns in the sheet: "\code{{arguments}}" and "\code{{values}}". See examples.
@@ -32,7 +31,7 @@
 #'
 #' @source
 #'
-#' https://tarwi.lamolina.edu.pe/~fmendiburu/
+#' \url{https://tarwi.lamolina.edu.pe/~fmendiburu/}
 #'
 #' @examples
 #'

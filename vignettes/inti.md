@@ -1,7 +1,7 @@
 ---
 title: "inti package"
 author: "Flavio Lozano-Isla"
-date: "2020-08-31"
+date: "2020-09-01"
 output: 
       rmarkdown::html_vignette:
         toc: true
@@ -52,6 +52,7 @@ The apps are included into the `Addins` list or you can run the following code.
 ```r
 inti::yupana()
 ```
+
 ### Tarpuy
 
 

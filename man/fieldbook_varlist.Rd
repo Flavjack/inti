@@ -2,7 +2,7 @@
 % Please edit documentation in R/fieldbook_varlist.R
 \name{fieldbook_varlist}
 \alias{fieldbook_varlist}
-\title{Field book variable list}
+\title{Fieldbook variable list}
 \usage{
 fieldbook_varlist(fieldbook, varlist = NULL)
 }

@@ -17,7 +17,7 @@
 #' @param fix.model The fixed effects in the model. See examples.
 #' @param ran.model The random effects in the model. See examples.
 #' @param blues Calculate the BLUEs (default = FALSE).
-#' @param effects Conditional modes of the random effects instead of the BLUPs (default = FALSE).
+#' @param effects Random effects instead of the BLUPs (default = FALSE).
 #' @param plot_diag Show diagnostic plots (default = FALSE).
 #' @param plot_dots Show dotplot genotypes vs trait (default = NULL). See examples.
 #' @param outliers.rm Remove outliers (default = FALSE). See references.
@@ -26,7 +26,7 @@
 #'
 #' For individual experiments is necessary provide the \code{trait}, \code{gen.name}, \code{rep.n}.
 #'
-#' For MET experiments you should \code{loc.n} and \code{loc.name} y/o \code{year.n} and \code{year.name} according your experiment.
+#' For MET experiments you should \code{loc.n} and \code{loc.name} and/or \code{year.n} and \code{year.name} according your experiment.
 #'
 #' The blues calculation is based in the pairwise comparison and its could takes time according the number of the genotypes.
 #'

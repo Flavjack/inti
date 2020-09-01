@@ -14,7 +14,7 @@
 #' @details
 #'
 #' For compare the factors you should use ":". For example, to compare treatment1
-#' and treatment2 => "treatment1:treatment2".
+#' and treatment2: "treatment1:treatment2".
 #'
 #' @return data frame
 #'

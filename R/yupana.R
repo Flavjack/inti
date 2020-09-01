@@ -1,16 +1,21 @@
-#' yupana
+#' Interactive data analysis
 #'
-#' Yupana es una aplicación web (online) interactiva multiplataforma de interfaz amigable e intuitiva; que busca agilizar el desarrollo de investigación y validación de productos en las instituciones del sector agropecuario e industrial.
+#' Invoke RStudio addin to analyze and graph experimental design data
 #'
-#' @references Lozano-Isla, Flavio, Gomez Carrion, Jimmy, Benites-Alfaro, Omar, & De Mendiburu, Felipe (2018). Yupana: Herramienta web interactiva para el análisis de datos en la investigación agropecuario e industrial. Quipo. <www.quipolab.com>
+#' @details
 #'
-#' @source
+#' Yupana: data analysis and graphics for experimental designs.
 #'
-#' Yupana .: <https://flavjack.shinyapps.io/yupana/>
+#' @return Shiny app
 #'
-#' User Manual .: <https://flavjack.github.io/yupana-usm>
+#' @examples
+#' \dontrun{
 #'
-#' @author quipo.org
+#'  inti::yupana()
+#'
+#' }
+#'
+#' @author Flavio Lozano-Isla
 #' @importFrom shiny runApp
 #' @export
 

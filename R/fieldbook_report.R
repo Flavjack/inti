@@ -4,7 +4,7 @@
 #'
 #' @param data Field book data.
 #' @param fb_smr Summary of the variables in the fieldbook.
-#' @param variable Response variable
+#' @param variable Response variable.
 #' @param model_facts Model used for the experimental design.
 #' @param dotplot_groups Factors to compare. See details.
 #' @param model_diag Diagnostic for model (default = FALSE).
@@ -12,7 +12,7 @@
 #' @details
 #'
 #' For compare the factors you should use ":". For example, to compare treatment1
-#' and treatment2 => "treatment1:treatment2".
+#' and treatment2: "treatment1:treatment2".
 #'
 #' @return data frame
 #'

@@ -18,8 +18,8 @@
 #'
 #' @details
 #'
-#' If the table is a out put of `mean_comparison(graph_opts = TRUE)` function.
-#' Its contain all the parameter for the plot
+#' If the table is a out put of \code{mean_comparison(graph_opts = TRUE)} function.
+#' Its contain all the parameter for the plot.
 #'
 #' @return plot
 #'

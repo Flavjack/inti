@@ -5,8 +5,8 @@
 #' @param data data frame.
 #' @param caption table caption (default = NULL). See details.
 #' @param notes footnotes for the table (default = NULL). See details.
-#' @param label label for start the footnote (default = "__Note:__").
-#' @param notation notation for the symbols and footnotes (default = "number"). See details.
+#' @param label label for start the footnote (default = "Note:").
+#' @param notation notation for the symbols and footnotes (default = "alphabet"). See details.
 #'
 #' @details
 #'
@@ -49,7 +49,7 @@
 include_table <- function(data
                         , caption = NULL
                         , notes = NULL
-                        , label = "__Note:__"
+                        , label = "Note:"
                         , notation = "alphabet"
 ) {
 

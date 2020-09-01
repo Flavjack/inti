@@ -36,3 +36,7 @@ inti::rticles_addin()
 https://inkaverse.com/
 
 https://lozanoisla.com/
+
+# bash
+# R CMD Rd2pdf . --no-clean
+

@@ -17,7 +17,7 @@
 #'
 #' @source
 #'
-#' https://github.com/haozhu233/kableExtra/blob/master/R/add_footnote.R
+#' \url{https://github.com/haozhu233/kableExtra/blob/master/R/add_footnote.R}
 #'
 #' @importFrom utils read.csv
 #' @importFrom stringr str_count str_extract str_extract_all
@@ -26,7 +26,7 @@
 
 footnotes <- function(table
                       , notes = NULL
-                      , label = "__Note:__"
+                      , label = "Note:"
                       , notation = "alphabet"
 ) {
 

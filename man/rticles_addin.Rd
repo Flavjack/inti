@@ -21,7 +21,7 @@ Open the ".Rprj" and you should have the possibility to compile the book.
 \examples{
 \dontrun{
 
- inti::rticles()
+ inti::rticles_addin()
 
 }
 

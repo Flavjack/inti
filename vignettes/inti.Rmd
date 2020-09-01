@@ -49,6 +49,7 @@ The apps are included into the `Addins` list or you can run the following code.
 ```{r eval=F, echo=TRUE}
 inti::yupana()
 ```
+
 ### Tarpuy
 
 ```{r eval=F, echo=TRUE}

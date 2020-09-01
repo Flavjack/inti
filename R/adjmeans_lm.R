@@ -9,7 +9,7 @@
 #' @param test Test comparison (default = "SNK"). Others: "TUKEY" & "DUNCAN".
 #' @param anova ANOVA table (default = FALSE).
 #' @param tab_vars Specific the variables in the summary table (default = NULL).
-#' @param sep Separator between the variables when use tab_vars. See details.
+#' @param sep Separator between the variables when use \code{tab_vars}. See details.
 #' @param digits Number of digits in the table (default = 3).
 #' @param plot_treat Treat of comparison in dot plot (default = NULL). See example.
 #' @param plot_groups Group of comparison in dot plot (default = NULL). See example.

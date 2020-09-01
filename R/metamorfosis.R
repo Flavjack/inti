@@ -1,6 +1,6 @@
 #' Transform data frame based in a dictionary
 #'
-#' Transform entire data frame (field book) according to data a dictionary.
+#' Transform entire fieldbook according to data a dictionary.
 #'
 #' @param fieldbook Data frame with the original information.
 #' @param dictionary Data frame with new names and categories. See details.
@@ -23,7 +23,7 @@
 #'
 #' 2. Dictionary.
 #'
-#' @author Flavio Lozano Isla
+#' @author Flavio Lozano-Isla
 #'
 #' @importFrom dplyr mutate_all starts_with sym vars filter rename_at mutate_at
 #' @importFrom purrr as_vector

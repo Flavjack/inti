@@ -19,7 +19,7 @@ fieldbook_mvr(data, fb_smr, summary_by, groups)
 result and plots
 }
 \description{
-Mutilvariate analysis: PCA and HCPC
+Mutilvariate analysis for PCA and HCPC
 }
 \details{
 Compute and plot information for multivarite analysis

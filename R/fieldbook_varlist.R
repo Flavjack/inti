@@ -1,4 +1,4 @@
-#' Field book variable list
+#' Fieldbook variable list
 #'
 #' Function to include the variables to evaluate in the fieldbook design.
 #'

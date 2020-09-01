@@ -9,7 +9,7 @@
 #' @description
 #'
 #' Use the method M4 in Bernal-Vasquez (2016).
-#' Bonferroni–Holm test to judge residuals standardized by the re‑scaled MAD (BH‑MADR)
+#' Bonferroni–Holm test to judge residuals standardized by the re‑scaled MAD (BH‑MADR).
 #'
 #' @return list
 #'

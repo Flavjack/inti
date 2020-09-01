@@ -50,7 +50,7 @@ H2cal(
 
 \item{blues}{Calculate the BLUEs (default = FALSE).}
 
-\item{effects}{Conditional modes of the random effects instead of the BLUPs (default = FALSE).}
+\item{effects}{Random effects instead of the BLUPs (default = FALSE).}
 
 \item{plot_diag}{Show diagnostic plots (default = FALSE).}
 
@@ -79,7 +79,7 @@ The function allows to made the calculation for individual or multi-environmenta
 
 For individual experiments is necessary provide the \code{trait}, \code{gen.name}, \code{rep.n}.
 
-For MET experiments you should \code{loc.n} and \code{loc.name} y/o \code{year.n} and \code{year.name} according your experiment.
+For MET experiments you should \code{loc.n} and \code{loc.name} and/or \code{year.n} and \code{year.name} according your experiment.
 
 The blues calculation is based in the pairwise comparison and its could takes time according the number of the genotypes.
 

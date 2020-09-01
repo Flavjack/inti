@@ -40,7 +40,7 @@ adjmeans_lm(
 
 \item{tab_vars}{Specific the variables in the summary table (default = NULL).}
 
-\item{sep}{Separator between the variables when use tab_vars. See details.}
+\item{sep}{Separator between the variables when use \code{tab_vars}. See details.}
 
 \item{digits}{Number of digits in the table (default = 3).}
 }

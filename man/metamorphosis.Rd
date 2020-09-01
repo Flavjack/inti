@@ -27,7 +27,7 @@ List with two objects.
 2. Dictionary.
 }
 \description{
-Transform entire data frame (field book) according to data a dictionary.
+Transform entire fieldbook according to data a dictionary.
 }
 \details{
 The function require at least three columns.
@@ -72,5 +72,5 @@ fb_new <- mtm$fieldbook
 
 }
 \author{
-Flavio Lozano Isla
+Flavio Lozano-Isla
 }

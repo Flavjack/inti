@@ -9,7 +9,7 @@ include_figure(
   figure,
   caption = NULL,
   notes = NULL,
-  label = "__Source:__",
+  label = "Source:",
   table = c("figures", "caption", "notes", "url")
 )
 }
@@ -22,7 +22,7 @@ include_figure(
 
 \item{notes}{manual figure notes (default = NULL).}
 
-\item{label}{label for start the footnote (default = "__Source:__").}
+\item{label}{label for start the footnote (default = "Source:").}
 
 \item{table}{columns in the table (default = c("figures", "caption", "notes", "url")).}
 }
@@ -34,10 +34,10 @@ Include figures with title and notes using a data base
 }
 \details{
 The data frame should contain 4 columns specified in \code{table}:
-1. \code{figures}
-2. \code{caption}
-3. \code{notes}
-4. \code{path} or \code{url}
+1. \code{figures}.
+2. \code{caption}.
+3. \code{notes}.
+4. \code{path} or \code{url}.
 If you don't use a a data frame you provide the information manually.
 }
 \author{

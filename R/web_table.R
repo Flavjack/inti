@@ -10,8 +10,6 @@
 #'
 #' @return table in markdown format for html documents
 #'
-#' @author Flavio Lozano-Isla
-#'
 #' @importFrom dplyr mutate_if
 #' @importFrom DT datatable
 #' @export

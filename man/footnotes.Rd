@@ -4,10 +4,10 @@
 \alias{footnotes}
 \title{Table footnote}
 \source{
-https://github.com/haozhu233/kableExtra/blob/master/R/add_footnote.R
+\url{https://github.com/haozhu233/kableExtra/blob/master/R/add_footnote.R}
 }
 \usage{
-footnotes(table, notes = NULL, label = "__Note:__", notation = "alphabet")
+footnotes(table, notes = NULL, label = "Note:", notation = "alphabet")
 }
 \arguments{
 \item{table}{kable output in pandoc format.}

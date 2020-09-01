@@ -4,7 +4,7 @@
 \alias{fieldbook_design}
 \title{Field book experimental designs}
 \source{
-https://tarwi.lamolina.edu.pe/~fmendiburu/
+\url{https://tarwi.lamolina.edu.pe/~fmendiburu/}
 }
 \usage{
 fieldbook_design(
@@ -27,14 +27,13 @@ fieldbook_design(
 
 \item{serie}{Digits in the plot id (default = 2).}
 
-\item{seed}{Replicability of draw results (default = 0) ~ always random. See details.}
+\item{seed}{Replicability of draw results (default = 0) always random. See details.}
 }
 \value{
 A list with fieldbook design
 }
 \description{
 Function to deploy experimental designs based in agricolae package.
-1. Field book for one and multiple factors
 }
 \details{
 The function allows to include the arguments in the sheet that have the information of the design.

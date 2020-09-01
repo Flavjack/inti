@@ -2,21 +2,27 @@
 % Please edit documentation in R/yupana.R
 \name{yupana}
 \alias{yupana}
-\title{yupana}
-\source{
-Yupana .: <https://flavjack.shinyapps.io/yupana/>
-
-User Manual .: <https://flavjack.github.io/yupana-usm>
-}
+\title{Interactive data analysis}
 \usage{
 yupana()
 }
-\description{
-Yupana es una aplicación web (online) interactiva multiplataforma de interfaz amigable e intuitiva; que busca agilizar el desarrollo de investigación y validación de productos en las instituciones del sector agropecuario e industrial.
+\value{
+Shiny app
 }
-\references{
-Lozano-Isla, Flavio, Gomez Carrion, Jimmy, Benites-Alfaro, Omar, & De Mendiburu, Felipe (2018). Yupana: Herramienta web interactiva para el análisis de datos en la investigación agropecuario e industrial. Quipo. <www.quipolab.com>
+\description{
+Invoke RStudio addin to analyze and graph experimental design data
+}
+\details{
+Yupana: data analysis and graphics for experimental designs.
+}
+\examples{
+\dontrun{
+
+ inti::yupana()
+
+}
+
 }
 \author{
-quipo.org
+Flavio Lozano-Isla
 }

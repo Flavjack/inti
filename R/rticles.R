@@ -25,7 +25,7 @@
 #'
 #' @source
 #'
-#' https://github.com/Flavjack/rticles
+#' \url{https://github.com/flavjack/rticles}
 #'
 #' @export
 

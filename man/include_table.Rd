@@ -8,7 +8,7 @@ include_table(
   data,
   caption = NULL,
   notes = NULL,
-  label = "__Note:__",
+  label = "Note:",
   notation = "alphabet"
 )
 }
@@ -19,9 +19,9 @@ include_table(
 
 \item{notes}{footnotes for the table (default = NULL). See details.}
 
-\item{label}{label for start the footnote (default = "__Note:__").}
+\item{label}{label for start the footnote (default = "Note:").}
 
-\item{notation}{notation for the symbols and footnotes (default = "number"). See details.}
+\item{notation}{notation for the symbols and footnotes (default = "alphabet"). See details.}
 }
 \value{
 Table with caption and footnotes

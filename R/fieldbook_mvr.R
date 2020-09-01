@@ -1,6 +1,6 @@
 #' Multivariate Analysis
 #'
-#' Mutilvariate analysis: PCA and HCPC
+#' Mutilvariate analysis for PCA and HCPC
 #'
 #' @param data Field book data.
 #' @param fb_smr Summary of the variables in the fieldbook.

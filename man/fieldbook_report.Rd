@@ -18,7 +18,7 @@ fieldbook_report(
 
 \item{fb_smr}{Summary of the variables in the fieldbook.}
 
-\item{variable}{Response variable}
+\item{variable}{Response variable.}
 
 \item{model_facts}{Model used for the experimental design.}
 
@@ -34,7 +34,7 @@ Function to create a complete report of the fieldbook
 }
 \details{
 For compare the factors you should use ":". For example, to compare treatment1
-and treatment2 => "treatment1:treatment2".
+and treatment2: "treatment1:treatment2".
 }
 \examples{
 
