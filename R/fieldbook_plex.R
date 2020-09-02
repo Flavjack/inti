@@ -3,11 +3,11 @@
 #' Information for build a plan for an experiment (PLEX)
 #'
 #' @param data Data with the fieldbook information.
-#' @param idea how the idea was born.
-#' @param goal the main goal of the project.
-#' @param hypothesis what are the expected results.
-#' @param rationale based in which evidence is planned the experiment.
-#' @param objectives the objectives of the project.
+#' @param idea How the idea was born.
+#' @param goal The main goal of the project.
+#' @param hypothesis What are the expected results.
+#' @param rationale Based in which evidence is planned the experiment.
+#' @param objectives The objectives of the project.
 #' @param plan General description of the project (M & M).
 #' @param institutions Institutions involved in the project.
 #' @param researchers Persons involved in the project.
@@ -20,20 +20,22 @@
 #' @param end The date of the end of the experiments.
 #' @param album link with the photos of the project.
 #' @param github link with the github repository.
-#' @param about Short description of the project
+#' @param about Short description of the project.
 #' @param fieldbook Name or ID for the fieldbook/project.
-#' @param nfactor Number of factors for the design
-#' @param design Type of design
-#' @param rep Number of replication
-#' @param serie Number of digits in the plots
-#' @param seed Seed for the randomization
+#' @param nfactor Number of factors for the design.
+#' @param design Type of design.
+#' @param rep Number of replication.
+#' @param serie Number of digits in the plots.
+#' @param seed Seed for the randomization.
 #'
 #' @details
 #'
-#' It´s not necessary to provide all the information.
+#' Provide the information available.
 #'
-#' @return data frame or list of arguments
-#' (info, variables, design, logbook, timetable, budget)
+#' @return data frame or list of arguments:
+#'
+#'   \enumerate{ \item info \item variables \item design \item logbook \item
+#'   timetable \item budget }
 #'
 #' @author
 #'
@@ -64,8 +66,7 @@
 #' data %>% sheet_write(ss = gs, sheet = "test")
 #'
 #' }
-#'
-#' @export
+#' 
 
 fieldbook_plex <- function(data = NULL
                           , idea = NULL

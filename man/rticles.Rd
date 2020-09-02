@@ -16,13 +16,13 @@ rticles(
 )
 }
 \arguments{
-\item{path}{directory for create the files.}
+\item{path}{Directory for create the files.}
 
-\item{type}{document type (default = "markdown").}
+\item{type}{Document type (default = "markdown").}
 
-\item{name}{name of the main document (default = "manuscript").}
+\item{name}{Name of the main document (default = "manuscript").}
 
-\item{project}{create a R project (default = TRUE). See details.}
+\item{project}{Create a R project (default = TRUE). See details.}
 
 \item{server}{How create the dependencies (default = "local").}
 }
@@ -33,12 +33,10 @@ folder and files
 Create a complete example for markdown o bookdown documents
 }
 \details{
-Create all the files in the path directory.
-It is recommended use ".Rproj".
-After create the project Open the ".Rprj" file.
-Compile the document and you will see the example.
-If you already have a folder and select such as "bookdown"
-is necessary change the main (.rmd) file to index.rmd
+Create all the files in the path directory. It is recommended use ".Rproj".
+After create the project Open the ".Rprj" file. Compile the document and you
+will see the example. If you already have a folder and select such as
+"bookdown" is necessary change the main (.rmd) file to index.rmd
 }
 \author{
 Flavio Lozano-Isla

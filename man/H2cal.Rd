@@ -2,11 +2,17 @@
 % Please edit documentation in R/H2cal.R
 \name{H2cal}
 \alias{H2cal}
-\title{Heritability in plant breeding on a genotype difference basis}
+\title{Heritability in plant breeding}
 \source{
+\itemize{
+
+\item
 https://github.com/PaulSchmidtGit/Heritability/tree/master/Alternative%20Heritability%20Measures
 
+\item
 https://stackoverflow.com/questions/38697477/mean-variance-of-a-difference-of-blues-or-blups-in-lme4
+
+}
 }
 \usage{
 H2cal(
@@ -54,36 +60,45 @@ H2cal(
 
 \item{plot_diag}{Show diagnostic plots (default = FALSE).}
 
-\item{plot_dots}{Show dotplot genotypes vs trait (default = NULL). See examples.}
+\item{plot_dots}{Show dotplot genotypes vs trait (default = NULL). See
+examples.}
 
 \item{outliers.rm}{Remove outliers (default = FALSE). See references.}
 }
 \value{
 A list with three object:
 
-1. Table with the variance components and heritability.
-
-2. BLUPs.
-
-3. BLUEs.
+  \enumerate{ \item Table with the variance components and heritability \item
+  BLUPs \item BLUEs \item Outliers \item model}
 }
 \description{
-Function to calculate:
-1. The variance components.
-2. Heritability under three approaches: Standard, Cullis and Piepho.
-3. Best Linear Unbiased Predictors (BLUPs).
-4. Best Linear Unbiased Estimators (BLUEs).
+Heritability in plant breeding on a genotype difference basis
 }
 \details{
-The function allows to made the calculation for individual or multi-environmental trials (MET) using th fixed and random model.
+The function allows to made the calculation for individual or
+multi-environmental trials (MET) using th fixed and random model.
 
-For individual experiments is necessary provide the \code{trait}, \code{gen.name}, \code{rep.n}.
+1. The variance components.
 
-For MET experiments you should \code{loc.n} and \code{loc.name} and/or \code{year.n} and \code{year.name} according your experiment.
+2. Heritability under three approaches: Standard, Cullis and Piepho.
 
-The blues calculation is based in the pairwise comparison and its could takes time according the number of the genotypes.
+3. Best Linear Unbiased Predictors (BLUPs).
 
-You can specify as \code{blues = FALSE} for calculate the variance components and blups faster.
+4. Best Linear Unbiased Estimators (BLUEs).
+
+5. Outliers remove.
+
+For individual experiments is necessary provide the \code{trait},
+\code{gen.name}, \code{rep.n}.
+
+For MET experiments you should \code{loc.n} and \code{loc.name} and/or
+\code{year.n} and \code{year.name} according your experiment.
+
+The blues calculation is based in the pairwise comparison and its could takes
+time according the number of the genotypes.
+
+You can specify as \code{blues = FALSE} for calculate the variance components
+and blups faster.
 
 For more information review the references.
 }
@@ -91,10 +106,6 @@ For more information review the references.
 
 \dontrun{
 library(inti)
-library(tidyverse)
-library(emmeans)
-library(lme4)
-library(lmerTest)
 library(agridat)
 
  dt <- john.alpha
@@ -115,14 +126,29 @@ library(agridat)
 
 }
 \references{
-Schmidt, P., J. Hartung, J. Bennewitz, and H.P. Piepho. 2019. Heritability in Plant Breeding on a Genotype-Difference Basis. Genetics 212(4): 991–1008. doi: 10.1534/genetics.119.302134.
+\itemize{
 
-Schmidt, P., J. Hartung, J. Rath, and H.P. Piepho. 2019. Estimating Broad-Sense Heritability with Unbalanced Data from Agricultural Cultivar Trials. Crop Science 59(2): 525–536. doi: 10.2135/cropsci2018.06.0376.
+\item Schmidt, P., J. Hartung, J. Bennewitz, and H.P. Piepho. 2019.
+Heritability in Plant Breeding on a Genotype-Difference Basis. Genetics
+212(4): 991–1008. doi: 10.1534/genetics.119.302134.
 
-Bernal-Vasquez, Angela-Maria, et al. “Outlier Detection Methods for Generalized Lattices: A Case Study on the Transition from ANOVA to REML.” Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016, pp. 787–804. Springer Link, doi:10.1007/s00122-016-2666-6.
+\item Schmidt, P., J. Hartung, J. Rath, and H.P. Piepho. 2019. Estimating
+Broad-Sense Heritability with Unbalanced Data from Agricultural Cultivar
+Trials. Crop Science 59(2): 525–536. doi: 10.2135/cropsci2018.06.0376.
+
+\item Bernal-Vasquez, Angela-Maria, et al. “Outlier Detection Methods for
+Generalized Lattices: A Case Study on the Transition from ANOVA to REML.”
+Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016, pp. 787–804.
+Springer Link, doi:10.1007/s00122-016-2666-6.
+
+}
 }
 \author{
-Maria Belen Kistner
+\itemize{
 
-Flavio Lozano-Isla
+\item Maria Belen Kistner
+
+\item Flavio Lozano-Isla
+
+}
 }

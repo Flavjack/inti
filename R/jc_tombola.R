@@ -14,8 +14,9 @@
 #'
 #' @details
 #'
-#' The function could consider n levels for \code{gr_lvl}. In the case of two level the third level will be both.
-#' The suggested levels for \code{st_lvl} are: active or spectator. Only the active members will enter in the schedule.
+#' The function could consider n levels for \code{gr_lvl}. In the case of two
+#' level the third level will be both. The suggested levels for \code{st_lvl}
+#' are: active or spectator. Only the active members will enter in the schedule.
 #'
 #' @return data frame with the schedule for the JC
 #'
@@ -52,7 +53,6 @@
 #'
 #' }
 #'
-#' @export
 
 jc_tombola <- function(data
                        , members

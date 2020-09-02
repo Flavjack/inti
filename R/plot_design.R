@@ -1,23 +1,22 @@
 #' Fieldbook plot experimental designs
 #'
-#' Function to plot the fieldbook design
+#' Plot fieldbook sketch designs based in experimental design
 #'
-#' @param data Experimental design data frame with the factors and level. See examples.
+#' @param data Experimental design data frame with the factors and level. See
+#'   examples.
 #' @param factor Vector with the name of the columns with the factors.
 #' @param dim Dimension for reshape the design arrangement.
 #' @param fill  Value for fill the experimental units (default = "plots").
-#' @param xlab Title for x axis
-#' @param ylab Title for y axis
-#' @param glab Title for group axis
+#' @param xlab Title for x axis.
+#' @param ylab Title for y axis.
+#' @param glab Title for group axis.
 #'
 #' @details The function allows to plot the experimental design according the
-#' field experiment design.
+#'   field experiment design.
 #'
 #' @return plot
 #'
-#' @author
-#'
-#' Flavio Lozano-Isla
+#' @author Flavio Lozano-Isla
 #'
 #' @import dplyr
 #' @importFrom purrr pluck as_vector

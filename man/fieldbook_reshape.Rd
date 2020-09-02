@@ -2,7 +2,7 @@
 % Please edit documentation in R/fieldbook_reshape.R
 \name{fieldbook_reshape}
 \alias{fieldbook_reshape}
-\title{Field book reshape}
+\title{Fieldbook reshape}
 \usage{
 fieldbook_reshape(
   data,
@@ -17,17 +17,19 @@ fieldbook_reshape(
 \arguments{
 \item{data}{Field book raw data.}
 
-\item{last_factor}{the last factor in your field book.}
+\item{last_factor}{The last factor in your field book.}
 
-\item{sep}{character that separates the last value.}
+\item{sep}{Character that separates the last value.}
 
 \item{new_colname}{The new name for the column created.}
 
-\item{from_var}{the first variable in case you want to exclude several variables.}
+\item{from_var}{The first variable in case you want to exclude several.
+variables.}
 
-\item{to_var}{the last variable in case you want to exclude several variables.}
+\item{to_var}{The last variable in case you want to exclude several
+variables.}
 
-\item{exc_factors}{factor to exclude during the reshape.}
+\item{exc_factors}{Factor to exclude during the reshape.}
 }
 \value{
 data frame
@@ -36,9 +38,9 @@ data frame
 Function to reshape fieldbook according a separation character
 }
 \details{
-If you variable name is variable_evaluation_rep.
-The reshape function will help to create the column "rep"
-and the new variable name will be variable_evaluation
+If you variable name is \code{variable_evaluation_rep}. The reshape function
+will help to create the column \code{rep} and the new variable name will be
+\code{variable_evaluation}.
 }
 \examples{
 

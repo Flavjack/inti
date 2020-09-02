@@ -5,16 +5,16 @@
 #' @param fieldbook Data frame with the fieldbook.
 #' @param varlist Data frame with the variables information. See examples.
 #'
-#' @details The function allows to include the arguments in the sheet that have the information of the variables.
-#' You should include 3 columns in the sheet: "\code{{abbreviation}}", "\code{{evaluation}}" and "\code{{sampling}}". See examples.
-#' The information will be extracted automatically and deploy the list of variable for the fieldbook design.
-#' If you will be evaluate the experimental unit one time you should set 1.
+#' @details The function allows to include the arguments in the sheet that have
+#'   the information of the variables. You should include 3 columns in the
+#'   sheet: \code{{abbreviation}}, \code{{evaluation}} and \code{{sampling}}.
+#'   See examples. The information will be extracted automatically and deploy
+#'   the list of variable for the fieldbook design. If you will be evaluate the
+#'   experimental unit one time you should set 1.
 #'
 #' @return data frame
 #'
-#' @author
-#'
-#' Flavio Lozano-Isla
+#' @author Flavio Lozano-Isla
 #'
 #' @import dplyr
 #' @importFrom tidyr pivot_wider
@@ -46,7 +46,6 @@
 #'
 #' }
 #'
-#' @export
 
 fieldbook_varlist <- function(fieldbook
                               , varlist = NULL

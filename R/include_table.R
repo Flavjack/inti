@@ -2,24 +2,24 @@
 #'
 #' Include tables with notes and titles for word and html documents
 #'
-#' @param data data frame.
-#' @param caption table caption (default = NULL). See details.
-#' @param notes footnotes for the table (default = NULL). See details.
-#' @param label label for start the footnote (default = "Note:").
-#' @param notation notation for the symbols and footnotes (default = "alphabet"). See details.
+#' @param data Data frame.
+#' @param caption Table caption (default = NULL). See details.
+#' @param notes Footnotes for the table (default = NULL). See details.
+#' @param label Label for start the footnote (default = "Note:").
+#' @param notation Notation for the symbols and footnotes (default =
+#'   "alphabet"). See details.
 #'
 #' @details
 #'
-#' For \code{caption} and \code{notes} you can include {caption} and {notes} in the last rows of your data frame.
-#' Where the information will be extracted automatically for include in the formatted table.
-#' You can add the footnote symbol using \code{{-}} in your table.
-#' \code{notation} could be use: "alphabet", "number", "none".
+#' For \code{caption} and \code{notes} you can include {caption} and {notes} in
+#' the last rows of your data frame. Where the information will be extracted
+#' automatically for include in the formatted table. You can add the footnote
+#' symbol using \code{{\-}} in your table. \code{notation} could be use:
+#' "alphabet", "number", "none".
 #'
 #' @return Table with caption and footnotes
 #'
-#' @author
-#'
-#' Flavio Lozano-Isla
+#' @author Flavio Lozano-Isla
 #'
 #' @examples
 #'
@@ -44,7 +44,6 @@
 #'
 #' }
 #'
-#' @export
 
 include_table <- function(data
                         , caption = NULL

@@ -2,30 +2,29 @@
 #'
 #' Graph summary data into bar o line plot
 #'
-#' @param data data frame with summary data. See details
-#' @param type type of plot  (default = "bar"). Others: "line".
+#' @param data Data frame with summary data. See details.
+#' @param type Type of plot  (default = "bar"). Others: "line".
 #' @param x Variable in the x axis.
 #' @param y Variable in the y axis.
-#' @param groups Groups the x axis (legend) .
+#' @param groups Groups the x axis (legend).
 #' @param xlab Label of x axis.
 #' @param ylab Label of y axis.
 #' @param glab Label of groups or legend.
 #' @param limits Limits max and min.
 #' @param brakes Units for break the limits.
 #' @param sig Comparison test values (default = "sig").
-#' @param error Variable used for error bars .
-#' @param legend Position of legend (default = "top"). Others: "left", "right", "bottom", "none"
+#' @param error Variable used for error bars.
+#' @param legend Position of legend (default = "top"). Others: "left", "right",
+#'   "bottom", "none".
 #'
 #' @details
 #'
-#' If the table is a out put of \code{mean_comparison(graph_opts = TRUE)} function.
-#' Its contain all the parameter for the plot.
+#' If the table is a out put of \code{mean_comparison(graph_opts = TRUE)}
+#' function. Its contain all the parameter for the plot.
 #'
 #' @return plot
 #'
-#' @author
-#'
-#' Flavio Lozano-Isla
+#' @author Flavio Lozano-Isla
 #'
 #' @import dplyr
 #' @importFrom grDevices colorRampPalette colors

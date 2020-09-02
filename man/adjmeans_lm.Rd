@@ -34,28 +34,32 @@ adjmeans_lm(
 
 \item{plot_diag}{Show diagnostic plots (default = FALSE).}
 
-\item{plot_treat}{Treat of comparison in dot plot (default = NULL). See example.}
+\item{plot_treat}{Treat of comparison in dot plot (default = NULL). See
+example.}
 
-\item{plot_groups}{Group of comparison in dot plot (default = NULL). See example.}
+\item{plot_groups}{Group of comparison in dot plot (default = NULL). See
+example.}
 
 \item{tab_vars}{Specific the variables in the summary table (default = NULL).}
 
-\item{sep}{Separator between the variables when use \code{tab_vars}. See details.}
+\item{sep}{Separator between the variables when use \code{tab_vars}. See
+details.}
 
 \item{digits}{Number of digits in the table (default = 3).}
 }
 \value{
-A list with two objects
+A list with two objects:
 
- 1. Summary statistics
+  1. Summary statistics.
 
- 2. Adjusted means with the mean comparisons under HSD test (p<0.05)
+  2. Means with the mean comparisons test.
 }
 \description{
-Function to calculate the adjusted means using Linear models (lm or aov).
+Function to calculate the adjusted means using Linear models (lm or aov)
 }
 \details{
-Using \code{tab_vars} select the variables shown the adjusted mean table with the \code{sep}.
+Using \code{tab_vars} select the variables shown the adjusted mean table with
+the \code{sep}. Mean comparison at p < 0.05.
 }
 \author{
 Flavio Lozano Isla

@@ -14,17 +14,18 @@ include_figure(
 )
 }
 \arguments{
-\item{data}{data frame with the figures information. See details.}
+\item{data}{Data frame with the figures information. See details.}
 
-\item{figure}{name or path of the figure.}
+\item{figure}{Name or path of the figure.}
 
-\item{caption}{manual figure caption (default = NULL).}
+\item{caption}{Manual figure caption (default = NULL).}
 
-\item{notes}{manual figure notes (default = NULL).}
+\item{notes}{Manual figure notes (default = NULL).}
 
-\item{label}{label for start the footnote (default = "Source:").}
+\item{label}{Label for start the footnote (default = "Source:").}
 
-\item{table}{columns in the table (default = c("figures", "caption", "notes", "url")).}
+\item{table}{Columns in the table (default = c("figures", "caption", "notes",
+"url")).}
 }
 \value{
 Figure with caption and notes
@@ -34,10 +35,15 @@ Include figures with title and notes using a data base
 }
 \details{
 The data frame should contain 4 columns specified in \code{table}:
+
 1. \code{figures}.
+
 2. \code{caption}.
+
 3. \code{notes}.
-4. \code{path} or \code{url}.
+
+4. \code{url} or \code{url}.
+
 If you don't use a a data frame you provide the information manually.
 }
 \author{

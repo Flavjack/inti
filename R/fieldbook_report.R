@@ -1,4 +1,4 @@
-#' Field book report
+#' Fieldbook report
 #'
 #' Function to create a complete report of the fieldbook
 #'
@@ -11,14 +11,12 @@
 #'
 #' @details
 #'
-#' For compare the factors you should use ":". For example, to compare treatment1
-#' and treatment2: "treatment1:treatment2".
+#' For compare the factors you should use ":". For example, to compare
+#' treatment1 and treatment2: \code{treatment1:treatment2}.
 #'
 #' @return data frame
 #'
-#' @author
-#'
-#' Flavio Lozano-Isla
+#' @author Flavio Lozano-Isla
 #'
 #' @import dplyr
 #' @importFrom stats rstandard
@@ -51,8 +49,7 @@
 #' report
 #'
 #' }
-#'
-#' @export
+#' 
 
 fieldbook_report <- function(data
                             , fb_smr

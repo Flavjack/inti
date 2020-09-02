@@ -17,9 +17,11 @@ fieldbook_design(
 )
 }
 \arguments{
-\item{data}{Experimental design data frame with the factors and level. See examples.}
+\item{data}{Experimental design data frame with the factors and level. See
+examples.}
 
-\item{n_factors}{Number of factor in the experiment  (default = 1). See details.}
+\item{n_factors}{Number of factor in the experiment  (default = 1). See
+details.}
 
 \item{type}{Type of experimental arrange  (default = "crd"). See details.}
 
@@ -27,21 +29,22 @@ fieldbook_design(
 
 \item{serie}{Digits in the plot id (default = 2).}
 
-\item{seed}{Replicability of draw results (default = 0) always random. See details.}
+\item{seed}{Replicability of draw results (default = 0) always random. See
+details.}
 }
 \value{
-A list with fieldbook design
+A list with the fieldbook design
 }
 \description{
-Function to deploy experimental designs based in agricolae package.
+Function to deploy experimental designs based in agricolae package
 }
 \details{
-The function allows to include the arguments in the sheet that have the information of the design.
-You should include 2 columns in the sheet: "\code{{arguments}}" and "\code{{values}}". See examples.
-The information will be extracted automatically and deploy the design. 
-n_factor = 1: crd, rcbd, lsd, lattice.
-n_factor = 2 (factorial): split-crd, split-rcbd
-n_factors >= 2 (factorial): crd, rcbd, lsd
+The function allows to include the arguments in the sheet that have
+  the information of the design. You should include 2 columns in the sheet:
+  \code{{arguments}} and \code{{values}}. See examples. The information will
+  be extracted automatically and deploy the design. \code{n_factors} = 1:
+  crd, rcbd, lsd, lattice. \code{n_factors} = 2 (factorial): split-crd,
+  split-rcbd \code{n_factors} >= 2 (factorial): crd, rcbd, lsd.
 }
 \examples{
 

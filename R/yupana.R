@@ -16,8 +16,9 @@
 #' }
 #'
 #' @author Flavio Lozano-Isla
+#' 
 #' @importFrom shiny runApp
-#' @export
+#' 
 
 yupana <- function() {
   appDir <- system.file("yupanapro", package = "inti")
@@ -32,5 +33,4 @@ yupana <- function() {
                 , port = 1221
                 )
 }
-
 

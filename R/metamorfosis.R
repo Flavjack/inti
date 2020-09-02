@@ -1,27 +1,26 @@
 #' Transform data frame based in a dictionary
 #'
-#' Transform entire fieldbook according to data a dictionary.
+#' Transform entire fieldbook according to data a dictionary
 #'
 #' @param fieldbook Data frame with the original information.
 #' @param dictionary Data frame with new names and categories. See details.
 #' @param from Column of the dictionary with the original names.
 #' @param to Column of the dictionary with the new names.
-#' @param index Column of the dictionary with the type and level of the variables.
+#' @param index Column of the dictionary with the type and level of the
+#'   variables.
 #' @param colnames Character vector with the name of the columns.
 #'
-#' @details The function require at least three columns.
+#' @details 
+#' 
+#' The function require at least three columns.
 #'
-#' 1. Original names (\code{from}).
+#'   1. Original names (\code{from}).
 #'
-#' 2. New names (\code{to}).
+#'   2. New names (\code{to}).
 #'
-#' 3. Variable type (\code{index}).
+#'   3. Variable type (\code{index}).
 #'
-#' @return List with two objects.
-#'
-#' 1. New data frame.
-#'
-#' 2. Dictionary.
+#' @return List with two objects. 1. New data frame. 2. Dictionary.
 #'
 #' @author Flavio Lozano-Isla
 #'
@@ -63,7 +62,6 @@
 #'
 #' }
 #'
-#' @export
 
 metamorphosis <- function(fieldbook
                           , dictionary

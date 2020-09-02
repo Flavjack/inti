@@ -21,15 +21,15 @@ plot_smr(
 )
 }
 \arguments{
-\item{data}{data frame with summary data. See details}
+\item{data}{Data frame with summary data. See details.}
 
-\item{type}{type of plot  (default = "bar"). Others: "line".}
+\item{type}{Type of plot  (default = "bar"). Others: "line".}
 
 \item{x}{Variable in the x axis.}
 
 \item{y}{Variable in the y axis.}
 
-\item{groups}{Groups the x axis (legend) .}
+\item{groups}{Groups the x axis (legend).}
 
 \item{xlab}{Label of x axis.}
 
@@ -43,9 +43,10 @@ plot_smr(
 
 \item{sig}{Comparison test values (default = "sig").}
 
-\item{error}{Variable used for error bars .}
+\item{error}{Variable used for error bars.}
 
-\item{legend}{Position of legend (default = "top"). Others: "left", "right", "bottom", "none"}
+\item{legend}{Position of legend (default = "top"). Others: "left", "right",
+"bottom", "none".}
 }
 \value{
 plot
@@ -54,8 +55,8 @@ plot
 Graph summary data into bar o line plot
 }
 \details{
-If the table is a out put of \code{mean_comparison(graph_opts = TRUE)} function.
-Its contain all the parameter for the plot.
+If the table is a out put of \code{mean_comparison(graph_opts = TRUE)}
+function. Its contain all the parameter for the plot.
 }
 \examples{
 

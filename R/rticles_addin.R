@@ -4,10 +4,9 @@
 #'
 #' @details
 #'
-#' Create all the files in the present work directory.
-#' It is recommended use ".Rproj" for bookdown documents.
-#' After create the ".Rproj" file.
-#' Open the ".Rprj" and you should have the possibility to compile the book.
+#' Create all the files in the present work directory. It is recommended use
+#' ".Rproj" for bookdown documents. After create the ".Rproj" file. Open the
+#' ".Rprj" and you should have the possibility to compile the book.
 #'
 #' @return Shiny app
 #'
@@ -19,10 +18,9 @@
 #' }
 #'
 #' @author Flavio Lozano-Isla
-#' 
+#'
 #' @importFrom shiny runApp dialogViewer runGadget
-#' 
-#' @export
+#'
 
 rticles_addin <- function() {
   appDir <- system.file("rticles", package = "inti")
@@ -34,5 +32,4 @@ rticles_addin <- function() {
   shiny::runApp(appDir, display.mode = "normal", launch.browser = TRUE)
 
 }
-
 

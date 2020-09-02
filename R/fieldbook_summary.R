@@ -1,4 +1,4 @@
-#' Field book summary
+#' Fieldbook summary
 #'
 #' Function to deploy a summary of the variables
 #'
@@ -6,19 +6,18 @@
 #' @param last_factor The last factor in your fieldbook.
 #' @param model_facts Model used for the experimental design.
 #' @param comp_facts Factors to compare. See details.
-#' @param test_comp Comparison test (default = "SNK"). Others: "TUKEY" & "DUNCAN".
+#' @param test_comp Comparison test (default = "SNK"). Others: "TUKEY" &
+#'   "DUNCAN".
 #' @param sig_level Significance level for the analysis (default = 0.05).
 #'
 #' @details
 #'
-#' For compare the factors you should use ":". For example, to compare treatment1
-#' and treatment2: "treatment1:treatment2".
+#' For compare the factors you should use ":". For example, to compare
+#' treatment1 and treatment2: \code{treatment1:treatment2}.
 #'
 #' @return data frame
 #'
-#' @author
-#'
-#' Flavio Lozano-Isla
+#' @author Flavio Lozano-Isla
 #'
 #' @import dplyr
 #' @import tidyr
@@ -49,8 +48,7 @@
 #' smrfb %>% write_sheet(ss = gs, sheet = "fbsmr")
 #'
 #' }
-#'
-#' @export
+#' 
 
 fieldbook_summary <- function(data
                              , last_factor

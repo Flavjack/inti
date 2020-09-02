@@ -2,7 +2,7 @@
 % Please edit documentation in R/tarpuy.R
 \name{tarpuy}
 \alias{tarpuy}
-\title{Field book experimental designs}
+\title{Fieldbook experimental designs}
 \usage{
 tarpuy()
 }

@@ -13,10 +13,9 @@ Shiny app
 Invoke RStudio addin to create markdown documents
 }
 \details{
-Create all the files in the present work directory.
-It is recommended use ".Rproj" for bookdown documents.
-After create the ".Rproj" file.
-Open the ".Rprj" and you should have the possibility to compile the book.
+Create all the files in the present work directory. It is recommended use
+".Rproj" for bookdown documents. After create the ".Rproj" file. Open the
+".Rprj" and you should have the possibility to compile the book.
 }
 \examples{
 \dontrun{

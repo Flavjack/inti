@@ -35,15 +35,15 @@ fieldbook_plex(
 \arguments{
 \item{data}{Data with the fieldbook information.}
 
-\item{idea}{how the idea was born.}
+\item{idea}{How the idea was born.}
 
-\item{goal}{the main goal of the project.}
+\item{goal}{The main goal of the project.}
 
-\item{hypothesis}{what are the expected results.}
+\item{hypothesis}{What are the expected results.}
 
-\item{rationale}{based in which evidence is planned the experiment.}
+\item{rationale}{Based in which evidence is planned the experiment.}
 
-\item{objectives}{the objectives of the project.}
+\item{objectives}{The objectives of the project.}
 
 \item{plan}{General description of the project (M & M).}
 
@@ -65,7 +65,7 @@ fieldbook_plex(
 
 \item{end}{The date of the end of the experiments.}
 
-\item{about}{Short description of the project}
+\item{about}{Short description of the project.}
 
 \item{fieldbook}{Name or ID for the fieldbook/project.}
 
@@ -73,25 +73,27 @@ fieldbook_plex(
 
 \item{github}{link with the github repository.}
 
-\item{nfactor}{Number of factors for the design}
+\item{nfactor}{Number of factors for the design.}
 
-\item{design}{Type of design}
+\item{design}{Type of design.}
 
-\item{rep}{Number of replication}
+\item{rep}{Number of replication.}
 
-\item{serie}{Number of digits in the plots}
+\item{serie}{Number of digits in the plots.}
 
-\item{seed}{Seed for the randomization}
+\item{seed}{Seed for the randomization.}
 }
 \value{
-data frame or list of arguments
-(info, variables, design, logbook, timetable, budget)
+data frame or list of arguments:
+
+  \enumerate{ \item info \item variables \item design \item logbook \item
+  timetable \item budget }
 }
 \description{
 Information for build a plan for an experiment (PLEX)
 }
 \details{
-It´s not necessary to provide all the information.
+Provide the information available.
 }
 \examples{
 

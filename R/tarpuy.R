@@ -1,4 +1,4 @@
-#' Field book experimental designs
+#' Fieldbook experimental designs
 #'
 #' Invoke RStudio addin to create field book designs
 #'
@@ -33,5 +33,4 @@ tarpuy <- function() {
                 )
 
 }
-
 

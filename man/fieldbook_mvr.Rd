@@ -13,16 +13,16 @@ fieldbook_mvr(data, fb_smr, summary_by, groups)
 
 \item{summary_by}{Variables for group the analysis.}
 
-\item{groups}{groups for color in PCA}
+\item{groups}{Groups for color in PCA.}
 }
 \value{
 result and plots
 }
 \description{
-Mutilvariate analysis for PCA and HCPC
+Multivariate analysis for PCA and HCPC
 }
 \details{
-Compute and plot information for multivarite analysis
+Compute and plot information for multivariate analysis.
 }
 \examples{
 

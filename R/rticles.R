@@ -2,20 +2,18 @@
 #'
 #' Create a complete example for markdown o bookdown documents
 #'
-#' @param path directory for create the files.
-#' @param type document type (default = "markdown").
-#' @param name name of the main document (default = "manuscript").
-#' @param project create a R project (default = TRUE). See details.
+#' @param path Directory for create the files.
+#' @param type Document type (default = "markdown").
+#' @param name Name of the main document (default = "manuscript").
+#' @param project Create a R project (default = TRUE). See details.
 #' @param server How create the dependencies (default = "local").
 #'
 #' @details
 #'
-#' Create all the files in the path directory.
-#' It is recommended use ".Rproj".
-#' After create the project Open the ".Rprj" file.
-#' Compile the document and you will see the example.
-#' If you already have a folder and select such as "bookdown"
-#' is necessary change the main (.rmd) file to index.rmd
+#' Create all the files in the path directory. It is recommended use ".Rproj".
+#' After create the project Open the ".Rprj" file. Compile the document and you
+#' will see the example. If you already have a folder and select such as
+#' "bookdown" is necessary change the main (.rmd) file to index.rmd
 #'
 #' @return folder and files
 #'
@@ -27,7 +25,6 @@
 #'
 #' \url{https://github.com/flavjack/rticles}
 #'
-#' @export
 
 rticles <- function(path = NULL
                     , type = c("markdown", "bookdown")

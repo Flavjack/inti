@@ -1,21 +1,19 @@
 #' Multivariate Analysis
 #'
-#' Mutilvariate analysis for PCA and HCPC
+#' Multivariate analysis for PCA and HCPC
 #'
 #' @param data Field book data.
 #' @param fb_smr Summary of the variables in the fieldbook.
 #' @param summary_by Variables for group the analysis.
-#' @param groups groups for color in PCA
+#' @param groups Groups for color in PCA.
 #'
 #' @details
 #'
-#' Compute and plot information for multivarite analysis
+#' Compute and plot information for multivariate analysis.
 #'
 #' @return result and plots
 #'
-#' @author
-#'
-#' Flavio Lozano-Isla
+#' @author Flavio Lozano-Isla
 #'
 #' @import dplyr
 #' @importFrom FactoMineR HCPC PCA
@@ -55,7 +53,6 @@
 #'
 #' }
 #'
-#' @export
 
 fieldbook_mvr <- function(data
                           , fb_smr

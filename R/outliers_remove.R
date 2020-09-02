@@ -8,28 +8,24 @@
 #'
 #' @description
 #'
-#' Use the method M4 in Bernal-Vasquez (2016).
-#' Bonferroni–Holm test to judge residuals standardized by the re‑scaled MAD (BH‑MADR).
+#' Use the method M4 in Bernal-Vasquez (2016). Bonferroni–Holm test to judge
+#' residuals standardized by the re‑scaled MAD (BH‑MADR).
 #'
-#' @return list
+#' @return list. 1. Table with date without outliers. 2. The outliers in the
+#'   dataset.
 #'
-#' 1. Table with date without outliers
-#'
-#' 2. The outliers in the dataset
-#'
-#' @author
-#'
-#' Flavio Lozano-Isla
+#' @author Flavio Lozano-Isla
 #'
 #' @references
 #'
-#' Bernal-Vasquez, Angela-Maria, et al. “Outlier Detection Methods for Generalized Lattices: A Case Study on the Transition from ANOVA to REML.”
-#' Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016, pp. 787–804. Springer Link, doi:10.1007/s00122-016-2666-6.
+#' Bernal-Vasquez, Angela-Maria, et al. “Outlier Detection Methods for
+#' Generalized Lattices: A Case Study on the Transition from ANOVA to REML.”
+#' Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016, pp. 787–804.
+#' Springer Link, doi:10.1007/s00122-016-2666-6.
 #'
 #' @importFrom stats median pnorm residuals
 #' @importFrom multtest mt.rawp2adjp
 #'
-#' @export
 
 outliers_remove <- function(data
                             , trait
@@ -41,16 +37,20 @@ outliers_remove <- function(data
   formula <- as.formula(paste(trait, model, sep = "~"))
   model_fact <- all.vars(formula)
   model <- lme4::lmer(formula, data)
-
-  resid <- resid(model)
-  studresid.data <-  resid/sd(resid, na.rm = TRUE) # donde se esta usando??
+  
+  # re-scaled MAD
   resi <- cbind(residuals(model, type = "response"))
   medi <- median(resi, na.rm = TRUE)
   MAD <- median((abs(resi-medi)), na.rm = TRUE)
-  re_MAD <- MAD*1.4828
-
-  res_MAD <- resi/re_MAD # MAD standardized residuals
-  rawp.BHStud <- 2 * (1 - pnorm(abs(res_MAD))) # Calculate adjusted p-values
+  re_MAD <- MAD*1.4826
+  # end
+  
+  # MAD standardized residuals
+  res_MAD <- resi/re_MAD 
+  # end
+  
+  # Calculate adjusted p-values
+  rawp.BHStud <- 2 * (1 - pnorm(abs(res_MAD))) 
 
   newdt <- data %>%
     select({{model_fact}}) %>%
@@ -81,6 +81,6 @@ outliers_remove <- function(data
   list(
     data = nwdt
     , outliers = outliers
-  )
+    )
 
 }

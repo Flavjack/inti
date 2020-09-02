@@ -2,7 +2,7 @@
 % Please edit documentation in R/fieldbook_report.R
 \name{fieldbook_report}
 \alias{fieldbook_report}
-\title{Field book report}
+\title{Fieldbook report}
 \usage{
 fieldbook_report(
   data,
@@ -33,8 +33,8 @@ data frame
 Function to create a complete report of the fieldbook
 }
 \details{
-For compare the factors you should use ":". For example, to compare treatment1
-and treatment2: "treatment1:treatment2".
+For compare the factors you should use ":". For example, to compare
+treatment1 and treatment2: \code{treatment1:treatment2}.
 }
 \examples{
 

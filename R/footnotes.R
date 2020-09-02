@@ -2,33 +2,34 @@
 #'
 #' Include tables footnotes and symbols for kables in pandoc format
 #'
-#' @param table kable output in pandoc format.
-#' @param notes footnotes for the table.
-#' @param label label for start the footnote.
-#' @param notation notation for the symbols and footnotes (default = "number"). See details.
+#' @param table Kable output in pandoc format.
+#' @param notes Footnotes for the table.
+#' @param label Label for start the footnote.
+#' @param notation Notation for the footnotes (default = "alphabet"). See
+#'   details.
 #'
 #' @details
 #'
-#' You should use the pandoc format \code{kable(format = "pipe")}.
-#' You can add the footnote symbol using \code{{-}} in your table.
-#' \code{notation} could be use: "alphabet", "number", "symbol", "none".
+#' You should use the pandoc format \code{kable(format = "pipe")}. You can add
+#' the footnote symbol using \code{{\-}} in your table. \code{notation} could be
+#' use: "alphabet", "number", "symbol", "none".
 #'
 #' @return Table with footnotes for word and html documents
 #'
 #' @source
-#'
 #' \url{https://github.com/haozhu233/kableExtra/blob/master/R/add_footnote.R}
 #'
 #' @importFrom utils read.csv
 #' @importFrom stringr str_count str_extract str_extract_all
-#'
+#' 
 #' @export
+#' 
 
 footnotes <- function(table
                       , notes = NULL
                       , label = "Note:"
                       , notation = "alphabet"
-) {
+                      ) {
 
   notation <- match.arg(notation, c("alphabet", "number", "none"))
 

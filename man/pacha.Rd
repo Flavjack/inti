@@ -2,10 +2,10 @@
 % Please edit documentation in R/pacha.R
 \name{pacha}
 \alias{pacha}
-\title{pacha}
+\title{Pacha}
 \usage{
 pacha()
 }
 \description{
-Fertilization management app.
+Fertilization management app
 }

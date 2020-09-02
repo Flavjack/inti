@@ -7,7 +7,7 @@
 plot_diag(model)
 }
 \arguments{
-\item{model}{statistical model}
+\item{model}{Statistical model.}
 }
 \value{
 plots

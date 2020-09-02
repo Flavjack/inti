@@ -1,9 +1,10 @@
 #' yaku
 #'
-#' Irrigation management app to calculate the water requirements according to the dialy evapotranspiration.
+#' Irrigation management app to calculate the water requirements according to
+#' the dialy evapotranspiration.
 #'
 #' @importFrom shiny runApp
-#' @export
+#' 
 
 yaku <- function() {
     appDir <- system.file("yaku", package = "inti")

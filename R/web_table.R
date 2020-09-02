@@ -2,17 +2,17 @@
 #'
 #' Export tables with download, pasta and copy buttons
 #'
-#' @param data dataset
-#' @param digits digits number in the table exported
-#' @param caption Title for the table
-#' @param rnames row names
-#' @param buttons "excel", "copy" or "none". Default c("excel", "copy")
+#' @param data Dataset.
+#' @param digits Digits number in the table exported.
+#' @param caption Title for the table.
+#' @param rnames Row names.
+#' @param buttons Buttons: "excel", "copy" or "none". Default c("excel", "copy")
 #'
 #' @return table in markdown format for html documents
 #'
 #' @importFrom dplyr mutate_if
 #' @importFrom DT datatable
-#' @export
+#' 
 
 web_table <- function(data, caption = NULL, digits = 3, rnames = FALSE, buttons = NULL){
 

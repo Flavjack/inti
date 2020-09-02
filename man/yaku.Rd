@@ -7,5 +7,6 @@
 yaku()
 }
 \description{
-Irrigation management app to calculate the water requirements according to the dialy evapotranspiration.
+Irrigation management app to calculate the water requirements according to
+the dialy evapotranspiration.
 }

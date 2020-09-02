@@ -1,26 +1,26 @@
-#' Field book reshape
+#' Fieldbook reshape
 #'
 #' Function to reshape fieldbook according a separation character
 #'
 #' @param data Field book raw data.
-#' @param last_factor the last factor in your field book.
-#' @param sep character that separates the last value.
+#' @param last_factor The last factor in your field book.
+#' @param sep Character that separates the last value.
 #' @param new_colname The new name for the column created.
-#' @param from_var the first variable in case you want to exclude several variables.
-#' @param to_var the last variable in case you want to exclude several variables.
-#' @param exc_factors factor to exclude during the reshape.
+#' @param from_var The first variable in case you want to exclude several.
+#'   variables.
+#' @param to_var The last variable in case you want to exclude several
+#'   variables.
+#' @param exc_factors Factor to exclude during the reshape.
 #'
 #' @details
 #'
-#' If you variable name is variable_evaluation_rep.
-#' The reshape function will help to create the column "rep"
-#' and the new variable name will be variable_evaluation
+#' If you variable name is \code{variable_evaluation_rep}. The reshape function
+#' will help to create the column \code{rep} and the new variable name will be
+#' \code{variable_evaluation}.
 #'
 #' @return data frame
 #'
-#' @author
-#'
-#' Flavio Lozano-Isla
+#' @author Flavio Lozano-Isla
 #'
 #' @importFrom dplyr select
 #' @importFrom tidyr pivot_wider pivot_longer
@@ -59,7 +59,6 @@
 #'
 #' }
 #'
-#' @export
 
 fieldbook_reshape <- function(data
                               , last_factor

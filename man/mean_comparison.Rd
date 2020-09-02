@@ -22,7 +22,8 @@ mean_comparison(
 
 \item{variable}{Model used for the experimental design.}
 
-\item{model_facts}{Comparison test (default = "SNK"). Others: "TUKEY" & "DUNCAN".}
+\item{model_facts}{Comparison test (default = "SNK"). Others: "TUKEY" &
+"DUNCAN".}
 
 \item{comp_facts}{Significance level for the analysis (default = 0.05).}
 
@@ -30,7 +31,7 @@ mean_comparison(
 
 \item{sig_level}{Significance level for the analysis (default = 0.05).}
 
-\item{graph_opts}{Include option in the table for graphs (default = FALSE)}
+\item{graph_opts}{Include option in the table for graphs (default = FALSE).}
 }
 \value{
 data frame
@@ -39,8 +40,8 @@ data frame
 Function to compare treatment from lm or aov
 }
 \details{
-For compare the factors you should use ":". For example, to compare treatment1
-and treatment2: "treatment1:treatment2".
+For compare the factors you should use ":". For example, to compare
+treatment1 and treatment2: \code{treatment1:treatment2}.
 }
 \examples{
 

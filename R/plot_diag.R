@@ -2,7 +2,7 @@
 #'
 #' Function to plot the diagnostic of models
 #'
-#' @param model statistical model
+#' @param model Statistical model.
 #'
 #' @return plots
 #'

@@ -13,15 +13,16 @@ include_table(
 )
 }
 \arguments{
-\item{data}{data frame.}
+\item{data}{Data frame.}
 
-\item{caption}{table caption (default = NULL). See details.}
+\item{caption}{Table caption (default = NULL). See details.}
 
-\item{notes}{footnotes for the table (default = NULL). See details.}
+\item{notes}{Footnotes for the table (default = NULL). See details.}
 
-\item{label}{label for start the footnote (default = "Note:").}
+\item{label}{Label for start the footnote (default = "Note:").}
 
-\item{notation}{notation for the symbols and footnotes (default = "alphabet"). See details.}
+\item{notation}{Notation for the symbols and footnotes (default =
+"alphabet"). See details.}
 }
 \value{
 Table with caption and footnotes
@@ -30,10 +31,11 @@ Table with caption and footnotes
 Include tables with notes and titles for word and html documents
 }
 \details{
-For \code{caption} and \code{notes} you can include {caption} and {notes} in the last rows of your data frame.
-Where the information will be extracted automatically for include in the formatted table.
-You can add the footnote symbol using \code{{-}} in your table.
-\code{notation} could be use: "alphabet", "number", "none".
+For \code{caption} and \code{notes} you can include {caption} and {notes} in
+the last rows of your data frame. Where the information will be extracted
+automatically for include in the formatted table. You can add the footnote
+symbol using \code{{\-}} in your table. \code{notation} could be use:
+"alphabet", "number", "none".
 }
 \examples{
 

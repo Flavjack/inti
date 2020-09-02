@@ -10,13 +10,14 @@
 footnotes(table, notes = NULL, label = "Note:", notation = "alphabet")
 }
 \arguments{
-\item{table}{kable output in pandoc format.}
+\item{table}{Kable output in pandoc format.}
 
-\item{notes}{footnotes for the table.}
+\item{notes}{Footnotes for the table.}
 
-\item{label}{label for start the footnote.}
+\item{label}{Label for start the footnote.}
 
-\item{notation}{notation for the symbols and footnotes (default = "number"). See details.}
+\item{notation}{Notation for the footnotes (default = "alphabet"). See
+details.}
 }
 \value{
 Table with footnotes for word and html documents
@@ -25,7 +26,7 @@ Table with footnotes for word and html documents
 Include tables footnotes and symbols for kables in pandoc format
 }
 \details{
-You should use the pandoc format \code{kable(format = "pipe")}.
-You can add the footnote symbol using \code{{-}} in your table.
-\code{notation} could be use: "alphabet", "number", "symbol", "none".
+You should use the pandoc format \code{kable(format = "pipe")}. You can add
+the footnote symbol using \code{{\-}} in your table. \code{notation} could be
+use: "alphabet", "number", "symbol", "none".
 }

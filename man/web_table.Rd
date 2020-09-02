@@ -7,15 +7,15 @@
 web_table(data, caption = NULL, digits = 3, rnames = FALSE, buttons = NULL)
 }
 \arguments{
-\item{data}{dataset}
+\item{data}{Dataset.}
 
-\item{caption}{Title for the table}
+\item{caption}{Title for the table.}
 
-\item{digits}{digits number in the table exported}
+\item{digits}{Digits number in the table exported.}
 
-\item{rnames}{row names}
+\item{rnames}{Row names.}
 
-\item{buttons}{"excel", "copy" or "none". Default c("excel", "copy")}
+\item{buttons}{Buttons: "excel", "copy" or "none". Default c("excel", "copy")}
 }
 \value{
 table in markdown format for html documents

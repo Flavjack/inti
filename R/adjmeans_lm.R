@@ -1,6 +1,6 @@
 #' Adjusted means using linear models
 #'
-#' Function to calculate the adjusted means using Linear models (lm or aov).
+#' Function to calculate the adjusted means using Linear models (lm or aov)
 #'
 #' @param data Experimental design data frame with the factors and traits.
 #' @param trait Name of the trait.
@@ -9,21 +9,25 @@
 #' @param test Test comparison (default = "SNK"). Others: "TUKEY" & "DUNCAN".
 #' @param anova ANOVA table (default = FALSE).
 #' @param tab_vars Specific the variables in the summary table (default = NULL).
-#' @param sep Separator between the variables when use \code{tab_vars}. See details.
+#' @param sep Separator between the variables when use \code{tab_vars}. See
+#'   details.
 #' @param digits Number of digits in the table (default = 3).
-#' @param plot_treat Treat of comparison in dot plot (default = NULL). See example.
-#' @param plot_groups Group of comparison in dot plot (default = NULL). See example.
+#' @param plot_treat Treat of comparison in dot plot (default = NULL). See
+#'   example.
+#' @param plot_groups Group of comparison in dot plot (default = NULL). See
+#'   example.
 #' @param plot_diag Show diagnostic plots (default = FALSE).
 #'
 #' @details
 #'
-#' Using \code{tab_vars} select the variables shown the adjusted mean table with the \code{sep}.
+#' Using \code{tab_vars} select the variables shown the adjusted mean table with
+#' the \code{sep}. Mean comparison at p < 0.05.
 #'
-#' @return A list with two objects
+#' @return A list with two objects:
 #'
-#'  1. Summary statistics
+#'   1. Summary statistics.
 #'
-#'  2. Adjusted means with the mean comparisons under HSD test (p<0.05)
+#'   2. Means with the mean comparisons test.
 #'
 #' @author Flavio Lozano Isla
 #'
@@ -33,8 +37,7 @@
 #' @importFrom stats aov
 #' @importFrom tidyr unite
 #' @importFrom graphics plot
-#'
-#' @export
+#' 
 
 adjmeans_lm <- function(data
                      , trait

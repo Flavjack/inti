@@ -5,22 +5,21 @@
 #' @param data Field book data.
 #' @param fb_smr Summary of the variables in the fieldbook.
 #' @param variable Model used for the experimental design.
-#' @param model_facts Comparison test (default = "SNK"). Others: "TUKEY" & "DUNCAN".
+#' @param model_facts Comparison test (default = "SNK"). Others: "TUKEY" &
+#'   "DUNCAN".
 #' @param comp_facts Significance level for the analysis (default = 0.05).
 #' @param test_comp Significance level for the analysis (default = 0.05).
 #' @param sig_level Significance level for the analysis (default = 0.05).
-#' @param graph_opts Include option in the table for graphs (default = FALSE)
+#' @param graph_opts Include option in the table for graphs (default = FALSE).
 #'
 #' @details
 #'
-#' For compare the factors you should use ":". For example, to compare treatment1
-#' and treatment2: "treatment1:treatment2".
+#' For compare the factors you should use ":". For example, to compare
+#' treatment1 and treatment2: \code{treatment1:treatment2}.
 #'
 #' @return data frame
 #'
-#' @author
-#'
-#' Flavio Lozano-Isla
+#' @author Flavio Lozano-Isla
 #'
 #' @import dplyr
 #' @importFrom tibble enframe deframe
@@ -58,7 +57,6 @@
 #'
 #' }
 #'
-#' @export
 
 mean_comparison <- function(data
                             , fb_smr

@@ -15,28 +15,25 @@ metamorphosis(fieldbook, dictionary, from, to, index, colnames)
 
 \item{to}{Column of the dictionary with the new names.}
 
-\item{index}{Column of the dictionary with the type and level of the variables.}
+\item{index}{Column of the dictionary with the type and level of the
+variables.}
 
 \item{colnames}{Character vector with the name of the columns.}
 }
 \value{
-List with two objects.
-
-1. New data frame.
-
-2. Dictionary.
+List with two objects. 1. New data frame. 2. Dictionary.
 }
 \description{
-Transform entire fieldbook according to data a dictionary.
+Transform entire fieldbook according to data a dictionary
 }
 \details{
 The function require at least three columns.
 
-1. Original names (\code{from}).
+  1. Original names (\code{from}).
 
-2. New names (\code{to}).
+  2. New names (\code{to}).
 
-3. Variable type (\code{index}).
+  3. Variable type (\code{index}).
 }
 \examples{
 

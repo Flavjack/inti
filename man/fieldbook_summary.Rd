@@ -2,7 +2,7 @@
 % Please edit documentation in R/fieldbook_summary.R
 \name{fieldbook_summary}
 \alias{fieldbook_summary}
-\title{Field book summary}
+\title{Fieldbook summary}
 \usage{
 fieldbook_summary(
   data,
@@ -22,7 +22,8 @@ fieldbook_summary(
 
 \item{comp_facts}{Factors to compare. See details.}
 
-\item{test_comp}{Comparison test (default = "SNK"). Others: "TUKEY" & "DUNCAN".}
+\item{test_comp}{Comparison test (default = "SNK"). Others: "TUKEY" &
+"DUNCAN".}
 
 \item{sig_level}{Significance level for the analysis (default = 0.05).}
 }
@@ -33,8 +34,8 @@ data frame
 Function to deploy a summary of the variables
 }
 \details{
-For compare the factors you should use ":". For example, to compare treatment1
-and treatment2: "treatment1:treatment2".
+For compare the factors you should use ":". For example, to compare
+treatment1 and treatment2: \code{treatment1:treatment2}.
 }
 \examples{
 

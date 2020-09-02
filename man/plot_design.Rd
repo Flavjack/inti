@@ -15,7 +15,8 @@ plot_design(
 )
 }
 \arguments{
-\item{data}{Experimental design data frame with the factors and level. See examples.}
+\item{data}{Experimental design data frame with the factors and level. See
+examples.}
 
 \item{factor}{Vector with the name of the columns with the factors.}
 
@@ -23,21 +24,21 @@ plot_design(
 
 \item{fill}{Value for fill the experimental units (default = "plots").}
 
-\item{xlab}{Title for x axis}
+\item{xlab}{Title for x axis.}
 
-\item{ylab}{Title for y axis}
+\item{ylab}{Title for y axis.}
 
-\item{glab}{Title for group axis}
+\item{glab}{Title for group axis.}
 }
 \value{
 plot
 }
 \description{
-Function to plot the fieldbook design
+Plot fieldbook sketch designs based in experimental design
 }
 \details{
 The function allows to plot the experimental design according the
-field experiment design.
+  field experiment design.
 }
 \examples{
 

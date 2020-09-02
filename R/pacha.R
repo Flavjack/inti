@@ -1,9 +1,9 @@
-#' pacha
+#' Pacha
 #'
-#' Fertilization management app.
+#' Fertilization management app
 #'
 #' @importFrom shiny runApp
-#' @export
+#' 
 
 pacha <- function() {
     appDir <- system.file("pacha", package = "inti")
@@ -14,6 +14,4 @@ pacha <- function() {
 
     shiny::runApp(appDir, display.mode = "normal", launch.browser = TRUE)
 }
-
-
 
