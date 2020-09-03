@@ -16,6 +16,7 @@ Invoke RStudio addin to analyze and graph experimental design data
 Yupana: data analysis and graphics for experimental designs.
 }
 \examples{
+
 \dontrun{
 
  inti::yupana()

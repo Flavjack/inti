@@ -31,6 +31,8 @@
 #' @importFrom tibble tibble
 #' @importFrom utils tail
 #' @importFrom purrr discard
+#' 
+#' @export
 #'
 #' @examples
 #'

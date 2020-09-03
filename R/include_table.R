@@ -20,6 +20,8 @@
 #' @return Table with caption and footnotes
 #'
 #' @author Flavio Lozano-Isla
+#' 
+#' @export
 #'
 #' @examples
 #'

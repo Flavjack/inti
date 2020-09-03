@@ -5,6 +5,8 @@
 #'
 #' @importFrom shiny runApp
 #' 
+#' @export
+#' 
 
 yaku <- function() {
     appDir <- system.file("yaku", package = "inti")

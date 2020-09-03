@@ -91,6 +91,8 @@
 #' @importFrom graphics abline par
 #' @importFrom stats fitted var as.formula
 #' @importFrom ggplot2 ggplot aes geom_point theme_minimal
+#' 
+#' @export
 #'
 #' @source
 #'

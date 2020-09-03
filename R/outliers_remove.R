@@ -25,6 +25,8 @@
 #'
 #' @importFrom stats median pnorm residuals
 #' @importFrom multtest mt.rawp2adjp
+#' 
+#' @export
 #'
 
 outliers_remove <- function(data

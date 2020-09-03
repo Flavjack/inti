@@ -24,6 +24,8 @@
 #' @source
 #'
 #' \url{https://github.com/flavjack/rticles}
+#' 
+#' @export
 #'
 
 rticles <- function(path = NULL

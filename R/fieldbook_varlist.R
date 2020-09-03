@@ -18,6 +18,8 @@
 #'
 #' @import dplyr
 #' @importFrom tidyr pivot_wider
+#' 
+#' @export
 #'
 #' @examples
 #'

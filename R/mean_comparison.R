@@ -25,6 +25,8 @@
 #' @importFrom tibble enframe deframe
 #' @importFrom agricolae SNK.test HSD.test duncan.test
 #' @importFrom grDevices gray.colors
+#' 
+#' @export
 #'
 #' @examples
 #'

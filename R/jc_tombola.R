@@ -21,6 +21,8 @@
 #' @return data frame with the schedule for the JC
 #'
 #' @author Flavio Lozano-Isla
+#' 
+#' @export
 #'
 #' @examples
 #'

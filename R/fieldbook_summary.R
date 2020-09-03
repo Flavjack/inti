@@ -21,6 +21,8 @@
 #'
 #' @import dplyr
 #' @import tidyr
+#' 
+#' @export
 #'
 #' @examples
 #'

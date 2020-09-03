@@ -18,6 +18,8 @@
 #' @import dplyr
 #' @importFrom FactoMineR HCPC PCA
 #' @importFrom tibble column_to_rownames
+#' 
+#' @export
 #'
 #' @examples
 #'

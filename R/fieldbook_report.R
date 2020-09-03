@@ -20,6 +20,8 @@
 #'
 #' @import dplyr
 #' @importFrom stats rstandard
+#' 
+#' @export
 #'
 #' @examples
 #'

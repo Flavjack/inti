@@ -4,6 +4,8 @@
 #'
 #' @importFrom shiny runApp
 #' 
+#' @export
+#' 
 
 pacha <- function() {
     appDir <- system.file("pacha", package = "inti")

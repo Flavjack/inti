@@ -7,8 +7,13 @@
 #' Yupana: data analysis and graphics for experimental designs.
 #'
 #' @return Shiny app
+#' 
+#' @importFrom shiny runApp
+#' 
+#' @export
 #'
 #' @examples
+#' 
 #' \dontrun{
 #'
 #'  inti::yupana()
@@ -16,8 +21,6 @@
 #' }
 #'
 #' @author Flavio Lozano-Isla
-#' 
-#' @importFrom shiny runApp
 #' 
 
 yupana <- function() {

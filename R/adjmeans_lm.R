@@ -38,6 +38,8 @@
 #' @importFrom tidyr unite
 #' @importFrom graphics plot
 #' 
+#' @export
+#' 
 
 adjmeans_lm <- function(data
                      , trait

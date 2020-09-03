@@ -44,6 +44,8 @@
 #' @importFrom dplyr mutate
 #' @importFrom tibble tribble deframe
 #' @importFrom stringr word
+#' 
+#' @export
 #'
 #' @examples
 #'

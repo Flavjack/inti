@@ -27,6 +27,8 @@
 #' @return Figure with caption and notes
 #'
 #' @author Flavio Lozano-Isla
+#' 
+#' @export
 #'   
 
 include_figure <- function(data = NULL

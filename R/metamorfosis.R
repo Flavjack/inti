@@ -30,6 +30,9 @@
 #' @importFrom tibble as_tibble
 #' @importFrom graphics hist
 #' @importFrom stats qqline qqnorm resid sd vcov
+#' 
+#' @export
+#' 
 #' @examples
 #'
 #' \dontrun{

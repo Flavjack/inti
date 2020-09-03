@@ -8,6 +8,8 @@
 #'
 #' @import dplyr
 #' @importFrom stats rstandard
+#' 
+#' @export
 #'
 #' @export
 
