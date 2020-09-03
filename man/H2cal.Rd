@@ -114,7 +114,7 @@ library(agridat)
 }
 \references{
 Schmidt, P., J. Hartung, J. Bennewitz, and H.P. Piepho. 2019. Heritability in
-Plant Breeding on a Genotype Difference Basis. Genetics 212(4): 991–1008.
+Plant Breeding on a Genotype Difference Basis. Genetics 212(4).
 
 Schmidt, P., J. Hartung, J. Rath, and H.P. Piepho. 2019. Estimating
 Broad Sense Heritability with Unbalanced Data from Agricultural Cultivar
@@ -122,7 +122,7 @@ Trials. Crop Science 59(2).
 
 Bernal Vasquez, Angela Maria, et al. “Outlier Detection Methods for
 Generalized Lattices: A Case Study on the Transition from ANOVA to REML.”
-Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016, pp. 787–804.
+Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016.
 }
 \author{
 Maria Belen Kistner

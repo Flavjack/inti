@@ -19,7 +19,7 @@ list. 1. Table with date without outliers. 2. The outliers in the
 }
 \description{
 Use the method M4 in Bernal Vasquez (2016). Bonferroni Holm test to judge
-residuals standardized by the re‑scaled MAD (BH MADR).
+residuals standardized by the re scaled MAD (BH MADR).
 }
 \details{
 Function to remove outliers in MET experiments
@@ -27,5 +27,5 @@ Function to remove outliers in MET experiments
 \references{
 Bernal Vasquez, Angela Maria, et al. “Outlier Detection Methods for
 Generalized Lattices: A Case Study on the Transition from ANOVA to REML.”
-Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016, pp. 787–804.
+Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016.
 }

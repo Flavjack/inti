@@ -3,9 +3,6 @@
 \name{fieldbook_design}
 \alias{fieldbook_design}
 \title{Field book experimental designs}
-\source{
-\url{https://tarwi.lamolina.edu.pe/~fmendiburu/}
-}
 \usage{
 fieldbook_design(
   data,

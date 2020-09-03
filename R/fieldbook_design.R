@@ -21,8 +21,6 @@
 #'
 #' @return A list with the fieldbook design
 #'
-#' @source \url{https://tarwi.lamolina.edu.pe/~fmendiburu/}
-#'
 #' @import dplyr
 #' @importFrom purrr pluck as_vector
 #' @importFrom stringr str_detect

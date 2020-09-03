@@ -22,7 +22,7 @@
 #'
 #' @importFrom dplyr select
 #' @importFrom tidyr pivot_wider pivot_longer
-#' 
+#'
 #' @export
 #'
 #' @examples
@@ -58,7 +58,7 @@
 #'                           )
 #'
 #' }
-#'
+#' 
 
 fieldbook_reshape <- function(data
                               , last_factor
