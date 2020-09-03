@@ -3,7 +3,7 @@ Type: Package
 Version: 0.1.0
 Title: Tools and Statistical Procedures in Plant Science
 Description: A collection of different applications and procedures used in plant breeding and experimental designs.
-Date: 2020-08-31
+Date: 2020-09-03
 Authors@R: person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com",
                   role = c("aut", "cre"))
 URL: https://github.com/flavjack/inti/

@@ -22,8 +22,6 @@
 #'
 #' @return List with two objects. 1. New data frame. 2. Dictionary.
 #'
-#' @author Flavio Lozano-Isla
-#'
 #' @importFrom dplyr mutate_all starts_with sym vars filter rename_at mutate_at
 #' @importFrom purrr as_vector
 #' @importFrom tidyr drop_na

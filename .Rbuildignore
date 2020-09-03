@@ -13,3 +13,6 @@
 ^inst/pacha$
 ^inst/yaku$
 ^CRAN-RELEASE$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

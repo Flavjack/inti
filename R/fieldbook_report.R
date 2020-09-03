@@ -16,8 +16,6 @@
 #'
 #' @return data frame
 #'
-#' @author Flavio Lozano-Isla
-#'
 #' @import dplyr
 #' @importFrom stats rstandard
 #' 

@@ -20,8 +20,6 @@
 #'
 #' @return data frame
 #'
-#' @author Flavio Lozano-Isla
-#'
 #' @importFrom dplyr select
 #' @importFrom tidyr pivot_wider pivot_longer
 #' 

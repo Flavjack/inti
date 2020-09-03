@@ -77,6 +77,3 @@ fbrs <- fieldbook_reshape(data = data
 }
 
 }
-\author{
-Flavio Lozano-Isla
-}

@@ -6,7 +6,7 @@
 #' @param last_factor The last factor in your fieldbook.
 #' @param model_facts Model used for the experimental design.
 #' @param comp_facts Factors to compare. See details.
-#' @param test_comp Comparison test (default = "SNK"). Others: "TUKEY" &
+#' @param test_comp Comparison test (default = "SNK"). Others: "TUKEY",
 #'   "DUNCAN".
 #' @param sig_level Significance level for the analysis (default = 0.05).
 #'
@@ -17,11 +17,9 @@
 #'
 #' @return data frame
 #'
-#' @author Flavio Lozano-Isla
-#'
 #' @import dplyr
 #' @import tidyr
-#' 
+#'
 #' @export
 #'
 #' @examples

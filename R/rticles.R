@@ -17,8 +17,6 @@
 #'
 #' @return folder and files
 #'
-#' @author Flavio Lozano-Isla
-#'
 #' @importFrom utils download.file
 #'
 #' @source

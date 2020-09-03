@@ -68,6 +68,3 @@ fb_new <- mtm$fieldbook
 }
 
 }
-\author{
-Flavio Lozano-Isla
-}

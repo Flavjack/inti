@@ -17,8 +17,6 @@
 #'
 #' }
 #'
-#' @author Flavio Lozano-Isla
-#'
 #' @importFrom shiny runApp dialogViewer runGadget
 #' 
 #' @export

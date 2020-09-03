@@ -25,8 +25,6 @@
 #' If you don't use a a data frame you provide the information manually.
 #'
 #' @return Figure with caption and notes
-#'
-#' @author Flavio Lozano-Isla
 #' 
 #' @export
 #'   

@@ -46,6 +46,3 @@ The data frame should contain 4 columns specified in \code{table}:
 
 If you don't use a a data frame you provide the information manually.
 }
-\author{
-Flavio Lozano-Isla
-}

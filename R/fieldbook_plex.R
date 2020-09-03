@@ -37,10 +37,6 @@
 #'   \enumerate{ \item info \item variables \item design \item logbook \item
 #'   timetable \item budget }
 #'
-#' @author
-#'
-#' Flavio Lozano-Isla
-#'
 #' @importFrom dplyr mutate
 #' @importFrom tibble tribble deframe
 #' @importFrom stringr word

@@ -14,8 +14,6 @@
 #'  inti::tarpuy()
 #'
 #' }
-#'
-#' @author Flavio Lozano-Isla
 #' 
 #' @importFrom shiny runApp dialogViewer runGadget
 #' 

@@ -11,7 +11,6 @@
 #' @return table in markdown format for html documents
 #'
 #' @importFrom dplyr mutate_if
-#' 
 #' @importFrom DT datatable
 #' 
 #' @export

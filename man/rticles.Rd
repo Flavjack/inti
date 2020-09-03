@@ -38,6 +38,3 @@ After create the project Open the ".Rprj" file. Compile the document and you
 will see the example. If you already have a folder and select such as
 "bookdown" is necessary change the main (.rmd) file to index.rmd
 }
-\author{
-Flavio Lozano-Isla
-}

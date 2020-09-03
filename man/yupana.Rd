@@ -24,6 +24,3 @@ Yupana: data analysis and graphics for experimental designs.
 }
 
 }
-\author{
-Flavio Lozano-Isla
-}

@@ -61,6 +61,3 @@ Function to calculate the adjusted means using Linear models (lm or aov)
 Using \code{tab_vars} select the variables shown the adjusted mean table with
 the \code{sep}. Mean comparison at p < 0.05.
 }
-\author{
-Flavio Lozano Isla
-}

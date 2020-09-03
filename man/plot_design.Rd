@@ -73,6 +73,3 @@ plot_design(data
 }
 
 }
-\author{
-Flavio Lozano-Isla
-}

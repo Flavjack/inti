@@ -16,8 +16,6 @@
 #'
 #' @return plot
 #'
-#' @author Flavio Lozano-Isla
-#'
 #' @import dplyr
 #' @importFrom purrr pluck as_vector
 #' @importFrom stringr str_detect

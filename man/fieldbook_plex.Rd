@@ -118,6 +118,3 @@ data \%>\% sheet_write(ss = gs, sheet = "test")
 }
 
 }
-\author{
-Flavio Lozano-Isla
-}

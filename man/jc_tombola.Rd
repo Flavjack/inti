@@ -78,6 +78,3 @@ jc \%>\% jc_tombola(data = .
 }
 
 }
-\author{
-Flavio Lozano-Isla
-}

@@ -23,6 +23,3 @@ Tarpuy allow to create experimental designs under an interactive app.
 }
 
 }
-\author{
-Flavio Lozano-Isla
-}

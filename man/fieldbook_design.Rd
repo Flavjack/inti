@@ -20,7 +20,7 @@ fieldbook_design(
 \item{data}{Experimental design data frame with the factors and level. See
 examples.}
 
-\item{n_factors}{Number of factor in the experiment  (default = 1). See
+\item{n_factors}{Number of factor in the experiment(default = 1). See
 details.}
 
 \item{type}{Type of experimental arrange  (default = "crd"). See details.}
@@ -43,8 +43,8 @@ The function allows to include the arguments in the sheet that have
   the information of the design. You should include 2 columns in the sheet:
   \code{{arguments}} and \code{{values}}. See examples. The information will
   be extracted automatically and deploy the design. \code{n_factors} = 1:
-  crd, rcbd, lsd, lattice. \code{n_factors} = 2 (factorial): split-crd,
-  split-rcbd \code{n_factors} >= 2 (factorial): crd, rcbd, lsd.
+  crd, rcbd, lsd, lattice. \code{n_factors} = 2 (factorial): split_crd,
+  split_rcbd \code{n_factors} >= 2 (factorial): crd, rcbd, lsd.
 }
 \examples{
 
@@ -66,7 +66,4 @@ data \%>\% inti::fieldbook_design()
 
 }
 
-}
-\author{
-Flavio Lozano-Isla
 }

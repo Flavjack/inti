@@ -29,15 +29,13 @@
 #'
 #'   2. Means with the mean comparisons test.
 #'
-#' @author Flavio Lozano Isla
-#'
 #' @import ggplot2
 #' @import agricolae
 #' @import dplyr
 #' @importFrom stats aov
 #' @importFrom tidyr unite
 #' @importFrom graphics plot
-#' 
+#'
 #' @export
 #' 
 

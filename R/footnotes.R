@@ -11,17 +11,14 @@
 #' @details
 #'
 #' You should use the pandoc format \code{kable(format = "pipe")}. You can add
-#' the footnote symbol using \code{{\-}} in your table. \code{notation} could be
-#' use: "alphabet", "number", "symbol", "none".
+#' the footnote symbol using \code{{hypen}} in your table. \code{notation} could
+#' be use: "alphabet", "number", "symbol", "none".
 #'
 #' @return Table with footnotes for word and html documents
 #'
-#' @source
-#' \url{https://github.com/haozhu233/kableExtra/blob/master/R/add_footnote.R}
-#'
 #' @importFrom utils read.csv
 #' @importFrom stringr str_count str_extract str_extract_all
-#' 
+#'
 #' @export
 #' 
 

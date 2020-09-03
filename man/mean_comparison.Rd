@@ -22,7 +22,7 @@ mean_comparison(
 
 \item{variable}{Model used for the experimental design.}
 
-\item{model_facts}{Comparison test (default = "SNK"). Others: "TUKEY" &
+\item{model_facts}{Comparison test (default = "SNK"). Others: "TUKEY",
 "DUNCAN".}
 
 \item{comp_facts}{Significance level for the analysis (default = 0.05).}
@@ -74,7 +74,4 @@ table \%>\% sheet_write(ss = gs, sheet = "plot")
 
 }
 
-}
-\author{
-Flavio Lozano-Isla
 }

@@ -14,12 +14,10 @@
 #' For \code{caption} and \code{notes} you can include {caption} and {notes} in
 #' the last rows of your data frame. Where the information will be extracted
 #' automatically for include in the formatted table. You can add the footnote
-#' symbol using \code{{\-}} in your table. \code{notation} could be use:
+#' symbol using \code{{hypen}} in your table. \code{notation} could be use:
 #' "alphabet", "number", "none".
 #'
 #' @return Table with caption and footnotes
-#'
-#' @author Flavio Lozano-Isla
 #' 
 #' @export
 #'

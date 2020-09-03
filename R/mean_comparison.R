@@ -5,7 +5,7 @@
 #' @param data Field book data.
 #' @param fb_smr Summary of the variables in the fieldbook.
 #' @param variable Model used for the experimental design.
-#' @param model_facts Comparison test (default = "SNK"). Others: "TUKEY" &
+#' @param model_facts Comparison test (default = "SNK"). Others: "TUKEY",
 #'   "DUNCAN".
 #' @param comp_facts Significance level for the analysis (default = 0.05).
 #' @param test_comp Significance level for the analysis (default = 0.05).
@@ -19,13 +19,11 @@
 #'
 #' @return data frame
 #'
-#' @author Flavio Lozano-Isla
-#'
 #' @import dplyr
 #' @importFrom tibble enframe deframe
 #' @importFrom agricolae SNK.test HSD.test duncan.test
 #' @importFrom grDevices gray.colors
-#' 
+#'
 #' @export
 #'
 #' @examples
@@ -58,7 +56,7 @@
 #' table %>% sheet_write(ss = gs, sheet = "plot")
 #'
 #' }
-#'
+#' 
 
 mean_comparison <- function(data
                             , fb_smr

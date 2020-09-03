@@ -87,6 +87,3 @@ plot_smr(data
 }
 
 }
-\author{
-Flavio Lozano-Isla
-}

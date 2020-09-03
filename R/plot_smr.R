@@ -24,8 +24,6 @@
 #'
 #' @return plot
 #'
-#' @author Flavio Lozano-Isla
-#'
 #' @import dplyr
 #' @importFrom grDevices colorRampPalette colors
 #'

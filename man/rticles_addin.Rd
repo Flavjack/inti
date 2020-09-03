@@ -25,6 +25,3 @@ Create all the files in the present work directory. It is recommended use
 }
 
 }
-\author{
-Flavio Lozano-Isla
-}

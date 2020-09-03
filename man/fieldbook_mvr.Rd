@@ -59,6 +59,3 @@ FactoMineR::plot.HCPC(mvr$hcpc)
 }
 
 }
-\author{
-Flavio Lozano-Isla
-}

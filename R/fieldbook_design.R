@@ -4,7 +4,7 @@
 #'
 #' @param data Experimental design data frame with the factors and level. See
 #'   examples.
-#' @param n_factors Number of factor in the experiment  (default = 1). See
+#' @param n_factors Number of factor in the experiment(default = 1). See
 #'   details.
 #' @param type Type of experimental arrange  (default = "crd"). See details.
 #' @param rep  Number of replications in the experiment (default = 3).
@@ -16,12 +16,10 @@
 #'   the information of the design. You should include 2 columns in the sheet:
 #'   \code{{arguments}} and \code{{values}}. See examples. The information will
 #'   be extracted automatically and deploy the design. \code{n_factors} = 1:
-#'   crd, rcbd, lsd, lattice. \code{n_factors} = 2 (factorial): split-crd,
-#'   split-rcbd \code{n_factors} >= 2 (factorial): crd, rcbd, lsd.
+#'   crd, rcbd, lsd, lattice. \code{n_factors} = 2 (factorial): split_crd,
+#'   split_rcbd \code{n_factors} >= 2 (factorial): crd, rcbd, lsd.
 #'
 #' @return A list with the fieldbook design
-#'
-#' @author Flavio Lozano-Isla
 #'
 #' @source \url{https://tarwi.lamolina.edu.pe/~fmendiburu/}
 #'

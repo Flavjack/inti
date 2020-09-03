@@ -19,8 +19,6 @@
 #' are: active or spectator. Only the active members will enter in the schedule.
 #'
 #' @return data frame with the schedule for the JC
-#'
-#' @author Flavio Lozano-Isla
 #' 
 #' @export
 #'

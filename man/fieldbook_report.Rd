@@ -66,6 +66,3 @@ report
 }
 
 }
-\author{
-Flavio Lozano-Isla
-}

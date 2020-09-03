@@ -19,8 +19,6 @@
 #'  inti::yupana()
 #'
 #' }
-#'
-#' @author Flavio Lozano-Isla
 #' 
 
 yupana <- function() {

@@ -8,23 +8,21 @@
 #'
 #' @description
 #'
-#' Use the method M4 in Bernal-Vasquez (2016). Bonferroni–Holm test to judge
-#' residuals standardized by the re‑scaled MAD (BH‑MADR).
+#' Use the method M4 in Bernal Vasquez (2016). Bonferroni Holm test to judge
+#' residuals standardized by the re‑scaled MAD (BH MADR).
 #'
 #' @return list. 1. Table with date without outliers. 2. The outliers in the
 #'   dataset.
 #'
-#' @author Flavio Lozano-Isla
-#'
 #' @references
 #'
-#' Bernal-Vasquez, Angela-Maria, et al. “Outlier Detection Methods for
+#' Bernal Vasquez, Angela Maria, et al. “Outlier Detection Methods for
 #' Generalized Lattices: A Case Study on the Transition from ANOVA to REML.”
 #' Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016, pp. 787–804.
-#' Springer Link, doi:10.1007/s00122-016-2666-6.
 #'
 #' @importFrom stats median pnorm residuals
 #' @importFrom multtest mt.rawp2adjp
+#' @importFrom lme4 lmer
 #' 
 #' @export
 #'

@@ -53,6 +53,3 @@ fieldbook
 }
 
 }
-\author{
-Flavio Lozano-Isla
-}

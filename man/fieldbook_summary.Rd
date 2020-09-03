@@ -22,7 +22,7 @@ fieldbook_summary(
 
 \item{comp_facts}{Factors to compare. See details.}
 
-\item{test_comp}{Comparison test (default = "SNK"). Others: "TUKEY" &
+\item{test_comp}{Comparison test (default = "SNK"). Others: "TUKEY",
 "DUNCAN".}
 
 \item{sig_level}{Significance level for the analysis (default = 0.05).}
@@ -64,7 +64,4 @@ smrfb \%>\% write_sheet(ss = gs, sheet = "fbsmr")
 
 }
 
-}
-\author{
-Flavio Lozano-Isla
 }

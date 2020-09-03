@@ -3,17 +3,6 @@
 \name{H2cal}
 \alias{H2cal}
 \title{Heritability in plant breeding}
-\source{
-\itemize{
-
-\item
-https://github.com/PaulSchmidtGit/Heritability/tree/master/Alternative%20Heritability%20Measures
-
-\item
-https://stackoverflow.com/questions/38697477/mean-variance-of-a-difference-of-blues-or-blups-in-lme4
-
-}
-}
 \usage{
 H2cal(
   data,
@@ -66,10 +55,7 @@ examples.}
 \item{outliers.rm}{Remove outliers (default = FALSE). See references.}
 }
 \value{
-A list with three object:
-
-  \enumerate{ \item Table with the variance components and heritability \item
-  BLUPs \item BLUEs \item Outliers \item model}
+list
 }
 \description{
 Heritability in plant breeding on a genotype difference basis
@@ -118,6 +104,7 @@ library(agridat)
             , blues = T
             , plot_diag = TRUE
             , plot_dots = "rep"
+            , outliers.rm = T
             )
  hr$tabsmr
  hr$blups
@@ -126,29 +113,19 @@ library(agridat)
 
 }
 \references{
-\itemize{
+Schmidt, P., J. Hartung, J. Bennewitz, and H.P. Piepho. 2019. Heritability in
+Plant Breeding on a Genotype Difference Basis. Genetics 212(4): 991–1008.
 
-\item Schmidt, P., J. Hartung, J. Bennewitz, and H.P. Piepho. 2019.
-Heritability in Plant Breeding on a Genotype-Difference Basis. Genetics
-212(4): 991–1008. doi: 10.1534/genetics.119.302134.
+Schmidt, P., J. Hartung, J. Rath, and H.P. Piepho. 2019. Estimating
+Broad Sense Heritability with Unbalanced Data from Agricultural Cultivar
+Trials. Crop Science 59(2).
 
-\item Schmidt, P., J. Hartung, J. Rath, and H.P. Piepho. 2019. Estimating
-Broad-Sense Heritability with Unbalanced Data from Agricultural Cultivar
-Trials. Crop Science 59(2): 525–536. doi: 10.2135/cropsci2018.06.0376.
-
-\item Bernal-Vasquez, Angela-Maria, et al. “Outlier Detection Methods for
+Bernal Vasquez, Angela Maria, et al. “Outlier Detection Methods for
 Generalized Lattices: A Case Study on the Transition from ANOVA to REML.”
 Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016, pp. 787–804.
-Springer Link, doi:10.1007/s00122-016-2666-6.
-
-}
 }
 \author{
-\itemize{
+Maria Belen Kistner
 
-\item Maria Belen Kistner
-
-\item Flavio Lozano-Isla
-
-}
+Flavio Lozano Isla
 }
