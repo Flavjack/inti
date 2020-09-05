@@ -8,20 +8,22 @@ template:
     image:
       src: man/figures/logo.png
   params:
-    bootswatch: cerulean
     ganalytics: UA-113308628-1
 
+development:
+  mode: auto
+  
 navbar:
   left:
-    - text: "Home"
+    - text: ""
       icon: fa-home
       href: index.html
-    - text: "Getting started"
+    - text: "Get started"
       icon: fa-seedling
       href: articles/inti.html
     - text: "Articles"
       icon: fa-book
-      href: articles/h2cal.html
+      href: articles/heritability.html
     - text: "Functions"
       icon: fa-file-code
       href: reference/index.html

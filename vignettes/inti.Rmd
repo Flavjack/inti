@@ -1,13 +1,8 @@
 ---
-title: "inti"
-subtitle: "inti version `r utils::packageVersion('inti')`"
-date: "`r Sys.Date()`"
-output: 
-      rmarkdown::html_vignette:
-        toc: true
-        keep_md: true
+title: "Introduction to inti"
+output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{inti}
+  %\VignetteIndexEntry{Introduction to inti}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,8 +10,6 @@ vignette: >
 ```{r setup, include=FALSE}
 source("files/setup.r")
 ```
-
-# Inti package
 
 The package `inti` has been developed to provide tools used in plant science and experimental designs. The package also include shiny apps for design experiments, interactive analysis and technical writing.
 
