@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Broad-sense heritability • inti</title>
+<title>Broad-sense heritability in plant breeding • inti</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Broad-sense heritability">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Broad-sense heritability in plant breeding">
 <meta property="og:description" content="How to calculate the heritability in plant breeding">
 <meta property="og:image" content="/reference/figures/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -106,7 +106,7 @@
       </header><script src="heritability_files/header-attrs-2.3/header-attrs.js"></script><script src="heritability_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Broad-sense heritability</h1>
+      <h1 data-toc-skip>Broad-sense heritability in plant breeding</h1>
                         <h4 class="author">Maria Belen Kistner</h4>
                         <h4 class="author">Flavio Lozano-Isla</h4>
             
@@ -118,29 +118,35 @@
 
     
     
-<p>Broad-sense heritability (<span class="math inline">\(H^2\)</span>) is defined as the proportion of phenotypic variance that is attributable to an overall variance for the genotype <span class="citation">(Schmidt et al., <a href="#ref-schmidt2019Estimating" role="doc-biblioref">2019</a><a href="#ref-schmidt2019Estimating" role="doc-biblioref">b</a>)</span>. There are usually additional interpretations associated with <span class="math inline">\(H^2\)</span>: <em>(i)</em> it is equivalent to the coefficient of determination of a linear regression of the unobservable genotypic value on the observed phenotype; <em>(ii)</em> it is also the squared correlation between predicted phenotypic value and genotypic value; and <em>(iii)</em> it represents the proportion of the selection differential (<span class="math inline">\(S\)</span>) that can be realized as the response to selection (<span class="math inline">\(R\)</span>)(Falconer and Mackay, 2005).</p>
+<div id="broad-sense-heritability-h2" class="section level1">
+<h1 class="hasAnchor">
+<a href="#broad-sense-heritability-h2" class="anchor"></a>Broad-sense heritability (<span class="math inline">\(H^2\)</span>)</h1>
+<p>Broad-sense heritability (<span class="math inline">\(H^2\)</span>) is defined as the proportion of phenotypic variance that is attributable to an overall genetic variance for the genotype <span class="citation">(Schmidt et al., <a href="#ref-schmidt2019Estimating" role="doc-biblioref">2019</a><a href="#ref-schmidt2019Estimating" role="doc-biblioref">b</a>)</span>. There are usually additional interpretations associated with <span class="math inline">\(H^2\)</span>: <em>(i)</em> It is equivalent to the coefficient of determination of a linear regression of the unobservable genotypic value on the observed phenotype; <em>(ii)</em> It is also the squared correlation between predicted phenotypic value and genotypic value; and <em>(iii)</em> It represents the proportion of the selection differential (<span class="math inline">\(S\)</span>) that can be realized as the response to selection (<span class="math inline">\(R\)</span>) <span class="citation">(Falconer and Mackay, <a href="#ref-falconer2005Introduction" role="doc-biblioref">2005</a>)</span>.</p>
 <p>There are two main reasons why heritability on an entry-mean basis is of interest in plant breeding <span class="citation">(Schmidt et al., <a href="#ref-schmidt2019Heritability" role="doc-biblioref">2019</a><a href="#ref-schmidt2019Heritability" role="doc-biblioref">a</a>)</span>:</p>
 <ol style="list-style-type: decimal">
 <li>It is plugged into the breeder’s Equation to predict the response to selection.</li>
 <li>It is a descriptive measure used to assess the usefulness and precision of results from cultivar evaluation trials.</li>
 </ol>
-<div id="usual-problems" class="section level2">
+<div id="breeders-equation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#usual-problems" class="anchor"></a>Usual Problems</h2>
-<p>In practice, most trials conducted in a multienvironment trial (MET) presente unbalanced data as not all cultivars are tested at each environment or simply when plot data is lost or when the number of replicates at each location varies between genotypes <span class="citation">(Schmidt et al., <a href="#ref-schmidt2019Estimating" role="doc-biblioref">2019</a><a href="#ref-schmidt2019Estimating" role="doc-biblioref">b</a>)</span>. However, the standard method for estimating heritability implicitly assumes balanced data, independent genotype effects, and homogeneous variances.</p>
+<a href="#breeders-equation" class="anchor"></a>Breeder´s equation</h2>
+<p><span class="math display">\[\Delta G=H^2S\]</span></p>
+<p>Where: - <span class="math inline">\(\Delta G\)</span> is the genetic gain - <span class="math inline">\(S\)</span> is the mean phenotypic value of the selected genotypes, expressed as a deviation from the population mean.</p>
 </div>
-<div id="how-calculate-the-heritability" class="section level2">
-<h2 class="hasAnchor">
-<a href="#how-calculate-the-heritability" class="anchor"></a>How calculate the Heritability?</h2>
+</div>
+<div id="usual-problems" class="section level1">
+<h1 class="hasAnchor">
+<a href="#usual-problems" class="anchor"></a>Usual Problems</h1>
+<p>In practice, most trials are conducted in a multienvironment trial (MET) presente unbalanced data as not all cultivars are tested at each environment or simply when plot data is lost or when the number of replicates at each location varies between genotypes <span class="citation">(Schmidt et al., <a href="#ref-schmidt2019Estimating" role="doc-biblioref">2019</a><a href="#ref-schmidt2019Estimating" role="doc-biblioref">b</a>)</span>. However, the standard method for estimating heritability implicitly assumes balanced data, independent genotype effects, and homogeneous variances.</p>
+</div>
+<div id="how-calculate-the-heritability" class="section level1">
+<h1 class="hasAnchor">
+<a href="#how-calculate-the-heritability" class="anchor"></a>How calculate the Heritability?</h1>
 <p>According <span class="citation">Schmidt et al. (<a href="#ref-schmidt2019Heritability" role="doc-biblioref">2019</a><a href="#ref-schmidt2019Heritability" role="doc-biblioref">a</a>)</span>, the variance components could be calculated in two ways:</p>
-</div>
-<div id="usuall-approach" class="section level2">
+<div id="firts-usuall-approach" class="section level2">
 <h2 class="hasAnchor">
-<a href="#usuall-approach" class="anchor"></a>Usuall approach</h2>
-<ul>
-<li>In MET experiments, enviroments denotes a year-by-location combination in CRD.</li>
-<li>This approach assumes a single variance for genotype-by-environment interactions (GxE), even when multiple locations were tested across multiple years.</li>
-</ul>
+<a href="#firts-usuall-approach" class="anchor"></a>Firts: usuall approach</h2>
+<p>In MET experiments, enviroments denotes a year-by-location interaction. This approach assumes a single variance for genotype-by-environment interactions (GxE), even when multiple locations were tested across multiple years.</p>
 <div id="model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#model" class="anchor"></a>Model</h3>
@@ -152,12 +158,10 @@
 <p><span class="math display">\[\sigma_p^2=\sigma_g^2+\frac{\sigma_{g\cdot e}^2}{n_e}+\frac{\sigma_{\varepsilon}^2}{n_e\cdot n_r}\]</span></p>
 </div>
 </div>
-<div id="latter-approach" class="section level2">
+<div id="second-latter-approach" class="section level2">
 <h2 class="hasAnchor">
-<a href="#latter-approach" class="anchor"></a>Latter approach</h2>
-<ul>
-<li>The environmental effects via separate year, and location main and interaction effects.</li>
-</ul>
+<a href="#second-latter-approach" class="anchor"></a>Second: latter approach</h2>
+<p>The environmental effects via separate year, and location main and interaction effects.</p>
 <p><span class="math display">\[y_{ikt}=\mu+G_i+Y_m+E_q+YxE_{mq}+GxY_{im}+GxE_{iq}+GxYxE_{imq}+\varepsilon_{ikmq}\]</span></p>
 <div id="phenotypic-variance-1" class="section level3">
 <h3 class="hasAnchor">
@@ -165,12 +169,12 @@
 <p><span class="math display">\[\sigma_p^2=\sigma_g^2+\frac{\sigma_{g\cdot e}^2}{n_e}+\frac{\sigma_{g\cdot y}^2}{n_y}+\frac{\sigma_{g\cdot y\cdot e}^2}{n_y\cdot n_e}+\ \frac{\sigma_{\epsilon}^2}{n_e\cdot n_y\cdot n_r}\]</span></p>
 </div>
 </div>
-<div id="breeders-equation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#breeders-equation" class="anchor"></a>Breeder´s equation</h2>
-<p><span class="math display">\[\Delta G=H^2S\]</span></p>
-<p>Where: - <span class="math inline">\(\Delta G\)</span> is the genetic gain - <span class="math inline">\(S\)</span> is the mean phenotypic value of the selected genotypes, expressed as a deviation from the population mean.</p>
+</div>
+<div id="differentes-heritability-calculation" class="section level1">
+<h1 class="hasAnchor">
+<a href="#differentes-heritability-calculation" class="anchor"></a>Differentes heritability calculation</h1>
 <table class="table">
+<caption>Differentes heritability calculation</caption>
 <colgroup>
 <col width="25%">
 <col width="35%">
@@ -188,9 +192,11 @@
 </tr></tbody>
 </table>
 </div>
-<div id="function-in-package" class="section level1">
+<div id="heritability-implemented-in-the-package" class="section level1">
 <h1 class="hasAnchor">
-<a href="#function-in-package" class="anchor"></a>Function in package</h1>
+<a href="#heritability-implemented-in-the-package" class="anchor"></a>Heritability implemented in the package</h1>
+<p>For calculate the standard heritability in MET experiments the number of location and replication should be include manually in the function <code><a href="../reference/H2cal.html">H2cal()</a></code>. In the case of difference number of replication in each experiments, take the maximum value (often done in practice) <span class="citation">(Schmidt et al., <a href="#ref-schmidt2019Estimating" role="doc-biblioref">2019</a><a href="#ref-schmidt2019Estimating" role="doc-biblioref">b</a>)</span>.</p>
+<p>For remove the outliers the function implemented is the Method 4 used for <span class="citation">Bernal-Vasquez et al. (<a href="#ref-bernal-vasquez2016Outliera" role="doc-biblioref">2016</a>)</span>: Bonferroni-Holm using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 <div id="load-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-packages" class="anchor"></a>Load packages</h2>
@@ -220,9 +226,9 @@
 </pre></div>
 <p><img src="heritability_files/figure-html/unnamed-chunk-2-1.png" width="98%" style="display: block; margin: auto;"></p>
 </div>
-<div id="model-1" class="section level2">
+<div id="model-information" class="section level2">
 <h2 class="hasAnchor">
-<a href="#model-1" class="anchor"></a>Model</h2>
+<a href="#model-information" class="anchor"></a>Model information</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="kw">hr</span><span class="op">$</span><span class="kw">model</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>()
 <span class="co">#&gt; Linear mixed model fit by REML ['lmerMod']</span>
@@ -254,13 +260,14 @@
 <span class="co">#&gt; repR3 -0.601  0.503</span>
 </pre></div>
 </div>
-<div id="summary-table" class="section level2">
+<div id="variance-component" class="section level2">
 <h2 class="hasAnchor">
-<a href="#summary-table" class="anchor"></a>Summary Table</h2>
+<a href="#variance-component" class="anchor"></a>Variance component</h2>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">hr</span><span class="op">$</span><span class="kw">tabsmr</span> <span class="op">%&gt;%</span> <span class="fu">kable</span>()
+<span class="kw">hr</span><span class="op">$</span><span class="kw">tabsmr</span> <span class="op">%&gt;%</span> <span class="fu">kable</span>(caption = <span class="st">"Variance component table."</span>)
 </pre></div>
 <table class="table">
+<caption>Variance component table.</caption>
 <colgroup>
 <col width="6%">
 <col width="3%">
@@ -317,13 +324,14 @@
 </tr></tbody>
 </table>
 </div>
-<div id="blups" class="section level2">
+<div id="best-linear-unbiased-predictors-blups" class="section level2">
 <h2 class="hasAnchor">
-<a href="#blups" class="anchor"></a>BLUPs</h2>
+<a href="#best-linear-unbiased-predictors-blups" class="anchor"></a>Best Linear Unbiased Predictors (BLUPs)</h2>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="kw">hr</span><span class="op">$</span><span class="kw">blups</span> <span class="op">%&gt;%</span> <span class="fu">kable</span>()
+<span class="kw">hr</span><span class="op">$</span><span class="kw">blups</span> <span class="op">%&gt;%</span> <span class="fu">kable</span>(caption = <span class="st">"BLUPs."</span>)
 </pre></div>
 <table class="table">
+<caption>BLUPs.</caption>
 <thead><tr class="header">
 <th align="left">gen</th>
 <th align="right">yield</th>
@@ -428,13 +436,14 @@
 </tbody>
 </table>
 </div>
-<div id="blues" class="section level2">
+<div id="best-linear-unbiased-estimators-blues" class="section level2">
 <h2 class="hasAnchor">
-<a href="#blues" class="anchor"></a>BLUEs</h2>
+<a href="#best-linear-unbiased-estimators-blues" class="anchor"></a>Best Linear Unbiased Estimators (BLUEs)</h2>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw">hr</span><span class="op">$</span><span class="kw">blues</span> <span class="op">%&gt;%</span> <span class="fu">kable</span>()
+<span class="kw">hr</span><span class="op">$</span><span class="kw">blues</span> <span class="op">%&gt;%</span> <span class="fu">kable</span>(caption = <span class="st">"BLUEs."</span>)
 </pre></div>
 <table class="table">
+<caption>BLUEs.</caption>
 <thead><tr class="header">
 <th align="left">gen</th>
 <th align="right">yield</th>
@@ -643,9 +652,10 @@
 <h2 class="hasAnchor">
 <a href="#outliers" class="anchor"></a>Outliers</h2>
 <div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="kw">hr</span><span class="op">$</span><span class="kw">outliers</span><span class="op">$</span><span class="kw">random</span> <span class="op">%&gt;%</span> <span class="fu">kable</span>()
+<span class="kw">hr</span><span class="op">$</span><span class="kw">outliers</span><span class="op">$</span><span class="kw">random</span> <span class="op">%&gt;%</span> <span class="fu">kable</span>(caption = <span class="st">"Outliers for random model."</span>)
 </pre></div>
 <table class="table">
+<caption>Outliers for random model.</caption>
 <colgroup>
 <col width="3%">
 <col width="4%">
@@ -691,9 +701,10 @@
 </table>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 
-<span class="kw">hr</span><span class="op">$</span><span class="kw">outliers</span><span class="op">$</span><span class="kw">fixed</span> <span class="op">%&gt;%</span> <span class="fu">kable</span>()
+<span class="kw">hr</span><span class="op">$</span><span class="kw">outliers</span><span class="op">$</span><span class="kw">fixed</span> <span class="op">%&gt;%</span> <span class="fu">kable</span>(caption = <span class="st">"Outliers for fixed model."</span>)
 </pre></div>
 <table class="table">
+<caption>Outliers for fixed model.</caption>
 <colgroup>
 <col width="2%">
 <col width="3%">
@@ -767,24 +778,6 @@
 </tr>
 </tbody>
 </table>
-<hr>
-<hr>
-</div>
-</div>
-<div id="two-stage-analisys" class="section level1">
-<h1 class="hasAnchor">
-<a href="#two-stage-analisys" class="anchor"></a>Two stage analisys</h1>
-<div id="first-stage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#first-stage" class="anchor"></a>First stage</h2>
-<p>The population will be analized indivually in each location. We have 6 populations and 3 enviroments in the first year. And 2 enviroments for the second year.</p>
-<p><span class="math display">\[y_{iko}=\mu+g_i+r_k+b_{ko}+\varepsilon_{iko}\]</span></p>
-</div>
-<div id="second-stage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#second-stage" class="anchor"></a>Second stage</h2>
-<hr>
-<hr>
 </div>
 </div>
 <div id="references" class="section level1">
@@ -794,39 +787,15 @@
 <div id="ref-bernal-vasquez2016Outliera">
 <p>Bernal-Vasquez, A.-M., H.-F. Utz, and H.-P. Piepho. 2016. Outlier detection methods for generalized lattices: A case study on the transition from ANOVA to REML. Theoretical and Applied Genetics 129(4): 787–804. doi: <a href="https://doi.org/10.1007/s00122-016-2666-6">10.1007/s00122-016-2666-6</a>.</p>
 </div>
+<div id="ref-falconer2005Introduction">
+<p>Falconer, D.S., and T.F. Mackay. 2005. Introduction to quantitative genetics (Pearson Prentice Hall, editor). Fourth. [Amsterdam, The Netherlands: Elsevier Science Publishers (Biomedical …, Upper Saddle River, NJ.</p>
+</div>
 <div id="ref-schmidt2019Heritability">
 <p>Schmidt, P., J. Hartung, J. Bennewitz, and H.-P. Piepho. 2019a. Heritability in Plant Breeding on a Genotype-Difference Basis. Genetics 212(4): 991–1008. doi: <a href="https://doi.org/10.1534/genetics.119.302134">10.1534/genetics.119.302134</a>.</p>
 </div>
 <div id="ref-schmidt2019Estimating">
 <p>Schmidt, P., J. Hartung, J. Rath, and H.-P. Piepho. 2019b. Estimating Broad-Sense Heritability with Unbalanced Data from Agricultural Cultivar Trials. Crop Science 59(2): 525–536. doi: <a href="https://doi.org/10.2135/cropsci2018.06.0376">10.2135/cropsci2018.06.0376</a>.</p>
 </div>
-</div>
-<hr>
-<hr>
-<div id="note" class="section level2">
-<h2 class="hasAnchor">
-<a href="#note" class="anchor"></a>Note</h2>
-<ul>
-<li>Calculation of <span class="math inline">\(\sigma_p^2\)</span> always involves the genotypic variance and all <span class="math inline">\(\sigma_{g\cdot e}^2\)</span> variances. However, it does not incorporate purely environmental variance components!</li>
-<li>According the last point, the number of location and replication should be include manually in the model for programming in R.</li>
-<li>The adjusted means: <span class="math display">\[\overline{y}_{i..}=BLUE(\mu+g_i)\]</span>
-</li>
-<li>Paul use in all calculation the replication as fixed for the randon and fixed models.</li>
-<li>In case of MET with diferente number of replication in each one, take the maximum value (often done in practice).</li>
-</ul>
-</div>
-<div id="problems-possibilities" class="section level2">
-<h2 class="hasAnchor">
-<a href="#problems-possibilities" class="anchor"></a>Problems &amp; possibilities</h2>
-<ul>
-<li>Using the latter aproach the model produce “singularity” and in some case the variance of the genotypes is very small.</li>
-<li>The heritability using Peipho approach looks very stable but take to much time as the equation made a comparison between the lines.</li>
-<li>The heritability based in Peipho approach is easy to implement in R.</li>
-<li>Accordint to the last point, include all in one model take a lot of time in calculation and pc performance only for one variable. So I will try to use the two step approachs.</li>
-<li>I tried to use the 3 locations by population, but we have the same problem with “singularity”</li>
-<li>Looks better when i use the each population for enviroment, not produce problems with the model and its faster, but the heritabilities are low in some cases.</li>
-<li>We will use the fixed VC? What VC we will choose?</li>
-</ul>
 </div>
 </div>
   </div>

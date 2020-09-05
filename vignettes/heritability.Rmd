@@ -1,5 +1,5 @@
 ---
-title: "Broad-sense heritability"
+title: "Broad-sense heritability in plant breeding"
 description: 'How to calculate the heritability in plant breeding'
 author:
     - "Maria Belen Kistner"
@@ -12,7 +12,7 @@ csl: https://www.zotero.org/styles/crop-science
 nocite: |  
   [@schmidt2019Estimating; @schmidt2019Heritability; @bernal-vasquez2016Outliera]
 vignette: >
-  %\VignetteIndexEntry{Broad-sense heritability}
+  %\VignetteIndexEntry{Broad-sense heritability in plant breeding}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -21,45 +21,14 @@ vignette: >
 source("files/setup.r")
 ```
 
-Broad-sense heritability ($H^2$) is defined as the proportion of phenotypic variance that is attributable to an overall variance for the genotype [@schmidt2019Estimating]. There are usually additional interpretations associated with $H^2$: *(i)* it is equivalent to the coefficient of determination of a linear regression of the unobservable genotypic value on the observed phenotype; *(ii)* it is also the squared correlation between predicted phenotypic value and genotypic value; and *(iii)* it represents the proportion of the selection differential ($S$) that can be realized as the response to selection ($R$)(Falconer and Mackay, 2005).
+# Broad-sense heritability ($H^2$)
+
+Broad-sense heritability ($H^2$) is defined as the proportion of phenotypic variance that is attributable to an overall genetic variance for the genotype [@schmidt2019Estimating]. There are usually additional interpretations associated with $H^2$: *(i)* It is equivalent to the coefficient of determination of a linear regression of the unobservable genotypic value on the observed phenotype; *(ii)* It is also the squared correlation between predicted phenotypic value and genotypic value; and *(iii)* It represents the proportion of the selection differential ($S$) that can be realized as the response to selection ($R$) [@falconer2005Introduction].
 
 There are two main reasons why heritability on an entry-mean basis is of interest in plant breeding [@schmidt2019Heritability]:
 
 1. It is plugged into the breeder’s Equation to predict the response to selection.
 2. It is a descriptive measure used to assess the usefulness and precision of results from cultivar evaluation trials. 
-
-## Usual Problems 
-
-In practice, most trials conducted in a multienvironment trial (MET) presente unbalanced data as not all cultivars are tested at each environment or simply when plot data is lost or when the number of replicates at each location varies between genotypes [@schmidt2019Estimating]. However, the standard method for estimating heritability implicitly assumes balanced data, independent genotype effects, and homogeneous variances.
-
-## How calculate the Heritability?
-
-According @schmidt2019Heritability, the variance components could be calculated in two ways:
-
-## Usuall approach
-
-- In MET experiments, enviroments denotes a year-by-location combination in CRD.
-- This approach assumes a single variance for genotype-by-environment interactions (GxE), even when multiple locations were tested across multiple years.
-
-### Model
-
-$$y_{ikt}=\mu\ +\ G_i+E_t+GxE_{it}+\varepsilon_{ikt}$$
-
-### Phenotypic variance
-
-$$\sigma_p^2=\sigma_g^2+\frac{\sigma_{g\cdot e}^2}{n_e}+\frac{\sigma_{\varepsilon}^2}{n_e\cdot n_r}$$
-
-## Latter approach
-
-- The environmental effects via separate year, and location main and interaction
-effects.
-
-
-$$y_{ikt}=\mu+G_i+Y_m+E_q+YxE_{mq}+GxY_{im}+GxE_{iq}+GxYxE_{imq}+\varepsilon_{ikmq}$$
-
-### Phenotypic variance
-
-$$\sigma_p^2=\sigma_g^2+\frac{\sigma_{g\cdot e}^2}{n_e}+\frac{\sigma_{g\cdot y}^2}{n_y}+\frac{\sigma_{g\cdot y\cdot e}^2}{n_y\cdot n_e}+\ \frac{\sigma_{\epsilon}^2}{n_e\cdot n_y\cdot n_r}$$
 
 ## Breeder´s equation
 
@@ -69,6 +38,38 @@ Where:
 - $\Delta G$ is the genetic gain
 - $S$ is the mean phenotypic value of the selected genotypes, expressed as a deviation from the population mean.
 
+# Usual Problems 
+
+In practice, most trials are conducted in a multienvironment trial (MET) presente unbalanced data as not all cultivars are tested at each environment or simply when plot data is lost or when the number of replicates at each location varies between genotypes [@schmidt2019Estimating]. However, the standard method for estimating heritability implicitly assumes balanced data, independent genotype effects, and homogeneous variances.
+
+# How calculate the Heritability?
+
+According @schmidt2019Heritability, the variance components could be calculated in two ways:
+
+## Firts: usuall approach
+
+In MET experiments, enviroments denotes a year-by-location interaction. This approach assumes a single variance for genotype-by-environment interactions (GxE), even when multiple locations were tested across multiple years.
+
+### Model
+
+$$y_{ikt}=\mu\ +\ G_i+E_t+GxE_{it}+\varepsilon_{ikt}$$
+
+### Phenotypic variance
+
+$$\sigma_p^2=\sigma_g^2+\frac{\sigma_{g\cdot e}^2}{n_e}+\frac{\sigma_{\varepsilon}^2}{n_e\cdot n_r}$$
+
+## Second: latter approach
+
+The environmental effects via separate year, and location main and interaction
+effects.
+
+$$y_{ikt}=\mu+G_i+Y_m+E_q+YxE_{mq}+GxY_{im}+GxE_{iq}+GxYxE_{imq}+\varepsilon_{ikmq}$$
+
+### Phenotypic variance
+
+$$\sigma_p^2=\sigma_g^2+\frac{\sigma_{g\cdot e}^2}{n_e}+\frac{\sigma_{g\cdot y}^2}{n_y}+\frac{\sigma_{g\cdot y\cdot e}^2}{n_y\cdot n_e}+\ \frac{\sigma_{\epsilon}^2}{n_e\cdot n_y\cdot n_r}$$
+
+# Differentes heritability calculation
 
 ```{r, echo=FALSE}
 tibble(
@@ -76,10 +77,14 @@ tibble(
   Cullis = "$H_{Cullis}^2=1-\\frac{\\overline{V}_{\\Delta..}^{^{BLUP}}}{2\\cdot\\sigma_g^2}$",
   Piepho = "$H_{Piepho}^2=\\frac{\\sigma_g^2}{\\sigma_g^2+\\frac{\\overline{V}_{\\Delta..}^{BLUE}}{2}}$"
   ) %>% 
-  kable(cpation = "Differentes heritability calculation")
+  kable(caption = "Differentes heritability calculation")
 ```
 
-# Function in package
+# Heritability implemented in the package
+
+For calculate the standard heritability in MET experiments the number of location and replication should be include manually in the function `H2cal()`. In the case of difference number of replication in each experiments, take the maximum value (often done in practice) [@schmidt2019Estimating].
+
+For remove the outliers the function implemented is the Method 4 used for @bernal-vasquez2016Outliera: Bonferroni-Holm using re-scaled MAD for standardizing residuals (BH-MADR).
 
 ## Load packages
 
@@ -109,54 +114,37 @@ library(agridat)
  
 ```
 
-## Model
+## Model information
 
 ```{r}
 hr$model %>% summary()
 ```
 
-## Summary Table
+## Variance component
 
 ```{r}
-hr$tabsmr %>% kable()
+hr$tabsmr %>% kable(caption = "Variance component table.")
 ```
 
-## BLUPs
+## Best Linear Unbiased Predictors (BLUPs)
 
 ```{r}
-hr$blups %>% kable()
+hr$blups %>% kable(caption = "BLUPs.")
 ```
 
-## BLUEs
+## Best Linear Unbiased Estimators (BLUEs)
 
 ```{r}
-hr$blues %>% kable()
+hr$blues %>% kable(caption = "BLUEs.")
 ```
 
 ## Outliers
 
 ```{r}
-hr$outliers$random %>% kable()
+hr$outliers$random %>% kable(caption = "Outliers for random model.")
 
-hr$outliers$fixed %>% kable()
+hr$outliers$fixed %>% kable(caption = "Outliers for fixed model.")
 ```
-
-
-***
-***
-
-# Two stage analisys
-
-## First stage
-
-The population will be analized indivually in each location. We have 6 populations and 3 enviroments in the first year. And 2 enviroments for the second year.
-
-$$y_{iko}=\mu+g_i+r_k+b_{ko}+\varepsilon_{iko}$$
-
-## Second stage
-
-***
-***
 
 # References
 
@@ -166,27 +154,4 @@ $$y_{iko}=\mu+g_i+r_k+b_{ko}+\varepsilon_{iko}$$
 ```{r references, echo=FALSE}
 if(!file.exists("files/pkgs.bib")){write_bib(c(.packages()),'files/pkgs.bib')}
 ```
-
-
-***
-***
-
-## Note
-
-- Calculation of $\sigma_p^2$ always involves the genotypic variance and all $\sigma_{g\cdot e}^2$ variances. However, it does not incorporate purely
-environmental variance components!
-- According the last point, the number of location and replication should be include manually in the model for programming in R.
-- The adjusted means: $$\overline{y}_{i..}=BLUE(\mu+g_i)$$
-- Paul use in all calculation the replication as fixed for the randon and fixed models.
-- In case of MET with diferente number of replication in each one, take the maximum value (often done in practice).
-
-## Problems & possibilities
-
-- Using the latter aproach the model produce "singularity" and in some case the variance of the genotypes is very small.
-- The heritability using Peipho approach looks very stable but take to much time as the equation made a comparison between the lines.
-- The heritability based in Peipho approach is easy to implement in R.
-- Accordint to the last point, include all in one model take a lot of time in calculation and pc performance only for one variable. So I will try to use the two step approachs.
-- I tried to use the 3 locations by population, but we have the same problem with "singularity"
-- Looks better when i use the each population for enviroment, not produce problems with the model and its faster, but the heritabilities are low in some cases.
-- We will use the fixed VC? What VC we will choose?
 
