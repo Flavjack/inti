@@ -19,8 +19,8 @@ cran <- c("devtools"
          )
 
 git <- c(
-  "Flavjack/inti" # Tools and Statistical Procedures in Plant Science
-  , "rstudio/bootstraplib"
+  "rstudio/bootstraplib"
+  , "Flavjack/inti" # Tools and Statistical Procedures in Plant Science
   )
 
 installed <- c(cran, sub(".*/", "", git)) %in% rownames(installed.packages())

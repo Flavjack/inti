@@ -27,14 +27,14 @@ fluidPage(title = "Rticles",
     tags$head(HTML('<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">')),
     tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
     tags$head(includeHTML(("www/analytics.html"))),
-    tags$head(tags$link(rel="shortcut icon", href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/favicon_rticles/android-chrome-512x512.png")),
+    tags$head(tags$link(rel="shortcut icon", href="https://flavjack.github.io/inti/reference/figures/quipo.png")),
 
     meta() %>%
       meta_social(
         title = "Rticles",
         description = "Rticles: Create technical documents with markdown and bookdown",
         url = "https://flavjack.shinyapps.io/rticles/",
-        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/favicon_rticles/android-chrome-512x512.png",
+        image = "https://flavjack.github.io/inti/reference/figures/quipo.png",
         image_alt = "quipolab.com"
       ),
 
@@ -50,7 +50,7 @@ fluidPage(title = "Rticles",
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://lozanoisla.com/">
-            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/quipo4c.png" style="height:55px" title="flozano"></a>
+            <img src="https://flavjack.github.io/inti/reference/figures/quipo4c.png" style="height:55px" title="flozano"></a>
             <span style="display:block;"><small>lozanoisla.com</small></span>
             </p></div>
 
@@ -149,7 +149,7 @@ fluidPage(title = "Rticles",
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9HTZNed2-q3WpQfIGraA1V">
-            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/youtube.png" style="height:60px" title="demo"></a>
+            <img src="https://flavjack.github.io/inti/reference/figures/youtube.png" style="height:60px" title="demo"></a>
             <span style="display:block;"><small>demo</small></span>
             </p></div>
             </div>

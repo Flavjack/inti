@@ -46,14 +46,14 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
 
                     tags$head(includeHTML(("www/analytics.html"))),
                     tags$head(tags$link(rel="shortcut icon"
-                                        , href="https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/favicon_tarpuy/android-chrome-512x512.png")),
+                                        , href="https://flavjack.github.io/inti/reference/figures/tarpuy.png")),
 
                     meta() %>%
                       meta_social(
                         title = "Tarpuy",
                         description = "Tarpuy: Easy way to create fieldbook experimental designs.",
                         url = "https://flavjack.shinyapps.io/tarpuy/",
-                        image = "https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/favicon_tarpuy/android-chrome-512x512.png",
+                        image = "https://flavjack.github.io/inti/reference/figures/tarpuy.png",
                         image_alt = "inkaverse.com"
                       )
 
@@ -73,7 +73,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://lozanoisla.com/">
-            <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/quipo4c.png" style="height:50px" title="flozano"></a>
+            <img src="https://flavjack.github.io/inti/reference/figures/quipo4c.png" style="height:50px" title="flozano"></a>
             <span style="display:block;"><small>lozanoisla.com</small></span>
             </p></div>
             </div>
@@ -305,7 +305,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                              <div style="display:inline-block; width:100%">
                              <p style="text-align:center">
                              <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC">
-                             <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/youtube.png" style="height:60px" title="demo"></a>
+                             <img src="https://flavjack.github.io/inti/reference/figures/youtube.png" style="height:60px" title="demo"></a>
                              <span style="display:block;"><small>demo</small></span>
                              </p></div>
 
@@ -322,7 +322,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                              <div style="display:inline-block; width:100%">
                              <p style="text-align:center">
                              <a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/">
-                             <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/favicon_yupana/android-chrome-512x512.png" style="height:80px" title="yupana"></a>
+                             <img src="https://flavjack.github.io/inti/reference/figures/yupana.png" style="height:80px" title="yupana"></a>
                              <span style="display:block;"><small>Yupana</small></span>
                              </p></div>
 
@@ -339,7 +339,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                              <div style="display:inline-block; width:100%">
                              <p style="text-align:center">
                              <a target="_blank" href="https://www.quipolab.com/">
-                             <img src="https://raw.githubusercontent.com/Flavjack/inti/master/inst/icons/favicon_rticles/android-chrome-512x512.png" style="height:70px" title="quipo"></a>
+                             <img src="https://flavjack.github.io/inti/reference/figures/quipo.png" style="height:70px" title="quipo"></a>
                              <span style="display:block;"><small>quipolab</small></span>
                              </p></div>
 

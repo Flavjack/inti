@@ -18,8 +18,8 @@ cran <-  c(
   )
 
 git <-  c(
-  "Flavjack/inti" # Tools and Statistical Procedures in Plant Science
-  , "crsh/citr" # include citation in Rmarkdown
+  "crsh/citr" # include citation in Rmarkdown
+  , "Flavjack/inti" # Tools and Statistical Procedures in Plant Science
   )
 
 installed <- c(cran, sub(".*/", "", git)) %in% rownames(installed.packages())
