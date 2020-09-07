@@ -6,8 +6,9 @@ home:
 template:
   opengraph:
     image:
-      src: man/figures/logo.png
+      src: https://flavjack.github.io/inti/reference/figures/logo.png
   params:
+    bootswatch: cerulean
     ganalytics: UA-113308628-1
 
 development:
