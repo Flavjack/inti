@@ -190,11 +190,10 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># \donttest{</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/flavjack/inti'>inti</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidyverse/googlesheets4'>googlesheets4</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span>)
 
 <span class='kw'>url</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"https://docs.google.com/spreadsheets/d/"</span>
 , <span class='st'>"1a82XIbTeWPC4pwvu9Zjl4qrGitGQ_B-mf3-w67VS4-Q/edit#gid=0"</span>)
@@ -203,19 +202,138 @@
 
 (<span class='kw'>design</span> <span class='op'>&lt;-</span> <span class='kw'>gs</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/range_read.html'>range_read</a></span>(<span class='st'>"design"</span>))
-
+</div><div class='output co'>#&gt; <span class='message'>Reading from "TARPUY"</span></div><div class='output co'>#&gt; <span class='message'>Range "'design'"</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 4</span><span>
+#&gt;   `{arguments}` `{values}`  temp cond    
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
+#&gt; </span><span style='color: #555555;'>1</span><span> nfactors      2             20 luz     
+#&gt; </span><span style='color: #555555;'>2</span><span> type          rcbd          25 ocuridad
+#&gt; </span><span style='color: #555555;'>3</span><span> rep           4             30 </span><span style='color: #BB0000;'>NA</span><span>      
+#&gt; </span><span style='color: #555555;'>4</span><span> serie         2             35 </span><span style='color: #BB0000;'>NA</span><span>      
+#&gt; </span><span style='color: #555555;'>5</span><span> seed          0             </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>      </div><div class='input'>
 (<span class='kw'>varlist</span> <span class='op'>&lt;-</span> <span class='kw'>gs</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/range_read.html'>range_read</a></span>(<span class='st'>"variables"</span>))
-
+    <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/range_read.html'>range_read</a></span>(<span class='st'>"varlist"</span>))
+</div><div class='output co'>#&gt; <span class='message'>Reading from "TARPUY"</span></div><div class='output co'>#&gt; <span class='message'>Range "'varlist'"</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 6</span><span>
+#&gt;    variable      `{siglas}` `{evaluation}` `{sampling}` units description       
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             
+#&gt; </span><span style='color: #555555;'> 1</span><span> floración     flw        </span><span style='color: #BB0000;'>NA</span><span>                       </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>    Estado fenológico 
+#&gt; </span><span style='color: #555555;'> 2</span><span> madurez       mtr        </span><span style='color: #BB0000;'>NA</span><span>                       </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>    Estado fenológico 
+#&gt; </span><span style='color: #555555;'> 3</span><span> cosecha       hrv        </span><span style='color: #BB0000;'>NA</span><span>                       </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>    Estado fenológico 
+#&gt; </span><span style='color: #555555;'> 4</span><span> días a la fl~ dflw       flw                       1 días  Días después de l~
+#&gt; </span><span style='color: #555555;'> 5</span><span> altura de pl~ altp       flw                       3 cm    Desde la base has~
+#&gt; </span><span style='color: #555555;'> 6</span><span> diámetro del~ dmt        flw                       3 mm    Usar un vernier   
+#&gt; </span><span style='color: #555555;'> 7</span><span> días a la ma~ dmdf       mtr                       1 días  Días después de l~
+#&gt; </span><span style='color: #555555;'> 8</span><span> altura de pl~ altp       mtr                       3 cm    Desde la base has~
+#&gt; </span><span style='color: #555555;'> 9</span><span> diámetro del~ dmt        mtr                       3 mm    Días después de l~
+#&gt; </span><span style='color: #555555;'>10</span><span> rendimiento ~ r10p       hrv                       2 g     Seleccionar las p~</div><div class='input'>
 <span class='kw'>fieldbook</span> <span class='op'>&lt;-</span> <span class='kw'>design</span> <span class='op'>%&gt;%</span>
   <span class='kw'>inti</span>::<span class='fu'><a href='fieldbook_design.html'>fieldbook_design</a></span>() <span class='op'>%&gt;%</span>
   <span class='kw'>inti</span>::<span class='fu'>fieldbook_varlist</span>(<span class='kw'>varlist</span>)
 
 <span class='kw'>fieldbook</span>
+</div><div class='output co'>#&gt; $design
+#&gt;    plots block temp     cond dflw_flw_1 altp_flw_1 altp_flw_2 altp_flw_3
+#&gt; 1    101     1   20      luz         NA         NA         NA         NA
+#&gt; 2    102     1   25      luz         NA         NA         NA         NA
+#&gt; 3    103     1   30 ocuridad         NA         NA         NA         NA
+#&gt; 4    104     1   30      luz         NA         NA         NA         NA
+#&gt; 5    105     1   35      luz         NA         NA         NA         NA
+#&gt; 6    106     1   25 ocuridad         NA         NA         NA         NA
+#&gt; 7    107     1   35 ocuridad         NA         NA         NA         NA
+#&gt; 8    108     1   20 ocuridad         NA         NA         NA         NA
+#&gt; 9    109     2   25 ocuridad         NA         NA         NA         NA
+#&gt; 10   110     2   20      luz         NA         NA         NA         NA
+#&gt; 11   111     2   25      luz         NA         NA         NA         NA
+#&gt; 12   112     2   30 ocuridad         NA         NA         NA         NA
+#&gt; 13   113     2   30      luz         NA         NA         NA         NA
+#&gt; 14   114     2   35      luz         NA         NA         NA         NA
+#&gt; 15   115     2   35 ocuridad         NA         NA         NA         NA
+#&gt; 16   116     2   20 ocuridad         NA         NA         NA         NA
+#&gt; 17   117     3   30 ocuridad         NA         NA         NA         NA
+#&gt; 18   118     3   25 ocuridad         NA         NA         NA         NA
+#&gt; 19   119     3   35 ocuridad         NA         NA         NA         NA
+#&gt; 20   120     3   35      luz         NA         NA         NA         NA
+#&gt; 21   121     3   20      luz         NA         NA         NA         NA
+#&gt; 22   122     3   30      luz         NA         NA         NA         NA
+#&gt; 23   123     3   25      luz         NA         NA         NA         NA
+#&gt; 24   124     3   20 ocuridad         NA         NA         NA         NA
+#&gt; 25   125     4   25      luz         NA         NA         NA         NA
+#&gt; 26   126     4   35      luz         NA         NA         NA         NA
+#&gt; 27   127     4   20 ocuridad         NA         NA         NA         NA
+#&gt; 28   128     4   25 ocuridad         NA         NA         NA         NA
+#&gt; 29   129     4   30 ocuridad         NA         NA         NA         NA
+#&gt; 30   130     4   20      luz         NA         NA         NA         NA
+#&gt; 31   131     4   35 ocuridad         NA         NA         NA         NA
+#&gt; 32   132     4   30      luz         NA         NA         NA         NA
+#&gt;    dmt_flw_1 dmt_flw_2 dmt_flw_3 dmdf_mtr_1 altp_mtr_1 altp_mtr_2 altp_mtr_3
+#&gt; 1         NA        NA        NA         NA         NA         NA         NA
+#&gt; 2         NA        NA        NA         NA         NA         NA         NA
+#&gt; 3         NA        NA        NA         NA         NA         NA         NA
+#&gt; 4         NA        NA        NA         NA         NA         NA         NA
+#&gt; 5         NA        NA        NA         NA         NA         NA         NA
+#&gt; 6         NA        NA        NA         NA         NA         NA         NA
+#&gt; 7         NA        NA        NA         NA         NA         NA         NA
+#&gt; 8         NA        NA        NA         NA         NA         NA         NA
+#&gt; 9         NA        NA        NA         NA         NA         NA         NA
+#&gt; 10        NA        NA        NA         NA         NA         NA         NA
+#&gt; 11        NA        NA        NA         NA         NA         NA         NA
+#&gt; 12        NA        NA        NA         NA         NA         NA         NA
+#&gt; 13        NA        NA        NA         NA         NA         NA         NA
+#&gt; 14        NA        NA        NA         NA         NA         NA         NA
+#&gt; 15        NA        NA        NA         NA         NA         NA         NA
+#&gt; 16        NA        NA        NA         NA         NA         NA         NA
+#&gt; 17        NA        NA        NA         NA         NA         NA         NA
+#&gt; 18        NA        NA        NA         NA         NA         NA         NA
+#&gt; 19        NA        NA        NA         NA         NA         NA         NA
+#&gt; 20        NA        NA        NA         NA         NA         NA         NA
+#&gt; 21        NA        NA        NA         NA         NA         NA         NA
+#&gt; 22        NA        NA        NA         NA         NA         NA         NA
+#&gt; 23        NA        NA        NA         NA         NA         NA         NA
+#&gt; 24        NA        NA        NA         NA         NA         NA         NA
+#&gt; 25        NA        NA        NA         NA         NA         NA         NA
+#&gt; 26        NA        NA        NA         NA         NA         NA         NA
+#&gt; 27        NA        NA        NA         NA         NA         NA         NA
+#&gt; 28        NA        NA        NA         NA         NA         NA         NA
+#&gt; 29        NA        NA        NA         NA         NA         NA         NA
+#&gt; 30        NA        NA        NA         NA         NA         NA         NA
+#&gt; 31        NA        NA        NA         NA         NA         NA         NA
+#&gt; 32        NA        NA        NA         NA         NA         NA         NA
+#&gt;    dmt_mtr_1 dmt_mtr_2 dmt_mtr_3 r10p_hrv_1 r10p_hrv_2
+#&gt; 1         NA        NA        NA         NA         NA
+#&gt; 2         NA        NA        NA         NA         NA
+#&gt; 3         NA        NA        NA         NA         NA
+#&gt; 4         NA        NA        NA         NA         NA
+#&gt; 5         NA        NA        NA         NA         NA
+#&gt; 6         NA        NA        NA         NA         NA
+#&gt; 7         NA        NA        NA         NA         NA
+#&gt; 8         NA        NA        NA         NA         NA
+#&gt; 9         NA        NA        NA         NA         NA
+#&gt; 10        NA        NA        NA         NA         NA
+#&gt; 11        NA        NA        NA         NA         NA
+#&gt; 12        NA        NA        NA         NA         NA
+#&gt; 13        NA        NA        NA         NA         NA
+#&gt; 14        NA        NA        NA         NA         NA
+#&gt; 15        NA        NA        NA         NA         NA
+#&gt; 16        NA        NA        NA         NA         NA
+#&gt; 17        NA        NA        NA         NA         NA
+#&gt; 18        NA        NA        NA         NA         NA
+#&gt; 19        NA        NA        NA         NA         NA
+#&gt; 20        NA        NA        NA         NA         NA
+#&gt; 21        NA        NA        NA         NA         NA
+#&gt; 22        NA        NA        NA         NA         NA
+#&gt; 23        NA        NA        NA         NA         NA
+#&gt; 24        NA        NA        NA         NA         NA
+#&gt; 25        NA        NA        NA         NA         NA
+#&gt; 26        NA        NA        NA         NA         NA
+#&gt; 27        NA        NA        NA         NA         NA
+#&gt; 28        NA        NA        NA         NA         NA
+#&gt; 29        NA        NA        NA         NA         NA
+#&gt; 30        NA        NA        NA         NA         NA
+#&gt; 31        NA        NA        NA         NA         NA
+#&gt; 32        NA        NA        NA         NA         NA
+#&gt; </div><div class='input'>
+<span class='co'># }</span>
 
-}
-
-</div></pre>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

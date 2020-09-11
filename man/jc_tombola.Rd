@@ -52,14 +52,12 @@ are: active or spectator. Only the active members will enter in the schedule.
 
 library(inti)
 library(googlesheets4)
-library(tidyverse)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
 , "15TaF0lCCByg0dgOLqfoTlLbAWnau8IiLOklpS4cvm4M/edit#gid=272604925")
+
 gs <- as_sheets_id(url)
 # browseURL(url)
-
-options(gargle_oauth_email = TRUE)
 
 jc <-  gs \%>\% range_read("members")
 
@@ -73,7 +71,8 @@ jc \%>\% jc_tombola(data = .
                   , date = "2020-06-17"
                   , seed = 2013
                   ) \%>\%
-                  web_table(rnames = T, caption = "JC")
+                  web_table(rnames = TRUE
+                  , caption = "JC")
 
 }
 

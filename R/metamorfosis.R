@@ -33,10 +33,10 @@
 #' 
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' library(googlesheets4)
-#' library(tidyverse)
+#' library(dplyr)
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
 #' , "1gue-wSQcEu4nJigVZdUWsTfIIzhtxpDRdWAQiEHgKak/edit#gid=0")

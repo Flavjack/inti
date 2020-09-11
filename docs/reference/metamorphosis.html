@@ -205,10 +205,10 @@ variables.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># \donttest{</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidyverse/googlesheets4'>googlesheets4</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
 
 <span class='kw'>url</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"https://docs.google.com/spreadsheets/d/"</span>
 , <span class='st'>"1gue-wSQcEu4nJigVZdUWsTfIIzhtxpDRdWAQiEHgKak/edit#gid=0"</span>)
@@ -217,12 +217,15 @@ variables.</p></td>
 
 <span class='kw'>fb_old</span> <span class='op'>&lt;-</span> <span class='kw'>gs</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/googlesheets4-deprecated.html'>sheets_read</a></span>(<span class='st'>"fb_old"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>select</span>(<span class='kw'>ID</span><span class='op'>:</span><span class='kw'>SNum</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span>(<span class='kw'>SS</span> <span class='op'>==</span> <span class='st'>"S1"</span>)
-
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>ID</span><span class='op'>:</span><span class='kw'>SNum</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>SS</span> <span class='op'>==</span> <span class='st'>"S1"</span>)
+</div><div class='output co'>#&gt; <span class='warning'>Warning: `sheets_read()` is deprecated as of googlesheets4 0.2.0.</span>
+#&gt; <span class='warning'>Please use `range_read()` instead.</span>
+#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='output co'>#&gt; <span class='message'>Reading from "RECIFE-2015-06-07 (J. Curcas - Imbibition time)"</span></div><div class='output co'>#&gt; <span class='message'>Range "'fb_old'"</span></div><div class='input'>
 <span class='kw'>dic</span> <span class='op'>&lt;-</span> <span class='kw'>gs</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/googlesheets4-deprecated.html'>sheets_read</a></span>(<span class='st'>"var_old"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>slice</span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>20</span>)
-
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>20</span>)
+</div><div class='output co'>#&gt; <span class='message'>Reading from "RECIFE-2015-06-07 (J. Curcas - Imbibition time)"</span></div><div class='output co'>#&gt; <span class='message'>Range "'var_old'"</span></div><div class='input'>
 <span class='kw'>mtm</span> <span class='op'>&lt;-</span> <span class='fu'>metamorphosis</span>(fieldbook = <span class='kw'>fb_old</span>
                         , dictionary = <span class='kw'>dic</span>
                         , from = <span class='st'>"old_name"</span>
@@ -233,9 +236,9 @@ variables.</p></td>
 
 <span class='kw'>fb_new</span> <span class='op'>&lt;-</span> <span class='kw'>mtm</span><span class='op'>$</span><span class='kw'>fieldbook</span>
 
-}
+<span class='co'># }</span>
 
-</div></pre>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

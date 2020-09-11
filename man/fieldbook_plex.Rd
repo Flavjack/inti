@@ -95,26 +95,3 @@ Information for build a plan for an experiment (PLEX)
 \details{
 Provide the information available.
 }
-\examples{
-
-\dontrun{
-
-library(inti)
-library(googlesheets4)
-library(tidyverse)
-
-url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1gue-wSQcEu4nJigVZdUWsTfIIzhtxpDRdWAQiEHgKak/edit#gid=1981295232")
-# browseURL(url)
-gs <- as_sheets_id(url)
-
-(data <- gs \%>\%
-    range_read("info"))
-
-plex <- data \%>\% fieldbook_plex(.)
-
-data \%>\% sheet_write(ss = gs, sheet = "test")
-
-}
-
-}

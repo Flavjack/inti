@@ -229,14 +229,12 @@ are: active or spectator. Only the active members will enter in the schedule.</p
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/flavjack/inti'>inti</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidyverse/googlesheets4'>googlesheets4</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span>)
 
 <span class='kw'>url</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"https://docs.google.com/spreadsheets/d/"</span>
 , <span class='st'>"15TaF0lCCByg0dgOLqfoTlLbAWnau8IiLOklpS4cvm4M/edit#gid=272604925"</span>)
+
 <span class='kw'>gs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/as_sheets_id.html'>as_sheets_id</a></span>(<span class='kw'>url</span>)
 <span class='co'># browseURL(url)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(gargle_oauth_email = <span class='fl'>TRUE</span>)
 
 <span class='kw'>jc</span> <span class='op'>&lt;-</span>  <span class='kw'>gs</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/range_read.html'>range_read</a></span>(<span class='st'>"members"</span>)
 
@@ -250,7 +248,8 @@ are: active or spectator. Only the active members will enter in the schedule.</p
                   , date = <span class='st'>"2020-06-17"</span>
                   , seed = <span class='fl'>2013</span>
                   ) <span class='op'>%&gt;%</span>
-                  <span class='fu'><a href='web_table.html'>web_table</a></span>(rnames = <span class='kw'>T</span>, caption = <span class='st'>"JC"</span>)
+                  <span class='fu'><a href='web_table.html'>web_table</a></span>(rnames = <span class='fl'>TRUE</span>
+                  , caption = <span class='st'>"JC"</span>)
 
 }
 

@@ -21,11 +21,10 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' library(inti)
 #' library(googlesheets4)
-#' library(tidyverse)
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
 #' , "1a82XIbTeWPC4pwvu9Zjl4qrGitGQ_B-mf3-w67VS4-Q/edit#gid=0")
@@ -36,7 +35,7 @@
 #'     range_read("design"))
 #'
 #' (varlist <- gs %>%
-#'     range_read("variables"))
+#'     range_read("varlist"))
 #'
 #' fieldbook <- design %>%
 #'   inti::fieldbook_design() %>%

@@ -16,7 +16,12 @@
 #' @export
 #' 
 
-web_table <- function(data, caption = NULL, digits = 3, rnames = FALSE, buttons = NULL){
+web_table <- function(data
+                      , caption = NULL
+                      , digits = 3
+                      , rnames = FALSE
+                      , buttons = NULL
+                      ){
 
   if (is.null(buttons)){
 

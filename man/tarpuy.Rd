@@ -16,6 +16,7 @@ Invoke RStudio addin to create field book designs
 Tarpuy allow to create experimental designs under an interactive app.
 }
 \examples{
+
 \dontrun{
 
  inti::tarpuy()

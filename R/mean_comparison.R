@@ -32,7 +32,6 @@
 #'
 #' library(inti)
 #' library(googlesheets4)
-#' library(tidyverse)
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
 #'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=1414357945")
@@ -48,7 +47,7 @@
 #' mc <- mean_comparison(data
 #'                      , fb_smr = fb_smr
 #'                      , variable = "BIOMDW"
-#'                      , graph_opts = T
+#'                      , graph_opts = TRUE
 #'                      )
 #'
 #' table <- mc$comparison

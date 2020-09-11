@@ -18,7 +18,7 @@ library(htmltools)
 # inti <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 <!-- badges: start -->
-  [![Travis build status](https://travis-ci.com/Flavjack/inti.svg?branch=master)](https://travis-ci.com/Flavjack/inti)
+  [![Travis build status](https://travis-ci.org/Flavjack/inti.svg?branch=master)](https://travis-ci.org/Flavjack/inti)
 <!-- badges: end -->
 
 Inti package is a collection of different applications and procedures used in plant breeding and experimental designs.

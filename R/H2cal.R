@@ -83,7 +83,8 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
+#' 
 #' library(inti)
 #' library(agridat)
 #'
@@ -94,14 +95,15 @@
 #'             , rep.n = 3
 #'             , fix.model = "rep + (1|rep:block) + gen"
 #'             , ran.model = "rep + (1|rep:block) + (1|gen)"
-#'             , blues = T
-#'             , plot_diag = TRUE
+#'             , blues = TRUE
+#'             , plot_diag = FALSE
 #'             , plot_dots = "rep"
-#'             , outliers.rm = T
+#'             , outliers.rm = TRUE
 #'             )
 #'  hr$tabsmr
 #'  hr$blups
 #'  hr$blues
+#'  
 #' }
 #' 
 
@@ -168,7 +170,8 @@ H2cal <- function(data
 
   if (plot_diag == TRUE) {
 
-    par(mfrow=c(2,4))
+    prp <- par(mfrow=c(2,4), no.readonly = TRUE)
+    on.exit(par(prp))         
     hist(resid(g.fix), main = trait)
     qqnorm(resid(g.fix), main = trait); qqline(resid(g.fix))
     plot(fitted(g.fix), resid(g.fix, type = "pearson"), main = trait); abline(h=0)

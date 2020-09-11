@@ -9,6 +9,7 @@
 #' @return Shiny app
 #'
 #' @examples
+#' 
 #' \dontrun{
 #'
 #'  inti::tarpuy()

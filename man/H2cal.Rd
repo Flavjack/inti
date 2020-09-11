@@ -90,7 +90,8 @@ For more information review the references.
 }
 \examples{
 
-\dontrun{
+\donttest{
+
 library(inti)
 library(agridat)
 
@@ -101,14 +102,15 @@ library(agridat)
             , rep.n = 3
             , fix.model = "rep + (1|rep:block) + gen"
             , ran.model = "rep + (1|rep:block) + (1|gen)"
-            , blues = T
-            , plot_diag = TRUE
+            , blues = TRUE
+            , plot_diag = FALSE
             , plot_dots = "rep"
-            , outliers.rm = T
+            , outliers.rm = TRUE
             )
  hr$tabsmr
  hr$blups
  hr$blues
+ 
 }
 
 }

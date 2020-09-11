@@ -23,11 +23,10 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' library(inti)
 #' library(googlesheets4)
-#' library(tidyverse)
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
 #'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
@@ -43,8 +42,8 @@
 #' report <- fieldbook_report(data
 #'                           , fb_smr = fb_smr
 #'                           , variable = "LA"
-#'                           , dotplot_groups = "genotypes"
-#'                           , model_diag = T
+#'                           , dotplot_groups = "genotype"
+#'                           , model_diag = TRUE
 #'                           )
 #' report
 #'
@@ -123,7 +122,8 @@ fieldbook_report <- function(data
 
     if (model_diag == TRUE) {
 
-      par(mfrow=c(2,2))
+      prp <- par(mfrow=c(2,2), no.readonly = TRUE)
+      on.exit(par(prp))         
       hist(resid(model), main = {{variable}})
       qqnorm(resid(model), main = {{variable}}); qqline(resid(model))
       plot(fitted(model), resid(model, type = "pearson"), main = {{variable}}); abline(h=0)

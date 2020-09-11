@@ -27,11 +27,10 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' library(inti)
 #' library(googlesheets4)
-#' library(tidyverse)
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
 #'               , "1gue-wSQcEu4nJigVZdUWsTfIIzhtxpDRdWAQiEHgKak/edit#gid=56106366")
@@ -45,17 +44,11 @@
 #'                           , last_factor = "imbt"
 #'                           , sep = "_"
 #'                           , new_colname = "rep"
-#'                           #, from_var = "sch_0_1"
-#'                           #, to_var = "swc_0_1"
-#'                           #, exc_factors = "bar_code"
-#'                           )
-#'
-#' fbrs <- fieldbook_reshape(data = data
-#'                           , last_factor = "geno"
-#'                           , sep = "_"
-#'                           , new_colname = "smp"
+#'                           , from_var = "sch_0_1"
+#'                           , to_var = "swc_0_1"
 #'                           , exc_factors = "bar_code"
 #'                           )
+#' fbrs
 #'
 #' }
 #' 

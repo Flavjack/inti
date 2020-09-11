@@ -18,6 +18,7 @@ Create all the files in the present work directory. It is recommended use
 ".Rprj" and you should have the possibility to compile the book.
 }
 \examples{
+
 \dontrun{
 
  inti::rticles_addin()

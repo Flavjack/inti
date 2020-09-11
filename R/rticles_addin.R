@@ -11,6 +11,7 @@
 #' @return Shiny app
 #'
 #' @examples
+#' 
 #' \dontrun{
 #'
 #'  inti::rticles_addin()

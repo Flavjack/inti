@@ -33,7 +33,6 @@
 #'
 #' library(inti)
 #' library(googlesheets4)
-#' library(tidyverse)
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
 #'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
@@ -41,7 +40,7 @@
 #' gs <- as_sheets_id(url)
 #'
 #' (data <- gs %>%
-#'     range_read("plot"))
+#'     range_read("LA"))
 #'
 #' plot_smr(data)
 #'
@@ -51,7 +50,6 @@
 #'          , brakes = 2000
 #'          , sig = "sig"
 #'          , error = "ste"
-#'          , legend = "left"
 #'          )
 #' }
 #'

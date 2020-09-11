@@ -39,11 +39,10 @@ treatment1 and treatment2: \code{treatment1:treatment2}.
 }
 \examples{
 
-\dontrun{
+\donttest{
 
 library(inti)
 library(googlesheets4)
-library(tidyverse)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
               , "15uwCgQRtR01B3FJaZBE8t_0bOC_8Bbey9ccwVlZH0jg/edit#gid=56711214")

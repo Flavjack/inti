@@ -26,11 +26,10 @@ Compute and plot information for multivariate analysis.
 }
 \examples{
 
-\dontrun{
+\donttest{
 
 library(inti)
 library(googlesheets4)
-library(tidyverse)
 library(FactoMineR)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"

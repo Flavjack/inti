@@ -23,10 +23,9 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #'
 #' library(googlesheets4)
-#' library(tidyverse)
 #' library(inti)
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"

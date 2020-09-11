@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Travis build
-status](https://travis-ci.com/Flavjack/inti.svg?branch=master)](https://travis-ci.com/Flavjack/inti)
+status](https://travis-ci.org/Flavjack/inti.svg?branch=master)](https://travis-ci.org/Flavjack/inti)
 <!-- badges: end -->
 
 Inti package is a collection of different applications and procedures
