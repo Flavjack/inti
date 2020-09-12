@@ -216,7 +216,7 @@ details.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'># \donttest{</span>
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/flavjack/inti'>inti</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidyverse/googlesheets4'>googlesheets4</a></span>)
@@ -229,45 +229,12 @@ details.</p></td>
 
 (<span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='kw'>gs</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/range_read.html'>range_read</a></span>(<span class='st'>"tarpuy"</span>))
-</div><div class='output co'>#&gt; <span class='message'>Using an auto-discovered, cached token.</span>
-#&gt; <span class='message'>To suppress this message, modify your code or options to clearly consent to the use of a cached token.</span>
-#&gt; <span class='message'>See gargle's "Non-interactive auth" vignette for more details:</span>
-#&gt; <span class='message'>https://gargle.r-lib.org/articles/non-interactive-auth.html</span></div><div class='output co'>#&gt; <span class='message'>The googlesheets4 package is using a cached token for flavjack@gmail.com.</span></div><div class='output co'>#&gt; <span class='message'>Reading from "inti"</span></div><div class='output co'>#&gt; <span class='message'>Range "'tarpuy'"</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 16 x 5</span><span>
-#&gt;     temp  prof condición genotype profundidad
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
-#&gt; </span><span style='color: #555555;'> 1</span><span>    15   0.3 luz       G01      1cm        
-#&gt; </span><span style='color: #555555;'> 2</span><span>    20   0.6 oscuridad G02      2cm        
-#&gt; </span><span style='color: #555555;'> 3</span><span>    25   0.7 </span><span style='color: #BB0000;'>NA</span><span>        G03      3cm        
-#&gt; </span><span style='color: #555555;'> 4</span><span>    30  </span><span style='color: #BB0000;'>NA</span><span>   </span><span style='color: #BB0000;'>NA</span><span>        G04      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'> 5</span><span>    35  </span><span style='color: #BB0000;'>NA</span><span>   </span><span style='color: #BB0000;'>NA</span><span>        G05      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'> 6</span><span>    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='color: #BB0000;'>NA</span><span>   </span><span style='color: #BB0000;'>NA</span><span>        G06      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'> 7</span><span>    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='color: #BB0000;'>NA</span><span>   </span><span style='color: #BB0000;'>NA</span><span>        G07      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'> 8</span><span>    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='color: #BB0000;'>NA</span><span>   </span><span style='color: #BB0000;'>NA</span><span>        G08      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'> 9</span><span>    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='color: #BB0000;'>NA</span><span>   </span><span style='color: #BB0000;'>NA</span><span>        G09      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'>10</span><span>    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='color: #BB0000;'>NA</span><span>   </span><span style='color: #BB0000;'>NA</span><span>        G10      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'>11</span><span>    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='color: #BB0000;'>NA</span><span>   </span><span style='color: #BB0000;'>NA</span><span>        G11      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'>12</span><span>    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='color: #BB0000;'>NA</span><span>   </span><span style='color: #BB0000;'>NA</span><span>        G12      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'>13</span><span>    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='color: #BB0000;'>NA</span><span>   </span><span style='color: #BB0000;'>NA</span><span>        G13      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'>14</span><span>    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='color: #BB0000;'>NA</span><span>   </span><span style='color: #BB0000;'>NA</span><span>        G14      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'>15</span><span>    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='color: #BB0000;'>NA</span><span>   </span><span style='color: #BB0000;'>NA</span><span>        G15      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'>16</span><span>    </span><span style='color: #BB0000;'>NA</span><span>  </span><span style='color: #BB0000;'>NA</span><span>   </span><span style='color: #BB0000;'>NA</span><span>        G16      </span><span style='color: #BB0000;'>NA</span><span>         </div><div class='input'>
-<span class='kw'>data</span> <span class='op'>%&gt;%</span> <span class='kw'>inti</span>::<span class='fu'>fieldbook_design</span>()
-</div><div class='output co'>#&gt; $design
-#&gt;    plots r temp
-#&gt; 1    101 1   25
-#&gt; 2    102 1   30
-#&gt; 3    103 1   15
-#&gt; 4    104 2   15
-#&gt; 5    105 1   20
-#&gt; 6    106 1   35
-#&gt; 7    107 2   35
-#&gt; 8    108 2   20
-#&gt; 9    109 2   25
-#&gt; 10   110 2   30
-#&gt; </div><div class='input'>
-<span class='co'># }</span>
 
-</div></span></pre>
+<span class='kw'>data</span> <span class='op'>%&gt;%</span> <span class='kw'>inti</span>::<span class='fu'>fieldbook_design</span>()
+
+}
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

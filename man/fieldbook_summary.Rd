@@ -39,7 +39,7 @@ treatment1 and treatment2: \code{treatment1:treatment2}.
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 library(inti)
 library(googlesheets4)

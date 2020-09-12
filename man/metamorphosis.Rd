@@ -37,7 +37,7 @@ The function require at least three columns.
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 library(googlesheets4)
 library(dplyr)

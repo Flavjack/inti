@@ -39,7 +39,7 @@ symbol using \code{{hypen}} in your table. \code{notation} could be use:
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 library(googlesheets4)
 library(inti)

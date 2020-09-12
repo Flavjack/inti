@@ -90,7 +90,7 @@ For more information review the references.
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 library(inti)
 library(agridat)

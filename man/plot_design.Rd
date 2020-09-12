@@ -42,7 +42,7 @@ The function allows to plot the experimental design according the
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 library(inti)
 library(googlesheets4)

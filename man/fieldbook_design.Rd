@@ -45,7 +45,7 @@ The function allows to include the arguments in the sheet that have
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 library(inti)
 library(googlesheets4)

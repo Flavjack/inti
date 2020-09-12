@@ -26,7 +26,7 @@ Compute and plot information for multivariate analysis.
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 library(inti)
 library(googlesheets4)

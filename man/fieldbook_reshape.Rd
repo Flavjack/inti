@@ -44,7 +44,7 @@ will help to create the column \code{rep} and the new variable name will be
 }
 \examples{
 
-\donttest{
+\dontrun{
 
 library(inti)
 library(googlesheets4)

@@ -209,7 +209,7 @@ treatment1 and treatment2: <code>treatment1:treatment2</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'># \donttest{</span>
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/flavjack/inti'>inti</a></span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidyverse/googlesheets4'>googlesheets4</a></span>)
@@ -221,76 +221,21 @@ treatment1 and treatment2: <code>treatment1:treatment2</code>.</p>
 
 (<span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='kw'>gs</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/range_read.html'>range_read</a></span>(<span class='st'>"fb"</span>))
-</div><div class='output co'>#&gt; <span class='message'>Reading from "YUPANA"</span></div><div class='output co'>#&gt; <span class='message'>Range "'fb'"</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 150 x 17</span><span>
-#&gt;    block treat genotype SPAD_29 SPAD_83 RWC_84 OP_84 LEAFDW STEMDW ROOTDW TUBDW
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> II    DRG   G01         56.3    41.1   61.5 -</span><span style='color: #BB0000;'>2.43</span><span>  13.3   14.9    3.83 19.8 
-#&gt; </span><span style='color: #555555;'> 2</span><span> IV    DRG   G02         52.7    47.9   63.2 -</span><span style='color: #BB0000;'>3.03</span><span>   9.42   8.63   2.1  17.7 
-#&gt; </span><span style='color: #555555;'> 3</span><span> III   IRG   G01         49.2    41.6   67.7 -</span><span style='color: #BB0000;'>2.5</span><span>   18.2   24.2    3.16 38.0 
-#&gt; </span><span style='color: #555555;'> 4</span><span> I     DRG   G02         55.5    44.2   64.9 -</span><span style='color: #BB0000;'>2.4</span><span>    8.84   6.58   2    13.5 
-#&gt; </span><span style='color: #555555;'> 5</span><span> II    IRG   G03         58.2    32.6   74.5 -</span><span style='color: #BB0000;'>2.27</span><span>  14.6   12.6    1.83 51.2 
-#&gt; </span><span style='color: #555555;'> 6</span><span> V     IRG   G04         43.5    37.8   74.0 -</span><span style='color: #BB0000;'>2.37</span><span>  19.8   17.5    2.83 62.5 
-#&gt; </span><span style='color: #555555;'> 7</span><span> I     IRG   G01         57.4    42.5   72.7 -</span><span style='color: #BB0000;'>1.77</span><span>  15.0   15.3    2.28 22.4 
-#&gt; </span><span style='color: #555555;'> 8</span><span> IV    IRG   G05         56.1    35.9   72.8 -</span><span style='color: #BB0000;'>2.33</span><span>  19.9   14.6    3.65 51.4 
-#&gt; </span><span style='color: #555555;'> 9</span><span> II    DRG   G06         61      57.5   59.8 -</span><span style='color: #BB0000;'>3.23</span><span>  19.9   21.2    4.04  2.37
-#&gt; </span><span style='color: #555555;'>10</span><span> I     DRG   G05         60.3    41.8   50.8 -</span><span style='color: #BB0000;'>2.87</span><span>  12.3   11.1    4.17 28.7 
-#&gt; </span><span style='color: #555555;'># ... with 140 more rows, and 6 more variables: BIOMDW </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, HI </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   TTRNS </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, WUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, TWUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, LA </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+
 (<span class='kw'>fb_smr</span> <span class='op'>&lt;-</span> <span class='kw'>gs</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/range_read.html'>range_read</a></span>(<span class='st'>"fbsm"</span>))
-</div><div class='output co'>#&gt; <span class='message'>Reading from "YUPANA"</span></div><div class='output co'>#&gt; <span class='message'>Range "'fbsm'"</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 17 x 8</span><span>
-#&gt;    variables type   levels   NAs model_facts     comp_facts  test_comp sig_level
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> block     factor      5    </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>              </span><span style='color: #BB0000;'>NA</span><span>          </span><span style='color: #BB0000;'>NA</span><span>            </span><span style='color: #BB0000;'>NA</span><span>   
-#&gt; </span><span style='color: #555555;'> 2</span><span> genotype  factor     15    </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>              </span><span style='color: #BB0000;'>NA</span><span>          </span><span style='color: #BB0000;'>NA</span><span>            </span><span style='color: #BB0000;'>NA</span><span>   
-#&gt; </span><span style='color: #555555;'> 3</span><span> treat     factor      2    </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>              </span><span style='color: #BB0000;'>NA</span><span>          </span><span style='color: #BB0000;'>NA</span><span>            </span><span style='color: #BB0000;'>NA</span><span>   
-#&gt; </span><span style='color: #555555;'> 4</span><span> BIOMDW    numer~    150     0 block + genoty~ genotype:t~ TUKEY          0.05
-#&gt; </span><span style='color: #555555;'> 5</span><span> HI        numer~    150     0 block + genoty~ genotype:t~ TUKEY          0.05
-#&gt; </span><span style='color: #555555;'> 6</span><span> LA        numer~    150     0 block + genoty~ genotype:t~ TUKEY          0.05
-#&gt; </span><span style='color: #555555;'> 7</span><span> LEAFDW    numer~    150     0 block + genoty~ genotype:t~ TUKEY          0.05
-#&gt; </span><span style='color: #555555;'> 8</span><span> OP_84     numer~    150     0 block + genoty~ genotype:t~ TUKEY          0.05
-#&gt; </span><span style='color: #555555;'> 9</span><span> ROOTDW    numer~    150     0 block + genoty~ genotype:t~ TUKEY          0.05
-#&gt; </span><span style='color: #555555;'>10</span><span> RWC_84    numer~    150     0 block + genoty~ genotype:t~ TUKEY          0.05
-#&gt; </span><span style='color: #555555;'>11</span><span> SPAD_29   numer~    150     0 block + genoty~ genotype:t~ TUKEY          0.05
-#&gt; </span><span style='color: #555555;'>12</span><span> SPAD_83   numer~    150     0 block + genoty~ genotype:t~ TUKEY          0.05
-#&gt; </span><span style='color: #555555;'>13</span><span> STEMDW    numer~    150     0 block + genoty~ genotype:t~ TUKEY          0.05
-#&gt; </span><span style='color: #555555;'>14</span><span> TTRNS     numer~    150     0 block + genoty~ genotype:t~ TUKEY          0.05
-#&gt; </span><span style='color: #555555;'>15</span><span> TUBDW     numer~    150     0 block + genoty~ genotype:t~ TUKEY          0.05
-#&gt; </span><span style='color: #555555;'>16</span><span> TWUE      numer~    150     0 block + genoty~ genotype:t~ TUKEY          0.05
-#&gt; </span><span style='color: #555555;'>17</span><span> WUE       numer~    150     0 block + genoty~ genotype:t~ TUKEY          0.05</div><div class='input'>
+
 <span class='kw'>report</span> <span class='op'>&lt;-</span> <span class='fu'>fieldbook_report</span>(<span class='kw'>data</span>
                           , fb_smr = <span class='kw'>fb_smr</span>
                           , variable = <span class='st'>"LA"</span>
                           , dotplot_groups = <span class='st'>"genotype"</span>
                           , model_diag = <span class='fl'>TRUE</span>
                           )
-</div><div class='img'><img src='fieldbook_report-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>report</span>
-</div><div class='output co'>#&gt; $formula
-#&gt; LA ~ block + genotype * treat
-#&gt; &lt;environment: 0x00000000430f6760&gt;
-#&gt; 
-#&gt; $anova
-#&gt; Call:
-#&gt;    aov(formula = model_formula, data = fb)
-#&gt; 
-#&gt; Terms:
-#&gt;                     block  genotype     treat genotype:treat Residuals
-#&gt; Sum of Squares    3435339 261729564 788556926      108147972  63797516
-#&gt; Deg. of Freedom         4        14         1             14       116
-#&gt; 
-#&gt; Residual standard error: 741.6054
-#&gt; Estimated effects may be unbalanced
-#&gt; 
-#&gt; $diagplot
-#&gt; $diagplot$freq</div><div class='img'><img src='fieldbook_report-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; $diagplot$qqnorm</div><div class='img'><img src='fieldbook_report-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; $diagplot$resid</div><div class='img'><img src='fieldbook_report-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; $diagplot$sresid</div><div class='img'><img src='fieldbook_report-5.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; 
-#&gt; $dotplot</div><div class='img'><img src='fieldbook_report-6.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div><div class='input'>
-<span class='co'># }</span>
+<span class='kw'>report</span>
 
-</div></span></pre>
+}
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

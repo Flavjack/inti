@@ -23,7 +23,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #'
 #' library(googlesheets4)
 #' library(inti)
