@@ -2,7 +2,7 @@ Package: inti
 Type: Package
 Version: 0.1.0
 Title: Tools and Statistical Procedures in Plant Science
-Description: The package inti is a collection of different applications and procedures
+Description: A collection of different applications and procedures 
     used in plant science and experimental designs.
     The package includes three shiny apps:
     i) Tarpuy for planning experimental projects.
