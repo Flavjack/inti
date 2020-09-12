@@ -8,7 +8,7 @@ Description: A collection of different applications and procedures
     i) Tarpuy for planning experimental projects.
     ii) Yupana for interactive data analysis.
     iii) Rticles for technical writing.
-Date: 2020-09-11
+Date: 2020-09-12
 Authors@R: person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com",
                   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0714-669X"))
 URL: https://github.com/flavjack/inti/
@@ -33,7 +33,6 @@ Suggests:
     agridat,
     googlesheets4,
     corrplot,
-    lmerTest,
     knitr,
     rmarkdown
 VignetteBuilder: knitr
