@@ -15,6 +15,7 @@ H2cal(
   year.name = NULL,
   fix.model,
   ran.model,
+  summary = FALSE,
   blues = FALSE,
   effects = FALSE,
   plot_diag = FALSE,
@@ -42,6 +43,8 @@ H2cal(
 \item{fix.model}{The fixed effects in the model. See examples.}
 
 \item{ran.model}{The random effects in the model. See examples.}
+
+\item{summary}{Print summary from random model (default = FALSE).}
 
 \item{blues}{Calculate the BLUEs (default = FALSE).}
 

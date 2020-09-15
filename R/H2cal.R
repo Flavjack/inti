@@ -12,6 +12,7 @@
 #' @param year.n Number of years (default = 1). See details.
 #' @param fix.model The fixed effects in the model. See examples.
 #' @param ran.model The random effects in the model. See examples.
+#' @param summary Print summary from random model (default = FALSE). 
 #' @param blues Calculate the BLUEs (default = FALSE).
 #' @param effects Random effects instead of the BLUPs (default = FALSE).
 #' @param plot_diag Show diagnostic plots (default = FALSE).
@@ -117,6 +118,7 @@ H2cal <- function(data
                   , year.name = NULL
                   , fix.model
                   , ran.model
+                  , summary = FALSE
                   , blues = FALSE
                   , effects = FALSE
                   , plot_diag = FALSE
@@ -164,9 +166,16 @@ H2cal <- function(data
   # fixed genotype effect
   f.md <- as.formula(paste(trait, paste(fix.model, collapse = " + "), sep = " ~ "))
   g.fix <- eval(bquote(lmer(.(f.md), data = dt.fm)))
-  # summary(g.fix)
 
-# Plot models -------------------------------------------------------------
+  # Print model summary -----------------------------------------------------
+  
+  if (summary == TRUE) {
+    
+    summary(g.ran) %>% print()
+    
+  }
+
+  # Plot models -------------------------------------------------------------
 
   if (plot_diag == TRUE) {
 
@@ -184,7 +193,7 @@ H2cal <- function(data
 
   }
 
-  ### Dot plots
+  # Dot-plot ----------------------------------------------------------------
 
   if (!is.null(plot_dots)) {
 
