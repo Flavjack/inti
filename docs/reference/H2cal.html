@@ -64,13 +64,13 @@
 
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113308628-1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113308628-7"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-113308628-1');
+  gtag('config', 'UA-113308628-7');
 </script>
 
 
@@ -172,6 +172,7 @@
   year.name = <span class='kw'>NULL</span>,
   <span class='kw'>fix.model</span>,
   <span class='kw'>ran.model</span>,
+  summary = <span class='fl'>FALSE</span>,
   blues = <span class='fl'>FALSE</span>,
   effects = <span class='fl'>FALSE</span>,
   plot_diag = <span class='fl'>FALSE</span>,
@@ -221,6 +222,10 @@
     <tr>
       <th>ran.model</th>
       <td><p>The random effects in the model. See examples.</p></td>
+    </tr>
+    <tr>
+      <th>summary</th>
+      <td><p>Print summary from random model (default = FALSE).</p></td>
     </tr>
     <tr>
       <th>blues</th>

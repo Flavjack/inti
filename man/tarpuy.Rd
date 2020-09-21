@@ -17,7 +17,7 @@ Tarpuy allow to create experimental designs under an interactive app.
 }
 \examples{
 
-\dontrun{
+if(interactive()){
 
  inti::tarpuy()
 

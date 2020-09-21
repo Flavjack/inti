@@ -14,15 +14,16 @@ used in plant breeding and experimental designs.
 
 ## Installation
 
-You can install the released version of inti from
-[CRAN](https://CRAN.R-project.org) with:
+<!-- You can install the released version of inti from [CRAN](https://CRAN.R-project.org) with: -->
 
-``` r
-install.packages("inti")
-```
+<!-- ``` r -->
 
-And the development version from
-[GitHub](https://github.com/Flavjack/inti) with:
+<!-- install.packages("inti") -->
+
+<!-- ``` -->
+
+The development version from [GitHub](https://github.com/Flavjack/inti)
+with:
 
 ``` r
 # install.packages("devtools")

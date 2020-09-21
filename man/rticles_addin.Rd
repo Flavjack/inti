@@ -19,7 +19,7 @@ Create all the files in the present work directory. It is recommended use
 }
 \examples{
 
-\dontrun{
+if(interactive()){
 
  inti::rticles_addin()
 

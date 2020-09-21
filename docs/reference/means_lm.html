@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mean comparison using data frames — mean_comparison • inti</title>
+<title>Mean comparison — means_lm • inti</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Mean comparison using data frames — mean_comparison" />
-<meta property="og:description" content="Function to compare treatment from lm or aov using data frames" />
+<meta property="og:title" content="Mean comparison — means_lm" />
+<meta property="og:description" content="Function to calculate the means using Linear models (lm or aov)" />
 <meta property="og:image" content="https://flavjack.github.io/inti/reference/figures/logo.png" />
 
 
@@ -152,24 +152,28 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Mean comparison using data frames</h1>
-    <small class="dont-index">Source: <a href='https://github.com/flavjack/inti/blob/master/R/mean_comparison.R'><code>R/mean_comparison.R</code></a></small>
-    <div class="hidden name"><code>mean_comparison.Rd</code></div>
+    <h1>Mean comparison</h1>
+    <small class="dont-index">Source: <a href='https://github.com/flavjack/inti/blob/master/R/means_lm.R'><code>R/means_lm.R</code></a></small>
+    <div class="hidden name"><code>means_lm.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Function to compare treatment from lm or aov using data frames</p>
+    <p>Function to calculate the means using Linear models (lm or aov)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mean_comparison</span>(
+    <pre class="usage"><span class='fu'>means_lm</span>(
   <span class='kw'>data</span>,
-  <span class='kw'>fb_smr</span>,
-  <span class='kw'>variable</span>,
-  <span class='kw'>model_facts</span>,
-  <span class='kw'>comp_facts</span>,
-  test_comp = <span class='st'>"SNK"</span>,
-  sig_level = <span class='fl'>0.05</span>,
-  graph_opts = <span class='fl'>FALSE</span>
+  <span class='kw'>trait</span>,
+  <span class='kw'>model</span>,
+  <span class='kw'>comparison</span>,
+  test = <span class='st'>"SNK"</span>,
+  anova = <span class='fl'>FALSE</span>,
+  plot_diag = <span class='fl'>FALSE</span>,
+  plot_treat = <span class='kw'>NULL</span>,
+  plot_groups = <span class='kw'>NULL</span>,
+  tab_vars = <span class='kw'>NULL</span>,
+  sep = <span class='kw'>NULL</span>,
+  digits = <span class='fl'>3</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -177,78 +181,67 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>Fieldbook data.</p></td>
+      <td><p>Experimental design data frame with the factors and traits.</p></td>
     </tr>
     <tr>
-      <th>fb_smr</th>
-      <td><p>Summary of the variables in the fieldbook.</p></td>
+      <th>trait</th>
+      <td><p>Name of the trait.</p></td>
     </tr>
     <tr>
-      <th>variable</th>
-      <td><p>Model used for the experimental design.</p></td>
+      <th>model</th>
+      <td><p>The effects in the model. See examples.</p></td>
     </tr>
     <tr>
-      <th>model_facts</th>
-      <td><p>Comparison test (default = "SNK"). Others: "TUKEY",
-"DUNCAN".</p></td>
+      <th>comparison</th>
+      <td><p>Factor for the comparisons.</p></td>
     </tr>
     <tr>
-      <th>comp_facts</th>
-      <td><p>Significance level for the analysis (default = 0.05).</p></td>
+      <th>test</th>
+      <td><p>Test comparison (default = "SNK"). Others: "TUKEY" &amp; "DUNCAN".</p></td>
     </tr>
     <tr>
-      <th>test_comp</th>
-      <td><p>Significance level for the analysis (default = 0.05).</p></td>
+      <th>anova</th>
+      <td><p>ANOVA table (default = FALSE).</p></td>
     </tr>
     <tr>
-      <th>sig_level</th>
-      <td><p>Significance level for the analysis (default = 0.05).</p></td>
+      <th>plot_diag</th>
+      <td><p>Show diagnostic plots (default = FALSE).</p></td>
     </tr>
     <tr>
-      <th>graph_opts</th>
-      <td><p>Include option in the table for graphs (default = FALSE).</p></td>
+      <th>plot_treat</th>
+      <td><p>Treat of comparison in dot plot (default = NULL). See
+example.</p></td>
+    </tr>
+    <tr>
+      <th>plot_groups</th>
+      <td><p>Group of comparison in dot plot (default = NULL). See
+example.</p></td>
+    </tr>
+    <tr>
+      <th>tab_vars</th>
+      <td><p>Specific the variables in the summary table (default = NULL).</p></td>
+    </tr>
+    <tr>
+      <th>sep</th>
+      <td><p>Separator between the variables when use <code>tab_vars</code>. See
+details.</p></td>
+    </tr>
+    <tr>
+      <th>digits</th>
+      <td><p>Number of digits in the table (default = 3).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>data frame</p>
+    <p>A list with two objects:</p>
+<p>1. Summary statistics.</p>
+<p>2. Means with the mean comparisons test.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For compare the factors you should use ":". For example, to compare
-treatment1 and treatment2: <code>treatment1:treatment2</code>.</p>
+    <p>Using <code>tab_vars</code> select the variables shown the adjusted mean table with
+the <code>sep</code>. Mean comparison at p &lt; 0.05.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/flavjack/inti'>inti</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidyverse/googlesheets4'>googlesheets4</a></span>)
-
-<span class='kw'>url</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"https://docs.google.com/spreadsheets/d/"</span>
-              , <span class='st'>"15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=1414357945"</span>)
-<span class='co'># browseURL(url)</span>
-<span class='kw'>gs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/as_sheets_id.html'>as_sheets_id</a></span>(<span class='kw'>url</span>)
-
-(<span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='kw'>gs</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/range_read.html'>range_read</a></span>(<span class='st'>"fb"</span>))
-
-(<span class='kw'>fb_smr</span> <span class='op'>&lt;-</span> <span class='kw'>gs</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/range_read.html'>range_read</a></span>(<span class='st'>"fbsm"</span>))
-
-<span class='kw'>mc</span> <span class='op'>&lt;-</span> <span class='fu'>mean_comparison</span>(<span class='kw'>data</span>
-                     , fb_smr = <span class='kw'>fb_smr</span>
-                     , variable = <span class='st'>"BIOMDW"</span>
-                     , graph_opts = <span class='fl'>TRUE</span>
-                     )
-
-<span class='kw'>table</span> <span class='op'>&lt;-</span> <span class='kw'>mc</span><span class='op'>$</span><span class='kw'>comparison</span>
-
-<span class='kw'>table</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/sheet_write.html'>sheet_write</a></span>(ss = <span class='kw'>gs</span>, sheet = <span class='st'>"plot"</span>)
-
-}
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

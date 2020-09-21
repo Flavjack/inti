@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' 
-#' \dontrun{
+#' if(interactive()){
 #'
 #'  inti::rticles_addin()
 #'

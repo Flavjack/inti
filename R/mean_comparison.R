@@ -1,8 +1,8 @@
-#' Mean comparison test
+#' Mean comparison using data frames 
 #'
-#' Function to compare treatment from lm or aov
+#' Function to compare treatment from lm or aov using data frames
 #'
-#' @param data Field book data.
+#' @param data Fieldbook data.
 #' @param fb_smr Summary of the variables in the fieldbook.
 #' @param variable Model used for the experimental design.
 #' @param model_facts Comparison test (default = "SNK"). Others: "TUKEY",

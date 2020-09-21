@@ -2,7 +2,7 @@
 % Please edit documentation in R/mean_comparison.R
 \name{mean_comparison}
 \alias{mean_comparison}
-\title{Mean comparison test}
+\title{Mean comparison using data frames}
 \usage{
 mean_comparison(
   data,
@@ -16,7 +16,7 @@ mean_comparison(
 )
 }
 \arguments{
-\item{data}{Field book data.}
+\item{data}{Fieldbook data.}
 
 \item{fb_smr}{Summary of the variables in the fieldbook.}
 
@@ -37,7 +37,7 @@ mean_comparison(
 data frame
 }
 \description{
-Function to compare treatment from lm or aov
+Function to compare treatment from lm or aov using data frames
 }
 \details{
 For compare the factors you should use ":". For example, to compare

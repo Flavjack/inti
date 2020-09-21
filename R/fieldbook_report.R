@@ -121,9 +121,11 @@ fieldbook_report <- function(data
     model <- aov(model_formula, fb)
 
     if (model_diag == TRUE) {
-
-      prp <- par(mfrow=c(2,2), no.readonly = TRUE)
-      on.exit(par(prp))         
+      
+      prp <- par(no.readonly = TRUE)
+      on.exit(par(prp))   
+      
+      par(mfrow=c(2,2))
       hist(resid(model), main = {{variable}})
       qqnorm(resid(model), main = {{variable}}); qqline(resid(model))
       plot(fitted(model), resid(model, type = "pearson"), main = {{variable}}); abline(h=0)

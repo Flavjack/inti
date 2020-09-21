@@ -17,7 +17,7 @@ Yupana: data analysis and graphics for experimental designs.
 }
 \examples{
 
-\dontrun{
+if(interactive()){
 
  inti::yupana()
 

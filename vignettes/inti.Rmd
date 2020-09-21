@@ -34,9 +34,7 @@ The package `inti` has been developed to provide tools used in plant science and
 
 # Shiny apps
 
-```{r echo=FALSE}
-HTML('
-
+```{=html}
 <div id=footer style="width:100%; margin:auto;">
 
 <div style="display:inline-block; width:24%">
@@ -65,8 +63,6 @@ HTML('
 </p></div>
 
 </div>
-
-')
 ```
 
 The shiny apps are based in the function developed in the package. 

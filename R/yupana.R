@@ -14,7 +14,7 @@
 #'
 #' @examples
 #' 
-#' \dontrun{
+#' if(interactive()){
 #'
 #'  inti::yupana()
 #'

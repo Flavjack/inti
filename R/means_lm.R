@@ -1,10 +1,10 @@
-#' Adjusted means using linear models
+#' Mean comparison
 #'
-#' Function to calculate the adjusted means using Linear models (lm or aov)
+#' Function to calculate the means using Linear models (lm or aov)
 #'
 #' @param data Experimental design data frame with the factors and traits.
 #' @param trait Name of the trait.
-#' @param lm.model The effects in the model. See examples.
+#' @param model The effects in the model. See examples.
 #' @param comparison Factor for the comparisons.
 #' @param test Test comparison (default = "SNK"). Others: "TUKEY" & "DUNCAN".
 #' @param anova ANOVA table (default = FALSE).
@@ -39,19 +39,19 @@
 #' @export
 #' 
 
-adjmeans_lm <- function(data
-                     , trait
-                     , lm.model
-                     , comparison
-                     , test = "SNK"
-                     , anova = FALSE
-                     , plot_diag = FALSE
-                     , plot_treat = NULL
-                     , plot_groups = NULL
-                     , tab_vars = NULL
-                     , sep = NULL
-                     , digits = 3
-                     ){
+means_lm <- function(data
+                   , trait
+                   , model
+                   , comparison
+                   , test = "SNK"
+                   , anova = FALSE
+                   , plot_diag = FALSE
+                   , plot_treat = NULL
+                   , plot_groups = NULL
+                   , tab_vars = NULL
+                   , sep = NULL
+                   , digits = 3
+                   ){
 
   treat <- NULL
 
@@ -74,7 +74,7 @@ adjmeans_lm <- function(data
 
   # Model
 
-  model <- as.formula(paste(trait, lm.model, sep = " ~ "))
+  model <- as.formula(paste(trait, model, sep = " ~ "))
 
   lm <- data %>%
     aov(model, data = .)
@@ -88,6 +88,9 @@ adjmeans_lm <- function(data
   # Diagnostic plot
 
   if (plot_diag == TRUE) {
+    
+    prp <- par(no.readonly = TRUE)
+    on.exit(par(prp))    
 
     par(mfrow=c(2,2))
     hist(resid(lm), main = trait)

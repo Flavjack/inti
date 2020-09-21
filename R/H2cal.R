@@ -179,8 +179,10 @@ H2cal <- function(data
 
   if (plot_diag == TRUE) {
 
-    prp <- par(mfrow=c(2,4), no.readonly = TRUE)
-    on.exit(par(prp))         
+    prp <- par(no.readonly = TRUE)
+    on.exit(par(prp))   
+    
+    par(mfrow=c(2,4))
     hist(resid(g.fix), main = trait)
     qqnorm(resid(g.fix), main = trait); qqline(resid(g.fix))
     plot(fitted(g.fix), resid(g.fix, type = "pearson"), main = trait); abline(h=0)
