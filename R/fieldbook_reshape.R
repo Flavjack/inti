@@ -33,7 +33,7 @@
 #' library(googlesheets4)
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "1gue-wSQcEu4nJigVZdUWsTfIIzhtxpDRdWAQiEHgKak/edit#gid=56106366")
+#'               , "1lslvNuebfI0YQw3KMz7clN8nIs3x8G9Da63E1em7J5o/")
 #' # browseURL(url)
 #' gs <- as_sheets_id(url)
 #'
@@ -64,13 +64,13 @@ fieldbook_reshape <- function(data
 
   where <- NULL
 
-  if ( is.null(from_var) | from_var == "") {
+  if ( is.null(from_var) || from_var == "") {
 
     from_var <- 1
 
   } else { from_var <- from_var }
 
-  if ( is.null(to_var) | to_var == "" ) {
+  if ( is.null(to_var) || to_var == "" ) {
 
     to_var <- ncol(data)
 

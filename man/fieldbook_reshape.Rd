@@ -50,7 +50,7 @@ library(inti)
 library(googlesheets4)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1gue-wSQcEu4nJigVZdUWsTfIIzhtxpDRdWAQiEHgKak/edit#gid=56106366")
+              , "1lslvNuebfI0YQw3KMz7clN8nIs3x8G9Da63E1em7J5o/")
 # browseURL(url)
 gs <- as_sheets_id(url)
 
