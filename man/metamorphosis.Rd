@@ -37,22 +37,22 @@ The function require at least three columns.
 }
 \examples{
 
-\dontrun{
-
 library(googlesheets4)
 library(dplyr)
 
+if (gs4_has_token()) {
+
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-, "1gue-wSQcEu4nJigVZdUWsTfIIzhtxpDRdWAQiEHgKak/edit#gid=0")
+, "1lslvNuebfI0YQw3KMz7clN8nIs3x8G9Da63E1em7J5o")
 gs <- as_sheets_id(url)
 # browseURL(url)
 
 fb_old <- gs \%>\%
-  sheets_read("fb_old") \%>\%
+  range_read("fb_old") \%>\%
   select(ID:SNum) \%>\%
   filter(SS == "S1")
 
-dic <- gs \%>\% sheets_read("var_old") \%>\%
+dic <- gs \%>\% range_read("var_old") \%>\%
   slice(1:20)
 
 mtm <- metamorphosis(fieldbook = fb_old

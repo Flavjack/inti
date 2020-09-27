@@ -48,13 +48,15 @@ are: active or spectator. Only the active members will enter in the schedule.
 }
 \examples{
 
-\dontrun{
+\dontshow{
 
 library(inti)
 library(googlesheets4)
 
+if (gs4_has_token()) {
+
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-, "15TaF0lCCByg0dgOLqfoTlLbAWnau8IiLOklpS4cvm4M/edit#gid=272604925")
+, "15TaF0lCCByg0dgOLqfoTlLbAWnau8IiLOklpS4cvm4M")
 
 gs <- as_sheets_id(url)
 # browseURL(url)
@@ -73,6 +75,8 @@ jc \%>\% jc_tombola(data = .
                   ) \%>\%
                   web_table(rnames = TRUE
                   , caption = "JC")
+
+}
 
 }
 

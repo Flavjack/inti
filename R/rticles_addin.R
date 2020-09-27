@@ -1,6 +1,8 @@
 #' Build markdown o bookdown template
 #'
 #' Invoke RStudio addin to create markdown documents
+#' 
+#' @param dependencies Install package dependencies for run the app
 #'
 #' @details
 #'
@@ -23,11 +25,23 @@
 #' @export
 #'
 
-rticles_addin <- function() {
+rticles_addin <- function(dependencies = FALSE) {
+  
   appDir <- system.file("rticles", package = "inti")
+  
   if (appDir == "") {
-    stop("Could not find example directory. Try re-installing `inti`.",
-         call. = FALSE)
+    
+    stop("Could not find example directory. Try re-installing `inti`."
+         , call. = FALSE)
+    
+  }
+  
+  pkgs <- system.file("rticles/setup.r", package = "inti")
+  
+  if (dependencies == TRUE ) {
+    
+    source(pkgs)
+    
   }
 
   shiny::runApp(appDir, display.mode = "normal", launch.browser = TRUE)

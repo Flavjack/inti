@@ -28,7 +28,7 @@ csl: https://www.zotero.org/styles/apa
 ---
 
 ```{r setup, include=FALSE}
-source("http://lozanoisla.com/setup.r")
+source("files/setup.r")
 url <- "https://docs.google.com/spreadsheets/d/1QziIXGOwb8cl3GaARJq6Ez6aU7vND_UHKJnFcAKx0VI/edit#gid=137089581"
 gs <- as_sheets_id(url)
 # browseURL(url)

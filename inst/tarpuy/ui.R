@@ -7,8 +7,6 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-if (file.exists("setup.r")) { source("setup.r") }
-
 library(shiny)
 library(inti)
 library(metathis)
@@ -18,9 +16,6 @@ library(googleAuthR)
 library(bootstraplib)
 library(shinydashboard)
 library(stringi)
-library(BiocManager)
-
-options(repos = BiocManager::repositories())
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
 options(gargle_oob_default = TRUE)

@@ -6,8 +6,6 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-if ( file.exists("setup.r") ) { source("setup.r") }
-
 library(shiny)
 library(miniUI)
 library(shinyFiles)
@@ -15,9 +13,6 @@ library(utils)
 library(fs)
 library(metathis)
 library(inti)
-library(BiocManager)
-
-options(repos = BiocManager::repositories())
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------

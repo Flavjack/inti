@@ -84,8 +84,6 @@
 #'
 #' @examples
 #'
-#' \dontrun{
-#' 
 #' library(inti)
 #' library(agridat)
 #'
@@ -104,8 +102,6 @@
 #'  hr$tabsmr
 #'  hr$blups
 #'  hr$blues
-#'  
-#' }
 #' 
 
 H2cal <- function(data
@@ -462,7 +458,7 @@ H2cal <- function(data
   ## Summary table VC & H^2
 
   vrcp <- dplyr::tibble(
-    varible = trait
+    variable = trait
     , rep = rep.n
     , geno = gen.n
     , env = loc.n

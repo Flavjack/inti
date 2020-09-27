@@ -1,6 +1,8 @@
 #' Fieldbook experimental designs
 #'
 #' Invoke RStudio addin to create field book designs
+#' 
+#' @param dependencies Install package dependencies for run the app
 #'
 #' @details
 #'
@@ -20,11 +22,23 @@
 #' 
 #' @export
 
-tarpuy <- function() {
+tarpuy <- function(dependencies = FALSE) {
+  
   appDir <- system.file("tarpuy", package = "inti")
+  
   if (appDir == "") {
-    stop("Could not find example directory. Try re-installing `inti`.",
-         call. = FALSE)
+    
+    stop("Could not find example directory. Try re-installing `inti`."
+         , call. = FALSE)
+    
+  }
+  
+  pkgs <- system.file("tarpuy/setup.r", package = "inti")
+  
+  if (dependencies == TRUE ) {
+    
+    source(pkgs)
+    
   }
 
   shiny::runApp(appDir

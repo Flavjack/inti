@@ -7,8 +7,6 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-if (file.exists("setup.r")) { source("setup.r") }
-
 library(shiny)
 library(inti)
 library(metathis)

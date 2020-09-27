@@ -39,10 +39,11 @@ symbol using \code{{hypen}} in your table. \code{notation} could be use:
 }
 \examples{
 
-\dontrun{
 
 library(googlesheets4)
 library(inti)
+
+if (gs4_has_token()) {
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
               , "1ilw0NHT7mihaM-3U48KzkuMt927xe8ukX6rNuIw2fT0/edit#gid=1157916926")

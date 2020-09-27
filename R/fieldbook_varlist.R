@@ -21,10 +21,10 @@
 #'
 #' @examples
 #'
-#' \dontrun{
-#'
 #' library(inti)
 #' library(googlesheets4)
+#' 
+#' if (gs4_has_token()) {
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
 #' , "1a82XIbTeWPC4pwvu9Zjl4qrGitGQ_B-mf3-w67VS4-Q/edit#gid=0")

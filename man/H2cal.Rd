@@ -93,8 +93,6 @@ For more information review the references.
 }
 \examples{
 
-\dontrun{
-
 library(inti)
 library(agridat)
 
@@ -113,8 +111,6 @@ library(agridat)
  hr$tabsmr
  hr$blups
  hr$blues
- 
-}
 
 }
 \references{

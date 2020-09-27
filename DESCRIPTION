@@ -4,11 +4,11 @@ Version: 0.1.0
 Title: Tools and Statistical Procedures in Plant Science
 Description: A collection of different applications and procedures 
     used in plant science and experimental designs.
-    The package includes three shiny apps:
-    i) Tarpuy for planning experimental projects.
-    ii) Yupana for interactive data analysis.
-    iii) Rticles for technical writing.
-Date: 2020-09-21
+    The package includes three interactive applications:
+    i) tarpuy for planning experimental projects.
+    ii) yupana for interactive data analysis.
+    iii) rticles for technical writing.
+Date: 2020-09-27
 Authors@R: person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com",
                   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0714-669X"))
 URL: https://github.com/flavjack/inti/
@@ -34,7 +34,8 @@ Suggests:
     googlesheets4,
     corrplot,
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
 License: MIT + file LICENSE
 Encoding: UTF-8

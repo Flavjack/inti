@@ -44,10 +44,11 @@ will help to create the column \code{rep} and the new variable name will be
 }
 \examples{
 
-\dontrun{
 
 library(inti)
 library(googlesheets4)
+
+if (gs4_has_token()) {
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
               , "1lslvNuebfI0YQw3KMz7clN8nIs3x8G9Da63E1em7J5o/")

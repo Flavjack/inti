@@ -6,8 +6,6 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-if ( file.exists("setup.r") ) { source("setup.r") }
-
 library(shiny)
 library(miniUI)
 library(shinyFiles)
@@ -15,18 +13,19 @@ library(utils)
 library(fs)
 library(metathis)
 library(inti)
-library(BiocManager)
-
-options(repos = BiocManager::repositories())
 
 # update template ---------------------------------------------------------
 # -------------------------------------------------------------------------
 
-# unlink("inst/rticles/template", recursive = T)
-# dir.create("inst/rticles/template")
-# inti::rticles(path = "inst/rticles/template", type = "book")
-# file.rename(from = "inst/rticles/template/rticles.Rproj"
-#             , to = "inst/rticles/template/rticles.proj")
+if (FALSE) {
+  
+  unlink("inst/rticles/template", recursive = T)
+  dir.create("inst/rticles/template")
+  inti::rticles(path = "inst/rticles/template", type = "book")
+  file.rename(from = "inst/rticles/template/rticles.Rproj"
+              , to = "inst/rticles/template/rticles.proj")
+  
+  }
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------

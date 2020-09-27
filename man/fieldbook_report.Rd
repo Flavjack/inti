@@ -38,10 +38,10 @@ treatment1 and treatment2: \code{treatment1:treatment2}.
 }
 \examples{
 
-\dontrun{
-
 library(inti)
 library(googlesheets4)
+
+if (gs4_has_token()) {
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")

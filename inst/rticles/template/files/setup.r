@@ -2,7 +2,7 @@
 # -------------------------------------------------------------------------
 #> author .: Flavio Lozano Isla
 #> web    .: https://lozanoisla.com
-#> date   .: 2020-07-16
+#> date   .: 2020-09-27
 # -------------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
@@ -10,23 +10,20 @@
 # -------------------------------------------------------------------------
 
 cran <- c("devtools" # Developer tools
-           , "bookdown" # Write articles and technical documents
-           , "knitr" # Base for markdown documents
-           , "tidyverse" # Data manipulation
-           , "googlesheets4" # Read/write google sheets docs
-           , "googledrive" # Download/Upload files from googledrive
-           , "agricolae" # Agriculture data analysis and designs
-           , "GerminaR" # Germination analysis
-           , "FactoMineR" # Multivariate data analysis
-           , "heatmaply" # Correlation plot
-           , "cowplot" # Layout for grid figures 
-           , "grid" # For merge figures 
-           , "png" # Import png files
-           , "jpeg" # Import jpg files
-           , "emmeans" # Estimated Marginal Means
-           , "lme4" # Linear Mixed-Effects Models (LMM)
-           , "lmerTest" # Tests in Linear Mixed Effects Models
-           )
+          , "bookdown" # Write articles and technical documents
+          , "knitr" # Base for markdown documents
+          , "tidyverse" # Data manipulation
+          , "googlesheets4" # Read/write google sheets docs
+          , "googledrive" # Download/Upload files from googledrive
+          , "agricolae" # Agriculture data analysis and designs
+          , "GerminaR" # Germination analysis
+          , "FactoMineR" # Multivariate data analysis
+          , "heatmaply" # Correlation plot
+          , "cowplot" # Layout for grid figures 
+          , "grid" # For merge figures 
+          , "png" # Import png files
+          , "jpeg" # Import jpg files
+          )
 
 git <- c(
   "Flavjack/inti" # Tools and Statistical Procedures in Plant Science
