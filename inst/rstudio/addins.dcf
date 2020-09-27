@@ -10,5 +10,5 @@ Interactive: true
 
 Name: Rticles
 Description: Build markdown and bookdown documents.
-Binding: rticles_addin
+Binding: rticles
 Interactive: true

@@ -2,39 +2,30 @@
 % Please edit documentation in R/rticles.R
 \name{rticles}
 \alias{rticles}
-\title{Rticles template}
-\source{
-\url{https://github.com/flavjack/rticles}
-}
+\title{Build markdown o bookdown template}
 \usage{
-rticles(
-  path = NULL,
-  type = c("markdown", "bookdown"),
-  name = "manuscript",
-  project = TRUE,
-  server = c("local", "web")
-)
+rticles(dependencies = FALSE)
 }
 \arguments{
-\item{path}{Directory for create the files.}
-
-\item{type}{Document type (default = "markdown").}
-
-\item{name}{Name of the main document (default = "manuscript").}
-
-\item{project}{Create a R project (default = TRUE). See details.}
-
-\item{server}{How create the dependencies (default = "local").}
+\item{dependencies}{Install package dependencies for run the app}
 }
 \value{
-folder and files
+Shiny app
 }
 \description{
-Create a complete example for markdown o bookdown documents
+Invoke RStudio addin to create markdown documents
 }
 \details{
-Create all the files in the path directory. It is recommended use ".Rproj".
-After create the project Open the ".Rprj" file. Compile the document and you
-will see the example. If you already have a folder and select such as
-"bookdown" is necessary change the main (.rmd) file to index.rmd.
+Create all the files in the present work directory. It is recommended use
+".Rproj" for bookdown documents. After create the ".Rproj" file. Open the
+".Rprj" and you should have the possibility to compile the book.
+}
+\examples{
+
+if(interactive()){
+
+ inti::rticles()
+
+}
+
 }
