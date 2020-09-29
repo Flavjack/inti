@@ -12,13 +12,15 @@
 #' @param year.n Number of years (default = 1). See details.
 #' @param fix.model The fixed effects in the model. See examples.
 #' @param ran.model The random effects in the model. See examples.
-#' @param summary Print summary from random model (default = FALSE). 
+#' @param summary Print summary from random model (default = FALSE).
 #' @param blues Calculate the BLUEs (default = FALSE).
 #' @param effects Random effects instead of the BLUPs (default = FALSE).
 #' @param plot_diag Show diagnostic plots (default = FALSE).
 #' @param plot_dots Show dotplot genotypes vs trait (default = NULL). See
 #'   examples.
 #' @param outliers.rm Remove outliers (default = FALSE). See references.
+#' @param weights an optional vector of ‘prior weights’ to be used in the
+#'   fitting process (default = NULL).
 #'
 #' @details
 #'
@@ -62,9 +64,9 @@
 #' Schmidt, P., J. Hartung, J. Bennewitz, and H.P. Piepho. 2019. Heritability in
 #' Plant Breeding on a Genotype Difference Basis. Genetics 212(4).
 #'
-#' Schmidt, P., J. Hartung, J. Rath, and H.P. Piepho. 2019. Estimating
-#' Broad Sense Heritability with Unbalanced Data from Agricultural Cultivar
-#' Trials. Crop Science 59(2).
+#' Schmidt, P., J. Hartung, J. Rath, and H.P. Piepho. 2019. Estimating Broad
+#' Sense Heritability with Unbalanced Data from Agricultural Cultivar Trials.
+#' Crop Science 59(2).
 #'
 #' Bernal Vasquez, Angela Maria, et al. “Outlier Detection Methods for
 #' Generalized Lattices: A Case Study on the Transition from ANOVA to REML.”
@@ -73,7 +75,7 @@
 #' @importFrom dplyr filter pull rename mutate all_of
 #' @importFrom purrr pluck as_vector
 #' @importFrom emmeans emmeans
-#' @importFrom stringr str_detect
+#' @importFrom stringr str_detect str_replace
 #' @importFrom tibble rownames_to_column as_tibble tibble
 #' @importFrom lme4 lmer ranef VarCorr
 #' @importFrom graphics abline par
@@ -95,14 +97,13 @@
 #'             , fix.model = "rep + (1|rep:block) + gen"
 #'             , ran.model = "rep + (1|rep:block) + (1|gen)"
 #'             , blues = TRUE
-#'             , plot_diag = FALSE
-#'             , plot_dots = "rep"
-#'             , outliers.rm = TRUE
+#'             , plot_diag = TRUE
+#'             , outliers.rm = FALSE
 #'             )
 #'  hr$tabsmr
 #'  hr$blups
 #'  hr$blues
-#' 
+#'  
 
 H2cal <- function(data
                   , trait
@@ -120,6 +121,7 @@ H2cal <- function(data
                   , plot_diag = FALSE
                   , plot_dots = NULL
                   , outliers.rm = FALSE
+                  , weights = NULL
                   ){
 
   # avoid Undefined global functions or variables
@@ -157,11 +159,11 @@ H2cal <- function(data
 
   # random genotype effect
   r.md <- as.formula(paste(trait, paste(ran.model, collapse = " + "), sep = " ~ "))
-  g.ran <- eval(bquote(lmer(.(r.md), data = dt.rm)))
+  g.ran <- eval(bquote(lmer(.(r.md), weights = weights, data = dt.rm)))
 
   # fixed genotype effect
   f.md <- as.formula(paste(trait, paste(fix.model, collapse = " + "), sep = " ~ "))
-  g.fix <- eval(bquote(lmer(.(f.md), data = dt.fm)))
+  g.fix <- eval(bquote(lmer(.(f.md), weights = weights, data = dt.fm)))
 
   # Print model summary -----------------------------------------------------
   
@@ -345,7 +347,7 @@ H2cal <- function(data
     BLUEs <- BLUE %>%
       purrr::pluck("emmeans") %>%
       tibble::as_tibble() %>%
-      dplyr::rename(!!trait := 'emmean')
+      dplyr::rename(!!trait := 'emmean') 
 
     # mean variance of a difference between genotypes (BLUEs)
 
@@ -358,7 +360,13 @@ H2cal <- function(data
 
   } else if (blues == FALSE){
 
-    BLUEs <- NULL
+    BLUEs <- g.fix %>%
+      lme4::fixef() %>% 
+      data.frame() %>% 
+      rownames_to_column(gen.name) %>% 
+      dplyr::rename(!!trait := .) %>% 
+      mutate_all(funs(stringr::str_replace(., gen.name, ""))) %>% 
+      mutate(across({{trait}}, as.numeric)) 
 
     count <- vcov(g.fix) %>%
       purrr::pluck("Dimnames") %>%
@@ -398,8 +406,8 @@ H2cal <- function(data
       tibble::rownames_to_column(gen.name) %>%
       dplyr::rename(!!trait := '(Intercept)') %>%
       tibble::as_tibble(.) %>%
-      dplyr::select(all_of(gen.name), dplyr::all_of(trait))
-
+      dplyr::select(all_of(gen.name), dplyr::all_of(trait)) 
+    
   } else {
 
     BLUPs <- g.ran %>%
@@ -408,7 +416,7 @@ H2cal <- function(data
       tibble::rownames_to_column(gen.name) %>%
       dplyr::rename(!!trait := '(Intercept)') %>%
       tibble::as_tibble(.) %>%
-      dplyr::select(all_of(gen.name), dplyr::all_of(trait))
+      dplyr::select(all_of(gen.name), dplyr::all_of(trait)) 
   }
 
   # mean variance of a difference between genotypes (BLUPs)
@@ -419,6 +427,16 @@ H2cal <- function(data
     attr("postVar") %>%
     purrr::as_vector(.) %>%
     mean(.)*2
+  
+  ## Smith weights
+  
+  smw.fx <- diag(solve(vcov(g.fix))) 
+  
+  if ( length(smw.fx) == nrow(BLUEs) ) {
+    
+    BLUEs <- BLUEs %>% mutate(smith.w = smw.fx)
+    
+  }
 
   ## Summary table of adjusted means
 

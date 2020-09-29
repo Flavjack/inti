@@ -20,7 +20,8 @@ H2cal(
   effects = FALSE,
   plot_diag = FALSE,
   plot_dots = NULL,
-  outliers.rm = FALSE
+  outliers.rm = FALSE,
+  weights = NULL
 )
 }
 \arguments{
@@ -56,6 +57,9 @@ H2cal(
 examples.}
 
 \item{outliers.rm}{Remove outliers (default = FALSE). See references.}
+
+\item{weights}{an optional vector of ‘prior weights’ to be used in the
+fitting process (default = NULL).}
 }
 \value{
 list
@@ -104,22 +108,21 @@ library(agridat)
             , fix.model = "rep + (1|rep:block) + gen"
             , ran.model = "rep + (1|rep:block) + (1|gen)"
             , blues = TRUE
-            , plot_diag = FALSE
-            , plot_dots = "rep"
-            , outliers.rm = TRUE
+            , plot_diag = TRUE
+            , outliers.rm = FALSE
             )
  hr$tabsmr
  hr$blups
  hr$blues
-
+ 
 }
 \references{
 Schmidt, P., J. Hartung, J. Bennewitz, and H.P. Piepho. 2019. Heritability in
 Plant Breeding on a Genotype Difference Basis. Genetics 212(4).
 
-Schmidt, P., J. Hartung, J. Rath, and H.P. Piepho. 2019. Estimating
-Broad Sense Heritability with Unbalanced Data from Agricultural Cultivar
-Trials. Crop Science 59(2).
+Schmidt, P., J. Hartung, J. Rath, and H.P. Piepho. 2019. Estimating Broad
+Sense Heritability with Unbalanced Data from Agricultural Cultivar Trials.
+Crop Science 59(2).
 
 Bernal Vasquez, Angela Maria, et al. “Outlier Detection Methods for
 Generalized Lattices: A Case Study on the Transition from ANOVA to REML.”
