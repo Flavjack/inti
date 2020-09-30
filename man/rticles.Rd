@@ -4,10 +4,7 @@
 \alias{rticles}
 \title{Build markdown o bookdown template}
 \usage{
-rticles(dependencies = FALSE)
-}
-\arguments{
-\item{dependencies}{Install package dependencies for run the app}
+rticles()
 }
 \value{
 Shiny app

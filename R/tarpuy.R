@@ -1,8 +1,6 @@
 #' Fieldbook experimental designs
 #'
 #' Invoke RStudio addin to create field book designs
-#' 
-#' @param dependencies Install package dependencies for run the app
 #'
 #' @details
 #'
@@ -22,7 +20,7 @@
 #' 
 #' @export
 
-tarpuy <- function(dependencies = FALSE) {
+tarpuy <- function() {
   
   appDir <- system.file("tarpuy", package = "inti")
   
@@ -30,14 +28,6 @@ tarpuy <- function(dependencies = FALSE) {
     
     stop("Could not find example directory. Try re-installing `inti`."
          , call. = FALSE)
-    
-  }
-  
-  pkgs <- system.file("tarpuy/setup.r", package = "inti")
-  
-  if (dependencies == TRUE ) {
-    
-    source(pkgs)
     
   }
 

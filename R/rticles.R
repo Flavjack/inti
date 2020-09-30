@@ -2,8 +2,6 @@
 #'
 #' Invoke RStudio addin to create markdown documents
 #' 
-#' @param dependencies Install package dependencies for run the app
-#'
 #' @details
 #'
 #' Create all the files in the present work directory. It is recommended use
@@ -25,7 +23,7 @@
 #' @export
 #'
 
-rticles <- function(dependencies = FALSE) {
+rticles <- function() {
   
   appDir <- system.file("rticles", package = "inti")
   
@@ -38,12 +36,6 @@ rticles <- function(dependencies = FALSE) {
   
   pkgs <- system.file("rticles/setup.r", package = "inti")
   
-  if (dependencies == TRUE ) {
-    
-    source(pkgs)
-    
-  }
-
   shiny::runApp(appDir, display.mode = "normal", launch.browser = TRUE)
 
 }

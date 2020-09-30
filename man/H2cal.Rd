@@ -13,15 +13,14 @@ H2cal(
   year.n = 1,
   loc.name = NULL,
   year.name = NULL,
-  fix.model,
   ran.model,
+  fix.model,
   summary = FALSE,
-  blues = FALSE,
-  effects = FALSE,
+  emmeans = FALSE,
+  weights = NULL,
   plot_diag = FALSE,
   plot_dots = NULL,
-  outliers.rm = FALSE,
-  weights = NULL
+  outliers.rm = FALSE
 )
 }
 \arguments{
@@ -41,15 +40,16 @@ H2cal(
 
 \item{year.name}{Name of the years (default = NULL). See details.}
 
-\item{fix.model}{The fixed effects in the model. See examples.}
-
 \item{ran.model}{The random effects in the model. See examples.}
+
+\item{fix.model}{The fixed effects in the model. See examples.}
 
 \item{summary}{Print summary from random model (default = FALSE).}
 
-\item{blues}{Calculate the BLUEs (default = FALSE).}
+\item{emmeans}{Use emmeans for calculate the BLUEs (default = FALSE).}
 
-\item{effects}{Random effects instead of the BLUPs (default = FALSE).}
+\item{weights}{an optional vector of ‘prior weights’ to be used in the
+fitting process (default = NULL).}
 
 \item{plot_diag}{Show diagnostic plots (default = FALSE).}
 
@@ -57,9 +57,6 @@ H2cal(
 examples.}
 
 \item{outliers.rm}{Remove outliers (default = FALSE). See references.}
-
-\item{weights}{an optional vector of ‘prior weights’ to be used in the
-fitting process (default = NULL).}
 }
 \value{
 list
@@ -105,15 +102,15 @@ library(agridat)
             , trait = "yield"
             , gen.name = "gen"
             , rep.n = 3
-            , fix.model = "rep + (1|rep:block) + gen"
-            , ran.model = "rep + (1|rep:block) + (1|gen)"
-            , blues = TRUE
+            , fix.model = "1 + rep + (1|rep:block) + gen"
+            , ran.model = "1 + rep + (1|rep:block) + (1|gen)"
             , plot_diag = TRUE
-            , outliers.rm = FALSE
+            , emmeans = TRUE
             )
+            
  hr$tabsmr
- hr$blups
  hr$blues
+ hr$blups
  
 }
 \references{

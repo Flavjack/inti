@@ -4,10 +4,7 @@
 \alias{yupana}
 \title{Interactive data analysis}
 \usage{
-yupana(dependencies = FALSE)
-}
-\arguments{
-\item{dependencies}{Install package dependencies for run the app}
+yupana()
 }
 \value{
 Shiny app

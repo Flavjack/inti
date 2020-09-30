@@ -125,10 +125,10 @@ library(agridat)
             , rep.n = 3
             , fix.model = "rep + (1|rep:block) + gen"
             , ran.model = "rep + (1|rep:block) + (1|gen)"
-            , blues = T
+            , emmeans = TRUE
             , plot_diag = TRUE
             , plot_dots = "rep"
-            , outliers.rm = TRUE
+            , outliers.rm = FALSE
             )
  
 ```
@@ -155,14 +155,6 @@ hr$blups %>% kable(caption = "BLUPs.")
 
 ```{r}
 hr$blues %>% kable(caption = "BLUEs.")
-```
-
-## Outliers
-
-```{r}
-hr$outliers$random %>% kable(caption = "Outliers for random model.")
-
-hr$outliers$fixed %>% kable(caption = "Outliers for fixed model.")
 ```
 
 # References

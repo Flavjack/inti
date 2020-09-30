@@ -2,8 +2,6 @@
 #'
 #' Invoke RStudio addin to analyze and graph experimental design data
 #' 
-#' @param dependencies Install package dependencies for run the app
-#'
 #' @details
 #'
 #' Yupana: data analysis and graphics for experimental designs.
@@ -23,7 +21,7 @@
 #' }
 #' 
 
-yupana <- function(dependencies = FALSE) {
+yupana <- function() {
   
   appDir <- system.file("yupanapro", package = "inti")
   
@@ -35,12 +33,6 @@ yupana <- function(dependencies = FALSE) {
   
   pkgs <- system.file("yupanapro/setup.r", package = "inti")
   
-  if (dependencies == TRUE ) {
-    
-    source(pkgs)
-    
-  }
-
   shiny::runApp(appDir
                 , display.mode = "normal"
                 , launch.browser = TRUE

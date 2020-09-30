@@ -10,11 +10,10 @@
 #' @param loc.n Number of locations (default = 1). See details.
 #' @param year.name Name of the years (default = NULL). See details.
 #' @param year.n Number of years (default = 1). See details.
-#' @param fix.model The fixed effects in the model. See examples.
 #' @param ran.model The random effects in the model. See examples.
+#' @param fix.model The fixed effects in the model. See examples.
+#' @param emmeans Use emmeans for calculate the BLUEs (default = FALSE).
 #' @param summary Print summary from random model (default = FALSE).
-#' @param blues Calculate the BLUEs (default = FALSE).
-#' @param effects Random effects instead of the BLUPs (default = FALSE).
 #' @param plot_diag Show diagnostic plots (default = FALSE).
 #' @param plot_dots Show dotplot genotypes vs trait (default = NULL). See
 #'   examples.
@@ -74,13 +73,13 @@
 #'
 #' @importFrom dplyr filter pull rename mutate all_of
 #' @importFrom purrr pluck as_vector
-#' @importFrom emmeans emmeans
 #' @importFrom stringr str_detect str_replace
 #' @importFrom tibble rownames_to_column as_tibble tibble
 #' @importFrom lme4 lmer ranef VarCorr
 #' @importFrom graphics abline par
 #' @importFrom stats fitted var as.formula
 #' @importFrom ggplot2 ggplot aes geom_point theme_minimal
+#' @importFrom emmeans emmeans
 #'
 #' @export
 #'
@@ -94,15 +93,15 @@
 #'             , trait = "yield"
 #'             , gen.name = "gen"
 #'             , rep.n = 3
-#'             , fix.model = "rep + (1|rep:block) + gen"
-#'             , ran.model = "rep + (1|rep:block) + (1|gen)"
-#'             , blues = TRUE
+#'             , fix.model = "1 + rep + (1|rep:block) + gen"
+#'             , ran.model = "1 + rep + (1|rep:block) + (1|gen)"
 #'             , plot_diag = TRUE
-#'             , outliers.rm = FALSE
+#'             , emmeans = TRUE
 #'             )
+#'             
 #'  hr$tabsmr
-#'  hr$blups
 #'  hr$blues
+#'  hr$blups
 #'  
 
 H2cal <- function(data
@@ -113,15 +112,14 @@ H2cal <- function(data
                   , year.n = 1
                   , loc.name = NULL
                   , year.name = NULL
-                  , fix.model
                   , ran.model
+                  , fix.model
                   , summary = FALSE
-                  , blues = FALSE
-                  , effects = FALSE
+                  , emmeans = FALSE
+                  , weights = NULL
                   , plot_diag = FALSE
                   , plot_dots = NULL
                   , outliers.rm = FALSE
-                  , weights = NULL
                   ){
 
   # avoid Undefined global functions or variables
@@ -215,11 +213,7 @@ H2cal <- function(data
 
   # genotypic variance component
 
-  vc.g <- g.ran %>%
-    lme4::VarCorr() %>%
-    tibble::as_tibble() %>%
-    dplyr::filter(grp == gen.name) %>%
-    dplyr::pull(vcov)
+  vc.g <- c(VarCorr(g.ran)[[gen.name]])
 
   # environment variance component
 
@@ -337,110 +331,81 @@ H2cal <- function(data
     dplyr::filter(grp == "Residual") %>%
     dplyr::pull(vcov)
 
-  ## Best Linear Unbiased Estimators (BLUE)
-
-  if(blues == TRUE){
-
-    BLUE <- g.fix %>%
-      emmeans::emmeans(as.formula(paste("pairwise", gen.name, sep = " ~ ")), )
-
-    BLUEs <- BLUE %>%
-      purrr::pluck("emmeans") %>%
-      tibble::as_tibble() %>%
-      dplyr::rename(!!trait := 'emmean') 
-
-    # mean variance of a difference between genotypes (BLUEs)
-
-    vdBLUE.avg <- BLUE %>%
-      purrr::pluck("contrasts") %>%
-      tibble::as_tibble() %>%
-      dplyr::mutate(Var=SE^2) %>%
-      dplyr::pull(Var) %>%
-      mean(.) # vdBLUE.avg
-
-  } else if (blues == FALSE){
-
-    BLUEs <- g.fix %>%
-      lme4::fixef() %>% 
-      data.frame() %>% 
-      rownames_to_column(gen.name) %>% 
-      dplyr::rename(!!trait := .) %>% 
-      mutate_all(funs(stringr::str_replace(., gen.name, ""))) %>% 
-      mutate(across({{trait}}, as.numeric)) 
-
-    count <- vcov(g.fix) %>%
-      purrr::pluck("Dimnames") %>%
-      purrr::pluck(1) %>%
-      stringr::str_detect(gen.name) %>%
-      summary(.) %>%
-      purrr::pluck("FALSE")
-
-    if(is.null(count)){
-
+  ## Best Linear Unbiased Estimators (BLUE) :: fixed model
+    
+    if(emmeans == TRUE){
+      
+      BLUE <- g.fix %>%
+        emmeans::emmeans(as.formula(paste("pairwise", gen.name, sep = " ~ ")), )
+      
+      BLUEs <- BLUE %>%
+        purrr::pluck("emmeans") %>%
+        tibble::as_tibble() %>%
+        dplyr::rename(!!trait := 'emmean') 
+      
+      # mean variance of a difference between genotypes (BLUEs)
+      
+      vdBLUE.avg <- BLUE %>%
+        purrr::pluck("contrasts") %>%
+        tibble::as_tibble() %>%
+        dplyr::mutate(Var=SE^2) %>%
+        dplyr::pull(Var) %>%
+        mean(.)
+      
+    } else if (emmeans == FALSE){
+      
+      count <- vcov(g.fix) %>%
+        purrr::pluck("Dimnames") %>%
+        purrr::pluck(1) %>%
+        stringr::str_detect(gen.name) %>%
+        summary(.) %>%
+        purrr::pluck("FALSE") %>% 
+        as.numeric()
+      
+      if(length(count) == 0) { count <- 0}
+  
+      BLUEs <- g.fix %>%
+        lme4::fixef() %>%
+        data.frame() %>% 
+        rownames_to_column(gen.name) %>% 
+        dplyr::rename(!!trait := .) %>% 
+        mutate(across({{gen.name}}, ~stringr::str_replace(., gen.name, ""))) %>% 
+        mutate(across({{trait}}, as.numeric)) %>% 
+        mutate( smith.w = diag(solve(vcov(g.fix))) ) %>% 
+        dplyr::slice((count+1):NROW(.))  
+      
       vdBLUE.avg <- g.fix %>%
         vcov(.) %>%
         base::as.matrix(.) %>%
         diag(.) %>%
-        as.vector() %>%
-        mean(.)
-
-    } else if (count > 0) {
-
-      vdBLUE.avg <- g.fix %>%
-        vcov(.) %>%
-        base::as.matrix(.) %>%
-        diag(.) %>%
-        as.vector() %>%
-        .[-c(1:count)] %>%
-        mean(.)
+        enframe() %>%
+        dplyr::slice((count+1):NROW(.)) %>% 
+        select(!.data$name) %>% 
+        deframe() %>% 
+        mean()*2 # x2?
+      
     }
-  }
 
-  ## Best Linear Unbiased Predictors (BLUP)
+  ## Best Linear Unbiased Predictors (BLUP) - random model
+      
+      BLUPs <- g.ran %>%
+        stats::coef() %>%
+        purrr::pluck(gen.name) %>%
+        tibble::rownames_to_column(gen.name) %>%
+        dplyr::rename(!!trait := '(Intercept)') %>%
+        tibble::as_tibble(.) %>%
+        dplyr::select(all_of(gen.name), dplyr::all_of(trait)) 
+      
+      # mean variance of a difference between genotypes (BLUPs)
+      
+      vdBLUP.avg <- g.ran %>%
+        lme4::ranef(condVar = TRUE) %>%
+        purrr::pluck(gen.name) %>%
+        attr("postVar") %>%
+        purrr::as_vector(.) %>%
+        mean(.)*2
 
-  if(effects == FALSE){
-
-    BLUPs <- g.ran %>%
-      stats::coef() %>%
-      purrr::pluck(gen.name) %>%
-      tibble::rownames_to_column(gen.name) %>%
-      dplyr::rename(!!trait := '(Intercept)') %>%
-      tibble::as_tibble(.) %>%
-      dplyr::select(all_of(gen.name), dplyr::all_of(trait)) 
-    
-  } else {
-
-    BLUPs <- g.ran %>%
-      lme4::ranef() %>%
-      purrr::pluck(gen.name) %>%
-      tibble::rownames_to_column(gen.name) %>%
-      dplyr::rename(!!trait := '(Intercept)') %>%
-      tibble::as_tibble(.) %>%
-      dplyr::select(all_of(gen.name), dplyr::all_of(trait)) 
-  }
-
-  # mean variance of a difference between genotypes (BLUPs)
-
-  vdBLUP.avg <- g.ran %>%
-    lme4::ranef(condVar = TRUE) %>%
-    purrr::pluck(gen.name) %>%
-    attr("postVar") %>%
-    purrr::as_vector(.) %>%
-    mean(.)*2
-  
-  ## Smith weights
-  
-  smw.fx <- diag(solve(vcov(g.fix))) 
-  
-  if ( length(smw.fx) == nrow(BLUEs) ) {
-    
-    BLUEs <- BLUEs %>% mutate(smith.w = smw.fx)
-    
-  }
-
-  ## Summary table of adjusted means
-
-  if (blues == TRUE) {
+   ## Summary table of adjusted means
 
     smd <- BLUEs %>%
         dplyr::summarise(
@@ -449,18 +414,6 @@ H2cal <- function(data
           , min = min(!!as.name(trait))
           , max = max(!!as.name(trait))
         )
-
-  } else if (blues == FALSE) {
-
-    smd <- BLUPs %>%
-      dplyr::summarise(
-        mean = mean(!!as.name(trait), na.rm = T)
-        , std = sqrt(var(!!as.name(trait), na.rm = T))
-        , min = min(!!as.name(trait))
-        , max = max(!!as.name(trait))
-      )
-
-  }
 
   ## Heritability
 
