@@ -382,7 +382,7 @@ H2cal <- function(data
         dplyr::slice((count+1):NROW(.)) %>% 
         select(!.data$name) %>% 
         deframe() %>% 
-        mean()*2 # x2?
+        mean()
       
     }
 
