@@ -127,10 +127,9 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                    , width = 1,
 
                                    div(
-                                     googleAuth_jsUI("js_token"
-                                                     , login_text = "LogIn"
-                                                     , logout_text = "LogOut"
-                                                     )
+                                     
+                                     uiOutput("login")
+                                     
                                      , align = "center")
 
                                ),

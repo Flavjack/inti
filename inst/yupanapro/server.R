@@ -45,8 +45,29 @@ observe({
 # auth --------------------------------------------------------------------
 
   gar_shiny_auth(session)
+  
 
-  access_token <- callModule(googleAuth_js, "js_token")
+# longin vs local ---------------------------------------------------------
+
+  output$login <- renderUI({
+    
+    if (file.exists("www/cloud.json")) {
+      
+      access_token <- callModule(googleAuth_js, "js_token")
+      
+      googleAuth_jsUI("js_token"
+                      , login_text = "LogIn"
+                      , logout_text = "LogOut"
+      )
+      
+    } else {
+      
+      actionButton("do_something", "Local", class = "btn-success")
+      
+    }
+      
+  })
+  
 
   gs <- reactive({
 
@@ -147,7 +168,8 @@ observe({
     if ( input$fieldbook_gsheet %in% sheet_names(gs()) ) {
 
       gs() %>%
-        range_read( input$fieldbook_gsheet )
+        range_read( input$fieldbook_gsheet ) %>% 
+        as.data.frame()
 
     } else { fieldbook <- NULL }
 
@@ -166,7 +188,8 @@ observe({
     if ( input$fbsmrvars_gsheet %in% sheet_names(gs()) ) {
 
       fbsmrvar <<- gs() %>%
-        range_read( input$fbsmrvars_gsheet )
+        range_read( input$fbsmrvars_gsheet ) %>% 
+        as.data.frame()
 
     } else { fbsmrvar <<- NULL }
 

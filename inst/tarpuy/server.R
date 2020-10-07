@@ -44,7 +44,26 @@ shinyServer(function(input, output, session) {
 
   gar_shiny_auth(session)
 
-  access_token <- callModule(googleAuth_js, "js_token")
+  # longin vs local ---------------------------------------------------------
+  
+  output$login <- renderUI({
+    
+    if (file.exists("www/cloud.json")) {
+      
+      access_token <- callModule(googleAuth_js, "js_token")
+      
+      googleAuth_jsUI("js_token"
+                      , login_text = "LogIn"
+                      , logout_text = "LogOut"
+      )
+      
+    } else {
+      
+      actionButton("do_something", "Local", class = "btn-success")
+      
+    }
+    
+  })
 
   gs <- reactive({
 

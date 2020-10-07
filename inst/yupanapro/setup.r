@@ -7,6 +7,8 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
+# source("https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/setup.r")
+
 cran <- c("devtools"
          , "shiny"
          , "metathis"
