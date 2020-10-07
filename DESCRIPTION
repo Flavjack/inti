@@ -11,7 +11,7 @@ Description: The 'inti' package is part of the 'inkaverse' project for developin
 Date: 2020-09-30
 Authors@R: person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com",
                   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0714-669X"))
-URL: https://github.com/flavjack/inti/
+URL: https://flavjack.github.io/inti/
 BugReports: https://github.com/flavjack/inti/issues
 Depends:
     shiny,

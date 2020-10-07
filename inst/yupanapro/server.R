@@ -22,7 +22,8 @@ library(corrplot)
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
 options(gargle_oob_default = TRUE)
 options(shiny.port = 1221)
-gar_set_client(web_json = "www/cloud.json")
+
+if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json")
 
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
