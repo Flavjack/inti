@@ -18,7 +18,9 @@ library(shinydashboard)
 library(ggpubr)
 library(FactoMineR)
 library(corrplot)
+library(BiocManager)
 
+options(repos = BiocManager::repositories())
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
 options(gargle_oob_default = TRUE)
 options(shiny.port = 1221)
@@ -49,12 +51,12 @@ observe({
 
 # longin vs local ---------------------------------------------------------
 
+  access_token <<- callModule(googleAuth_js, "js_token")
+  
   output$login <- renderUI({
     
     if (file.exists("www/cloud.json")) {
-      
-      access_token <- callModule(googleAuth_js, "js_token")
-      
+
       googleAuth_jsUI("js_token"
                       , login_text = "LogIn"
                       , logout_text = "LogOut"
