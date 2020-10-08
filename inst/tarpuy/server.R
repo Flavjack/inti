@@ -17,6 +17,7 @@ library(bootstraplib)
 library(shinydashboard)
 library(stringi)
 
+options(shiny.sanitize.errors = TRUE)
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
 options(gargle_oob_default = TRUE)
 options(shiny.port = 1221)

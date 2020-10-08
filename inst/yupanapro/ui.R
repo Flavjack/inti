@@ -69,7 +69,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://lozanoisla.com/">
-            <img src="https://flavjack.github.io/inti/reference/figures/quipo4c.png" style="height:50px" title="flozano"></a>
+            <img src="https://flavjack.github.io/inti/reference/figures/biologia.png" style="height:50px" title="flozano"></a>
             <span style="display:block;"><small>lozanoisla.com</small></span>
             </p></div>
             </div>
@@ -403,6 +403,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                           , label = "Modules"
                                           , choices = c("Gsheet"
                                                         , "Plots")
+                                          , selected = "Plots"
                                           , inline = TRUE
 
                              ),
@@ -429,13 +430,37 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                                           , step = 50
                                           , min = 100
                              ),
+                             
+                             
+                             fluidRow(
+                               
+                               column(6, 
+                                      
+                                      div(
+                                        
+                                        actionButton(inputId = "graph_refresh"
+                                                     , label = "Refresh"
+                                                     , class = "btn btn-warning")
+                                        
+                                        , align = "center")
+                                      
 
-                             actionButton(inputId = "graph_create"
-                                          , label = "Create"
-                                          , class = "btn btn-info"
-                             )
-
-                      ),
+                                      ),
+                               
+                               column(6, 
+                                      
+                                      div(
+                                        
+                                        actionButton(inputId = "graph_create"
+                                                     , label = "Create"
+                                                     , class = "btn btn-success")
+                                        
+                                        , align = "center")
+                                      
+                                      )
+                             ),
+                             
+                             ),
 
                       column(width = 10,
 

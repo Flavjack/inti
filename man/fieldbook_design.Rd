@@ -59,7 +59,7 @@ gs <- as_sheets_id(url)
 (data <- gs \%>\%
     range_read("tarpuy"))
 
-data \%>\% inti::fieldbook_design()
+data \%>\% inti::fieldbook_design(n_factors = 6)
 
 }
 

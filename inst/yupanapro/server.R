@@ -162,7 +162,7 @@ observe({
   })
 
 # -------------------------------------------------------------------------
-
+  
   fieldbook <- reactive({
 
     if ( input$fieldbook_gsheet %in% sheet_names(gs()) ) {
@@ -174,25 +174,22 @@ observe({
     } else { fieldbook <- NULL }
 
   })
-
+  
   refresh <- reactive({ list(input$fbsm_refresh, input$mvr_refresh) })
 
-  # make var reactive!
-  fbsmrvar <- NULL
-  makeReactiveBinding("fbsmrvar")
+  fbsmrvar <- eventReactive( refresh(), {
+    
+      validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
 
-  observeEvent( refresh(), {
+      if ( input$fbsmrvars_gsheet %in% sheet_names(gs()) ) {
 
-    validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
+        fbsmrvar <- gs() %>%
+          range_read( input$fbsmrvars_gsheet ) %>%
+          as.data.frame()
 
-    if ( input$fbsmrvars_gsheet %in% sheet_names(gs()) ) {
-
-      fbsmrvar <<- gs() %>%
-        range_read( input$fbsmrvars_gsheet ) %>% 
-        as.data.frame()
-
-    } else { fbsmrvar <<- NULL }
-
+      } else { fbsmrvar <- NULL }
+    
+    
   })
 
 # Yupana: Fieldbook -------------------------------------------------------
@@ -529,9 +526,9 @@ observe({
 
   output$rpt_variable <- renderUI({
 
-    if ( !is.null( fbsmrvar ) ) {
+    if ( !is.null( fbsmrvar() ) ) {
 
-      rpt_variable_names <- fbsmrvar %>%
+      rpt_variable_names <- fbsmrvar() %>%
         filter(!type %in% c("factor", "factores", "factors")) %>%
         select(variables) %>%
         deframe()
@@ -550,9 +547,9 @@ observe({
 
   output$rpt_dotplot_groups <- renderUI({
 
-    if ( !is.null( fbsmrvar ) ) {
+    if ( !is.null( fbsmrvar() ) ) {
 
-      rpt_dotplot_groups_names <- fbsmrvar %>%
+      rpt_dotplot_groups_names <- fbsmrvar() %>%
         filter(type %in% c("factor", "factores", "factors")) %>%
         select(variables) %>%
         deframe()
@@ -573,10 +570,10 @@ observe({
 
     validate( need( input$rpt_variable, "Choose your variable") )
 
-    if ( !is.null( fieldbook() ) & !is.null( fbsmrvar ) )  {
+    if ( !is.null( fieldbook() ) & !is.null( fbsmrvar() ) )  {
 
       rslt <- fieldbook_report(data = fieldbook()
-                               , fb_smr = fbsmrvar
+                               , fb_smr = fbsmrvar()
                                , variable = input$rpt_variable
                                , dotplot_groups = input$rpt_dotplot_groups
                                , model_diag = FALSE
@@ -612,10 +609,10 @@ observe({
 
     validate( need( input$rpt_variable, "Choose your variable") )
 
-    if ( !is.null( fieldbook() ) & !is.null( fbsmrvar ) )  {
+    if ( !is.null( fieldbook() ) & !is.null( fbsmrvar() ) )  {
 
       mc <- mean_comparison(data = fieldbook()
-                            , fb_smr = fbsmrvar
+                            , fb_smr = fbsmrvar()
                             , variable = input$rpt_variable
                             , graph_opts = T
       )
@@ -749,19 +746,22 @@ observe({
   })
 
   # -------------------------------------------------------------------------
+  
+  sheet_grp <- eventReactive(input$graph_refresh, {
+    
+    gs() %>% sheet_names()
+    
+    })
 
   output$graph_sheets <- renderUI({
 
-    sheet_names <- sheet_names(gs())
-    sheet_exclude <- c(input$fieldbook_gsheet, input$fbsmrvars_gsheet)
-    sheet_names <- sheet_names[!(sheet_names %in% sheet_exclude)]
-
     selectInput(inputId = "graph_sheets"
                 , label = "Graph sheet"
-                , choices = c(sheet_names)
-    )
-
-  })
+                , choices = c("choose" = ""
+                              , sheet_grp()
+                              )
+                )
+    })
 
   # -------------------------------------------------------------------------
 
@@ -782,21 +782,18 @@ observe({
 
   # -------------------------------------------------------------------------
 
-  plotgr <- NULL
-  makeReactiveBinding("plotgr")
-
-  observeEvent(input$graph_create, {
-
+  plotgr <- eventReactive(input$graph_create, {
+    
     if ( input$graph_sheets %in% sheet_names(gs()) ) {
-
-      plot_table <- gs() %>%
+      
+      plottb <<- gs() %>%
         range_read( input$graph_sheets )
-
-    }
-
-    plotgr <<- plot_smr(plot_table)
-
-  })
+      
+    } else {"Choose a summary table"}
+    
+    plot_smr(plottb) 
+    
+    })
 
   # -------------------------------------------------------------------------
 
@@ -809,7 +806,7 @@ observe({
     outfile <- tempfile(fileext = ".png")
 
     png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
-    print(plotgr)
+    print(plotgr())
     dev.off()
 
     list(src = outfile)
@@ -860,9 +857,9 @@ observe({
 
   output$mvr_facts <- renderUI({
 
-    if ( !is.null( fieldbook() ) & !is.null( fbsmrvar ) ) {
+    if ( !is.null( fieldbook() ) & !is.null( fbsmrvar() ) ) {
 
-      mvr_variable_names <- fbsmrvar %>%
+      mvr_variable_names <- fbsmrvar() %>%
         filter(type %in% c("factor", "factores", "factors")) %>%
         select(variables) %>%
         deframe()
@@ -899,7 +896,7 @@ observe({
   mvr <- reactive({
 
     mvr <- fieldbook_mvr(data = fieldbook()
-                         , fb_smr = fbsmrvar
+                         , fb_smr = fbsmrvar()
                          , summary_by = input$mvr_facts
                          , groups = input$mvr_groups
     )

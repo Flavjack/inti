@@ -69,7 +69,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://lozanoisla.com/">
-            <img src="https://flavjack.github.io/inti/reference/figures/quipo4c.png" style="height:50px" title="flozano"></a>
+            <img src="https://flavjack.github.io/inti/reference/figures/biologia.png" style="height:50px" title="flozano"></a>
             <span style="display:block;"><small>lozanoisla.com</small></span>
             </p></div>
             </div>
