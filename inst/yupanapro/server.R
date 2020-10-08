@@ -786,6 +786,8 @@ observe({
 
   plotgr <- eventReactive(input$graph_create, {
     
+    validate( need( input$graph_sheets, "Refresh a choose a sheet") )
+    
     if ( input$graph_sheets %in% sheet_names(gs()) ) {
       
       plottb <<- gs() %>%
