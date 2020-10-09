@@ -19,6 +19,7 @@ cran <- c("devtools"
          , "ggpubr"
          , "FactoMineR"
          , "corrplot"
+         , "BiocManager"
          )
 
 git <- c(
