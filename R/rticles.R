@@ -2,6 +2,8 @@
 #'
 #' Invoke RStudio addin to create markdown documents
 #' 
+#' @param dependencies Install package dependencies for run the app
+#' 
 #' @details
 #'
 #' Create all the files in the present work directory. It is recommended use
@@ -23,7 +25,13 @@
 #' @export
 #'
 
-rticles <- function() {
+rticles <- function(dependencies = FALSE) {
+  
+  if (dependencies == TRUE ) {
+    
+    source("https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/setup.r")
+    
+  }
   
   appDir <- system.file("rticles", package = "inti")
   

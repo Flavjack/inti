@@ -4,7 +4,10 @@
 \alias{tarpuy}
 \title{Fieldbook experimental designs}
 \usage{
-tarpuy()
+tarpuy(dependencies = FALSE)
+}
+\arguments{
+\item{dependencies}{Install package dependencies for run the app}
 }
 \value{
 Shiny app
