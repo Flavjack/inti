@@ -32,23 +32,27 @@ if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json")
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-bs_theme_new(version = "4+3", bootswatch = NULL)
+bs_theme(version = "4+3", bootswatch = NULL) #!
 
 navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/">Yupana</a></strong></h3>')
            , windowTitle = "Yupana"
            , position = "fixed-top"
-           , theme = "bootstrap_sandstone.css"
            , selected = "Intro"
+           , theme = "bootstrap_sandstone.css"
+           , 
 
-           , includeCSS("www/custom.css"),
+ # Yupana Info -------------------------------------------------------------
+ # -------------------------------------------------------------------------
 
-           tabPanel("",
-
-                    bootstrap(), # allow use the new bootstrap
-
-                    tags$head(includeHTML(("www/analytics.html"))),
-                    tags$head(tags$link(rel="shortcut icon", href="https://flavjack.github.io/inti/reference/figures/yupana.png")),
-
+           tabPanel("Intro"
+                    
+                    , bs_theme_dependencies("flatly") #!
+                    , includeCSS("www/custom.css") #!
+                    
+                    , tags$head(includeHTML(("www/analytics.html")))
+                    , tags$head(tags$link(rel="shortcut icon"
+                                          , href="https://flavjack.github.io/inti/reference/figures/yupana.png")),
+                    
                     meta() %>%
                       meta_social(
                         title = "Yupana",
@@ -57,14 +61,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
                         image = "https://flavjack.github.io/inti/reference/figures/yupana.png",
                         image_alt = "quipolab.com"
                       )
-           ),
-
- # Yupana Info -------------------------------------------------------------
- # -------------------------------------------------------------------------
-
-           tabPanel("Intro",
-
-                    fluidRow(
+                    
+                    , fluidRow(
 
                       column(width = 1,
 
