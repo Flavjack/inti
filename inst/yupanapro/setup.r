@@ -23,7 +23,9 @@ cran <- c("devtools"
          )
 
 git <- c(
-  "rstudio/bootstraplib"
+  "rstudio/sass"
+  , "rstudio/htmltools"
+  , "rstudio/bootstraplib"
   , "Flavjack/inti" # Tools and Statistical Procedures in Plant Science
   )
 
