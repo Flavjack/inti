@@ -23,7 +23,7 @@ Learn more about the ‘inkaverse’ project at
 
 ## Installation
 
-<!-- You can install the released version of inti from [CRAN](https://CRAN.R-project.org) with: -->
+<!-- To install the stable version from [CRAN](https://CRAN.R-project.org), run the following from an R console: -->
 
 <!-- ``` r -->
 
@@ -31,15 +31,20 @@ Learn more about the ‘inkaverse’ project at
 
 <!-- ``` -->
 
-The development version from [GitHub](https://github.com/Flavjack/inti)
-with:
+To install the latest development version directly from
+[GitHub](https://github.com/Flavjack/inti), run the following from an R
+console:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("Flavjack/inti")
+if (!require("remotes"))
+  install.packages("remotes")
+remotes::install_github("rstudio/shiny")
 ```
 
 ## Shiny apps
+
+If is the first time running any of the apps consider install the app
+dependencies (e. g. `inti::yupana(dependencies = TRUE)`)
 
 ### Yupana
 
