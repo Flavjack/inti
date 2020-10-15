@@ -52,8 +52,8 @@ There are two main reasons why heritability on an entry-mean basis is of interes
 ## Breeder´s equation
 
 $$\Delta G=H^2S$$
-
 Where: 
+
 - $\Delta G$ is the genetic gain
 - $S$ is the mean phenotypic value of the selected genotypes, expressed as a deviation from the population mean.
 
@@ -65,9 +65,9 @@ In practice, most trials are conducted in a multienvironment trial (MET) present
 
 According @schmidt2019Heritability, the variance components could be calculated in two ways:
 
-## Firts: usuall approach
+## 1) Two stages approach
 
-In MET experiments, enviroments denotes a year-by-location interaction. This approach assumes a single variance for genotype-by-environment interactions (GxE), even when multiple locations were tested across multiple years.
+For the two stage approach, in the first stage each experiment is analyzed individually according their experiment design (Lattice, CRBD, etc) [@zystro2018Alternativea]. And for the second stage environments are denotes a year-by-location interaction. This approach assumes a single variance for genotype-by-environment interactions (GxE), even when multiple locations were tested across multiple years.
 
 ### Model
 
@@ -77,10 +77,9 @@ $$y_{ikt}=\mu\ +\ G_i+E_t+GxE_{it}+\varepsilon_{ikt}$$
 
 $$\sigma_p^2=\sigma_g^2+\frac{\sigma_{g\cdot e}^2}{n_e}+\frac{\sigma_{\varepsilon}^2}{n_e\cdot n_r}$$
 
-## Second: latter approach
+## 2) One stage approach
 
-The environmental effects via separate year, and location main and interaction
-effects.
+For the one stage approach only one model is used for the MET analysis. The environmental effects are included via separate year, and location main interaction effects.
 
 $$y_{ikt}=\mu+G_i+Y_m+E_q+YxE_{mq}+GxY_{im}+GxE_{iq}+GxYxE_{imq}+\varepsilon_{ikmq}$$
 
@@ -88,7 +87,7 @@ $$y_{ikt}=\mu+G_i+Y_m+E_q+YxE_{mq}+GxY_{im}+GxE_{iq}+GxYxE_{imq}+\varepsilon_{ik
 
 $$\sigma_p^2=\sigma_g^2+\frac{\sigma_{g\cdot e}^2}{n_e}+\frac{\sigma_{g\cdot y}^2}{n_y}+\frac{\sigma_{g\cdot y\cdot e}^2}{n_y\cdot n_e}+\ \frac{\sigma_{\epsilon}^2}{n_e\cdot n_y\cdot n_r}$$
 
-# Differentes heritability calculation
+# Differentes heritability calculations
 
 ```{r, echo=FALSE}
 tibble(
@@ -99,7 +98,7 @@ tibble(
   kable(caption = "Differentes heritability calculation")
 ```
 
-# Heritability implemented in the package
+# Heritability function in the package
 
 For calculate the standard heritability in MET experiments the number of location and replication should be include manually in the function `H2cal()`. In the case of difference number of replication in each experiments, take the maximum value (often done in practice) [@schmidt2019Estimating].
 
@@ -108,16 +107,13 @@ For remove the outliers the function implemented is the Method 4 used for @berna
 ## Load packages
 
 ```{r pkgs}
-
 library(inti)
 library(agridat)
-
 ```
 
 ## H2cal function
 
 ```{r fig.width= 7, fig.height=5}
-
  dt <- john.alpha
  hr <- H2cal(data = dt
             , trait = "yield"
@@ -130,7 +126,6 @@ library(agridat)
             , plot_dots = "rep"
             , outliers.rm = FALSE
             )
- 
 ```
 
 ## Model information
@@ -142,19 +137,19 @@ hr$model %>% summary()
 ## Variance component
 
 ```{r}
-hr$tabsmr %>% kable(caption = "Variance component table.")
+hr$tabsmr %>% kable(caption = "Variance component table")
 ```
 
 ## Best Linear Unbiased Predictors (BLUPs)
 
 ```{r}
-hr$blups %>% kable(caption = "BLUPs.")
+hr$blups %>% kable(caption = "BLUPs")
 ```
 
 ## Best Linear Unbiased Estimators (BLUEs)
 
 ```{r}
-hr$blues %>% kable(caption = "BLUEs.")
+hr$blues %>% kable(caption = "BLUEs")
 ```
 
 # References
