@@ -36,7 +36,7 @@ To install the latest development version directly from [GitHub](https://github.
 ``` r
 if (!require("remotes"))
   install.packages("remotes")
-remotes::install_github("rstudio/shiny")
+remotes::install_github("flavjack/inti")
 ```
 ## Shiny apps
 

@@ -38,7 +38,7 @@ console:
 ``` r
 if (!require("remotes"))
   install.packages("remotes")
-remotes::install_github("rstudio/shiny")
+remotes::install_github("flavjack/inti")
 ```
 
 ## Shiny apps
