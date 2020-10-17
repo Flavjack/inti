@@ -1,8 +1,13 @@
+# -------------------------------------------------------------------------
 # rticles -----------------------------------------------------------------
 # -------------------------------------------------------------------------
+#> open https://flavjack.github.io/inti/index.html
+#> open https://flavjack.shinyapps.io/rticles/
+#> author .: Flavio Lozano-Isla (lozanoisla.com)
+#> date .: 2020-10-17
+# -------------------------------------------------------------------------
 
-# https://flavjack.shinyapps.io/rticles/
-
+# -------------------------------------------------------------------------
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
@@ -16,6 +21,8 @@ library(fs)
 library(metathis)
 library(inti)
 
+
+# -------------------------------------------------------------------------
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
@@ -41,25 +48,21 @@ fluidPage(title = "Rticles",
              br(),
 
              HTML('
-
             <div id=footer style="width:100%; margin:auto;">
-
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
-            <a target="_blank" href="https://lozanoisla.com/">
-            <img src="https://flavjack.github.io/inti/reference/figures/quipo4c.png" style="height:55px" title="flozano"></a>
-            <span style="display:block;"><small>lozanoisla.com</small></span>
+            <a target="_blank" href="https://flavjack.github.io/inti/index.html">
+            <img src="https://flavjack.github.io/inti/reference/figures/biologia.png" style="height:50px" title="flozano"></a>
+            <span style="display:block;"><small>project</small></span>
             </p></div>
-
             </div>
-
                   ')
 
              ),
 
       column(3,
 
-             HTML('<h1><a target="_blank" href="https://flavjack.shinyapps.io/rticles/">Rticles</a></h1>'),
+             HTML('<h1><a target="_blank" href="https://inkaverse.com/">Rticles</a></h1>'),
 
              br(),
 

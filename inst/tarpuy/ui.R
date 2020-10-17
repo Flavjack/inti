@@ -1,9 +1,13 @@
+# -------------------------------------------------------------------------
 # tarpuy ------------------------------------------------------------------
 # -------------------------------------------------------------------------
+#> open https://flavjack.github.io/inti/index.html
+#> open https://flavjack.shinyapps.io/tarpuy/
+#> author .: Flavio Lozano-Isla (lozanoisla.com)
+#> date .: 2020-10-17
+# -------------------------------------------------------------------------
 
-# open https://flavjack.shinyapps.io/tarpuy/
-# open http://localhost:1221/
-
+# -------------------------------------------------------------------------
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
@@ -27,20 +31,22 @@ options(shiny.port = 1221)
 
 if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json")
 
+# -------------------------------------------------------------------------
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
 bs_global_theme(version = "4+3", bootswatch = NULL) #!
 
-navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/">Tarpuy</a></strong></h3>')
+navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.com/">Tarpuy</a></strong></h3>')
            , windowTitle = "Tarpuy"
            , position = "fixed-top"
            , selected = "Intro"
            , theme = "bootstrap_sandstone.css"
            , 
 
-           # Yupana Info -------------------------------------------------------------
-           # -------------------------------------------------------------------------
+# -------------------------------------------------------------------------
+# Yupana Info -------------------------------------------------------------
+# -------------------------------------------------------------------------
 
            tabPanel("Intro"
                     
@@ -68,9 +74,9 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://flavjack.s
             <div id=footer style="width:100%; margin:auto;">
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
-            <a target="_blank" href="https://lozanoisla.com/">
+            <a target="_blank" href="https://flavjack.github.io/inti/index.html">
             <img src="https://flavjack.github.io/inti/reference/figures/biologia.png" style="height:50px" title="flozano"></a>
-            <span style="display:block;"><small>lozanoisla.com</small></span>
+            <span style="display:block;"><small>project</small></span>
             </p></div>
             </div>
                   ')

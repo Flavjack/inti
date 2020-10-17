@@ -1,46 +1,55 @@
+# -------------------------------------------------------------------------
 # yupana ------------------------------------------------------------------
 # -------------------------------------------------------------------------
+#> open https://flavjack.github.io/inti/index.html
+#> open https://flavjack.shinyapps.io/yupanapro/
+#> author .: Flavio Lozano-Isla (lozanoisla.com)
+#> date .: 2020-10-17
+# -------------------------------------------------------------------------
 
-# open https://flavjack.shinyapps.io/yupanapro/
-# open http://localhost:1221/
-
+# -------------------------------------------------------------------------
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-# source("https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/setup.r")
-
-cran <- c("devtools"
-         , "shiny"
-         , "metathis"
-         , "tidyverse"
-         , "googlesheets4"
-         , "googleAuthR"
-         , "shinydashboard"
-         , "ggpubr"
-         , "FactoMineR"
-         , "corrplot"
-         , "BiocManager"
-         )
+cran <- c(
+  "devtools"
+  , "installr" 
+  , "shiny"
+  , "metathis"
+  , "tidyverse"
+  , "googlesheets4"
+  , "googleAuthR"
+  , "shinydashboard"
+  , "ggpubr"
+  , "FactoMineR"
+  , "corrplot"
+  , "BiocManager"
+  )
 
 git <- c(
   "rstudio/bootstraplib"
-  , "Flavjack/inti" # Tools and Statistical Procedures in Plant Science
+  , "Flavjack/inti" 
   )
 
-installed <- c(cran, sub(".*/", "", git)) %in% rownames(installed.packages())
+for (pkg in cran) { 
+  if( !require(pkg, character.only = TRUE) ) {
+    install.packages(pkg)
+    library(pkg, character.only = TRUE)
+  } 
+}
 
-if (any(installed == FALSE)) {
-  cran_missing <- cran %in% c(cran, sub(".*/", "", git))[!installed == TRUE]
-  cran_install <- c(cran, sub(".*/", "", git))[cran_missing == TRUE]
-  install.packages( cran_install )
-  }
+for (pkg in git) { 
+  if( !require(sub(".*/", "", pkg), character.only = TRUE) ) {
+    devtools::install_github(pkg)
+    library(pkg, character.only = TRUE)
+  } 
+}
 
-invisible(lapply(sub(".*/", "", git), unloadNamespace))
-invisible(lapply(git, devtools::install_github, dependencies = T))
-invisible(lapply(c(cran, sub(".*/", "", git)), library, character.only = TRUE))
-rm(cran, git, installed)
+rm(cran, git, pkg)
 
-# References .:
+# -------------------------------------------------------------------------
+# references --------------------------------------------------------------
+# -------------------------------------------------------------------------
 
 # https://shiny.rstudio.com/tutorial/written-tutorial/lesson3/
 

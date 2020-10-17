@@ -1,8 +1,8 @@
 # Info --------------------------------------------------------------------
 # -------------------------------------------------------------------------
-#> author .: Flavio Lozano Isla
+#> author .: Flavio Lozano-Isla
 #> web    .: https://lozanoisla.com
-#> date   .: 2020-09-27
+#> date   .: 2020-09-28
 # -------------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
@@ -10,8 +10,8 @@
 # -------------------------------------------------------------------------
 
 cran <- c("devtools" # Developer tools
-          , "bookdown" # Write articles and technical documents
           , "knitr" # Base for markdown documents
+          , "bookdown" # Write articles and technical documents
           , "tidyverse" # Data manipulation
           , "googlesheets4" # Read/write google sheets docs
           , "googledrive" # Download/Upload files from googledrive
@@ -33,13 +33,12 @@ git <- c(
 installed <- c(cran, sub(".*/", "", git)) %in% rownames(installed.packages())
 
 if (any(installed == FALSE)) {
-
   cran_missing <- cran %in% c(cran, sub(".*/", "", git))[!installed == TRUE]
   cran_install <- c(cran, sub(".*/", "", git))[cran_missing == TRUE]
   install.packages( cran_install )
-  
-}
+  }
 
+invisible(lapply(sub(".*/", "", git), unloadNamespace))
 invisible(lapply(git, devtools::install_github))
 invisible(lapply(c(cran, sub(".*/", "", git)), library, character.only = TRUE))
 rm(cran, git, installed)
@@ -74,3 +73,4 @@ options(
 
 googlesheets4::gs4_auth(T)
 googledrive::drive_auth(T)
+

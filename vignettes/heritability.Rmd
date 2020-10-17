@@ -67,7 +67,7 @@ According @schmidt2019Heritability, the variance components could be calculated 
 
 ## 1) Two stages approach
 
-For the two stage approach, in the first stage each experiment is analyzed individually according their experiment design (Lattice, CRBD, etc) [@zystro2018Alternativea]. And for the second stage environments are denotes a year-by-location interaction. This approach assumes a single variance for genotype-by-environment interactions (GxE), even when multiple locations were tested across multiple years.
+For the two stage approach, in the first stage each experiment is analyzed individually according their experiment design (Lattice, CRBD, etc) [@zystro2018Alternative]. And for the second stage environments are denotes a year-by-location interaction. This approach assumes a single variance for genotype-by-environment interactions (GxE), even when multiple locations were tested across multiple years.
 
 ### Model
 
