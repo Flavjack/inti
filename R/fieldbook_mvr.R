@@ -73,10 +73,12 @@ fieldbook_mvr <- function(data
     deframe()
 
   vars_num <- fb_smr %>%
-    filter(.data$type %in% "numeric")
+    filter(.data$type %in% "numeric") %>% 
+    filter(levels > 0) # drop variables with values
 
   vars_cha <- fb_smr %>%
-    filter(.data$type %in% "character")
+    filter(.data$type %in% "character") %>% 
+    filter(levels > 0) # drop variables with values
 
   fb <- data %>%
     select(where(~!all(is.na(.)))) %>%
@@ -105,12 +107,13 @@ par <- list(quali = summary_by
 # pca ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  pca_info <- fb %>%
-    PCA(X = .
-        , scale.unit = T
-        , quali.sup = quali_ncol
-        , graph = FALSE
-        )
+pca_info <- fb %>%
+  select(where(~ length(unique(.)) > 1)) %>%  # drop variables with variation
+  PCA(X = .
+    , scale.unit = T
+    , quali.sup = quali_ncol
+    , graph = FALSE
+    )
 
 # hcpc --------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -124,9 +127,10 @@ par <- list(quali = summary_by
 # Correlation -------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-cor <- fb %>%
+cor <- fb %>% 
   select(where(is.numeric)) %>%
-  correlation(method = "pearson")
+  select(where(~ length(unique(.)) > 1)) %>% # drop variables with variation
+  agricolae::correlation(method = "pearson")
 
 # results -----------------------------------------------------------------
 # -------------------------------------------------------------------------
