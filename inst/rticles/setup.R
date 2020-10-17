@@ -13,7 +13,6 @@
 
 cran <-  c(
   "devtools"
-  , "installr" 
   , "shiny"
   , "miniUI"
   , "shinyFiles"
