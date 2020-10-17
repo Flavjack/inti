@@ -68,10 +68,12 @@ fieldbook_report <- function(data
     select(where(~!all(is.na(.))))
 
   vars_num <- fb_smr %>%
-    filter(type %in% "numeric")
+    filter(type %in% "numeric") %>% 
+    filter(levels > 0)
 
   vars_cat <- fb_smr %>%
-    filter(type %in% "character")
+    filter(type %in% "character") %>% 
+    filter(levels > 0)
 
   fb <- data %>%
     select(where(~!all(is.na(.)))) %>%

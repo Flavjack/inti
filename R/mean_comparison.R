@@ -81,10 +81,12 @@ mean_comparison <- function(data
     deframe()
 
   vars_num <- fb_smr %>%
-    filter(.data$type %in% "numeric")
+    filter(.data$type %in% "numeric") %>% 
+    filter(levels > 0)
 
   vars_cat <- fb_smr %>%
-    filter(.data$type %in% "character")
+    filter(.data$type %in% "character") %>% 
+    filter(levels > 0)
 
   fb <- data %>%
     select(where(~!all(is.na(.)))) %>%
