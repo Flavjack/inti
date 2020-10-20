@@ -119,10 +119,16 @@ include_figure <- function(data = NULL
       message("Include url or path for your figure")
       
     }
+  
+  print(img)
+  
+  cat(img)
+  
+  knitr::asis_output(img)
 
 # result ------------------------------------------------------------------
 
-  list(figure = img, caption = cap)
+return(cap)
 
 }
 

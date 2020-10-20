@@ -5,9 +5,9 @@
 \title{Table with footnotes}
 \usage{
 include_table(
-  data,
-  caption = NULL,
-  notes = NULL,
+  data = NULL,
+  caption = NA,
+  notes = NA,
   label = "Note:",
   notation = "alphabet"
 )
@@ -53,9 +53,7 @@ gs <- as_sheets_id(url)
 table <- gs \%>\%
     range_read("tab1")
 
-table \%>\% inti::include_table(label = "_Nota:_"
-                              , notation = "num"
-)
+table \%>\% inti::include_table()
 
 }
 

@@ -37,28 +37,26 @@
 #' table <- gs %>%
 #'     range_read("tab1")
 #'
-#' table %>% inti::include_table(label = "_Nota:_"
-#'                               , notation = "num"
-#' )
+#' table %>% inti::include_table()
 #'
 #' }
 #'
 
-include_table <- function(data
-                        , caption = NULL
-                        , notes = NULL
+include_table <- function(data = NULL
+                        , caption = NA
+                        , notes = NA
                         , label = "Note:"
                         , notation = "alphabet"
 ) {
 
   # data <- table
-
-  first_col <- names(data[1]) %>% as.symbol()
-  col_list <- data[[first_col]]
+  
   col_capt <- c("{caption}", "{title}", "{titulo}")
   col_note <- c("{notes}", "{note}", "{nota}", "{notas}")
+  first_col <- names(data[1]) %>% as.symbol()
+  col_list <- data[[first_col]]
 
-  if(is.null(caption)){
+  if(!is.null(data)){
 
     col_math <- col_list %in% col_capt
     col_cap <- col_list[col_math == TRUE]
@@ -66,33 +64,34 @@ include_table <- function(data
     caption <- data %>%
       filter( {{first_col}} %in% {{col_cap}} ) %>%
       purrr::pluck(2)
-
-  }
-
-  if(is.null(notes)){
-
+    
     col_math <- col_list %in% col_note
     col_note <- col_list[col_math == TRUE]
-
-    if ( length(col_note) == 0 ) {
-
-      note <- NULL
-      notation <- "none"
-
-    } else {
-
+    
+    if (length(col_note) > 0) {
+      
       notes <- data %>%
         filter( {{first_col}}  == {{col_note}} ) %>%
-        pluck(2) %>%
-        as_vector()
-
-    }
-
+        pluck(2) 
+      
+    } else {notes <- NULL}
+    
   }
-
-  data %>%
-    filter( !{{first_col}}  %in% c( {{col_capt}}, {{col_note}} ) ) %>%
-    knitr::kable(caption = caption, format = "pipe") %>%
-    inti::footnotes(notes = notes, label = label, notation = notation)
+  
+  tab <-  data %>%
+    filter( !{{first_col}}  %in% c( {{col_capt}}, {{col_note}} ) )
+  
+  if(!is.na(notes) && length(notes) > 1) {
+    
+    table <- tab %>% knitr::kable(caption = caption, format = "pipe") %>% 
+      inti::footnotes(notes = notes, label = label, notation = notation)
+    
+  } else {
+    
+    table <-tab %>% knitr::kable(caption = caption, format = "pipe")
+      
+  }
+  
+return(table)
 
 }
