@@ -4,27 +4,18 @@
 \alias{include_figure}
 \title{Figure with caption and notes}
 \usage{
-include_figure(
-  data = NULL,
-  figure,
-  caption = NULL,
-  notes = NULL,
-  label = "Note:",
-  table = c("figures", "descripton")
-)
+include_figure(data = NULL, figure, caption = NA, notes = NA, label = "Note:")
 }
 \arguments{
 \item{data}{Data frame with the figures information. See details.}
 
 \item{figure}{Name or path of the figure.}
 
-\item{caption}{Manual figure caption (default = NULL).}
+\item{caption}{Manual figure caption (default = NA).}
 
-\item{notes}{Manual figure notes (default = NULL).}
+\item{notes}{Manual figure notes (default = NA).}
 
-\item{label}{Label for start the footnote (default = "Source:").}
-
-\item{table}{Columns in the table (default = c("figure", "description")).}
+\item{label}{Label for start the footnote (default = "Note:").}
 }
 \value{
 Figure with caption and notes
@@ -50,19 +41,14 @@ If you don't use a data frame you provide the information manually.
 library(googlesheets4)
 library(inti)
 
-if (gs4_has_token()) {
+finfo <- info_figure(caption = "test"
+                   , notes = "nota"
+                   , url = "https://devblackops.io/images/testing.jpg"
+                   , path = "test.jpg"
+                   )
 
-url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1dfgpmCKdPmxRHozrZp0iE_xMGsvKTIcztDpMWYSEGaY")
-
-gs <- as_sheets_id(url)
-
-data <- gs \%>\% 
-  range_read("fig1")
-
-fig <- include_figure(data)
+fig <- finfo \%>\%  include_figure()
 fig
 
-}
 
 }

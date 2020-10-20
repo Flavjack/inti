@@ -4,11 +4,10 @@
 #'
 #' @param data Data frame with the figures information. See details.
 #' @param figure Name or path of the figure.
-#' @param caption Manual figure caption (default = NULL).
-#' @param notes Manual figure notes (default = NULL).
-#' @param label Label for start the footnote (default = "Source:").
-#' @param table Columns in the table (default = c("figure", "description")).
-#'
+#' @param caption Manual figure caption (default = NA).
+#' @param notes Manual figure notes (default = NA).
+#' @param label Label for start the footnote (default = "Note:").
+#' 
 #' @details
 #'
 #' The data frame should contain 4 rows in \code{table}:
@@ -32,29 +31,27 @@
 #' library(googlesheets4)
 #' library(inti)
 #' 
-#' if (gs4_has_token()) {
+#' finfo <- info_figure(caption = "test"
+#'                    , notes = "nota"
+#'                    , url = "https://devblackops.io/images/testing.jpg"
+#'                    , path = "test.jpg"
+#'                    )
 #' 
-#' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "1dfgpmCKdPmxRHozrZp0iE_xMGsvKTIcztDpMWYSEGaY")
-#' 
-#' gs <- as_sheets_id(url)
-#' 
-#' data <- gs %>% 
-#'   range_read("fig1")
-#' 
-#' fig <- include_figure(data)
+#' fig <- finfo %>%  include_figure()
 #' fig
 #' 
-#' }
 #' 
 
 include_figure <- function(data = NULL
                          , figure
-                         , caption = NULL
-                         , notes = NULL
+                         , caption = NA
+                         , notes = NA
                          , label = "Note:"
-                         , table = c("figures", "descripton")
                          ){
+  
+  # data <- finfo
+  
+  data <- data %>% pluck(1)
   
   first_col <- names(data[1]) %>% as.symbol()
   col_list <- data[[first_col]]
@@ -106,13 +103,13 @@ include_figure <- function(data = NULL
     
     }
   
-    if ( c(!is.na(path) & file.exists(path)) & !is.na(url) ) {
+    if ( c(!is.na(path) && file.exists(path)) && !is.na(url) ) {
       
-      img <- path %>% knitr::include_graphics()
+      img_path <- path 
       
-    } else if (!is.na(url) ) {
+    } else if ( !is.na(url) ) {
       
-      img <- url %>% knitr::include_graphics()
+      img_path <- url
     
     } else {
       
@@ -120,15 +117,11 @@ include_figure <- function(data = NULL
       
     }
   
-  print(img)
+  img <- img_path %>% knitr::include_graphics()
   
-  cat(img)
-  
-  knitr::asis_output(img)
-
 # result ------------------------------------------------------------------
-
-return(cap)
-
+  
+  img
+  
 }
 

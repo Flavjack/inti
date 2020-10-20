@@ -6,6 +6,7 @@
 #' @param notes Figure notes.
 #' @param url Figure url or link.
 #' @param path Figure local path.
+#' @param label Label for notes (default = "Note:")
 #' @param nrows Free rows in the export table.
 #'
 #' @return data frame
@@ -26,6 +27,7 @@ info_figure <- function(caption = NA
                         , notes = NA
                         , url = NA
                         , path = NA
+                        , label = "Note:"
                         , nrows = 50
                         ){
   
@@ -38,7 +40,20 @@ info_figure <- function(caption = NA
       , description = rep_len(NA, nrows)
       )
   
-  tabinfo
+  if ( is.na(notes) ) { 
+    
+    cap <- caption
+    
+  } else if (!is.na(notes)) {
+    
+    cap <- paste(caption, label, notes)
+    
+  }
+  
+
+# result ------------------------------------------------------------------
+
+list(info = tabinfo, caption = cap)
   
 }
 

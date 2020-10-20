@@ -4,7 +4,14 @@
 \alias{info_figure}
 \title{Figure information}
 \usage{
-info_figure(caption = NA, notes = NA, url = NA, path = NA, nrows = 50)
+info_figure(
+  caption = NA,
+  notes = NA,
+  url = NA,
+  path = NA,
+  label = "Note:",
+  nrows = 50
+)
 }
 \arguments{
 \item{caption}{Figure caption.}
@@ -14,6 +21,8 @@ info_figure(caption = NA, notes = NA, url = NA, path = NA, nrows = 50)
 \item{url}{Figure url or link.}
 
 \item{path}{Figure local path.}
+
+\item{label}{Label for notes (default = "Note:")}
 
 \item{nrows}{Free rows in the export table.}
 }

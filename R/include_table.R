@@ -47,7 +47,7 @@ include_table <- function(data = NULL
                         , notes = NA
                         , label = "Note:"
                         , notation = "alphabet"
-) {
+                        ) {
 
   # data <- table
   
