@@ -168,7 +168,7 @@ means_lm <- function(data
 
   smr_stat <- mc %>%
     pluck("statistics") %>%
-    dplyr::mutate(trait =  print(as.character(trait))) %>%
+    dplyr::mutate(trait =  as.character(trait)) %>%
     select(trait, dplyr::everything())
 
   # Results
