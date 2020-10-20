@@ -9,8 +9,8 @@ include_figure(
   figure,
   caption = NULL,
   notes = NULL,
-  label = "Source:",
-  table = c("figures", "caption", "notes", "url")
+  label = "Note:",
+  table = c("figures", "descripton")
 )
 }
 \arguments{
@@ -24,8 +24,7 @@ include_figure(
 
 \item{label}{Label for start the footnote (default = "Source:").}
 
-\item{table}{Columns in the table (default = c("figures", "caption", "notes",
-"url")).}
+\item{table}{Columns in the table (default = c("figure", "description")).}
 }
 \value{
 Figure with caption and notes
@@ -34,15 +33,36 @@ Figure with caption and notes
 Include figures with title and notes using a data base
 }
 \details{
-The data frame should contain 4 columns specified in \code{table}:
+The data frame should contain 4 rows in \code{table}:
 
-1. \code{figures}.
+1. \code{caption}.
 
-2. \code{caption}.
+2. \code{notes}.
 
-3. \code{notes}.
+3. \code{url} 
 
-4. \code{url} or \code{url}.
+4. \code{path}.
 
-If you don't use a a data frame you provide the information manually.
+If you don't use a data frame you provide the information manually.
+}
+\examples{
+
+library(googlesheets4)
+library(inti)
+
+if (gs4_has_token()) {
+
+url <- paste0("https://docs.google.com/spreadsheets/d/"
+              , "1dfgpmCKdPmxRHozrZp0iE_xMGsvKTIcztDpMWYSEGaY")
+
+gs <- as_sheets_id(url)
+
+data <- gs \%>\% 
+  range_read("fig1")
+
+fig <- include_figure(data)
+fig
+
+}
+
 }
