@@ -1,4 +1,4 @@
-# inti 0.1.0.900
+# inti 0.1.1
 
 ## Major changes
 

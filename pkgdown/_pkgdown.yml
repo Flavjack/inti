@@ -1,7 +1,7 @@
 home:
   title: Tools and Statistical Procedures in Plant Science
   description: A collection of different applications and procedures used in plant breeding and experimental designs.
-  url: https://github.com/flavjack/inti/
+  url: https://flavjack.github.io/inti/
   author: Flavio Lozano-Isla
 template:
   opengraph:
