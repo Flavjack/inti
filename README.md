@@ -23,13 +23,12 @@ Learn more about the ‘inkaverse’ project at
 
 ## Installation
 
-<!-- To install the stable version from [CRAN](https://CRAN.R-project.org), run the following from an R console: -->
+To install the stable version from [CRAN](https://CRAN.R-project.org),
+run the following from an R console:
 
-<!-- ``` r -->
-
-<!-- install.packages("inti") -->
-
-<!-- ``` -->
+``` r
+install.packages("inti")
+```
 
 To install the latest development version directly from
 [GitHub](https://github.com/Flavjack/inti), run the following from an R
