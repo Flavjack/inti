@@ -12,6 +12,7 @@
 - Exclude columns with all NA values
 - Button for generate and refresh graphs
 - App not stop if graph information is wrong
+- Update bookdown new release
 
 # inti 0.1.0
 

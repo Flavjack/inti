@@ -13,8 +13,9 @@ site: bookdown::bookdown_site
 documentclass: book
 bookdown::gitbook:
 output: 
-  bookdown::word_document2: 
+  bookdown::word_document2:
     reference_docx: files/style_rticles.docx
+    number_sections: false
   bookdown::html_document2:
     toc: true
     number_sections: true
@@ -28,8 +29,9 @@ csl: https://www.zotero.org/styles/apa
 ---
 
 ```{r setup, include=FALSE}
-source("files/setup.r")
-url <- "https://docs.google.com/spreadsheets/d/1QziIXGOwb8cl3GaARJq6Ez6aU7vND_UHKJnFcAKx0VI/edit#gid=137089581"
+source("https://lozanoisla.com/setup.r")
+url <- paste0("https://docs.google.com/spreadsheets/d/"
+              , "1QziIXGOwb8cl3GaARJq6Ez6aU7vND_UHKJnFcAKx0VI")
 gs <- as_sheets_id(url)
 # browseURL(url)
 
@@ -147,17 +149,14 @@ if(!file.exists("files/pkgs.bib")){write_bib(c(.packages()),'files/pkgs.bib')}
 `r if (knitr:::is_html_output()) '# Tables {-}'`
 
 ```{r germin}
-
 gs %>% 
   range_read("prosopis") %>% 
   select(rep:D5) %>% 
   head(10) %>% 
-  inti::include_table(
+  inti::info_table(
     caption = "Germination dataset import from a googlesheet"
-    , notes = "@schafleitner2007"
-    , label = "__Source:__"
-    )
-
+    , notes = "@schafleitner2007") %>% 
+  inti::include_table(label = "__*Source:*__")
 ```
 
 \newpage
@@ -233,14 +232,14 @@ save_plot("files/fig_gerplot.png",
           base_aspect_ratio = 2.5, 
           units = "mm")
 
-fig <- include_figure(
-  figure = "files/fig_gerplot.png"
-  , caption = "Germination  experiment with *Prosopis juliflor* under different osmotic potentials and temperatures."
-  , notes = " A) Bar graph with germination percentage in a factorial analisys. B)  Line graph from cumulative germination under different osmotic potentials."
+fig <- info_figure(
+  caption = "Germination  experiment with *Prosopis juliflor* under different osmotic potentials and temperatures."
+  , notes = "A) Bar graph with germination percentage in a factorial analisys. B)  Line graph from cumulative germination under different osmotic potentials."
   , label = "__Where:__"
+  , url = "files/fig_gerplot.png"
   )
-
-fig$figure
+  
+fig %>% include_figure()
 ```
 
 \newpage
@@ -268,12 +267,11 @@ save_plot("files/fig_jcurcas.png",
           base_aspect_ratio = 1.2, 
           units = "mm")
 
-fig <- include_figure(
-  figure = "files/fig_jcurcas.png"
-  , caption = "Plant of *Jatropha curcas*. A) Foliage, B) Leaf, C) Fruit."
-  )
+fig <- info_figure(
+  caption = "Plant of *Jatropha curcas*. A) Foliage, B) Leaf, C) Fruit."
+  , url = "files/fig_jcurcas.png")
 
-fig$figure
+fig %>% include_figure()
 ```
 
 \newpage
@@ -384,12 +382,12 @@ save_plot("files/fig_mv.png",
           base_aspect_ratio = 1.2, 
           units = "mm")
 
-fig <- include_figure(
-  figure = "files/fig_mv.png"
-  , caption = "Multivariate Analysis: Principal component Analysis and Hierarchical Clustering Analysis."
+fig <- info_figure(
+  caption = "Multivariate Analysis: Principal component Analysis and Hierarchical Clustering Analysis."
+  , url = "files/fig_mv.png"
   )
-
-fig$figure
+  
+fig %>% include_figure()
 ```
 
 <!-- Anexos -->
