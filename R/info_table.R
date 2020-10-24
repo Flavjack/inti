@@ -3,8 +3,8 @@
 #' Add table information for include_table
 #'
 #' @param data data frame
-#' @param caption Figure caption.
-#' @param notes Figure notes.
+#' @param caption Table caption.
+#' @param notes Table notes.
 #'
 #' @return data frame
 #' 
@@ -13,22 +13,22 @@
 #' @examples 
 #' 
 #' tab <- tibble(
-#' x = rep_len("a", 5)
-#' , y = rep_len("b", 5)
+#' x = rep_len(1, 5)
+#' , y = rep_len(3, 5)
 #' , z = rep_len("c", 5)
 #' )
 #'
-#' tinfo <- tab %>% 
+#' info <- tab %>% 
 #' info_table(
 #'   caption = "Figure caption"
-#'   , notes = "notes"
+#'   , notes = "test note"
 #'   )
 #' 
 
 info_table <- function(data
-                        , caption = NA
-                        , notes = NA
-                        ){
+                       , caption = NA
+                       , notes = NA
+                       ){
   
   # data <- tab
   
@@ -42,13 +42,11 @@ info_table <- function(data
     select(!.data$name) %>% 
     tibble::add_column({{col2}} := c(caption, notes))
   
+  tab <- merge(data, tabinfo, all = TRUE, sort = F)
   
-  tab <- bind_rows(data, tabinfo)
-  
-
 # results -----------------------------------------------------------------
 
-tab  
+list(table = tab, data = data)
   
 }
 

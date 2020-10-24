@@ -8,8 +8,8 @@ include_table(
   data = NULL,
   caption = NA,
   notes = NA,
-  label = "Note:",
-  notation = "alphabet"
+  label = NA,
+  notation = "none"
 )
 }
 \arguments{
@@ -39,22 +39,19 @@ symbol using \code{{hypen}} in your table. \code{notation} could be use:
 }
 \examples{
 
-library(googlesheets4)
-library(inti)
+tab <- tibble(
+x = rep_len(1, 5)
+, y = rep_len(3, 5)
+, z = rep_len("c", 5)
+)
 
-if (gs4_has_token()) {
+info <- tab \%>\% 
+info_table(
+  caption = "Figure caption"
+  , notes = "test note"
+  )
 
-url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1dfgpmCKdPmxRHozrZp0iE_xMGsvKTIcztDpMWYSEGaY")
+info \%>\% inti::include_table()
 
-# browseURL(url)
-gs <- as_sheets_id(url)
-
-table <- gs \%>\%
-    range_read("tab1")
-
-table \%>\% inti::include_table()
-
-}
 
 }

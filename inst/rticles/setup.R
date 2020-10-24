@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/index.html
 #> open https://flavjack.shinyapps.io/rticles/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-10-17
+#> date .: 2020-10-24
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------

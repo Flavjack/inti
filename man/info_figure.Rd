@@ -9,7 +9,7 @@ info_figure(
   notes = NA,
   url = NA,
   path = NA,
-  label = "Note:",
+  label = NA,
   nrows = 50
 )
 }
@@ -22,7 +22,7 @@ info_figure(
 
 \item{path}{Figure local path.}
 
-\item{label}{Label for notes (default = "Note:")}
+\item{label}{Label for notes (default = NA)}
 
 \item{nrows}{Free rows in the export table.}
 }
@@ -35,10 +35,10 @@ Describe figures information for export or print
 \examples{
 
 finfo <- info_figure(
-  caption = "Figure caption"
+  caption = "Figure caption."
+  , notes = "Test note"
   , url = "www.image.dir"
-  , nrows = 30
+  , label = "Source:"
   )
-
 
 }

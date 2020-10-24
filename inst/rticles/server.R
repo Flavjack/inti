@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/index.html
 #> open https://flavjack.shinyapps.io/rticles/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-10-17
+#> date .: 2020-10-24
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -20,6 +20,9 @@ library(utils)
 library(fs)
 library(metathis)
 library(inti)
+library(BiocManager)
+
+options(repos = BiocManager::repositories())
 
 # -------------------------------------------------------------------------
 # update template ---------------------------------------------------------
@@ -135,12 +138,13 @@ shinyServer(function(input, output, session) {
 
   observeEvent(input$create, {
 
-    inti::rticles(path = path()
-                  , type = input$type
-                  , name = input$name
-                  , project = project()
-                  , server = server()
-                  )
+    inti::create_rticles(
+      path = path()
+      , type = input$type
+      , name = input$name
+      , project = project()
+      , server = server()
+      )
     })
 
 # download data -----------------------------------------------------------
@@ -156,11 +160,12 @@ shinyServer(function(input, output, session) {
 
     content = function(content) {
 
-      filelist <- inti:::rticles(type = input$type
-                                 , name = input$name
-                                 , project = project()
-                                 , server = server()
-                                 )
+      filelist <- inti:::create_rticles(
+        type = input$type
+        , name = input$name
+        , project = project()
+        , server = server()
+        )
 
       zip::zipr(zipfile = content, files = filelist)
 

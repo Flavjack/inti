@@ -6,7 +6,7 @@
 #' @param notes Figure notes.
 #' @param url Figure url or link.
 #' @param path Figure local path.
-#' @param label Label for notes (default = "Note:")
+#' @param label Label for notes (default = NA)
 #' @param nrows Free rows in the export table.
 #'
 #' @return data frame
@@ -16,18 +16,18 @@
 #' @examples 
 #'
 #' finfo <- info_figure(
-#'   caption = "Figure caption"
+#'   caption = "Figure caption."
+#'   , notes = "Test note"
 #'   , url = "www.image.dir"
-#'   , nrows = 30
+#'   , label = "Source:"
 #'   )
-#' 
 #' 
 
 info_figure <- function(caption = NA
                         , notes = NA
                         , url = NA
                         , path = NA
-                        , label = "Note:"
+                        , label = NA
                         , nrows = 50
                         ){
   
@@ -46,10 +46,17 @@ info_figure <- function(caption = NA
     
   } else if (!is.na(notes)) {
     
-    cap <- paste(caption, label, notes)
+    if (is.na(label)) {
+      
+      cap <- paste(caption, notes) 
+      
+    } else {
+      
+      cap <- paste(caption, label, notes) 
+      
+    }
     
   }
-  
 
 # result ------------------------------------------------------------------
 

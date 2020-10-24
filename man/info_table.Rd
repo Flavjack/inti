@@ -9,9 +9,9 @@ info_table(data, caption = NA, notes = NA)
 \arguments{
 \item{data}{data frame}
 
-\item{caption}{Figure caption.}
+\item{caption}{Table caption.}
 
-\item{notes}{Figure notes.}
+\item{notes}{Table notes.}
 }
 \value{
 data frame
@@ -22,15 +22,15 @@ Add table information for include_table
 \examples{
 
 tab <- tibble(
-x = rep_len("a", 5)
-, y = rep_len("b", 5)
+x = rep_len(1, 5)
+, y = rep_len(3, 5)
 , z = rep_len("c", 5)
 )
 
-tinfo <- tab \%>\% 
+info <- tab \%>\% 
 info_table(
   caption = "Figure caption"
-  , notes = "notes"
+  , notes = "test note"
   )
 
 }
