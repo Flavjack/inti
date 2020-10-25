@@ -4,14 +4,19 @@
 \alias{info_table}
 \title{Table information}
 \usage{
-info_table(data, caption = NA, notes = NA)
+info_table(data, caption = NA, notes = NA, label = NA, notation = "none")
 }
 \arguments{
-\item{data}{data frame}
+\item{data}{Data frame}
 
 \item{caption}{Table caption.}
 
 \item{notes}{Table notes.}
+
+\item{label}{Note label.}
+
+\item{notation}{Notation for the symbols and footnotes (default = "none").
+See details.}
 }
 \value{
 data frame
@@ -19,18 +24,25 @@ data frame
 \description{
 Add table information for include_table
 }
+\details{
+You can add the footnote symbol using \code{{hypen}} in your table.
+\code{notation} could be use: "alphabet", "number", "none".
+}
 \examples{
 
-tab <- tibble(
+library(inti)
+
+tab <- data.frame(
 x = rep_len(1, 5)
 , y = rep_len(3, 5)
 , z = rep_len("c", 5)
 )
 
-info <- tab \%>\% 
+info <- tab \%>\%
 info_table(
   caption = "Figure caption"
   , notes = "test note"
+  , label = "Where:"
   )
 
 }

@@ -6,21 +6,11 @@
 #' @param figure Name or path of the figure.
 #' @param caption Manual figure caption (default = NA).
 #' @param notes Manual figure notes (default = NA).
-#' @param label Label for start the footnote (default = "Note:").
+#' @param label Label for start the footnote (default = NA).
 #' 
 #' @details
 #'
-#' The data frame should contain 4 rows in \code{table}:
-#'
-#' 1. \code{caption}.
-#'
-#' 2. \code{notes}.
-#'
-#' 3. \code{url} 
-#' 
-#' 4. \code{path}.
-#'
-#' If you don't use a data frame you provide the information manually.
+#' The data frame information result from `info_figure` output.
 #'
 #' @return Figure with caption and notes
 #' 
@@ -28,25 +18,25 @@
 #' 
 #' @examples 
 #' 
-#' library(googlesheets4)
 #' library(inti)
 #' 
-#' finfo <- info_figure(caption = "test"
-#'                    , notes = "nota"
+#' fig <- info_figure(caption = "caption test."
+#'                    , notes = "note test."
+#'                    , label = "_Source:_"
 #'                    , url = "https://devblackops.io/images/testing.jpg"
-#'                    , path = "test.jpg"
+#'                    , path = "man/figures/logo.png"
 #'                    )
 #' 
-#' fig <- finfo %>%  include_figure()
-#' fig
-#' 
+#' # use this in r chunk `fig.caption = fig$caption`                   
+#'                    
+#' fig %>%  include_figure()
 #' 
 
 include_figure <- function(data = NULL
                          , figure
                          , caption = NA
                          , notes = NA
-                         , label = "Note:"
+                         , label = NA
                          ){
   
   # data <- finfo
@@ -101,9 +91,9 @@ include_figure <- function(data = NULL
       
     cap <- paste(caption, label, notes)
     
-    }
+  }
   
-    if ( c(!is.na(path) && file.exists(path)) && !is.na(url) ) {
+    if ( !is.na(path) && !is.na(url) && file.exists(path) ) {
       
       img_path <- path 
       
@@ -113,7 +103,7 @@ include_figure <- function(data = NULL
     
     } else {
       
-      message("Include url or path for your figure")
+      stop("Cannot find the file")
       
     }
   

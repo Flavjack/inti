@@ -161,7 +161,7 @@
     <p>Include figures with title and notes using a data base</p>
     </div>
 
-    <pre class="usage"><span class='fu'>include_figure</span><span class='op'>(</span>data <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>figure</span>, caption <span class='op'>=</span> <span class='cn'>NA</span>, notes <span class='op'>=</span> <span class='cn'>NA</span>, label <span class='op'>=</span> <span class='st'>"Note:"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>include_figure</span><span class='op'>(</span>data <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>figure</span>, caption <span class='op'>=</span> <span class='cn'>NA</span>, notes <span class='op'>=</span> <span class='cn'>NA</span>, label <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,7 +184,7 @@
     </tr>
     <tr>
       <th>label</th>
-      <td><p>Label for start the footnote (default = "Note:").</p></td>
+      <td><p>Label for start the footnote (default = NA).</p></td>
     </tr>
     </table>
 
@@ -193,30 +193,25 @@
     <p>Figure with caption and notes</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The data frame should contain 4 rows in <code>table</code>:</p>
-<p>1. <code>caption</code>.</p>
-<p>2. <code>notes</code>.</p>
-<p>3. <code>url</code></p>
-<p>4. <code>path</code>.</p>
-<p>If you don't use a data frame you provide the information manually.</p>
+    <p>The data frame information result from `info_figure` output.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidyverse/googlesheets4'>googlesheets4</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://flavjack.github.io/inti/'>inti</a></span><span class='op'>)</span>
 
-<span class='va'>finfo</span> <span class='op'>&lt;-</span> <span class='fu'><a href='info_figure.html'>info_figure</a></span><span class='op'>(</span>caption <span class='op'>=</span> <span class='st'>"test"</span>
-                   , notes <span class='op'>=</span> <span class='st'>"nota"</span>
+<span class='va'>fig</span> <span class='op'>&lt;-</span> <span class='fu'><a href='info_figure.html'>info_figure</a></span><span class='op'>(</span>caption <span class='op'>=</span> <span class='st'>"caption test."</span>
+                   , notes <span class='op'>=</span> <span class='st'>"note test."</span>
+                   , label <span class='op'>=</span> <span class='st'>"_Source:_"</span>
                    , url <span class='op'>=</span> <span class='st'>"https://devblackops.io/images/testing.jpg"</span>
-                   , path <span class='op'>=</span> <span class='st'>"test.jpg"</span>
+                   , path <span class='op'>=</span> <span class='st'>"man/figures/logo.png"</span>
                    <span class='op'>)</span>
 
-<span class='va'>fig</span> <span class='op'>&lt;-</span> <span class='va'>finfo</span> <span class='op'>%&gt;%</span>  <span class='fu'>include_figure</span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>fig</span>
+<span class='co'># use this in r chunk `fig.caption = fig$caption`                   </span>
+                   
+<span class='va'>fig</span> <span class='op'>%&gt;%</span>  <span class='fu'>include_figure</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "https://devblackops.io/images/testing.jpg"
 #&gt; attr(,"class")
 #&gt; [1] "knit_image_paths" "knit_asis"       </div><div class='input'>
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

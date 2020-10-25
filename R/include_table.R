@@ -4,10 +4,10 @@
 #'
 #' @param data Data frame.
 #' @param caption Table caption (default = NULL). See details.
-#' @param notes Footnotes for the table (default = NULL). See details.
-#' @param label Label for start the footnote (default = "Note:").
+#' @param notes Footnotes for the table (default = NA). See details.
+#' @param label Label for start the footnote (default = NA).
 #' @param notation Notation for the symbols and footnotes (default =
-#'   "alphabet"). See details.
+#'   "none"). See details.
 #'
 #' @details
 #'
@@ -22,8 +22,10 @@
 #' @export
 #'
 #' @examples
+#' 
+#' library(inti)
 #'
-#' tab <- tibble(
+#' tab <- data.frame(
 #' x = rep_len(1, 5)
 #' , y = rep_len(3, 5)
 #' , z = rep_len("c", 5)
@@ -33,10 +35,10 @@
 #' info_table(
 #'   caption = "Figure caption"
 #'   , notes = "test note"
+#'   , label = "Where:"
 #'   )
 #'
 #' info %>% inti::include_table()
-#'
 #'
 
 include_table <- function(data = NULL
@@ -52,6 +54,8 @@ include_table <- function(data = NULL
   
   col_capt <- c("{caption}", "{title}", "{titulo}")
   col_note <- c("{notes}", "{note}", "{nota}", "{notas}")
+  col_label <- c("{label}", "{etiqueta}")
+  col_notation <- c("{notation}", "{tipo}")
   first_col <- names(info[1]) %>% as.symbol()
   col_list <- info[[first_col]]
 
@@ -74,6 +78,28 @@ include_table <- function(data = NULL
         pluck(2) 
       
     } else {notes <- NA}
+    
+    col_math <- col_list %in% col_label
+    col_label <- col_list[col_math == TRUE]
+    
+    if (length(col_label) > 0) {
+      
+      label <- info %>%
+        filter( {{first_col}}  == {{col_label}} ) %>%
+        pluck(2) 
+      
+    } else {label <- NA}
+    
+    col_math <- col_list %in% col_notation
+    col_notation <- col_list[col_math == TRUE]
+    
+    if (length(col_notation) > 0) {
+      
+      notation <- info %>%
+        filter( {{first_col}}  == {{col_notation}} ) %>%
+        pluck(2) 
+      
+    } else {notation <- notation}
     
   }
   

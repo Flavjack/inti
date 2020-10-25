@@ -2,17 +2,20 @@
 
 ## Major changes
 
-- Now apps work locally
-- Update bootstrap in yupana and tarpuy
+- Apps: now apps work locally
+- Yupana & Tarpuy: update bootstrap
+- Yupana: button for generate and refresh graphs
+- Package: new functions - info_figure() & info_table()
+- Package: function include_table updated
 
 ## Bug fixes
 
-- Fix problem with 'cloud.json'
-- Exclude variables without variation in PCA
-- Exclude columns with all NA values
-- Button for generate and refresh graphs
-- App not stop if graph information is wrong
-- Update bookdown new release
+- Apps: fix problem with 'cloud.json'
+- Yupana: exclude variables without variation in PCA 
+- Yupana: exclude columns with all NA values
+- Yupana: app not stop if graph arguments are wrong
+- rticles: update app with the new bookdown release
+- Yupana & Tarpuy: update from observeEvent() --> reactive()
 
 # inti 0.1.0
 

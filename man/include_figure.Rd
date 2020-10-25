@@ -4,7 +4,7 @@
 \alias{include_figure}
 \title{Figure with caption and notes}
 \usage{
-include_figure(data = NULL, figure, caption = NA, notes = NA, label = "Note:")
+include_figure(data = NULL, figure, caption = NA, notes = NA, label = NA)
 }
 \arguments{
 \item{data}{Data frame with the figures information. See details.}
@@ -15,7 +15,7 @@ include_figure(data = NULL, figure, caption = NA, notes = NA, label = "Note:")
 
 \item{notes}{Manual figure notes (default = NA).}
 
-\item{label}{Label for start the footnote (default = "Note:").}
+\item{label}{Label for start the footnote (default = NA).}
 }
 \value{
 Figure with caption and notes
@@ -24,31 +24,21 @@ Figure with caption and notes
 Include figures with title and notes using a data base
 }
 \details{
-The data frame should contain 4 rows in \code{table}:
-
-1. \code{caption}.
-
-2. \code{notes}.
-
-3. \code{url} 
-
-4. \code{path}.
-
-If you don't use a data frame you provide the information manually.
+The data frame information result from `info_figure` output.
 }
 \examples{
 
-library(googlesheets4)
 library(inti)
 
-finfo <- info_figure(caption = "test"
-                   , notes = "nota"
+fig <- info_figure(caption = "caption test."
+                   , notes = "note test."
+                   , label = "_Source:_"
                    , url = "https://devblackops.io/images/testing.jpg"
-                   , path = "test.jpg"
+                   , path = "man/figures/logo.png"
                    )
 
-fig <- finfo \%>\%  include_figure()
-fig
-
+# use this in r chunk `fig.caption = fig$caption`                   
+                   
+fig \%>\%  include_figure()
 
 }

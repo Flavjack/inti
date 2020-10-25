@@ -17,12 +17,12 @@ include_table(
 
 \item{caption}{Table caption (default = NULL). See details.}
 
-\item{notes}{Footnotes for the table (default = NULL). See details.}
+\item{notes}{Footnotes for the table (default = NA). See details.}
 
-\item{label}{Label for start the footnote (default = "Note:").}
+\item{label}{Label for start the footnote (default = NA).}
 
 \item{notation}{Notation for the symbols and footnotes (default =
-"alphabet"). See details.}
+"none"). See details.}
 }
 \value{
 Table with caption and footnotes
@@ -39,7 +39,9 @@ symbol using \code{{hypen}} in your table. \code{notation} could be use:
 }
 \examples{
 
-tab <- tibble(
+library(inti)
+
+tab <- data.frame(
 x = rep_len(1, 5)
 , y = rep_len(3, 5)
 , z = rep_len("c", 5)
@@ -49,9 +51,9 @@ info <- tab \%>\%
 info_table(
   caption = "Figure caption"
   , notes = "test note"
+  , label = "Where:"
   )
 
 info \%>\% inti::include_table()
-
 
 }

@@ -18,8 +18,7 @@ different procedures and tools used in plant science and experimental
 designs. The mean aim of the package is to support researchers during
 the planning of experiments and data collection ‘tarpuy()’, data
 analysis and graphics ‘yupana()’, and technical writing ‘rtciles()’.
-Learn more about the ‘inkaverse’ project at
-<https://inkaverse.com/apps/>.
+Learn more about the ‘inkaverse’ project at <https://inkaverse.com/>.
 
 ## Installation
 
@@ -44,6 +43,10 @@ remotes::install_github("flavjack/inti")
 
 If is the first time running any of the apps consider install the app
 dependencies (e. g. `inti::yupana(dependencies = TRUE)`)
+
+After install the package and the app dependencies also you can access
+to the app through the Addins list in Rstudio or click the app icon in
+the following link <https://inkaverse.com/apps/>
 
 ### Yupana
 
