@@ -42,7 +42,7 @@ info_figure <- function(caption = NA
   
   if ( is.na(notes) ) { 
     
-    cap <- caption
+    cap <- caption 
     
   } else if (!is.na(notes)) {
     
@@ -52,12 +52,14 @@ info_figure <- function(caption = NA
       
     } else {
       
-      cap <- paste(caption, label, notes) 
+      cap <- paste(caption, label, notes)
       
     }
     
   }
 
+  cap <- cap %>% gsub("\r?\n|\r", "", .)
+  
 # result ------------------------------------------------------------------
 
 list(info = tabinfo, caption = cap)

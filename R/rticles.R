@@ -29,7 +29,7 @@ rticles <- function(dependencies = FALSE) {
   
   if (dependencies == TRUE ) {
     
-    source("https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/setup.r")
+    source("https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/setup.R")
     
   }
   

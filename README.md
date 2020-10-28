@@ -42,7 +42,11 @@ remotes::install_github("flavjack/inti")
 ## Shiny apps
 
 If is the first time running any of the apps consider install the app
-dependencies (e. g. `inti::yupana(dependencies = TRUE)`)
+dependencies:
+
+``` r
+inti::yupana(dependencies = TRUE)
+```
 
 After install the package and the app dependencies also you can access
 to the app through the Addins list in Rstudio or click the app icon in

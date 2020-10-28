@@ -27,20 +27,24 @@ The 'inti' package is part of the 'inkaverse' project for developing different p
 
 To install the stable version from [CRAN](https://CRAN.R-project.org), run the following from an R console:
 
-``` r
+```{r eval=F}
 install.packages("inti")
 ```
 
 To install the latest development version directly from [GitHub](https://github.com/Flavjack/inti), run the following from an R console:
 
-``` r
+```{r eval=F}
 if (!require("remotes"))
   install.packages("remotes")
 remotes::install_github("flavjack/inti")
 ```
 ## Shiny apps
 
-If is the first time running any of the apps consider install the app dependencies (e. g. `inti::yupana(dependencies = TRUE)`)
+If is the first time running any of the apps consider install the app dependencies:
+
+```{r eval=F}
+inti::yupana(dependencies = TRUE)
+```
 
 After install the package and the app dependencies also you can access to the app through the Addins list in Rstudio or click the app icon in the following link https://inkaverse.com/apps/
 
@@ -49,6 +53,7 @@ After install the package and the app dependencies also you can access to the ap
 ```{r eval=F}
 inti::yupana()
 ```
+
 ### Tarpuy
 
 ```{r eval=F}
