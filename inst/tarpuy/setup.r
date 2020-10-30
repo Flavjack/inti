@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-10-25
+#> date .: 2020-10-30
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -38,7 +38,7 @@ for (pkg in cran) {
 for (pkg in git) { 
   if( !require(sub(".*/", "", pkg), character.only = TRUE) ) {
     devtools::install_github(pkg)
-    library(pkg, character.only = TRUE)
+    library(sub(".*/", "", pkg), character.only = TRUE)
   } 
 }
 
