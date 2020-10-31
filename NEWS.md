@@ -5,8 +5,9 @@
 - Apps: now apps work locally
 - Yupana & Tarpuy: update bootstrap
 - Yupana: button for generate and refresh graphs
-- Package: new functions - info_figure() & info_table()
-- Package: function include_table updated
+- Package: new functions - `info_figure()` & `info_table()`
+- Package: function `include_table` updated
+- Yupana & Tarpuy: `plot_label` in fieldbook summary for label axis in plots
 
 ## Bug fixes
 

@@ -51,25 +51,28 @@ library(googlesheets4)
 if (gs4_has_token()) {
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=1414357945")
+              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs")
 # browseURL(url)
 gs <- as_sheets_id(url)
 
 (data <- gs \%>\%
-    range_read("fb"))
+     range_read("fb"))
 
-(fb_smr <- gs \%>\%
-  range_read("fbsm"))
+fbsm <- fieldbook_summary(data
+                 , last_factor = "genotype"
+                 , model_facts = "treat*genotype"
+                 , comp_facts = "treat:genotype"
+                 ) 
 
 mc <- mean_comparison(data
-                     , fb_smr = fb_smr
-                     , variable = "BIOMDW"
+                     , fb_smr = fbsm
+                     , variable = "HI"
                      , graph_opts = TRUE
                      )
 
 table <- mc$comparison
 
-table \%>\% sheet_write(ss = gs, sheet = "plot")
+# fbsm \%>\% sheet_write(ss = gs, sheet = "fbsm")
 
 }
 

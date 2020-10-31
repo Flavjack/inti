@@ -35,7 +35,7 @@
 #' if (gs4_has_token()) {
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs")
 #' # browseURL(url)
 #' gs <- as_sheets_id(url)
 #'

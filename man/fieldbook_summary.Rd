@@ -46,21 +46,21 @@ library(googlesheets4)
 if (gs4_has_token()) {
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "15uwCgQRtR01B3FJaZBE8t_0bOC_8Bbey9ccwVlZH0jg/edit#gid=56711214")
+              , "15uwCgQRtR01B3FJaZBE8t_0bOC_8Bbey9ccwVlZH0jg")
 # browseURL(url)
 gs <- as_sheets_id(url)
 
 (data <- gs \%>\%
     range_read("fb"))
 
-smrfb <- fieldbook_summary(data
+fbsm <- fieldbook_summary(data
                  , last_factor = "dosis"
                  , model_facts = "bloque + cultivar*fuenteN*dosis"
                  , comp_facts = "cultivar:fuenteN:dosis"
                  )
-smrfb
+fbsm
 
-smrfb \%>\% write_sheet(ss = gs, sheet = "fbsmr")
+# fbsm \%>\% write_sheet(ss = gs, sheet = "fbsm")
 
 }
 
