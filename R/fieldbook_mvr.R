@@ -9,14 +9,15 @@
 #'
 #' @details
 #'
-#' Compute and plot information for multivariate analysis.
+#' Compute and plot information for multivariate analysis (PCA, HCPC and
+#' correlation).
 #'
 #' @return result and plots
 #'
 #' @import dplyr
 #' @importFrom FactoMineR HCPC PCA
 #' @importFrom tibble column_to_rownames
-#' 
+#'
 #' @export
 #'
 #' @examples
@@ -24,11 +25,11 @@
 #' library(inti)
 #' library(googlesheets4)
 #' library(FactoMineR)
-#' 
+#'
 #' if (gs4_has_token()) {
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs")
 #' # browseURL(url)
 #' gs <- as_sheets_id(url)
 #'
@@ -68,10 +69,6 @@ fieldbook_mvr <- function(data
     filter(.data$type %in% "factor") %>%
     select(where(~!all(is.na(.))))
 
-  factor_opt <- factor_list %>%
-    select(!.data$type) %>%
-    deframe()
-
   vars_num <- fb_smr %>%
     filter(.data$type %in% "numeric") %>% 
     filter(levels > 0) # drop variables with values
@@ -95,7 +92,6 @@ fieldbook_mvr <- function(data
 # -------------------------------------------------------------------------
 
 quali_ncol <- which(names(fb) %in% {{summary_by}})
-
 groups_ncol <- which(names(fb) %in% {{groups}})
 
 par <- list(quali = summary_by
@@ -129,16 +125,18 @@ pca_info <- fb %>%
 
 cor <- fb %>% 
   select(where(is.numeric)) %>%
-  select(where(~ length(unique(.)) > 1)) %>% # drop variables with variation
+  select(where(~ length(unique(.)) > 1)) %>% # drop variables without variation
   agricolae::correlation(method = "pearson")
 
 # results -----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  multvr = list(pca = pca_info
-                , hcpc = clt_info
-                , corr = cor
-                , data = fb
-                , param = par)
+  multvr = list(
+    pca = pca_info
+    , hcpc = clt_info
+    , corr = cor
+    , data = fb
+    , param = par
+    )
 
 }

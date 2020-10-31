@@ -22,7 +22,8 @@ result and plots
 Multivariate analysis for PCA and HCPC
 }
 \details{
-Compute and plot information for multivariate analysis.
+Compute and plot information for multivariate analysis (PCA, HCPC and
+correlation).
 }
 \examples{
 
@@ -33,7 +34,7 @@ library(FactoMineR)
 if (gs4_has_token()) {
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
+              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs")
 # browseURL(url)
 gs <- as_sheets_id(url)
 
