@@ -47,9 +47,12 @@
 #'                      , choix = "ind"
 #'                      , habillage = mvr$param$groups_n
 #'                      , invisible = "quali"
-#' )
-#'
-#' FactoMineR::plot.HCPC(mvr$hcpc)
+#'                      )
+#' 
+#' FactoMineR::plot.HCPC(mvr$hcpc
+#'                       , choice = "map"
+#'                       , draw.tree = F
+#'                       )
 #'
 #' }
 #' 
@@ -67,26 +70,27 @@ fieldbook_mvr <- function(data
 
   factor_list <- fb_smr %>%
     filter(.data$type %in% "factor") %>%
-    select(where(~!all(is.na(.))))
+    select(where(~!all(is.na(.)))) %>% 
+    filter(levels > 0)
 
   vars_num <- fb_smr %>%
     filter(.data$type %in% "numeric") %>% 
-    filter(levels > 0) # drop variables with values
+    filter(levels > 0) 
 
   vars_cha <- fb_smr %>%
     filter(.data$type %in% "character") %>% 
-    filter(levels > 0) # drop variables with values
+    filter(levels > 0) 
 
   fb <- data %>%
     select(where(~!all(is.na(.)))) %>%
-    mutate(across( factor_list[["variables"]], as.character)) %>%
+    mutate(across( factor_list[["variables"]], as.factor)) %>%
+    mutate(across( vars_cha[["variables"]], as.factor)) %>%
     mutate(across( vars_num[["variables"]], as.numeric)) %>%
-    mutate(across( vars_cha[["variables"]], as.character)) %>%
     select({{summary_by}}, vars_num[["variables"]]) %>%
     group_by( across( {{summary_by}} )) %>%
     summarize(across(everything(),  ~ mean(., na.rm = TRUE) )) %>%
     unite("rnames", {{summary_by}} , sep = "_", remove = F) %>%
-    column_to_rownames("rnames")
+    column_to_rownames("rnames") 
 
 # parameters --------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -114,11 +118,10 @@ pca_info <- fb %>%
 # hcpc --------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  clt_info <- pca_info %>%
-    HCPC(res = .
-         , nb.clust = -1
-         , graph = FALSE
-         )
+clt_info <- HCPC(pca_info
+                 , nb.clust=-1
+                 , graph = FALSE
+                 )
 
 # Correlation -------------------------------------------------------------
 # -------------------------------------------------------------------------

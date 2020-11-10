@@ -105,7 +105,7 @@ fieldbook_summary <- function(data
       , values_to = "values"
     ) %>%
     group_by(variables) %>%
-    summarise(levels = n_distinct(values)) %>%
+    summarise(levels = n_distinct(values, na.rm = TRUE)) %>%
     mutate(type = "factor", .after = "variables")
 
 # combine tables ----------------------------------------------------------

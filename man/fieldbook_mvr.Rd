@@ -52,9 +52,12 @@ FactoMineR::plot.PCA(mvr$pca
                      , choix = "ind"
                      , habillage = mvr$param$groups_n
                      , invisible = "quali"
-)
+                     )
 
-FactoMineR::plot.HCPC(mvr$hcpc)
+FactoMineR::plot.HCPC(mvr$hcpc
+                      , choice = "map"
+                      , draw.tree = F
+                      )
 
 }
 
