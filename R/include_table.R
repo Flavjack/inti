@@ -68,13 +68,16 @@ include_table <- function(data = NULL
   col_list <- info[[first_col]]
 
   if(!is.null(data)){
+    
+    info <- info %>% 
+      mutate(across(1:2, as.character))
 
     col_math <- col_list %in% col_capt
     col_cap <- col_list[col_math == TRUE]
 
     caption <- info %>%
       filter( {{first_col}} %in% {{col_cap}} ) %>%
-      purrr::pluck(2)
+      pluck(2)
     
     col_math <- col_list %in% col_note
     col_note <- col_list[col_math == TRUE]
