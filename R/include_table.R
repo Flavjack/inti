@@ -35,7 +35,6 @@
 #' info_table(
 #'   caption = "Figure caption"
 #'   , notes = "test note"
-#'   , label = "Where:"
 #'   )
 #'
 #' info %>% inti::include_table()
@@ -50,7 +49,16 @@ include_table <- function(data = NULL
 
   # data <- info
   
-  info <- data %>% pluck(1)
+  if ( exists(c("info", "table"), data) ) {
+
+    info <- data %>% pluck(1) 
+    table <-  data %>% pluck(2)
+    
+  } else {
+    
+    info <- data 
+    
+  }
   
   col_capt <- c("{caption}", "{title}", "{titulo}")
   col_note <- c("{notes}", "{note}", "{nota}", "{notas}")
@@ -103,8 +111,20 @@ include_table <- function(data = NULL
     
   }
   
-  table <-  data %>% pluck(2)
+  if ( exists(c("info", "table"), data) ) {
+    
+    table <- data %>% pluck(2) 
+    
+  } else {
+    
+    ncol <- names(data)[1] %>% as.name()
+    
+    table <- data %>% 
+      filter( !{{ncol}} %in% c(col_cap, col_note, col_label, col_notation))
+    
+  }
   
+
   if (is.na(notes)) {
     
     ftab <- table %>% 

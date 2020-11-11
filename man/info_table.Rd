@@ -42,7 +42,6 @@ info <- tab \%>\%
 info_table(
   caption = "Figure caption"
   , notes = "test note"
-  , label = "Where:"
   )
 
 }

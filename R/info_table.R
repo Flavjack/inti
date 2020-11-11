@@ -32,7 +32,6 @@
 #' info_table(
 #'   caption = "Figure caption"
 #'   , notes = "test note"
-#'   , label = "Where:"
 #'   )
 #' 
 
@@ -59,7 +58,7 @@ info_table <- function(data
   
 # results -----------------------------------------------------------------
 
-list(table = tab, data = data)
+list(info = tab, table = data)
   
 }
 
