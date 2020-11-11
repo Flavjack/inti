@@ -46,8 +46,8 @@ info_table <- function(data
   
   tnames <- names(data) 
   
-  col1 <- tnames[1] %>% as.symbol()
-  col2 <- tnames[2] %>% as.symbol()
+  col1 <- tnames[1] %>% as.name()
+  col2 <- tnames[2] %>% as.name()
   
   tabinfo <- c("{caption}", "{notes}", "{label}", "{notation}") %>% 
     enframe(value = {{col1}}) %>% 
