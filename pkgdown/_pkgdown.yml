@@ -9,7 +9,7 @@ template:
       src: https://flavjack.github.io/inti/reference/figures/logo.png
   params:
     bootswatch: cerulean
-    ganalytics: UA-113308628-7
+    ganalytics: G-804H2EJ8RN
 
 development:
   mode: auto
