@@ -21,7 +21,7 @@ library(metathis)
 library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
-library(bootstraplib)
+library(bslib)
 library(shinydashboard)
 library(ggpubr)
 library(FactoMineR)
@@ -553,6 +553,24 @@ observe({
     } else { print ("Insert fieldbook summary") }
 
   })
+  
+
+  # -------------------------------------------------------------------------
+  
+  output$sheet_export <- renderUI({
+    
+    validate( need( input$rpt_variable, "Choose your variable") )
+    
+    # sheet <- input$rpt_variable %>% as.vector()
+    
+    textInput(inputId = "sheet_export"
+            , label = "Sheet export"
+            , value = input$rpt_variable
+            )
+    
+    })
+
+  
 
   # -------------------------------------------------------------------------
 
@@ -615,6 +633,21 @@ observe({
   })
 
   # -------------------------------------------------------------------------
+  
+  output$rpt_digits <- renderUI({
+    
+    validate( need( input$rpt_variable, "Choose your variable") )
+    
+    numericInput(inputId = "rpt_digits"
+                 , label = "Table digits"
+                 , value = 2
+                 , step = 1
+                 , min = 0
+                 , max = 6
+    )
+  })
+  
+  # -------------------------------------------------------------------------
 
   mean_comp <- reactive({
 
@@ -626,7 +659,8 @@ observe({
                             , fb_smr = fbsmrvar()
                             , variable = input$rpt_variable
                             , graph_opts = T
-      )
+                            , digits = input$rpt_digits
+                            )
     }
 
   })
@@ -635,7 +669,7 @@ observe({
 
     mc <- mean_comp()$comparison %>%
       select(!c("{colors}", "{arguments}", "{values}")) %>%
-      inti::web_table()
+      inti::web_table(digits = input$rpt_digits)
 
   })
 
@@ -650,17 +684,20 @@ observe({
   # export meancomparison table ---------------------------------------------
 
   observeEvent(input$export_mctab, {
+    
+    sheet_export <- input$sheet_export %>% gsub("[[:space:]]", "_", .)
 
-    if ( !input$rpt_variable %in% sheet_names(gs()) ) {
+    if ( !sheet_export %in% sheet_names(gs()) ) {
 
-      sheet_add(ss = gs(), sheet = input$rpt_variable)
+      sheet_add( ss = gs(), sheet = sheet_export )
 
-      mean_comp()$comparison %>% sheet_write(ss = gs(), sheet = input$rpt_variable)
+      mean_comp()$comparison %>% 
+        sheet_write(ss = gs(), sheet = sheet_export )
 
     } else { print ("sheet already exist") }
 
   })
-
+  
   # -------------------------------------------------------------------------
 
   output$rpt_preview <- renderUI({
@@ -760,7 +797,9 @@ observe({
   
   sheet_grp <- eventReactive(input$graph_refresh, {
     
-    gs() %>% sheet_names()
+    fbinfo <- c(input$fieldbook_gsheet, input$fbsmrvars_gsheet)
+    
+    gs() %>% sheet_names() %>% setdiff(., fbinfo)
     
     })
 

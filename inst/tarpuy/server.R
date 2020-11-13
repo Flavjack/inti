@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-10-25
+#> date .: 2020-11-13
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -21,7 +21,7 @@ library(metathis)
 library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
-library(bootstraplib)
+library(bslib)
 library(shinydashboard)
 library(stringi)
 library(BiocManager)

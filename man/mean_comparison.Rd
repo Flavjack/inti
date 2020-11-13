@@ -12,7 +12,8 @@ mean_comparison(
   comp_facts,
   test_comp = "SNK",
   sig_level = 0.05,
-  graph_opts = FALSE
+  graph_opts = FALSE,
+  digits = 3
 )
 }
 \arguments{
@@ -32,6 +33,8 @@ mean_comparison(
 \item{sig_level}{Significance level for the analysis (default = 0.05).}
 
 \item{graph_opts}{Include option in the table for graphs (default = FALSE).}
+
+\item{digits}{Number of digits in the table.}
 }
 \value{
 data frame

@@ -11,6 +11,7 @@
 #' @param test_comp Significance level for the analysis (default = 0.05).
 #' @param sig_level Significance level for the analysis (default = 0.05).
 #' @param graph_opts Include option in the table for graphs (default = FALSE).
+#' @param digits Number of digits in the table.
 #'
 #' @details
 #'
@@ -68,6 +69,7 @@ mean_comparison <- function(data
                             , test_comp = "SNK"
                             , sig_level = 0.05
                             , graph_opts = FALSE
+                            , digits = 3
                             ) {
 
   where <- NULL
@@ -206,7 +208,7 @@ mean_comparison <- function(data
 
     if (test_comp == "SNK"){
 
-      mc <- SNK.test(
+      mc <- agricolae::SNK.test(
         y = model_aov
         , trt = comp_facts
         , alpha = sig_level
@@ -214,7 +216,7 @@ mean_comparison <- function(data
 
     } else if (test_comp == "HSD") {
 
-      mc <- HSD.test(
+      mc <- agricolae::HSD.test(
         y = model_aov
         , trt = comp_facts
         , alpha = sig_level
@@ -222,7 +224,7 @@ mean_comparison <- function(data
 
     } else if (test_comp == "DUNCAN") {
 
-      mc <- duncan.test(
+      mc <- agricolae::duncan.test(
         y = model_aov
         , trt = comp_facts
         , alpha = sig_level
@@ -360,7 +362,8 @@ mean_comparison <- function(data
                                      )  %>%
       mutate(across(.data$Row.names, as.numeric)) %>%
       arrange(.data$Row.names) %>%
-      select(-.data$Row.names)
+      select(-.data$Row.names) %>% 
+      mutate(across(where(is.numeric), ~round(., digits)))
 
   }
 

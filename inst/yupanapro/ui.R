@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-10-25
+#> date .: 2020-11-13
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -21,7 +21,7 @@ library(metathis)
 library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
-library(bootstraplib)
+library(bslib)
 library(shinydashboard)
 library(ggpubr)
 library(FactoMineR)
@@ -39,12 +39,10 @@ if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json")
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-bs_theme(version = "4+3", bootswatch = NULL) #!
-
 navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.com/">Yupana</a></strong></h3>')
            , windowTitle = "Yupana"
            , selected = "Intro"
-           , theme = "bootstrap_sandstone.css"
+           , theme = "bootstrap_sandstone.css" #!
            , 
 
 # -------------------------------------------------------------------------
@@ -54,8 +52,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
            tabPanel("Intro"
                     
                     , bs_theme_dependencies("flatly") #!
-                    , includeCSS("www/custom.css") #!
                     
+                    , includeCSS("www/custom.css")
                     , tags$head(includeHTML(("www/analytics.html")))
                     , tags$head(tags$link(rel="shortcut icon"
                                           , href="https://flavjack.github.io/inti/reference/figures/yupana.png")),
@@ -234,7 +232,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
 
                                     <li>Debes dar los permisos para editar las hojas haciendo “LOG IN”;
                                     ya que la app requiere los permisos correspondientes para leer y exportar la información generada.
-                                    Más información en la politicas de privacidad: <a href="https://inkaverse.com/policy/">https://inkaverse.com/policy/</a>
+                                    Más información en la politicas de privacidad: <a href="https://inkaverse.com/articles/policy"> https://inkaverse.com/articles/policy </a>
 
                                     <li>Cuando des los permisos el botón de "LOG IN" cambiará a color rojo “LOG OUT”.
                                     Lo que te permitirá interactuar con tu información y analizar tus datos.
@@ -380,7 +378,13 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                               uiOutput("rpt_variable"),
 
                               uiOutput("rpt_dotplot_groups"),
-
+                              
+                              uiOutput("sheet_export"),
+                              
+                              uiOutput("rpt_digits"),
+                              
+                              br(),
+                              
                               actionButton(inputId = "fbsm_refresh"
                                            , label = "Refresh"
                                            , class = "btn btn-success"

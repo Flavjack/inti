@@ -5,9 +5,9 @@ account: flavjack
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2600632
-bundleId: 3753138
+bundleId: 3857190
 url: https://flavjack.shinyapps.io/yupanapro/
-when: 1602967966.73787
+when: 1605285235.75805
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: setup.R

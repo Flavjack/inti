@@ -5,9 +5,9 @@ account: flavjack
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2570255
-bundleId: 3752175
+bundleId: 3856541
 url: https://flavjack.shinyapps.io/tarpuy/
-when: 1602936933.29072
+when: 1605275083.39236
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: setup.r
+ignoredFiles: setup.R

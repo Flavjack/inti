@@ -10,7 +10,7 @@
 #'
 #' @return table in markdown format for html documents
 #'
-#' @importFrom dplyr mutate_if
+#' @importFrom dplyr mutate across
 #' @importFrom DT datatable
 #' 
 #' @export
@@ -22,11 +22,15 @@ web_table <- function(data
                       , rnames = FALSE
                       , buttons = NULL
                       ){
+  
+  where <- NULL
+  
+  data <- data %>%
+    mutate(across(where(is.numeric), ~round(., digits))) 
 
   if (is.null(buttons)){
 
-    data %>%
-      mutate_if(is.numeric, ~round(., digits)) %>%
+    data %>% 
       datatable(extensions = c('Buttons', 'Scroller'),
                 rownames = rnames,
                 options = list(dom = 'Bt',
@@ -37,8 +41,7 @@ web_table <- function(data
 
   } else if (buttons == "none"){
 
-    data %>%
-      mutate_if(is.numeric, ~round(., digits)) %>%
+    data %>% 
       datatable(extensions = c('Scroller'),
                 rownames = rnames,
                 options = list(dom = 'Bt',
@@ -50,7 +53,6 @@ web_table <- function(data
   } else {
 
     data %>%
-      mutate_if(is.numeric, ~round(., digits)) %>%
       datatable(extensions = c('Buttons','Scroller'),
                 rownames = rnames,
                 options = list(dom = 'Bt',

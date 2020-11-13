@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-10-25
+#> date .: 2020-11-13
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -21,7 +21,7 @@ library(metathis)
 library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
-library(bootstraplib)
+library(bslib)
 library(shinydashboard)
 library(stringi)
 library(BiocManager)
@@ -37,13 +37,11 @@ if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json")
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-bs_global_theme(version = "4+3", bootswatch = NULL) #!
-
 navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.com/">Tarpuy</a></strong></h3>')
            , windowTitle = "Tarpuy"
            , position = "fixed-top"
            , selected = "Intro"
-           , theme = "bootstrap_sandstone.css"
+           , theme = "bootstrap_sandstone.css"  #!
            , 
 
 # -------------------------------------------------------------------------
@@ -53,8 +51,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
            tabPanel("Intro"
                     
                     , bs_theme_dependencies("flatly") #!
-                    , includeCSS("www/custom.css") #!
                     
+                    , includeCSS("www/custom.css")
                     , tags$head(includeHTML(("www/analytics.html")))
                     , tags$head(tags$link(rel="shortcut icon"
                                           , href="https://flavjack.github.io/inti/reference/figures/tarpuy.png")),

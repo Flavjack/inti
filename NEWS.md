@@ -8,6 +8,10 @@
 - Package: new functions - `info_figure()` & `info_table()`
 - Package: function `include_table` updated
 - Yupana & Tarpuy: `plot_label` in fieldbook summary for label axis in plots
+- Yupana: export analysis with sheet name
+- Package: update pkgdown documentation
+- Yupana & Tarpuy: update packages for app
+- Yupana: round digits in export table
 
 ## Bug fixes
 
