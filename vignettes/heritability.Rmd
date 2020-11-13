@@ -1,9 +1,7 @@
 ---
 title: "Broad-sense heritability in plant breeding"
 description: 'How to calculate the heritability in plant breeding'
-author:
-    - "Maria Belen Kistner"
-    - "Flavio Lozano-Isla"
+author: "Maria Belen Kistner & Flavio Lozano-Isla"
 output: rmarkdown::html_vignette
 bibliography: [files/pkgs.bib, files/book.bib]
 link-citations: true

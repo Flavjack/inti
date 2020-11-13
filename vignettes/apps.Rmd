@@ -1,8 +1,8 @@
 ---
-title: "Introduction to inti"
+title: "Apps"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to inti}
+  %\VignetteIndexEntry{Apps}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -31,6 +31,8 @@ options(
 ```
 
 The package `inti` has been developed to provide tools used in plant science and experimental designs. The package also include shiny apps for design experiments, interactive analysis and technical writing.
+
+The `inti` package is inspired by the Inca mythology where the sun (`inti`) is considered the most significant deity. The web applications are based on this worldview.
 
 # Shiny apps
 
@@ -72,4 +74,38 @@ The shiny apps are based in the function developed in the package.
 **Tarpuy:** ease way to deploy fieldbook experimental plans.
 
 **Rticles:** Template for technical documents using Rmarkdown.
+
+## GerminaR + GerminaQuant
+
+GerminaR is the first platform base in open source package to calculate and graphic the germination indices in R. GerminaR include a web application called "GerminQuant for R" for non programming user.
+
+***
+
+```{=html}
+<div id=footer style="width:100%; margin:auto;">
+
+<div style="display:inline-block; width:32%">
+<p style="text-align:center">
+<a target="_blank" href="https://CRAN.R-project.org/package=GerminaR"><img src="https://flavjack.github.io/GerminaR/reference/figures/logo.png" style="height:70px" title="R cran" alt="GerminaR"></a> 
+<span style="display:block;"><small>GerminaR</small></span>
+</p></div>
+
+<div style="display:inline-block; width:32%">
+<p style="text-align:center">
+<a target="_blank" href="https://flavjack.github.io/GerminaR/"><img src="https://pkgdown.r-lib.org/reference/figures/logo.png" style="height:70px" title="GerminaR" alt="GerminaR"></a> 
+<span style="display:block;"><small>Project</small></span>
+</p></div>
+
+<div style="display:inline-block; width:32%">
+<p style="text-align:center">
+<a target="_blank" href="https://flavjack.shinyapps.io/germinaquant/"><img src="https://flavjack.github.io/GerminaR/reference/figures/germinaquant.png" style="height:70px" title="GerminaQuant" alt="GerminaQuant for R"></a>
+<span style="display:block;"><small>GerminaQuant</small></span>
+</p></div>
+
+</div>
+```
+
+### Citation
+
+Lozano-Isla, Flavio; Benites-Alfaro, Omar Eduardo; Pompelli, Marcelo Francisco (2019). GerminaR: An R package for germination analysis with the interactive web application “GerminaQuant for R.” Ecological Research, 34(2), 339–346. <https://doi.org/10.1111/1440-1703.1275>
 

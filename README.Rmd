@@ -38,6 +38,7 @@ if (!require("remotes"))
   install.packages("remotes")
 remotes::install_github("flavjack/inti")
 ```
+
 ## Shiny apps
 
 If is the first time running any of the apps consider install the app dependencies:

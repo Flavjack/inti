@@ -10,6 +10,9 @@ template:
   params:
     bootswatch: cerulean
     ganalytics: G-804H2EJ8RN
+    docsearch:
+      api_key: 
+      index_name: 
 
 development:
   mode: auto
@@ -19,16 +22,63 @@ navbar:
     - text: ""
       icon: fa-home
       href: index.html
-    - text: "Get started"
+    - text: "Apps"
       icon: fa-seedling
-      href: articles/inti.html
+      href: articles/apps.html
     - text: "Articles"
       icon: fa-book
-      href: articles/heritability.html
+      menu:
+      - text: "Broad-sense heritability in plant breeding"
+        href: articles/heritability.html
     - text: "Functions"
       icon: fa-file-code
       href: reference/index.html
+    - text: "Privacy Policy"
+      icon: fa-shield-alt
+      href: articles/policy.html
     - text: "News"
       icon: fa-file-alt
       href: news/index.html
+
+# functions
+
+reference:
+
+  - title: Yupana
+    desc:  Data analysis
+    contents:
+      - yupana
+      - fieldbook_reshape
+      - fieldbook_summary
+      - mean_comparison
+      - fieldbook_report
+      - plot_diag
+      - plot_smr
+      - fieldbook_mvr
+      
+  - title: Tarpuy
+    desc:  Experimental designs
+    contents:
+      - tarpuy
+      - fieldbook_plex
+      - fieldbook_design
+      - fieldbook_varlist
+      - plot_design
+      
+  - title: Rticles
+    desc:  Write technical docs
+    contents:
+      - rticles
+      - create_rticles
+      - starts_with("info")
+      - starts_with("include")
+      
+  - title: Extra
+    desc:  Multipurpose
+    contents:
+      - H2cal
+      - outliers_remove
+      - metamorphosis
+      - means_lm
+      - web_table
 
