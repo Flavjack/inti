@@ -49,8 +49,8 @@ inti::yupana(dependencies = TRUE)
 ```
 
 After install the package and the app dependencies also you can access
-to the app through the Addins list in Rstudio or click the app icon in
-the following link <https://inkaverse.com/apps/>
+to the apps through the Addins list in Rstudio or running the following
+code:
 
 ### Yupana
 

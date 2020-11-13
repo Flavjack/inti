@@ -23,7 +23,7 @@ navbar:
       icon: fa-home
       href: index.html
     - text: "Apps"
-      icon: fa-seedling
+      icon: fa-gamepad
       href: articles/apps.html
     - text: "Articles"
       icon: fa-book

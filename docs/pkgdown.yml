@@ -1,9 +1,0 @@
-pandoc: 2.9.2.1
-pkgdown: 1.6.1
-pkgdown_sha: ~
-articles:
-  apps: apps.html
-  heritability: heritability.html
-  policy: policy.html
-last_built: 2020-11-13T02:32Z
-

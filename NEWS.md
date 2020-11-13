@@ -1,4 +1,4 @@
-# inti 0.1.1
+# Version 0.1.1
 
 ## Major changes
 
@@ -18,7 +18,7 @@
 - rticles: update app with the new bookdown release
 - Yupana & Tarpuy: update from observeEvent() --> reactive()
 
-# inti 0.1.0
+# Version 0.1.0
 
 ## Major changes
 

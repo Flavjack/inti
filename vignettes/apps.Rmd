@@ -34,46 +34,79 @@ The package `inti` has been developed to provide tools used in plant science and
 
 The `inti` package is inspired by the Inca mythology where the sun (`inti`) is considered the most significant deity. The web applications are based on this worldview.
 
-# Shiny apps
+The shiny apps are based in the function developed in the package <https://inkaverse.com/reference/>. 
+
+## Tarpuy
+
+Ease way to deploy fieldbook experimental plans.
 
 ```{=html}
 <div id=footer style="width:100%; margin:auto;">
 
-<div style="display:inline-block; width:24%">
+<div style="display:inline-block; width:48%">
+<p style="text-align:center">
+<a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC">
+<img src="https://flavjack.github.io/inti/reference/figures/youtube.png" style="height:60px" title="demo"></a>
+<span style="display:block;"><small>demo</small></span>
+</p></div>
+
+<div style="display:inline-block; width:48%">
 <p style="text-align:center">
 <a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/"><img src="https://flavjack.github.io/inti/reference/figures/tarpuy.png" style="height:70px" title="tarpuy"></a>
 <span style="display:block;"><small>Tarpuy</small></span>
 </p></div>
 
-<div style="display:inline-block; width:24%">
+</div>
+```
+
+## Yupana:
+
+Data analysis and graphics for experimental designs.
+
+```{=html}
+<div id=footer style="width:100%; margin:auto;">
+
+<div style="display:inline-block; width:48%">
 <p style="text-align:center">
-<a target="_blank" href="https://flavjack.shinyapps.io/rticles/"><img src="https://flavjack.github.io/inti/reference/figures/quipo.png" style="height:70px" title="rticles"></a>
-<span style="display:block;"><small>Rticles</small></span>
+<a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9sTx5Dbff9O0g6KCU4pwCQ">
+<img src="https://flavjack.github.io/inti/reference/figures/youtube.png" style="height:60px" title="demo"></a>
+<span style="display:block;"><small>demo</small></span>
 </p></div>
 
-
-<div style="display:inline-block; width:24%">
+<div style="display:inline-block; width:48%">
 <p style="text-align:center">
 <a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/"><img src="https://flavjack.github.io/inti/reference/figures/yupana.png" style="height:70px" title="yupana"></a>
 <span style="display:block;"><small>Yupana</small></span>
 </p></div>
 
-<div style="display:inline-block; width:24%">
+</div>
+```
+
+
+## Rticles
+
+Template for technical documents using Rmarkdown.
+
+
+```{=html}
+<div id=footer style="width:100%; margin:auto;">
+
+<div style="display:inline-block; width:48%">
 <p style="text-align:center">
-<a target="_blank" href="https://flavjack.github.io/inti/"><img src="https://pkgdown.r-lib.org/reference/figures/logo.png" style="height:70px" title="inti" alt="inti"></a>
-<span style="display:block;"><small>Project</small></span>
+<a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9HTZNed2-q3WpQfIGraA1V">
+<img src="https://flavjack.github.io/inti/reference/figures/youtube.png" style="height:60px" title="demo"></a>
+<span style="display:block;"><small>demo</small></span>
+</p></div>
+
+<div style="display:inline-block; width:48%">
+<p style="text-align:center">
+<a target="_blank" href="https://flavjack.shinyapps.io/rticles/"><img src="https://flavjack.github.io/inti/reference/figures/quipo.png" style="height:70px" title="rticles"></a>
+<span style="display:block;"><small>Rticles</small></span>
 </p></div>
 
 </div>
 ```
 
-The shiny apps are based in the function developed in the package. 
-
-**Yupana:** data analysis and graphics for experimental designs.
-
-**Tarpuy:** ease way to deploy fieldbook experimental plans.
-
-**Rticles:** Template for technical documents using Rmarkdown.
 
 ## GerminaR + GerminaQuant
 
