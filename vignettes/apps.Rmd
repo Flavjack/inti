@@ -59,7 +59,7 @@ Ease way to deploy fieldbook experimental plans.
 </div>
 ```
 
-## Yupana:
+## Yupana
 
 Data analysis and graphics for experimental designs.
 

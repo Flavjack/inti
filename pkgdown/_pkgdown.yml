@@ -30,12 +30,12 @@ navbar:
       menu:
       - text: "Broad-sense heritability in plant breeding"
         href: articles/heritability.html
-    - text: "Functions"
-      icon: fa-file-code
-      href: reference/index.html
     - text: "Privacy Policy"
       icon: fa-shield-alt
       href: articles/policy.html
+    - text: "Functions"
+      icon: fa-file-code
+      href: reference/index.html
     - text: "News"
       icon: fa-file-alt
       href: news/index.html

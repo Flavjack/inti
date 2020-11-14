@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-11-13
+#> date .: 2020-11-14
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -38,7 +38,7 @@ if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json")
 # -------------------------------------------------------------------------
 
 navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.com/">Tarpuy</a></strong></h3>')
-           , windowTitle = "Tarpuy"
+           , windowTitle = "Tarpuy • app"
            , position = "fixed-top"
            , selected = "Intro"
            , theme = "bootstrap_sandstone.css"  #!

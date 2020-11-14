@@ -42,8 +42,8 @@ xl <- gs %>%
 fb <- xl %>% 
   readxl::read_excel("prosopis")  %>% 
   rename_with(tolower) %>% 
-  mutate(across(c("rep", "nacl", "temp"), as.factor )) %>% 
-  mutate(across(where(is.factor), ~gsub("\\s+|\\.", "_", .) )) %>% 
+  mutate(across(c("rep", "nacl", "temp"), ~ as.factor(.) )) %>% 
+  mutate(across(where(is.factor), ~ gsub("[[:space:]]", "", .)) ) %>% 
   as.data.frame()
 # str(fb)
 ```
@@ -91,28 +91,22 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praes
 Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet Mauris ipsum .
 
 ```{r code, echo=TRUE, eval=FALSE}
-
-# load data
-
 library(GerminaR) 
 
+# load data
 fb <- prosopis %>% 
-  dplyr::mutate(across(c(rep, nacl, temp),  ~ as.character(.)))
+  dplyr::mutate(across(c(rep, nacl, temp), ~ as.character(.) ))
 
 # germination analysis
-
 gsm <- ger_summary(SeedN = "seeds", evalName = "D", data = fb)
 str(gsm)
 
 # analisys of variance
-
 av <- aov(formula = grp ~ nacl*temp + rep, data = gsm)
 summary(av)
 
 # mean comparision test
-
 mc <- ger_testcomp(aov = av, comp = c("temp", "nacl"), type = "snk")
-  
 ```
 
 ## Class aptent taciti
@@ -149,23 +143,22 @@ if(!file.exists("files/pkgs.bib")){write_bib(c(.packages()),'files/pkgs.bib')}
 `r if (knitr:::is_html_output()) '# Tables {-}'`
 
 ```{r germin}
-gs %>% 
+tab <- gs %>% 
   range_read("prosopis") %>% 
   select(rep:D5) %>% 
   head(10) %>% 
   inti::info_table(
     caption = "Germination dataset import from a googlesheet"
-    , notes = "@schafleitner2007") %>% 
-  inti::include_table(label = "__*Source:*__")
+    , notes = "@schafleitner2007")  
+
+tab %>%  inti::include_table()
 ```
 
 \newpage
 
 ```{r webtab}
-
 fb %>% 
   web_table("Germination dataset to download in html")
-
 ```
 
 \newpage
@@ -179,19 +172,15 @@ fb %>%
 ## Punctual analysis
 
 # germination analysis
-
 gsm <- ger_summary(SeedN = "seeds", evalName = "d", data = fb)
 
 # analysis of variance
-
 av <- aov(formula = grp ~ nacl*temp + rep, data = gsm)
 
 # mean comparison test
-
 mc <- ger_testcomp(aov = av, comp = c("temp", "nacl"), type = "snk")
 
 # line or bar graphics
-
 gbp <- mc$table %>% 
   fplot(type = "bar", 
         x = "temp", xlab = "Temperature (ºC)",
@@ -205,25 +194,29 @@ gbp <- mc$table %>%
 ## Intime analysis
 
 # data frame with percentual or relative germination in time
-
-git <- ger_intime(Factor = "nacl", SeedN = "seeds", evalName = "d", method = "percentage", data = fb)
+git <- ger_intime(Factor = "nacl"
+                  , SeedN = "seeds"
+                  , evalName = "d"
+                  , method = "percentage"
+                  , data = fb)
 
 # graphic germination in time
-
 ggt <- git %>% 
-  fplot(type = "line", 
-          x = "evaluation", xlab = "Day",
-          y = "mean", ylab = "Germination ('%')",
-          groups = "nacl", glab = "NaCl (Mpa)", 
-          limits = c(0,120), brakes = 10,
-          color = F)
+  fplot(type = "line"
+        , x = "evaluation"
+        , xlab = "Day"
+        , y = "mean"
+        , ylab = "Germination ('%')"
+        , groups = "nacl"
+        , glab = "NaCl (Mpa)"
+        , limits = c(0,120)
+        , brakes = 10
+        , color = F)
 
 ## Plot figures
-
-gerplot <- cowplot::ggdraw(xlim = c(0, 1), ylim = c(0, 0.5))+
-  draw_plot(gbp, width = 0.5, height = 0.5, x = 0.0, y = 0.0) +
-  draw_plot(ggt, width = 0.5, height = 0.5, x = 0.5, y = 0.0) +
-  draw_plot_label(label = c("A", "B"), x = c(0.0, 0.5), y = c(0.5, 0.5))
+gerplot <- cowplot::plot_grid(gbp, ggt
+                              , nrow = 1
+                              , labels = "AUTO")
 
 save_plot("files/fig_gerplot.png", 
           plot = gerplot,
@@ -251,15 +244,14 @@ if (!file.exists("files/fig_jc.jpg")){
   url = "https://raw.githubusercontent.com/Flavjack/rticles/master/files/fig_jc.jpg", destfile = "files/fig_jc.jpg", mode = "wb")
 }
 
-fg <- jpeg::readJPEG("files/fig_jc.jpg") %>% 
-  grid::rasterGrob(interpolate = TRUE)
+fg <- magick::image_read("files/fig_jc.jpg") %>% 
+  grid::rasterGrob()
 
-plot <- cowplot::ggdraw(xlim = c(0, 0.5), ylim = c(0, 0.5))+
-  draw_plot(fg, width = 0.5, height = 0.5, x = 0.0, y = 0.0) +
+plot <- cowplot::plot_grid(fg) +
   draw_plot_label(label = c("A", "B", "C"),
-                  x = c(0.01, 0.26, 0.01), 
-                  y = c(0.48, 0.48, 0.15))
-
+                  x = c(0.02, 0.51, 0.02), 
+                  y = c(0.98, 0.98, 0.30))
+  
 save_plot("files/fig_jcurcas.png", 
           plot = plot,
           dpi= 300, 
@@ -268,7 +260,10 @@ save_plot("files/fig_jcurcas.png",
           units = "mm")
 
 fig <- info_figure(
-  caption = "Plant of *Jatropha curcas*. A) Foliage, B) Leaf, C) Fruit."
+  caption = "Plant of *Jatropha curcas*.
+  A) Foliage,
+  B) Leaf, 
+  C) Fruit."
   , url = "files/fig_jcurcas.png")
 
 fig %>% include_figure()
@@ -282,7 +277,6 @@ fig %>% include_figure()
 
 pca <- gsm %>% 
   drop_na() %>% 
-  # select_if(., is.numeric) %>% 
   select(nacl, temp, grp, mgt, unc, syn) %>% 
   
   PCA(X = ., 
@@ -296,9 +290,6 @@ pca <- gsm %>%
 # # Correlation de dimensions
 # dimdesc(pca)
 # sink()
-
-# library(FactoInvestigate)
-# Investigate(pca, document = "pdf_document")
 
 ppi <- 300
 png("files/fig_pca_var.png", width=7*ppi, height=7*ppi, res=ppi)
@@ -353,20 +344,16 @@ plot.HCPC(x = clt, choice = "map")
 
 graphics.off()
 
-fg_01 <- png::readPNG("files/fig_pca_var.png") %>% 
-  grid::rasterGrob(interpolate = TRUE)
+fg_01 <- magick::image_read("files/fig_pca_var.png") %>% 
+  grid::rasterGrob()
+fg_02 <- magick::image_read("files/fig_pca_ind.png")  %>% 
+  grid::rasterGrob()
+fg_03 <- magick::image_read("files/fig_cluster_tree.png") %>% 
+  grid::rasterGrob()
+fg_04 <- magick::image_read("files/fig_cluster_map.png") %>% 
+  grid::rasterGrob()
 
-fg_02 <- png::readPNG("files/fig_pca_ind.png") %>% 
-  grid::rasterGrob(interpolate = TRUE)
-
-fg_03 <- png::readPNG("files/fig_cluster_tree.png") %>% 
-  grid::rasterGrob(interpolate = TRUE)
-
-fg_04 <- png::readPNG("files/fig_cluster_map.png") %>% 
-  grid::rasterGrob(interpolate = TRUE)
-
-
-plot <- cowplot::ggdraw(xlim = c(0, 1), ylim = c(0, 1))+
+plot <- cowplot::ggdraw(xlim = c(0, 1), ylim = c(0, 1)) +
   draw_plot(fg_01, width = 0.5, height = 0.5, x = 0.0, y = 0.5) +
   draw_plot(fg_02, width = 0.5, height = 0.5, x = 0.5, y = 0.5) +
   draw_plot(fg_03, width = 0.5, height = 0.5, x = 0.0, y = 0.0) +
@@ -375,15 +362,16 @@ plot <- cowplot::ggdraw(xlim = c(0, 1), ylim = c(0, 1))+
                   x = c(0.0, 0.5, 0.0, 0.5 ), 
                   y = c(0.98, 0.98, 0.48, 0.48))
 
-save_plot("files/fig_mv.png", 
-          plot = plot,
-          dpi= 300, 
-          base_height = 100,
-          base_aspect_ratio = 1.2, 
-          units = "mm")
+save_plot("files/fig_mv.png"
+          , plot = plot
+          , dpi = 300
+          , base_height = 20
+          , base_aspect_ratio = 1.2
+          , units = "cm")
 
 fig <- info_figure(
-  caption = "Multivariate Analysis: Principal component Analysis and Hierarchical Clustering Analysis."
+  caption = "Multivariate Analysis: 
+  Principal component Analysis and Hierarchical Clustering Analysis."
   , url = "files/fig_mv.png"
   )
   

@@ -27,6 +27,14 @@
 
 rticles <- function(dependencies = FALSE) {
   
+  message("
+  - If is the first time running Rticles consider install the app dependencies:
+  > inti::rticles(dependencies = TRUE)
+  - List of dependencies: 
+  > https://github.com/Flavjack/inti/blob/master/inst/rticles/setup.R
+  - Demo: https://inkaverse.com/articles/apps
+          ")
+  
   if (dependencies == TRUE ) {
     
     source("https://raw.githubusercontent.com/Flavjack/inti/master/inst/rticles/setup.R")

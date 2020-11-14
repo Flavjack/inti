@@ -7,9 +7,9 @@ bookdown::gitbook:
       collapse: section
       scroll_highlight: yes
       before: |
-        <li> <a href="https://www.linkedin.com/in/flavjack/" target="blank"> Flavio Lozano Isla </a> </li>
+        <li> <a href="https://inkaverse.com/" target="blank"> Inkaverse Project </a> </li>
       after:  |
-        <li> <a href="https://lozanoisla.com/projects/" target="blank"> Projects </a> </li>
+        <li> <a href="https://flavjack.shinyapps.io/rticles/" target="blank"> Rticles app </a> </li>
     fontsettings:
       theme: white
       family: sans

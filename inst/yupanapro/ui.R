@@ -40,7 +40,7 @@ if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json")
 # -------------------------------------------------------------------------
 
 navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.com/">Yupana</a></strong></h3>')
-           , windowTitle = "Yupana"
+           , windowTitle = "Yupana • app"
            , selected = "Intro"
            , theme = "bootstrap_sandstone.css" #!
            , 

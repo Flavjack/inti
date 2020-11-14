@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/rticles/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-10-25
+#> date .: 2020-11-14
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -30,7 +30,7 @@ options(repos = BiocManager::repositories())
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-fluidPage(title = "Rticles",
+fluidPage(title = "Rticles • app",
 
     tags$head(HTML('<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">')),
     tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
