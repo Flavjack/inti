@@ -34,8 +34,7 @@ Suggests:
     googlesheets4,
     corrplot,
     knitr,
-    rmarkdown,
-    testthat
+    rmarkdown
 VignetteBuilder: knitr
 License: MIT + file LICENSE
 Encoding: UTF-8

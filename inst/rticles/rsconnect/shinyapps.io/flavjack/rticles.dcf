@@ -5,9 +5,9 @@ account: flavjack
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2554575
-bundleId: 3778357
+bundleId: 3860489
 url: https://flavjack.shinyapps.io/rticles/
-when: 1603569892.1073
+when: 1605371967.44141
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: setup.R|www/manual.rmd|template
+ignoredFiles: setup.R|www/manual.rmd

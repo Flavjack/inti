@@ -1,47 +1,50 @@
-# Info --------------------------------------------------------------------
 # -------------------------------------------------------------------------
-#> author .: Flavio Lozano-Isla
-#> web    .: https://lozanoisla.com
-#> date   .: 2020-09-28
+# R packages dependencies and configuration -------------------------------
 # -------------------------------------------------------------------------
+#> author .: Flavio Lozano-Isla (lozanoisla.com)
+#> date   .: 2020-11-14
 # -------------------------------------------------------------------------
 
+# -------------------------------------------------------------------------
 # Packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-cran <- c("devtools" # Developer tools
-          , "knitr" # Base for markdown documents
-          , "bookdown" # Write articles and technical documents
-          , "tidyverse" # Data manipulation
-          , "googlesheets4" # Read/write google sheets docs
-          , "googledrive" # Download/Upload files from googledrive
-          , "agricolae" # Agriculture data analysis and designs
-          , "GerminaR" # Germination analysis
-          , "FactoMineR" # Multivariate data analysis
-          , "heatmaply" # Correlation plot
-          , "cowplot" # Layout for grid figures 
-          , "grid" # For merge figures 
-          , "png" # Import png files
-          , "jpeg" # Import jpg files
-          )
+cran <- c(
+  "devtools" # Developer tools
+  , "knitr" # Write Docs in R 
+  , "bookdown" # Write articles and technical documents
+  , "tidyverse" # Data manipulation
+  , "googlesheets4" # Read/write google sheets docs
+  , "googledrive" # Download/Upload files from googledrive
+  , "agricolae" # Agriculture data analysis and designs
+  , "GerminaR" # Germination analysis
+  , "FactoMineR" # Multivariate data analysis
+  , "heatmaply" # Correlation plot
+  , "cowplot" # Layout for grid figures 
+  , "magick" # Import png files
+  , "grid" # Image grob
+  )
 
 git <- c(
   "Flavjack/inti" # Tools and Statistical Procedures in Plant Science
   , "crsh/citr" # Use zotero for citations
   )
 
-installed <- c(cran, sub(".*/", "", git)) %in% rownames(installed.packages())
+for (pkg in cran) { 
+  if( !require(pkg, character.only = TRUE) ) {
+    install.packages(pkg)
+    library(pkg, character.only = TRUE)
+    } 
+}
 
-if (any(installed == FALSE)) {
-  cran_missing <- cran %in% c(cran, sub(".*/", "", git))[!installed == TRUE]
-  cran_install <- c(cran, sub(".*/", "", git))[cran_missing == TRUE]
-  install.packages( cran_install )
-  }
+for (pkg in git) { 
+  if( !require(sub(".*/", "", pkg), character.only = TRUE) ) {
+    devtools::install_github(pkg)
+    library(sub(".*/", "", pkg), character.only = TRUE)
+    } 
+}
 
-invisible(lapply(sub(".*/", "", git), unloadNamespace))
-invisible(lapply(git, devtools::install_github))
-invisible(lapply(c(cran, sub(".*/", "", git)), library, character.only = TRUE))
-rm(cran, git, installed)
+rm(cran, git, pkg)
 
 # -------------------------------------------------------------------------
 # Knitr options -----------------------------------------------------------

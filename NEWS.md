@@ -2,32 +2,36 @@
 
 ## Major changes
 
-- Apps: now apps work locally
-- Yupana & Tarpuy: update bootstrap
-- Yupana: button for generate and refresh graphs
-- Package: new functions - `info_figure()` & `info_table()`
-- Package: function `include_table` updated
-- Yupana & Tarpuy: `plot_label` in fieldbook summary for label axis in plots
-- Yupana: export analysis with sheet name
-- Package: update pkgdown documentation
-- Yupana & Tarpuy: update packages for app
-- Yupana: round digits in export table
+- *Yupana & Tarpuy*
+  - now apps work locally
+  - update bootstrap
+  - update packages dependencies for apps
+  
+- *Yupana*
+  - Graphs: button for generate and refresh graphs
+  - Fieldbook: `plot_label` in fieldbook summary for label axis in plots
+  - Analysis: export analysis with sheet name
+  - Analysis: round digits in export table
+  
+- *Package* 
+  - new functions: `info_figure()` & `info_table()`
+  - update pkgdown documentation
 
 ## Bug fixes
 
-- Apps: fix problem with 'cloud.json'
-- Yupana: exclude variables without variation in PCA 
-- Yupana: exclude columns with all NA values
-- Yupana: app not stop if graph arguments are wrong
-- rticles: update app with the new bookdown release
-- Yupana & Tarpuy: update from observeEvent() --> reactive()
+- *Yupana & Tarpuy*
+  - fix problem with 'cloud.json'
+  
+- *Yupana* 
+  - Multivariate: exclude variables without variation in PCA 
+  - Multivariate: exclude columns with all NA values
+  - Graphs: app not stop if graph arguments are wrong
+  - update from observeEvent() --> reactive()
+  
+- *rticles*
+  - update app with the new bookdown release
 
 # Version 0.1.0
 
-## Major changes
+- First package release
 
-- First release
-
-## Bug fixes
-
-- First release

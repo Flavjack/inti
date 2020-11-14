@@ -15,13 +15,13 @@
 
 if (file.exists("setup.R")) { source("setup.R") }
 
+library(inti)
 library(shiny)
 library(miniUI)
 library(shinyFiles)
 library(utils)
 library(fs)
 library(metathis)
-library(inti)
 library(BiocManager)
 
 options(repos = BiocManager::repositories())

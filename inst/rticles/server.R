@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/rticles/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-10-25
+#> date .: 2020-11-14
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -15,13 +15,13 @@
 
 if (file.exists("setup.R")) { source("setup.R") }
 
+library(inti)
 library(shiny)
 library(miniUI)
 library(shinyFiles)
 library(utils)
 library(fs)
 library(metathis)
-library(inti)
 library(BiocManager)
 
 options(repos = BiocManager::repositories())
