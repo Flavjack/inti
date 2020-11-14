@@ -69,7 +69,7 @@ mean_comparison <- function(data
                             , test_comp = "SNK"
                             , sig_level = 0.05
                             , graph_opts = FALSE
-                            , digits = 3
+                            , digits = 2
                             ) {
 
   where <- NULL
@@ -353,7 +353,7 @@ mean_comparison <- function(data
       merge(colors, ., by = 0, all = TRUE) %>%
       mutate(across(.data$Row.names, as.numeric)) %>%
       arrange(.data$Row.names) %>%
-      select(-.data$Row.names)
+      select(!.data$Row.names)
 
     comparison[["table"]]  <- merge( comparison[["table"]]
                                      , opts_table
@@ -362,8 +362,8 @@ mean_comparison <- function(data
                                      )  %>%
       mutate(across(.data$Row.names, as.numeric)) %>%
       arrange(.data$Row.names) %>%
-      select(-.data$Row.names) %>% 
-      mutate(across(where(is.numeric), ~round(., digits)))
+      select(!.data$Row.names) %>% 
+      mutate(across(where(is.numeric), ~round(., digits))) #!
 
   }
 

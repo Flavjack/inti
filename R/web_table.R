@@ -18,7 +18,7 @@
 
 web_table <- function(data
                       , caption = NULL
-                      , digits = 3
+                      , digits = 2
                       , rnames = FALSE
                       , buttons = NULL
                       ){
@@ -26,7 +26,7 @@ web_table <- function(data
   where <- NULL
   
   data <- data %>%
-    mutate(across(where(is.numeric), ~round(., digits))) 
+    mutate(across(where(is.numeric), ~round(., digits))) #!
 
   if (is.null(buttons)){
 

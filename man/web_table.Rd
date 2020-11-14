@@ -4,7 +4,7 @@
 \alias{web_table}
 \title{HTML tables for markdown documents}
 \usage{
-web_table(data, caption = NULL, digits = 3, rnames = FALSE, buttons = NULL)
+web_table(data, caption = NULL, digits = 2, rnames = FALSE, buttons = NULL)
 }
 \arguments{
 \item{data}{Dataset.}

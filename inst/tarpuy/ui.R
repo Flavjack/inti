@@ -257,7 +257,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                                    <li>Introduce el nombre de la hoja donde donde se creará/cargará la información.
                                    <li>Debes dar los permisos para editar las hojas haciendo “LOG IN”;
                                    ya que la app requiere los permisos correspondientes para leer y exportar la información generada.
-                                   Más información en la politicas de privacidad: <a href="https://inkaverse.com/policy/">https://inkaverse.com/policy/</a>
+                                   Más información en la politicas de privacidad: <a href="https://inkaverse.com/articles/policy"> https://inkaverse.com/articles/policy</a>
                                    <li>Cuando des los permisos el botón de "LOG IN" cambiará a color rojo “LOG OUT”.
                                    Lo que te permitirá interactuar con tu información y analizar tus datos.
                                    <li>Cualquier problema o sugerencia puedes escribir en el rastreador de problemas.

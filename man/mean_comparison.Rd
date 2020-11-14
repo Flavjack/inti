@@ -13,7 +13,7 @@ mean_comparison(
   test_comp = "SNK",
   sig_level = 0.05,
   graph_opts = FALSE,
-  digits = 3
+  digits = 2
 )
 }
 \arguments{
