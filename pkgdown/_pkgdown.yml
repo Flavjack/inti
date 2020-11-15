@@ -1,8 +1,12 @@
 home:
-  title: Tools and Statistical Procedures in Plant Science
-  description: A collection of different applications and procedures used in plant breeding and experimental designs.
+  title: Inkaverse
+  description: Tools and Statistical Procedures in Plant Science
   url: https://flavjack.github.io/inti/
   author: Flavio Lozano-Isla
+  links:
+  - text: Support project
+    href: https://www.patreon.com/inkaverse
+
 template:
   opengraph:
     image:
@@ -16,31 +20,34 @@ template:
 
 development:
   mode: auto
-  
+
 navbar:
   left:
     - text: ""
-      icon: fa-home
+      icon: fa-home fa-lg
       href: index.html
     - text: "Apps"
-      icon: fa-gamepad
+      icon: fa-gamepad fa-lg
       href: articles/apps.html
     - text: "Articles"
-      icon: fa-book
+      icon: fa-book fa-lg
       menu:
       - text: "Broad-sense heritability in plant breeding"
         href: articles/heritability.html
     - text: "Privacy Policy"
-      icon: fa-shield-alt
+      icon: fa-shield-alt fa-lg
       href: articles/policy.html
     - text: "Functions"
-      icon: fa-file-code
+      icon: fa-file-code fa-lg
       href: reference/index.html
     - text: "News"
-      icon: fa-file-alt
+      icon: fa-file-alt fa-lg
       href: news/index.html
-
-# functions
+  right:
+    - icon: fab fa-github fa-lg
+      href: https://github.com/flavjack/inti/
+    - icon: fas fa-mug-hot fa-lg
+      href: https://patreon.com/inkaverse
 
 reference:
 
