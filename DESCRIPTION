@@ -43,7 +43,7 @@ Suggests:
     googleAuthR,
     shinydashboard,
     stringi,
-    ggpur,
+    ggpubr,
     BiocManager
 Remotes:
     rstudio/htmltools,
