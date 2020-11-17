@@ -26,6 +26,7 @@ cran <- c(
 git <- c(
   "rstudio/htmltools"
   , "rstudio/bslib"
+  , "MarkEdmondson1234/googleID"
   , "Flavjack/inti" 
   )
 
