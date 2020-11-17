@@ -27,7 +27,9 @@ library(stringi)
 library(BiocManager)
 
 options(repos = BiocManager::repositories())
-options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
+options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"
+                                          , "https://www.googleapis.com/auth/userinfo.email"
+                                          ))
 options(gargle_oob_default = TRUE)
 options(shiny.port = 1221)
 
@@ -54,11 +56,12 @@ shinyServer(function(input, output, session) {
 # auth --------------------------------------------------------------------
 
   gar_shiny_auth(session)
-
+  
   # longin vs local ---------------------------------------------------------
   
   access_token <- callModule(googleAuth_js, "js_token")
   
+
   output$login <- renderUI({
     
     if (file.exists("www/cloud.json")) {
@@ -66,11 +69,11 @@ shinyServer(function(input, output, session) {
       googleAuth_jsUI("js_token"
                       , login_text = "LogIn"
                       , logout_text = "LogOut"
-      )
+                      )
       
     } else {
       
-      actionButton("do_something", "Local", class = "btn-success")
+      actionButton("local_user", "Local", class = "btn-success")
       
     }
     
@@ -131,7 +134,7 @@ shinyServer(function(input, output, session) {
       )
       
     }
-
+    
     validate( need( gs4_has_token(), "LogIn and insert a url" ) )
     
     gs_created <<- gs4_create(

@@ -21,13 +21,16 @@ library(metathis)
 library(tidyverse)
 library(googlesheets4)
 library(googleAuthR)
+library(googleID)
 library(bslib)
 library(shinydashboard)
 library(stringi)
 library(BiocManager)
 
 options(repos = BiocManager::repositories())
-options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"))
+options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"
+                                          , "https://www.googleapis.com/auth/userinfo.email"
+                                          ))
 options(gargle_oob_default = TRUE)
 options(shiny.port = 1221)
 
@@ -128,7 +131,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                       column(width = 7,
 
                              fluidRow(
-
+                               
                                box(title = div(h4(icon("key")), align = "right")
                                    , width = 1,
 
@@ -325,23 +328,6 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                              <a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/">
                              <img src="https://flavjack.github.io/inti/reference/figures/yupana.png" style="height:80px" title="yupana"></a>
                              <span style="display:block;"><small>Yupana</small></span>
-                             </p></div>
-
-                             </div>
-
-                                   '),
-
-                              br(),
-
-                              HTML('
-
-                             <div id=footer style="width:100%; margin:auto;">
-
-                             <div style="display:inline-block; width:100%">
-                             <p style="text-align:center">
-                             <a target="_blank" href="https://www.quipolab.com/">
-                             <img src="https://flavjack.github.io/inti/reference/figures/quipo.png" style="height:70px" title="quipo"></a>
-                             <span style="display:block;"><small>quipolab</small></span>
                              </p></div>
 
                              </div>

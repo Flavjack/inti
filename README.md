@@ -11,6 +11,7 @@ status](https://travis-ci.org/Flavjack/inti.svg?branch=master)](https://travis-c
 status](https://ci.appveyor.com/api/projects/status/github/Flavjack/inti?branch=master&svg=true)](https://ci.appveyor.com/project/Flavjack/inti)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/inti)](https://CRAN.R-project.org/package=inti)
+<!-- [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/inti?color=green)](https://r-pkg.org/pkg/inti) -->
 <!-- badges: end -->
 
 The ‘inti’ package is part of the ‘inkaverse’ project for developing
