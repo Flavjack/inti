@@ -30,25 +30,10 @@ Imports:
     emmeans,
     multtest
 Suggests:
-    rmarkdown,
-    tidyverse,
-    GerminaR,
-    cowplot,
     agridat,
     googlesheets4,
-    corrplot,
     knitr,
-    devtools,
-    metathis,
-    googleAuthR,
-    shinydashboard,
-    stringi,
-    BiocManager
-Remotes:
-    rstudio/htmltools,
-    rstudio/sass,
-    rstudio/bslib,
-    MarkEdmondson1234/googleID
+    rmarkdown
 VignetteBuilder: knitr
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
