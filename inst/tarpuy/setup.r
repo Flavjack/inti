@@ -24,7 +24,8 @@ cran <- c(
   )
 
 git <- c(
-  "rstudio/bslib"
+  "rstudio/htmltools"
+  , "rstudio/bslib"
   , "Flavjack/inti" 
   )
 
