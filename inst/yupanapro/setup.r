@@ -31,17 +31,17 @@ git <- c(
   , "Flavjack/inti" 
   )
 
+for (pkg in git) { 
+  if( !require(sub(".*/", "", pkg), character.only = TRUE) ) {
+    devtools::install_github(pkg, upgrade = TRUE)
+    library(sub(".*/", "", pkg), character.only = TRUE)
+  } 
+}
+
 for (pkg in cran) { 
   if( !require(pkg, character.only = TRUE) ) {
     install.packages(pkg)
     library(pkg, character.only = TRUE)
-  } 
-}
-
-for (pkg in git) { 
-  if( !require(sub(".*/", "", pkg), character.only = TRUE) ) {
-    devtools::install_github(pkg, dependencies = T, upgrade = T)
-    library(sub(".*/", "", pkg), character.only = TRUE)
   } 
 }
 
