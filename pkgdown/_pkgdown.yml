@@ -5,7 +5,7 @@ home:
   author: Flavio Lozano-Isla
   links:
   - text: Support project
-    href: https://www.patreon.com/inkaverse
+    href: https://www.patreon.com/inkaverse/
 
 template:
   opengraph:
@@ -47,7 +47,7 @@ navbar:
     - icon: fab fa-github fa-lg
       href: https://github.com/flavjack/inti/
     - icon: fas fa-mug-hot fa-lg
-      href: https://patreon.com/inkaverse
+      href: https://patreon.com/inkaverse/
 
 reference:
 
