@@ -19,7 +19,6 @@ Depends:
     dplyr,
     tidyr,
     tibble
-biocViews:
 Imports:
     lme4,
     agricolae,
@@ -27,8 +26,7 @@ Imports:
     purrr,
     stringr,
     DT,
-    emmeans,
-    multtest
+    emmeans
 Suggests:
     agridat,
     googlesheets4,

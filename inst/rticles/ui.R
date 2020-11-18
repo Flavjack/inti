@@ -22,9 +22,6 @@ library(shinyFiles)
 library(utils)
 library(fs)
 library(metathis)
-library(BiocManager)
-
-options(repos = BiocManager::repositories())
 
 # -------------------------------------------------------------------------
 # app ---------------------------------------------------------------------

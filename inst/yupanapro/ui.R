@@ -26,9 +26,7 @@ library(shinydashboard)
 library(ggpubr)
 library(FactoMineR)
 library(corrplot)
-library(BiocManager)
 
-options(repos = BiocManager::repositories())
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"
                                           , "https://www.googleapis.com/auth/userinfo.email"
                                           ))

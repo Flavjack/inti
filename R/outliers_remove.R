@@ -20,19 +20,29 @@
 #' Generalized Lattices: A Case Study on the Transition from ANOVA to REML.”
 #' Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016.
 #'
-#' @importFrom stats median pnorm residuals
-#' @importFrom multtest mt.rawp2adjp
+#' @importFrom stats median pnorm residuals p.adjust
 #' @importFrom lme4 lmer
 #' 
 #' @export
+#' 
+#' @examples
 #'
+#' library(inti)
+#' library(agridat)
+#'
+#' outliers <- outliers_remove(
+#'   data = john.alpha
+#'   , trait ="yield"
+#'   , model = "rep + (1|rep:block) + gen"
+#'   )
+#'   
 
 outliers_remove <- function(data
                             , trait
                             , model
                             ) {
 
-  out_flag <- NULL
+  out_flag <- bholm <- NULL
 
   formula <- as.formula(paste(trait, model, sep = "~"))
   model_fact <- all.vars(formula)
@@ -60,15 +70,13 @@ outliers_remove <- function(data
 
   # Produce a Bonferroni-Holm tests for the adjusted p-values
 
-  test.BHStud <- mt.rawp2adjp(rawp.BHStud, proc = c("Holm"))
+  test.BHStud <- p.adjust(rawp.BHStud, method = "holm")
 
-  adjp <- cbind(test.BHStud[[1]][,1])
-  bholm <- cbind(test.BHStud[[1]][,2])
-  index <- cbind(test.BHStud[[2]])
-
-  BHStud_test <- tibble(adjp, bholm, index) %>%
-    mutate(out_flag = ifelse(bholm <0.05, "OUTLIER", ".")) %>%
-    arrange(index)
+  BHStud_test <- tibble(adjp = rawp.BHStud
+                        , bholm = test.BHStud
+                        ) %>% 
+    rownames_to_column("index") %>% 
+    mutate(out_flag = ifelse(bholm <0.05, "OUTLIER", "."))
 
   outliers <- cbind(newdt, BHStud_test) %>%
     dplyr::filter(out_flag %in% "OUTLIER")

@@ -24,9 +24,7 @@ library(googleAuthR)
 library(bslib)
 library(shinydashboard)
 library(stringi)
-library(BiocManager)
 
-options(repos = BiocManager::repositories())
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"
                                           , "https://www.googleapis.com/auth/userinfo.email"
                                           ))

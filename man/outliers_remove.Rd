@@ -24,6 +24,18 @@ residuals standardized by the re scaled MAD (BH MADR).
 \details{
 Function to remove outliers in MET experiments
 }
+\examples{
+
+library(inti)
+library(agridat)
+
+outliers <- outliers_remove(
+  data = john.alpha
+  , trait ="yield"
+  , model = "rep + (1|rep:block) + gen"
+  )
+  
+}
 \references{
 Bernal Vasquez, Angela Maria, et al. “Outlier Detection Methods for
 Generalized Lattices: A Case Study on the Transition from ANOVA to REML.”
