@@ -35,6 +35,8 @@ outliers <- outliers_remove(
   , model = "rep + (1|rep:block) + gen"
   )
   
+outliers
+  
 }
 \references{
 Bernal Vasquez, Angela Maria, et al. “Outlier Detection Methods for

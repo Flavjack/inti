@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/rticles/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-10-30
+#> date .: 2020-11-18
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -19,7 +19,6 @@ cran <-  c(
   , "utils"
   , "fs"
   , "metathis"
-  , "BiocManager"
   )
 
 git <-  c(

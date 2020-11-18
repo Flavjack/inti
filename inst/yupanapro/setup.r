@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-11-13
+#> date .: 2020-11-18
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -22,7 +22,6 @@ cran <- c(
   , "ggpubr"
   , "FactoMineR"
   , "corrplot"
-  , "BiocManager"
   )
 
 git <- c(

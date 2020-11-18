@@ -36,6 +36,8 @@
 #'   , model = "rep + (1|rep:block) + gen"
 #'   )
 #'   
+#' outliers
+#'   
 
 outliers_remove <- function(data
                             , trait

@@ -2,6 +2,14 @@
 
 ## Major changes
 
+- *Package* 
+  - Exclude package `multtest` from the depends
+
+
+# Version 0.1.1
+
+## Major changes
+
 - *Yupana & Tarpuy*
   - now apps work locally
   - update bootstrap

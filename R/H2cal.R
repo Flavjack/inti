@@ -97,6 +97,7 @@
 #'             , ran.model = "1 + rep + (1|rep:block) + (1|gen)"
 #'             , plot_diag = TRUE
 #'             , emmeans = TRUE
+#'             , outliers.rm = TRUE
 #'             )
 #'             
 #'  hr$tabsmr

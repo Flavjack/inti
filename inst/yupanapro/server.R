@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-10-25
+#> date .: 2020-11-18
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -55,8 +55,8 @@ observe({
 
 # longin vs local ---------------------------------------------------------
 
-  access_token <<- moduleServer(id = "js_token"
-                                , module = googleAuth_js)
+  access_token <- moduleServer(id = "js_token"
+                               , module = googleAuth_js)
   
   output$login <- renderUI({
     
@@ -69,7 +69,7 @@ observe({
       
     } else {
       
-      actionButton("do_something", "Local", class = "btn-success")
+      actionButton("local_user", "Local", class = "btn-success")
       
     }
       
@@ -833,7 +833,7 @@ observe({
     
     if ( input$graph_sheets %in% sheet_names(gs()) ) {
       
-      plottb <<- gs() %>%
+      plottb <- gs() %>%
         range_read( input$graph_sheets )
       
     } else {"Choose a summary table"}

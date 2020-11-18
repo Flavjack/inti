@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-11-14
+#> date .: 2020-11-18
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -57,8 +57,8 @@ shinyServer(function(input, output, session) {
   
   # longin vs local ---------------------------------------------------------
   
-  access_token <- callModule(googleAuth_js, "js_token")
-  
+  access_token <- moduleServer(id = "js_token"
+                               , module = googleAuth_js)
 
   output$login <- renderUI({
     
