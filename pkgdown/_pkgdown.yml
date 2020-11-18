@@ -4,8 +4,8 @@ home:
   url: https://flavjack.github.io/inti/
   author: Flavio Lozano-Isla
   links:
-  - text: Support project
-    href: https://www.patreon.com/inkaverse/
+  - text: Support the project
+    href: https://github.com/sponsors/Flavjack
 
 template:
   opengraph:
@@ -46,8 +46,8 @@ navbar:
   right:
     - icon: fab fa-github fa-lg
       href: https://github.com/flavjack/inti/
-    - icon: fas fa-mug-hot fa-lg
-      href: https://patreon.com/inkaverse/
+    - icon: far fa-heart fa-lg
+      href: https://github.com/sponsors/Flavjack
 
 reference:
 
