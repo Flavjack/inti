@@ -544,6 +544,8 @@ shinyServer(function(input, output, session) {
       range_read( input$gsheet_fb ) %>% names()
 
   })
+  
+  if (file.exists("www/analytics.r")) { source("www/analytics.r", local = T) }
 
   output$sketch_options <- renderUI({
 

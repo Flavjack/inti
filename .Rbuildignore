@@ -8,6 +8,8 @@
 ^cran-comments\.md$
 ^\.secrets$
 [.]json$
+analytics.R
+analytics.r
 ^inst/icons$
 ^inst/yupana$
 ^inst/pacha$

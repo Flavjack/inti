@@ -30,6 +30,7 @@ library(corrplot)
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"
                                           , "https://www.googleapis.com/auth/userinfo.email"
                                           ))
+
 options(gargle_oob_default = TRUE)
 options(shiny.port = 1221)
 
@@ -40,6 +41,7 @@ if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json")
 # -------------------------------------------------------------------------
 
 shinyServer(function(input, output, session) {
+  
 
 # close auto local session ------------------------------------------------
 
@@ -58,6 +60,8 @@ observe({
   access_token <- moduleServer(id = "js_token"
                                , module = googleAuth_js)
   
+# -------------------------------------------------------------------------
+
   output$login <- renderUI({
     
     if (file.exists("www/cloud.json")) {
@@ -67,7 +71,7 @@ observe({
                       , logout_text = "LogOut"
                       )
       
-    } else {
+      } else {
       
       actionButton("local_user", "Local", class = "btn-success")
       
@@ -194,7 +198,6 @@ observe({
           as.data.frame()
 
       } else { fbsmrvar <- NULL }
-    
     
   })
 
@@ -340,14 +343,16 @@ observe({
       fbsmr <- fieldbook_summary(data = fieldbook()
                                  , last_factor = input$last_factor
                                  , model_facts = input$model_facts
-                                 , comp_facts = paste0(input$comp_facts, collapse = ":")
+                                 , comp_facts = paste0(input$comp_facts
+                                                       , collapse = ":")
                                  , test_comp = input$test_comp
                                  , sig_level = input$sig_level
       )
 
       if ( !input$fbsmrvars_gsheet %in% sheet_names(gs()) ) {
 
-        sheet_add(ss = gs(), .after = input$fieldbook_gsheet, sheet = input$fbsmrvars_gsheet)
+        sheet_add(ss = gs(), .after = input$fieldbook_gsheet
+                  , sheet = input$fbsmrvars_gsheet)
 
         fbsmr %>% sheet_write(ss = gs(), sheet = input$fbsmrvars_gsheet)
 
@@ -565,7 +570,7 @@ observe({
     
     })
 
-  
+  if (file.exists("www/analytics.r")) { source("www/analytics.r", local = T) }
 
   # -------------------------------------------------------------------------
 
