@@ -47,9 +47,9 @@ include_table <- function(data = NULL
                         , notation = "none"
                         ) {
 
-  # data <- info
+  # data <- table
   
-  if ( exists(c("info", "table"), data) ) {
+  if ( exists("info", data) && exists("table", data) ) {
 
     info <- data %>% purrr::pluck(1) 
     table <-  data %>% purrr::pluck(2)
