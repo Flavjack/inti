@@ -28,11 +28,13 @@
 #' , z = rep_len("c", 5)
 #' )
 #'
-#' info <- tab %>%
+#' table <- tab %>%
 #' info_table(
 #'   caption = "Figure caption"
 #'   , notes = "test note"
 #'   )
+#'   
+#' table$info
 #' 
 
 info_table <- function(data

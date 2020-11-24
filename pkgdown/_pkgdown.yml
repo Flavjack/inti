@@ -16,8 +16,8 @@ template:
     bootswatch: cerulean
     ganalytics: G-804H2EJ8RN
     docsearch:
-      api_key: 
-      index_name: 
+      api_key: f3d6fbee3fef1a17738422273d5317f5
+      index_name: inti
 
 development:
   mode: auto

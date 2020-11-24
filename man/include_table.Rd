@@ -47,12 +47,12 @@ x = rep_len(1, 5)
 , z = rep_len("c", 5)
 )
 
-info <- tab \%>\% 
+table <- tab \%>\% 
 info_table(
   caption = "Figure caption"
   , notes = "test note"
   )
 
-info \%>\% inti::include_table()
+table \%>\% inti::include_table()
 
 }
