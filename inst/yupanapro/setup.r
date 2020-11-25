@@ -26,7 +26,6 @@ cran <- c(
 
 git <- c(
   "rstudio/bslib"
-  , "MarkEdmondson1234/googleID"
   , "Flavjack/inti" 
   )
 
