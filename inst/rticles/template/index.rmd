@@ -13,13 +13,13 @@ site: bookdown::bookdown_site
 documentclass: book
 bookdown::gitbook:
 output: 
-  bookdown::word_document2:
-    reference_docx: files/style_rticles.docx
-    number_sections: false
   bookdown::html_document2:
     toc: true
     number_sections: true
     toc_float: true
+  bookdown::word_document2:
+    reference_docx: files/style_rticles.docx
+    number_sections: false
 always_allow_html: true
 link-citations: true
 colorlinks: true
