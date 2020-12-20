@@ -1,19 +1,7 @@
 ---
-title: "&nbsp;"
+title: "Rticles: Create technical documents with markdown and bookdown"
 description: document template for scientific report
-favicon: files/logo.png
-github-repo: flavjack/rticles
-site: bookdown::bookdown_site
-documentclass: book
-bookdown::gitbook:
-output: 
-  # bookdown::word_document2: 
-  #   reference_docx: files/style_rticles.docx
-  bookdown::html_document2:
-    # toc: yes
-    number_sections: no
-    # toc_float: yes
-always_allow_html: yes
+output: blogdown::html_page
 link-citations: true
 colorlinks: yes
 # bibliography: [files/book.bib, files/pkgs.bib]
@@ -26,7 +14,7 @@ editor_options:
 source("https://lozanoisla.com/setup.r")
 ```
 
-# Crea tu primer documento
+## Crea tu primer documento
 
 Rticles te ayudará a crear tu primer documento usando R + markdown = Rmarkdown (.Rmd).
 

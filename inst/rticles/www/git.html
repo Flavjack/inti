@@ -1,0 +1,34 @@
+<link href="git_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="git_files/anchor-sections-1.0/anchor-sections.js"></script>
+
+
+<div id="git" class="section level2">
+<h2>Git</h2>
+<hr />
+<hr />
+<div id="importar-cambios" class="section level3">
+<h3>Importar cambios</h3>
+<pre class="bash"><code>git pull</code></pre>
+</div>
+<div id="enviar-cambios" class="section level3">
+<h3>Enviar cambios</h3>
+<pre class="bash"><code>git add .
+git commit -m &quot;message&quot;
+git push </code></pre>
+</div>
+<div id="re-escribir-archivos-locales-a-origen" class="section level3">
+<h3>Re-escribir archivos locales a origen</h3>
+<pre class="bash"><code>git fetch --all
+git reset --hard origin/master
+git pull origin master
+</code></pre>
+</div>
+<div id="forzar-envio-de-cambios" class="section level3">
+<h3>Forzar envio de cambios</h3>
+<pre class="bash"><code>git push -f origin master</code></pre>
+</div>
+<div id="revertir-cambios" class="section level3">
+<h3>Revertir cambios</h3>
+<pre class="bash"><code>git reset --hard &lt;commit&gt;</code></pre>
+</div>
+</div>

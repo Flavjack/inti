@@ -1,0 +1,6 @@
+
+p{ text-align: justify; }
+
+.shiny-input-container:not(.shiny-input-container-inline) { width: 100%; }
+
+.dropdown-menu{z-index:10000 !important;}

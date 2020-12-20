@@ -34,7 +34,7 @@ options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/sprea
 options(gargle_oob_default = TRUE)
 options(shiny.port = 1221)
 
-if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json")
+if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json", activate = "web")
 
 # -------------------------------------------------------------------------
 # app ---------------------------------------------------------------------
@@ -63,22 +63,22 @@ observe({
 # -------------------------------------------------------------------------
 
   output$login <- renderUI({
-    
+
     if (file.exists("www/cloud.json")) {
 
       googleAuth_jsUI("js_token"
                       , login_text = "LogIn"
                       , logout_text = "LogOut"
                       )
-      
+
       } else {
-      
+
       actionButton("local_user", "Local", class = "btn-success")
-      
+
     }
-      
+
   })
-  
+
   gs <- reactive({
 
     if(Sys.getenv('SHINY_PORT') == "") {

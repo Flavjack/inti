@@ -1,3 +1,14 @@
+# Version 0.1.3
+
+## Major changes
+
+- *Rticles*
+  - update bootstrap
+  - include code section
+
+- *Yupana & Tarpuy*
+  - google auth verification
+
 # Version 0.1.2
 
 ## Major changes

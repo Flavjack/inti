@@ -1,0 +1,86 @@
+---
+title: "Rticles: cheat sheet"
+description: document template for scientific report
+output: blogdown::html_page
+link-citations: true
+colorlinks: yes
+# bibliography: [files/book.bib, files/pkgs.bib]
+csl: https://www.zotero.org/styles/apa
+editor_options: 
+  chunk_output_type: console
+---
+
+## Bookdown
+
+***
+***
+
+### Configuración
+
+> [CODIGO](https://github.com/Flavjack/lozanoisla/blob/master/static/setup.r)
+
+```{r, eval = F}
+source("https://lozanoisla.com/setup.r")
+url <- paste0("https://docs.google.com/spreadsheets/d/"
+              , "1QziIXGOwb8cl3GaARJq6Ez6aU7vND_UHKJnFcAKx0VI")
+gs <- as_sheets_id(url)
+# browseURL(url)
+xl <- gs %>% 
+  drive_download("files/fieldbook.xlsx", overwrite = T) %>%
+  pluck(2)
+fb <- xl %>% 
+  readxl::read_excel("prosopis")  %>% 
+  rename_with(tolower) %>% 
+  mutate(across(c("rep", "nacl", "temp"), ~ as.factor(.) )) %>% 
+  mutate(across(where(is.factor), ~ gsub("[[:space:]]", "", .)) ) %>% 
+  as.data.frame()
+# str(fb)
+```
+
+### Tablas
+
+```{r, eval = F}
+tab <- gs %>% 
+  range_read("prosopis") %>% 
+  select(rep:D5) %>% 
+  head(10) %>% 
+  inti::info_table(
+    caption = "Germination dataset import from a googlesheet"
+    , notes = "@schafleitner2007")  
+tab %>%  inti::include_table()
+```
+
+### Figuras
+
+```{r, eval = F}
+gerplot <- cowplot::plot_grid(gbp, ggt
+                              , nrow = 1
+                              , labels = "AUTO")
+save_plot("files/fig_gerplot.png", 
+          plot = gerplot,
+          dpi= 300, 
+          base_height = 100, 
+          base_aspect_ratio = 2.5, 
+          units = "mm")
+fig <- info_figure(
+  caption = "Germination  experiment with *Prosopis juliflor* under different osmotic potentials and temperatures."
+  , notes = "A) Bar graph with germination percentage in a factorial analisys. B)  Line graph from cumulative germination under different osmotic potentials."
+  , label = "__Where:__"
+  , url = "files/fig_gerplot.png"
+  )
+  
+fig %>% include_figure()
+```
+
+### pdf
+
+```{r, eval = F}
+<embed src="files/file_name.pdf" width="100%" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+```
+
+### videos
+
+```{r, eval = F}
+<iframe width="100%" height="450" src="https://www.youtube.com/embed/video_id" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+```
+

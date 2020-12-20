@@ -1,10 +1,10 @@
 # -------------------------------------------------------------------------
-# rticles -----------------------------------------------------------------
+# Rticles -----------------------------------------------------------------
 # -------------------------------------------------------------------------
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/rticles/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-11-14
+#> date .: 2020-12-20
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -17,11 +17,12 @@ if (file.exists("setup.R")) { source("setup.R") }
 
 library(inti)
 library(shiny)
+library(metathis)
+library(bslib)
+library(shinydashboard)
 library(miniUI)
 library(shinyFiles)
-library(utils)
 library(fs)
-library(metathis)
 
 # -------------------------------------------------------------------------
 # update template ---------------------------------------------------------
@@ -107,30 +108,28 @@ shinyServer(function(input, output, session) {
 # Export path -------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  volumes <- c(
-    Home = fs::path_home(),
-    "R Installation" = R.home(),
-    getVolumes()()
-    )
+volumes <- c(Home = fs::path_home()
+             , "R Installation" = R.home()
+             , getVolumes()())
 
-  shinyDirChoose(input,
-    "directory",
-    roots = volumes,
-    session = session,
-    restrictions = system.file(package = "base")
-  )
+shinyDirChoose(input
+               , "directory"
+               , roots = volumes
+               , session = session
+               , restrictions = system.file(package = "base")
+               , allowDirCreate = TRUE)
 
-  output$directorypath <- renderPrint({
-    if (is.integer(input$directory)) {
-      cat("No directory has been selected")
-    } else {
-      parseDirPath(volumes, input$directory)
-    }
-  })
+output$directorypath <- renderPrint({
+  if (is.integer(input$directory)) {
+    cat("No directory has been selected")
+  } else {
+    parseDirPath(volumes, input$directory)
+  }
+})
 
-  path <- reactive({
-    paste0(parseDirPath(volumes, input$directory), "/")
-  })
+path <- reactive({
+  paste0(parseDirPath(volumes, input$directory), "/")
+})
 
 # rticles -----------------------------------------------------------------
 # -------------------------------------------------------------------------

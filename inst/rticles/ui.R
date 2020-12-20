@@ -1,10 +1,10 @@
 # -------------------------------------------------------------------------
-# rticles -----------------------------------------------------------------
+# Rticle ------------------------------------------------------------------
 # -------------------------------------------------------------------------
-#> open https://flavjack.github.io/inti/
+#> open https://flavjack.github.io/rticles/
 #> open https://flavjack.shinyapps.io/rticles/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-11-14
+#> date .: 2020-12-20
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -17,38 +17,50 @@ if (file.exists("setup.R")) { source("setup.R") }
 
 library(inti)
 library(shiny)
+library(metathis)
+library(bslib)
+library(shinydashboard)
 library(miniUI)
 library(shinyFiles)
-library(utils)
 library(fs)
-library(metathis)
 
 # -------------------------------------------------------------------------
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-fluidPage(title = "Rticles • app",
-
-    tags$head(HTML('<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">')),
-    tags$head(HTML('<style>* {font-size: 100%; font-family: Roboto Mono;}</style>')),
-    tags$head(includeHTML(("www/analytics.html"))),
-    tags$head(tags$link(rel="shortcut icon", href="https://flavjack.github.io/inti/reference/figures/quipo.png")),
-
-    meta() %>%
-      meta_social(
-        title = "Rticles",
-        description = "Rticles: Create technical documents with markdown and bookdown",
-        url = "https://flavjack.shinyapps.io/rticles/",
-        image = "https://flavjack.github.io/inti/reference/figures/quipo.png",
-        image_alt = "quipolab.com"
-      ),
-
-    fluidRow(
-      column(2,
-
-             br(),
-
-             HTML('
+navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.com/">Rticles</a></strong></h3>')
+           , windowTitle = "Rticles • app"
+           , selected = "Intro"
+           , theme = "bootstrap_sandstone.css" #!
+           , 
+           
+           # -------------------------------------------------------------------------
+           # Rticles Info ------------------------------------------------------------
+           # -------------------------------------------------------------------------
+           
+           tabPanel("Intro"
+                    
+                    , bs_theme_dependencies("flatly") #!
+                    
+                    , includeCSS("www/custom.css")
+                    , tags$head(includeHTML(("www/analytics.html")))
+                    , tags$head(tags$link(rel="shortcut icon"
+                                          , href="https://flavjack.github.io/inti/reference/figures/yupana.png")),
+                    
+                    meta() %>%
+                      meta_social(
+                        title = "Rticles",
+                        description = "Rticles: Create technical documents with markdown and bookdown",
+                        url = "https://flavjack.shinyapps.io/rticles/",
+                        image = "https://flavjack.github.io/inti/reference/figures/quipo.png",
+                        image_alt = "quipolab.com"
+                      )
+                    
+                    , fluidRow(
+                      
+                      column(width = 1,
+                             
+                             HTML('
             <div id=footer style="width:100%; margin:auto;">
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
@@ -58,94 +70,93 @@ fluidPage(title = "Rticles • app",
             </p></div>
             </div>
                   ')
-
-             ),
-
-      column(3,
-
-             HTML('<h1><a target="_blank" href="https://inkaverse.com/">Rticles</a></h1>'),
-
-             br(),
-
-             selectizeInput(
-               inputId = "type",
-               label = "Document type",
-               choices = c("markdown", "bookdown"),
-               multiple = FALSE
-             ),
-
-             textInput(
-               inputId = "name",
-               label = "Document name",
-               value = "manuscript"
-             ),
-
-             p(),
-
-             radioButtons(
-               inputId = "project",
-               label = "R project",
-               choices = c("Yes", "No"),
-               selected = "Yes",
-               inline = T
-             ),
-
-             p(),
-
-             conditionalPanel(
-
-               "output.server == 'web'",
-
-               downloadButton(outputId = "downloadData"
-                              , label =  "Download")
-
-             ),
-
-             conditionalPanel(
-
-               "output.server == 'local'",
-
-               verbatimTextOutput("directorypath"),
-
-               shinyDirButton(
-                 "directory",
-                 "Select folder",
-                 "Please select a folder"
-               ),
-
-             ),
-
-             br(),
-
-             conditionalPanel(
-
-               "output.server == 'local'",
-
-               gadgetTitleBar(
-                 title = "enjoy :)",
-                 left = miniTitleBarCancelButton(),
-                 right = miniTitleBarButton(
-                   inputId = "create",
-                   label = "Create",
-                   primary = TRUE
-                 ))
-
-             )
-
-             ),
-
-      column(5,
-
-             includeHTML("www/manual.html")
-
-             ),
-
-      column(2,
-
-             br(),
-
-             HTML('
-
+                             
+                      ),
+                      
+                      column(3,
+                             
+                             HTML('<h1><a target="_blank" href="https://inkaverse.com/">Rticles</a></h1>'),
+                             
+                             br(),
+                             
+                             selectizeInput(
+                               inputId = "type",
+                               label = "Document type",
+                               choices = c("markdown", "bookdown"),
+                               multiple = FALSE
+                             ),
+                             
+                             textInput(
+                               inputId = "name",
+                               label = "Document name",
+                               value = "manuscript"
+                             ),
+                             
+                             p(),
+                             
+                             radioButtons(
+                               inputId = "project",
+                               label = "R project",
+                               choices = c("Yes", "No"),
+                               selected = "Yes",
+                               inline = T
+                             ),
+                             
+                             p(),
+                             
+                             conditionalPanel(
+                               
+                               "output.server == 'web'",
+                               
+                               downloadButton(outputId = "downloadData"
+                                              , label =  "Download"
+                                              , class = "btn-success")
+                               
+                             ),
+                             
+                             conditionalPanel(
+                               
+                               "output.server == 'local'",
+                               
+                               verbatimTextOutput("directorypath"),
+                               
+                               shinyDirButton(
+                                 id = "directory"
+                                 , label = "Select folder"
+                                 , title = "Please select a folder"
+                                 , class = "btn-success"
+                               ),
+                               
+                             ),
+                             
+                             br(),
+                             
+                             conditionalPanel(
+                               
+                               "output.server == 'local'",
+                               
+                               gadgetTitleBar(
+                                 title = "enjoy :)",
+                                 left = miniTitleBarCancelButton(),
+                                 right = miniTitleBarButton(
+                                   inputId = "create",
+                                   label = "Create",
+                                   primary = TRUE
+                                 ))
+                               
+                             )
+                             
+                      ),
+                      
+                      column(6,
+                             
+                             includeHTML("www/manual.html")
+                             
+                      ),
+                      
+                      column(2,
+                             
+                             HTML('
             <div id=footer style="width:100%; margin:auto;">
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
@@ -154,80 +165,54 @@ fluidPage(title = "Rticles • app",
             <span style="display:block;"><small>demo</small></span>
             </p></div>
             </div>
-
                   '),
-
-             HTML('
-
+                             
+                             HTML('
             <h4 style="text-align: center;"><span style="color: #0a0909;">Softwares</span></h4>
-
             <p> </p>
             <p> </p>
             <p> </p>
-
             <div id=footer style="width:100%; margin:auto;">
-
             <div style="display:inline-block; width:100%">
-
             <p style="text-align:center; vertical-align:middle">
             <a target="_blank" href="https://www.zotero.org/download/">
             <img src="https://www.zotero.org/static/images/bs4theme/zotero-logo.1519312231.svg" style="height:40px" title="Zotero" alt="Zotero"></a>
             </p>
-
             </div>
-
             <p> </p>
-
             <div style="display:inline-block; width:100%">
-
             <p style="text-align:center; vertical-align:middle">
             <a target="_blank" href="https://cloud.r-project.org/">
             <img src="https://cran.r-project.org/Rlogo.svg" style="height:40px" title="R cran" alt="R cran"></a>
             </p>
-
             </div>
-
             <p> </p>
-
             <div style="display:inline-block; width:100%">
-
             <p style="text-align:center; vertical-align:middle">
             <a target="_blank" href="https://rstudio.com/products/rstudio/download/">
             <img src="https://d33wubrfki0l68.cloudfront.net/62bcc8535a06077094ca3c29c383e37ad7334311/a263f/assets/img/logo.svg" style="height:40px" title="Rstudio" alt="Rstudio"></a>
             </p>
-
             </div>
-
             <p> </p>
-
             <div style="display:inline-block; width:100%">
-
             <p style="text-align:center; vertical-align:middle">
             <a target="_blank" href="https://git-scm.com/downloads">
             <img src="https://git-scm.com/images/logo@2x.png" style="height:40px" title="Git" alt="Git"></a>
             </p>
-
             </div>
-
             <p> </p>
-
             <div style="display:inline-block; width:100%">
-
             <p style="text-align:center; vertical-align:middle">
             <a target="_blank" href="https://retorque.re/zotero-better-bibtex/">
             <img src="https://ctan.org/teaser/pkg/bibtex" style="height:40px" title="Git" alt="Git"></a>
             </p>
-
             </div>
-
             </div>
-
                 '),
-
-             br(),
-
-             HTML('
-
+                             
+                             br(),
+                             
+                             HTML('
             <div id=footer style="width:100%; margin:auto;">
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
@@ -236,24 +221,36 @@ fluidPage(title = "Rticles • app",
             <span style="display:block;"><small>Github</small></span>
             </p></div>
             </div>
-
-                  '),
-
-             HTML('
-
-            <div id=footer style="width:100%; margin:auto;">
-            <div style="display:inline-block; width:100%">
-            <p style="text-align:center">
-            <a target="_blank" href="https://www.quipolab.com/">
-            <img src="https://lozanoisla.com/img/quipo.png" style="height:50px" title="demo"></a>
-            </p></div>
-            </div>
-
                   ')
-
-             ),
-    )
-  )
-
-# end ---------------------------------------------------------------------
-# -------------------------------------------------------------------------
+                      )
+                      
+                      
+                      )
+                    
+                    ),
+           
+           tabPanel("Code",
+                    
+                    fluidRow(
+                      
+                      column(width = 5,
+                             
+                             includeHTML("www/markdown.html")
+                             
+                             ),
+                      
+                      column(width = 4,
+                             
+                             includeHTML("www/bookdown.html")
+                             
+                             ),
+                      
+                      column(width = 3,
+                             
+                             includeHTML("www/git.html")
+                             
+                             )
+                    )
+                    
+                    )
+           )

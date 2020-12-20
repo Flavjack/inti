@@ -4,25 +4,26 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/rticles/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-11-18
+#> date .: 2020-12-20
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-cran <-  c(
+cran <- c(
   "devtools"
   , "shiny"
+  , "shinydashboard"
   , "miniUI"
   , "shinyFiles"
-  , "utils"
   , "fs"
   , "metathis"
   )
 
 git <-  c(
-  "crsh/citr" 
+  "rstudio/bslib"
+  , "crsh/citr" 
   , "Flavjack/inti" 
   )
 
