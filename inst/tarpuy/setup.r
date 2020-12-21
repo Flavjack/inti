@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-11-18
+#> date .: 2020-12-21
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -23,7 +23,9 @@ cran <- c(
   )
 
 git <- c(
-  "rstudio/bslib"
+  "rstudio/htmltools"
+  , "rstudio/sass"
+  , "rstudio/bslib"
   , "Flavjack/inti" 
   )
 
