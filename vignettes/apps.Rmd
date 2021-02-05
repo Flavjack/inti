@@ -34,7 +34,13 @@ The package `inti` has been developed to provide tools used in plant science and
 
 The `inti` package is inspired by the Inca mythology where the sun (`inti`) is considered the most significant deity. The web applications are based on this worldview.
 
-The shiny apps are based in the function developed in the package <https://inkaverse.com/reference/>. 
+The shiny apps are based in the function developed in the package <https://inkaverse.com/reference/>.
+
+## Install the apps locally
+
+```{=html}
+<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/sbpBD5CyUGM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+```
 
 ## Tarpuy
 
@@ -82,11 +88,9 @@ Data analysis and graphics for experimental designs.
 </div>
 ```
 
-
 ## Rticles
 
 Template for technical documents using Rmarkdown.
-
 
 ```{=html}
 <div id=footer style="width:100%; margin:auto;">
@@ -106,7 +110,6 @@ Template for technical documents using Rmarkdown.
 
 </div>
 ```
-
 
 ## GerminaR + GerminaQuant
 

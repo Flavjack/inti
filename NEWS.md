@@ -10,7 +10,8 @@
   - google auth verification
   
 - *Apps*
-  - bslib install from CRAN
+  - bslib dependence install from CRAN
+  - Include video for local installation
 
 # Version 0.1.2
 
