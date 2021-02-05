@@ -22,14 +22,10 @@ cran <- c(
   , "ggpubr"
   , "FactoMineR"
   , "corrplot"
+  , "bslib"
   )
 
-git <- c(
-  "rstudio/htmltools"
-  , "rstudio/sass"
-  , "rstudio/bslib"
-  , "Flavjack/inti" 
-  )
+git <- c("Flavjack/inti")
 
 for (pkg in cran) { 
   if( !require(pkg, character.only = TRUE) ) {

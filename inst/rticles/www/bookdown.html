@@ -1,5 +1,3 @@
-<link href="bookdown_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="bookdown_files/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <div id="bookdown" class="section level2">
@@ -8,9 +6,6 @@
 <hr />
 <div id="configuración" class="section level3">
 <h3>Configuración</h3>
-<blockquote>
-<p><a href="https://github.com/Flavjack/lozanoisla/blob/master/static/setup.r">CODIGO</a></p>
-</blockquote>
 <pre class="r"><code>source(&quot;https://lozanoisla.com/setup.r&quot;)
 url &lt;- paste0(&quot;https://docs.google.com/spreadsheets/d/&quot;
               , &quot;1QziIXGOwb8cl3GaARJq6Ez6aU7vND_UHKJnFcAKx0VI&quot;)
@@ -26,6 +21,13 @@ fb &lt;- xl %&gt;%
   mutate(across(where(is.factor), ~ gsub(&quot;[[:space:]]&quot;, &quot;&quot;, .)) ) %&gt;% 
   as.data.frame()
 # str(fb)</code></pre>
+<div id="icons" style="width: 100%; margin: auto;">
+
+<div style="display: inline-block; width: 100%;">
+<p style="text-align: center;"><a rel="noopener" href="https://raw.githubusercontent.com/Flavjack/lozanoisla/master/static/setup.r?token=AB3ARRMHTHEGZ4CKQSSNEEC76KBCA" target="_blank"><img style="height: 50px;" title="code" src="https://www.flaticon.es/svg/static/icons/svg/2920/2920244.svg" alt="code" /></a> <span style="display: block;">codigo</span></p>
+</div>
+
+</div>
 </div>
 <div id="tablas" class="section level3">
 <h3>Tablas</h3>
@@ -36,7 +38,9 @@ fb &lt;- xl %&gt;%
   inti::info_table(
     caption = &quot;Germination dataset import from a googlesheet&quot;
     , notes = &quot;@schafleitner2007&quot;)  
-tab %&gt;%  inti::include_table()</code></pre>
+tab %&gt;%  inti::include_table()
+
+#&gt; cite: (Table \@ref(tab:chunk))</code></pre>
 </div>
 <div id="figuras" class="section level3">
 <h3>Figuras</h3>
@@ -56,14 +60,40 @@ fig &lt;- info_figure(
   , url = &quot;files/fig_gerplot.png&quot;
   )
   
-fig %&gt;% include_figure()</code></pre>
+fig %&gt;% include_figure()
+
+#&gt; cite: (Figure \@ref(fig:chunk))
+#&gt; caption: fig.cap= fig$caption</code></pre>
 </div>
-<div id="pdf" class="section level3">
-<h3>pdf</h3>
+<div id="referencias" class="section level3">
+<h3>Referencias</h3>
+<div id="especificar-posición" class="section level4">
+<h4>Especificar posición</h4>
+<pre class="html"><code>::: {#refs}
+:::</code></pre>
+</div>
+<div id="citar-paquetes" class="section level4">
+<h4>Citar paquetes</h4>
+<pre class="r"><code>if(!file.exists(&quot;files/pkgs.bib&quot;)){write_bib(c(.packages()),&#39;files/pkgs.bib&#39;)}</code></pre>
+</div>
+</div>
+<div id="pdfs" class="section level3">
+<h3>PDF’s</h3>
 <pre class="r"><code>&lt;embed src=&quot;files/file_name.pdf&quot; width=&quot;100%&quot; height=&quot;500&quot; alt=&quot;pdf&quot; pluginspage=&quot;http://www.adobe.com/products/acrobat/readstep2.html&quot;&gt;</code></pre>
 </div>
 <div id="videos" class="section level3">
-<h3>videos</h3>
+<h3>Videos</h3>
 <pre class="r"><code>&lt;iframe width=&quot;100%&quot; height=&quot;450&quot; src=&quot;https://www.youtube.com/embed/video_id&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen&gt;&lt;/iframe&gt;</code></pre>
+</div>
+<div id="articul8" class="section level3">
+<h3>Articul<sup>8</sup></h3>
+<pre class="r"><code>file &lt;- list.files(pattern = &#39;*.zip&#39;)
+unzip(file, overwrite = T)
+path &lt;- unzip(file, list = T)$Name
+file.rename(path, &quot;manuscript.Rmd&quot;)
+
+#&gt; title: &amp;nbsp
+#&gt; include=FALSE
+#&gt; child = &quot;manuscript.Rmd&quot;</code></pre>
 </div>
 </div>

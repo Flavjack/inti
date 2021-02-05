@@ -8,6 +8,9 @@
 
 - *Yupana & Tarpuy*
   - google auth verification
+  
+- *Apps*
+  - bslib install from CRAN
 
 # Version 0.1.2
 

@@ -19,11 +19,11 @@ cran <- c(
   , "shinyFiles"
   , "fs"
   , "metathis"
+  , "bslib"
   )
 
 git <-  c(
-  "rstudio/bslib"
-  , "crsh/citr" 
+  "crsh/citr" 
   , "Flavjack/inti" 
   )
 

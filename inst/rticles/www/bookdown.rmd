@@ -17,8 +17,6 @@ editor_options:
 
 ### Configuración
 
-> [CODIGO](https://github.com/Flavjack/lozanoisla/blob/master/static/setup.r)
-
 ```{r, eval = F}
 source("https://lozanoisla.com/setup.r")
 url <- paste0("https://docs.google.com/spreadsheets/d/"
@@ -37,6 +35,16 @@ fb <- xl %>%
 # str(fb)
 ```
 
+```{=html}
+<div id="icons" style="width: 100%; margin: auto;">
+
+<div style="display: inline-block; width: 100%;">
+<p style="text-align: center;"><a rel="noopener" href="https://raw.githubusercontent.com/Flavjack/lozanoisla/master/static/setup.r?token=AB3ARRMHTHEGZ4CKQSSNEEC76KBCA" target="_blank"><img style="height: 50px;" title="code" src="https://www.flaticon.es/svg/static/icons/svg/2920/2920244.svg" alt="code" /></a> <span style="display: block;">codigo</span></p>
+</div>
+
+</div>
+```
+
 ### Tablas
 
 ```{r, eval = F}
@@ -48,6 +56,8 @@ tab <- gs %>%
     caption = "Germination dataset import from a googlesheet"
     , notes = "@schafleitner2007")  
 tab %>%  inti::include_table()
+
+#> cite: (Table \@ref(tab:chunk))
 ```
 
 ### Figuras
@@ -70,17 +80,51 @@ fig <- info_figure(
   )
   
 fig %>% include_figure()
+
+#> cite: (Figure \@ref(fig:chunk))
+#> caption: fig.cap= fig$caption
 ```
 
-### pdf
+### Referencias
+
+#### Especificar posición
+
+```{html, eval = F}
+::: {#refs}
+:::
+```
+
+#### Citar paquetes
+
+```{r, eval = F}
+if(!file.exists("files/pkgs.bib")){write_bib(c(.packages()),'files/pkgs.bib')}
+```
+
+### PDF's
 
 ```{r, eval = F}
 <embed src="files/file_name.pdf" width="100%" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
 ```
 
-### videos
+### Videos
 
 ```{r, eval = F}
 <iframe width="100%" height="450" src="https://www.youtube.com/embed/video_id" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ```
+
+### Articul^8^
+
+```{r, eval=F}
+file <- list.files(pattern = '*.zip')
+unzip(file, overwrite = T)
+path <- unzip(file, list = T)$Name
+file.rename(path, "manuscript.Rmd")
+
+#> title: &nbsp
+#> include=FALSE
+#> child = "manuscript.Rmd"
+```
+
+
+
 

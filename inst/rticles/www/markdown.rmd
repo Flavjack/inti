@@ -14,8 +14,15 @@ editor_options:
 
 ***
 ***
+```{=html}
+<div id="icons" style="width: 100%; margin: auto;">
 
-[TUTORIAL](https://www.markdowntutorial.com/es/)
+<div style="display: inline-block; width: 100%;">
+<p style="text-align: center;"><a rel="noopener" href="https://www.markdowntutorial.com/es/" target="_blank"><img style="height: 50px;" title="tutorial" src="https://www.flaticon.es/svg/static/icons/svg/3048/3048482.svg" alt="tutorial" /></a> <span style="display: block;">tutorial</span></p>
+</div>
+
+</div>
+```
 
 <embed src="rmarkdown.pdf" width="100%" height="800" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
 
