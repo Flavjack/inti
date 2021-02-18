@@ -122,7 +122,7 @@ library(agridat)
             , emmeans = TRUE
             , plot_diag = TRUE
             , plot_dots = "rep"
-            , outliers.rm = FALSE
+            , outliers.rm = TRUE
             )
 ```
 
@@ -148,6 +148,16 @@ hr$blups %>% kable(caption = "BLUPs")
 
 ```{r}
 hr$blues %>% kable(caption = "BLUEs")
+```
+
+## Outliers
+
+```{r}
+hr$outliers$random %>% kable(caption = "Outliers random model")
+```
+
+```{r}
+hr$outliers$fixed %>% kable(caption = "Outliers fixed model")
 ```
 
 # References

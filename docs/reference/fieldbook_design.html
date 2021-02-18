@@ -199,7 +199,8 @@
   type <span class='op'>=</span> <span class='st'>"crd"</span>,
   rep <span class='op'>=</span> <span class='fl'>2</span>,
   serie <span class='op'>=</span> <span class='fl'>2</span>,
-  seed <span class='op'>=</span> <span class='fl'>0</span>
+  seed <span class='op'>=</span> <span class='fl'>0</span>,
+  qr <span class='op'>=</span> <span class='st'>"FB"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -232,6 +233,10 @@ details.</p></td>
       <td><p>Replicability of draw results (default = 0) always random. See
 details.</p></td>
     </tr>
+    <tr>
+      <th>qr</th>
+      <td><p>Bar code prefix for data collection.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -260,9 +265,9 @@ details.</p></td>
 <span class='va'>gs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/as_sheets_id.html'>as_sheets_id</a></span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span>
 
 <span class='op'>(</span><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='va'>gs</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/range_read.html'>range_read</a></span><span class='op'>(</span><span class='st'>"tarpuy"</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/range_read.html'>range_read</a></span><span class='op'>(</span><span class='st'>"tarpuyr"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>data</span> <span class='op'>%&gt;%</span> <span class='fu'>inti</span><span class='fu'>::</span><span class='fu'>fieldbook_design</span><span class='op'>(</span>n_factors <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
+<span class='va'>data</span> <span class='op'>%&gt;%</span> <span class='fu'>inti</span><span class='fu'>::</span><span class='fu'>fieldbook_design</span><span class='op'>(</span>n_factors <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 
 <span class='op'>}</span>
 

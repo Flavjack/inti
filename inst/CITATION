@@ -1,0 +1,28 @@
+citHeader(
+    "If you are using inti in your work,\n"
+    , "we encourage to cite the package\n"
+    , "\n"
+    , "To cite inti in publications, please use:"
+    )
+
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+url <- "https://CRAN.R-project.org/package=inti"
+
+bibentry(
+    bibtype = "Manual"
+    , title = "{inti}: Tools and Statistical Procedures in Plant Science"
+    , author = c(person("Flavio", "Lozano-Isla"))
+    , year = year
+    , note = note
+    , url = url
+    )
+
+textVersion = paste0(
+    "Flavio Lozano-Isla
+    , (", year, ")."
+    , " inti: Tools and Statistical Procedures in Plant Science. "
+    , note, "."
+    , " url"
+    )
+  
