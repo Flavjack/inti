@@ -10,7 +10,8 @@ fieldbook_design(
   type = "crd",
   rep = 2,
   serie = 2,
-  seed = 0
+  seed = 0,
+  qr = "FB"
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ details.}
 
 \item{seed}{Replicability of draw results (default = 0) always random. See
 details.}
+
+\item{qr}{Bar code prefix for data collection.}
 }
 \value{
 A list with the fieldbook design
@@ -57,9 +60,9 @@ url <- paste0("https://docs.google.com/spreadsheets/d/"
 gs <- as_sheets_id(url)
 
 (data <- gs \%>\%
-    range_read("tarpuy"))
+    range_read("tarpuyr"))
 
-data \%>\% inti::fieldbook_design(n_factors = 6)
+data \%>\% inti::fieldbook_design(n_factors = 2)
 
 }
 

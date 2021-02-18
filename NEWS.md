@@ -9,6 +9,9 @@
 - *Yupana & Tarpuy*
   - google auth verification
   
+- *Tarpuy*
+  - Include QR code in fieldbook
+  
 - *Apps*
   - bslib dependence install from CRAN
   - Include video for local installation

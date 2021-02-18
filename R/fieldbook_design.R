@@ -11,6 +11,7 @@
 #' @param serie Digits in the plot id (default = 2).
 #' @param seed Replicability of draw results (default = 0) always random. See
 #'   details.
+#' @param qr Bar code prefix for data collection.
 #'
 #' @details The function allows to include the arguments in the sheet that have
 #'   the information of the design. You should include 2 columns in the sheet:
@@ -23,7 +24,7 @@
 #'
 #' @import dplyr
 #' @importFrom purrr pluck as_vector
-#' @importFrom stringr str_detect
+#' @importFrom stringr str_detect str_to_upper
 #' @importFrom tibble tibble
 #' @importFrom utils tail
 #' @importFrom purrr discard
@@ -44,9 +45,9 @@
 #' gs <- as_sheets_id(url)
 #'
 #' (data <- gs %>%
-#'     range_read("tarpuy"))
+#'     range_read("tarpuyr"))
 #'
-#' data %>% inti::fieldbook_design(n_factors = 6)
+#' data %>% inti::fieldbook_design(n_factors = 2)
 #' 
 #' }
 #' 
@@ -56,9 +57,11 @@ fieldbook_design <- function(data,
                              type = "crd",
                              rep = 2,
                              serie = 2,
-                             seed = 0) {
+                             seed = 0,
+                             qr = "FB"
+                             ) {
 
-  plots <- Row.names <- NULL
+  plots <- Row.names <- factors <- NULL
 
 # design type -------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -176,6 +179,31 @@ if ( length(seed_name)  > 0  ) {
     as.numeric()
 
 } else { seed }
+
+# -------------------------------------------------------------------------
+
+qr_list <- c("qr", "cod", "code", "qr-code")
+qr_match <- names(arguments_opt) %in% qr_list
+qr_name <- names(arguments_opt)[qr_match == TRUE]
+
+if ( length(qr_name)  > 0  ) {
+  
+  qr <- arguments_opt %>%
+    pluck("qr") %>%
+    # iconv(., "latin1", "ASCII//TRANSLIT") %>% 
+    stringi::stri_trans_general("Latin-ASCII") %>%
+    stringr::str_to_upper() %>% 
+    gsub("[[:space:]]", "-", .)
+  
+} else { 
+  
+  qr <- qr %>% 
+    # iconv(., "latin1", "ASCII//TRANSLIT") %>% 
+    stringi::stri_trans_general("Latin-ASCII") %>%
+    stringr::str_to_upper() %>% 
+    gsub("[[:space:]]", "-", .)
+  
+  }
 
 # factor numbers ----------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -367,10 +395,23 @@ treat_fcts <- treatments_levels[treat_name]
             dplyr::arrange(plots) %>%
             select(-Row.names)
             )
-          }
+        }
 
-  # result ------------------------------------------------------------------
-  # -------------------------------------------------------------------------
+# include qr --------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+result$design <- result$design %>% 
+  unite(.
+        , factors
+        , c(names(.))
+        , remove=FALSE
+        , sep = "_"
+        ) %>% 
+  mutate(factors = paste(qr, factors, sep = "_")) %>% 
+  rename('qr-code' = factors )
+
+# result ------------------------------------------------------------------
+# -------------------------------------------------------------------------
 
   return(result)
 

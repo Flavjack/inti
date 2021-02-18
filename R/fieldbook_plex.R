@@ -39,7 +39,7 @@
 #'
 #' @importFrom dplyr mutate
 #' @importFrom tibble tribble deframe
-#' @importFrom stringr word
+#' @importFrom stringr word str_to_upper
 #' 
 #' @export
 #'
@@ -75,7 +75,7 @@ fieldbook_plex <- function(data = NULL
   # idea <- goal <- hypothesis <-  rationale <- objectives <-  plan <- NA
   # institutions <- researchers <- manager <- location <- altitude <- NA
   # georeferencing <- environment <- start <- end <- album <- github <- NA
-  # fieldbook <- NA
+  # fieldbook <- NULL
   # nfactor = 1
   # design = "crd"
   # rep = 2
@@ -93,6 +93,48 @@ fieldbook_plex <- function(data = NULL
   if ( is.null(end) | is.na(end) | end == "") {
 
     end  <-  NULL } else { end <- end %>% as.Date(format = "%Y-%m-%d") }
+  
+
+# fieldbook name ----------------------------------------------------------
+  
+  # fieldbook <- NULL
+  # about <- "Sëiid germinatión 1/2"
+  # location <- "Lä Molína, Lima, Perú"
+
+  if( is.null(fieldbook) &
+      !is.null(location) & !is.null(start[1]) & !is.null(about) ) {
+    
+    fbname <- paste(strsplit(location, ",") %>% unlist() %>% pluck(1)
+                    , as.character(start[1])
+                    , about
+                    , sep = " "
+                    ) %>%
+      # iconv(., "latin1", "ASCII//TRANSLIT") %>% 
+      stringi::stri_trans_general("Latin-ASCII") %>%
+      stringr::str_to_upper()
+    
+    qrcode <- paste(strsplit(location, ",") %>% unlist() %>% pluck(1)
+                    , as.character(start[1])
+                    , sep = "_"
+                    ) %>%
+      # iconv(., "latin1", "ASCII//TRANSLIT") %>% 
+      stringi::stri_trans_general("Latin-ASCII") %>%
+      stringr::str_to_upper() %>% 
+      gsub("[[:space:]]", "-", .)
+      
+    
+  } else {
+    
+    fbname <- fieldbook
+    
+    qrcode <- fieldbook %>%
+      # iconv(., "latin1", "ASCII//TRANSLIT") %>% 
+      stringi::stri_trans_general("Latin-ASCII") %>%
+      stringr::str_to_upper() %>% 
+      gsub("[[:space:]]", "-", .)
+    
+  }
+    
 
 # plex -----------------------------------------------------------------------
 
@@ -114,14 +156,14 @@ if ( is.null(data) ) {
              , "START EXPERIMENT" = as.character.Date(start)
              , "END EXPERIMENT" = as.character.Date(end)
              , ABOUT = about
-             , "FIELDBOOK NAME" = fieldbook
+             , "FIELDBOOK NAME" = fbname
              , GITHUB = github
              , ALBUM = album
              ) %>%
     enframe() %>%
     rename('PLEX' = .data$name, 'INFORMATION' = .data$value)
-
-} else if ( !is.null(data) ) { # for import to the app?
+  
+  } else if ( !is.null(data) ) { # for import to the app?
 
   plex <- data %>%
     mutate(across(.data$PLEX, tolower)) %>%
@@ -151,6 +193,7 @@ dsg_info <-  c(nfactors = nfactor
               , rep = rep
               , serie = serie
               , seed = seed
+              , qr = qrcode
               ) %>%
   enframe() %>%
   rename('{arguments}' = .data$name, '{values}' = .data$value)

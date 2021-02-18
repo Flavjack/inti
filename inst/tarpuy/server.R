@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-11-18
+#> date .: 2021-02-17
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -234,20 +234,12 @@ shinyServer(function(input, output, session) {
   # -------------------------------------------------------------------------
 
   plex <- reactive({
-
-    if( input$plex_fieldbook == "" &
-        input$plex_location != "" & !is.na(input$plex_dates[1]) & input$plex_about != "") {
-
-      fbname <- paste(strsplit(input$plex_location, ",") %>% unlist() %>% pluck(1)
-                      , as.character(input$plex_dates[1])
-                      , input$plex_about
-                      , sep = " "
-      ) %>%
-        stringi::stri_trans_general("Latin-ASCII") %>%
-
-        str_to_upper()
-
-      } else ( fbname <- input$plex_fieldbook )
+    
+    if( input$plex_fieldbook == "" ) {
+      
+      fbname <- NULL
+      
+    } else { fbname <- input$plex_fieldbook }
 
     plex <- fieldbook_plex(data = NULL
                            , idea = input$plex_idea
@@ -274,7 +266,7 @@ shinyServer(function(input, output, session) {
                            , rep = input$plex_rep
                            , serie = input$plex_serie
                            , seed = input$plex_seed
-    )
+                           )
 
   })
 
@@ -460,6 +452,7 @@ shinyServer(function(input, output, session) {
           , rep = input$design_rep
           , serie = input$design_serie
           , seed = input$design_seed
+          , qr = input$design_qr
         ) %>%
         inti::fieldbook_varlist( variables )
 

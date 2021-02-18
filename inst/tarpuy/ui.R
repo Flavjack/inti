@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-11-18
+#> date .: 2021-02-17
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -601,11 +601,9 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                                           , value = 0
                                           , min = 0
                              )
-
-
+                             
+                             )
                       )
-
-                    )
 
 # Tarpuy fb  --------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -650,6 +648,12 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                                           , value = 0
                                           , min = 0
                                           ),
+                             
+                             textInput(inputId = "design_qr"
+                                       , label = "QR label"
+                                       , placeholder = "QR prefix"
+                                       , value = "FB"
+                             ),
 
                              actionButton(inputId = "export_design"
                                           , label = "Generate"
