@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-02-17
+#> date .: 2021-03-12
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -15,19 +15,10 @@
 
 if (file.exists("setup.R")) { source("setup.R") }
 
-  # library(shiny)
-  # library(inti)
-  # library(metathis)
-  # library(tidyverse)
-  # library(googlesheets4)
-  # library(googleAuthR)
-  # library(bslib)
-  # library(shinydashboard)
-  # library(stringi)
-
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"
                                           , "https://www.googleapis.com/auth/userinfo.email"
                                           ))
+
 options(gargle_oob_default = TRUE)
 options(shiny.port = 1221)
 

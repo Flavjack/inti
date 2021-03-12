@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-12-21
+#> date .: 2021-03-12
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -42,6 +42,21 @@ for (pkg in git) {
 }
 
 rm(cran, git, pkg)
+
+# -------------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+library(shiny)
+library(inti)
+library(metathis)
+library(tidyverse)
+library(googlesheets4)
+library(googleAuthR)
+library(bslib)
+library(shinydashboard)
+library(ggpubr)
+library(FactoMineR)
+library(corrplot)
 
 # -------------------------------------------------------------------------
 # references --------------------------------------------------------------

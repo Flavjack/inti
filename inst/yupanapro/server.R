@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-11-18
+#> date .: 2021-03-12
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -14,18 +14,6 @@
 #> devtools::install_github("flavjack/inti")
 
 if (file.exists("setup.R")) { source("setup.R") }
-
-library(shiny)
-library(inti)
-library(metathis)
-library(tidyverse)
-library(googlesheets4)
-library(googleAuthR)
-library(bslib)
-library(shinydashboard)
-library(ggpubr)
-library(FactoMineR)
-library(corrplot)
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"
                                           , "https://www.googleapis.com/auth/userinfo.email"

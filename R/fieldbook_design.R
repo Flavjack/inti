@@ -81,7 +81,8 @@ data_fb <- data %>%
   mutate(across(everything(), ~ gsub(" ", "_", .))) %>%
   dplyr::tibble()
 
-treatments_names <- data_fb %>% names()
+treatments_names <- data_fb %>% 
+  names() 
 
 treatments_levels <- data_fb %>%
   select( {{treatments_names}} ) %>%

@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-12-21
+#> date .: 2020-03-12
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -32,18 +32,27 @@ for (pkg in cran) {
   } 
 }
   
-if(Sys.getenv('SHINY_PORT') == "") {
-  
-  for (pkg in git) { 
-    if( !require(sub(".*/", "", pkg), character.only = TRUE) ) {
-      devtools::install_github(pkg, upgrade = TRUE)
-      library(sub(".*/", "", pkg), character.only = TRUE)
-    } 
-  }
-  
+for (pkg in git) { 
+  if( !require(sub(".*/", "", pkg), character.only = TRUE) ) {
+    devtools::install_github(pkg, upgrade = TRUE)
+    library(sub(".*/", "", pkg), character.only = TRUE)
+  } 
 }
-
+  
 rm(cran, git, pkg)
+
+# -------------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+library(shiny)
+library(inti)
+library(metathis)
+library(tidyverse)
+library(googlesheets4)
+library(googleAuthR)
+library(bslib)
+library(shinydashboard)
+library(stringi)
 
 # -------------------------------------------------------------------------
 # references --------------------------------------------------------------
