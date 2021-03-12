@@ -31,12 +31,16 @@ for (pkg in cran) {
     library(pkg, character.only = TRUE)
   } 
 }
-
-for (pkg in git) { 
-  if( !require(sub(".*/", "", pkg), character.only = TRUE) ) {
-    devtools::install_github(pkg, upgrade = TRUE)
-    library(sub(".*/", "", pkg), character.only = TRUE)
-  } 
+  
+if(Sys.getenv('SHINY_PORT') == "") {
+  
+  for (pkg in git) { 
+    if( !require(sub(".*/", "", pkg), character.only = TRUE) ) {
+      devtools::install_github(pkg, upgrade = TRUE)
+      library(sub(".*/", "", pkg), character.only = TRUE)
+    } 
+  }
+  
 }
 
 rm(cran, git, pkg)

@@ -15,15 +15,15 @@
 
 if (file.exists("setup.R")) { source("setup.R") }
 
-library(shiny)
-library(inti)
-library(metathis)
-library(tidyverse)
-library(googlesheets4)
-library(googleAuthR)
-library(bslib)
-library(shinydashboard)
-library(stringi)
+  # library(shiny)
+  # library(inti)
+  # library(metathis)
+  # library(tidyverse)
+  # library(googlesheets4)
+  # library(googleAuthR)
+  # library(bslib)
+  # library(shinydashboard)
+  # library(stringi)
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"
                                           , "https://www.googleapis.com/auth/userinfo.email"

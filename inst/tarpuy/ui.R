@@ -15,15 +15,15 @@
 
 if (file.exists("setup.R")) { source("setup.R") }
 
-library(shiny)
-library(inti)
-library(metathis)
-library(tidyverse)
-library(googlesheets4)
-library(googleAuthR)
-library(bslib)
-library(shinydashboard)
-library(stringi)
+  # library(shiny)
+  # library(inti)
+  # library(metathis)
+  # library(tidyverse)
+  # library(googlesheets4)
+  # library(googleAuthR)
+  # library(bslib)
+  # library(shinydashboard)
+  # library(stringi)
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"
                                           , "https://www.googleapis.com/auth/userinfo.email"
@@ -93,7 +93,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
 
                                  HTML('
                                  <p>
-                                 Tarpuy es una plataforma interactiva para la el planeamiento de experimentos (PLEX).
+                                 Tarpuy es una plataforma interactiva para el planeamiento de experimentos (PLEX).
                                  Está desarrollada con la finalidad de promover las buenas prácticas en la colecta, análisis y manipulación de datos.
                                  Tarpuy tiene el objetivo de "continuidad" entre el uso de la aplicación y el software estadístico R.
                                  Tarpuy está basada en el paquete <strong><em>inti</em></strong>:
