@@ -7,10 +7,6 @@
 #> date .: 2021-03-19
 # -------------------------------------------------------------------------
 
-# -------------------------------------------------------------------------
-# packages ----------------------------------------------------------------
-# -------------------------------------------------------------------------
-
 cran <- c(
   "devtools"
   , "shiny"
@@ -46,31 +42,4 @@ suppressPackageStartupMessages({
 })
 
 rm(cran, git, pkg)
-
-# -------------------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-library(shiny)
-library(inti)
-library(metathis)
-library(tidyverse)
-library(googlesheets4)
-library(googleAuthR)
-library(bslib)
-library(shinydashboard)
-library(ggpubr)
-library(FactoMineR)
-library(corrplot)
-
-# -------------------------------------------------------------------------
-# references --------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-# https://shiny.rstudio.com/tutorial/written-tutorial/lesson3/
-
-# https://rpubs.com/therimalaya/43190
-
-# open https://realfavicongenerator.net/
-
-# https://googlesheets4.tidyverse.org/reference/sheets_auth.html
 

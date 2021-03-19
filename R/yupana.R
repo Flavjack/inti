@@ -32,9 +32,9 @@ yupana <- function(dependencies = FALSE) {
   > https://inkaverse.com/articles/apps
           ")
   
-  if (dependencies == TRUE ) {
+  if (dependencies == TRUE) {
     
-    source("https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupanapro/setup.r")
+    source("https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupana/setup.R")
     
   }
   
@@ -45,8 +45,6 @@ yupana <- function(dependencies = FALSE) {
     stop("Could not find example directory. Try re-installing `inti`."
          , call. = FALSE)
   }
-  
-  pkgs <- system.file("yupana/setup.r", package = "inti")
   
   shiny::runApp(appDir
                 , display.mode = "normal"

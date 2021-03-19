@@ -33,7 +33,7 @@ tarpuy <- function(dependencies = FALSE) {
   
   if (dependencies == TRUE ) {
     
-    source("https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/setup.r")
+    source("https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/setup.R")
     
   }
   

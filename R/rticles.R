@@ -49,8 +49,6 @@ rticles <- function(dependencies = FALSE) {
     
   }
   
-  pkgs <- system.file("rticles/setup.r", package = "inti")
-  
   shiny::runApp(appDir, display.mode = "normal", launch.browser = TRUE)
 
 }

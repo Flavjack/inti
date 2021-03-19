@@ -13,7 +13,7 @@
 
 #> devtools::install_github("flavjack/inti")
 
-if (file.exists("setup.R")) { source("setup.R") }
+source("pkgs.R")
 
 # -------------------------------------------------------------------------
 # update template ---------------------------------------------------------
