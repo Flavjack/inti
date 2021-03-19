@@ -1,7 +1,9 @@
 ---
 title: "Rticles: cheat sheet"
 description: document template for scientific report
-output: blogdown::html_page
+output: 
+  blogdown::html_page:
+    self_contained: true
 link-citations: true
 colorlinks: yes
 # bibliography: [files/book.bib, files/pkgs.bib]
@@ -39,7 +41,7 @@ fb <- xl %>%
 <div id="icons" style="width: 100%; margin: auto;">
 
 <div style="display: inline-block; width: 100%;">
-<p style="text-align: center;"><a rel="noopener" href="https://raw.githubusercontent.com/Flavjack/lozanoisla/master/static/setup.r?token=AB3ARRMHTHEGZ4CKQSSNEEC76KBCA" target="_blank"><img style="height: 50px;" title="code" src="https://www.flaticon.es/svg/static/icons/svg/2920/2920244.svg" alt="code" /></a> <span style="display: block;">codigo</span></p>
+<p style="text-align: center;"><a rel="noopener" href="https://raw.githubusercontent.com/Flavjack/rticles/master/index.Rmd" target="_blank"><img style="height: 50px;" title="code" src="https://www.flaticon.es/svg/static/icons/svg/2920/2920244.svg" alt="code" /></a> <span style="display: block;">codigo</span></p>
 </div>
 
 </div>
@@ -117,14 +119,63 @@ if(!file.exists("files/pkgs.bib")){write_bib(c(.packages()),'files/pkgs.bib')}
 ```{r, eval=F}
 file <- list.files(pattern = '*.zip')
 unzip(file, overwrite = T)
-path <- unzip(file, list = T)$Name
+list <- unzip(file, list = T)$Name
+md <- grep("md$", list) 
+path <- list[md]
 file.rename(path, "manuscript.Rmd")
 
 #> title: &nbsp
 #> include=FALSE
 #> child = "manuscript.Rmd"
+#> unlink("manuscript.Rmd")
 ```
 
+### Cover page
+
+```{r, eval=FALSE}
+#> yaml 
+
+params:
+  user:   'Flavio Lozano Isla'
+  title:  '" Title"'
+  logo:   !r if (!knitr:::is_html_output()) knitr::include_graphics('files/logo.png')
+  uni:    'Universidad Nacional Agraria la Molina'
+  facu:   'Facultad de Agronomía'
+  type:   'Tesis para optar el título de ingeniero Agrónomo'
+  date:   !r if (knitr:::is_html_output()) {format(Sys.time(), '%d %b %Y %X')}
+  place:  'Lima-Perú'
+  year:   '2021'
+  
+#> Doc body
+  
+:::{custom-style="uni"} 
+`r params$uni` 
+:::
+:::{custom-style="facu"} 
+`r params$facu` 
+:::
+:::{custom-style="logo"} 
+`r params$logo` 
+:::
+:::{custom-style="title"} 
+`r params$title` 
+:::
+:::{custom-style="type"} 
+`r params$type` 
+:::
+:::{custom-style="user"} 
+`r params$user` 
+:::
+:::{custom-style="place"} 
+`r params$place` 
+:::
+:::{custom-style="year"} 
+`r params$year` 
+:::
+
+\newpage  
+
+```
 
 
 

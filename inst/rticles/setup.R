@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/rticles/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-12-20
+#> date .: 2021-03-19
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -13,13 +13,13 @@
 
 cran <- c(
   "devtools"
-  , "shiny"
+  , "bslib"
+  , "metathis"
   , "shinydashboard"
   , "miniUI"
   , "shinyFiles"
+  , "zip"
   , "fs"
-  , "metathis"
-  , "bslib"
   )
 
 git <-  c(
@@ -27,21 +27,37 @@ git <-  c(
   , "Flavjack/inti" 
   )
 
+suppressPackageStartupMessages({
+  
 for (pkg in cran) { 
-  if( !require(pkg, character.only = TRUE) ) {
+  if( !require(pkg, character.only = T) ) {
     install.packages(pkg)
-    library(pkg, character.only = TRUE)
+      library(pkg, character.only = T)
   } 
 }
 
 for (pkg in git) { 
-  if( !require(sub(".*/", "", pkg), character.only = TRUE) ) {
-    devtools::install_github(pkg, upgrade = TRUE)
-    library(sub(".*/", "", pkg), character.only = TRUE)
+  if( !require(sub(".*/", "", pkg), character.only = T) ) {
+    devtools::install_github(pkg, upgrade = T)
+      library(sub(".*/", "", pkg), character.only = T)
   } 
 }
 
+})
+
 rm(cran, git, pkg)
+
+# -------------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+library(inti)
+library(bslib)
+library(metathis)
+library(shinydashboard)
+library(miniUI)
+library(shinyFiles)
+library(zip)
+library(fs)
 
 # -------------------------------------------------------------------------
 # references --------------------------------------------------------------

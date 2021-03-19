@@ -1,7 +1,9 @@
 ---
 title: "Rticles: cheat sheet"
 description: document template for scientific report
-output: blogdown::html_page
+output: 
+  blogdown::html_page:
+    self_contained: true
 link-citations: true
 colorlinks: yes
 # bibliography: [files/book.bib, files/pkgs.bib]

@@ -38,7 +38,7 @@ yupana <- function(dependencies = FALSE) {
     
   }
   
-  appDir <- system.file("yupanapro", package = "inti")
+  appDir <- system.file("yupana", package = "inti")
   
   if (appDir == "") {
     
@@ -46,7 +46,7 @@ yupana <- function(dependencies = FALSE) {
          , call. = FALSE)
   }
   
-  pkgs <- system.file("yupanapro/setup.r", package = "inti")
+  pkgs <- system.file("yupana/setup.r", package = "inti")
   
   shiny::runApp(appDir
                 , display.mode = "normal"
