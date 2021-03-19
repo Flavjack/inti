@@ -14,10 +14,10 @@
 suppressPackageStartupMessages({
   
 library(inti)
+library(bslib)
 library(metathis)
 library(googlesheets4)
 library(googleAuthR)
-library(bslib)
 library(shinydashboard)
 
 })

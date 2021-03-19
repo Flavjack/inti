@@ -9,16 +9,13 @@
 
 cran <- c(
   "devtools"
-  , "shiny"
+  , "bslib"
   , "metathis"
-  , "tidyverse"
   , "googlesheets4"
   , "googleAuthR"
   , "shinydashboard"
   , "ggpubr"
-  , "FactoMineR"
   , "corrplot"
-  , "bslib"
   )
 
 git <- c("Flavjack/inti")
