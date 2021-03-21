@@ -15,7 +15,7 @@
 - *Apps*
   - bslib dependence install from CRAN
   - Include video for local installation
-  - Suppress messages for load apps
+  - Suppress messages when load apps
 
 # Version 0.1.2
 
