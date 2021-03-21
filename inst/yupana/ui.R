@@ -104,7 +104,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                                  HTML('
 
                                   <p>
-                                  Yupana está pensando en la reproductibilidad de los resultados.
+                                  Yupana está diseñado pensando en la reproductibilidad de los resultados.
                                   Los análisis realizados se almacenará en la hojas de cálculo privadas de cada usuario.
                                   Los resultados de yupana pueden ser usados en R o viceversa. Yupana además permite:
                                   </p>

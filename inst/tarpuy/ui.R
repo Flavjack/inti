@@ -101,8 +101,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
 
                                  HTML('
                                  <p>
-                                 Tarpuy está pensando en la elaboración de proyectos experimentales de forma rápida e intuitiva.
-                                 Los resultados se almacenará en la hojas de cálculo privadas de cada usuario.Tarpuy además permite:
+                                 Tarpuy está diseñado pensando en la elaboración de proyectos experimentales de forma rápida e intuitiva.
+                                 Los resultados se almacenará en la hojas de cálculo privadas de cada usuario. Tarpuy además permite:
                                  </p>
                                  <ul>
                                  <li>Genera la información mínima del proyecto de investigación.
@@ -277,8 +277,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                                   <li>Es recomendable solo tener una libro de campo "fieldbook" por cada experimento.
                                   Si tienes muchas pestañas que dificultan tu trabajo, puedes ir ocultandolas (<em>click derecho en la pestaña > Ocultar hoja</em>).
                                   Al momento de usar la app puedes especificar qué hoja deseas utilizar y la app extrae la información de la hoja indicada.
-                                  <li>Si deseas analizar los datos experimentales de tu proyecto, puedes usar la app Yupana
-                                  (<a href="https://flavjack.shinyapps.io/yupanapro/">https://flavjack.shinyapps.io/yupanapro/</a>)
+                                  <li>Si deseas analizar los datos experimentales de tu proyecto, puedes usar la app Yupana:
+                                  <a href="https://flavjack.shinyapps.io/yupanapro/">https://flavjack.shinyapps.io/yupanapro/</a>
                                   </li>
                                   </ul>
                                   <p>
