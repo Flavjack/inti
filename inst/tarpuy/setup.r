@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2020-03-19
+#> date .: 2020-03-24
 # -------------------------------------------------------------------------
 
 cran <- c(
@@ -14,6 +14,8 @@ cran <- c(
   , "googlesheets4"
   , "googleAuthR"
   , "shinydashboard"
+  , "tidyverse"
+  , "stringi"
   )
 
 git <- c("Flavjack/inti")
