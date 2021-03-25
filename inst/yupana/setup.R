@@ -17,6 +17,7 @@ cran <- c(
   , "ggpubr"
   , "corrplot"
   , "tidyverse"
+  , "FactoMineR"
   )
 
 git <- c("Flavjack/inti")
