@@ -1,3 +1,18 @@
+# Version 0.1.4
+
+## Major changes
+
+- *Rticles*
+  - update code for unzip `Articul8` files
+  
+## Bug fixes
+
+- *Yupana & Tarpuy*
+  - add `pkgs.R` file to load dependencies in apps
+
+- *Tarpuy*
+  - fix auto-install packages in `inti::tarpuy(T)`
+
 # Version 0.1.3
 
 ## Major changes
