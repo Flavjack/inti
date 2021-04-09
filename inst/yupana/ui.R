@@ -345,7 +345,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                                            , label = "Modules"
                                            , choices = c("Gsheet"
                                                          , "Model"
-                                                         , "Plots")
+                                                         , "Diagnostic" = "Plots")
                                            , inline = TRUE
                                            , selected = "Model"
 

@@ -169,32 +169,6 @@ shinyServer(function(input, output, session) {
   # tarpuy plex -------------------------------------------------------------
   # -------------------------------------------------------------------------
 
-  # test args ---------------------------------------------------------------
-
-  observe({
-
-    cat("--------------------------------------------------\n")
-
-    cat("input$fieldbook_url")
-    print(input$fieldbook_url)
-
-    cat("input$plex_fieldbook")
-    print(input$plex_fieldbook)
-
-    cat("input$plex_location")
-    print(input$plex_location)
-
-    cat("input$plex_dates[1]")
-    print(input$plex_dates[1])
-
-    cat("input$plex_dates[2]")
-    print(input$plex_dates[2])
-
-    cat("input$plex_about")
-    print(input$plex_about)
-
-  })
-
   # design type -------------------------------------------------------------
 
   output$plex_design <- renderUI({
@@ -231,7 +205,7 @@ shinyServer(function(input, output, session) {
       fbname <- NULL
       
     } else { fbname <- input$plex_fieldbook }
-
+    
     plex <- fieldbook_plex(data = NULL
                            , idea = input$plex_idea
                            , goal = input$plex_goal
@@ -246,8 +220,8 @@ shinyServer(function(input, output, session) {
                            , altitude = input$plex_altitude
                            , georeferencing = input$plex_georeferencing
                            , environment = input$plex_environment
-                           , start = as.character(input$plex_dates[1])
-                           , end = as.character(input$plex_dates[2])
+                           , start = input$plex_dates[1]
+                           , end = input$plex_dates[2]
                            , about = input$plex_about
                            , fieldbook = fbname
                            , album = input$plex_album
@@ -306,7 +280,7 @@ shinyServer(function(input, output, session) {
 
       plex()$logbook %>% sheet_write(ss = gs(), sheet = input$plex_logbook)
 
-    } else { print ("unselected") }
+    } else { print ("sheet created") }
 
 # timetable ---------------------------------------------------------------
 
@@ -316,7 +290,7 @@ shinyServer(function(input, output, session) {
 
       plex()$timetable %>% sheet_write(ss = gs(), sheet = input$plex_timetable)
 
-    } else { print ("unselected") }
+    } else { print ("sheet created") }
 
 # budget ------------------------------------------------------------------
 
@@ -326,35 +300,12 @@ shinyServer(function(input, output, session) {
 
       plex()$budget %>% sheet_write(ss = gs(), sheet = input$plex_budget)
 
-    } else { print ("unselected") }
+    } else { print ("sheet created") }
 
   })
 
   # tarpuy design -----------------------------------------------------------
   # -------------------------------------------------------------------------
-
-  # test args ---------------------------------------------------------------
-
-  observe({
-
-    cat("--------------------------------------------------\n")
-
-    cat("Factores")
-    print(input$design_nfactors)
-
-    cat("Design type")
-    print(input$design_type)
-
-    cat("Replication")
-    print(input$design_rep)
-
-    cat("Plot digits")
-    print(input$design_serie)
-
-    cat("Seed")
-    print(input$design_seed)
-
-  })
 
   # preview design -----------------------------------------------------------
 
@@ -472,23 +423,6 @@ shinyServer(function(input, output, session) {
 
   # tarpuy sketch -----------------------------------------------------------
   # -------------------------------------------------------------------------
-
-  # test args ---------------------------------------------------------------
-
-  observe({
-
-    cat("--------------------------------------------------\n")
-
-    cat("input$sketch_xlab")
-    print(input$sketch_xlab)
-
-    cat("input$sketch_dim")
-    print(input$sketch_dim)
-
-    cat("input$sketch_dim2")
-    print(input$sketch_dim2)
-
-  })
 
   # preview sketch ----------------------------------------------------------
 

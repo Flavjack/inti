@@ -192,50 +192,6 @@ observe({
 # Yupana: Fieldbook -------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  observe({
-
-    cat("Fieldbook --------------------------------------------------\n")
-
-    cat("input$fieldbook_url")
-    print(input$fieldbook_url)
-
-    cat("input$fieldbook_gsheet")
-    print(input$fieldbook_gsheet)
-
-    cat("input$fbsmrvars_gsheet")
-    print(input$fbsmrvars_gsheet)
-
-    cat("input$last_factor")
-    print(input$last_factor)
-
-    cat("input$model_facts")
-    print(input$model_facts)
-
-    cat("input$comp_facts")
-    print(input$comp_facts)
-
-    cat("input$test_comp")
-    print(input$test_comp)
-
-    cat("input$sig_level")
-    print(input$sig_level)
-
-    cat("input$exclude_factor")
-    print(input$exc_fact_rs)
-
-    cat("input$from_var_rs")
-    print(input$from_var_rs)
-
-    cat("input$to_var_rs")
-    print(input$to_var_rs)
-
-    cat("input$exc_fact_rs")
-    print(input$exc_fact_rs)
-
-  })
-
-  # -------------------------------------------------------------------------
-
   output$fieldbook_preview <- renderUI({
 
     tags$iframe(src = fb_url()
@@ -265,6 +221,9 @@ observe({
   # -------------------------------------------------------------------------
 
   output$comp_facts <- renderUI({
+    
+    validate( need( fieldbook(), "LogIn and insert a url" ) )
+    validate( need( input$last_factor, "Insert last factor" ) )
 
     if ( !is.null( fieldbook() ) && input$last_factor != ""  ) {
 
@@ -370,6 +329,8 @@ observe({
   })
 
   output$from_var_rs <- renderUI({
+    
+    validate( need( input$last_factor_rs, "Insert last factor" ) )
 
     if ( !is.null(fieldbook()) && input$last_factor_rs != "" ) {
 
@@ -388,7 +349,9 @@ observe({
   })
 
   output$to_var_rs <- renderUI({
-
+    
+    validate( need( input$last_factor_rs, "Insert last factor" ) )
+    
     if ( !is.null(fieldbook()) && input$last_factor_rs != "" ) {
 
       fieldbook_varnames <- fieldbook() %>%
@@ -406,6 +369,8 @@ observe({
   })
 
   output$exc_fact_rs <- renderUI({
+    
+    validate( need( input$last_factor_rs, "Insert last factor" ) )
 
     if ( !is.null( fieldbook() ) && input$last_factor_rs != ""  ) {
 
@@ -506,23 +471,6 @@ observe({
   # Yupana: Analysis --------------------------------------------------------
   # -------------------------------------------------------------------------
 
-  observe({
-
-    cat("Analysis --------------------------------------------------\n")
-
-    cat("rpt_variable")
-    print(input$rpt_variable)
-
-    cat("rpt_dotplot_groups")
-    print(input$rpt_dotplot_groups)
-
-    cat("rpt_preview_opt")
-    print(input$rpt_preview_opt)
-
-  })
-
-  # -------------------------------------------------------------------------
-
   output$rpt_variable <- renderUI({
 
     if ( !is.null( fbsmrvar() ) ) {
@@ -602,13 +550,9 @@ observe({
   output$anova <- renderPrint({ summary(report()$anova) })
 
   output$dfreq <- renderPlot({
-
-    p1 <- report()$diagplot$freq
-    p2 <- report()$diagplot$qqnorm
-    p3 <- report()$diagplot$resid
-    p4 <- report()$diagplot$sresid
-
-    ggarrange(p1, p2, p3, p4, ncol = 2, nrow = 2)
+    
+    diag <- report()$diagplot 
+    plot_grid(plotlist = diag, ncol = 2)
 
   })
 
@@ -689,7 +633,7 @@ observe({
   # -------------------------------------------------------------------------
 
   output$rpt_preview <- renderUI({
-
+    
     if ( input$rpt_preview_opt == "Gsheet" ) {
 
       tags$iframe(src = fbsm_url(),
@@ -697,6 +641,8 @@ observe({
 
     } else if ( input$rpt_preview_opt == "Model" & !is.null(input$rpt_variable) ) {
 
+      validate( need( input$rpt_variable, "Choose your variable") )
+      
       tagList(
 
         fluidRow(
@@ -760,29 +706,6 @@ observe({
   # Yupana: Graphics --------------------------------------------------------
   # -------------------------------------------------------------------------
 
-  observe({
-
-    cat("Graphics --------------------------------------------------\n")
-
-    cat("graph_sheets")
-    print(input$graph_sheets)
-
-    cat("graph_width")
-    print(input$graph_width)
-
-    cat("graph_height")
-    print(input$graph_height)
-
-    cat("graph_dpi")
-    print(input$graph_dpi)
-
-    cat("grp_format")
-    print(input$grp_format)
-
-  })
-
-  # -------------------------------------------------------------------------
-  
   sheet_grp <- eventReactive(input$graph_refresh, {
     
     fbinfo <- c(input$fieldbook_gsheet, input$fbsmrvars_gsheet)
@@ -816,7 +739,6 @@ observe({
     plot_url  <- paste(url, id, sep = "#gid=")
 
   })
-
 
   # -------------------------------------------------------------------------
 
@@ -875,26 +797,6 @@ observe({
   # Yupana: Multivariate-----------------------------------------------------
   # -------------------------------------------------------------------------
 
-  observe({
-
-    cat("Multivariate --------------------------------------------------\n")
-
-    cat("mvr_width")
-    print(input$mvr_width)
-
-    cat("mvr_height")
-    print(input$mvr_height)
-
-    cat("mvr_dpi")
-    print(input$mvr_dpi)
-
-    cat("mvr_facts")
-    print(input$mvr_facts)
-
-  })
-
-  # -------------------------------------------------------------------------
-
   output$mvr_facts <- renderUI({
 
     if ( !is.null( fieldbook() ) & !is.null( fbsmrvar() ) ) {
@@ -905,7 +807,7 @@ observe({
         deframe()
 
       selectInput(inputId = "mvr_facts"
-                  , label = "Variable"
+                  , label = "Factors"
                   , multiple = T
                   , choices = c("choose" = ""
                                 , mvr_variable_names)
@@ -918,7 +820,8 @@ observe({
   # -------------------------------------------------------------------------
 
   output$mvr_groups <- renderUI({
-
+    
+    validate(need(input$mvr_facts, "Insert summary factors"))
 
     if ( !is.null(input$mvr_facts) ) {
 
@@ -927,25 +830,34 @@ observe({
                   , choices = c(input$mvr_facts)
       )
 
-    } else { print ("Insert summary variables") }
+    } else { print ("Insert summary factors") }
 
   })
 
   # -------------------------------------------------------------------------
 
   mvr <- reactive({
-
+    
+    n <- fieldbook() %>%
+      select(input$mvr_facts)  %>% 
+      unlist() %>% 
+      unique() %>% 
+      length()
+    
+    validate(need(n>2, "The factors should have more than 2 levels"))
+    
     mvr <- fieldbook_mvr(data = fieldbook()
                          , fb_smr = fbsmrvar()
                          , summary_by = input$mvr_facts
-                         , groups = input$mvr_groups
-    )
+                         , groups = input$mvr_groups)
   })
 
   # -------------------------------------------------------------------------
 
   output$pca_var <- renderImage({
-
+    
+    validate(need(mvr()$pca, "Insert summary factors"))
+    
     dpi <- input$mvr_dpi
     ancho <- input$mvr_width
     alto <- input$mvr_height
@@ -969,6 +881,8 @@ observe({
   # -------------------------------------------------------------------------
 
   output$pca_ind <- renderImage({
+    
+    validate(need(mvr()$pca, "Insert summary factors"))
 
     dpi <- input$mvr_dpi
     ancho <- input$mvr_width
@@ -996,6 +910,8 @@ observe({
   # -------------------------------------------------------------------------
 
   output$hcpc_tree <- renderImage({
+    
+    validate(need(mvr()$pca, "Insert summary factors"))
 
     dpi <- input$mvr_dpi
     ancho <- input$mvr_width
@@ -1016,6 +932,8 @@ observe({
   # -------------------------------------------------------------------------
 
   output$hcpc_map <- renderImage({
+    
+    validate(need(mvr()$pca, "Insert summary factors"))
 
     dpi <- input$mvr_dpi
     ancho <- input$mvr_width
@@ -1041,6 +959,8 @@ observe({
   # -------------------------------------------------------------------------
 
   output$correlation <- renderImage({
+    
+    validate(need(mvr()$pca, "Insert summary factors"))
 
     dpi <- input$mvr_dpi
     ancho <- input$mvr_width + 5
@@ -1065,7 +985,9 @@ observe({
   # -------------------------------------------------------------------------
 
   output$mvr_preview <- renderUI({
-
+    
+    validate(need(input$mvr_facts, "Insert summary factors"))
+    
     if ( input$mvr_module == "PCA" & !is.null(input$mvr_facts) ) {
 
       tagList(
@@ -1125,7 +1047,6 @@ observe({
         )
 
       )
-
 
     }
   })

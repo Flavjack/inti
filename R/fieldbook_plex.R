@@ -59,8 +59,8 @@ fieldbook_plex <- function(data = NULL
                           , altitude = NULL
                           , georeferencing = NULL
                           , environment = NULL
-                          , start = NULL
-                          , end = NULL
+                          , start = NA
+                          , end = NA
                           , about = NULL
                           , fieldbook = NULL
                           , album = NULL
@@ -89,16 +89,24 @@ fieldbook_plex <- function(data = NULL
   # start <- "2020-08-15" ; end <- "2020-12-03"
 
   start  <-  start %>% as.Date(format = "%Y-%m-%d")
-
-  if ( is.null(end) | is.na(end) | end == "") {
-
-    end  <-  NULL } else { end <- end %>% as.Date(format = "%Y-%m-%d") }
+  end  <-  end %>% as.Date(format = "%Y-%m-%d")
   
+  if (is.na(start)) {
+    
+    start  <-  Sys.Date() %>% as.Date(format = "%Y-%m-%d")
+    
+  } 
+  
+  if (is.na(end) | end == Sys.Date() ) {
+
+    end  <-  start + 90 
+    
+    } 
 
 # fieldbook name ----------------------------------------------------------
   
   # fieldbook <- NULL
-  # about <- "Sëiid germinatión 1/2"
+  # about <- "Sëed germinatión 1/2"
   # location <- "Lä Molína, Lima, Perú"
 
   if( is.null(fieldbook) &
@@ -202,7 +210,7 @@ dsg_info <-  c(nfactors = nfactor
 
 # timetable ---------------------------------------------------------------
 
-  if ( !is.null(end) ) { finish <- end - start } else { finish <-  60 }
+finish <- end - start
 
 first_col <- c("Activities (DAI)"
                , "Material Preparation"

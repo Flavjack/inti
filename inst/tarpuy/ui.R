@@ -419,8 +419,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
 
                                               dateRangeInput(inputId = "plex_dates"
                                                              , label = "Experiment dates (start/end)"
-                                                             , end = NA
                                                              , width = "100%"
+                                                             , end = NA
                                                              )
                              ),
 

@@ -2,6 +2,15 @@
 
 ## Major changes
 
+- *Yupana*
+  - Delete error messages in console when run the app
+  - Change dependency: `ggpubr` --> `cowplot`
+  - Multivariate analysis need factor levels n>2 
+
+- *Yupana*
+  - Delete error messages in console when run the app
+  - fix dates in experiments
+
 - *Rticles*
   - update code for unzip `Articul8` files
   
