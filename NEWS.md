@@ -25,6 +25,7 @@ Arguments changed in the syntax for `fbsm` and `graphics`.
     - Delete redundant arguments; limits, brakes
     - Suggest use "*" instead of ":"
     - Include additional layers to the plot. e.i. `coord_flip()`
+    - Save plot dimensions in the exported sheet
   
 ## Bug fixes
 

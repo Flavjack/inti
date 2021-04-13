@@ -204,9 +204,11 @@
   glab <span class='op'>=</span> <span class='cn'>NULL</span>,
   limits <span class='op'>=</span> <span class='cn'>NULL</span>,
   brakes <span class='op'>=</span> <span class='cn'>NULL</span>,
+  xrotation <span class='op'>=</span> <span class='cn'>NULL</span>,
   sig <span class='op'>=</span> <span class='cn'>NULL</span>,
   error <span class='op'>=</span> <span class='cn'>NULL</span>,
-  legend <span class='op'>=</span> <span class='cn'>NULL</span>
+  legend <span class='op'>=</span> <span class='cn'>NULL</span>,
+  opt <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -253,6 +255,10 @@
       <td><p>Units for break the limits.</p></td>
     </tr>
     <tr>
+      <th>xrotation</th>
+      <td><p>Angle and horizontal and vertical alignment.</p></td>
+    </tr>
+    <tr>
       <th>sig</th>
       <td><p>Comparison test values (default = "sig").</p></td>
     </tr>
@@ -264,6 +270,10 @@
       <th>legend</th>
       <td><p>Position of legend (default = "top"). Others: "left", "right",
 "bottom", "none".</p></td>
+    </tr>
+    <tr>
+      <th>opt</th>
+      <td><p>Include extra layer to the plot</p></td>
     </tr>
     </table>
 
@@ -288,14 +298,14 @@ function. Its contain all the parameter for the plot.</p>
 <span class='va'>gs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/as_sheets_id.html'>as_sheets_id</a></span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span>
 
 <span class='op'>(</span><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='va'>gs</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/range_read.html'>range_read</a></span><span class='op'>(</span><span class='st'>"LA"</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/googlesheets4/man/range_read.html'>range_read</a></span><span class='op'>(</span><span class='st'>"plot"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='fu'>plot_smr</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
 
 <span class='fu'>plot_smr</span><span class='op'>(</span><span class='va'>data</span>
          , type <span class='op'>=</span> <span class='st'>"bar"</span>
-         , limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>14000</span><span class='op'>)</span>
-         , brakes <span class='op'>=</span> <span class='fl'>2000</span>
+         , limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>
+         , brakes <span class='op'>=</span> <span class='fl'>0.2</span>
          , sig <span class='op'>=</span> <span class='st'>"sig"</span>
          , error <span class='op'>=</span> <span class='st'>"ste"</span>
          <span class='op'>)</span>

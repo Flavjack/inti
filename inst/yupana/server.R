@@ -742,9 +742,11 @@ observe({
 
   # -------------------------------------------------------------------------
 
-  plotgr <- eventReactive(input$graph_create, {
+  
+  
+  plotdt <- eventReactive(input$graph_create, {
     
-    validate( need( input$graph_sheets, "Refresh a choose a sheet") )
+    validate( need( input$graph_sheets, "Refresh and choose a sheet") )
     
     if ( input$graph_sheets %in% sheet_names(gs()) ) {
       
@@ -753,18 +755,27 @@ observe({
       
     } else {"Choose a summary table"}
     
-    plot_smr(plottb) 
-    
     })
+  
+  plotgr <- reactive({ plot_smr(plotdt()) })
 
   # -------------------------------------------------------------------------
 
   output$plotgr <- renderImage({
-
-    dpi <- input$graph_dpi
-    ancho <- input$graph_width
-    alto <- input$graph_height
-
+    
+    validate( need( input$graph_sheets, "Refresh and choose a sheet") )
+    
+    dim <- plotdt() %>% 
+      select('{arguments}',	'{values}') %>% 
+      tibble::deframe() %>% 
+      .["dimensions"] %>% 
+      strsplit(., "[*]") %>% 
+      pluck(1) %>% as.numeric()
+    
+    if(!is.na(dim[1])) { ancho <- dim[1] } else {ancho <- input$graph_width}
+    if(!is.na(dim[2])) { alto <- dim[2] } else {alto <- input$graph_height}
+    if(!is.na(dim[3])) { dpi <- dim[3] } else {dpi <- input$graph_dpi}
+    
     outfile <- tempfile(fileext = ".png")
 
     png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
