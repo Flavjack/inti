@@ -43,7 +43,7 @@ data frame
 Function to compare treatment from lm or aov using data frames
 }
 \details{
-For compare the factors you should use ":". For example, to compare
+For compare the factors you should use "*". For example, to compare
 treatment1 and treatment2: \code{treatment1:treatment2}.
 }
 \examples{
@@ -62,20 +62,20 @@ gs <- as_sheets_id(url)
      range_read("fb"))
 
 fbsm <- fieldbook_summary(data
-                 , last_factor = "genotype"
-                 , model_facts = "treat*genotype"
-                 , comp_facts = "treat:genotype"
+                 , last_factor = "bloque"
+                 , model_facts = "genotipo*tratamiento"
+                 , comp_facts = "genotipo*tratamiento"
                  ) 
 
 mc <- mean_comparison(data
                      , fb_smr = fbsm
-                     , variable = "HI"
+                     , variable = "hi"
                      , graph_opts = TRUE
                      )
 
 table <- mc$comparison
 
-# fbsm \%>\% sheet_write(ss = gs, sheet = "fbsm")
+# table \%>\% sheet_write(ss = gs, sheet = "plot")
 
 }
 

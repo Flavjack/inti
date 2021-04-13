@@ -33,8 +33,8 @@ data frame
 Function to create a complete report of the fieldbook
 }
 \details{
-For compare the factors you should use ":". For example, to compare
-treatment1 and treatment2: \code{treatment1:treatment2}.
+For compare the factors you should use "*". For example, to compare
+treatment1 and treatment2: \code{treatment1*treatment2}.
 }
 \examples{
 

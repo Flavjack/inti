@@ -15,7 +15,7 @@
 #'
 #' @details
 #'
-#' For compare the factors you should use ":". For example, to compare
+#' For compare the factors you should use "*". For example, to compare
 #' treatment1 and treatment2: \code{treatment1:treatment2}.
 #'
 #' @return data frame
@@ -43,20 +43,20 @@
 #'      range_read("fb"))
 #'
 #' fbsm <- fieldbook_summary(data
-#'                  , last_factor = "genotype"
-#'                  , model_facts = "treat*genotype"
-#'                  , comp_facts = "treat:genotype"
+#'                  , last_factor = "bloque"
+#'                  , model_facts = "genotipo*tratamiento"
+#'                  , comp_facts = "genotipo*tratamiento"
 #'                  ) 
 #'
 #' mc <- mean_comparison(data
 #'                      , fb_smr = fbsm
-#'                      , variable = "HI"
+#'                      , variable = "hi"
 #'                      , graph_opts = TRUE
 #'                      )
 #'
 #' table <- mc$comparison
 #'
-#' # fbsm %>% sheet_write(ss = gs, sheet = "fbsm")
+#' # table %>% sheet_write(ss = gs, sheet = "plot")
 #'
 #' }
 #' 
@@ -196,7 +196,8 @@ mean_comparison <- function(data
   # test comparison ---------------------------------------------------------
   # -------------------------------------------------------------------------
 
-  comp_facts <- strsplit(comp_facts, ":") %>%
+  comp_facts <- strsplit(comp_facts
+                         , split = "[-+*/)( ]|[^x][0-9]+|^[0-9]+") %>%
     purrr::pluck(1) %>%
     gsub(" ", "", ., fixed = TRUE)
 
@@ -241,10 +242,10 @@ mean_comparison <- function(data
       select(!c(.data$q25, .data$q50, .data$q75)) %>%
       rename("sig" = .data$groups)
 
-    if ( length(comp_facts) <= 2 ) {
+    if ( length(comp_facts) <= 3 ) {
 
       tb_mc <- tb_mc %>%
-        separate(.data$treatments, {{comp_facts}}, sep = ":")
+        separate(.data$treatments, {{comp_facts}}, sep = ":", remove = F)
 
     }
 
@@ -312,21 +313,23 @@ mean_comparison <- function(data
 
   if ( min_value >= 0 & max_value > 0 ) {
 
-    limits <- paste(0, round(max_value*1.2, 1),  sep = "x")
+    limits <- paste(0, round(max_value*1.2, 1),  sep = "*")
     brakes <- abs(round(max_value*1.2, 1))/5
 
   } else if ( min_value < 0 &  max_value > 0 ) {
 
     limits <- paste(round(min_value*1.2, 1)
-                    , round(max_value*1.2, 1),  sep = "x")
+                    , round(max_value*1.2, 1),  sep = "*")
     brakes <- abs(round(max_value*1.2, 1))/5
 
   } else if ( min_value < 0 &  max_value <= 0 ) {
 
-    limits <- paste( round(min_value*1.2, 1), 0,  sep = "x")
+    limits <- paste( round(min_value*1.2, 1), 0,  sep = "*")
     brakes <- abs(round(min_value*1.2, 1))/5
 
   }
+  
+  xlim <- paste(limits, brakes, sep = "*")
 
   if ( graph_opts == TRUE ) {
     
@@ -341,11 +344,13 @@ mean_comparison <- function(data
                    , xlab = xlab
                    , ylab = ylab
                    , glab = glab
-                   , limits = limits
-                   , brakes = brakes
+                   , xlimits = xlim
+                   , xrotation = "0*0.5*0.5"
                    , sig = "sig"
                    , error = "ste"
                    , legend = "top"
+                   , opt = NA
+                   , dimensions = NA
                    )
 
     opts_table <- enframe(graph_opts) %>%

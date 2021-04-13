@@ -12,10 +12,12 @@
 #' @param glab Label of groups or legend.
 #' @param limits Limits max and min.
 #' @param brakes Units for break the limits.
+#' @param xrotation Angle and horizontal and vertical alignment.
 #' @param sig Comparison test values (default = "sig").
 #' @param error Variable used for error bars.
 #' @param legend Position of legend (default = "top"). Others: "left", "right",
 #'   "bottom", "none".
+#' @param opt Include extra layer to the plot
 #'
 #' @details
 #'
@@ -40,14 +42,14 @@
 #' gs <- as_sheets_id(url)
 #'
 #' (data <- gs %>%
-#'     range_read("LA"))
+#'     range_read("plot"))
 #'
 #' plot_smr(data)
 #'
 #' plot_smr(data
 #'          , type = "bar"
-#'          , limits = c(0, 14000)
-#'          , brakes = 2000
+#'          , limits = c(0, 1)
+#'          , brakes = 0.2
 #'          , sig = "sig"
 #'          , error = "ste"
 #'          )
@@ -65,13 +67,15 @@ plot_smr <- function(data
                      , glab = NULL
                      , limits = NULL
                      , brakes = NULL
+                     , xrotation = NULL
                      , sig = NULL
                      , error = NULL
                      , legend = NULL
+                     , opt = NULL
                      ) {
 
-  # type <- x <- y <- groups <- xlab <- ylab <- NULL
-  # glab <- limits <- brakes <- sig <- error <- legend <- NULL
+  # type <- x <- y <- groups <- xlab <- ylab <- xrotation <- NULL
+  # glab <- limits <- brakes <- sig <- error <- legend <- opt <- NULL
 
 # data --------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -173,7 +177,7 @@ if ( is.null(color_grps) ) {
 
 # -------------------------------------------------------------------------
 
-  if ( is.null(xlab) ) { #
+  if ( is.null(xlab) ) { 
 
     xlab <- graph_opts[["xlab"]] %>%
       gsub(pattern = " ", "~", .)
@@ -181,7 +185,7 @@ if ( is.null(color_grps) ) {
 
     }
 
-  if ( is.null(ylab) ) { #
+  if ( is.null(ylab) ) { 
 
     ylab <- graph_opts[["ylab"]] %>%
       gsub(pattern = " ", "~", .)
@@ -201,16 +205,17 @@ if ( is.null(color_grps) ) {
 # -------------------------------------------------------------------------
 
   if ( is.null(limits) ) {
-
-    limits <- graph_opts[["limits"]] %>%
-      strsplit(., "x") %>% deframe() %>% as.numeric()
-
+    limits <- graph_opts[["xlimits"]] %>%
+      strsplit(., "[*]") %>% 
+      pluck(1) %>% .[1:2] %>% 
+      as.numeric()
     }
 
   if ( is.null(brakes) ) {
-
-    brakes <- abs(as.numeric(graph_opts[["brakes"]]))
-
+    brakes <- graph_opts[["xlimits"]] %>%
+      strsplit(., "[*]") %>% 
+      pluck(1) %>% .[3] %>% 
+      as.numeric() %>% abs()
   }
 
   if ( limits[1] >= 0 & limits[2] >= 0 ) {
@@ -226,6 +231,19 @@ if ( is.null(color_grps) ) {
     limits_brk <- ((limits[1]*+100):(limits[2]*+100)) * brakes
 
   }
+  
+
+# -------------------------------------------------------------------------
+
+  if ( is.null(xrotation) ) {
+    xrotation <- graph_opts[["xrotation"]] %>%
+      strsplit(., "[*]") %>% 
+      pluck(1) %>% as.numeric()
+    angle <- xrotation[1]
+    h <- xrotation[2]
+    v <- xrotation[3]
+  }
+  
 
 # bar plot ----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -377,18 +395,32 @@ if ( is.null(color_grps) ) {
                      , legend = "top")
     }
 
+# -------------------------------------------------------------------------
+  
+  if ( is.null(opt) ) {
+    opt <- graph_opts[["opt"]] 
+    }
+  
 # results -----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  plot +
+graph <- 'plot +
     theme_bw() +
     theme(
-      panel.background = element_rect(fill = "transparent"),
-      plot.background = element_rect(fill = "transparent"),
-      panel.grid.major = element_blank(),
-      panel.grid.minor = element_blank(),
-      legend.background = element_rect(fill = "transparent"),
-      legend.box.background = element_rect(fill = "transparent"),
-      legend.position = legend
-      )
+      panel.background = element_rect(fill = "transparent")
+      , plot.background = element_rect(fill = "transparent")
+      , panel.grid.major = element_blank()
+      , panel.grid.minor = element_blank()
+      , legend.background = element_rect(fill = "transparent")
+      , legend.box.background = element_rect(fill = "transparent")
+      , legend.position = legend
+      , axis.text.x = element_text(angle = angle, hjust=h, vjust = v)
+    )' 
+
+  if(!is.na(opt)) {
+    eval(parse(text=paste(graph, opt, sep = " + ")))
+  } else {
+    eval(parse(text= graph))
+  }
+
 }

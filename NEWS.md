@@ -1,4 +1,7 @@
-# Version 0.1.4
+# Version 0.2.0
+
+Changes incompatible with the old versions.
+Arguments changed in the syntax for `fbsm` and `graphics`.
 
 ## Major changes
 
@@ -13,6 +16,15 @@
 
 - *Rticles*
   - update code for unzip `Articul8` files
+  
+- *Package* 
+  - ´mean_comparison´ update
+    - No remove the treatments column
+    - Allows plot 3 factors comparison `facet_grid()`
+    - New arguments for plot: xlimits, xrotation, dimension, opt
+    - Delete redundant arguments; limits, brakes
+    - Suggest use "*" instead of ":"
+    - Include additional layers to the plot. e.i. `coord_flip()`
   
 ## Bug fixes
 

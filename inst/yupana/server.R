@@ -291,7 +291,7 @@ observe({
                                  , last_factor = input$last_factor
                                  , model_facts = input$model_facts
                                  , comp_facts = paste0(input$comp_facts
-                                                       , collapse = ":")
+                                                       , collapse = "*")
                                  , test_comp = input$test_comp
                                  , sig_level = input$sig_level
       )

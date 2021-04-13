@@ -11,8 +11,8 @@
 #'
 #' @details
 #'
-#' For compare the factors you should use ":". For example, to compare
-#' treatment1 and treatment2: \code{treatment1:treatment2}.
+#' For compare the factors you should use "*". For example, to compare
+#' treatment1 and treatment2: \code{treatment1*treatment2}.
 #'
 #' @return data frame
 #'
@@ -95,7 +95,7 @@ fieldbook_report <- function(data
   model_facts_match <- names(arguments) %in% model_facts_opt
   model_facts_name <- names(arguments)[model_facts_match == TRUE]
 
-  if ( length(model_facts_name)  > 0  )  {
+  if (length(model_facts_name)  > 0) {
 
     model_facts <- arguments %>%
       select({{model_facts_name}}) %>%

@@ -15,9 +15,11 @@ plot_smr(
   glab = NULL,
   limits = NULL,
   brakes = NULL,
+  xrotation = NULL,
   sig = NULL,
   error = NULL,
-  legend = NULL
+  legend = NULL,
+  opt = NULL
 )
 }
 \arguments{
@@ -41,12 +43,16 @@ plot_smr(
 
 \item{brakes}{Units for break the limits.}
 
+\item{xrotation}{Angle and horizontal and vertical alignment.}
+
 \item{sig}{Comparison test values (default = "sig").}
 
 \item{error}{Variable used for error bars.}
 
 \item{legend}{Position of legend (default = "top"). Others: "left", "right",
 "bottom", "none".}
+
+\item{opt}{Include extra layer to the plot}
 }
 \value{
 plot
@@ -71,14 +77,14 @@ url <- paste0("https://docs.google.com/spreadsheets/d/"
 gs <- as_sheets_id(url)
 
 (data <- gs \%>\%
-    range_read("LA"))
+    range_read("plot"))
 
 plot_smr(data)
 
 plot_smr(data
          , type = "bar"
-         , limits = c(0, 14000)
-         , brakes = 2000
+         , limits = c(0, 1)
+         , brakes = 0.2
          , sig = "sig"
          , error = "ste"
          )
