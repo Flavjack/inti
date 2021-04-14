@@ -27,7 +27,7 @@ The 'inti' package is part of the 'inkaverse' project for developing different p
 
 ## Installation
 
-To install the stable version from [CRAN](https://cloud.r-project.org/package=inti), run the following from an R console:
+To install the stable version from [CRAN](https://cran.r-project.org/package=inti), run the following from an R console:
 
 ```{r eval=F}
 install.packages("inti")
