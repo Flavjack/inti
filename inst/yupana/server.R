@@ -497,8 +497,6 @@ observe({
     
     validate( need( input$rpt_variable, "Choose your variable") )
     
-    # sheet <- input$rpt_variable %>% as.vector()
-    
     textInput(inputId = "sheet_export"
             , label = "Sheet export"
             , value = input$rpt_variable
@@ -547,8 +545,8 @@ observe({
 
   })
 
-  output$anova <- renderPrint({ summary(report()$anova) })
-
+  output$anova <- renderPrint({ anova(report()$anova) })
+  
   output$dfreq <- renderPlot({
     
     diag <- report()$diagplot 
@@ -605,11 +603,12 @@ observe({
 
   })
 
-  output$mc_stats <- renderTable({
+  output$mc_stats <- DT::renderDataTable(server = FALSE, {
 
     mc <- mean_comp()$stats %>%
       select(!c(name.t, MSerror, Df)) %>%
-      select(!intersect(names(.), c("StudentizedRange", "MSD")))
+      select(!intersect(names(.), c("StudentizedRange", "MSD"))) %>%
+      inti::web_table(buttons = "copy")
 
   })
 
@@ -649,15 +648,15 @@ observe({
 
           column(width = 5,
 
-                 HTML('<h4><strong>Analysis of Variance</strong></h4>'),
+                 HTML('<h4><strong>ANOVA</strong></h4>'),
 
                  verbatimTextOutput("anova"),
-
+                 
                  br(),
 
                  HTML('<h4><strong>Statistics</strong></h4>'),
 
-                 tableOutput("mc_stats")
+                 DT::dataTableOutput("mc_stats")
 
           ),
 

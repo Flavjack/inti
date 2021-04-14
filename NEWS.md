@@ -9,6 +9,7 @@ Arguments changed in the syntax for `fbsm` and `graphics`.
   - Delete error messages in console when run the app
   - Change dependency: `ggpubr` --> `cowplot`
   - Multivariate analysis need factor levels n>2 
+  - Allows copy the `Statistics` table
 
 - *Yupana*
   - Delete error messages in console when run the app
@@ -26,6 +27,7 @@ Arguments changed in the syntax for `fbsm` and `graphics`.
     - Suggest use "*" instead of ":"
     - Include additional layers to the plot. e.i. `coord_flip()`
     - Save plot dimensions in the exported sheet
+  - `web_table` fix resize table in web
   
 ## Bug fixes
 

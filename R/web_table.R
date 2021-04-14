@@ -25,42 +25,27 @@ web_table <- function(data
   
   where <- NULL
   
-  data <- data %>%
-    mutate(across(where(is.numeric), ~round(., digits))) #!
-
-  if (is.null(buttons)){
-
-    data %>% 
-      datatable(extensions = c('Buttons', 'Scroller'),
-                rownames = rnames,
-                options = list(dom = 'Bt',
-                               buttons = c("excel", "copy"),
-                               autoWidth = TRUE, scroller = TRUE,
-                               scrollY = "50vh", scrollX = TRUE),
-                caption =  caption)
-
-  } else if (buttons == "none"){
-
-    data %>% 
-      datatable(extensions = c('Scroller'),
-                rownames = rnames,
-                options = list(dom = 'Bt',
-                               buttons = buttons,
-                               autoWidth = TRUE, scroller = TRUE,
-                               scrollY = "50vh", scrollX = TRUE),
-                caption =  caption)
-
+  if (is.null(buttons)) {
+    
+    botones <- c("excel", "copy")
+    ext <- c('Buttons', 'Scroller')
+    
   } else {
-
-    data %>%
-      datatable(extensions = c('Buttons','Scroller'),
-                rownames = rnames,
-                options = list(dom = 'Bt',
-                               buttons = buttons,
-                               autoWidth = TRUE, scroller = TRUE,
-                               scrollY = "50vh", scrollX = TRUE),
-                caption =  caption)
-
+    
+    botones <- buttons
+    ext <- c('Scroller')
   }
+  
+  data %>%
+    mutate(across(where(is.numeric), ~round(., digits))) %>% 
+    datatable(extensions = ext
+              , rownames = rnames
+              , options = list(dom = 'Bt'
+                               , buttons = botones
+                               , scroller = TRUE
+                               , scrollX = TRUE
+                               , scrollY = "60vh"
+                               )
+              , caption =  caption)
 
 }
