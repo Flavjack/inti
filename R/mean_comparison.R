@@ -344,7 +344,7 @@ mean_comparison <- function(data
                    , xlab = xlab
                    , ylab = ylab
                    , glab = glab
-                   , xlimits = xlim
+                   , ylimits = xlim
                    , xrotation = "0*0.5*0.5"
                    , sig = "sig"
                    , error = "ste"

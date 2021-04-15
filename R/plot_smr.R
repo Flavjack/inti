@@ -205,14 +205,14 @@ if ( is.null(color_grps) ) {
 # -------------------------------------------------------------------------
 
   if ( is.null(limits) ) {
-    limits <- graph_opts[["xlimits"]] %>%
+    limits <- graph_opts[["ylimits"]] %>%
       strsplit(., "[*]") %>% 
       pluck(1) %>% .[1:2] %>% 
       as.numeric()
     }
 
   if ( is.null(brakes) ) {
-    brakes <- graph_opts[["xlimits"]] %>%
+    brakes <- graph_opts[["ylimits"]] %>%
       strsplit(., "[*]") %>% 
       pluck(1) %>% .[3] %>% 
       as.numeric() %>% abs()

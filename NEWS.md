@@ -1,3 +1,8 @@
+# Version 0.2.1
+
+- *Yupana*
+  - Change `xlimits` --> `ylimits`
+
 # Version 0.2.0
 
 Changes incompatible with the old versions.
