@@ -1,0 +1,97 @@
+---
+title: "Yupana"
+description: 'Options and arguments in the app Yupana'
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Yupana}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+source("http://lozanoisla.com/lectures/setup.r")
+library(gsheet)
+library(dplyr)
+```
+
+Yupana permite el análisis y gráfica de datos basados en diseños experimentales. A continuación se presentará los parámetros y opciones que pueden ser modificadas dentro de la aplicación.
+
+# Modulos
+
+```{r}
+url <- "https://docs.google.com/spreadsheets/d/1nLP-dH9-dsVMXgsU7Z02EbgWvMIBKG5IYVRHAJCN-Z0/edit#gid=0"
+url %>% 
+  gsheet2tbl() %>% 
+  info_table(
+    caption = "Módulos de la aplicación Yupana"
+    ) %>% 
+  include_table()
+```
+
+# Graphics
+
+## Opciones de gráfico
+
+```{r}
+url <- "https://docs.google.com/spreadsheets/d/1nLP-dH9-dsVMXgsU7Z02EbgWvMIBKG5IYVRHAJCN-Z0/edit#gid=1216293392"
+url %>% 
+  gsheet2tbl() %>% 
+  info_table(
+    caption = "Lista de argumentos, descripción y opciones para la generación de gráficos en la aplicación Yupana"
+    , notes = "Opciones basadas en la función: `plot_smr()`"
+    ) %>% 
+  include_table()
+```
+
+### Ejemplo
+
+```{r, fig.cap= fig$caption}
+dir <- "files/graph-table.png"
+fig <- dir %>% 
+  info_figure(
+    caption = "Ejemplo de los parámetros en `{arguments}` y `{values}` para la generación de gráficos en la aplicación Yupana"
+    , url = .
+    )
+fig %>% include_figure()
+```
+
+```{r, fig.cap= fig$caption}
+dir <- "files/graph-figure.png"
+fig <- dir %>% 
+  info_figure(
+    caption = "Figura basada en los `{arguments}` y `{values}` de la tabla anterior"
+    , url = .
+    )
+fig %>% include_figure()
+```
+
+La apliación por defecto genera un gama de colores `{colors}` en una escala de grises. Los colores pueden ser modificados de forma manual por sus nombres en ingles o usando los valores `HEX`. En este caso se cambió la escala de grises por los colores verde (green) y rojo (red).
+
+## Incluir nuevas capas `opt`
+
+Yupana a partir de la versión 0.2.0 permite la inclusión de capas adicionales a los gráficos. Puedes incluir dicha información en `opt` de los `{arguments}`.
+
+Puedes incluir diversas capas descritas para el paquete `ggplot2`.
+
+### Ejemplo
+
+```{r, fig.cap= fig$caption}
+dir <- "files/graph-figure-grid.png"
+fig <- dir %>% 
+  info_figure(
+    caption = "Gráfico con la inclusión de la capa `facet_grid()`"
+    , url = .
+    )
+fig %>% include_figure()
+```
+
+```{r, fig.cap= fig$caption}
+dir <- "files/graph-table-grid.png"
+fig <- dir %>% 
+  info_figure(
+    caption = "Inclusión de `facet_grid(tratamiento ~ .)` en `opt` de los `{arguments}` en Yupana"
+    , url = .
+    )
+fig %>% include_figure()
+```
+

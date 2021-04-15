@@ -1,7 +1,10 @@
 # Version 0.2.1
 
 - *Yupana*
-  - Change `xlimits` --> `ylimits`
+  - Fix `{arguments}` from `xlimits` to `ylimits`
+  
+- *Package* 
+  - Vignette for describe the options in Yupana
 
 # Version 0.2.0
 

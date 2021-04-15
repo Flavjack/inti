@@ -349,8 +349,8 @@ mean_comparison <- function(data
                    , sig = "sig"
                    , error = "ste"
                    , legend = "top"
-                   , opt = NA
                    , dimensions = NA
+                   , opt = NA
                    )
 
     opts_table <- enframe(graph_opts) %>%
