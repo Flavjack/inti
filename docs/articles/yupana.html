@@ -20,7 +20,7 @@
 <script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
 <link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Yupana">
-<meta property="og:description" content="Options and arguments in the app Yupana">
+<meta property="og:description" content="Yupana: arguments and options in the app">
 <meta property="og:image" content="https://flavjack.github.io/inti/reference/figures/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -79,7 +79,7 @@
       <a href="../articles/heritability.html">Broad-sense heritability in plant breeding</a>
     </li>
     <li>
-      <a href="../articles/yupana.html">Yupana: options</a>
+      <a href="../articles/yupana.html">Yupana: arguments and options</a>
     </li>
   </ul>
 </li>
@@ -114,7 +114,7 @@
 </li>
 <li>
   <a href="https://github.com/sponsors/Flavjack">
-    <span class="far fa-heart fa-lg"></span>
+    <span class="fas fa-heart fa-lg"></span>
      
   </a>
 </li>
@@ -196,8 +196,8 @@
 <caption>Lista de argumentos, descripción y opciones para la generación de gráficos en la aplicación Yupana</caption>
 <colgroup>
 <col width="10%">
-<col width="61%">
-<col width="28%">
+<col width="57%">
+<col width="32%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">arguments</th>
@@ -263,7 +263,7 @@
 <tr class="even">
 <td align="left">legend</td>
 <td align="left">Posición de la leyenda</td>
-<td align="left">left - right - bottom - none</td>
+<td align="left">top - left - right - bottom - none</td>
 </tr>
 <tr class="odd">
 <td align="left">dimensions</td>
@@ -277,18 +277,18 @@
 </tr>
 </tbody>
 </table>
-<p><small>Opciones basadas en la función: <code><a href="../reference/plot_smr.html">plot_smr()</a></code></small></p>
-<div id="ejemplo" class="section level3">
+<p>Nota: <small>Opciones basadas en la función: <code><a href="../reference/plot_smr.html">plot_smr()</a></code></small></p>
+<div id="argumentos-y-valores" class="section level3">
 <h3 class="hasAnchor">
-<a href="#ejemplo" class="anchor"></a>Ejemplo</h3>
+<a href="#argumentos-y-valores" class="anchor"></a>Argumentos y valores</h3>
 <div class="figure" style="text-align: center">
-<img src="files/graph-table.png" alt="Ejemplo de los parámetros en `{arguments}` y `{values}` para la generación de gráficos en la aplicación Yupana" width="98%"><p class="caption">
-Ejemplo de los parámetros en <code>{arguments}</code> y <code>{values}</code> para la generación de gráficos en la aplicación Yupana
+<img src="files/graph-table.png" alt="Parámetros en `{arguments}` y `{values}` para la generación de gráficos en la aplicación Yupana." width="98%"><p class="caption">
+Parámetros en <code>{arguments}</code> y <code>{values}</code> para la generación de gráficos en la aplicación Yupana.
 </p>
 </div>
 <div class="figure" style="text-align: center">
-<img src="files/graph-figure.png" alt="Figura basada en los `{arguments}` y `{values}` de la tabla anterior" width="98%"><p class="caption">
-Figura basada en los <code>{arguments}</code> y <code>{values}</code> de la tabla anterior
+<img src="files/graph-figure.png" alt="Figura basada en los `{arguments}` y `{values}` de la tabla anterior." width="98%"><p class="caption">
+Figura basada en los <code>{arguments}</code> y <code>{values}</code> de la tabla anterior.
 </p>
 </div>
 <p>La apliación por defecto genera un gama de colores <code>{colors}</code> en una escala de grises. Los colores pueden ser modificados de forma manual por sus nombres en ingles o usando los valores <code>HEX</code>. En este caso se cambió la escala de grises por los colores verde (green) y rojo (red).</p>
@@ -300,19 +300,15 @@ Figura basada en los <code>{arguments}</code> y <code>{values}</code> de la tabl
 </h2>
 <p>Yupana a partir de la versión 0.2.0 permite la inclusión de capas adicionales a los gráficos. Puedes incluir dicha información en <code>opt</code> de los <code>{arguments}</code>.</p>
 <p>Puedes incluir diversas capas descritas para el paquete <code>ggplot2</code>.</p>
-<div id="ejemplo-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#ejemplo-1" class="anchor"></a>Ejemplo</h3>
 <div class="figure" style="text-align: center">
 <img src="files/graph-figure-grid.png" alt="Gráfico con la inclusión de la capa `facet_grid()`" width="98%"><p class="caption">
 Gráfico con la inclusión de la capa <code>facet_grid()</code>
 </p>
 </div>
 <div class="figure" style="text-align: center">
-<img src="files/graph-table-grid.png" alt="Inclusión de `facet_grid(tratamiento ~ .)` en `opt` de los `{arguments}` en Yupana" width="98%"><p class="caption">
-Inclusión de <code>facet_grid(tratamiento ~ .)</code> en <code>opt</code> de los <code>{arguments}</code> en Yupana
+<img src="files/graph-table-grid.png" alt="Inclusión de `facet_grid(tratamiento ~ .)` en `opt` de los `{arguments}` en Yupana." width="98%"><p class="caption">
+Inclusión de <code>facet_grid(tratamiento ~ .)</code> en <code>opt</code> de los <code>{arguments}</code> en Yupana.
 </p>
-</div>
 </div>
 </div>
 </div>

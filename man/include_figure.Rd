@@ -4,18 +4,16 @@
 \alias{include_figure}
 \title{Figure with caption and notes}
 \usage{
-include_figure(data = NULL, figure, caption = NA, notes = NA, label = NA)
+include_figure(figure, caption = NA, notes = NA, label = NA)
 }
 \arguments{
-\item{data}{Data frame with the figures information. See details.}
+\item{figure}{Path or URL of the figure.}
 
-\item{figure}{Name or path of the figure.}
+\item{caption}{Figure caption (default = NA).}
 
-\item{caption}{Manual figure caption (default = NA).}
+\item{notes}{Figure notes (default = NA).}
 
-\item{notes}{Manual figure notes (default = NA).}
-
-\item{label}{Label for start the footnote (default = NA).}
+\item{label}{Label for the notes (default = NA).}
 }
 \value{
 Figure with caption and notes
@@ -23,22 +21,13 @@ Figure with caption and notes
 \description{
 Include figures with title and notes using a data base
 }
-\details{
-The data frame information result from `info_figure` output.
-}
 \examples{
 
 library(inti)
 
-fig <- info_figure(caption = "caption test."
-                   , notes = "note test."
-                   , label = "_Source:_"
-                   , url = "https://devblackops.io/images/testing.jpg"
-                   , path = "man/figures/logo.png"
-                   )
+figure <- "https://inkaverse.com/reference/figures/logo.png"
 
-# use this in r chunk `fig.caption = fig$caption`                   
-                   
-fig \%>\%  include_figure()
+figure \%>\% include_figure(caption = "Title test."
+                        , notes = "Note test.")
 
 }

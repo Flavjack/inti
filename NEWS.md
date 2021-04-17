@@ -4,7 +4,11 @@
   - Fix `{arguments}` from `xlimits` to `ylimits`
   
 - *Package* 
-  - Vignette for describe the options in Yupana
+  - Vignette for describe the arguments and options in Yupana
+  
+- *Package* 
+  - Delete redundant functions `info_figure` & `info_grahics`
+  - Update functions: `include_figure` & `include_graphics`
 
 # Version 0.2.0
 

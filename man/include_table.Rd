@@ -4,16 +4,10 @@
 \alias{include_table}
 \title{Table with footnotes}
 \usage{
-include_table(
-  data = NULL,
-  caption = NA,
-  notes = NA,
-  label = NA,
-  notation = "none"
-)
+include_table(table, caption = NA, notes = NA, label = NA, notation = "none")
 }
 \arguments{
-\item{data}{Data frame.}
+\item{table}{Data frame.}
 
 \item{caption}{Table caption (default = NULL). See details.}
 
@@ -22,37 +16,28 @@ include_table(
 \item{label}{Label for start the footnote (default = NA).}
 
 \item{notation}{Notation for the symbols and footnotes (default =
-"none"). See details.}
+"none") Others: "alphabet", "number", "symbol".}
 }
 \value{
 Table with caption and footnotes
 }
 \description{
-Include tables with notes and titles for word and html documents
-}
-\details{
-For \code{caption} and \code{notes} you can include {caption} and {notes} in
-the last rows of your data frame. Where the information will be extracted
-automatically for include in the formatted table. You can add the footnote
-symbol using \code{{hypen}} in your table. \code{notation} could be use:
-"alphabet", "number", "none".
+Include tables with title and footnotes for word and html documents
 }
 \examples{
 
 library(inti)
 
-tab <- data.frame(
+table <- data.frame(
 x = rep_len(1, 5)
 , y = rep_len(3, 5)
 , z = rep_len("c", 5)
 )
 
-table <- tab \%>\% 
-info_table(
-  caption = "Figure caption"
-  , notes = "test note"
+table \%>\% inti::include_table(
+  caption = "Title caption"
+  , notes = "Footnote"
+  , label = "Source:"
   )
-
-table \%>\% inti::include_table()
-
+  
 }
