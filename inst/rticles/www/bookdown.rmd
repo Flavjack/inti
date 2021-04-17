@@ -50,14 +50,15 @@ fb <- xl %>%
 ### Tablas
 
 ```{r, eval = F}
-tab <- gs %>% 
+gs %>% 
   range_read("prosopis") %>% 
   select(rep:D5) %>% 
   head(10) %>% 
-  inti::info_table(
+  inti::include_table(
     caption = "Germination dataset import from a googlesheet"
-    , notes = "@schafleitner2007")  
-tab %>%  inti::include_table()
+    , notes = "@schafleitner2007"
+    , label = "__Source:__"
+    )
 
 #> cite: (Table \@ref(tab:chunk))
 ```
@@ -65,23 +66,14 @@ tab %>%  inti::include_table()
 ### Figuras
 
 ```{r, eval = F}
-gerplot <- cowplot::plot_grid(gbp, ggt
-                              , nrow = 1
-                              , labels = "AUTO")
-save_plot("files/fig_gerplot.png", 
-          plot = gerplot,
-          dpi= 300, 
-          base_height = 100, 
-          base_aspect_ratio = 2.5, 
-          units = "mm")
-fig <- info_figure(
-  caption = "Germination  experiment with *Prosopis juliflor* under different osmotic potentials and temperatures."
-  , notes = "A) Bar graph with germination percentage in a factorial analisys. B)  Line graph from cumulative germination under different osmotic potentials."
-  , label = "__Where:__"
-  , url = "files/fig_gerplot.png"
-  )
-  
-fig %>% include_figure()
+fig <- include_figure(
+  figure = "files/fig_jcurcas.png"
+  , caption = "Plant of *Jatropha curcas*. 
+  A) Foliage.
+  B) Leaf. 
+  C) Fruit.")
+
+fig$figure
 
 #> cite: (Figure \@ref(fig:chunk))
 #> caption: fig.cap= fig$caption
@@ -176,6 +168,4 @@ params:
 \newpage  
 
 ```
-
-
 

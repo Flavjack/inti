@@ -32,36 +32,28 @@ fb &lt;- xl %&gt;%
 </div>
 <div id="tablas" class="section level3">
 <h3>Tablas</h3>
-<pre class="r"><code>tab &lt;- gs %&gt;% 
+<pre class="r"><code>gs %&gt;% 
   range_read(&quot;prosopis&quot;) %&gt;% 
   select(rep:D5) %&gt;% 
   head(10) %&gt;% 
-  inti::info_table(
+  inti::include_table(
     caption = &quot;Germination dataset import from a googlesheet&quot;
-    , notes = &quot;@schafleitner2007&quot;)  
-tab %&gt;%  inti::include_table()
+    , notes = &quot;@schafleitner2007&quot;
+    , label = &quot;__Source:__&quot;
+    )
 
 #&gt; cite: (Table \@ref(tab:chunk))</code></pre>
 </div>
 <div id="figuras" class="section level3">
 <h3>Figuras</h3>
-<pre class="r"><code>gerplot &lt;- cowplot::plot_grid(gbp, ggt
-                              , nrow = 1
-                              , labels = &quot;AUTO&quot;)
-save_plot(&quot;files/fig_gerplot.png&quot;, 
-          plot = gerplot,
-          dpi= 300, 
-          base_height = 100, 
-          base_aspect_ratio = 2.5, 
-          units = &quot;mm&quot;)
-fig &lt;- info_figure(
-  caption = &quot;Germination  experiment with *Prosopis juliflor* under different osmotic potentials and temperatures.&quot;
-  , notes = &quot;A) Bar graph with germination percentage in a factorial analisys. B)  Line graph from cumulative germination under different osmotic potentials.&quot;
-  , label = &quot;__Where:__&quot;
-  , url = &quot;files/fig_gerplot.png&quot;
-  )
-  
-fig %&gt;% include_figure()
+<pre class="r"><code>fig &lt;- include_figure(
+  figure = &quot;files/fig_jcurcas.png&quot;
+  , caption = &quot;Plant of *Jatropha curcas*. 
+  A) Foliage.
+  B) Leaf. 
+  C) Fruit.&quot;)
+
+fig$figure
 
 #&gt; cite: (Figure \@ref(fig:chunk))
 #&gt; caption: fig.cap= fig$caption</code></pre>
