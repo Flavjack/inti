@@ -35,9 +35,11 @@ x = rep_len(1, 5)
 )
 
 table \%>\% inti::include_table(
-  caption = "Title caption"
+  caption = "Title caption b) line 0
+  a) line 1
+  b) line 2"
   , notes = "Footnote"
-  , label = "Source:"
+  , label = "Where:"
   )
   
 }

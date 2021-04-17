@@ -13,13 +13,13 @@ site: bookdown::bookdown_site
 documentclass: book
 bookdown::gitbook:
 output: 
+  bookdown::word_document2:
+    reference_docx: files/style_rticles.docx
+    number_sections: false
   bookdown::html_document2:
     toc: true
     number_sections: true
     toc_float: true
-  bookdown::word_document2:
-    reference_docx: files/style_rticles.docx
-    number_sections: false
 always_allow_html: true
 link-citations: true
 colorlinks: true
@@ -143,15 +143,15 @@ if(!file.exists("files/pkgs.bib")){write_bib(c(.packages()),'files/pkgs.bib')}
 `r if (knitr:::is_html_output()) '# Tables {-}'`
 
 ```{r germin}
-tab <- gs %>% 
+gs %>% 
   range_read("prosopis") %>% 
   select(rep:D5) %>% 
   head(10) %>% 
-  inti::info_table(
+  inti::include_table(
     caption = "Germination dataset import from a googlesheet"
-    , notes = "@schafleitner2007")  
-
-tab %>%  inti::include_table()
+    , notes = "@schafleitner2007"
+    , label = "__Source:__"
+    )
 ```
 
 \newpage
@@ -182,14 +182,18 @@ mc <- ger_testcomp(aov = av, comp = c("temp", "nacl"), type = "snk")
 
 # line or bar graphics
 gbp <- mc$table %>% 
-  fplot(type = "bar", 
-        x = "temp", xlab = "Temperature (ºC)",
-        y = "grp", ylab = "Germination ('%')",
-        groups = "nacl", glab = "NaCl (Mpa)", 
-        limits = c(0,150), brakes = 10,
-        sig = "sig", error = "std",
-        color = F
-        )
+  fplot(type = "bar"
+        , x = "temp"
+        , y = "grp"
+        , groups = "nacl"
+        , xlab = "Temperature (ºC)"
+        , ylab = "Germination ('%')"
+        , glab = "NaCl (Mpa)"
+        , limits = c(0,150)
+        , brakes = 10
+        , sig = "sig"
+        , error = "std"
+        , color = F)
 
 ## Intime analysis
 
@@ -225,14 +229,15 @@ save_plot("files/fig_gerplot.png",
           base_aspect_ratio = 2.5, 
           units = "mm")
 
-fig <- info_figure(
-  caption = "Germination  experiment with *Prosopis juliflor* under different osmotic potentials and temperatures."
-  , notes = "A) Bar graph with germination percentage in a factorial analisys. B)  Line graph from cumulative germination under different osmotic potentials."
+fig <- include_figure(
+  figure = "files/fig_gerplot.png"
+  , caption = "Germination  experiment with *Prosopis juliflor* under different osmotic potentials and temperatures."
+  , notes = "
+  A) Bar graph with germination percentage in a factorial analisys. 
+  B) Line graph from cumulative germination under different osmotic potentials."
   , label = "__Where:__"
-  , url = "files/fig_gerplot.png"
   )
-  
-fig %>% include_figure()
+fig$figure
 ```
 
 \newpage
@@ -248,25 +253,25 @@ fg <- magick::image_read("files/fig_jc.jpg") %>%
   grid::rasterGrob()
 
 plot <- cowplot::plot_grid(fg) +
-  draw_plot_label(label = c("A", "B", "C"),
-                  x = c(0.02, 0.51, 0.02), 
-                  y = c(0.98, 0.98, 0.30))
+  draw_plot_label(label = c("A", "B", "C")
+                  , x = c(0.02, 0.51, 0.02)
+                  , y = c(0.98, 0.98, 0.30))
   
-save_plot("files/fig_jcurcas.png", 
-          plot = plot,
-          dpi= 300, 
-          base_height = 100, 
-          base_aspect_ratio = 1.2, 
-          units = "mm")
+save_plot("files/fig_jcurcas.png"
+          , plot = plot
+          , dpi= 300
+          , base_height = 100
+          , base_aspect_ratio = 1.2
+          , units = "mm")
 
-fig <- info_figure(
-  caption = "Plant of *Jatropha curcas*.
-  A) Foliage,
-  B) Leaf, 
-  C) Fruit."
-  , url = "files/fig_jcurcas.png")
+fig <- include_figure(
+  figure = "files/fig_jcurcas.png"
+  , caption = "Plant of *Jatropha curcas*. 
+  A) Foliage.
+  B) Leaf. 
+  C) Fruit.")
 
-fig %>% include_figure()
+fig$figure
 ```
 
 \newpage
@@ -369,13 +374,13 @@ save_plot("files/fig_mv.png"
           , base_aspect_ratio = 1.2
           , units = "cm")
 
-fig <- info_figure(
+fig <- include_figure(
   caption = "Multivariate Analysis: 
   Principal component Analysis and Hierarchical Clustering Analysis."
-  , url = "files/fig_mv.png"
+  , figure = "files/fig_mv.png"
   )
   
-fig %>% include_figure()
+fig$figure
 ```
 
 <!-- Anexos -->

@@ -122,12 +122,12 @@ unzip(file, overwrite = T)
 list <- unzip(file, list = T)$Name
 md <- grep("md$", list) 
 path <- list[md]
-file.rename(path, "manuscript.Rmd")
+file.rename(path, "gdoc.Rmd")
 
 #> title: &nbsp
 #> include=FALSE
-#> child = "manuscript.Rmd"
-#> unlink("manuscript.Rmd")
+#> child = "gdoc.Rmd"
+#> unlink("gdoc.Rmd")
 ```
 
 ### Cover page

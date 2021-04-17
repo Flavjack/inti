@@ -93,12 +93,12 @@ unzip(file, overwrite = T)
 list &lt;- unzip(file, list = T)$Name
 md &lt;- grep(&quot;md$&quot;, list) 
 path &lt;- list[md]
-file.rename(path, &quot;manuscript.Rmd&quot;)
+file.rename(path, &quot;gdoc.Rmd&quot;)
 
 #&gt; title: &amp;nbsp
 #&gt; include=FALSE
-#&gt; child = &quot;manuscript.Rmd&quot;
-#&gt; unlink(&quot;manuscript.Rmd&quot;)</code></pre>
+#&gt; child = &quot;gdoc.Rmd&quot;
+#&gt; unlink(&quot;gdoc.Rmd&quot;)</code></pre>
 </div>
 <div id="cover-page" class="section level3">
 <h3>Cover page</h3>

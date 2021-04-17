@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/rticles/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-03-19
+#> date .: 2021-04-17
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -63,12 +63,17 @@ shinyServer(function(input, output, session) {
 # -------------------------------------------------------------------------
 
   output$server <- reactive({
-    if(Sys.getenv('SHINY_PORT') == "") {"local"} else {"web"}
+    if(Sys.getenv('SHINY_PORT') == "") {
+      "web" # local!
+      } else {"web"} # always web!
   })
+  
   outputOptions(output, "server", suspendWhenHidden = FALSE)
 
   server <- reactive({
-    if(Sys.getenv('SHINY_PORT') == "") {"local"} else {"web"}
+    if(Sys.getenv('SHINY_PORT') == "") {
+      "web" # local!
+      } else {"web"}  
   })
 
 # test code ---------------------------------------------------------------

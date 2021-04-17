@@ -24,9 +24,11 @@
 #' )
 #'
 #' table %>% inti::include_table(
-#'   caption = "Title caption"
+#'   caption = "Title caption b) line 0
+#'   a) line 1
+#'   b) line 2"
 #'   , notes = "Footnote"
-#'   , label = "Source:"
+#'   , label = "Where:"
 #'   )
 #'   
 
@@ -39,8 +41,12 @@ include_table <- function(table
   
   if(!is.data.frame(table)) stop("Use a data frame or table")
   
+  title <- caption %>%
+    gsub(' +', " ", .) %>%
+    gsub("[\r\n]", "", .) 
+  
   ftab <- table %>% 
-    knitr::kable(caption = caption
+    knitr::kable(caption = title
                  , format = "pipe")
   
   if (!is.na(notes)) {

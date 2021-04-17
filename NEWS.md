@@ -3,10 +3,11 @@
 - *Yupana*
   - Fix `{arguments}` from `xlimits` to `ylimits`
   
-- *Package* 
-  - Vignette for describe the arguments and options in Yupana
+- *Rticles*
+  - Update template files
   
 - *Package* 
+  - Vignette for describe the arguments and options in Yupana
   - Delete redundant functions `info_figure` & `info_grahics`
   - Update functions: `include_figure` & `include_graphics`
 

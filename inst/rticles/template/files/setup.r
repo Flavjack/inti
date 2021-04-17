@@ -2,7 +2,7 @@
 # R packages dependencies and configuration -------------------------------
 # -------------------------------------------------------------------------
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date   .: 2020-11-14
+#> date   .: 2021-04-08
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -12,6 +12,7 @@
 cran <- c(
   "devtools" # Developer tools
   , "knitr" # Write Docs in R 
+  , "readxl" # Read excel files
   , "bookdown" # Write articles and technical documents
   , "tidyverse" # Data manipulation
   , "googlesheets4" # Read/write google sheets docs
@@ -30,19 +31,23 @@ git <- c(
   , "crsh/citr" # Use zotero for citations
   )
 
-for (pkg in cran) { 
-  if( !require(pkg, character.only = TRUE) ) {
-    install.packages(pkg)
-    library(pkg, character.only = TRUE)
+suppressPackageStartupMessages({
+  
+  for (pkg in cran) { 
+    if( !require(pkg, character.only = T) ) {
+      install.packages(pkg)
+      library(pkg, character.only = T)
     } 
-}
-
-for (pkg in git) { 
-  if( !require(sub(".*/", "", pkg), character.only = TRUE) ) {
-    devtools::install_github(pkg)
-    library(sub(".*/", "", pkg), character.only = TRUE)
+  }
+  
+  for (pkg in git) { 
+    if( !require(sub(".*/", "", pkg), character.only = T) ) {
+      devtools::install_github(pkg, upgrade = T)
+      library(sub(".*/", "", pkg), character.only = T)
     } 
-}
+  }
+  
+})
 
 rm(cran, git, pkg)
 

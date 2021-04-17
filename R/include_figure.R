@@ -27,12 +27,18 @@ include_figure <- function(figure
                            , label = NA
                            ){
   
-  title <- caption
+  title <- caption %>%
+    gsub(' +', " ", .) %>%
+    gsub("[\r\n]", "", .) 
+  
+  notes <- notes %>% 
+    gsub(' +', " ", .) %>%
+    gsub("[\r\n]", "", .) 
   
   if(!is.na(notes)) {
     title <- paste(caption, notes)
     if(!is.na(label)) {
-      title <- paste(caption, label, notes)
+      title <- paste(caption, label, " ",notes)
     }
   }
   

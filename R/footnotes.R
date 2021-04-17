@@ -95,6 +95,10 @@ footnotes <- function(table
                            paste0(rep(" ", 4 - ceiling(i/5)), collapse = "")),
                     table)
     }
+    
+    if(!is.na(label)) {
+      label <- paste0("<small>", label, "</small>")
+    } else {label <- ""}
 
     table[length(table) + 1] <- ""
     table[length(table) + 1] <- label
