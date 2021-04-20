@@ -4,7 +4,14 @@
 \alias{web_table}
 \title{HTML tables for markdown documents}
 \usage{
-web_table(data, caption = NULL, digits = 2, rnames = FALSE, buttons = NULL)
+web_table(
+  data,
+  caption = NULL,
+  digits = 2,
+  rnames = FALSE,
+  buttons = NULL,
+  file_name = NULL
+)
 }
 \arguments{
 \item{data}{Dataset.}
@@ -16,6 +23,8 @@ web_table(data, caption = NULL, digits = 2, rnames = FALSE, buttons = NULL)
 \item{rnames}{Row names.}
 
 \item{buttons}{Buttons: "excel", "copy" or "none". Default c("excel", "copy")}
+
+\item{file_name}{Excel file name}
 }
 \value{
 table in markdown format for html documents

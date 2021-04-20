@@ -1,7 +1,8 @@
-# Version 0.2.1
+# Version 0.3.0
 
 - *Yupana*
   - Fix `{arguments}` from `xlimits` to `ylimits`
+  - Update tables output
   
 - *Rticles*
   - Update template files

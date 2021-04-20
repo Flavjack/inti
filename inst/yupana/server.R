@@ -15,6 +15,9 @@
 
 source("pkgs.R")
 
+# -------------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"
                                           , "https://www.googleapis.com/auth/userinfo.email"
                                           ))
@@ -599,7 +602,8 @@ observe({
 
     mc <- mean_comp()$comparison %>%
       select(!c("{colors}", "{arguments}", "{values}")) %>%
-      inti::web_table(digits = input$rpt_digits)
+      inti::web_table(digits = input$rpt_digits
+                      , file_name = input$rpt_variable)
 
   })
 
