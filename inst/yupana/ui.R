@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-03-12
+#> date .: 2021-04-24
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -416,7 +416,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                              numericInput(inputId = "graph_dpi"
                                           , label = "Resolution"
                                           , value = 100
-                                          , step = 2
+                                          , step = 20
                                           , min = 50
                              ),
                              
