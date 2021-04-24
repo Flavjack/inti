@@ -30,6 +30,9 @@ csl: https://www.zotero.org/styles/apa
 
 ```{r setup, include=FALSE}
 source("https://lozanoisla.com/setup.r")
+```
+
+```{r}
 url <- paste0("https://docs.google.com/spreadsheets/d/"
               , "1QziIXGOwb8cl3GaARJq6Ez6aU7vND_UHKJnFcAKx0VI")
 gs <- as_sheets_id(url)
@@ -185,12 +188,11 @@ gbp <- mc$table %>%
   fplot(type = "bar"
         , x = "temp"
         , y = "grp"
-        , groups = "nacl"
+        , group = "nacl"
         , xlab = "Temperature (ºC)"
         , ylab = "Germination ('%')"
         , glab = "NaCl (Mpa)"
-        , limits = c(0,150)
-        , brakes = 10
+        , ylimits = c(0, 150, 10)
         , sig = "sig"
         , error = "std"
         , color = F)
@@ -211,11 +213,10 @@ ggt <- git %>%
         , xlab = "Day"
         , y = "mean"
         , ylab = "Germination ('%')"
-        , groups = "nacl"
+        , group = "nacl"
         , glab = "NaCl (Mpa)"
-        , limits = c(0,120)
-        , brakes = 10
-        , color = F)
+        , ylimits = c(0, 120, 10)
+        , color = T)
 
 ## Plot figures
 gerplot <- cowplot::plot_grid(gbp, ggt

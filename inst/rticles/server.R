@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/rticles/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-04-17
+#> date .: 2021-04-24
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -26,6 +26,7 @@ if (FALSE) {
   inti::create_rticles(path = "inst/rticles/template", type = "book")
   file.rename(from = "inst/rticles/template/rticles.Rproj"
               , to = "inst/rticles/template/rticles.proj")
+  
   }
 
 # -------------------------------------------------------------------------

@@ -30,7 +30,6 @@ Imports:
     stringi
 Suggests:
     agridat,
-    googlesheets4,
     gsheet,
     knitr,
     rmarkdown
