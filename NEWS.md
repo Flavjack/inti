@@ -10,8 +10,8 @@
 - *Package* 
   - Vignette for describe the arguments and options in Yupana
   - Delete redundant functions `info_figure()` & `info_grahics()`
-  - Update functions: `include_figure()` & `include_graphics()`
-  - Update funtion `plot_smr()` include:
+  - Update functions: `include_figure()` & `include_figure()`
+  - Update function `plot_smr()` include:
     - `xtext`: labels for the x level
     - `gtext`: labels for the group levels
 
