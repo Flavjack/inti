@@ -28,36 +28,31 @@
 #' @export
 #'
 #' @examples
+#' 
+#' \dontrun{
 #'
 #' library(inti)
-#' library(googlesheets4)
+#' library(gsheet)
 #' 
-#' if (gs4_has_token()) {
-#'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs")
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/"
+#'               , "edit#gid=172957346")
 #' # browseURL(url)
-#' gs <- as_sheets_id(url)
-#'
-#' (data <- gs %>%
-#'      range_read("fb"))
-#'
-#' fbsm <- fieldbook_summary(data
-#'                  , last_factor = "bloque"
-#'                  , model_facts = "genotipo*tratamiento"
-#'                  , comp_facts = "genotipo*tratamiento"
-#'                  ) 
-#'
-#' mc <- mean_comparison(data
-#'                      , fb_smr = fbsm
-#'                      , variable = "hi"
-#'                      , graph_opts = TRUE
-#'                      )
-#'
-#' table <- mc$comparison
-#'
-#' # table %>% sheet_write(ss = gs, sheet = "plot")
-#'
+#' 
+#' fb <- gsheet2tbl(url)
+#' 
+#' model <- fb %>% 
+#'   fieldbook_summary(last_factor = "bloque"
+#'                     , model_facts = "tratamiento*genotipo"
+#'                     , comp_facts = "tratamiento*genotipo"
+#'                     )
+#' 
+#' mc <- fb %>%
+#'   mean_comparison(fb_smr = model
+#'                   , variable = "hi"
+#'                   , graph_opts = T)
+#' mc$comparison
+#' 
 #' }
 #' 
 
@@ -73,6 +68,14 @@ mean_comparison <- function(data
                             ) {
 
   where <- NULL
+  
+  if(FALSE){
+    
+    data <- fb
+    
+    fb_smr <- model
+    
+  }
 
   # fieldbook structure -----------------------------------------------------
   # -------------------------------------------------------------------------
@@ -279,7 +282,7 @@ mean_comparison <- function(data
   if ( length(comp_facts) >= 3 ){
 
     x <- "treatments"
-    groups <- "treatments"
+    group <- "treatments"
     colors <-   gray.colors(n = comparison$stats$ntr
                             , start = 0.8
                             , end = 0.3) %>%
@@ -290,7 +293,7 @@ mean_comparison <- function(data
   if ( length(comp_facts) == 2 ){
 
     x <- comp_facts[1]
-    groups <- comp_facts[2]
+    group <- comp_facts[2]
     colors <- gray.colors(n = factor_opt[comp_facts[2]]
                           , start = 0.8
                           , end = 0.3) %>%
@@ -300,7 +303,7 @@ mean_comparison <- function(data
   if ( length(comp_facts) == 1 ){
 
     x <- comp_facts[1]
-    groups <- comp_facts[1]
+    group <- comp_facts[1]
     colors <- gray.colors(n = factor_opt[comp_facts[1]]
                           , start = 0.8
                           , end = 0.3) %>%
@@ -329,26 +332,28 @@ mean_comparison <- function(data
 
   }
   
-  xlim <- paste(limits, brakes, sep = "*")
+  ylim <- paste(limits, brakes, sep = "*")
 
   if ( graph_opts == TRUE ) {
     
     xlab <- labels[ x ] %>% as.vector()
     ylab <- labels[ {{variable}} ] %>% as.vector()
-    glab <- labels[ groups ] %>% as.vector()
+    glab <- labels[ group ] %>% as.vector()
     
     graph_opts <- c(type = "bar"
                    , x = x
                    , y = {{variable}}
-                   , groups = groups
+                   , group = group
                    , xlab = xlab
                    , ylab = ylab
                    , glab = glab
-                   , ylimits = xlim
+                   , ylimits = ylim
                    , xrotation = "0*0.5*0.5"
                    , sig = "sig"
                    , error = "ste"
                    , legend = "top"
+                   , xtext = NA
+                   , gtext = NA
                    , dimensions = NA
                    , opt = NA
                    )

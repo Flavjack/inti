@@ -9,50 +9,56 @@ plot_smr(
   type = NULL,
   x = NULL,
   y = NULL,
-  groups = NULL,
+  group = NULL,
   xlab = NULL,
   ylab = NULL,
   glab = NULL,
-  limits = NULL,
-  brakes = NULL,
+  ylimits = NULL,
   xrotation = NULL,
+  xtext = NULL,
+  gtext = NULL,
+  legend = NULL,
   sig = NULL,
   error = NULL,
-  legend = NULL,
+  color = TRUE,
   opt = NULL
 )
 }
 \arguments{
-\item{data}{Data frame with summary data. See details.}
+\item{data}{Output from ger_testcomp function}
 
-\item{type}{Type of plot  (default = "bar"). Others: "line".}
+\item{type}{Type of graphic. "bar" or "line"}
 
-\item{x}{Variable in the x axis.}
+\item{x}{Axis x variable}
 
-\item{y}{Variable in the y axis.}
+\item{y}{Axis y variable}
 
-\item{groups}{Groups the x axis (legend).}
+\item{group}{Group variable}
 
-\item{xlab}{Label of x axis.}
+\item{xlab}{Title for the axis x}
 
-\item{ylab}{Label of y axis.}
+\item{ylab}{Title for the axis y}
 
-\item{glab}{Label of groups or legend.}
+\item{glab}{Title for the legend}
 
-\item{limits}{Limits max and min.}
+\item{ylimits}{limits of the y axis}
 
-\item{brakes}{Units for break the limits.}
+\item{xrotation}{Rotation in x axis c(angle, h, v)}
 
-\item{xrotation}{Angle and horizontal and vertical alignment.}
+\item{xtext}{Text labels in x axis}
 
-\item{sig}{Comparison test values (default = "sig").}
+\item{gtext}{Text labels in group}
 
-\item{error}{Variable used for error bars.}
+\item{legend}{the position of legends ("none", "left", "right", "bottom",
+"top", or two-element numeric vector)}
 
-\item{legend}{Position of legend (default = "top"). Others: "left", "right",
-"bottom", "none".}
+\item{sig}{Column with the significance}
 
-\item{opt}{Include extra layer to the plot}
+\item{error}{Show the error bar ("ste" or "std").}
+
+\item{color}{colored figure (TRUE), otherwise black & white (FALSE)}
+
+\item{opt}{Add news layer to the plot}
 }
 \value{
 plot
@@ -66,28 +72,30 @@ function. Its contain all the parameter for the plot.
 }
 \examples{
 
-library(inti)
-library(googlesheets4)
+\dontrun{
 
-if (gs4_has_token()) {
+library(inti)
+library(gsheet)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs")
+              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/"
+              , "edit#gid=883914570")
 # browseURL(url)
-gs <- as_sheets_id(url)
 
-(data <- gs \%>\%
-    range_read("plot"))
+fb <- gsheet2tbl(url)
+fb \%>\% plot_smr()
 
-plot_smr(data)
+fb \%>\%
+  plot_smr(type = "line"
+           , x = "genotipo"
+           , y = "lfa"
+           , xlab = "test"
+           , ylab = "gran"
+           , glab = "legend"
+           , xrotation = c(45, 0.5, 0.5)
+           , ylimits = c(0, 15000, 3000)
+           )
 
-plot_smr(data
-         , type = "bar"
-         , limits = c(0, 1)
-         , brakes = 0.2
-         , sig = "sig"
-         , error = "ste"
-         )
 }
 
 }

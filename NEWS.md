@@ -2,15 +2,18 @@
 
 - *Yupana*
   - Fix `{arguments}` from `xlimits` to `ylimits`
-  - Update tables output
+  - Update tables style
   
 - *Rticles*
   - Update template files
   
 - *Package* 
   - Vignette for describe the arguments and options in Yupana
-  - Delete redundant functions `info_figure` & `info_grahics`
-  - Update functions: `include_figure` & `include_graphics`
+  - Delete redundant functions `info_figure()` & `info_grahics()`
+  - Update functions: `include_figure()` & `include_graphics()`
+  - Update funtion `plot_smr()` include:
+    - `xtext`: labels for the x level
+    - `gtext`: labels for the group levels
 
 # Version 0.2.0
 
@@ -39,7 +42,7 @@ Arguments changed in the syntax for `fbsm` and `graphics`.
     - New arguments for plot: xlimits, xrotation, dimension, opt
     - Delete redundant arguments; limits, brakes
     - Suggest use "*" instead of ":"
-    - Include additional layers to the plot. e.i. `coord_flip()`
+    - Include additional layers to the plot. e.g. `coord_flip()`
     - Save plot dimensions in the exported sheet
   - `web_table` fix resize table in web
   

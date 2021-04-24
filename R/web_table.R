@@ -8,6 +8,7 @@
 #' @param rnames Row names.
 #' @param buttons Buttons: "excel", "copy" or "none". Default c("excel", "copy")
 #' @param file_name Excel file name
+#' @param scrolly Windows height to show the table
 #'
 #' @return table in markdown format for html documents
 #'
@@ -23,11 +24,14 @@ web_table <- function(data
                       , rnames = FALSE
                       , buttons = NULL
                       , file_name = NULL
+                      , scrolly = NULL
                       ){
   
   if(!is.data.frame(data)) stop("Use a data frame or table")
   
   where <- NULL
+  
+  if(is.null(scrolly)) scrolly <- "60vh"
   
   ext <- c('Buttons', 'Scroller')
   
@@ -49,7 +53,7 @@ web_table <- function(data
                 , deferRender = TRUE
                 , scroller = TRUE
                 , scrollX = TRUE
-                , scrollY = "60vh"
+                , scrollY = scrolly
                 
                 , columnDefs = list(list(width = '200px'
                                          , targets = "_all"))

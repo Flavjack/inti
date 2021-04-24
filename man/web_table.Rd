@@ -10,7 +10,8 @@ web_table(
   digits = 2,
   rnames = FALSE,
   buttons = NULL,
-  file_name = NULL
+  file_name = NULL,
+  scrolly = NULL
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ web_table(
 \item{buttons}{Buttons: "excel", "copy" or "none". Default c("excel", "copy")}
 
 \item{file_name}{Excel file name}
+
+\item{scrolly}{Windows height to show the table}
 }
 \value{
 table in markdown format for html documents

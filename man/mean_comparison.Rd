@@ -48,34 +48,29 @@ treatment1 and treatment2: \code{treatment1:treatment2}.
 }
 \examples{
 
-library(inti)
-library(googlesheets4)
+\dontrun{
 
-if (gs4_has_token()) {
+library(inti)
+library(gsheet)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs")
+              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/"
+              , "edit#gid=172957346")
 # browseURL(url)
-gs <- as_sheets_id(url)
 
-(data <- gs \%>\%
-     range_read("fb"))
+fb <- gsheet2tbl(url)
 
-fbsm <- fieldbook_summary(data
-                 , last_factor = "bloque"
-                 , model_facts = "genotipo*tratamiento"
-                 , comp_facts = "genotipo*tratamiento"
-                 ) 
+model <- fb \%>\% 
+  fieldbook_summary(last_factor = "bloque"
+                    , model_facts = "tratamiento*genotipo"
+                    , comp_facts = "tratamiento*genotipo"
+                    )
 
-mc <- mean_comparison(data
-                     , fb_smr = fbsm
-                     , variable = "hi"
-                     , graph_opts = TRUE
-                     )
-
-table <- mc$comparison
-
-# table \%>\% sheet_write(ss = gs, sheet = "plot")
+mc <- fb \%>\%
+  mean_comparison(fb_smr = model
+                  , variable = "hi"
+                  , graph_opts = T)
+mc$comparison
 
 }
 
