@@ -25,30 +25,3 @@ The function allows to include the arguments in the sheet that have
   the list of variable for the fieldbook design. If you will be evaluate the
   experimental unit one time you should set 1.
 }
-\examples{
-
-library(inti)
-library(googlesheets4)
-
-if (gs4_has_token()) {
-
-url <- paste0("https://docs.google.com/spreadsheets/d/"
-, "1a82XIbTeWPC4pwvu9Zjl4qrGitGQ_B-mf3-w67VS4-Q/edit#gid=0")
-# browseURL(url)
-gs <- as_sheets_id(url)
-
-(design <- gs \%>\%
-    range_read("design"))
-
-(varlist <- gs \%>\%
-    range_read("varlist"))
-
-fieldbook <- design \%>\%
-  inti::fieldbook_design() \%>\%
-  inti::fieldbook_varlist(varlist)
-
-fieldbook
-
-}
-
-}

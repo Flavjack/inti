@@ -46,24 +46,3 @@ The function allows to include the arguments in the sheet that have
   crd, rcbd, lsd, lattice. \code{n_factors} = 2 (factorial): split_crd,
   split_rcbd \code{n_factors} >= 2 (factorial): crd, rcbd, lsd.
 }
-\examples{
-
-library(inti)
-library(googlesheets4)
-library(dplyr)
-
-if (gs4_has_token()) {
-
-url <- paste0("https://docs.google.com/spreadsheets/d/"
-, "1ilw0NHT7mihaM-3U48KzkuMt927xe8ukX6rNuIw2fT0/edit#gid=0")
-# browseURL(url)
-gs <- as_sheets_id(url)
-
-(data <- gs \%>\%
-    range_read("tarpuyr"))
-
-data \%>\% inti::fieldbook_design(n_factors = 2)
-
-}
-
-}

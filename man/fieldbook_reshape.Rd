@@ -42,32 +42,3 @@ If you variable name is \code{variable_evaluation_rep}. The reshape function
 will help to create the column \code{rep} and the new variable name will be
 \code{variable_evaluation}.
 }
-\examples{
-
-
-library(inti)
-library(googlesheets4)
-
-if (gs4_has_token()) {
-
-url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1lslvNuebfI0YQw3KMz7clN8nIs3x8G9Da63E1em7J5o/")
-# browseURL(url)
-gs <- as_sheets_id(url)
-
-(data <- gs \%>\%
-    range_read("fb"))
-
-fbrs <- fieldbook_reshape(data = data
-                          , last_factor = "imbt"
-                          , sep = "_"
-                          , new_colname = "rep"
-                          , from_var = "sch_0_1"
-                          , to_var = "swc_0_1"
-                          , exc_factors = "bar_code"
-                          )
-fbrs
-
-}
-
-}

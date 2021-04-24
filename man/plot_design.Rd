@@ -40,36 +40,3 @@ Plot fieldbook sketch designs based in experimental design
 The function allows to plot the experimental design according the
   field experiment design.
 }
-\examples{
-
-library(inti)
-library(googlesheets4)
-library(purrr)
-
-if (gs4_has_token()) {
-
-url <- paste0("https://docs.google.com/spreadsheets/d/"
-, "1ilw0NHT7mihaM-3U48KzkuMt927xe8ukX6rNuIw2fT0/edit#gid=0")
-# browseURL(url)
-gs <- as_sheets_id(url)
-
-(fb <- gs \%>\%
-    range_read("tarpuy"))
-
-data <- fb \%>\% inti::fieldbook_design(n_factors = 2
-                                      , type = "rcbd"
-                                      , rep = 3) \%>\% pluck("design")
-
-plot_design(data
-            , factor = "temp"
-            , dim = "block"
-            )
-
-plot_design(data
-            , factor = "temp"
-            , dim = "9x5"
-            )
-
-}
-
-}

@@ -36,32 +36,3 @@ Function to create a complete report of the fieldbook
 For compare the factors you should use "*". For example, to compare
 treatment1 and treatment2: \code{treatment1*treatment2}.
 }
-\examples{
-
-library(inti)
-library(googlesheets4)
-
-if (gs4_has_token()) {
-
-url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
-# browseURL(url)
-gs <- as_sheets_id(url)
-
-(data <- gs \%>\%
-    range_read("fb"))
-
-(fb_smr <- gs \%>\%
-  range_read("fbsm"))
-
-report <- fieldbook_report(data
-                          , fb_smr = fb_smr
-                          , variable = "LA"
-                          , dotplot_groups = "genotype"
-                          , model_diag = TRUE
-                          )
-report
-
-}
-
-}

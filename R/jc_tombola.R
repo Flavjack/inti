@@ -22,40 +22,6 @@
 #' 
 #' @export
 #'
-#' @examples
-#'
-#' \dontshow{
-#'
-#' library(inti)
-#' library(googlesheets4)
-#' 
-#' if (gs4_has_token()) {
-#'
-#' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#' , "15TaF0lCCByg0dgOLqfoTlLbAWnau8IiLOklpS4cvm4M")
-#' 
-#' gs <- as_sheets_id(url)
-#' # browseURL(url)
-#'
-#' jc <-  gs %>% range_read("members")
-#'
-#' jc %>% jc_tombola(data = .
-#'                   , members = "Member"
-#'                   , group = "Language"
-#'                   , gr_lvl = c("english", "spanish")
-#'                   , status = "Status"
-#'                   , st_lvl = "activo"
-#'                   , frq = 7
-#'                   , date = "2020-06-17"
-#'                   , seed = 2013
-#'                   ) %>%
-#'                   web_table(rnames = TRUE
-#'                   , caption = "JC")
-#'
-#' }
-#' 
-#' }
-#'
 
 jc_tombola <- function(data
                        , members

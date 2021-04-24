@@ -23,11 +23,11 @@ Imports:
     lme4,
     agricolae,
     FactoMineR,
+    emmeans,
     purrr,
     stringr,
-    DT,
-    emmeans,
-    stringi
+    stringi,
+    DT
 Suggests:
     agridat,
     gsheet,
