@@ -5,15 +5,15 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/inti)](https://CRAN.R-project.org/package=inti)
+[![DOI](https://zenodo.org/badge/82401374.svg)](https://zenodo.org/badge/latestdoi/82401374)
 [![Travis build
 status](https://travis-ci.org/Flavjack/inti.svg?branch=master)](https://travis-ci.org/Flavjack/inti)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/Flavjack/inti?branch=master&svg=true)](https://ci.appveyor.com/project/Flavjack/inti)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/inti)](https://CRAN.R-project.org/package=inti)
 [![CRAN RStudio mirror
-downloads](https://cranlogs.r-pkg.org/badges/grand-total/inti?color=green)](https://r-pkg.org/pkg/inti)
-[![DOI](https://zenodo.org/badge/82401374.svg)](https://zenodo.org/badge/latestdoi/82401374)
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/inti?color=brightgreen)](https://r-pkg.org/pkg/inti)
 <!-- badges: end -->
 
 The ‘inti’ package is part of the ‘inkaverse’ project for developing

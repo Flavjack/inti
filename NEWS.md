@@ -1,3 +1,16 @@
+# Versión 0.3.1
+
+- upcoming updates
+  - Exploratory module []
+    - Boxplot
+    - Distributions
+    - emmeans [?]
+  - Comparison using vectors []
+  - PCA analysis
+    - Dimension contributions []
+    - Results to download []
+    - Styled message for apps []
+
 # Version 0.3.0
 
 - *Yupana*

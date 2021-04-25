@@ -403,21 +403,21 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                                           , label = "Width (cm)"
                                           , value = 20
                                           , step = 2
-                                          , min = 5
+                                          , min = 4
                              ),
 
                              numericInput(inputId = "graph_height"
                                           , label = "Height (cm)"
                                           , value = 10
                                           , step = 2
-                                          , min = 5
+                                          , min = 4
                              ),
 
                              numericInput(inputId = "graph_dpi"
                                           , label = "Resolution"
                                           , value = 100
                                           , step = 20
-                                          , min = 50
+                                          , min = 40
                              ),
                              
                              
@@ -484,23 +484,23 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
 
                           numericInput(inputId = "mvr_width"
                                        , label = "Width (cm)"
-                                       , value = 15
+                                       , value = 14
                                        , step = 2
-                                       , min = 5
+                                       , min = 4
                           ),
 
                           numericInput(inputId = "mvr_height"
                                        , label = "Height (cm)"
-                                       , value = 15
+                                       , value = 14
                                        , step = 2
-                                       , min = 5
+                                       , min = 4
                           ),
 
                           numericInput(inputId = "mvr_dpi"
                                        , label = "Resolution"
                                        , value = 100
                                        , step = 20
-                                       , min = 50
+                                       , min = 40
                           ),
 
                           actionButton(inputId = "mvr_refresh"
