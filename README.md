@@ -8,10 +8,7 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/inti)](https://CRAN.R-project.org/package=inti)
 [![DOI](https://zenodo.org/badge/82401374.svg)](https://zenodo.org/badge/latestdoi/82401374)
-[![Travis build
-status](https://travis-ci.org/Flavjack/inti.svg?branch=master)](https://travis-ci.org/Flavjack/inti)
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/Flavjack/inti?branch=master&svg=true)](https://ci.appveyor.com/project/Flavjack/inti)
+[![R-CMD-check](https://github.com/Flavjack/inti/workflows/R-CMD-check/badge.svg)](https://github.com/Flavjack/inti/actions)
 [![CRAN RStudio mirror
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/inti?color=brightgreen)](https://r-pkg.org/pkg/inti)
 <!-- badges: end -->
