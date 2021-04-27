@@ -13,7 +13,7 @@
 
 #> devtools::install_github("flavjack/inti")
 
-source("pkgs.R")
+suppressMessages(source("pkgs.R"))
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"
                                           , "https://www.googleapis.com/auth/userinfo.email"
@@ -630,8 +630,8 @@ shinyServer(function(input, output, session) {
     }
 
   })
-
-  # end app -----------------------------------------------------------------
-  # -------------------------------------------------------------------------
+  
+# end app -----------------------------------------------------------------
+# -------------------------------------------------------------------------
 
 })

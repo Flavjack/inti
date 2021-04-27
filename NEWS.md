@@ -1,15 +1,31 @@
-# Versión 0.3.1
+# Version 0.3.1
 
-- upcoming updates
-  - Exploratory module []
-    - Boxplot
-    - Distributions
-    - emmeans [?]
-  - Comparison using vectors []
-  - PCA analysis
-    - Dimension contributions []
-    - Results to download []
-    - Styled message for apps []
+## Major changes
+
+- *Rticles*
+  - Deprecated: `create_rticles()` & `rticles()`
+  - Deprecated shiny app: `rticles`
+  - Now you can create your docs using Rmarkdown templates
+    - Rticles
+    - Books
+  - Vignette for explain the dependencies to use rticles
+    
+- *Yupana*
+  - Styled messages
+  
+- *Tarpuy*
+  - Styled messages
+
+
+# - upcoming updates
+#   - Exploratory module []
+#     - Boxplot
+#     - Distributions
+#     - emmeans [?]
+#   - Comparison using vectors []
+#   - PCA analysis
+#     - Dimension contributions []
+#     - Results to download []
 
 # Version 0.3.0
 

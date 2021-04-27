@@ -8,7 +8,3 @@ Description: Field experimental designer.
 Binding: tarpuy
 Interactive: true
 
-Name: Rticles
-Description: Build markdown and bookdown documents.
-Binding: rticles
-Interactive: true

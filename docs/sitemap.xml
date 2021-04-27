@@ -4,7 +4,7 @@
     <loc>https://inkaverse.com//index.html</loc>
   </url>
   <url>
-    <loc>https://inkaverse.com//reference/create_rticles.html</loc>
+    <loc>https://inkaverse.com//reference/colortext.html</loc>
   </url>
   <url>
     <loc>https://inkaverse.com//reference/fieldbook_design.html</loc>
@@ -67,9 +67,6 @@
     <loc>https://inkaverse.com//reference/reexports.html</loc>
   </url>
   <url>
-    <loc>https://inkaverse.com//reference/rticles.html</loc>
-  </url>
-  <url>
     <loc>https://inkaverse.com//reference/tarpuy.html</loc>
   </url>
   <url>
@@ -86,6 +83,9 @@
   </url>
   <url>
     <loc>https://inkaverse.com//articles/policy.html</loc>
+  </url>
+  <url>
+    <loc>https://inkaverse.com//articles/rticles.html</loc>
   </url>
   <url>
     <loc>https://inkaverse.com//articles/yupana.html</loc>

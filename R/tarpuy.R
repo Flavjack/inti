@@ -23,14 +23,7 @@
 #' @export
 
 tarpuy <- function(dependencies = FALSE) {
-  
-  message("
-  - If is the first time running Tarpuy consider install the app dependencies:
-  > inti::tarpuy(dependencies = TRUE)
-  - Demo: 
-  > https://inkaverse.com/articles/apps
-          ")
-  
+
   if (dependencies == TRUE ) {
     
     source("https://raw.githubusercontent.com/Flavjack/inti/master/inst/tarpuy/setup.R")

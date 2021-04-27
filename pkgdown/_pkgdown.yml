@@ -37,6 +37,8 @@ navbar:
         href: articles/heritability.html
       - text: "Yupana: arguments and options"
         href: articles/yupana.html
+      - text: "Rticles: scientific docs with R"
+        href: articles/rticles.html
     - text: "Privacy Policy"
       icon: fa-shield-alt fa-lg
       href: articles/policy.html
@@ -78,13 +80,12 @@ reference:
   - title: Rticles
     desc:  Write technical docs
     contents:
-      - rticles
-      - create_rticles
+      - web_table
       - footnotes
       - starts_with("include")
       
   - title: Plant breeding
-    desc:  Write technical docs
+    desc: Algorithms and calculations
     contents:
       - H2cal
       - metamorphosis
@@ -92,8 +93,8 @@ reference:
       - means_lm
       
   - title: Extra
-    desc:  Multipurpose
+    desc: Miscellaneous
     contents:
-      - web_table
       - jc_tombola
+      - colortext
 

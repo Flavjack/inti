@@ -38,4 +38,4 @@ suppressPackageStartupMessages({
   
 })
 
-rm(cran, git, pkg)
+remove(cran, git, pkg)

@@ -1,0 +1,4 @@
+name: Books
+description: >
+   Rticles: Scientific Documents with Bookdown R Package
+create_dir: TRUE
