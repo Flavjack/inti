@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-04-24
+#> date .: 2021-04-29
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -13,7 +13,7 @@
 
 #> devtools::install_github("flavjack/inti")
 
-suppressMessages(source("pkgs.R"))
+suppressPackageStartupMessages({source("pkgs.R")})
 
 # -------------------------------------------------------------------------
 # -------------------------------------------------------------------------

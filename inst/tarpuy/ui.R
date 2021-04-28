@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-03-12
+#> date .: 2021-04-29
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -13,7 +13,8 @@
 
 #> devtools::install_github("flavjack/inti")
 
-source("pkgs.R")
+source("msgs.R")
+suppressPackageStartupMessages({source("pkgs.R")})
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"
                                           , "https://www.googleapis.com/auth/userinfo.email"

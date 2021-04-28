@@ -13,7 +13,7 @@
 
 #> devtools::install_github("flavjack/inti")
 
-suppressMessages(source("pkgs.R"))
+suppressPackageStartupMessages({source("pkgs.R")})
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"
                                           , "https://www.googleapis.com/auth/userinfo.email"
