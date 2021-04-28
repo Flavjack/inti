@@ -4,7 +4,7 @@
 \alias{colortext}
 \title{Colourise text for display in the terminal.}
 \usage{
-colortext(text, fg = "white", bg = NULL)
+colortext(text, fg = "red", bg = NULL)
 }
 \arguments{
 \item{text}{character vector}

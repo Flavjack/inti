@@ -15,6 +15,7 @@
   
 - *Tarpuy*
   - Styled messages
+  - Vignette for explain the modules in the app
 
 
 # - upcoming updates

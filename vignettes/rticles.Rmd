@@ -1,6 +1,6 @@
 ---
 title: "Rticles"
-description: 'Rticles: scientific docs with R'
+description: 'Rticles: scientific documents with R'
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Rticles}
@@ -16,9 +16,13 @@ El paquete `inti` posee planillas para la generación de documentos técnico/cie
 
 Para el uso de las plantilla se debe tener en cuenta el uso de algunas cuentas y herrameintas las cuales se expondran a continuación.
 
+```{=html}
+<p align="center"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/videoseries?list=PLSQMdOu57lj9HTZNed2-q3WpQfIGraA1V" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+```
+
 # Herramientas
 
-Antes de iniciar, debemos instalar las herramientas que necesitamos. Las herramientas son independientes del sistema operativo, de acceso libre y pueden ser usadas para la investigación reproducible.
+Antes de iniciar con la construcción de documentos técnico/científicos con R, debemos instalar las herramientas que necesitamos. Las herramientas son independientes del sistema operativo, de acceso libre y pueden ser usadas para la investigación reproducible.
 
 > El listado de herramientas son una recomendación basada en mi experiencia, y no son las únicas herramientas de acceso libre.
 

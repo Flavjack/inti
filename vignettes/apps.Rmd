@@ -1,5 +1,6 @@
 ---
 title: "Apps"
+description: 'inti: interactive apps'
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Apps}
@@ -8,33 +9,14 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-library(inti)
-library(knitr)
-
-knitr::opts_chunk$set(
-    fig.align = "center" # Center images in the export file
-  , out.width = "98%" # Figure width in html
-  , echo = TRUE # Avoid print code in the export file
-  , message = FALSE # Avoid print messages in the export file
-  , warning = FALSE # Avoid print messages in the export file
-  , collapse = TRUE
-  , comment = "#>"
-  )
-
-options(
-    OutDec= "." # Use "." instead of "," in the decimal values
-  , scipen = 99 # Avoid use "6e-04"
-  , knitr.kable.NA = "" # NA values will appear as empty cell
-  , knitr.table.format = "pipe" # Format for export tables
-  , citr.use_betterbiblatex = FALSE # For zotero addin 
-  ) 
+source("http://lozanoisla.com/docs.r")
 ```
 
 The package `inti` has been developed to provide tools used in plant science and experimental designs. The package also include shiny apps for design experiments, interactive analysis and technical writing.
 
 The `inti` package is inspired by the Inca mythology where the sun (`inti`) is considered the most significant deity. The web applications are based on this worldview.
 
-The shiny apps are based in the function developed in the package <https://inkaverse.com/reference/>.
+The shiny apps are based in the functions developed in the package <https://inkaverse.com/reference/>.
 
 ## Install the apps locally
 
@@ -44,19 +26,26 @@ The shiny apps are based in the function developed in the package <https://inkav
 
 ## Tarpuy
 
-Ease way to deploy fieldbook experimental plans.
+Ease way to deploy field-book experimental plans.
 
 ```{=html}
 <div id=footer style="width:100%; margin:auto;">
 
-<div style="display:inline-block; width:48%">
+<div style="display:inline-block; width:32%">
 <p style="text-align:center">
 <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC">
-<img src="https://flavjack.github.io/inti/reference/figures/youtube.png" style="height:60px" title="demo"></a>
+<img src="https://flavjack.github.io/inti/reference/figures/youtube.png" style="height:65px" title="demo"></a>
 <span style="display:block;"><small>demo</small></span>
 </p></div>
 
-<div style="display:inline-block; width:48%">
+<div style="display:inline-block; width:32%">
+<p style="text-align:center">
+<a target="_blank" href="https://inkaverse.com/articles/tarpuy.html">
+<img src="https://lozanoisla.com/img/tools.png" style="height:60px" title="options"></a>
+<span style="display:block;"><small>options</small></span>
+</p></div>
+
+<div style="display:inline-block; width:32%">
 <p style="text-align:center">
 <a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/"><img src="https://flavjack.github.io/inti/reference/figures/tarpuy.png" style="height:70px" title="tarpuy"></a>
 <span style="display:block;"><small>Tarpuy</small></span>
@@ -75,7 +64,7 @@ Data analysis and graphics for experimental designs.
 <div style="display:inline-block; width:32%">
 <p style="text-align:center">
 <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9sTx5Dbff9O0g6KCU4pwCQ">
-<img src="https://flavjack.github.io/inti/reference/figures/youtube.png" style="height:60px" title="demo"></a>
+<img src="https://flavjack.github.io/inti/reference/figures/youtube.png" style="height:65px" title="demo"></a>
 <span style="display:block;"><small>demo</small></span>
 </p></div>
 
@@ -95,54 +84,37 @@ Data analysis and graphics for experimental designs.
 </div>
 ```
 
-## Rticles
-
-Template for technical documents using Rmarkdown.
-
-```{=html}
-<div id=footer style="width:100%; margin:auto;">
-
-<div style="display:inline-block; width:48%">
-<p style="text-align:center">
-<a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9HTZNed2-q3WpQfIGraA1V">
-<img src="https://flavjack.github.io/inti/reference/figures/youtube.png" style="height:60px" title="demo"></a>
-<span style="display:block;"><small>demo</small></span>
-</p></div>
-
-<div style="display:inline-block; width:48%">
-<p style="text-align:center">
-<a target="_blank" href="https://flavjack.shinyapps.io/rticles/"><img src="https://flavjack.github.io/inti/reference/figures/quipo.png" style="height:70px" title="rticles"></a>
-<span style="display:block;"><small>Rticles</small></span>
-</p></div>
-
-</div>
-```
-
 ## GerminaR + GerminaQuant
 
-GerminaR is the first platform base in open source package to calculate and graphic the germination indices in R. GerminaR include a web application called "GerminQuant for R" for non programming user.
+GerminaR is the first platform base in open source package to calculate and graphic the germination indices in R. GerminaR include a web application called "GerminQuant for R" for non programming users.
 
 ***
 
 ```{=html}
 <div id=footer style="width:100%; margin:auto;">
 
-<div style="display:inline-block; width:32%">
+<div style="display:inline-block; width:24%">
 <p style="text-align:center">
 <a target="_blank" href="https://CRAN.R-project.org/package=GerminaR"><img src="https://flavjack.github.io/GerminaR/reference/figures/logo.png" style="height:70px" title="R cran" alt="GerminaR"></a> 
 <span style="display:block;"><small>GerminaR</small></span>
 </p></div>
 
-<div style="display:inline-block; width:32%">
+<div style="display:inline-block; width:24%">
+<p style="text-align:center">
+<a target="_blank" href="https://youtube.com/playlist?list=PLSQMdOu57lj9QUoA6JLuv0nBTYacuyrbg"><img src="https://lozanoisla.com/img/youtube.png" style="height:70px" title="Demo" alt="Demo"></a> 
+<span style="display:block;"><small>Demo</small></span>
+</p></div>
+
+<div style="display:inline-block; width:24%">
+<p style="text-align:center">
+<a target="_blank" href="https://flavjack.shinyapps.io/germinaquant/"><img src="https://flavjack.github.io/GerminaR/reference/figures/germinaquant.png" style="height:65px" title="GerminaQuant" alt="GerminaQuant for R"></a>
+<span style="display:block;"><small>GerminaQuant</small></span>
+</p></div>
+
+<div style="display:inline-block; width:24%">
 <p style="text-align:center">
 <a target="_blank" href="https://flavjack.github.io/GerminaR/"><img src="https://pkgdown.r-lib.org/reference/figures/logo.png" style="height:70px" title="GerminaR" alt="GerminaR"></a> 
 <span style="display:block;"><small>Project</small></span>
-</p></div>
-
-<div style="display:inline-block; width:32%">
-<p style="text-align:center">
-<a target="_blank" href="https://flavjack.shinyapps.io/germinaquant/"><img src="https://flavjack.github.io/GerminaR/reference/figures/germinaquant.png" style="height:70px" title="GerminaQuant" alt="GerminaQuant for R"></a>
-<span style="display:block;"><small>GerminaQuant</small></span>
 </p></div>
 
 </div>

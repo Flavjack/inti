@@ -1,0 +1,52 @@
+---
+title: "Tarpuy"
+description: 'Tarpuy: field-book experimental plans'
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tarpuy}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+source("http://lozanoisla.com/docs.r")
+```
+
+Tarpuy es una herramienta interactiva que permite la construcción de planes experimentales.
+
+Tarpuy permite:
+
+- Generación de planes experimentales
+- Construcción de experimentos basados en diseños experimentales
+- Libros de campo para las evaluacion de experimentos 
+- Incluir lista de variables a los libros de campo
+- Croquis basados en el diseño experimental
+- Permite adicionar: cronograma, presupuesto y diario
+
+```{=html}
+<div id=footer style="width:100%; margin:auto;">
+
+<div style="display:inline-block; width:49%">
+<p style="text-align:center">
+<a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC">
+<img src="https://flavjack.github.io/inti/reference/figures/youtube.png" style="height:65px" title="demo"></a>
+<span style="display:block;"><small>demo</small></span>
+</p></div>
+
+<div style="display:inline-block; width:49%">
+<p style="text-align:center">
+<a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/"><img src="https://flavjack.github.io/inti/reference/figures/tarpuy.png" style="height:70px" title="tarpuy"></a>
+<span style="display:block;"><small>Tarpuy</small></span>
+</p></div>
+
+</div>
+```
+
+# Módulos
+
+```{r}
+url <- "https://docs.google.com/spreadsheets/d/1nLP-dH9-dsVMXgsU7Z02EbgWvMIBKG5IYVRHAJCN-Z0/edit#gid=73943593"
+url %>% 
+  gsheet2tbl() %>% 
+  include_table(caption = "Módulos de la aplicación Tarpuy")
+```

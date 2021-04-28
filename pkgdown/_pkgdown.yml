@@ -33,12 +33,14 @@ navbar:
     - text: "Articles"
       icon: fa-book fa-lg
       menu:
+      - text: "Tarpuy: field-book experimental plans"
+        href: articles/tarpuy.html
+      - text: "Yupana: experimental design analysis"
+        href: articles/yupana.html
+      - text: "Rticles: scientific documents with R"
+        href: articles/rticles.html
       - text: "Broad-sense heritability in plant breeding"
         href: articles/heritability.html
-      - text: "Yupana: arguments and options"
-        href: articles/yupana.html
-      - text: "Rticles: scientific docs with R"
-        href: articles/rticles.html
     - text: "Privacy Policy"
       icon: fa-shield-alt fa-lg
       href: articles/policy.html

@@ -21,7 +21,7 @@
 #' cat(colortext("White on red", "white", "red"), "\n")
 #' 
 
-colortext <- function(text, fg = "white", bg = NULL) {
+colortext <- function(text, fg = "red", bg = NULL) {
   
   term <- Sys.getenv()["TERM"]
   
