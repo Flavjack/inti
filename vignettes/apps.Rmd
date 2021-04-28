@@ -9,7 +9,7 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-source("http://lozanoisla.com/docs.r")
+source("http://inkaverse.com/docs.r")
 ```
 
 The package `inti` has been developed to provide tools used in plant science and experimental designs. The package also include shiny apps for design experiments, interactive analysis and technical writing.

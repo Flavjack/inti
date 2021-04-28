@@ -2,7 +2,7 @@
 # Configuration & R packages for documents --------------------------------
 # -------------------------------------------------------------------------
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date   .: 2021-04-24
+#> date   .: 2021-04-28
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -33,7 +33,7 @@ knitr::opts_chunk$set(
   , message = FALSE # Avoid print messages in the export file
   , warning = FALSE # Avoid print messages in the export file
   , collapse = TRUE # Collapse text output into source blocks
-  , tidy = TRUE # Reformat R source code
+  # , tidy = TRUE # Reformat R source code
   )
 
 # -------------------------------------------------------------------------

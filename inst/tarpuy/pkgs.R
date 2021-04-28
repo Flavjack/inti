@@ -7,6 +7,8 @@
 #> date .: 2020-03-24
 # -------------------------------------------------------------------------
 
+suppressPackageStartupMessages({library(inti)})
+
 # -------------------------------------------------------------------------
 # message -----------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -48,7 +50,6 @@ message(
 # -------------------------------------------------------------------------
 
 suppressPackageStartupMessages({
-  
 library(inti)
 library(bslib)
 library(metathis)
@@ -57,6 +58,5 @@ library(googleAuthR)
 library(shinydashboard)
 library(tidyverse)
 library(stringi)
-
 })
 

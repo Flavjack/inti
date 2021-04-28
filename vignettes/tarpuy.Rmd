@@ -9,7 +9,7 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-source("http://lozanoisla.com/docs.r")
+source("http://inkaverse.com/docs.r")
 ```
 
 Tarpuy es una herramienta interactiva que permite la construcción de planes experimentales.
