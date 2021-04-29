@@ -12,31 +12,29 @@ vignette: >
 source("http://inkaverse.com/docs.r")
 ```
 
-El paquete `inti` posee planillas para la generación de documentos técnico/científicos usando `Rmarkdown + Bookdown`. Que permitirán la elaboración de documentos reproducibles.
-
-Para el uso de las plantilla se debe tener en cuenta el uso de algunas cuentas y herrameintas las cuales se expondran a continuación.
+El paquete `inti` posee planillas para la generación de documentos técnico/científicos usando `Rmarkdown + Bookdown`. Estas plantillas permitirán la elaboración de documentos reproducibles.
 
 ```{=html}
 <p align="center"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/videoseries?list=PLSQMdOu57lj9HTZNed2-q3WpQfIGraA1V" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 ```
 
-# Herramientas
+# Herramientas para documentos reproducibles
 
-Antes de iniciar con la construcción de documentos técnico/científicos con R, debemos instalar las herramientas que necesitamos. Las herramientas son independientes del sistema operativo, de acceso libre y pueden ser usadas para la investigación reproducible.
+Para la construcción de documentos técnico/científicos con R, deben crearse algunas cuentas e instalar los programas que necesitamos. Estas herramientas son independientes del sistema operativo, de acceso libre y pueden ser usadas para la investigación reproducible.
 
-> El listado de herramientas son una recomendación basada en mi experiencia, y no son las únicas herramientas de acceso libre.
+> El listado de herramientas son una recomendación basada en mi experiencia, y no son las únicas herramientas.
 
 ## Cuentas
 
-> Se recomienda usar el mismo correo para tpdas las cuentas!. El uso de correos diferentes para cada servicio dificultará el trabajo.
+> Se recomienda usar el mismo correo para todas las cuentas. El uso de correos diferentes para cada servicio dificultará el flujo de trabajo.
 
-Crearse una cuenta en los siguientes servicios:
+Deben crearse una cuenta en los siguientes servicios:
 
-1. `Google (Gmail)`. Les recomiendo tener una cuenta de google ya que nos permite tener acceso a `Gsuit` que posee un conjunto de herramientas gratis en línea. Estas herramientas son un buen complemento para el trabajo en equipo y puedes acceder a ellos desde distintos dispositivos móviles.
+1. `Google (Gmail)`. Se recomienda que tengan una cuenta de Google ya que nos permitirá tener acceso a `Gsuit` que posee un conjunto de herramientas gratuitas en línea. Estas herramientas son un buen complemento para el trabajo en equipo y puedes acceder a ellos desde distintos dispositivos móviles.
 
 1. `Zotero`. Será nuestra biblioteca virtual, y una de las herramientas que más usaremos, ya que nos permitirá organizar nuestro trabajo y citar los documentos en nuestros manuscritos.
 
-1. `GitHub`. ES un servicio para el repositorio de código. Nos ayudará organizar nuestros proyectos y códigos. Nos permitirá visualizar los historiales de cambio de nuestro proyecto, compartir nuestro código y generar páginas webs para publicar documentos en línea
+1. `GitHub`. Es un servicio de repositorio de código. Nos ayudará organizar nuestros proyectos y códigos. Nos permite visualizar los historiales de cambio de nuestro proyecto, compartir nuestro código y generar páginas webs para publicar documentos en línea.
 
 ### Links para crear las cuentas
 
@@ -63,11 +61,11 @@ Crearse una cuenta en los siguientes servicios:
 
 ## Programas
 
-> Instalar los siguientes softwares en el orden que se mencionan, para evitar conflictos en su funcionamiento.
+> Instalar los siguientes programas en el orden que se mencionan, para evitar conflictos en su funcionamiento.
 
 1. `Zotero`. Es un gestor de referencias bibliográficas, libre, abierto y gratuito desarrollado por el Center for History and New Media de la Universidad George Mason.
 
-1. `R CRAN`. Es un entorno y lenguaje de programación con un enfoque al análisis estadístico. El software R viene por defecto con funcionalidades básicas y para ampliar estas debemos instalar paquetes. R actualmente nos permite hacer distintas tareas comó análisis estadísticos, generación de gráficos, escritura de documentos, desarrollo de aplicaciones webs, etc.
+1. `R CRAN`. Es un entorno de lenguaje de programación con un enfoque al análisis estadístico. El software R viene por defecto con funcionalidades básicas y para ampliar estas debemos instalar paquetes. R actualmente nos permite hacer distintas tareas comó análisis estadísticos, generación de gráficos, escritura de documentos, desarrollo de aplicaciones webs, etc.
 
 1. `RStudio`. RStudio es un entorno de desarrollo integrado para el lenguaje de programación R, dedicado a la computación estadística y gráficos.
 
@@ -123,7 +121,7 @@ Los usuarios de `Windows`, pueden instalar estas aplicaciones entre otras desde 
 </div>
 ```
 
-## Chocolatey
+## Chocolatey (opcional)
 
 Si eres usuario de windows, puedes instalar todas las herramientas mencionadas desde el administrador de paquetes `chocolatey` a través de `PowerShell`.
 

@@ -12,15 +12,15 @@ vignette: >
 source("http://inkaverse.com/docs.r")
 ```
 
-Tarpuy es una herramienta interactiva que permite la construcción de planes experimentales.
+Tarpuy es una herramienta que permite la construcción de planes experimentales de forma interactiva.
 
 Tarpuy permite:
 
 - Generación de planes experimentales
 - Construcción de experimentos basados en diseños experimentales
 - Libros de campo para las evaluacion de experimentos 
-- Incluir lista de variables a los libros de campo
-- Croquis basados en el diseño experimental
+- Incluir lista de variables en los libros de campo
+- Croquis basados en los diseños experimentales
 - Permite adicionar: cronograma, presupuesto y diario
 
 ```{=html}

@@ -17,7 +17,7 @@ Yupana es una heramienta interactiva que permite el análisis y gráfica de dato
 Yupana permite:
 
 - Análisis de datos con distintos modelos estadisticos
-- Diagnostico de modelos
+- Diagnostico de los modelos
 - Análisis de comparación de medias de los tratamientos
 - Información resumen de la comparación de los tratamientos
 - Gráfica de los resultados
