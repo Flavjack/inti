@@ -12,21 +12,27 @@
     
 - *Yupana*
   - Styled messages
+  - New module: `Exploratory`
   
 - *Tarpuy*
   - Styled messages
   - Vignette for explain the modules in the app
-
+  
+- *Package* 
+  - New function: `plot_raw()`
+    - Boxplot graph
 
 # - upcoming updates
 #   - Exploratory module []
-#     - Boxplot
 #     - Distributions
 #     - emmeans [?]
 #   - Comparison using vectors []
 #   - PCA analysis
 #     - Dimension contributions []
 #     - Results to download []
+# footnotes -> rowdata
+# R/sysdata.rda. This is the best place to put data that your functions need
+# https://r-pkgs.org/data.html
 
 # Version 0.3.0
 

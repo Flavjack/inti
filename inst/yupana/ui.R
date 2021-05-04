@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-04-29
+#> date .: 2021-05-04
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -299,7 +299,171 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
 
            ),
 
-           tabPanel("Fieldbook",
+tabPanel("Exploratory",
+         
+# Exploratory -------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+fluidRow(
+  
+  column(3,
+         
+         fixedRow(
+           
+           column(6, #
+                  
+                  selectInput(
+                    inputId = "raw_type"
+                    , label = "Type"
+                    , choices = c("boxplot")
+                  )
+                  
+           ),
+           
+           column(6, 
+                  
+                  selectInput(
+                    inputId ="raw_color"
+                    , label = "Color"
+                    , choices = c("yes", "no")
+                  )
+                  
+           ),   
+           
+           column(6, 
+                  
+                  uiOutput("raw_response"),
+                  
+                  ),
+           
+           column(6, 
+                  
+                  textInput(
+                    inputId ="raw_ylab"
+                    , label = "Y label"
+                  )
+                  
+                  ),
+
+           column(6, 
+                  
+                  uiOutput("raw_x"),
+                  
+                  ),
+           
+           column(6, 
+                  
+                  textInput(
+                    inputId ="raw_xlab"
+                    , label = "X label"
+                  )
+                  
+                  ),
+           
+           column(6, 
+                  
+                  uiOutput("raw_group"),
+           
+                  ),
+           
+           column(6, 
+                  
+                  textInput(
+                    inputId ="raw_glab"
+                    , label = "Group label"
+                  )
+                  
+                  ),
+           
+         ),
+         
+         
+         fixedRow(
+           
+           column(6, 
+                  
+                  textInput(
+                    inputId ="raw_ylimits"
+                    , label = "Y limits"
+                    , placeholder = "0*100*20"
+                  )
+                  
+                  ),
+           
+           column(6, 
+                  
+                  textInput(
+                    inputId ="raw_xrotation"
+                    , label = "X rotation"
+                    , value = "0*0.5*0.5"
+                    , placeholder = "angle*h*v"
+                  )
+                  
+                  ),
+           
+           column(6, 
+                  
+                  selectInput(
+                    inputId = "raw_legend"
+                    , label = "Legend"
+                    , choices = c("top", "bottom", "left", "right", "none")
+                  )
+                  
+                  ),
+           
+           column(6, 
+                  
+                  textInput(
+                    inputId ="raw_dimension"
+                    , label = "Dimensions (cm)"
+                    , placeholder = "w*h*dpi"
+                  )
+                  
+           ),
+           
+           column(12, 
+                  
+                  textInput(
+                    inputId ="raw_xtext"
+                    , label = "X brake labels (,)"
+                  )
+                  
+           ),
+           
+           column(12, 
+                  
+                  textInput(
+                    inputId ="raw_gtext"
+                    , label = "Group brake labels (,)"
+                  )
+                  
+           ),
+           
+           column(12, 
+                  
+                  textInput(
+                    inputId ="raw_opt"
+                    , label = "Opt"
+                    , placeholder = "extra layers"
+                  )
+                  
+                  )
+         ),
+
+         ),
+  
+  column(9,
+         
+         uiOutput("plot_raw"),
+         
+         )
+  
+)
+
+
+),
+
+tabPanel("Fieldbook",
 
 # Yupana Fieldbook --------------------------------------------------------
 # -------------------------------------------------------------------------
