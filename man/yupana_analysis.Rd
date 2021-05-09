@@ -49,18 +49,16 @@ library(inti)
 library(gsheet)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/"
-              , "edit#gid=172957346")
+              , "14sO81N50Zx1al5O3Iu3IPaz1_5CVncvtsx-_JRqJ_qE/edit#gid=1959740260")
 # browseURL(url)
 
 fb <- gsheet2tbl(url)
 
 
 yrs <- yupana_analysis(data = fb
-                       , response = "hi"
-                       , model_factors = "geno*treat"
-                       , comparison = c("geno", "treat")
-                       , digits = 1
+                       , response = "ps_foliar"
+                       , model_factors = "EVALUACION * CONDICION * VARIEDAD"
+                       , comparison = c("EVALUACION", "CONDICION", "VARIEDAD")
                        )
                        
 yrs$meancomp

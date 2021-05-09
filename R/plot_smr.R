@@ -58,7 +58,9 @@
 #'                           , y = "hi"
 #'                           , group = "treat"
 #'                           , ylimits = c(0, 1, 0.1)
-#'                           )
+#'                           , opt = "theme_minimal()"
+#'                           ) +
+#'                            facet_grid(.~ treat)
 #' 
 #' }
 #' 

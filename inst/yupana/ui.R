@@ -178,7 +178,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                                ),
                                
                                box(title = h5("Model factors (optional)")
-                                   , width = 4
+                                   , width = 6
                                    , solidHeader = T,
                                    
                                    textInput(inputId = "fb_model_factors"
@@ -188,8 +188,6 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                                              )
                                    
                                ),
-                               
-                               column(2),
 
                                box(title = div(h5("Open GS"), align = "center")
                                    , width = 2
@@ -719,7 +717,10 @@ tabPanel("Graphics",
                                         , width = "100%"
                                         )
                            
-                           )
+                           ),
+                    
+                    br(),
+                    br()
                     
                     )
                   

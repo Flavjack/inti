@@ -728,7 +728,9 @@ observe({
              , gtext = if(input$smr_gtext == "") NULL else smr_gtext
              , error = if(input$smr_error == "none") NULL else input$smr_error
              , sig = if(input$smr_sig == "none") NULL else input$smr_sig
-             )
+             ) +
+      {if(!is.na(input$analysis_comparison[3])) facet_grid(. ~ .data[[input$analysis_comparison[3]]])}
+    
     })
   
   # -------------------------------------------------------------------------

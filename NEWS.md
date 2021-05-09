@@ -20,6 +20,7 @@ Changes incompatible with the old versions.
     - Reactivity in the analysis
   - Export model information
   - Overwrite graph info
+  - Design with 3 factor use `facet_grid()`
   
 - *Tarpuy*
   - Styled messages
