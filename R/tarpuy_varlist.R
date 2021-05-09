@@ -15,12 +15,12 @@
 #' @return data frame
 #'
 #' @import dplyr
-#' @importFrom tidyr pivot_wider
+#' @importFrom tidyr pivot_wider unite
 #' 
 #' @export
 #'
 
-fieldbook_varlist <- function(fieldbook
+tarpuy_varlist <- function(fieldbook
                               , varlist = NULL
                               ) {
 

@@ -207,7 +207,8 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
 
                                      actionButton(inputId = "create_sheet"
                                                   , label =  "Create"
-                                                  , class = "btn btn-success"
+                                                  , class = "btn btn-warning"
+                                                  , width = "80%"
                                                   )
 
                                      , align = "center")
@@ -564,35 +565,69 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                       column(width = 2,
 
                              h5(icon("pencil-ruler"), "Experimental design"),
-
-                             numericInput(
-                               inputId = "plex_nfactors"
-                               , label = "Factors number"
-                               , value = 1
-                               , max = 5
-                               , min = 1
-                             ),
+                             
+                             fluidRow(
+                               
+                               
+                               column(7,
+                                      
+                                      numericInput(
+                                        inputId = "plex_nfactors"
+                                        , label = "Factors number"
+                                        , value = 1
+                                        , max = 5
+                                        , min = 1
+                                        )
+                                      
+                                      ),
+                               
+                               column(5,
+                                      
+                                      numericInput(inputId = "plex_rep"
+                                                   , label = "Replications"
+                                                   , value = 3
+                                                   , min = 2
+                                                   )
+                                      )
+                               ),
 
                              uiOutput("plex_design"),
+                             
+                             fluidRow(
 
-                             numericInput(inputId = "plex_rep"
-                                          , label = "Replications"
-                                          , value = 3
-                                          , min = 2
-                             ),
+                               column(6,
+                                      
+                                      numericInput(inputId = "plex_serie"
+                                                   , label = "Plot digits"
+                                                   , value = 2
+                                                   , max = 3
+                                                   , min = 1
+                                                   )
+                                      
+                                      ),
+                               
+                               column(6,
+                                      
+                                      numericInput(inputId = "plex_seed"
+                                                   , label = "Seed"
+                                                   , value = 0
+                                                   , min = 0
+                                                   )
+                                      
+                                      )
+                               )
+                             
+                             
 
-                             numericInput(inputId = "plex_serie"
-                                          , label = "Plot digits"
-                                          , value = 2
-                                          , max = 3
-                                          , min = 1
-                             ),
+                             
+                             
 
-                             numericInput(inputId = "plex_seed"
-                                          , label = "Seed"
-                                          , value = 0
-                                          , min = 0
-                             )
+
+
+
+
+
+
                              
                              )
                       )
@@ -609,62 +644,102 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                       column(2,
 
                              h5(icon("pencil-ruler"), "Experimental design"),
+                             
+                             fluidRow(
+                               
+                               column(7,
+                                      
+                                      numericInput(
+                                        inputId = "design_nfactors"
+                                        , label = "Factors number"
+                                        , value = 1
+                                        , max = 5
+                                        , min = 1
+                                        ),
+                                      
+                                      ),
+                                      
 
-                             numericInput(
-                               inputId = "design_nfactors"
-                               , label = "Factors number"
-                               , value = 1
-                               , max = 5
-                               , min = 1
-                             ),
-
-                             uiOutput("plex_location"),
-
+                               column(5,
+                                      
+                                      numericInput(inputId = "design_rep"
+                                                   , label = "Replications"
+                                                   , value = 3
+                                                   , min = 2
+                                                   ),
+                                      ),
+                               ),
+                             
                              uiOutput("design_type"),
+                             
+                             fluidRow(
+                               
+                               column(6,
+                                      
+                                      numericInput(inputId = "design_serie"
+                                                   , label = "Plot digits"
+                                                   , value = 2
+                                                   , max = 3
+                                                   , min = 1
+                                                   ),
+                                      
+                                      ),
+                               
+                               
+                               column(6,
+                                      
+                                      numericInput(inputId = "design_seed"
+                                                   , label = "Seed"
+                                                   , value = 0
+                                                   , min = 0
+                                                   ),
+                                      
+                                      
+                                      )
+                               ),
 
-                             numericInput(inputId = "design_rep"
-                                          , label = "Replications"
-                                          , value = 3
-                                          , min = 2
-                                          ),
-
-                             numericInput(inputId = "design_serie"
-                                          , label = "Plot digits"
-                                          , value = 2
-                                          , max = 3
-                                          , min = 1
-                                          ),
-
-                             numericInput(inputId = "design_seed"
-                                          , label = "Seed"
-                                          , value = 0
-                                          , min = 0
-                                          ),
                              
                              textInput(inputId = "design_qr"
                                        , label = "QR label"
                                        , placeholder = "QR prefix"
                                        , value = "FB"
-                             ),
-
-                             actionButton(inputId = "export_design"
-                                          , label = "Generate"
-                                          , class = "btn btn-success"
-                                          )
-
-                             ),
-
+                                       ),
+                             
+                             fluidRow(
+                               
+                               column(6,
+                                      
+                                      radioButtons(inputId = "export_design_overwrite"
+                                                 , label = "Overwrite"
+                                                 , inline = TRUE
+                                                 , choices = c("no", "yes")
+                                                 )
+                                      ),
+                               
+                               column(6,
+                                      
+                                      actionButton(inputId = "export_design"
+                                                   , label = "Generate"
+                                                   , class = "btn btn-success"
+                                                   , width = "100%"
+                                                   )
+                                      )
+                               
+                               ),
+                             
+                      ),
+                      
                       column(10,
-
+                             
                              uiOutput("gsheet_preview_design"),
 
                              br(),
                              br()
 
                              )
-                      )
-
-
+                      
+                    )
+                      
 # Tarpuy sketch -----------------------------------------------------------
 # -------------------------------------------------------------------------
 

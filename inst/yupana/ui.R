@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-05-04
+#> date .: 2021-05-08
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -162,29 +162,37 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                              fluidRow(
 
                                box(title = h5("Fieldbook data")
-                                   , width = 3
+                                   , width = 2
                                    , solidHeader = T,
 
-                                   textInput(inputId = "fieldbook_gsheet"
-                                             , label = NULL
-                                             , value = "fb"
-                                             , placeholder = "Sheet name"
-                                   )
+                                   uiOutput("fieldbook_gsheet")
+                                   
                                ),
-
-                               box(title = h5("Fieldbook summary")
-                                   , width = 3
+                               
+                               box(title = h5("Last factor")
+                                   , width = 2
                                    , solidHeader = T,
-
-                                   textInput(inputId = "fbsmrvars_gsheet"
-                                             , label = NULL
-                                             , value = "fbsm"
-                                             , placeholder = "Sheet name"
-                                   )
+                                 
+                                   uiOutput("fb_last_factor")
+                                 
                                ),
+                               
+                               box(title = h5("Model factors (optional)")
+                                   , width = 4
+                                   , solidHeader = T,
+                                   
+                                   textInput(inputId = "fb_model_factors"
+                                             , label = NULL
+                                             , width = "100%"
+                                             , placeholder = "e.g. block + factor1*factor2"
+                                             )
+                                   
+                               ),
+                               
+                               column(2),
 
                                box(title = div(h5("Open GS"), align = "center")
-                                   , width = 6
+                                   , width = 2
                                    , solidHeader = T,
 
                                    div(
@@ -299,332 +307,517 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
 
            ),
 
-tabPanel("Exploratory",
-         
-# Exploratory -------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-fluidRow(
-  
-  column(3,
-         
-         fixedRow(
-           
-           column(6, #
-                  
-                  selectInput(
-                    inputId = "raw_type"
-                    , label = "Type"
-                    , choices = c("boxplot")
-                  )
-                  
-           ),
-           
-           column(6, 
-                  
-                  selectInput(
-                    inputId ="raw_color"
-                    , label = "Color"
-                    , choices = c("yes", "no")
-                  )
-                  
-           ),   
-           
-           column(6, 
-                  
-                  uiOutput("raw_response"),
-                  
-                  ),
-           
-           column(6, 
-                  
-                  textInput(
-                    inputId ="raw_ylab"
-                    , label = "Y label"
-                  )
-                  
-                  ),
-
-           column(6, 
-                  
-                  uiOutput("raw_x"),
-                  
-                  ),
-           
-           column(6, 
-                  
-                  textInput(
-                    inputId ="raw_xlab"
-                    , label = "X label"
-                  )
-                  
-                  ),
-           
-           column(6, 
-                  
-                  uiOutput("raw_group"),
-           
-                  ),
-           
-           column(6, 
-                  
-                  textInput(
-                    inputId ="raw_glab"
-                    , label = "Group label"
-                  )
-                  
-                  ),
-           
-         ),
-         
-         
-         fixedRow(
-           
-           column(6, 
-                  
-                  textInput(
-                    inputId ="raw_ylimits"
-                    , label = "Y limits"
-                    , placeholder = "0*100*20"
-                  )
-                  
-                  ),
-           
-           column(6, 
-                  
-                  textInput(
-                    inputId ="raw_xrotation"
-                    , label = "X rotation"
-                    , value = "0*0.5*0.5"
-                    , placeholder = "angle*h*v"
-                  )
-                  
-                  ),
-           
-           column(6, 
-                  
-                  selectInput(
-                    inputId = "raw_legend"
-                    , label = "Legend"
-                    , choices = c("top", "bottom", "left", "right", "none")
-                  )
-                  
-                  ),
-           
-           column(6, 
-                  
-                  textInput(
-                    inputId ="raw_dimension"
-                    , label = "Dimensions (cm)"
-                    , placeholder = "w*h*dpi"
-                  )
-                  
-           ),
-           
-           column(12, 
-                  
-                  textInput(
-                    inputId ="raw_xtext"
-                    , label = "X brake labels (,)"
-                  )
-                  
-           ),
-           
-           column(12, 
-                  
-                  textInput(
-                    inputId ="raw_gtext"
-                    , label = "Group brake labels (,)"
-                  )
-                  
-           ),
-           
-           column(12, 
-                  
-                  textInput(
-                    inputId ="raw_opt"
-                    , label = "Opt"
-                    , placeholder = "extra layers"
-                  )
-                  
-                  )
-         ),
-
-         ),
-  
-  column(9,
-         
-         uiOutput("plot_raw"),
-         
-         )
-  
-)
-
-
-),
-
-tabPanel("Fieldbook",
-
 # Yupana Fieldbook --------------------------------------------------------
 # -------------------------------------------------------------------------
 
-                    fluidRow(
+tabPanel("Fieldbook",
 
-                      column(2,
+fluidRow(
 
-                             radioButtons(inputId = "fb_preview_opt"
-                                          , label = "Modules"
-                                          , choices = c("Summary"
-                                                        , "Reshape")
-                                          , inline = TRUE
+  column(2,
 
-                             ),
+         radioButtons(inputId = "fb_preview_opt"
+                      , label = "Modules"
+                      , choices = c("Reshape")
+                      , inline = TRUE
 
-                             uiOutput("fb_modules"),
+         ),
 
-                             br(),
+         uiOutput("fb_modules"),
 
-                             ),
+         br(),
 
-                      column(width = 10,
+         ),
 
-                             uiOutput("fieldbook_preview")
+  column(width = 10,
 
-                      ),
+         uiOutput("fieldbook_preview")
 
-                     )
+  ),
+
+ )
+
+),
+
+# Exploratory -------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+tabPanel("Exploratory",
+         
+         fluidRow(
+           
+           column(2,
+                  
+                  fixedRow(
+                    
+                    column(12, 
+                           
+                           selectInput(
+                             inputId = "raw_type"
+                             , label = "Type"
+                             , choices = c("boxplot")
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           uiOutput("raw_response"),
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           uiOutput("raw_x"),
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           uiOutput("raw_group"),
+                           
+                    ),
+                    
+                    column(6, 
+                           
+                           textInput(
+                             inputId ="raw_ylimits"
+                             , label = "Y limits"
+                             , placeholder = "0*100*20"
+                           )
+                           
+                    ),
+                    
+                    column(6, 
+                           
+                           textInput(
+                             inputId ="raw_xrotation"
+                             , label = "X rotation"
+                             , value = "0*0.5*0.5"
+                             , placeholder = "angle*h*v"
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           textInput(
+                             inputId = "raw_dimension"
+                             , label = "Dimensions (W*H*dpi)"
+                             , placeholder = "W*H*dpi"
+                             , value = "20*10*100"
+                           )
+                           
+                    )
+                    
+                  )
+                  
+           ),
+           
+           column(8,
+                  
+                  uiOutput("plot_raw"),
+                  
+           ),
+           
+           column(2,
+                  
+                  fixedRow(
+                    
+                    column(6, 
+                           
+                           selectInput(
+                             inputId ="raw_color"
+                             , label = "Color"
+                             , choices = c("yes", "no")
+                           )
+                           
+                    ),   
+                    
+                    column(6, 
+                           
+                           selectInput(
+                             inputId = "raw_legend"
+                             , label = "Legend"
+                             , choices = c("top", "bottom", "left", "right", "none")
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           textInput(
+                             inputId ="raw_ylab"
+                             , label = "Y label"
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           textInput(
+                             inputId ="raw_xlab"
+                             , label = "X label"
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           textInput(
+                             inputId ="raw_glab"
+                             , label = "Group label"
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           textInput(
+                             inputId ="raw_gtext"
+                             , label = "Group brake labels (,)"
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           textInput(
+                             inputId ="raw_xtext"
+                             , label = "X brake labels (,)"
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           textInput(
+                             inputId ="raw_opt"
+                             , label = "Opt"
+                             , placeholder = "extra layers"
+                           )
+                           
+                    )
+                  )
+                  
+           )
+         )
+         
+),
 
 # Yupana Analysis ---------------------------------------------------------
 # -------------------------------------------------------------------------
 
-                    ),
+tabPanel("Analysis",
+         
+fluidRow(
+  
+  column(2, 
+                
+        radioButtons(inputId = "analysis_preview_opt"
+                     , label = "Modules"
+                     , choices = c("Gsheet"
+                                   , "Model"
+                                   , "Diagnostic"
+                                   )
+                     , inline = TRUE
+                     , selected = "Model"
+                     ),
+        
+        uiOutput("analysis_last_factor"),
+        
+        uiOutput("analysis_response"),
+        
+        uiOutput("analysis_comparison"),
+        
+        uiOutput("analysis_model_factors"),
 
-            tabPanel("Analysis",
-
-
-                     fluidRow(
-
-                       column(2,
-
-                              radioButtons(inputId = "rpt_preview_opt"
-                                           , label = "Modules"
-                                           , choices = c("Gsheet"
-                                                         , "Model"
-                                                         , "Diagnostic" = "Plots")
-                                           , inline = TRUE
-                                           , selected = "Model"
-
-                              ),
-
-                              uiOutput("rpt_variable"),
-
-                              uiOutput("rpt_dotplot_groups"),
-                              
-                              uiOutput("sheet_export"),
-                              
-                              uiOutput("rpt_digits"),
-                              
-                              br(),
-                              
-                              actionButton(inputId = "fbsm_refresh"
-                                           , label = "Refresh"
-                                           , class = "btn btn-success"
-                              )
-
-                              ),
-
-
-                       column(width = 10,
-
-                                uiOutput("rpt_preview")
-
-                       ),
-
-                     )
-
+        selectInput(
+          inputId = "analysis_test_comparison"
+          , label = "Test comparison"
+          , choices = c("SNK", "TUKEY", "DUNCAN")
+        ),
+        
+        fluidRow(
+          
+          column(7,
+                 
+                 numericInput(
+                   inputId = "analysis_sig_level"
+                   , label = "Significance level"
+                   , value = 0.05
+                   , step = 0.01
+                   , min = 0
+                   , max = 0.5
+                 )
+                 
+          ),
+          
+          column(5,
+                 
+                 numericInput(
+                   inputId = "analysis_digits"
+                   , label = "Digits"
+                   , value = 2
+                   , min = 0
+                   , step = 1
+                 )
+                 
+          )
+          
+        )
+        
+        ),
+ 
+ column(10,
+        
+        uiOutput("analysis_preview")
+        
+        )
+ 
+ )
+                     
+         
 # Yupana Graphics ---------------------------------------------------------
 # -------------------------------------------------------------------------
 
-            ),
+),
 
-           tabPanel("Graphics",
+tabPanel("Graphics",
+         
+         fluidRow(
+           
+           column(2,
 
-                    fluidRow(
+                  fixedRow(
 
-                      column(2,
+                    column(12,
+                           
+                           radioButtons(inputId = "smr_preview_opt"
+                                        , label = "Modules"
+                                        , choices = c("Gsheet"
+                                                      , "Plots")
+                                        , selected = "Plots"
+                                        , inline = TRUE)
+                    ),
+                    
+                    column(12,
+                           
+                           HTML('<p>Model</p>'),
+                           
+                           verbatimTextOutput("analysis_model")
+                           
+                           ),
+                    
+                    column(12, 
+                           
+                           selectInput(
+                             inputId = "smr_type"
+                             , label = "Type"
+                             , choices = c("bar", "line")
+                           )
+                           
+                    ),
+                    
+                    column(6, 
+                           
+                           uiOutput("smr_sig"),
+                           
+                    ),
+                    
+                    column(6, 
+                           
+                           selectInput(
+                             inputId = "smr_error"
+                             , label = "Error bar"
+                             , selected = "ste"
+                             , choices = c("none", "ste", "std")
+                           )
+                           
+                    ),
 
-                             radioButtons(inputId = "grp_preview_opt"
-                                          , label = "Modules"
-                                          , choices = c("Gsheet"
-                                                        , "Plots")
-                                          , selected = "Plots"
-                                          , inline = TRUE
-
-                             ),
-
-                             uiOutput("graph_sheets"),
-
-                             numericInput(inputId = "graph_width"
-                                          , label = "Width (cm)"
-                                          , value = 20
-                                          , step = 2
-                                          , min = 4
-                             ),
-
-                             numericInput(inputId = "graph_height"
-                                          , label = "Height (cm)"
-                                          , value = 10
-                                          , step = 2
-                                          , min = 4
-                             ),
-
-                             numericInput(inputId = "graph_dpi"
-                                          , label = "Resolution"
-                                          , value = 100
-                                          , step = 20
-                                          , min = 40
-                             ),
-                             
-                             
-                             fluidRow(
-                               
-                               column(6, 
-                                      
-                                      div(
-                                        
-                                        actionButton(inputId = "graph_refresh"
-                                                     , label = "Refresh"
-                                                     , class = "btn btn-warning")
-                                        
-                                        , align = "center")
-                                      
-
-                                      ),
-                               
-                               column(6, 
-                                      
-                                      div(
-                                        
-                                        actionButton(inputId = "graph_create"
-                                                     , label = "Create"
-                                                     , class = "btn btn-success")
-                                        
-                                        , align = "center")
-                                      
-                                      )
-                             ),
-                             
-                             ),
-
-                      column(width = 10,
-
-                               uiOutput("graph_preview")
-
-                      ),
-
+                    column(12, 
+                           
+                           uiOutput("smr_response"),
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           uiOutput("smr_x"),
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           uiOutput("smr_group"),
+                           
+                    ),
+                    
+                    column(6, 
+                           
+                           textInput(
+                             inputId ="smr_ylimits"
+                             , label = "Y limits"
+                             , placeholder = "0*100*20"
+                           )
+                           
+                    ),
+                    
+                    column(6, 
+                           
+                           textInput(
+                             inputId ="smr_xrotation"
+                             , label = "X rotation"
+                             , value = "0*0.5*0.5"
+                             , placeholder = "angle*h*v"
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           textInput(
+                             inputId = "smr_dimension"
+                             , label = "Dimensions (W*H*dpi)"
+                             , placeholder = "W*H*dpi"
+                             , value = "20*10*100"
+                           )
+                           
+                    ),
+                    
+                    column(6,
+                           
+                           uiOutput("graph_sheet_save"),
+                           
+                           ),
+                    
+                    column(6,
+                           
+                           radioButtons(inputId = "graph_smr_overwrite"
+                                        , label = "Overwrite"
+                                        , inline = TRUE
+                                        , choices = c("no", "yes")
+                                        )
+                           ),
+                    
+                    column(6,
+                           
+                           actionButton(inputId = "graph_smr_load"
+                                        , label = "Load"
+                                        , class = "btn btn-primary"
+                                        , width = "100%"
+                                        )
+                           
+                           ),
+                    
+                    column(6,
+                           
+                           actionButton(inputId = "graph_smr_save"
+                                        , label = "Save"
+                                        , class = "btn btn-warning"
+                                        , width = "100%"
+                                        )
+                           
+                           )
+                    
                     )
+                  
+           ),
+           
+           column(8,
+                  
+                  uiOutput("plot_smr"),
+                  
+           ),
+           
+           column(2,
+                  
+                  fixedRow(
+                    
+                    column(6, 
+                           
+                           selectInput(
+                             inputId ="smr_color"
+                             , label = "Color"
+                             , choices = c("yes", "no")
+                           )
+                           
+                    ),   
+                    
+                    column(6, 
+                           
+                           selectInput(
+                             inputId = "smr_legend"
+                             , label = "Legend"
+                             , choices = c("top", "bottom", "left", "right", "none")
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           textInput(
+                             inputId ="smr_ylab"
+                             , label = "Y label"
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           textInput(
+                             inputId ="smr_xlab"
+                             , label = "X label"
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           textInput(
+                             inputId ="smr_glab"
+                             , label = "Group label"
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           textInput(
+                             inputId ="smr_gtext"
+                             , label = "Group brake labels (,)"
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           textInput(
+                             inputId ="smr_xtext"
+                             , label = "X brake labels (,)"
+                           )
+                           
+                    ),
+                    
+                    column(12, 
+                           
+                           textInput(
+                             inputId ="smr_opt"
+                             , label = "Opt"
+                             , placeholder = "extra layers"
+                           )
+                           
+                    )
+                  )
+                  
+           )
+         )
+                    
+# multivariate ------------------------------------------------------------
+# -------------------------------------------------------------------------
 
-                ),
+),
 
         tabPanel("Multivariate",
 
@@ -640,39 +833,24 @@ tabPanel("Fieldbook",
                                                      , "CORR"
                                                      )
                                        , inline = TRUE
-
-                          ),
+                                       ),
+                          
+                          uiOutput("mvr_last_factor"),
 
                           uiOutput("mvr_facts"),
 
                           uiOutput("mvr_groups"),
+                          
+                          uiOutput("mvr_variables"),
 
-                          numericInput(inputId = "mvr_width"
-                                       , label = "Width (cm)"
-                                       , value = 14
-                                       , step = 2
-                                       , min = 4
+                          textInput(
+                            inputId ="mvr_dimension"
+                            , label = "Dimensions (cm)"
+                            , placeholder = "w*h*dpi"
+                            , value = "14*14*100"
+                            )
+                          
                           ),
-
-                          numericInput(inputId = "mvr_height"
-                                       , label = "Height (cm)"
-                                       , value = 14
-                                       , step = 2
-                                       , min = 4
-                          ),
-
-                          numericInput(inputId = "mvr_dpi"
-                                       , label = "Resolution"
-                                       , value = 100
-                                       , step = 20
-                                       , min = 40
-                          ),
-
-                          actionButton(inputId = "mvr_refresh"
-                                       , label = "Refresh"
-                                       , class = "btn btn-success"
-                          )
-                   ),
 
                    column(width = 10,
 

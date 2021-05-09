@@ -1,4 +1,4 @@
-#' Table footnote
+#' Footnotes in tables
 #'
 #' Include tables footnotes and symbols for kables in pandoc format
 #'
@@ -29,9 +29,9 @@ footnotes <- function(table
                       ) {
 
   notation <- match.arg(notation, c("alphabet", "number", "none"))
-
-  ids.ops <- read.csv(system.file("files/symbols.csv", package = "inti"))
-
+  
+  ids.ops <- inti:::sym
+  
   if (notation == "none") {
 
     ids <- ids.ops[["alphabet"]]

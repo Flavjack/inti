@@ -1,6 +1,6 @@
-#' Field book experimental designs
+#' Fieldbook experimental designs
 #'
-#' Function to deploy experimental designs based in agricolae package
+#' Function to deploy experimental designs
 #'
 #' @param data Experimental design data frame with the factors and level. See
 #'   examples.
@@ -27,21 +27,66 @@
 #' @importFrom stringr str_detect str_to_upper
 #' @importFrom tibble tibble
 #' @importFrom utils tail
+#' @importFrom tidyr unite
 #' @importFrom purrr discard
 #' 
 #' @export
+#' 
+#' @examples
+#' 
+#' \dontrun{
 #'
+#' library(inti)
+#' library(gsheet)
+#' 
+#' url <- paste0("https://docs.google.com/spreadsheets/d/"
+#'               , "1wXzDc6OFOFgDgjGiZX8qYB8hzvgspoPf-qUS5AsScus/edit#gid=1296863855")
+#' # browseURL(url)
+#' 
+#' fb <- gsheet2tbl(url)
+#' 
+#' 
+#' tarpuy_design(data = fb)
+#' 
+#' 
+#' 
+#' }
 
-fieldbook_design <- function(data,
+tarpuy_design <- function(data,
                              n_factors = 1,
                              type = "crd",
                              rep = 2,
                              serie = 2,
                              seed = 0,
-                             qr = "FB"
+                             qr = "fb"
                              ) {
 
   plots <- Row.names <- factors <- NULL
+  
+  if(FALSE) {
+    
+    data <- fb
+    
+    ncolum <- data %>% 
+      as.data.frame() %>% 
+      select(dplyr::contains("value")) %>% 
+      pluck(1)[1] %>% 
+      as.numeric()
+    
+    if(length(ncolum) == 0)
+    
+    
+    treat_fcts <- data %>%
+      select(!starts_with("{") | !ends_with("}")) %>% 
+      select(1:{{ncolum}}) %>% 
+      as.list() %>% 
+      lapply(., function(x) unique(x)) %>% 
+      map(discard, is.na) %>% 
+      lengths() %>% 
+      prod()
+    
+    
+  }
 
 # design type -------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -67,6 +112,7 @@ treatments_names <- data_fb %>%
 treatments_levels <- data_fb %>%
   select( {{treatments_names}} ) %>%
   as.list() %>%
+  lapply(., function(x) unique(x)) %>% 
   purrr::map(discard, is.na)
 
 # extract arguments -------------------------------------------------------
@@ -196,9 +242,9 @@ treat_fcts <- treatments_levels[treat_name]
 # -------------------------------------------------------------------------
 
           if (n_factors == 1) {
-
+            
             onefact <- treat_fcts %>% pluck(1)
-
+            
             if (type == "crd") {
               design <- agricolae::design.crd(
                 trt = onefact,
@@ -277,7 +323,7 @@ treat_fcts <- treatments_levels[treat_name]
           treat_name <- twofact_lvl %>% names()
           fact1 <- twofact_lvl %>% pluck(1)
           fact2 <- twofact_lvl %>% pluck(2)
-
+          
           if (type == "split-crd") {
 
             design <- agricolae::design.split(
@@ -320,7 +366,7 @@ treat_fcts <- treatments_levels[treat_name]
 # -------------------------------------------------------------------------
 
         if ( n_factors >= 2 && ( type == "crd" | type == "rcbd" | type == "lsd" ) ) {
-
+          
           treat_lvls <- lengths(treat_fcts)
 
           design <- agricolae::design.ab(
@@ -337,17 +383,17 @@ treat_fcts <- treatments_levels[treat_name]
           col_rnm <- function(renamed_fb, treat, new_names) {
 
             oldn <- renamed_fb %>%
-              select(treat) %>%
+              dplyr::select({{treat}}) %>%
               unique() %>%
               as_vector()
 
             names <- structure(as.character(new_names),
-                               names = as.character(oldn)
-            )
+                               names = as.character(oldn))
 
             renamed_fb %>%
-              mutate_at({{ treat }}, ~ recode(., !!!names)) %>%
-              select({{ treat }})
+              mutate(across({{treat}}, ~dplyr::recode(.x = ., !!!names))) %>%
+              select({{treat}})
+            
             }
 
           # -------------------------------------------------------------------------
@@ -360,21 +406,25 @@ treat_fcts <- treatments_levels[treat_name]
           fin <- length(renamed_fb)
 
           fb_recoded <- lapply(ini:fin, function(x) {
+            
+            colnm <- colnames(renamed_fb)[x]
+            
             renamed_fb %>%
-              col_rnm(.,
-                      treat = colnames(.)[x],
-                      new_names = treat_fcts[[colnames(.)[x]]]
+              col_rnm(renamed_fb = .,
+                      treat = {{colnm}},
+                      new_names = treat_fcts[[colnm]]
               )
+            
             })
 
           result <- list(
             design = do.call(cbind, fb_recoded) %>%
             tibble() %>%
-            merge(renamed_fb %>% select(-{{ treat_name }}),
+            merge(renamed_fb %>% select(!{{ treat_name }}),
                   .,
                   by = 0) %>%
             dplyr::arrange(plots) %>%
-            select(-Row.names)
+            select(!Row.names)
             )
         }
 

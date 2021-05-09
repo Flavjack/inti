@@ -26,7 +26,7 @@
 #' @export
 #'
 
-plot_design <- function(data
+tarpuy_plotdesign <- function(data
                         , factor
                         , dim = NULL
                         , fill = "plots"

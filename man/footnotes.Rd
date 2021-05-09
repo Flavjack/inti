@@ -2,7 +2,7 @@
 % Please edit documentation in R/footnotes.R
 \name{footnotes}
 \alias{footnotes}
-\title{Table footnote}
+\title{Footnotes in tables}
 \usage{
 footnotes(table, notes = NULL, label = "Note:", notation = "alphabet")
 }

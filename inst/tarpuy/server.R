@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-03-12
+#> date .: 2021-04-08
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -161,6 +161,7 @@ shinyServer(function(input, output, session) {
     actionButton(inputId = "open_sheet"
                  , label = "Open"
                  , class = "btn btn-success"
+                 , width = "80%"
                  , onclick = open
     )
 
@@ -206,7 +207,7 @@ shinyServer(function(input, output, session) {
       
     } else { fbname <- input$plex_fieldbook }
     
-    plex <- fieldbook_plex(data = NULL
+    plex <- tarpuy_plex(data = NULL
                            , idea = input$plex_idea
                            , goal = input$plex_goal
                            , hypothesis = input$plex_hypothesis
@@ -304,127 +305,164 @@ shinyServer(function(input, output, session) {
 
   })
 
-  # tarpuy design -----------------------------------------------------------
+# tarpuy design -----------------------------------------------------------
+# -------------------------------------------------------------------------
+
+# preview design -----------------------------------------------------------
+
+gsheet_design <- reactive({
+
+  info <- gs4_get(gs())
+
+  url <- info$spreadsheet_url
+
+  id <- info$sheets %>%
+    filter(name %in% input$gsheet_design) %>%
+    pluck("id")
+
+  plot_url  <- paste(url, id, sep = "#gid=")
+
+})
+
+output$gsheet_preview_design <- renderUI({
+
+  validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
+
+  tags$iframe(src = gsheet_design(),
+              style="height:580px; width:100%; scrolling=no")
+
+})
+
+# design type -------------------------------------------------------------
+
+output$design_type <- renderUI({
+
+  if(input$design_nfactors == 1) {
+
+    type <- c("crd", "rcbd", "lsd", "lattice")
+
+  } else if (input$design_nfactors == 2) {
+
+    type <- c("crd", "rcbd", "lsd", "split-crd", "split-rcbd")
+
+  } else if (input$design_nfactors > 2) {
+
+    type <- c("crd", "rcbd", "lsd")
+
+  }
+
+  selectizeInput(
+    inputId = "design_type",
+    label = "Design type",
+    choices = type,
+    multiple = FALSE
+  )
+
+})
+
+# export fieldbook --------------------------------------------------------
+
+observeEvent(input$export_design, {
+  
+  validate(need(input$fieldbook_url, "LogIn and create or insert a url"))
+  
+  # fieldbook ---------------------------------------------------------------
+  
+  if ( input$gsheet_design %in% sheet_names(gs()) ) {
+    
+    fieldbook <-  gs() %>%
+      range_read(input$gsheet_design)
+    
+  } else { fieldbook <- NULL }
+  
+# check level in the table ------------------------------------------------
+
+  ncolum <- fieldbook %>% 
+    as.data.frame() %>% 
+    select(dplyr::contains("value")) %>% 
+    pluck(1)[1] %>% 
+    as.numeric()
+  
+  if(length(ncolum) != 0) {
+    
+    treat_fcts <- fieldbook %>%
+      select(!starts_with("{") | !ends_with("}")) %>% 
+      select(1:{{ncolum}}) %>% 
+      as.list() %>% 
+      lapply(., function(x) unique(x)) %>% 
+      map(discard, is.na) %>% 
+      lengths() %>% 
+      prod()
+    
+  } else if (length(ncolum) == 0) {
+    
+    treat_fcts <- fieldbook %>% 
+      select(1:input$design_nfactors) %>% 
+      as.list() %>% 
+      lapply(., function(x) unique(x)) %>% 
+      map(discard, is.na) %>% 
+      lengths() %>% 
+      prod()
+    
+  }
+  
+  validate(need(treat_fcts >= 2, "Factors without enough levels"))
+
+  # variables ---------------------------------------------------------------
+
+  if ( input$gsheet_varlist %in% sheet_names(gs()) ) {
+
+    variables <- gs() %>%
+      range_read(input$gsheet_varlist)
+
+  } else { variables <- NULL }
+
   # -------------------------------------------------------------------------
 
-  # preview design -----------------------------------------------------------
+    fbds <- fieldbook %>%
+      tarpuy_design(
+        n_factors = input$design_nfactors
+        , type = input$design_type
+        , rep = input$design_rep
+        , serie = input$design_serie
+        , seed = input$design_seed
+        , qr = input$design_qr
+      ) %>%
+      tarpuy_varlist(variables)
+  
+  
+    sheet_export <- input$gsheet_fb %>% gsub("[[:space:]]", "_", .)
 
-  gsheet_design <- reactive({
+    if (input$export_design_overwrite == "no" & !sheet_export %in% sheet_names(gs())) {
 
-    info <- gs4_get(gs())
+      sheet_add(ss = gs(), sheet = sheet_export)
 
-    url <- info$spreadsheet_url
-
-    id <- info$sheets %>%
-      filter(name %in% input$gsheet_design) %>%
-      pluck("id")
-
-    plot_url  <- paste(url, id, sep = "#gid=")
-
-  })
-
-  output$gsheet_preview_design <- renderUI({
-
-    validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
-
-    tags$iframe(src = gsheet_design(),
-                style="height:580px; width:100%; scrolling=no")
-
-  })
-
-  # design type -------------------------------------------------------------
-
-  output$design_type <- renderUI({
-
-    if(input$design_nfactors == 1) {
-
-      type <- c("crd", "rcbd", "lsd", "lattice")
-
-    } else if (input$design_nfactors == 2) {
-
-      type <- c("crd", "rcbd", "lsd", "split-crd", "split-rcbd")
-
-    } else if (input$design_nfactors > 2) {
-
-      type <- c("crd", "rcbd", "lsd")
-
-    }
-
-    selectizeInput(
-      inputId = "design_type",
-      label = "Design type",
-      choices = type,
-      multiple = FALSE
-    )
-
-  })
-
-  # export fieldbook --------------------------------------------------------
-
-  observeEvent(input$export_design, {
-
-    validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
-
-    # variables ---------------------------------------------------------------
-
-    if ( input$gsheet_varlist %in% sheet_names(gs()) ) {
-
-      variables <- gs() %>%
-        range_read(input$gsheet_varlist)
-
-    } else { variables <- NULL }
-
-    # fieldbook ---------------------------------------------------------------
-
-    if ( input$gsheet_design %in% sheet_names(gs()) ) {
-
-      fieldbook <-  gs() %>%
-        range_read(input$gsheet_design)
-
-    } else { fieldbook <- NULL }
-
-    # -------------------------------------------------------------------------
-
-    if ( !is.null( fieldbook ) ) {
-
-      fbds <- fieldbook %>%
-        inti::fieldbook_design(
-          n_factors = input$design_nfactors
-          , type = input$design_type
-          , rep = input$design_rep
-          , serie = input$design_serie
-          , seed = input$design_seed
-          , qr = input$design_qr
-        ) %>%
-        inti::fieldbook_varlist( variables )
-
-      if ( !input$gsheet_fb %in% sheet_names(gs()) ) {
-
-        sheet_add(ss = gs(), sheet = input$gsheet_fb, .after = input$gsheet_design)
-
-      }
-
-      fbds %>%
-        pluck("design") %>%
+      fbds$desig %>%
         as.data.frame() %>%
-        write_sheet(ss = gs(), sheet = input$gsheet_fb)
+        write_sheet(ss = gs(), sheet = sheet_export)
 
-    } else { "Create your design" }
+    } else if(input$export_design_overwrite == "yes") {
 
-    # -------------------------------------------------------------------------
+      fbds$desig %>%
+        as.data.frame() %>%
+        write_sheet(ss = gs(), sheet = sheet_export)
 
-    if ( !"sketch" %in% sheet_names(gs()) & input$gsheet_fb %in% sheet_names(gs()) ) {
+    } else {  print ("sheet already exist") }
 
-      sheet_add(ss = gs(), sheet = "sketch", .after = input$gsheet_fb)
+# -------------------------------------------------------------------------
 
-    }
+  if (!"sketch" %in% sheet_names(gs()) & sheet_export %in% sheet_names(gs()) ) {
 
-  })
+    sheet_add(ss = gs(), sheet = "sketch", .after = sheet_export)
 
-  # tarpuy sketch -----------------------------------------------------------
-  # -------------------------------------------------------------------------
+  }
 
-  # preview sketch ----------------------------------------------------------
+})
+
+# tarpuy sketch -----------------------------------------------------------
+# -------------------------------------------------------------------------
+
+# preview sketch ----------------------------------------------------------
 
   gsheet_fb <- reactive({
 
@@ -526,7 +564,7 @@ shinyServer(function(input, output, session) {
 
     if ( input$sketch_dim2 != "" ) { blocking <- input$sketch_dim2 } else { blocking <- input$sketch_dim }
 
-    plot_sketch <-  plot_design(data = fb_sketch
+    plot_sketch <-  tarpuy_plotdesign(data = fb_sketch
                                 , factor = input$sketch_factor
                                 , dim = blocking
                                 , fill = input$sketch_fill

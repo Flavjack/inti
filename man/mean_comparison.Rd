@@ -2,49 +2,35 @@
 % Please edit documentation in R/mean_comparison.R
 \name{mean_comparison}
 \alias{mean_comparison}
-\title{Mean comparison using data frames}
+\title{Mean comparison test}
 \usage{
 mean_comparison(
   data,
-  fb_smr,
-  variable,
-  model_facts,
-  comp_facts,
+  response,
+  model_factors,
+  comparison,
   test_comp = "SNK",
-  sig_level = 0.05,
-  graph_opts = FALSE,
-  digits = 2
+  sig_level = 0.05
 )
 }
 \arguments{
 \item{data}{Fieldbook data.}
 
-\item{fb_smr}{Summary of the variables in the fieldbook.}
+\item{response}{Model used for the experimental design.}
 
-\item{variable}{Model used for the experimental design.}
+\item{model_factors}{Factor in the model.}
 
-\item{model_facts}{Comparison test (default = "SNK"). Others: "TUKEY",
-"DUNCAN".}
+\item{comparison}{Significance level for the analysis (default = 0.05).}
 
-\item{comp_facts}{Significance level for the analysis (default = 0.05).}
-
-\item{test_comp}{Significance level for the analysis (default = 0.05).}
+\item{test_comp}{Comparison test (default = "SNK"). Others: "TUKEY", "DUNCAN".}
 
 \item{sig_level}{Significance level for the analysis (default = 0.05).}
-
-\item{graph_opts}{Include option in the table for graphs (default = FALSE).}
-
-\item{digits}{Number of digits in the table.}
 }
 \value{
-data frame
+list
 }
 \description{
 Function to compare treatment from lm or aov using data frames
-}
-\details{
-For compare the factors you should use "*". For example, to compare
-treatment1 and treatment2: \code{treatment1:treatment2}.
 }
 \examples{
 
@@ -60,17 +46,14 @@ url <- paste0("https://docs.google.com/spreadsheets/d/"
 
 fb <- gsheet2tbl(url)
 
-model <- fb \%>\% 
-  fieldbook_summary(last_factor = "bloque"
-                    , model_facts = "tratamiento*genotipo"
-                    , comp_facts = "tratamiento*genotipo"
-                    )
-
-mc <- fb \%>\%
-  mean_comparison(fb_smr = model
-                  , variable = "hi"
-                  , graph_opts = T)
+mc <- mean_comparison(data = fb
+                      , response = "hi"
+                      , model_factors = "geno*treat"
+                      , comparison = c("geno", "treat")
+                      , test_comp = "TUKEY"
+                      )
 mc$comparison
+mc$stat
 
 }
 

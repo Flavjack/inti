@@ -44,7 +44,7 @@ web_table <- function(data
   }
   
   data %>% 
-    mutate(across(where(is.numeric), ~round(., digits))) %>%
+    mutate(across(where(is.numeric), ~round(., digits = digits))) %>%
     datatable(extensions = ext
               , rownames = rnames
               , options = list(

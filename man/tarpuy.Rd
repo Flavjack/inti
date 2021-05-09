@@ -2,7 +2,7 @@
 % Please edit documentation in R/tarpuy.R
 \name{tarpuy}
 \alias{tarpuy}
-\title{Fieldbook experimental designs}
+\title{Interactive fieldbook designs}
 \usage{
 tarpuy(dependencies = FALSE)
 }
@@ -13,7 +13,7 @@ tarpuy(dependencies = FALSE)
 Shiny app
 }
 \description{
-Invoke RStudio addin to create field book designs
+Invoke RStudio addin to create fieldbook designs
 }
 \details{
 Tarpuy allow to create experimental designs under an interactive app.

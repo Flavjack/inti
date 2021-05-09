@@ -1,4 +1,6 @@
-# Version 0.3.1
+# Version 0.4.0
+
+Changes incompatible with the old versions.
 
 ## Major changes
 
@@ -13,27 +15,26 @@
 - *Yupana*
   - Styled messages
   - New module: `Exploratory`
+  - Update in the modules
+    - No need `fbsm`
+    - Reactivity in the analysis
+  - Export model information
+  - Overwrite graph info
   
 - *Tarpuy*
   - Styled messages
   - Vignette for explain the modules in the app
+  - Overwrite fieldbook info
   
 - *Package* 
   - New function: `plot_raw()`
     - Boxplot graph
-
-# - upcoming updates
-#   - Exploratory module []
-#     - Distributions
-#     - emmeans [?]
-#   - Comparison using vectors []
-#   - PCA analysis
-#     - Dimension contributions []
-#     - Results to download []
-# footnotes -> rowdata
-# R/sysdata.rda. This is the best place to put data that your functions need
-# https://r-pkgs.org/data.html
-
+  - Update function: `fieldbook_mvr` --> `yupana_mvr`
+    - Can be used independently
+  - symbols to internal data
+    - Table to create footnotes
+  - rename functions
+    
 # Version 0.3.0
 
 - *Yupana*

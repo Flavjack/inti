@@ -61,24 +61,14 @@ reference:
   - title: Yupana
     desc:  Data analysis
     contents:
-      - yupana
-      - fieldbook_reshape
-      - fieldbook_summary
-      - mean_comparison
-      - fieldbook_report
-      - plot_diag
-      - plot_smr
-      - fieldbook_mvr
+      - starts_with("yupana")
+      - starts_with("plot")
       
   - title: Tarpuy
     desc:  Experimental designs
     contents:
-      - tarpuy
-      - fieldbook_plex
-      - fieldbook_design
-      - fieldbook_varlist
-      - plot_design
-      
+      - starts_with("tarpuy")
+
   - title: Rticles
     desc:  Write technical docs
     contents:
@@ -92,7 +82,7 @@ reference:
       - H2cal
       - metamorphosis
       - outliers_remove
-      - means_lm
+      - mean_comparison
       
   - title: Extra
     desc: Miscellaneous

@@ -7,27 +7,6 @@
     <loc>https://inkaverse.com//reference/colortext.html</loc>
   </url>
   <url>
-    <loc>https://inkaverse.com//reference/fieldbook_design.html</loc>
-  </url>
-  <url>
-    <loc>https://inkaverse.com//reference/fieldbook_mvr.html</loc>
-  </url>
-  <url>
-    <loc>https://inkaverse.com//reference/fieldbook_plex.html</loc>
-  </url>
-  <url>
-    <loc>https://inkaverse.com//reference/fieldbook_report.html</loc>
-  </url>
-  <url>
-    <loc>https://inkaverse.com//reference/fieldbook_reshape.html</loc>
-  </url>
-  <url>
-    <loc>https://inkaverse.com//reference/fieldbook_summary.html</loc>
-  </url>
-  <url>
-    <loc>https://inkaverse.com//reference/fieldbook_varlist.html</loc>
-  </url>
-  <url>
     <loc>https://inkaverse.com//reference/footnotes.html</loc>
   </url>
   <url>
@@ -43,9 +22,6 @@
     <loc>https://inkaverse.com//reference/jc_tombola.html</loc>
   </url>
   <url>
-    <loc>https://inkaverse.com//reference/means_lm.html</loc>
-  </url>
-  <url>
     <loc>https://inkaverse.com//reference/mean_comparison.html</loc>
   </url>
   <url>
@@ -55,10 +31,10 @@
     <loc>https://inkaverse.com//reference/outliers_remove.html</loc>
   </url>
   <url>
-    <loc>https://inkaverse.com//reference/plot_design.html</loc>
+    <loc>https://inkaverse.com//reference/plot_diag.html</loc>
   </url>
   <url>
-    <loc>https://inkaverse.com//reference/plot_diag.html</loc>
+    <loc>https://inkaverse.com//reference/plot_raw.html</loc>
   </url>
   <url>
     <loc>https://inkaverse.com//reference/plot_smr.html</loc>
@@ -70,10 +46,34 @@
     <loc>https://inkaverse.com//reference/tarpuy.html</loc>
   </url>
   <url>
+    <loc>https://inkaverse.com//reference/tarpuy_design.html</loc>
+  </url>
+  <url>
+    <loc>https://inkaverse.com//reference/tarpuy_plex.html</loc>
+  </url>
+  <url>
+    <loc>https://inkaverse.com//reference/tarpuy_plotdesign.html</loc>
+  </url>
+  <url>
+    <loc>https://inkaverse.com//reference/tarpuy_varlist.html</loc>
+  </url>
+  <url>
     <loc>https://inkaverse.com//reference/web_table.html</loc>
   </url>
   <url>
     <loc>https://inkaverse.com//reference/yupana.html</loc>
+  </url>
+  <url>
+    <loc>https://inkaverse.com//reference/yupana_analysis.html</loc>
+  </url>
+  <url>
+    <loc>https://inkaverse.com//reference/yupana_graph_opt.html</loc>
+  </url>
+  <url>
+    <loc>https://inkaverse.com//reference/yupana_mvr.html</loc>
+  </url>
+  <url>
+    <loc>https://inkaverse.com//reference/yupana_reshape.html</loc>
   </url>
   <url>
     <loc>https://inkaverse.com//articles/apps.html</loc>

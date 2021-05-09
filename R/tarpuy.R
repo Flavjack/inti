@@ -1,6 +1,6 @@
-#' Fieldbook experimental designs
+#' Interactive fieldbook designs
 #'
-#' Invoke RStudio addin to create field book designs
+#' Invoke RStudio addin to create fieldbook designs
 #' 
 #' @param dependencies Install package dependencies for run the app
 #'

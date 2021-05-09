@@ -26,14 +26,14 @@
 #' @export
 #' 
 
-fieldbook_reshape <- function(data
-                              , last_factor
-                              , sep
-                              , new_colname
-                              , from_var = NULL
-                              , to_var = NULL
-                              , exc_factors = NULL
-                             ) {
+yupana_reshape <- function(data
+                          , last_factor
+                          , sep
+                          , new_colname
+                          , from_var = NULL
+                          , to_var = NULL
+                          , exc_factors = NULL
+                         ) {
 
   where <- NULL
 

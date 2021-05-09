@@ -1,4 +1,4 @@
-#' Transform data frame based in a dictionary
+#' Transform fieldbooks based in a dictionary
 #'
 #' Transform entire fieldbook according to data a dictionary
 #'

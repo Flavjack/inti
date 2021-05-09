@@ -45,7 +45,7 @@
 #'
 #' 
 
-fieldbook_plex <- function(data = NULL
+tarpuy_plex <- function(data = NULL
                           , idea = NULL
                           , goal = NULL
                           , hypothesis = NULL

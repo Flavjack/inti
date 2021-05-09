@@ -2,7 +2,7 @@
 % Please edit documentation in R/metamorfosis.R
 \name{metamorphosis}
 \alias{metamorphosis}
-\title{Transform data frame based in a dictionary}
+\title{Transform fieldbooks based in a dictionary}
 \usage{
 metamorphosis(fieldbook, dictionary, from, to, index, colnames)
 }

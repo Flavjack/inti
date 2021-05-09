@@ -14,10 +14,10 @@ plot_smr(
   ylab = NULL,
   glab = NULL,
   ylimits = NULL,
-  xrotation = NULL,
+  xrotation = c(0, 0.5, 0.5),
   xtext = NULL,
   gtext = NULL,
-  legend = NULL,
+  legend = "top",
   sig = NULL,
   error = NULL,
   color = TRUE,
@@ -79,22 +79,24 @@ library(gsheet)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/"
-              , "edit#gid=883914570")
+              , "edit#gid=172957346")
 # browseURL(url)
 
 fb <- gsheet2tbl(url)
-fb \%>\% plot_smr()
 
-fb \%>\%
-  plot_smr(type = "line"
-           , x = "genotipo"
-           , y = "lfa"
-           , xlab = "test"
-           , ylab = "gran"
-           , glab = "legend"
-           , xrotation = c(45, 0.5, 0.5)
-           , ylimits = c(0, 15000, 3000)
-           )
+
+yrs <- yupana_analysis(data = fb
+                       , response = "hi"
+                       , model_factors = "geno*treat"
+                       , comparison = c("geno", "treat")
+                       )
+
+yrs$meancomp \%>\% plot_smr(type = "bar"
+                          , x = "geno"
+                          , y = "hi"
+                          , group = "treat"
+                          , ylimits = c(0, 1, 0.1)
+                          )
 
 }
 

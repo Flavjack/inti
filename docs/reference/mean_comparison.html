@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mean comparison using data frames — mean_comparison • inti</title>
+<title>Mean comparison test — mean_comparison • inti</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,7 +52,7 @@
 
 
 
-<meta property="og:title" content="Mean comparison using data frames — mean_comparison" />
+<meta property="og:title" content="Mean comparison test — mean_comparison" />
 <meta property="og:description" content="Function to compare treatment from lm or aov using data frames" />
 <meta property="og:image" content="https://flavjack.github.io/inti/reference/figures/logo.png" />
 
@@ -193,7 +193,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Mean comparison using data frames</h1>
+    <h1>Mean comparison test</h1>
     <small class="dont-index">Source: <a href='https://github.com/flavjack/inti/blob/master/R/mean_comparison.R'><code>R/mean_comparison.R</code></a></small>
     <div class="hidden name"><code>mean_comparison.Rd</code></div>
     </div>
@@ -204,14 +204,11 @@
 
     <pre class="usage"><span class='fu'>mean_comparison</span><span class='op'>(</span>
   <span class='va'>data</span>,
-  <span class='va'>fb_smr</span>,
-  <span class='va'>variable</span>,
-  <span class='va'>model_facts</span>,
-  <span class='va'>comp_facts</span>,
+  <span class='va'>response</span>,
+  <span class='va'>model_factors</span>,
+  <span class='va'>comparison</span>,
   test_comp <span class='op'>=</span> <span class='st'>"SNK"</span>,
-  sig_level <span class='op'>=</span> <span class='fl'>0.05</span>,
-  graph_opts <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  digits <span class='op'>=</span> <span class='fl'>2</span>
+  sig_level <span class='op'>=</span> <span class='fl'>0.05</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -222,47 +219,30 @@
       <td><p>Fieldbook data.</p></td>
     </tr>
     <tr>
-      <th>fb_smr</th>
-      <td><p>Summary of the variables in the fieldbook.</p></td>
-    </tr>
-    <tr>
-      <th>variable</th>
+      <th>response</th>
       <td><p>Model used for the experimental design.</p></td>
     </tr>
     <tr>
-      <th>model_facts</th>
-      <td><p>Comparison test (default = "SNK"). Others: "TUKEY",
-"DUNCAN".</p></td>
+      <th>model_factors</th>
+      <td><p>Factor in the model.</p></td>
     </tr>
     <tr>
-      <th>comp_facts</th>
+      <th>comparison</th>
       <td><p>Significance level for the analysis (default = 0.05).</p></td>
     </tr>
     <tr>
       <th>test_comp</th>
-      <td><p>Significance level for the analysis (default = 0.05).</p></td>
+      <td><p>Comparison test (default = "SNK"). Others: "TUKEY", "DUNCAN".</p></td>
     </tr>
     <tr>
       <th>sig_level</th>
       <td><p>Significance level for the analysis (default = 0.05).</p></td>
     </tr>
-    <tr>
-      <th>graph_opts</th>
-      <td><p>Include option in the table for graphs (default = FALSE).</p></td>
-    </tr>
-    <tr>
-      <th>digits</th>
-      <td><p>Number of digits in the table.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>data frame</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>For compare the factors you should use "*". For example, to compare
-treatment1 and treatment2: <code>treatment1:treatment2</code>.</p>
+    <p>list</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -278,17 +258,14 @@ treatment1 and treatment2: <code>treatment1:treatment2</code>.</p>
 
 <span class='va'>fb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html'>gsheet2tbl</a></span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span>
 
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='va'>fb</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='fieldbook_summary.html'>fieldbook_summary</a></span><span class='op'>(</span>last_factor <span class='op'>=</span> <span class='st'>"bloque"</span>
-                    , model_facts <span class='op'>=</span> <span class='st'>"tratamiento*genotipo"</span>
-                    , comp_facts <span class='op'>=</span> <span class='st'>"tratamiento*genotipo"</span>
-                    <span class='op'>)</span>
-
-<span class='va'>mc</span> <span class='op'>&lt;-</span> <span class='va'>fb</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mean_comparison</span><span class='op'>(</span>fb_smr <span class='op'>=</span> <span class='va'>model</span>
-                  , variable <span class='op'>=</span> <span class='st'>"hi"</span>
-                  , graph_opts <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
+<span class='va'>mc</span> <span class='op'>&lt;-</span> <span class='fu'>mean_comparison</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>fb</span>
+                      , response <span class='op'>=</span> <span class='st'>"hi"</span>
+                      , model_factors <span class='op'>=</span> <span class='st'>"geno*treat"</span>
+                      , comparison <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"geno"</span>, <span class='st'>"treat"</span><span class='op'>)</span>
+                      , test_comp <span class='op'>=</span> <span class='st'>"TUKEY"</span>
+                      <span class='op'>)</span>
 <span class='va'>mc</span><span class='op'>$</span><span class='va'>comparison</span>
+<span class='va'>mc</span><span class='op'>$</span><span class='va'>stat</span>
 
 <span class='op'>}</span>
 
