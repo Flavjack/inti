@@ -6,7 +6,7 @@ Description: The 'inti' package is part of the 'inkaverse' project for developin
     different procedures and tools used in plant science and experimental designs. 
     The mean aim of the package is to support researchers during the planning of
     experiments and data collection (tarpuy()), data analysis and graphics (yupana())
-    , and technical writing (rtciles()). 
+    , and technical writing. 
     Learn more about the 'inkaverse' project at <https://inkaverse.com/>.
 Date: 2021-05-09
 Authors@R: person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com",

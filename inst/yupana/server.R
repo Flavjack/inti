@@ -743,8 +743,8 @@ grdt <- reactive({
         , xlab = gropt$xlab
         , ylab = gropt$ylab
         , glab = gropt$glab
-        , ylimits = gropt$ylimits %>% paste(., collapse = "*")
-        , xrotation = gropt$xrotation %>% paste(., collapse = "*")
+        , ylimits = if(is.na(gropt$ylimits)) NA else paste(gropt$ylimits, collapse = "*")
+        , xrotation = if(is.na(gropt$xrotation)) NA else paste(gropt$xrotation, collapse = "*")
         , xtext = if(is.na(gropt$xtext)) NA else paste(gropt$xtext, collapse = ",")
         , gtext = if(is.na(gropt$gtext)) NA else paste(gropt$gtext, collapse = ",")
         , legend = gropt$legend
