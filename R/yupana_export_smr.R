@@ -5,7 +5,7 @@
 #' @param data Fieldbook data.
 #' @param response Model used for the experimental design.
 #' @param comparison Factor to compare
-#' @param model_factors Factor interaction in the model
+#' @param model Model used in the analysis
 #' @param test_comp Type of test comparison
 #' @param type Plot type
 #' @param ylab Title for the axis y
@@ -57,17 +57,17 @@
 #' }
 #' 
 
-yupana_graph_opt <- function(data
+yupana_export_smr <- function(data
                              , response
                              , comparison
-                             , model_factors
+                             , model
                              , test_comp = NA
                              , type = NA
                              , xlab = NA
                              , ylab = NA
                              , glab = NA
                              , ylimits = NA
-                             , xrotation = "0*0.5*0.5"
+                             , xrotation = c(0, 0.5, 0.5)
                              , xtext = NA
                              , gtext = NA
                              , legend = "top"
@@ -75,7 +75,7 @@ yupana_graph_opt <- function(data
                              , error = NA
                              , color = TRUE
                              , opt = NA
-                             , dimension = "20*10*100"
+                             , dimension = c(20, 10, 100)
                              , sig_level = NA
                             ) {
   
@@ -111,9 +111,6 @@ dimension = "20*10*100"
 # graph table -------------------------------------------------------------
 # -------------------------------------------------------------------------
   
-  model <- as.formula(paste({{response}}, model_factors, sep = "~"))
-  model <- paste(deparse(model, width.cutoff = 500), collapse="")
-
   if ( length(comparison) >= 3 ){
     
     x <- "treatments"
@@ -171,15 +168,15 @@ dimension = "20*10*100"
                    , xlab = xlab
                    , ylab = ylab
                    , glab = glab
-                   , ylimits = ylimits
-                   , xrotation = xrotation
+                   , ylimits = paste(ylimits, collapse = "*")  
+                   , xrotation = paste(xrotation, collapse = "*") 
                    , sig = sig
                    , error = error
                    , legend = legend
-                   , gtext = gtext
-                   , xtext = xtext
+                   , gtext = paste(gtext, collapse = ",") 
+                   , xtext = paste(xtext, collapse = ",")  
                    , opt = opt
-                   , dimension = dimension
+                   , dimension = paste(dimension, collapse = "*") 
                    , model = model
                    , comparison = paste(comparison, collapse = "*")
                    , test_comp = test_comp

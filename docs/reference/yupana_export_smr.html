@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • inti</title>
+<title>Graph options to export — yupana_export_smr • inti</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,7 +52,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Graph options to export — yupana_export_smr" />
+<meta property="og:description" content="Function to export the graph options and model parameters" />
 <meta property="og:image" content="https://flavjack.github.io/inti/reference/figures/logo.png" />
 
 
@@ -82,7 +83,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -190,232 +191,155 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Graph options to export</h1>
+    <small class="dont-index">Source: <a href='https://github.com/flavjack/inti/blob/master/R/yupana_export_smr.R'><code>R/yupana_export_smr.R</code></a></small>
+    <div class="hidden name"><code>yupana_export_smr.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Function to export the graph options and model parameters</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>yupana_export_smr</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>response</span>,
+  <span class='va'>comparison</span>,
+  <span class='va'>model</span>,
+  test_comp <span class='op'>=</span> <span class='cn'>NA</span>,
+  type <span class='op'>=</span> <span class='cn'>NA</span>,
+  xlab <span class='op'>=</span> <span class='cn'>NA</span>,
+  ylab <span class='op'>=</span> <span class='cn'>NA</span>,
+  glab <span class='op'>=</span> <span class='cn'>NA</span>,
+  ylimits <span class='op'>=</span> <span class='cn'>NA</span>,
+  xrotation <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.5</span>, <span class='fl'>0.5</span><span class='op'>)</span>,
+  xtext <span class='op'>=</span> <span class='cn'>NA</span>,
+  gtext <span class='op'>=</span> <span class='cn'>NA</span>,
+  legend <span class='op'>=</span> <span class='st'>"top"</span>,
+  sig <span class='op'>=</span> <span class='cn'>NA</span>,
+  error <span class='op'>=</span> <span class='cn'>NA</span>,
+  color <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  opt <span class='op'>=</span> <span class='cn'>NA</span>,
+  dimension <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>, <span class='fl'>10</span>, <span class='fl'>100</span><span class='op'>)</span>,
+  sig_level <span class='op'>=</span> <span class='cn'>NA</span>
+<span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-yupana" class="hasAnchor"><a href="#section-yupana" class="anchor"></a>Yupana</h2>
-          <p class="section-desc"><p>Data analysis</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="yupana.html">yupana()</a></code> </p>
-        </td>
-        <td><p>Interactive data analysis</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="yupana_analysis.html">yupana_analysis()</a></code> </p>
-        </td>
-        <td><p>Fieldbook analysis report</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="yupana_export_smr.html">yupana_export_smr()</a></code> </p>
-        </td>
-        <td><p>Graph options to export</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="yupana_import_smr.html">yupana_import_smr()</a></code> </p>
-        </td>
-        <td><p>Import information from data summary</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="yupana_mvr.html">yupana_mvr()</a></code> </p>
-        </td>
-        <td><p>Multivariate Analysis</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="yupana_reshape.html">yupana_reshape()</a></code> </p>
-        </td>
-        <td><p>Fieldbook reshape</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_diag.html">plot_diag()</a></code> </p>
-        </td>
-        <td><p>Diagnostic plots</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_raw.html">plot_raw()</a></code> </p>
-        </td>
-        <td><p>Plot raw data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_smr.html">plot_smr()</a></code> </p>
-        </td>
-        <td><p>Plot summary data</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-tarpuy" class="hasAnchor"><a href="#section-tarpuy" class="anchor"></a>Tarpuy</h2>
-          <p class="section-desc"><p>Experimental designs</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="tarpuy.html">tarpuy()</a></code> </p>
-        </td>
-        <td><p>Interactive fieldbook designs</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tarpuy_design.html">tarpuy_design()</a></code> </p>
-        </td>
-        <td><p>Fieldbook experimental designs</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tarpuy_plex.html">tarpuy_plex()</a></code> </p>
-        </td>
-        <td><p>Fieldbook plan information</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tarpuy_plotdesign.html">tarpuy_plotdesign()</a></code> </p>
-        </td>
-        <td><p>Fieldbook plot experimental designs</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tarpuy_varlist.html">tarpuy_varlist()</a></code> </p>
-        </td>
-        <td><p>Fieldbook variable list</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-rticles" class="hasAnchor"><a href="#section-rticles" class="anchor"></a>Rticles</h2>
-          <p class="section-desc"><p>Write technical docs</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="web_table.html">web_table()</a></code> </p>
-        </td>
-        <td><p>HTML tables for markdown documents</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="footnotes.html">footnotes()</a></code> </p>
-        </td>
-        <td><p>Footnotes in tables</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="include_figure.html">include_figure()</a></code> </p>
-        </td>
-        <td><p>Figure with caption and notes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="include_table.html">include_table()</a></code> </p>
-        </td>
-        <td><p>Table with footnotes</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-plant-breeding" class="hasAnchor"><a href="#section-plant-breeding" class="anchor"></a>Plant breeding</h2>
-          <p class="section-desc"><p>Algorithms and calculations</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="H2cal.html">H2cal()</a></code> </p>
-        </td>
-        <td><p>Heritability in plant breeding</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="metamorphosis.html">metamorphosis()</a></code> </p>
-        </td>
-        <td><p>Transform fieldbooks based in a dictionary</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="outliers_remove.html">outliers_remove()</a></code> </p>
-        </td>
-        <td><p>Remove outliers</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="mean_comparison.html">mean_comparison()</a></code> </p>
-        </td>
-        <td><p>Mean comparison test</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-extra" class="hasAnchor"><a href="#section-extra" class="anchor"></a>Extra</h2>
-          <p class="section-desc"><p>Miscellaneous</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="jc_tombola.html">jc_tombola()</a></code> </p>
-        </td>
-        <td><p>Journal Club Tombola</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="colortext.html">colortext()</a></code> </p>
-        </td>
-        <td><p>Colourise text for display in the terminal.</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p>Fieldbook data.</p></td>
+    </tr>
+    <tr>
+      <th>response</th>
+      <td><p>Model used for the experimental design.</p></td>
+    </tr>
+    <tr>
+      <th>comparison</th>
+      <td><p>Factor to compare</p></td>
+    </tr>
+    <tr>
+      <th>model</th>
+      <td><p>Model used in the analysis</p></td>
+    </tr>
+    <tr>
+      <th>test_comp</th>
+      <td><p>Type of test comparison</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>Plot type</p></td>
+    </tr>
+    <tr>
+      <th>xlab</th>
+      <td><p>Title for the axis x</p></td>
+    </tr>
+    <tr>
+      <th>ylab</th>
+      <td><p>Title for the axis y</p></td>
+    </tr>
+    <tr>
+      <th>glab</th>
+      <td><p>Title for the legend</p></td>
+    </tr>
+    <tr>
+      <th>ylimits</th>
+      <td><p>limits of the y axis</p></td>
+    </tr>
+    <tr>
+      <th>xrotation</th>
+      <td><p>Rotation in x axis c(angle, h, v)</p></td>
+    </tr>
+    <tr>
+      <th>xtext</th>
+      <td><p>Text labels in x axis</p></td>
+    </tr>
+    <tr>
+      <th>gtext</th>
+      <td><p>Text labels in group</p></td>
+    </tr>
+    <tr>
+      <th>legend</th>
+      <td><p>the position of legends ("none", "left", "right", "bottom",
+"top", or two-element numeric vector)</p></td>
+    </tr>
+    <tr>
+      <th>sig</th>
+      <td><p>Column with the significance</p></td>
+    </tr>
+    <tr>
+      <th>error</th>
+      <td><p>Show the error bar ("ste" or "std").</p></td>
+    </tr>
+    <tr>
+      <th>color</th>
+      <td><p>colored figure (TRUE), otherwise black &amp; white (FALSE)</p></td>
+    </tr>
+    <tr>
+      <th>opt</th>
+      <td><p>Add news layer to the plot</p></td>
+    </tr>
+    <tr>
+      <th>dimension</th>
+      <td><p>Dimension of graphs</p></td>
+    </tr>
+    <tr>
+      <th>sig_level</th>
+      <td><p>Level of significance for the test</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>data frame</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://inkaverse.com/'>inti</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/maxconway/gsheet'>gsheet</a></span><span class='op'>)</span>
+
+<span class='va'>url</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"https://docs.google.com/spreadsheets/d/"</span>
+              , <span class='st'>"15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/"</span>
+              , <span class='st'>"edit#gid=172957346"</span><span class='op'>)</span>
+<span class='co'># browseURL(url)</span>
+
+<span class='va'>fb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html'>gsheet2tbl</a></span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span>
+
+<span class='va'>mc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mean_comparison.html'>mean_comparison</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>fb</span>
+                      , response <span class='op'>=</span> <span class='st'>"hi"</span>
+                      , model_factors <span class='op'>=</span> <span class='st'>"geno*treat"</span>
+                      , comparison <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"geno"</span>, <span class='st'>"treat"</span><span class='op'>)</span>
+                      <span class='op'>)</span>
+<span class='va'>mc</span><span class='op'>$</span><span class='va'>comparison</span>
+
+<span class='op'>}</span>
+
+</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

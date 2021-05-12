@@ -45,11 +45,14 @@ shinyServer(function(input, output, session) {
 # auth --------------------------------------------------------------------
 
   gar_shiny_auth(session)
-  
-  # longin vs local ---------------------------------------------------------
+
+# longin vs local ---------------------------------------------------------
   
   access_token <- moduleServer(id = "js_token"
                                , module = googleAuth_js)
+  
+
+# -------------------------------------------------------------------------
 
   output$login <- renderUI({
     
@@ -89,8 +92,11 @@ shinyServer(function(input, output, session) {
     as_sheets_id( fieldbook_url() )
 
   })
+  
 
-  # generate sheet url ------------------------------------------------------
+if (file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
+  
+# generate sheet url ------------------------------------------------------
 
   fieldbook_url <- reactive({
 
@@ -501,8 +507,6 @@ observeEvent(input$export_design, {
 
   })
   
-  if (file.exists("www/analytics.r")) { source("www/analytics.r", local = T) }
-
   output$sketch_options <- renderUI({
 
     factors <- fb_factors()

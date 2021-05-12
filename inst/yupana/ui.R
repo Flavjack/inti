@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-05-08
+#> date .: 2021-05-12
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -599,88 +599,58 @@ tabPanel("Graphics",
                                         , inline = TRUE)
                     ),
                     
+                    column(12, 
+                           
+                           uiOutput("smr_type")
+                           
+                           ),
+                           
+
                     column(12,
+
+                           uiOutput("smr_response")
+
+                           ),
+
+                    column(12,
+
+                           uiOutput("smr_x")
+
+                           ),
+
+                    column(12,
+
+                           uiOutput("smr_group")
+
+                           ),
+                    
+                    column(6, 
                            
-                           HTML('<p>Model</p>'),
-                           
-                           verbatimTextOutput("analysis_model")
+                           uiOutput("smr_sig")
                            
                            ),
                     
-                    column(12, 
+                    column(6, 
                            
-                           selectInput(
-                             inputId = "smr_type"
-                             , label = "Type"
-                             , choices = c("bar", "line")
-                           )
+                           uiOutput("smr_error")
                            
                     ),
                     
                     column(6, 
                            
-                           uiOutput("smr_sig"),
+                           uiOutput("smr_ylimits")
                            
                     ),
                     
                     column(6, 
                            
-                           selectInput(
-                             inputId = "smr_error"
-                             , label = "Error bar"
-                             , selected = "ste"
-                             , choices = c("none", "ste", "std")
-                           )
-                           
-                    ),
-
-                    column(12, 
-                           
-                           uiOutput("smr_response"),
+                           uiOutput("smr_xrotation")
                            
                     ),
                     
-                    column(12, 
+                    column(12,
                            
-                           uiOutput("smr_x"),
-                           
-                    ),
-                    
-                    column(12, 
-                           
-                           uiOutput("smr_group"),
-                           
-                    ),
-                    
-                    column(6, 
-                           
-                           textInput(
-                             inputId ="smr_ylimits"
-                             , label = "Y limits"
-                             , placeholder = "0*100*20"
-                           )
-                           
-                    ),
-                    
-                    column(6, 
-                           
-                           textInput(
-                             inputId ="smr_xrotation"
-                             , label = "X rotation"
-                             , value = "0*0.5*0.5"
-                             , placeholder = "angle*h*v"
-                           )
-                           
-                    ),
-                    
-                    column(12, 
-                           
-                           textInput(
-                             inputId = "smr_dimension"
-                             , label = "Dimensions (W*H*dpi)"
-                             , placeholder = "W*H*dpi"
-                             , value = "20*10*100"
-                           )
+                           uiOutput("smr_dimension")
                            
                     ),
                     
@@ -736,80 +706,66 @@ tabPanel("Graphics",
                   
                   fixedRow(
                     
+                    column(12,
+                           
+                           HTML('<p>Model</p>'),
+                           
+                           verbatimTextOutput("analysis_model")
+                           
+                    ),
+                    
                     column(6, 
                            
                            selectInput(
                              inputId ="smr_color"
                              , label = "Color"
                              , choices = c("yes", "no")
-                           )
+                             )
                            
-                    ),   
+                           ),   
                     
                     column(6, 
                            
-                           selectInput(
-                             inputId = "smr_legend"
-                             , label = "Legend"
-                             , choices = c("top", "bottom", "left", "right", "none")
-                           )
+                           uiOutput("plot_error"),
+                           
+                           ),
+                    
+                    column(12, 
+                           
+                           uiOutput("plot_ylab")
                            
                     ),
                     
                     column(12, 
                            
-                           textInput(
-                             inputId ="smr_ylab"
-                             , label = "Y label"
-                           )
+                           uiOutput("plot_xlab")
                            
                     ),
                     
                     column(12, 
                            
-                           textInput(
-                             inputId ="smr_xlab"
-                             , label = "X label"
-                           )
+                           uiOutput("plot_glab")
                            
                     ),
                     
                     column(12, 
                            
-                           textInput(
-                             inputId ="smr_glab"
-                             , label = "Group label"
-                           )
+                           uiOutput("plot_gtext")
                            
                     ),
                     
                     column(12, 
                            
-                           textInput(
-                             inputId ="smr_gtext"
-                             , label = "Group brake labels (,)"
-                           )
+                           uiOutput("plot_xtext")
                            
                     ),
                     
                     column(12, 
                            
-                           textInput(
-                             inputId ="smr_xtext"
-                             , label = "X brake labels (,)"
+                           
+                           uiOutput("plot_opt")
+                           
                            )
-                           
-                    ),
-                    
-                    column(12, 
-                           
-                           textInput(
-                             inputId ="smr_opt"
-                             , label = "Opt"
-                             , placeholder = "extra layers"
-                           )
-                           
-                    )
                   )
                   
            )

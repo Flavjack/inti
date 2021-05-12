@@ -84,105 +84,6 @@ plot_smr <- function(data
                      , opt = NULL
                      ) {
   
-# arg_dt <- data %>%
-#   as.data.frame() %>%
-#   select(starts_with("{") | ends_with("}")) %>%
-#   rename_with(~ gsub("\\{|\\}", "", .) ) 
-# 
-# # -------------------------------------------------------------------------
-# 
-#   if(length(arg_dt) >= 2) {
-# 
-#   graph_opts <- arg_dt %>%
-#     select(.data$arguments, .data$values) %>%
-#     drop_na(.data$arguments) %>% 
-#     mutate(arguments = paste0(.data$arguments, ".e")) %>% 
-#     deframe() %>% 
-#     as.list()
-#   
-#   list2env(graph_opts, environment())
-# 
-#   if("colors" %in% names(arg_dt)) {
-# 
-#     plot_color <- arg_dt %>%
-#       select(colors) %>%
-#       drop_na() %>% 
-#       deframe()
-#     
-#     color <- TRUE
-#     
-#   } 
-#   
-#   if(is.null(x)) x <- x.e else x <- x
-#   if(is.null(y)) y <- y.e else y <- y
-#   
-#   if(is.null(type)) type <- type.e else type <- type
-#   
-#   if(is.null(group)) group <- x.e else group <- x
-#   
-#   if(is.null(xlab) ) xlab <- xlab.e else xlab <- xlab
-#   if(is.null(ylab) ) ylab <- ylab.e else ylab <- ylab
-#   if(is.null(glab) ) glab <- glab.e else glab <- glab
-#   
-#   if(is.null(legend)) legend <- legend.e else legend <- legend
-#   if(is.null(sig)) sig <- sig.e else sig <- sig
-#   if(is.null(error)) error <- error.e else error <- error
-#   
-#   if(is.null(xtext)) {
-#     xtext <- error.e %>%
-#       strsplit(split = ",") %>% 
-#       unlist()
-#   } else {
-#     xtext <- xtext
-#   }
-#   
-#   if(is.null(gtext)) {
-#     gtext <- gtext.e %>%
-#       strsplit(split = ",") %>% 
-#       unlist()
-#   } else {
-#     gtext <- gtext
-#   } 
-#   
-#   if(is.null(xrotation) ) {
-#     xrotation <- xrotation.e %>%
-#       strsplit(split = "[*]") %>% 
-#       unlist() %>% 
-#       as.numeric()
-#   } else {
-#     xrotation <- xrotation
-#   }
-#   
-#   if(is.null(ylimits) ) {
-#     ylimits <- ylimits.e %>% 
-#       strsplit(split = "[*]") %>% 
-#       unlist() %>% 
-#       as.numeric()
-#   } else {
-#     ylimits <- ylimits
-#   }
-#   
-#   if(is.null(opt) ) {
-#     opt <- opt.e %>% 
-#       gsub(' +', " ", .) %>%
-#       gsub("[\r\n]", "", .) 
-#   } else {
-#     opt <- NULL
-#   } 
-#   
-#   
-#   if(length(plot_color) != 0) {
-#     
-#     color_full <- plot_color
-#     
-#     color_gray <- plot_color
-#     
-#   } 
-#   
-#   
-#   }
-
-
 # match args --------------------------------------------------------------
 
 legend <- match.arg(legend, c("top", "left", "right", "bottom", "none"))
@@ -294,9 +195,7 @@ if(type == "barra") {
                       , labels = if(!is.null(gtext)) gtext else waiver()) 
 }
 
-
 # line plot ---------------------------------------------------------------
-
 
 if (type == "linea") {
   

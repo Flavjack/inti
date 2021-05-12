@@ -27,16 +27,15 @@
 #' library(gsheet)
 #' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "14sO81N50Zx1al5O3Iu3IPaz1_5CVncvtsx-_JRqJ_qE/edit#gid=1959740260")
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=946957922")
 #' # browseURL(url)
 #' 
 #' fb <- gsheet2tbl(url)
 #' 
-#' 
 #' yrs <- yupana_analysis(data = fb
-#'                        , response = "ps_foliar"
-#'                        , model_factors = "EVALUACION * CONDICION * VARIEDAD"
-#'                        , comparison = c("EVALUACION", "CONDICION", "VARIEDAD")
+#'                        , response = "spad_83"
+#'                        , model_factors = "geno + treat"
+#'                        , comparison = c("geno", "treat")
 #'                        )
 #'                        
 #' yrs$meancomp
@@ -67,6 +66,7 @@ if(FALSE) {
   sig_level = 0.05
   plot_dist = "boxplot"
   model_diag = FALSE
+  digits = 2
   
 }
   
@@ -122,6 +122,15 @@ if(FALSE) {
   comptab <- mc$comparison %>% 
     mutate(across(where(is.numeric), ~round(., digits = digits)))
   
+  info <- comptab %>% 
+    select({{response}}:ncol(.)) %>% 
+    names()
+  
+  factors <- comptab %>% 
+    select(!{{info}}) %>% 
+    names()
+  
+  
 # model as text -----------------------------------------------------------
 
   model_formula <- paste(deparse(model, width.cutoff = 500), collapse="")
@@ -130,12 +139,16 @@ if(FALSE) {
 # -------------------------------------------------------------------------
 
   fb_report = list(
-    formula = model_formula
+    model = model_formula
     , anova = model_aov
     , plotdiag = plotdiag
     , plotdist = plotdist
     , meancomp = comptab
     , stats = mc$stats
+    , response = response
+    , comparison = comparison
+    , factors = factors
+    , tabvar = info
     )
 
 }

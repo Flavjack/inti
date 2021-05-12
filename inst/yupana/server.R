@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-05-08
+#> date .: 2021-05-12
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -24,8 +24,6 @@ options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/sprea
 
 options(gargle_oob_default = TRUE)
 options(shiny.port = 1221)
-
-if (file.exists("www/analytics.r")) { source("www/analytics.r", local = T) }
 
 if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json", activate = "web")
 
@@ -47,6 +45,10 @@ observe({
   }
 
 })
+  
+# auth --------------------------------------------------------------------
+
+  gar_shiny_auth(session)
 
 # longin vs local ---------------------------------------------------------
 
@@ -93,6 +95,9 @@ observe({
     as_sheets_id( fieldbook_url() )
 
   })
+  
+if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
+  
   
 # -------------------------------------------------------------------------
 
@@ -575,8 +580,6 @@ observe({
 
   output$anova <- renderPrint({ anova(analysis()$anova) })
   
-  output$analysis_model <- renderText({ analysis()$formula })
-  
   output$plotdiag <- renderPlot({
     
     diag <- analysis()$plotdiag 
@@ -652,7 +655,7 @@ observe({
 
         fluidRow(
 
-          column(width = 6,
+          column(width = 5,
 
                  HTML('<h4><strong>Model Diagnostic</strong></h4>'),
 
@@ -660,7 +663,7 @@ observe({
 
           ),
 
-          column(width = 6,
+          column(width = 7,
 
                  HTML('<h4><strong>Variable Distribution</strong></h4>'),
 
@@ -676,64 +679,420 @@ observe({
 # Yupana: Graphics --------------------------------------------------------
 # -------------------------------------------------------------------------
   
-  output$smr_sig <- renderUI({ 
+# load --------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+observeEvent(input$graph_smr_load, {
+  
+  names <- gs() %>% sheet_names()
+  
+  import <- modalDialog(size = "s", easyClose = T, 
     
-    names <- analysis()$meancomp %>% names()
+    title = div(h3("Select your sheet", icon("cloud-upload-alt"))
+                , align = "left"),
     
     selectInput(
-      inputId = "smr_sig"
-      , label = "Significance"
-      , selected = "sig"
-      , choices = c("none", names)
-    )
+      inputId = "smr_load_sheet"
+      , label = NULL
+      , choices = c("choose" = ""
+                    , names)
+      ), 
     
-    })
+    footer = tagList(
+      actionButton("import_sheet", "Import", class = "btn-success")
+      )
+    
+    )
   
+  showModal(import)
+  
+})
+  
+observeEvent(input$import_sheet, { removeModal() })
+  
+gropt <- NULL
+makeReactiveBinding("gropt")
+
+observeEvent(input$import_sheet, {
+  
+  validate(need(input$smr_load_sheet, "Select your sheet"))
+  
+  mc <- gs() %>% range_read(input$smr_load_sheet)
+  
+  gropt <<- mc %>% yupana_import_smr()
+  
+})
+
+
+observeEvent(input$analysis_response, {
+  
+  gropt <<- NULL
+  
+})
+
+
+grdt <- reactive({
+  
+  if(!is.null(gropt)) {
+
+    list(data = gropt$data
+        , type = gropt$type
+        , y = gropt$y
+        , x = gropt$x
+        , group = gropt$group
+        , xlab = gropt$xlab
+        , ylab = gropt$ylab
+        , glab = gropt$glab
+        , ylimits = gropt$ylimits %>% paste(., collapse = "*")
+        , xrotation = gropt$xrotation %>% paste(., collapse = "*")
+        , xtext = if(is.na(gropt$xtext)) NA else paste(gropt$xtext, collapse = ",")
+        , gtext = if(is.na(gropt$gtext)) NA else paste(gropt$gtext, collapse = ",")
+        , legend = gropt$legend
+        , sig = gropt$sig
+        , error = gropt$error
+        # , color = gropt$plot_color
+        , opt = gropt$opt
+        , dimension = gropt$dimension
+        , model = gropt$model
+        , factors = gropt$factors
+        , tabvar = gropt$tabvar
+        , comparison = gropt$comparison
+        , test_comp = gropt$test_comp
+        , sig_level = gropt$sig_level
+        )  
+    
+  } else if (is.null(gropt)) {
+    
+    list(data = analysis()$meancomp
+        , y = analysis()$response
+        , x = analysis()$comparison[1]
+        , group = analysis()$comparison[2]
+        #>
+        , type = NA
+        , xlab = NA 
+        , ylab = NA 
+        , glab = NA 
+        , ylimits = NA 
+        , xrotation = NA 
+        , legend = NA 
+        , error = NA 
+        , color = NA 
+        , opt = NA 
+        , xtext = NA 
+        , gtext = NA 
+        , sig = NA 
+        , dimension = NA 
+        #>
+        , model = analysis()$model
+        , factors = analysis()$factors
+        , tabvar = analysis()$tabvar
+        , comparison = analysis()$comparison
+        , test_comp = input$analysis_test_comparison
+        )
+    }
+  
+})
+
+output$smr_type <- renderUI({ 
+  
+  grdt <- grdt()
+  
+  opts <- c("bar", "line")
+  selection <- grdt$type
+  
+  selectInput(
+    inputId = "smr_type"
+    , label = "Type"
+    , choices = opts
+    , selected = selection
+    )
+  
+})
+
+output$smr_response <- renderUI({ 
+  
+  grdt <- grdt()
+  
+  opts <- grdt$y
+
+selectInput(
+  inputId = "smr_response"
+  , label = "Response variable"
+  , choices = opts
+  )
+
+})
+
+output$smr_x <- renderUI({ 
+  
+  grdt <- grdt()
+
+  opts <- grdt$factors
+  selection <- grdt$x
+
+selectInput(
+  inputId = "smr_x"
+  , label = "Axis X"
+  , choices = opts
+  , selected = selection
+  )
+
+})
+
+output$smr_group <- renderUI({ 
+  
+  grdt <- grdt()
+
+  opts <- grdt$factors
+  selection <- grdt$group
+  
+selectInput(
+  inputId = "smr_group"
+  , label = "Grouped"
+  , choices = opts
+  , selected = selection
+  )
+
+})
+
+output$smr_sig <- renderUI({ 
+  
+  grdt <- grdt()
+
+  opts <- c(grdt$tabvar, "none")
+  selection <- grdt$sig
+
+selectInput(
+  inputId = "smr_sig"
+  , label = "Significance"
+  , choices = opts
+  , selected = selection
+  )
+
+})
+
+output$smr_error <- renderUI({ 
+  
+  grdt <- grdt()
+  
+  opts <- c("ste", "std", "none")
+  selection <- grdt$error
+  
+  selectInput(
+    inputId = "smr_error"
+    , label = "Error bar"
+    , choices = opts
+    , selected = selection
+    )
+  
+})
+
+output$plot_error <- renderUI({ 
+  
+  grdt <- grdt()
+  
+  opts <- c("top", "bottom", "left", "right", "none")
+  selection <- grdt$error
+  
+  selectInput(
+    inputId = "smr_legend"
+    , label = "Legend"
+    , choices = opts
+    , selected = selection
+  )
+  
+})
+
+output$smr_ylimits <- renderUI({ 
+  
+  grdt <- grdt()
+  
+  selection <- if(is.na(grdt$ylimits)) "" else grdt$ylimits
+  
+  textInput(
+    inputId ="smr_ylimits"
+    , label = "Y limits"
+    , placeholder = "0*100*20"
+    , value = selection
+    )
+  
+})
+
+output$smr_xrotation <- renderUI({ 
+  
+  grdt <- grdt()
+  
+  selection <- if(is.na(grdt$xrotation)) "0*0.5*0.5" else grdt$xrotation
+  
+  textInput(
+    inputId ="smr_xrotation"
+    , label = "X rotation"
+    , placeholder = "angle*h*v"
+    , value = selection
+    )
+  
+})
+
+output$smr_dimension <- renderUI({ 
+  
+  grdt <- grdt()
+  
+  selection <- grdt$dimension
+  
+  selection <- if(is.na(grdt$xrotation)) "20*10*100" else paste(selection, collapse = "*")
+  
+  textInput(
+    inputId = "smr_dimension"
+    , label = "Dimensions (W*H*dpi)"
+    , placeholder = "W*H*dpi"
+    , value = selection
+  )
+  
+})
+
+output$analysis_model <- renderText({ 
+  
+  grdt <- grdt()
+  
+  grdt$model
+  
+})
+
+output$plot_ylab <- renderUI({ 
+  
+  grdt <- grdt()
+  selection <- if(is.na(grdt$ylab)) "" else grdt$ylab
+  
+  textInput(
+    inputId ="smr_ylab"
+    , label = "Y label"
+    , value = selection
+  )
+  
+})
+
+output$plot_xlab <- renderUI({ 
+  
+  grdt <- grdt()
+  selection <- if(is.na(grdt$xlab)) "" else grdt$xlab
+  
+  textInput(
+    inputId ="smr_xlab"
+    , label = "X label"
+    , value = selection
+    )
+  
+})
+
+output$plot_glab <- renderUI({ 
+  
+  grdt <- grdt()
+  selection <- if(is.na(grdt$glab)) "" else grdt$glab
+  
+  textInput(
+    inputId ="smr_glab"
+    , label = "Group label"
+    , value = selection
+  )
+  
+})
+
+output$plot_gtext <- renderUI({ 
+  
+  grdt <- grdt()
+  selection <- if(is.na(grdt$gtext)) "" else grdt$gtext
+  
+  textInput(
+    inputId ="smr_gtext"
+    , label = "Group brake labels (,)"
+    , value = selection
+  )
+  
+})
+
+output$plot_xtext <- renderUI({ 
+  
+  grdt <- grdt()
+  selection <- if(is.na(grdt$xtext)) "" else grdt$xtext
+
+  textInput(
+    inputId ="smr_xtext"
+    , label = "X brake labels (,)"
+    , value = selection
+  )
+  
+})
+
+output$plot_opt <- renderUI({ 
+  
+  grdt <- grdt()
+  selection <- if(is.na(grdt$opt)) "" else grdt$opt
+  
+  textInput(
+    inputId ="smr_opt"
+    , label = "Opt"
+    , placeholder = "extra layers"
+    , value = selection
+    )
+  
+})
+
+
+# plot --------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
   plotsmr <- reactive({ 
     
-    validate(need(analysis()$meancomp, "Select your parameter in Analysis"))
-    validate(need(input$analysis_response, "Choose your parameters"))
-    validate(need(input$analysis_comparison[1], "Choose your parameters"))
+    grdt <- grdt()
     
-    smr_xrotation <- input$smr_xrotation %>% 
-      strsplit(., "[*]") %>% 
-      pluck(1) %>% as.numeric()
+    ylimits <- if(input$smr_ylimits == "") NULL else {
+      
+      input$smr_ylimits %>% 
+        strsplit(., "[*]") %>% 
+        unlist() %>% as.numeric()
+      
+      }
     
-    smr_ylimits <- input$smr_ylimits %>% 
-      strsplit(., "[*]") %>% 
-      pluck(1) %>% as.numeric()
+    xrotation <- if(input$smr_xrotation == "") NULL else {
+      
+      input$smr_xrotation %>% 
+        strsplit(., "[*]") %>% 
+        unlist() %>% as.numeric()
+      
+      }
+
+    xlab <- if(input$smr_xlab == "") NULL else input$smr_xlab
+    ylab <- if(input$smr_ylab == "") NULL else input$smr_ylab
+    glab <- if(input$smr_glab == "") NULL else input$smr_glab
+    xtext <- if(input$smr_xtext == "") NULL else input$smr_xtext %>% strsplit(., ",") %>% unlist()
+    gtext <- if(input$smr_gtext == "") NULL else input$smr_gtext %>% strsplit(., ",") %>% unlist()
     
-    smr_gtext <- input$smr_gtext %>% 
-      strsplit(., ",") %>% 
-      pluck(1) %>% as.character()
+    opt <- if(input$smr_opt == "") NULL else input$smr_opt
+    sig <- if(input$smr_sig == "none") NULL else input$smr_sig
     
-    smr_xtext <- input$smr_xtext %>% 
-      strsplit(., ",") %>% 
-      pluck(1) %>% as.character()
-    
-    plot_smr(data = analysis()$meancomp
+    plot_smr(data = grdt$data
              , type = input$smr_type
-             , y = input$analysis_response
-             , x = input$analysis_comparison[1]
-             , group = if(is.na(input$analysis_comparison[2])) NULL else input$analysis_comparison[2]
-             , xlab = if(input$smr_xlab == "") NULL else input$smr_xlab
-             , ylab = if(input$smr_ylab == "") NULL else input$smr_ylab
-             , glab = if(input$smr_glab == "") NULL else input$smr_glab
-             , ylimits = if(input$smr_ylimits == "") NULL else smr_ylimits
-             , xrotation = if(input$smr_xrotation == "") NULL else smr_xrotation
+             , y = input$smr_response
+             , x = input$smr_x
+             , group = input$smr_group
+             , xlab = xlab
+             , ylab = ylab
+             , glab = glab
+             , ylimits = ylimits
+             , xrotation = xrotation
+             , error = input$smr_error
              , legend = input$smr_legend
+             , opt = opt
+             , sig = sig
+             , gtext = gtext 
+             , xtext = xtext
              , color = if(input$smr_color == "yes") TRUE else FALSE
-             , opt = if(input$smr_opt == "") NULL else input$smr_opt
-             , xtext = if(input$smr_xtext == "") NULL else smr_xtext
-             , gtext = if(input$smr_gtext == "") NULL else smr_gtext
-             , error = if(input$smr_error == "none") NULL else input$smr_error
-             , sig = if(input$smr_sig == "none") NULL else input$smr_sig
-             ) +
+             ) + 
       {if(!is.na(input$analysis_comparison[3])) facet_grid(. ~ .data[[input$analysis_comparison[3]]])}
     
     })
   
-  # -------------------------------------------------------------------------
+# -------------------------------------------------------------------------
   
   output$plotsmr <- renderImage({
     
@@ -741,7 +1100,7 @@ observe({
     
     dim <- input$smr_dimension %>% 
       strsplit(., "[*]") %>% 
-      pluck(1) %>% as.numeric()
+      unlist() %>% as.numeric()
     
     if(!is.na(dim[1])) { ancho <- dim[1] } else {ancho <- input$graph_width}
     if(!is.na(dim[2])) { alto <- dim[2] } else {alto <- input$graph_height}
@@ -799,41 +1158,55 @@ observe({
   
   output$graph_sheet_save <- renderUI({
     
-    validate(need(input$analysis_response, "Choose your variable"))
+    if(is.null(gropt)) {
+      
+      selection <- input$analysis_response 
+      
+    } else if (!is.null(gropt)) {
+      
+      selection <- input$smr_load_sheet
+        
+    }
     
     textInput(inputId = "graph_smr_name"
               , label = "Sheet export"
-              , value = input$analysis_response
-    )
-    
-  })
+              , value = selection
+              )
+    })
   
   graph_save_info <- reactive({
     
-    yupana_graph_opt(data = analysis()$meancomp
-                     , response = input$analysis_response
-                     , comparison = input$analysis_comparison
-                     , model_factors = input$analysis_model_factors
-                     , test_comp = input$analysis_test_comparison
-                     , sig_level = input$analysis_sig_level
+    # validate(need(grdt(), "Some paremeter are missing") )
+
+    grdt <- grdt()
+    
+    yupana_export_smr(data = grdt$data
+                      #> reactive
                      , type = input$smr_type
-                     , xlab = if(input$smr_xlab == "") NA else input$smr_xlab
-                     , ylab = if(input$smr_ylab == "") NA else input$smr_ylab
-                     , glab = if(input$smr_glab == "") NA else input$smr_glab
-                     , ylimits = if(input$smr_ylimits == "") NA else input$smr_ylimits
+                     , xlab = input$smr_xlab
+                     , ylab = input$smr_ylab
+                     , glab = input$smr_glab
+                     , ylimits = input$smr_ylimits
                      , xrotation = input$smr_xrotation
-                     , xtext = if(input$smr_xtext == "") NA else input$smr_xtext
-                     , gtext = if(input$smr_gtext == "") NA else input$smr_gtext
+                     , xtext = input$smr_xtext
+                     , gtext = input$smr_gtext
                      , legend = input$smr_legend
                      , sig = input$smr_sig
                      , error = input$smr_error
                      , color = if(input$smr_color == "yes") TRUE else FALSE
-                     , opt = if(input$smr_opt == "") NA else input$smr_opt
+                     , opt = input$smr_opt
                      , dimension = input$smr_dimension
+                     #> fixed/reactive
+                     , response = grdt$y
+                     , comparison = grdt$comparison
+                     , model = grdt$model
+                     , test_comp = grdt$test_comp
+                     , sig_level = grdt$sig_level
                      )
     
     }) 
   
+
   observeEvent(input$graph_smr_save, {
     
     validate(need(graph_save_info(), "Some paremeter are missing") )
@@ -892,8 +1265,6 @@ observe({
                   , choices = c("choose" = ""
                                 , mvr_factors)
       )
-
-
 
   })
 

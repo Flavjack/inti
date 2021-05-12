@@ -21,6 +21,7 @@ Changes incompatible with the old versions.
   - Export model information
   - Overwrite graph info
   - Design with 3 factor use `facet_grid()`
+  - Allow import/export information for plots
   
 - *Tarpuy*
   - Styled messages
