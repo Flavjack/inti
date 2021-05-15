@@ -18,7 +18,7 @@
 #' library(gsheet)
 #' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=1877968284")
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=1948849836")
 #' # browseURL(url)
 #' 
 #' data <- gsheet2tbl(url)
@@ -33,6 +33,7 @@
 #'          , y = info$y
 #'          , group = info$group
 #'          , ylimits = info$ylimits
+#'          , color = info$color
 #'          )
 #'
 #' }

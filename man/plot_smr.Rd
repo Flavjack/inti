@@ -97,6 +97,8 @@ yrs$meancomp \%>\% plot_smr(type = "bar"
                           , group = "treat"
                           , ylimits = c(0, 1, 0.1)
                           , opt = "theme_minimal()"
+                          , color = c("brown", "blue", "black")
+                          , sig = "sig"
                           ) +
                            facet_grid(.~ treat)
 

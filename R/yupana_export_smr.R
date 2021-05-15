@@ -147,19 +147,18 @@ dimension = "20*10*100"
         , "#F3BB00" # yellow
         , "#0198CD" # blue
         , "#FE6673" # red
-      ))(length(data[[group]] %>% unique())) %>% 
-      tibble('{colors}' = .)
+      ))(length(data[[group]] %>% unique()))
     
-  } 
-  
-  if(isFALSE(color)) {
+  } else if (isFALSE(color)) {
     
     color <-   gray.colors(n = nlevels
                             , start = 0.8
-                            , end = 0.3) %>%
-      tibble('{colors}' = .)
+                            , end = 0.3) 
     
-  }
+  } else { color <- color }
+  
+  pallete <- color %>%
+    tibble('{colors}' = .)
   
     graph_opts <- c(type = type
                    , x = x
@@ -185,7 +184,7 @@ dimension = "20*10*100"
 
     opts_table <- enframe(graph_opts) %>%
       rename('{arguments}' = .data$name, '{values}' = .data$value) %>%
-      merge(color, ., by = 0, all = TRUE) %>%
+      merge(pallete, ., by = 0, all = TRUE) %>%
       mutate(across(.data$Row.names, as.numeric)) %>%
       arrange(.data$Row.names) %>%
       select(!.data$Row.names)

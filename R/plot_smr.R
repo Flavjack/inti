@@ -59,6 +59,8 @@
 #'                           , group = "treat"
 #'                           , ylimits = c(0, 1, 0.1)
 #'                           , opt = "theme_minimal()"
+#'                           , color = c("brown", "blue", "black")
+#'                           , sig = "sig"
 #'                           ) +
 #'                            facet_grid(.~ treat)
 #' 
@@ -99,17 +101,27 @@ if(is.null(group)) {group <- x}
 
 # graph-color -------------------------------------------------------------
 
-color_full <- colorRampPalette(
-  c("#86CD80"   # green
-    , "#F4CB8C" # orange
-    , "#F3BB00" # yellow
-    , "#0198CD" # blue
-    , "#FE6673" # red
-  ))(length(data[[group]] %>% unique()))
-
-color_gray <- gray.colors(n =  data[[group]] %>% unique() %>% length()
-                          , start = 0.8
-                          , end = 0.3) 
+if (isTRUE(color)) {
+  
+  color <- colorRampPalette(
+    c("#86CD80"   # green
+      , "#F4CB8C" # orange
+      , "#F3BB00" # yellow
+      , "#0198CD" # blue
+      , "#FE6673" # red
+    ))(length(data[[group]] %>% unique()))
+  
+} else if (isFALSE(color)) {
+  
+  color <- gray.colors(n =  data[[group]] %>% unique() %>% length()
+                       , start = 0.8
+                       , end = 0.3) 
+  
+} else {
+  
+  color <- color
+  
+}
 
 # sci-labels --------------------------------------------------------------
 
@@ -189,9 +201,11 @@ if(type == "barra") {
           , colour = "black"
           , vjust = -0.5
           , hjust = 0.5
-          , angle = 0) 
+          , angle = 0
+          , size = 2.5
+          ) 
     } +
-    scale_fill_manual(values = if(isFALSE(color)) color_gray else color_full
+    scale_fill_manual(values = color
                       , labels = if(!is.null(gtext)) gtext else waiver()) 
 }
 
@@ -238,12 +252,14 @@ if (type == "linea") {
           , colour = "black"
           , vjust = -0.5
           , hjust = 0.5
-          , angle = 0) 
+          , angle = 0
+          , size = 2.5
+          ) 
     } +
     
     scale_color_manual(
       labels = if(!is.null(gtext)) gtext else waiver()
-      , values = if(isFALSE(color)) color_gray else color_full
+      , values = color
     ) + 
     scale_linetype_discrete(labels = if(!is.null(gtext)) gtext else waiver()) +
     scale_shape_discrete(labels = if(!is.null(gtext)) gtext else waiver())

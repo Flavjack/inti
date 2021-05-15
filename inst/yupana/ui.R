@@ -716,11 +716,7 @@ tabPanel("Graphics",
                     
                     column(6, 
                            
-                           selectInput(
-                             inputId ="smr_color"
-                             , label = "Color"
-                             , choices = c("yes", "no")
-                             )
+                           uiOutput("plot_color"),
                            
                            ),   
                     

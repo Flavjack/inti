@@ -750,7 +750,7 @@ grdt <- reactive({
         , legend = gropt$legend
         , sig = gropt$sig
         , error = gropt$error
-        # , color = gropt$plot_color
+        , color = if(length(gropt$color) == 0) TRUE else gropt$color
         , opt = gropt$opt
         , dimension = gropt$dimension
         , model = gropt$model
@@ -842,7 +842,7 @@ selectInput(
 output$smr_group <- renderUI({ 
   
   grdt <- grdt()
-
+  
   opts <- grdt$factors
   selection <- grdt$group
   
@@ -858,9 +858,18 @@ selectInput(
 output$smr_sig <- renderUI({ 
   
   grdt <- grdt()
-
+  
   opts <- c(grdt$tabvar, "none")
-  selection <- grdt$sig
+  
+  if(is.null(gropt)) {
+    
+    selection <- "sig"
+    
+  } else {
+    
+    selection <- grdt$sig
+
+  }
 
 selectInput(
   inputId = "smr_sig"
@@ -1037,6 +1046,26 @@ output$plot_opt <- renderUI({
   
 })
 
+output$plot_color <- renderUI({
+  
+  if(is.null(gropt)) {
+    
+    opts <- c("yes", "no")
+    
+  } else {
+    
+    opts <- c("manual")
+    
+  }
+  
+  selectInput(
+    inputId ="smr_color"
+    , label = "Color"
+    , choices = opts
+    )
+  
+})
+
 
 # plot --------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -1044,6 +1073,8 @@ output$plot_opt <- renderUI({
   plotsmr <- reactive({ 
     
     grdt <- grdt()
+    
+    grdt %>% print()
     
     ylimits <- if(input$smr_ylimits == "") NULL else {
       
@@ -1069,6 +1100,11 @@ output$plot_opt <- renderUI({
     
     opt <- if(input$smr_opt == "") NULL else input$smr_opt
     sig <- if(input$smr_sig == "none") NULL else input$smr_sig
+    error <- if(input$smr_error == "none") NULL else input$smr_error
+    
+    color <- if(input$smr_color == "yes") { TRUE
+    } else if (input$smr_color == "no") { FALSE
+    } else if (input$smr_color == "manual"){ grdt$color }
     
     plot_smr(data = grdt$data
              , type = input$smr_type
@@ -1080,15 +1116,17 @@ output$plot_opt <- renderUI({
              , glab = glab
              , ylimits = ylimits
              , xrotation = xrotation
-             , error = input$smr_error
+             , error = error
+             , sig = sig
              , legend = input$smr_legend
              , opt = opt
-             , sig = sig
              , gtext = gtext 
              , xtext = xtext
-             , color = if(input$smr_color == "yes") TRUE else FALSE
-             ) + 
-      {if(!is.na(input$analysis_comparison[3])) facet_grid(. ~ .data[[input$analysis_comparison[3]]])}
+             , color = color
+             ) 
+    
+    # + 
+    #   {if(!is.na(input$analysis_comparison[3])) facet_grid(. ~ .data[[input$analysis_comparison[3]]])}
     
     })
   
@@ -1180,6 +1218,10 @@ output$plot_opt <- renderUI({
 
     grdt <- grdt()
     
+    color <- if(input$smr_color == "yes") { TRUE
+    }  else if (input$smr_color == "nos") { FALSE 
+        } else { grdt$color }
+    
     yupana_export_smr(data = grdt$data
                       #> reactive
                      , type = input$smr_type
@@ -1193,7 +1235,6 @@ output$plot_opt <- renderUI({
                      , legend = input$smr_legend
                      , sig = input$smr_sig
                      , error = input$smr_error
-                     , color = if(input$smr_color == "yes") TRUE else FALSE
                      , opt = input$smr_opt
                      , dimension = input$smr_dimension
                      #> fixed/reactive
@@ -1202,6 +1243,7 @@ output$plot_opt <- renderUI({
                      , model = grdt$model
                      , test_comp = grdt$test_comp
                      , sig_level = grdt$sig_level
+                     , color = color
                      )
     
     }) 
