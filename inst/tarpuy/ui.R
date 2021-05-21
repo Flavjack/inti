@@ -47,14 +47,14 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                     , includeCSS("www/custom.css")
                     , tags$head(includeHTML(("www/analytics.html")))
                     , tags$head(tags$link(rel="shortcut icon"
-                                          , href="https://flavjack.github.io/inti/reference/figures/tarpuy.png")),
+                                          , href="https://flavjack.github.io/inti/logo.png")),
                     
                     meta() %>%
                       meta_social(
                         title = "Tarpuy",
                         description = "Tarpuy: Easy way to create fieldbook experimental designs.",
                         url = "https://flavjack.shinyapps.io/tarpuy/",
-                        image = "https://flavjack.github.io/inti/reference/figures/tarpuy.png",
+                        image = "https://flavjack.github.io/inti/logo.png",
                         image_alt = "inkaverse.com"
                         ),
                     
@@ -67,7 +67,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
             <a target="_blank" href="https://flavjack.github.io/inti/index.html">
-            <img src="https://flavjack.github.io/inti/reference/figures/biologia.png" style="height:50px" title="flozano"></a>
+            <img src="https://flavjack.github.io/inti/logo.png" style="height:50px" title="flozano"></a>
             <span style="display:block;"><small>project</small></span>
             </p></div>
             </div>
@@ -299,7 +299,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                              <div style="display:inline-block; width:100%">
                              <p style="text-align:center">
                              <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC">
-                             <img src="https://flavjack.github.io/inti/reference/figures/youtube.png" style="height:60px" title="demo"></a>
+                             <img src="https://flavjack.github.io/inti/img/youtube.png" style="height:60px" title="demo"></a>
                              <span style="display:block;"><small>demo</small></span>
                              </p></div>
 
@@ -316,7 +316,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                              <div style="display:inline-block; width:100%">
                              <p style="text-align:center">
                              <a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/">
-                             <img src="https://flavjack.github.io/inti/reference/figures/yupana.png" style="height:80px" title="yupana"></a>
+                             <img src="https://flavjack.github.io/inti/logo.png" style="height:80px" title="yupana"></a>
                              <span style="display:block;"><small>Yupana</small></span>
                              </p></div>
 

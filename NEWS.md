@@ -37,6 +37,7 @@ Changes incompatible with the old versions.
   - symbols to internal data
     - Table to create footnotes
   - rename functions
+  - Include new logo
     
 # Version 0.3.0
 
