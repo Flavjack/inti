@@ -1124,10 +1124,6 @@ output$plot_color <- renderUI({
              , xtext = xtext
              , color = color
              ) 
-    
-    # + 
-    #   {if(!is.na(input$analysis_comparison[3])) facet_grid(. ~ .data[[input$analysis_comparison[3]]])}
-    
     })
   
 # -------------------------------------------------------------------------
