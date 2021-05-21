@@ -187,7 +187,7 @@
 <div id="two-stages-approach" class="section level2">
 <h2 class="hasAnchor">
 <a href="#two-stages-approach" class="anchor"></a>1) Two stages approach</h2>
-<p>For the two stage approach, in the first stage each experiment is analyzed individually according their experiment design (Lattice, CRBD, etc) <span class="citation">(<a href="#ref-zystro2018Alternative" role="doc-biblioref">Zystro et al., 2018</a>)</span>. And for the second stage environments are denotes a year-by-location interaction. This approach assumes a single variance for genotype-by-environment interactions (GxE), even when multiple locations were tested across multiple years.</p>
+<p>For the two stage approach, in the first stage each experiment is analyzed individually according their experiment design (Lattice, CRBD, etc) <span class="citation">(<a href="#ref-zystro2018Alternative" role="doc-biblioref">Zystro et al., 2018</a>)</span>. And for the second stage environments are denotes a year-by-location interaction. This approach assumes a single variance for genotype-by-environment interactions (GxE), even when multiple locations were tested across multiple years <span class="citation">(<a href="#ref-buntaran2020Cross" role="doc-biblioref">Buntaran et al., 2020</a>)</span>.</p>
 <div id="model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#model" class="anchor"></a>Model</h3>
@@ -241,47 +241,67 @@
 <div id="load-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-packages" class="anchor"></a>Load packages</h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://inkaverse.com/">inti</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://kwstat.github.io/agridat/">agridat</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="h2cal-function" class="section level2">
 <h2 class="hasAnchor">
 <a href="#h2cal-function" class="anchor"></a>H2cal function</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"> <span class="va">dt</span> <span class="op">&lt;-</span> <span class="va">john.alpha</span>
+ <span class="va">hr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/H2cal.html">H2cal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dt</span>
+            , trait <span class="op">=</span> <span class="st">"yield"</span>
+            , gen.name <span class="op">=</span> <span class="st">"gen"</span>
+            , rep.n <span class="op">=</span> <span class="fl">3</span>
+            , fix.model <span class="op">=</span> <span class="st">"rep + (1|rep:block) + gen"</span>
+            , ran.model <span class="op">=</span> <span class="st">"rep + (1|rep:block) + (1|gen)"</span>
+            , emmeans <span class="op">=</span> <span class="cn">TRUE</span>
+            , plot_diag <span class="op">=</span> <span class="cn">TRUE</span>
+            , plot_dots <span class="op">=</span> <span class="st">"rep"</span>
+            , outliers.rm <span class="op">=</span> <span class="cn">TRUE</span>
+            <span class="op">)</span></code></pre></div>
 <p><img src="heritability_files/figure-html/unnamed-chunk-2-1.png" width="98%" style="display: block; margin: auto;"></p>
 </div>
 <div id="model-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#model-information" class="anchor"></a>Model information</h2>
-<pre><code>## Linear mixed model fit by REML ['lmerMod']
-## Formula: yield ~ rep + (1 | rep:block) + (1 | gen)
-##    Data: dt.rm
-## Weights: weights
-## 
-## REML criterion at convergence: 78
-## 
-## Scaled residuals: 
-##      Min       1Q   Median       3Q      Max 
-## -1.96200 -0.28318  0.04692  0.42242  2.20560 
-## 
-## Random effects:
-##  Groups    Name        Variance Std.Dev.
-##  gen       (Intercept) 0.14584  0.3819  
-##  rep:block (Intercept) 0.07895  0.2810  
-##  Residual              0.05334  0.2310  
-## Number of obs: 71, groups:  gen, 24; rep:block, 18
-## 
-## Fixed effects:
-##             Estimate Std. Error t value
-## (Intercept)   4.4597     0.1471  30.318
-## repR2         0.3564     0.1759   2.026
-## repR3        -0.3555     0.1759  -2.021
-## 
-## Correlation of Fixed Effects:
-##       (Intr) repR2 
-## repR2 -0.601       
-## repR3 -0.601  0.503</code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">## Linear mixed model fit by REML ['lmerMod']</span>
+<span class="co">## Formula: yield ~ rep + (1 | rep:block) + (1 | gen)</span>
+<span class="co">##    Data: dt.rm</span>
+<span class="co">## Weights: weights</span>
+<span class="co">## </span>
+<span class="co">## REML criterion at convergence: 78</span>
+<span class="co">## </span>
+<span class="co">## Scaled residuals: </span>
+<span class="co">##      Min       1Q   Median       3Q      Max </span>
+<span class="co">## -1.96200 -0.28318  0.04692  0.42242  2.20560 </span>
+<span class="co">## </span>
+<span class="co">## Random effects:</span>
+<span class="co">##  Groups    Name        Variance Std.Dev.</span>
+<span class="co">##  gen       (Intercept) 0.14584  0.3819  </span>
+<span class="co">##  rep:block (Intercept) 0.07895  0.2810  </span>
+<span class="co">##  Residual              0.05334  0.2310  </span>
+<span class="co">## Number of obs: 71, groups:  gen, 24; rep:block, 18</span>
+<span class="co">## </span>
+<span class="co">## Fixed effects:</span>
+<span class="co">##             Estimate Std. Error t value</span>
+<span class="co">## (Intercept)   4.4597     0.1471  30.318</span>
+<span class="co">## repR2         0.3564     0.1759   2.026</span>
+<span class="co">## repR3        -0.3555     0.1759  -2.021</span>
+<span class="co">## </span>
+<span class="co">## Correlation of Fixed Effects:</span>
+<span class="co">##       (Intr) repR2 </span>
+<span class="co">## repR2 -0.601       </span>
+<span class="co">## repR3 -0.601  0.503</span></code></pre></div>
 </div>
 <div id="variance-component" class="section level2">
 <h2 class="hasAnchor">
 <a href="#variance-component" class="anchor"></a>Variance component</h2>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">tabsmr</span> <span class="op">%&gt;%</span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Variance component table"</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <caption>Variance component table</caption>
 <colgroup>
@@ -343,6 +363,8 @@
 <div id="best-linear-unbiased-predictors-blups" class="section level2">
 <h2 class="hasAnchor">
 <a href="#best-linear-unbiased-predictors-blups" class="anchor"></a>Best Linear Unbiased Predictors (BLUPs)</h2>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">blups</span> <span class="op">%&gt;%</span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"BLUPs"</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <caption>BLUPs</caption>
 <thead><tr class="header">
@@ -452,6 +474,8 @@
 <div id="best-linear-unbiased-estimators-blues" class="section level2">
 <h2 class="hasAnchor">
 <a href="#best-linear-unbiased-estimators-blues" class="anchor"></a>Best Linear Unbiased Estimators (BLUEs)</h2>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">blues</span> <span class="op">%&gt;%</span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"BLUEs"</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <caption>BLUEs</caption>
 <thead><tr class="header">
@@ -661,6 +685,8 @@
 <div id="outliers" class="section level2">
 <h2 class="hasAnchor">
 <a href="#outliers" class="anchor"></a>Outliers</h2>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">outliers</span><span class="op">$</span><span class="va">random</span> <span class="op">%&gt;%</span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Outliers random model"</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <caption>Outliers random model</caption>
 <thead><tr class="header">
@@ -692,6 +718,8 @@
 <td align="left">OUTLIER</td>
 </tr></tbody>
 </table>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">outliers</span><span class="op">$</span><span class="va">fixed</span> <span class="op">%&gt;%</span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Outliers fixed model"</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <caption>Outliers fixed model</caption>
 <colgroup>
@@ -775,6 +803,12 @@
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-bernal-vasquez2016Outliera" class="csl-entry">
 Bernal-Vasquez, A.-M., H.-F. Utz, and H.-P. Piepho. 2016. Outlier detection methods for generalized lattices: A case study on the transition from <span>ANOVA</span> to <span>REML</span>. Theoretical and Applied Genetics 129(4): 787–804. doi: <a href="https://doi.org/10.1007/s00122-016-2666-6">10.1007/s00122-016-2666-6</a>.
+</div>
+<div id="ref-bolker2021Mean" class="csl-entry">
+Bolker, B. 2021. Mean variance of a difference of <span>BLUEs</span> or <span>BLUPs</span> in lme4. Stack Overflow. <a href="https://stackoverflow.com/questions/38697477/mean-variance-of-a-difference-of-blues-or-blups-in-lme4">https://stackoverflow.com/questions/38697477/mean-variance-of-a-difference-of-blues-or-blups-in-lme4</a> (accessed 21 May 2021).
+</div>
+<div id="ref-buntaran2020Cross" class="csl-entry">
+Buntaran, H., H.-P. Piepho, P. Schmidt, J. Rydén, M. Halling, et al. 2020. Cross-validation of stagewise mixed-model analysis of <span>Swedish</span> variety trials with winter wheat and spring barley. Crop Science 60(5): 2221–2240. doi: <a href="https://doi.org/10.1002/csc2.20177">10.1002/csc2.20177</a>.
 </div>
 <div id="ref-falconer2005Introduction" class="csl-entry">
 Falconer, D.S., and T.F. Mackay. 2005. Introduction to quantitative genetics (Pearson Prentice Hall, editor). Fourth.
