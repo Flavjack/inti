@@ -1035,7 +1035,18 @@ output$plot_xtext <- renderUI({
 output$plot_opt <- renderUI({ 
   
   grdt <- grdt()
-  selection <- if(is.na(grdt$opt)) "" else grdt$opt
+  
+  groups <- grdt$comparison
+  
+  if(length(groups) == 3) {
+
+    selection <- paste0("facet_grid(. ~", groups[3], ")")
+    
+  } else {
+    
+    selection <- if(is.na(grdt$opt)) "" else grdt$opt
+    
+  }
   
   textInput(
     inputId ="smr_opt"

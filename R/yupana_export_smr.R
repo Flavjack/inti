@@ -111,27 +111,17 @@ dimension = "20*10*100"
 # graph table -------------------------------------------------------------
 # -------------------------------------------------------------------------
   
-  if ( length(comparison) >= 3 ){
-    
-    x <- "treatments"
-    group <- "treatments"
-    
-    }
-
-  if ( length(comparison) == 2 ){
-
-    x <- comparison[1]
-    group <- comparison[2]
-    
-    }
-
   if ( length(comparison) == 1 ){
 
     x <- comparison[1]
     group <- comparison[1]
     
+  } else if ( length(comparison) <= 3 ){
+    
+    x <- comparison[1]
+    group <- comparison[2]
+    
   }
-  
 
 # color pallete -----------------------------------------------------------
 
