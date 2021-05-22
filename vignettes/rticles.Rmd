@@ -99,6 +99,24 @@ Deben crearse una cuenta en los siguientes servicios:
 </div>
 ```
 
+#### Complementos para zotero
+
+```{=html}
+<div id=footer style="width:100%; margin:auto;">
+  
+  <div style="display:inline-block; width:49%">
+  <p style="text-align:center; vertical-align:middle">
+  <a target="_blank" href="http://zotfile.com/"><img src="https://flavjack.github.io/inti/img/zotfile.png" style="height:50px" title="ZotFile" alt="ZotFile"></a> 
+  </p></div>
+  
+  <div style="display:inline-block; width:49%">
+  <p style="text-align:center; vertical-align:middle">
+  <a target="_blank" href="https://retorque.re/zotero-better-bibtex/"><img src="https://flavjack.github.io/inti/img/bibtex.png" style="height:50px" title="Better BibTeX" alt="BBTeX"></a> 
+  </p></div>
+  
+</div>
+```
+
 ## Herramientas adicionales
 
 Existen alguna herramientas básicas que NO deben faltar en tú computador:
