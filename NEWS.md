@@ -38,7 +38,8 @@ Changes incompatible with the old versions.
     - Table to create footnotes
   - rename functions
   - Include new logo
-  - 
+  - Comparison between `H2cal` and `asreml`
+  - Add data base for MET
     
 # Version 0.3.0
 
