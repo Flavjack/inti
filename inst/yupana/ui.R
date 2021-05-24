@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-05-22
+#> date .: 2021-05-24
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -53,13 +53,26 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                         title = "Yupana",
                         description = "Yupana: platform for statistical data analysis",
                         url = "https://flavjack.shinyapps.io/yupanapro/",
-                        image = "https://flavjack.github.io/inti/logo.png",
+                        image = "https://flavjack.github.io/inti/img/yupana.png",
                         image_alt = "inkaverse.com"
                       )
                     
                     , fluidRow(
 
                       column(width = 1,
+                             
+                             HTML('
+              <div id=footer style="width:100%; margin:auto;">
+              <div style="display:inline-block; width:100%">
+              <p style="text-align:center">
+              <a target="_blank" href="https://inkaverse.com/articles/yupana.html">
+              <img src="https://flavjack.github.io/inti/img/yupana.png" style="height:80px" title="Yupana"></a>
+              <span style="display:block;"><small>Yupana</small></span>
+              </p></div>
+              </div>
+                    '),
+              
+              br(),
 
                              HTML('
             <div id=footer style="width:100%; margin:auto;">
@@ -293,7 +306,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
               <div style="display:inline-block; width:100%">
               <p style="text-align:center">
               <a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/">
-              <img src="https://flavjack.github.io/inti/logo.png" style="height:80px" title="tarpuy"></a>
+              <img src="https://flavjack.github.io/inti/img/tarpuy.png" style="height:80px" title="tarpuy"></a>
               <span style="display:block;"><small>Tarpuy</small></span>
               </p></div>
               </div>

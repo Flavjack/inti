@@ -47,7 +47,7 @@ Ease way to deploy field-book experimental plans.
 
 <div style="display:inline-block; width:32%">
 <p style="text-align:center">
-<a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/"><img src="https://flavjack.github.io/inti/tarpuy.png" style="height:70px" title="tarpuy"></a>
+<a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/"><img src="https://flavjack.github.io/inti/img/tarpuy.png" style="height:80px" title="tarpuy"></a>
 <span style="display:block;"><small>Tarpuy</small></span>
 </p></div>
 
@@ -77,7 +77,7 @@ Data analysis and graphics for experimental designs.
 
 <div style="display:inline-block; width:32%">
 <p style="text-align:center">
-<a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/"><img src="https://flavjack.github.io/inti/yupana.png" style="height:70px" title="yupana"></a>
+<a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/"><img src="https://flavjack.github.io/inti/img/yupana.png" style="height:80px" title="yupana"></a>
 <span style="display:block;"><small>Yupana</small></span>
 </p></div>
 

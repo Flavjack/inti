@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-05-09
+#> date .: 2021-05-24
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -54,13 +54,26 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                         title = "Tarpuy",
                         description = "Tarpuy: Easy way to create fieldbook experimental designs.",
                         url = "https://flavjack.shinyapps.io/tarpuy/",
-                        image = "https://flavjack.github.io/inti/logo.png",
+                        image = "https://flavjack.github.io/inti/img/tarpuy.png",
                         image_alt = "inkaverse.com"
                         ),
                     
                     fluidRow(
 
                       column(width = 1,
+                             
+                             HTML('
+              <div id=footer style="width:100%; margin:auto;">
+              <div style="display:inline-block; width:100%">
+              <p style="text-align:center">
+              <a target="_blank" href="https://inkaverse.com/articles/tarpuy.html">
+              <img src="https://flavjack.github.io/inti/img/tarpuy.png" style="height:80px" title="Tarpuy"></a>
+              <span style="display:block;"><small>Tarpuy</small></span>
+              </p></div>
+              </div>
+                    '),
+              
+              br(),
 
                              HTML('
             <div id=footer style="width:100%; margin:auto;">
@@ -316,7 +329,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                              <div style="display:inline-block; width:100%">
                              <p style="text-align:center">
                              <a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/">
-                             <img src="https://flavjack.github.io/inti/logo.png" style="height:80px" title="yupana"></a>
+                             <img src="https://flavjack.github.io/inti/img/yupana.png" style="height:80px" title="yupana"></a>
                              <span style="display:block;"><small>Yupana</small></span>
                              </p></div>
 
