@@ -318,38 +318,6 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
 
            ),
 
-# Yupana Fieldbook --------------------------------------------------------
-# -------------------------------------------------------------------------
-
-tabPanel("Fieldbook",
-
-fluidRow(
-
-  column(2,
-
-         radioButtons(inputId = "fb_preview_opt"
-                      , label = "Modules"
-                      , choices = c("Reshape")
-                      , inline = TRUE
-
-         ),
-
-         uiOutput("fb_modules"),
-
-         br(),
-
-         ),
-
-  column(width = 10,
-
-         uiOutput("fieldbook_preview")
-
-  ),
-
- )
-
-),
-
 # Exploratory -------------------------------------------------------------
 # -------------------------------------------------------------------------
 
@@ -827,7 +795,39 @@ tabPanel("Graphics",
                   br()
 
                  )
-        )
+        ),
+
+# Yupana Fieldbook --------------------------------------------------------
+# -------------------------------------------------------------------------
+
+tabPanel("Fieldbook",
+         
+         fluidRow(
+           
+           column(2,
+                  
+                  radioButtons(inputId = "fb_preview_opt"
+                               , label = "Modules"
+                               , choices = c("Reshape")
+                               , inline = TRUE
+                               
+                  ),
+                  
+                  uiOutput("fb_modules"),
+                  
+                  br(),
+                  
+           ),
+           
+           column(width = 10,
+                  
+                  uiOutput("fieldbook_preview")
+                  
+           ),
+           
+         )
+         
+)
 
 # Yupana end code ---------------------------------------------------------
 # -------------------------------------------------------------------------

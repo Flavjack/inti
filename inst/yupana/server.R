@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-05-12
+#> date .: 2021-05-24
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -1084,8 +1084,6 @@ output$plot_color <- renderUI({
   plotsmr <- reactive({ 
     
     grdt <- grdt()
-    
-    grdt %>% print()
     
     ylimits <- if(input$smr_ylimits == "") NULL else {
       
