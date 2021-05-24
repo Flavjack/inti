@@ -83,7 +83,7 @@ Deben crearse una cuenta en los siguientes servicios:
   
   <div style="display:inline-block; width:24%">
   <p style="text-align:center; vertical-align:middle">
-  <a target="_blank" href="https://cloud.r-project.org/"><img src="https://cran.r-project.org/Rlogo.svg" style="height:60px" title="R cran" alt="R cran"></a> 
+  <a target="_blank" href="https://cran.r-project.org/"><img src="https://cran.r-project.org/Rlogo.svg" style="height:60px" title="R cran" alt="R cran"></a> 
   </p></div>
   
   <div style="display:inline-block; width:24%"> 

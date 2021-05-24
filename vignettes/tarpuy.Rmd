@@ -18,7 +18,7 @@ Tarpuy permite:
 
 - Generación de planes experimentales
 - Construcción de experimentos basados en diseños experimentales
-- Libros de campo para las evaluacion de experimentos 
+- Libros de campo para las evaluación de experimentos 
 - Incluir lista de variables en los libros de campo
 - Croquis basados en los diseños experimentales
 - Permite adicionar: cronograma, presupuesto y diario

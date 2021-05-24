@@ -20,7 +20,7 @@ A data frame with 1069 rows and 8 variables:
   }
 }
 \source{
-\url{https://doi.org/10.1002/csc2.20177}
+\doi{10.1002/csc2.20177}
 }
 \usage{
 met

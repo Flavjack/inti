@@ -19,7 +19,7 @@
 #'   \item{env}{enviroment (18): combination zone + location + year}      
 #'   }
 #'   
-#' @source \url{https://doi.org/10.1002/csc2.20177}
+#' @source \doi{10.1002/csc2.20177}
 
 "met"
 
