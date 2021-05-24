@@ -40,6 +40,7 @@ Changes incompatible with the old versions.
   - Include new logo
   - Comparison between `H2cal` and `asreml`
   - Add data base for MET
+  - Logo for the package and apps
     
 # Version 0.3.0
 

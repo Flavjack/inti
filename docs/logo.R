@@ -1,8 +1,10 @@
 library(hexSticker)
 library(magick)
 library(showtext)
+library(dplyr)
 
 # open https://fonts.google.com/
+# font poma
 
 # -------------------------------------------------------------------------
 # inkaverse ---------------------------------------------------------------
@@ -32,10 +34,6 @@ sticker(subplot = logo
         , filename = "pkgdown/favicon/img/inkaverse.png"
         )
 
-file.copy(from = "pkgdown/favicon/img/inkaverse.png"
-          , to = "man/figures/logo.png"
-          , overwrite = T)
-
 #> Fechas en el quipo
 
 # 2007    00-x-x--0000000-- (verde)          (ingreso a la universidad) 
@@ -50,25 +48,19 @@ file.copy(from = "pkgdown/favicon/img/inkaverse.png"
 
 logo <- list.files("pkgdown/favicon/img"
                    , full.names = T
-                   , pattern = "inti_lines"
+                   , pattern = "logo_inti.jpg"
                    ) %>% 
   image_read()
-
-font <- "Ewert"
-
-font_add_google(font, "logo")
-showtext_auto()
 
 sticker(subplot = logo
         , white_around_sticker = TRUE
         , s_x = 1.0
-        , s_y = 0.81
-        , s_width = 1
-        , s_height = 1
-        , package = "INTI"
+        , s_y = 0.90
+        , s_width = 1.7
+        , s_height = 1.7
+        , package = ""
         , p_color = "red"
         , p_size = 15
-        , p_family = "logo"
         , h_color = "#6b594b"
         , h_fill = "#ffe701"
         , h_size = 1
@@ -80,31 +72,29 @@ sticker(subplot = logo
         , filename = "pkgdown/favicon/img/inti.png"
         )
 
+file.copy(from = "pkgdown/favicon/img/inti.png"
+          , to = "man/figures/logo.png"
+          , overwrite = T)
+
 # -------------------------------------------------------------------------
 # yupana ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
 logo <- list.files("pkgdown/favicon/img"
                    , full.names = T
-                   , pattern = "yupana_graph"
+                   , pattern = "logo_yupana"
                    ) %>% 
   image_read()
-
-font <- "Ewert"
-
-font_add_google(font, "logo")
-showtext_auto()
 
 sticker(subplot = logo
         , white_around_sticker = TRUE
         , s_x = 1.0
-        , s_y = 0.81
-        , s_width = 1
-        , s_height = 1
-        , package = "YUPANA"
+        , s_y = 0.90
+        , s_width = 1.7
+        , s_height = 1.7
+        , package = ""
         , p_color = "red"
         , p_size = 15
-        , p_family = "logo"
         , h_color = "#6b594b"
         , h_fill = "#ffe701"
         , h_size = 1
@@ -122,25 +112,19 @@ sticker(subplot = logo
 
 logo <- list.files("pkgdown/favicon/img"
                    , full.names = T
-                   , pattern = "tarpuy_lines"
+                   , pattern = "logo_tarpuy"
                    ) %>% 
   image_read()
-
-font <- "Ewert"
-
-font_add_google(font, "logo")
-showtext_auto()
 
 sticker(subplot = logo
         , white_around_sticker = TRUE
         , s_x = 1.0
-        , s_y = 0.81
-        , s_width = 1
-        , s_height = 1
-        , package = "TARPUY"
+        , s_y = 0.87
+        , s_width = 1.7
+        , s_height = 1.7
+        , package = ""
         , p_color = "red"
         , p_size = 15
-        , p_family = "logo"
         , h_color = "#6b594b"
         , h_fill = "#ffe701"
         , h_size = 1
@@ -151,11 +135,4 @@ sticker(subplot = logo
         , u_y = 0.7
         , filename = "pkgdown/favicon/img/tarpuy.png"
         )
-
-
-
-
-
-
-
 

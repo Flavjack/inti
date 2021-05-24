@@ -29,13 +29,13 @@ Tarpuy permite:
 <div style="display:inline-block; width:49%">
 <p style="text-align:center">
 <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC">
-<img src="https://flavjack.github.io/inti/reference/figures/youtube.png" style="height:65px" title="demo"></a>
+<img src="https://flavjack.github.io/inti/img/youtube.png" style="height:65px" title="demo"></a>
 <span style="display:block;"><small>demo</small></span>
 </p></div>
 
 <div style="display:inline-block; width:49%">
 <p style="text-align:center">
-<a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/"><img src="https://flavjack.github.io/inti/logo.png" style="height:70px" title="tarpuy"></a>
+<a target="_blank" href="https://flavjack.shinyapps.io/tarpuy/"><img src="https://flavjack.github.io/inti/tarpuy.png" style="height:70px" title="tarpuy"></a>
 <span style="display:block;"><small>Tarpuy</small></span>
 </p></div>
 

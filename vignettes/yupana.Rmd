@@ -29,13 +29,13 @@ Yupana permite:
 <div style="display:inline-block; width:49%">
 <p style="text-align:center">
 <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9sTx5Dbff9O0g6KCU4pwCQ">
-<img src="https://flavjack.github.io/inti/reference/figures/youtube.png" style="height:65px" title="demo"></a>
+<img src="https://flavjack.github.io/inti/img/youtube.png" style="height:65px" title="demo"></a>
 <span style="display:block;"><small>demo</small></span>
 </p></div>
 
 <div style="display:inline-block; width:49%">
 <p style="text-align:center">
-<a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/"><img src="https://flavjack.github.io/inti/logo.png" style="height:70px" title="yupana"></a>
+<a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/"><img src="https://flavjack.github.io/inti/yupana.png" style="height:70px" title="yupana"></a>
 <span style="display:block;"><small>Yupana</small></span>
 </p></div>
 
