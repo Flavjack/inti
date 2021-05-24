@@ -36,5 +36,6 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 License: GPL-3 | file LICENSE
+LazyData: true
 Encoding: UTF-8
 RoxygenNote: 7.1.1

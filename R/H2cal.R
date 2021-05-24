@@ -155,7 +155,7 @@ H2cal <- function(data
   }
 
 # fit models --------------------------------------------------------------
-
+  
   # random genotype effect
   r.md <- as.formula(paste(trait, paste(ran.model, collapse = " + "), sep = " ~ "))
   g.ran <- eval(bquote(lmer(.(r.md), weights = weights, data = dt.rm)))
@@ -202,6 +202,9 @@ H2cal <- function(data
       theme_minimal()
 
   } else { p_dots <- NULL }
+  
+
+# -------------------------------------------------------------------------
 
   ### handle model estimates
 
@@ -331,13 +334,14 @@ H2cal <- function(data
     tibble::as_tibble() %>%
     dplyr::filter(grp == "Residual") %>%
     dplyr::pull(vcov)
+  
 
-  ## Best Linear Unbiased Estimators (BLUE) :: fixed model
+## Best Linear Unbiased Estimators (BLUE) :: fixed model
     
     if(emmeans == TRUE){
       
       BLUE <- g.fix %>%
-        emmeans::emmeans(as.formula(paste("pairwise", gen.name, sep = " ~ ")), )
+        emmeans::emmeans(as.formula(paste("pairwise", gen.name, sep = " ~ ")))
       
       BLUEs <- BLUE %>%
         purrr::pluck("emmeans") %>%
@@ -353,7 +357,7 @@ H2cal <- function(data
         dplyr::pull(Var) %>%
         mean(.)
       
-    } else if (emmeans == FALSE){
+    } else if (emmeans == FALSE) {
       
       count <- vcov(g.fix) %>%
         purrr::pluck("Dimnames") %>%
@@ -363,16 +367,16 @@ H2cal <- function(data
         purrr::pluck("FALSE") %>% 
         as.numeric()
       
-      if(length(count) == 0) { count <- 0}
+      if(length(count) == 0) { count <- 0 }
   
       BLUEs <- g.fix %>%
         lme4::fixef() %>%
         data.frame() %>% 
-        rownames_to_column(gen.name) %>% 
+        rownames_to_column({{gen.name}}) %>% 
         dplyr::rename(!!trait := .) %>% 
         mutate(across({{gen.name}}, ~stringr::str_replace(., gen.name, ""))) %>% 
         mutate(across({{trait}}, as.numeric)) %>% 
-        mutate( smith.w = diag(solve(vcov(g.fix))) ) %>% 
+        mutate(smith.w = diag(solve(vcov(g.fix)))) %>% 
         dplyr::slice((count+1):NROW(.))  
       
       vdBLUE.avg <- g.fix %>%
@@ -406,7 +410,7 @@ H2cal <- function(data
         purrr::as_vector(.) %>%
         mean(.)*2
 
-   ## Summary table of adjusted means
+   ## Summary table of adjusted means (BLUEs)
 
     smd <- BLUEs %>%
         dplyr::summarise(

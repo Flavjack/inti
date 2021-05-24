@@ -38,6 +38,7 @@ Changes incompatible with the old versions.
     - Table to create footnotes
   - rename functions
   - Include new logo
+  - 
     
 # Version 0.3.0
 

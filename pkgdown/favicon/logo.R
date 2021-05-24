@@ -2,18 +2,17 @@ library(hexSticker)
 library(magick)
 library(showtext)
 
-#> https://fonts.google.com/
+# open https://fonts.google.com/
 
-logo <- list.files("C:/Users/User/git/inti/pkgdown/favicon/img"
+# -------------------------------------------------------------------------
+# inkaverse ---------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+logo <- list.files("pkgdown/favicon/img"
                    , full.names = T
-                   , pattern = "inkaverse.jpg"
+                   , pattern = "logo_inkaverse.jpg"
                    ) %>% 
   image_read() 
-
-
-# -------------------------------------------------------------------------
-# logo --------------------------------------------------------------------
-# -------------------------------------------------------------------------
 
 sticker(subplot = logo
         , white_around_sticker = TRUE
@@ -30,8 +29,12 @@ sticker(subplot = logo
         , u_angle = 90
         , u_x = 1.8
         , u_y = 0.7
-        , filename = "man/figures/logo.png"
+        , filename = "pkgdown/favicon/img/inkaverse.png"
         )
+
+file.copy(from = "pkgdown/favicon/img/inkaverse.png"
+          , to = "man/figures/logo.png"
+          , overwrite = T)
 
 #> Fechas en el quipo
 
@@ -45,10 +48,10 @@ sticker(subplot = logo
 # inti --------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-logo <- list.files("C:/Users/User/git/inti/pkgdown/favicon/img"
+logo <- list.files("pkgdown/favicon/img"
                    , full.names = T
                    , pattern = "inti_lines"
-) %>% 
+                   ) %>% 
   image_read()
 
 font <- "Ewert"
@@ -74,14 +77,14 @@ sticker(subplot = logo
         , u_angle = 90
         , u_x = 1.8
         , u_y = 0.7
-        , filename = "man/figures/inti.png"
-)
+        , filename = "pkgdown/favicon/img/inti.png"
+        )
 
 # -------------------------------------------------------------------------
 # yupana ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-logo <- list.files("C:/Users/User/git/inti/pkgdown/favicon/img"
+logo <- list.files("pkgdown/favicon/img"
                    , full.names = T
                    , pattern = "yupana_graph"
                    ) %>% 
@@ -110,14 +113,14 @@ sticker(subplot = logo
         , u_angle = 90
         , u_x = 1.8
         , u_y = 0.7
-        , filename = "man/figures/yupana.png"
+        , filename = "pkgdown/favicon/img/yupana.png"
         )
 
 # -------------------------------------------------------------------------
 # tarpuy ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-logo <- list.files("C:/Users/User/git/inti/pkgdown/favicon/img"
+logo <- list.files("pkgdown/favicon/img"
                    , full.names = T
                    , pattern = "tarpuy_lines"
                    ) %>% 
@@ -146,7 +149,7 @@ sticker(subplot = logo
         , u_angle = 90
         , u_x = 1.8
         , u_y = 0.7
-        , filename = "man/figures/tarpuy.png"
+        , filename = "pkgdown/favicon/img/tarpuy.png"
         )
 
 
