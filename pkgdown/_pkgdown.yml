@@ -41,6 +41,8 @@ navbar:
         href: articles/rticles.html
       - text: "Broad-sense heritability in plant breeding"
         href: articles/heritability.html
+      - text: "Stagewise mixed-model analysis"
+        href: articles/extra/stagewise.html
     - text: "Privacy Policy"
       icon: fa-shield-alt fa-lg
       href: articles/policy.html

@@ -20,3 +20,4 @@ analytics.r
 ^\.github$
 setup.R
 setup.r
+^vignettes/extra/

@@ -1,0 +1,287 @@
+---
+title: "Stagewise mixed-model analysis"
+description: 'Comparison: asreml and H2cal'
+output: rmarkdown::html_vignette
+bibliography: [../files/pkgs.bib, ../files/book.bib]
+link-citations: true
+colorlinks: yes
+csl: https://www.zotero.org/styles/crop-science
+vignette: >
+  %\VignetteIndexEntry{Stagewise mixed-model analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+source("http://inkaverse.com/docs.r")
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Best linear unbiased prediction (BLUP) is used in plant breeding experiments for the selection of the best lines in multi-environmental trials (MET).
+
+In this section, a comparison will be made between the `H2Cal()` function of the inti package [@R-inti] and the code using the `asrml` package published by @buntaran2020Cross. 
+
+For the comparison we will use the two methods described by @buntaran2020Cross. (i) The "two-stage" analysis, using two stages, the first to calculate the BLUE and the second the BLUPs. (ii) The "one stage" analysis using only one model to calculate the BLUPs.
+
+# Load data
+
+```{r}
+library(inti)
+library(purrr)
+library(dplyr)
+fb <- inti::met
+```
+
+# Two-stage analysis
+
+## asreml
+
+```{r, results='hide', cache=TRUE}
+library(asreml)
+library(data.table)
+library(plyr)
+library(stringr)
+asreml.options(maxit=100) # Set asreml iteration
+
+############################
+##### Stage I LSMEANS #####
+##### per location   #####
+
+ww <- data.table(fb)
+
+##### Make column Zone_Loc #####
+
+trials     <- nlevels(ww$env)
+envs <- levels(ww$env)
+
+##### Make data list for Stage I #####
+data_list <- matrix(data=list(), nrow=length(envs), ncol=1, 
+                    dimnames=list(envs, c("data_Set")))
+
+##### Make a list of Trials #####
+for(i in 1:trials){
+  print(i)
+  b <- levels(ww$env)
+  c <- b[i]
+  env <- as.factor(c)
+  env <- data.table(env)
+  f <- merge(ww,env,by="env")
+  assign(paste0("data_", b[i]), f)
+  data_list[[i, "data_Set" ]] <- f
+  
+  rm(b, c, f, env)
+}
+
+data_list <- data.table(ldply(data_list[, "data_Set"], data.frame, .id="env"))
+
+stgI_list <- matrix(data=list(), nrow=length(envs), ncol=1, 
+                    dimnames=list(envs, c("lsmeans")))
+
+asreml.options(maxit=100) # Set asreml iteration
+
+############################
+##### Stage I LSMEANS #####
+##### per location   #####
+
+for (i in envs){
+  
+  edat <- droplevels(subset(ww, env == i))
+  
+  print(i)
+  
+  mod.1 <- asreml(fixed     = yield ~ cultivar,
+                  random      = ~ rep + rep:alpha,
+                  data        = edat,
+                  predict     = predict.asreml(classify = "cultivar"))
+  
+  update.asreml(mod.1)
+  print(summary.asreml(mod.1)$varcomp)
+  
+  blue <- predict(mod.1, classify="cultivar", levels=levels(edat$cultivar), vcov=TRUE,aliased = T) # get the lsmeans
+  blue.1 <- data.table(blue$pvals)[, c(1:3)] 
+  names(blue.1) <- c("cultivar", "yield_lsm", "se")
+  blue.1[ , ':='(var=se^2, smith.w=diag(solve(blue$vcov)))] # calculate the Smith's weight
+  
+  stgI_list[[i, "lsmeans" ]] <- blue.1 # put all the results of Stage 1 in the list
+  
+  rm(Edat,mod.1, blue, blue.1)
+}
+
+#######################################################
+##### Preparing dataset of Stage I for Stage II ######
+
+##### Unlist the results of Stage I and format as data.table #####
+stgII_list <- data.table(plyr::ldply(stgI_list[, "lsmeans"], data.frame, .id="env"))
+
+stgII_list$zone<- factor(str_split_fixed(stgII_list$env, "_", 2)[,1]) # Make Zone column by split the record in Zone_Loc column
+stgII_list$location <- factor(str_split_fixed(stgII_list$env, "_", 3)[,2])  # Make Location by split the record in Zone_Loc column
+stgII_list$year <- factor(str_split_fixed(stgII_list$env, "_", 3)[,3]) # Make Year by split the record in Zone_Loc column
+
+blues.asreml <- stgII_list
+
+############################
+##### Stage II BLUPs ######
+##### Zone analysis #####
+
+model <- asreml(yield_lsm  ~ zone,
+                random    = ~cultivar + zone:location + zone:cultivar + cultivar:zone:location,
+                weights   = smith.w,
+                family    = asr_gaussian(dispersion=1.0), # fix residual variance to 1
+                data      = blues.asreml,
+                predict   = predict.asreml(classify = "cultivar")
+                )
+
+update.asreml(model)
+
+# print(summary.asreml(model)$varcomp) # print the variance components
+
+blups.asrml <- data.frame((model$predictions$pvals[1:4]))
+```
+
+## H2cal
+
+```{r}
+library(inti)
+library(purrr)
+
+#> First stage
+
+envs <- levels(fb$env)
+
+model <- 1:length(envs) %>% map(function(x) {
+  
+  model <- fb %>% filter(env %in% envs[x]) %>% 
+    
+    H2cal(trait = "yield"
+          , gen.name = "cultivar"
+          , rep.n = 4
+          , ran.model = "1 + (1|rep:alpha) + (1|cultivar)"
+          , fix.model = "0 + (1|rep:alpha) + cultivar"
+          , emmeans = F
+          )
+  
+  blues <- model$blues %>% mutate(trial = levels(fb$env)[x])
+  
+  })
+
+blues.h2cal <- bind_rows(model) %>% 
+  separate(trial, c("zone", "location", "year")) %>% 
+  mutate(across(c(yield, smith.w), as.numeric)) %>% 
+  mutate(across(!c(yield, smith.w), as.factor))
+
+#> Second stage
+
+met <- blues.h2cal %>%
+  mutate(across(!yield, as.factor)) %>%
+  H2cal(trait = "yield"
+        , gen.name = "cultivar"
+        , rep.n = 4
+        , loc.n = 18
+        , loc.name = "Location"
+        , ran.model = "1 + (1|zone:location) + (1|zone:cultivar) + (1|cultivar)"
+        , fix.model = "0 + (1|zone:location) + (1|zone:cultivar) + cultivar"
+        , emmeans = T
+        # , weights = blues.h2cal$smith.w
+        )
+
+blups.h2cal <- met$blups
+```
+
+- First stage
+  - Fixed model with `0 +` for avoid intercep and calculate all the BLUEs.
+  - `emmeans = F` to calculate the Smith weitghts in the first stage
+
+## BLUEs comparison
+
+```{r}
+blues.comp <- merge(blues.asreml 
+                    , blues.h2cal 
+                    , by = c("cultivar", "zone", "location"))
+
+rs <- cor(blues.comp$yield, blues.comp$yield_lsm) # 0.9999286
+rs
+
+blues.comp %>% web_table()
+```
+
+The BLUEs correlation between `H2Cal` and `asrml` is (r = `r rs`)
+
+## BLUPs comparison
+
+```{r}
+blups.comp <- merge(blups.asrml, blups.h2cal
+                    , by = c("cultivar"))
+
+rs <- cor(blups.comp$yield, blups.comp$predicted.value) # 0.9820397
+rs
+
+blups.comp %>% web_table()
+```
+
+The BLUPs correlation between `H2Cal` and `asrml` is (r = `r rs`)
+
+# Single-stage analysis
+
+## asreml
+
+```{r, results='hide', cache=TRUE}
+library(asreml)
+
+options("scipen"=100,"digits"= 4 )
+asreml.options(maxit=100) # Set asreml iteration
+
+##### Fit a single-stage model #####
+## incomplete block and replicate location-specific
+## location-specifice residual variance
+
+mod <- asreml(fixed       = yield ~ zone,
+              random      = ~ rep:at(location) + rep:alpha:at(location) + zone:location + 
+                             cultivar + cultivar:zone:location+ cultivar:zone,
+              residual    = ~ dsum(~(units)|location),
+              data        = fb,
+              predict     = predict.asreml(classify = "cultivar"))
+
+update.asreml(mod)
+
+blups.asreml <- data.frame((mod$predictions$pvals[1:4])) 
+```
+
+## H2cal
+
+```{r}
+library(inti)
+
+model <- fb %>% 
+  H2cal(trait = "yield"
+        , gen.name = "cultivar"
+        , loc.name = "location"
+        , rep.n = 2
+        , loc.n = 18
+        , ran.model = "1 + (1|rep:location) + (1|rep:alpha:location) + (1|cultivar:zone:location) + (1|cultivar:zone) + (1|cultivar:location) + (1|cultivar)"
+        , fix.model = "0 + (1|rep:location) + (1|rep:alpha:location) + (1|cultivar:zone:location) + (1|cultivar:zone) + (1|cultivar:location) + cultivar"
+        , summary = T
+        , emmeans = T
+        , plot_diag = F
+        )
+
+blups.h2cal <- model$blups 
+```
+
+## BLUPs comparison
+
+```{r}
+blups.comp <- merge(blups.asreml, blups.h2cal, by = c("cultivar"))
+
+rs <- cor(blups.comp$predicted.value, blups.comp$yield) # 0.9202
+rs
+
+blups.comp %>% web_table()
+```
+
+The BLUPs correlation between `H2Cal` and `asrml` is (r = `r rs`)
+
+# References
+
+::: {#refs}
+:::
+
