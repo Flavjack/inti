@@ -88,7 +88,7 @@ Deben crearse una cuenta en los siguientes servicios:
   
   <div style="display:inline-block; width:24%"> 
   <p style="text-align:center; vertical-align:middle">
-  <a target="_blank" href="https://rstudio.com/products/rstudio/download/"><img src="https://d33wubrfki0l68.cloudfront.net/62bcc8535a06077094ca3c29c383e37ad7334311/a263f/assets/img/logo.svg" style="height:60px" title="Rstudio" alt="Rstudio"></a> 
+  <a target="_blank" href="https://www.rstudio.com/products/rstudio/download/"><img src="https://d33wubrfki0l68.cloudfront.net/62bcc8535a06077094ca3c29c383e37ad7334311/a263f/assets/img/logo.svg" style="height:60px" title="Rstudio" alt="Rstudio"></a> 
   </p></div>
   
   <div style="display:inline-block; width:24%"> 

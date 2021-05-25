@@ -101,7 +101,7 @@ GerminaR is the first platform base in open source package to calculate and grap
 
 <div style="display:inline-block; width:24%">
 <p style="text-align:center">
-<a target="_blank" href="https://youtube.com/playlist?list=PLSQMdOu57lj9QUoA6JLuv0nBTYacuyrbg"><img src="https://lozanoisla.com/img/youtube.png" style="height:70px" title="Demo" alt="Demo"></a> 
+<a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9QUoA6JLuv0nBTYacuyrbg"><img src="https://lozanoisla.com/img/youtube.png" style="height:70px" title="Demo" alt="Demo"></a> 
 <span style="display:block;"><small>Demo</small></span>
 </p></div>
 

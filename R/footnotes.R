@@ -30,7 +30,7 @@ footnotes <- function(table
 
   notation <- match.arg(notation, c("alphabet", "number", "none"))
   
-  ids.ops <- inti:::sym
+  ids.ops <- eval(parse(text = "inti:::sym")) 
   
   if (notation == "none") {
 
