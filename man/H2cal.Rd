@@ -19,8 +19,8 @@ H2cal(
   emmeans = FALSE,
   weights = NULL,
   plot_diag = FALSE,
-  plot_dots = NULL,
-  outliers.rm = FALSE
+  outliers.rm = FALSE,
+  trial = NULL
 )
 }
 \arguments{
@@ -53,10 +53,9 @@ fitting process (default = NULL).}
 
 \item{plot_diag}{Show diagnostic plots (default = FALSE).}
 
-\item{plot_dots}{Show dotplot genotypes vs trait (default = NULL). See
-examples.}
-
 \item{outliers.rm}{Remove outliers (default = FALSE). See references.}
+
+\item{trial}{Name of the trial in the results (default = NULL).}
 }
 \value{
 list

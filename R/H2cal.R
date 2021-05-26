@@ -15,11 +15,10 @@
 #' @param emmeans Use emmeans for calculate the BLUEs (default = FALSE).
 #' @param summary Print summary from random model (default = FALSE).
 #' @param plot_diag Show diagnostic plots (default = FALSE).
-#' @param plot_dots Show dotplot genotypes vs trait (default = NULL). See
-#'   examples.
 #' @param outliers.rm Remove outliers (default = FALSE). See references.
 #' @param weights an optional vector of ‘prior weights’ to be used in the
 #'   fitting process (default = NULL).
+#' @param trial Name of the trial in the results (default = NULL). 
 #'
 #' @details
 #'
@@ -119,8 +118,8 @@ H2cal <- function(data
                   , emmeans = FALSE
                   , weights = NULL
                   , plot_diag = FALSE
-                  , plot_dots = NULL
                   , outliers.rm = FALSE
+                  , trial = NULL
                   ){
 
   # avoid Undefined global functions or variables
@@ -191,18 +190,6 @@ H2cal <- function(data
     par(mfrow=c(1,1))
 
   }
-
-  # Dot-plot ----------------------------------------------------------------
-
-  if (!is.null(plot_dots)) {
-
-    p_dots <- dt.rm %>%
-      ggplot(aes(!!as.name(trait), !!as.name(gen.name))) +
-      geom_point(aes(color = !!as.name(plot_dots))) +
-      theme_minimal()
-
-  } else { p_dots <- NULL }
-  
 
 # -------------------------------------------------------------------------
 
@@ -391,18 +378,21 @@ H2cal <- function(data
       
     }
 
-  ## Best Linear Unbiased Predictors (BLUP) - random model
-      
+
+# Best Linear Unbiased Predictors (BLUP) - random model -------------------
+
       BLUPs <- g.ran %>%
         stats::coef() %>%
         purrr::pluck(gen.name) %>%
         tibble::rownames_to_column(gen.name) %>%
         dplyr::rename(!!trait := '(Intercept)') %>%
         tibble::as_tibble(.) %>%
-        dplyr::select(all_of(gen.name), dplyr::all_of(trait)) 
+        dplyr::select({{gen.name}}, {{trait}}) %>% 
+        {if (!is.null(trial)) dplyr::mutate(.data = ., trial = trial) else .} %>% 
+        {if (!is.null(trial)) select(.data = ., trial, everything()) else .}
       
-      # mean variance of a difference between genotypes (BLUPs)
-      
+# mean variance of a difference between genotypes (BLUPs) -----------------
+
       vdBLUP.avg <- g.ran %>%
         lme4::ranef(condVar = TRUE) %>%
         purrr::pluck(gen.name) %>%
@@ -410,7 +400,7 @@ H2cal <- function(data
         purrr::as_vector(.) %>%
         mean(.)*2
 
-   ## Summary table of adjusted means (BLUEs)
+# Summary table of adjusted means (BLUEs) ---------------------------------
 
     smd <- BLUEs %>%
         dplyr::summarise(
@@ -418,7 +408,15 @@ H2cal <- function(data
           , std = sqrt(var(!!as.name(trait), na.rm = T))
           , min = min(!!as.name(trait))
           , max = max(!!as.name(trait))
-        )
+        ) 
+    
+# -------------------------------------------------------------------------
+    
+    BLUEs <- BLUEs %>% 
+      {if (!is.null(trial)) dplyr::mutate(.data = ., trial = trial) else .} %>% 
+      {if (!is.null(trial)) select(.data = ., trial, everything()) else .}
+
+# -------------------------------------------------------------------------
 
   ## Heritability
 
@@ -450,7 +448,9 @@ H2cal <- function(data
     , h2.s = H2.s
     , h2.c = H2.c
     , h2.p = H2.p
-    )
+    ) %>% 
+    {if (!is.null(trial)) dplyr::mutate(.data = ., trial = trial) else .} %>% 
+    {if (!is.null(trial)) select(.data = ., trial, everything()) else .}
 
   ## Results
 
@@ -460,7 +460,6 @@ H2cal <- function(data
     , blues = BLUEs
     , model = g.ran
     , outliers = outliers
-    , dotplot = p_dots
     )
 }
 

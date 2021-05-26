@@ -198,10 +198,11 @@ blues.comp <- merge(blues.asreml
                     , blues.h2cal 
                     , by = c("cultivar", "zone", "location"))
 
+# plot(blues.comp$yield, blues.comp$yield_lsm)
 rs <- cor(blues.comp$yield, blues.comp$yield_lsm) # 0.9999286
-rs
+cat("r =", rs)
 
-blues.comp %>% web_table()
+blues.comp %>% web_table(digits = 4)
 ```
 
 The BLUEs correlation between `H2Cal` and `asrml` is (r = `r rs`)
@@ -212,10 +213,11 @@ The BLUEs correlation between `H2Cal` and `asrml` is (r = `r rs`)
 blups.comp <- merge(blups.asrml, blups.h2cal
                     , by = c("cultivar"))
 
+# plot(blups.comp$yield, blups.comp$predicted.value)
 rs <- cor(blups.comp$yield, blups.comp$predicted.value) # 0.9820397
-rs
+cat("r =", rs)
 
-blups.comp %>% web_table()
+blups.comp %>% web_table(digits = 4)
 ```
 
 The BLUPs correlation between `H2Cal` and `asrml` is (r = `r rs`)
@@ -272,10 +274,11 @@ blups.h2cal <- model$blups
 ```{r}
 blups.comp <- merge(blups.asreml, blups.h2cal, by = c("cultivar"))
 
+# plot(blups.comp$predicted.value, blups.comp$yield)
 rs <- cor(blups.comp$predicted.value, blups.comp$yield) # 0.9202
-rs
+cat("r =", rs)
 
-blups.comp %>% web_table()
+blups.comp %>% web_table(digits = 4)
 ```
 
 The BLUPs correlation between `H2Cal` and `asrml` is (r = `r rs`)
