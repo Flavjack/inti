@@ -1,3 +1,9 @@
+# Version 0.4.1
+
+- *Package* 
+  - `plot_raw()` allows vector with colors for plots
+  - `H2cal()` include trial option for MET 
+
 # Version 0.4.0
 
 Changes incompatible with the old versions.

@@ -93,9 +93,9 @@ if(is.null(group)) group <- x else group <- group
 
 # graph-color -------------------------------------------------------------
 
-if(isTRUE(color)) {
+if (isTRUE(color)) {
   
-  paleta <- colorRampPalette(
+  color <- colorRampPalette(
     c("#86CD80"   # green
       , "#F4CB8C" # orange
       , "#F3BB00" # yellow
@@ -103,14 +103,16 @@ if(isTRUE(color)) {
       , "#FE6673" # red
     ))(length(data[[group]] %>% unique()))
   
-}
-
-if(isFALSE(color)) {
-
-  paleta <- gray.colors(n =  data[[group]] %>% unique() %>% length()
-                          , start = 0.8
-                          , end = 0.3) 
-
+} else if (isFALSE(color)) {
+  
+  color <- gray.colors(n =  data[[group]] %>% unique() %>% length()
+                       , start = 0.8
+                       , end = 0.3) 
+  
+} else {
+  
+  color <- color
+  
 }
 
 # -------------------------------------------------------------------------
@@ -140,7 +142,7 @@ plot <- plotdt %>%
     , y = if(is.null(ylab)) y else ylab
     , fill = if(is.null(glab)) group else glab
   ) + 
-  scale_fill_manual(values = paleta
+  scale_fill_manual(values = color
                     , labels = if(!is.null(gtext)) gtext else waiver()) +
   {if(!is.null(xtext)) scale_x_discrete(labels = xtext)} 
 
