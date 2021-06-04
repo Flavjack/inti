@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-04-08
+#> date .: 2021-06-04
 # -------------------------------------------------------------------------
 
 cran <- c(
@@ -18,6 +18,7 @@ cran <- c(
   , "corrplot"
   , "tidyverse"
   , "FactoMineR"
+  , "ggpmisc" # add equation in regression
   )
 
 git <- c("Flavjack/inti")

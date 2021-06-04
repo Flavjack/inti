@@ -4,6 +4,7 @@
   - `plot_raw()` 
     - Allows vector with colors for plots
     - Include "scatterplot" 
+    - Add equation in regression
   - `H2cal()` include trial option for MET
 
 # Version 0.4.0
