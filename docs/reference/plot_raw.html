@@ -232,7 +232,7 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Type of graphic. "boxplot"</p></td>
+      <td><p>Type of graphic. c("boxplot", "scatterplot")</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -301,18 +301,18 @@
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/maxconway/gsheet'>gsheet</a></span><span class='op'>)</span>
 
 <span class='va'>url</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"https://docs.google.com/spreadsheets/d/"</span>
-              , <span class='st'>"15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/"</span>
-              , <span class='st'>"edit#gid=172957346"</span><span class='op'>)</span>
+              , <span class='st'>"1D1KYc5FMTHow_PpW6ijravmkF_z9zES8Incfroi-Tc4/edit#gid=1336259432"</span><span class='op'>)</span>
 <span class='co'># browseURL(url)</span>
 
-<span class='va'>fb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html'>gsheet2tbl</a></span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span>
+<span class='co'># fb &lt;- gsheet2tbl(url)</span>
 
 <span class='va'>fb</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>plot_raw</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"boxplot"</span>
-           , x <span class='op'>=</span> <span class='st'>"geno"</span>
-           , y <span class='op'>=</span> <span class='st'>"lfa"</span>
-           , group <span class='op'>=</span> <span class='st'>"treat"</span>
+  <span class='fu'>plot_raw</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"sca"</span>
+           , x <span class='op'>=</span> <span class='st'>"elt_test"</span>
+           , y <span class='op'>=</span> <span class='st'>"tam_test"</span>
+           , group <span class='op'>=</span> <span class='st'>"testiculo"</span>
            , color <span class='op'>=</span> <span class='cn'>T</span>
+           , ylimits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1500</span>, <span class='fl'>300</span><span class='op'>)</span>
            <span class='op'>)</span>
 
 <span class='op'>}</span>

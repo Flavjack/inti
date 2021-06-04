@@ -1,8 +1,10 @@
 # Version 0.4.1
 
 - *Package* 
-  - `plot_raw()` allows vector with colors for plots
-  - `H2cal()` include trial option for MET 
+  - `plot_raw()` 
+    - Allows vector with colors for plots
+    - Include "scatterplot" 
+  - `H2cal()` include trial option for MET
 
 # Version 0.4.0
 
@@ -38,13 +40,13 @@ Changes incompatible with the old versions.
 - *Package* 
   - New function: `plot_raw()`
     - Boxplot graph
-  - Update function: `fieldbook_mvr` --> `yupana_mvr`
+  - Update function: `fieldbook_mvr` --> `yupana_mvr()`
     - Can be used independently
   - symbols to internal data
     - Table to create footnotes
   - rename functions
   - Include new logo
-  - Vignettes: comparison between `H2cal` and `asreml`
+  - Vignettes: comparison between `H2cal()` and `asreml`
   - Add data base for MET
   - Logo for the package and apps
     

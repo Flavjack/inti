@@ -46,7 +46,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                     , includeCSS("www/custom.css")
                     , tags$head(includeHTML(("www/analytics.html")))
                     , tags$head(tags$link(rel="shortcut icon"
-                                          , href="https://flavjack.github.io/inti/logo.png")),
+                                          , href="https://flavjack.github.io/inti/img/inkaverse.png")),
                     
                     meta() %>%
                       meta_social(
@@ -334,7 +334,7 @@ tabPanel("Exploratory",
                            selectInput(
                              inputId = "raw_type"
                              , label = "Type"
-                             , choices = c("boxplot")
+                             , choices = c("boxplot", "scatterplot")
                            )
                            
                     ),

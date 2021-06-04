@@ -155,8 +155,9 @@ model <- 1:length(envs) %>% map(function(x) {
     H2cal(trait = "yield"
           , gen.name = "cultivar"
           , rep.n = 4
-          , ran.model = "1 + (1|rep:alpha) + (1|cultivar)"
-          , fix.model = "0 + (1|rep:alpha) + cultivar"
+          , ran.model = "1 + (1|rep) + (1|rep:alpha) + (1|cultivar)"
+          , fix.model = "0 + (1|rep) + (1|rep:alpha) + cultivar"
+          # , plot_diag = T
           , emmeans = F
           )
   
@@ -177,9 +178,10 @@ met <- blues.h2cal %>%
         , gen.name = "cultivar"
         , rep.n = 4
         , loc.n = 18
-        , loc.name = "Location"
-        , ran.model = "1 + (1|zone:location) + (1|zone:cultivar) + (1|cultivar)"
-        , fix.model = "0 + (1|zone:location) + (1|zone:cultivar) + cultivar"
+        , loc.name = "location"
+        , ran.model = "1 + zone + (1|zone:location) + (1|zone:cultivar) + (1|cultivar)"
+        , fix.model = "0 + zone + (1|zone:location) + (1|zone:cultivar) + cultivar"
+        # , plot_diag = T
         , emmeans = T
         # , weights = blues.h2cal$smith.w
         )
@@ -199,7 +201,7 @@ blues.comp <- merge(blues.asreml
                     , by = c("cultivar", "zone", "location"))
 
 # plot(blues.comp$yield, blues.comp$yield_lsm)
-rs <- cor(blues.comp$yield, blues.comp$yield_lsm) # 0.9999286
+rs <- cor(blues.comp$yield, blues.comp$yield_lsm) # 1
 cat("r =", rs)
 
 blues.comp %>% web_table(digits = 4)
@@ -214,7 +216,7 @@ blups.comp <- merge(blups.asrml, blups.h2cal
                     , by = c("cultivar"))
 
 # plot(blups.comp$yield, blups.comp$predicted.value)
-rs <- cor(blups.comp$yield, blups.comp$predicted.value) # 0.9820397
+rs <- cor(blups.comp$yield, blups.comp$predicted.value) # 0.9818724
 cat("r =", rs)
 
 blups.comp %>% web_table(digits = 4)
@@ -259,11 +261,11 @@ model <- fb %>%
         , loc.name = "location"
         , rep.n = 2
         , loc.n = 18
-        , ran.model = "1 + (1|rep:location) + (1|rep:alpha:location) + (1|cultivar:zone:location) + (1|cultivar:zone) + (1|cultivar:location) + (1|cultivar)"
-        , fix.model = "0 + (1|rep:location) + (1|rep:alpha:location) + (1|cultivar:zone:location) + (1|cultivar:zone) + (1|cultivar:location) + cultivar"
+        , ran.model = "1 + zone + (1|rep:location) + (1|rep:alpha:location) + (1|zone:location) + (1|cultivar:zone) + (1|cultivar:zone:location) + (1|cultivar)"
+        , fix.model = "0 + zone + (1|rep:location) + (1|rep:alpha:location) + (1|zone:location) + (1|cultivar:zone) + (1|cultivar:zone:location) + cultivar"
         , summary = T
         , emmeans = T
-        , plot_diag = F
+        # , plot_diag = T
         )
 
 blups.h2cal <- model$blups 

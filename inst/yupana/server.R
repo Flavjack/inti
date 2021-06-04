@@ -272,7 +272,7 @@ if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
       pluck(1) %>% as.character()
     
     fieldbook() %>% 
-      plot_raw(type = "boxplot"
+      plot_raw(type = input$raw_type
                , x = if(input$raw_x == "") NULL else input$raw_x
                , y = if(input$raw_y == "") NULL else input$raw_y
                , group = if(input$raw_group == "") NULL else input$raw_group
