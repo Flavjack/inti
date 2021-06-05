@@ -6,6 +6,7 @@
     - Include "scatterplot" 
     - Add equation in regression
   - `H2cal()` include trial option for MET
+  - New video for the version > 0.4.1
 
 # Version 0.4.0
 
