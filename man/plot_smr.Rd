@@ -19,6 +19,7 @@ plot_smr(
   gtext = NULL,
   legend = "top",
   sig = NULL,
+  sigsize = 3,
   error = NULL,
   color = TRUE,
   opt = NULL
@@ -53,6 +54,8 @@ plot_smr(
 "top", or two-element numeric vector)}
 
 \item{sig}{Column with the significance}
+
+\item{sigsize}{Font size in significance letters}
 
 \item{error}{Show the error bar ("ste" or "std").}
 
@@ -91,16 +94,16 @@ yrs <- yupana_analysis(data = fb
                        , comparison = c("geno", "treat")
                        )
 
-yrs$meancomp \%>\% plot_smr(type = "bar"
-                          , x = "geno"
-                          , y = "hi"
-                          , group = "treat"
-                          , ylimits = c(0, 1, 0.1)
-                          , opt = "theme_minimal()"
-                          , color = c("brown", "blue", "black")
-                          , sig = "sig"
-                          ) +
-                           facet_grid(.~ treat)
+yrs$meancomp \%>\% 
+  plot_smr(type = "bar"
+           , x = "geno"
+           , y = "hi"
+           , group = "treat"
+           , ylimits = c(0, 1, 0.1)
+           , color = c("brown", "blue", "black")
+           , sig = "sig"
+           ) +
+  facet_grid(.~ treat)
 
 }
 

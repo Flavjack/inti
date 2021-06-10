@@ -107,7 +107,7 @@ GerminaR is the first platform base in open source package to calculate and grap
 
 <div style="display:inline-block; width:24%">
 <p style="text-align:center">
-<a target="_blank" href="https://flavjack.shinyapps.io/germinaquant/"><img src="https://flavjack.github.io/GerminaR/reference/figures/germinaquant.png" style="height:65px" title="GerminaQuant" alt="GerminaQuant for R"></a>
+<a target="_blank" href="https://flavjack.shinyapps.io/germinaquant/"><img src="https://flavjack.github.io/GerminaR/img/germinaquant.png" style="height:65px" title="GerminaQuant" alt="GerminaQuant for R"></a>
 <span style="display:block;"><small>GerminaQuant</small></span>
 </p></div>
 

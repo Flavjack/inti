@@ -17,6 +17,7 @@
 #' @param legend the position of legends ("none", "left", "right", "bottom",
 #'   "top", or two-element numeric vector)
 #' @param sig Column with the significance
+#' @param sigsize Font size in significance letters
 #' @param error Show the error bar ("ste" or "std").
 #' @param color colored figure (TRUE), otherwise black & white (FALSE)
 #' @param opt Add news layer to the plot
@@ -53,16 +54,16 @@
 #'                        , comparison = c("geno", "treat")
 #'                        )
 #' 
-#' yrs$meancomp %>% plot_smr(type = "bar"
-#'                           , x = "geno"
-#'                           , y = "hi"
-#'                           , group = "treat"
-#'                           , ylimits = c(0, 1, 0.1)
-#'                           , opt = "theme_minimal()"
-#'                           , color = c("brown", "blue", "black")
-#'                           , sig = "sig"
-#'                           ) +
-#'                            facet_grid(.~ treat)
+#' yrs$meancomp %>% 
+#'   plot_smr(type = "bar"
+#'            , x = "geno"
+#'            , y = "hi"
+#'            , group = "treat"
+#'            , ylimits = c(0, 1, 0.1)
+#'            , color = c("brown", "blue", "black")
+#'            , sig = "sig"
+#'            ) +
+#'   facet_grid(.~ treat)
 #' 
 #' }
 #' 
@@ -81,6 +82,7 @@ plot_smr <- function(data
                      , gtext = NULL
                      , legend = "top"
                      , sig = NULL
+                     , sigsize = 3
                      , error = NULL
                      , color = TRUE
                      , opt = NULL
@@ -170,8 +172,8 @@ if(type == "barra") {
     
     geom_col(
       position = position_dodge2()
-      , colour="black"
-      , size=.4
+      , colour = "black"
+      , size = 0.4
       , na.rm = T
     ) +
     labs(
@@ -202,7 +204,7 @@ if(type == "barra") {
           , vjust = -0.5
           , hjust = 0.5
           , angle = 0
-          , size = 2.5
+          , size = sigsize
           ) 
     } +
     scale_fill_manual(values = color
@@ -253,7 +255,7 @@ if (type == "linea") {
           , vjust = -0.5
           , hjust = 0.5
           , angle = 0
-          , size = 2.5
+          , size = 3
           ) 
     } +
     
