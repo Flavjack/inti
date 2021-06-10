@@ -129,7 +129,9 @@ if(type == "boxplot") {
                   , fill = .data[[group]]
     )) +
     geom_boxplot(outlier.colour = "red", outlier.size = 2.5) +
-    geom_point(position = position_jitterdodge()) 
+    geom_point(position = position_jitterdodge()) +
+    
+    {if(!is.null(xtext)) scale_x_discrete(labels = xtext)} 
   
 } else if(type == "scatterplot") {
 
@@ -150,13 +152,15 @@ if(type == "boxplot") {
     
     } +
       
-    geom_point(position = position_jitter(width=1, height=.5)) +
+    geom_point(size = 2.5) +
     
     geom_smooth(method = lm
                 , formula = 'y ~ x'
                 , se = FALSE
                 , fullrange = TRUE
-                ) 
+                ) +
+    
+    {if(!is.null(xtext)) scale_x_continuous(labels = xtext)} 
   
   }
 
@@ -171,23 +175,22 @@ plot <- type + {
     }
     
   } +
+  
+  scale_shape_discrete(labels = if(!is.null(gtext)) gtext else waiver()) +
+  
+  scale_color_manual(values = color
+                     , labels = if(!is.null(gtext)) gtext else waiver()) +
+  
+  scale_fill_manual(values = color
+                     , labels = if(!is.null(gtext)) gtext else waiver()) +
+
   labs(
     x = if(is.null(xlab)) x else xlab
     , y = if(is.null(ylab)) y else ylab
     , color = if(is.null(glab)) group else glab
     , fill = if(is.null(glab)) group else glab
     , shape = if(is.null(glab)) group else glab
-  ) + 
-  
-  scale_fill_manual(values = color
-                     , labels = if(!is.null(gtext)) gtext else waiver()) +
-  
-  scale_color_manual(values = color
-                    , labels = if(!is.null(gtext)) gtext else waiver()) +
-  
-  
-  {if(!is.null(xtext)) scale_x_discrete(labels = xtext)} 
-
+  ) 
 
 layers <- 'plot +
   theme_minimal() +

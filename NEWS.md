@@ -1,12 +1,17 @@
 # Version 0.4.1
 
 - *Package* 
+  - `plot_smr()`
+    - Add significance font size
   - `plot_raw()` 
     - Allows vector with colors for plots
-    - Include "scatterplot" 
-    - Add equation in regression
+    - Include "scatterplot"
   - `H2cal()` include trial option for MET
   - New video for the version > 0.4.1
+  
+- *Yupana*
+  - Add equations in regressions plot
+  - Include scatterplot in "Exploratory" module
 
 # Version 0.4.0
 

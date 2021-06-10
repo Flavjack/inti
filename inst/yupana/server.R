@@ -612,7 +612,7 @@ if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
   output$smrstats <- DT::renderDataTable(server = FALSE, {
 
     mc <- analysis()$stats %>%
-      inti::web_table(buttons = "copy")
+      inti::web_table(buttons = "copy", scrolly = "15vh")
 
   })
 

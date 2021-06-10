@@ -27,7 +27,7 @@ web_table(
 
 \item{file_name}{Excel file name}
 
-\item{scrolly}{Windows height to show the table}
+\item{scrolly}{Windows height to show the table. Default "60vh"}
 }
 \value{
 table in markdown format for html documents

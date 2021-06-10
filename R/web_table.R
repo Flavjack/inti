@@ -8,7 +8,7 @@
 #' @param rnames Row names.
 #' @param buttons Buttons: "excel", "copy" or "none". Default c("excel", "copy")
 #' @param file_name Excel file name
-#' @param scrolly Windows height to show the table
+#' @param scrolly Windows height to show the table. Default "60vh"
 #'
 #' @return table in markdown format for html documents
 #'
