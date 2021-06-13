@@ -16,6 +16,16 @@
 #' @importFrom DT datatable
 #' 
 #' @export
+#' @examples
+#'
+#' \dontrun{
+#'
+#' library(inti)
+#' 
+#' met %>%
+#'   web_table(caption = "Web table")
+#' 
+#' }
 #' 
 
 web_table <- function(data
@@ -27,29 +37,34 @@ web_table <- function(data
                       , scrolly = NULL
                       ){
   
+# -------------------------------------------------------------------------
+
   if(!is.data.frame(data)) stop("Use a data frame or table")
   
   where <- NULL
   
   if(is.null(scrolly)) scrolly <- "60vh"
   
-  ext <- c('Buttons', 'Scroller')
-  
   if (is.null(buttons)) {
     
-    buttons <- list(
-      list(extend = 'copy', filename = file_name)
-      , list(extend = 'excel', filename = file_name)
-    )
-  }
+    ext <- c('Buttons', 'Scroller')
+    
+  } else {  ext <- c('Scroller') }
   
+  botones <- list(
+    list(extend = 'copy', filename = file_name)
+    , list(extend = 'excel', filename = file_name)
+    )
+  
+# -------------------------------------------------------------------------
+
   data %>% 
     mutate(across(where(is.numeric), ~round(., digits = digits))) %>%
     datatable(extensions = ext
               , rownames = rnames
               , options = list(
                 dom = 'Bt' # "Bti"
-                , buttons = buttons
+                , buttons = botones
                 , deferRender = TRUE
                 , scroller = TRUE
                 , scrollX = TRUE

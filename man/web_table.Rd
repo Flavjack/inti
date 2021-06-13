@@ -35,3 +35,15 @@ table in markdown format for html documents
 \description{
 Export tables with download, pasta and copy buttons
 }
+\examples{
+
+\dontrun{
+
+library(inti)
+
+met \%>\%
+  web_table(caption = "Web table")
+
+}
+
+}
