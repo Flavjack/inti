@@ -14,11 +14,13 @@ plot_raw(
   ylab = NULL,
   glab = NULL,
   ylimits = NULL,
+  xlimits = NULL,
   xrotation = NULL,
   legend = "top",
   xtext = NULL,
   gtext = NULL,
   color = TRUE,
+  linetype = 0,
   opt = NULL
 )
 }
@@ -41,6 +43,8 @@ plot_raw(
 
 \item{ylimits}{Limits and break of the y axis c(init, end, brakes)}
 
+\item{xlimits}{For scatterplot. Limits and break of the x axis c(init, end, brakes)}
+
 \item{xrotation}{Rotation in x axis c(angle, h, v)}
 
 \item{legend}{the position of legends ("none", "left", "right", "bottom",
@@ -51,6 +55,8 @@ plot_raw(
 \item{gtext}{Text labels in groups}
 
 \item{color}{Colored figure (TRUE), otherwise black & white (FALSE)}
+
+\item{linetype}{Line type for regression. Default = 0}
 
 \item{opt}{Add new layers to the plot}
 }
@@ -71,7 +77,7 @@ url <- paste0("https://docs.google.com/spreadsheets/d/"
               , "1D1KYc5FMTHow_PpW6ijravmkF_z9zES8Incfroi-Tc4/edit#gid=1336259432")
 # browseURL(url)
 
-# fb <- gsheet2tbl(url)
+fb <- gsheet2tbl(url)
 
 fb \%>\%
   plot_raw(type = "sca"
@@ -80,6 +86,7 @@ fb \%>\%
            , group = "testiculo"
            , color = T
            , ylimits = c(0, 1500, 300)
+           , linetype = 1
            )
 
 }
