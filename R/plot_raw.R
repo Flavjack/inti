@@ -44,7 +44,7 @@
 #'            , group = "testiculo"
 #'            , color = T
 #'            , ylimits = c(0, 1500, 300)
-#'            , linetype = 1
+#'            , linetype = 0
 #'            )
 #'
 #' }
@@ -65,7 +65,7 @@ plot_raw <- function(data
                      , xtext = NULL
                      , gtext = NULL
                      , color = TRUE
-                     , linetype = 0
+                     , linetype = 1
                      , opt = NULL
                      ){
 
@@ -149,11 +149,11 @@ if(type == "boxplot") {
       
       ggplot(data = ., aes(x = .data[[x]]
                     , y = .data[[y]]
-                    , color = .data[[group]]
                     , shape = .data[[group]]
+                    , color = .data[[group]]
                     )) 
       
-    } else { ggplot(data = ., aes(x = .data[[x]], y = .data[[y]] ))  }
+    } else { ggplot(data = ., aes(x = .data[[x]], y = .data[[y]])) }
     
     } +
       
@@ -168,7 +168,6 @@ if(type == "boxplot") {
     
     {if(!is.null(xlimits)) scale_x_continuous(limits = xlimits[1:2] 
                                               , breaks = seq(xlimits[1], xlimits[2], by = xlimits[3])
-                                              # , expand = c(0,0)
                                               )} 
   
   }
@@ -185,21 +184,21 @@ plot <- type + {
     
   } +
   
+  scale_fill_manual(values = color
+                     , labels = if(!is.null(gtext)) gtext else waiver()) +
+  
   scale_shape_discrete(labels = if(!is.null(gtext)) gtext else waiver()) +
   
   scale_color_manual(values = color
-                     , labels = if(!is.null(gtext)) gtext else waiver()) +
-  
-  scale_fill_manual(values = color
                      , labels = if(!is.null(gtext)) gtext else waiver()) +
 
   labs(
     x = if(is.null(xlab)) x else xlab
     , y = if(is.null(ylab)) y else ylab
-    , color = if(is.null(glab)) group else glab
     , fill = if(is.null(glab)) group else glab
     , shape = if(is.null(glab)) group else glab
-  ) 
+    , color = if(is.null(glab)) group else glab
+    ) 
 
 layers <- 'plot +
   theme_minimal() +

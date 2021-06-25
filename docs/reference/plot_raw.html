@@ -215,11 +215,13 @@
   ylab <span class='op'>=</span> <span class='cn'>NULL</span>,
   glab <span class='op'>=</span> <span class='cn'>NULL</span>,
   ylimits <span class='op'>=</span> <span class='cn'>NULL</span>,
+  xlimits <span class='op'>=</span> <span class='cn'>NULL</span>,
   xrotation <span class='op'>=</span> <span class='cn'>NULL</span>,
   legend <span class='op'>=</span> <span class='st'>"top"</span>,
   xtext <span class='op'>=</span> <span class='cn'>NULL</span>,
   gtext <span class='op'>=</span> <span class='cn'>NULL</span>,
   color <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  linetype <span class='op'>=</span> <span class='fl'>1</span>,
   opt <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
@@ -263,6 +265,10 @@
       <td><p>Limits and break of the y axis c(init, end, brakes)</p></td>
     </tr>
     <tr>
+      <th>xlimits</th>
+      <td><p>For scatterplot. Limits and break of the x axis c(init, end, brakes)</p></td>
+    </tr>
+    <tr>
       <th>xrotation</th>
       <td><p>Rotation in x axis c(angle, h, v)</p></td>
     </tr>
@@ -282,6 +288,10 @@
     <tr>
       <th>color</th>
       <td><p>Colored figure (TRUE), otherwise black &amp; white (FALSE)</p></td>
+    </tr>
+    <tr>
+      <th>linetype</th>
+      <td><p>Line type for regression. Default = 0</p></td>
     </tr>
     <tr>
       <th>opt</th>
@@ -304,7 +314,7 @@
               , <span class='st'>"1D1KYc5FMTHow_PpW6ijravmkF_z9zES8Incfroi-Tc4/edit#gid=1336259432"</span><span class='op'>)</span>
 <span class='co'># browseURL(url)</span>
 
-<span class='co'># fb &lt;- gsheet2tbl(url)</span>
+<span class='va'>fb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html'>gsheet2tbl</a></span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span>
 
 <span class='va'>fb</span> <span class='op'>%&gt;%</span>
   <span class='fu'>plot_raw</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"sca"</span>
@@ -313,6 +323,7 @@
            , group <span class='op'>=</span> <span class='st'>"testiculo"</span>
            , color <span class='op'>=</span> <span class='cn'>T</span>
            , ylimits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1500</span>, <span class='fl'>300</span><span class='op'>)</span>
+           , linetype <span class='op'>=</span> <span class='fl'>0</span>
            <span class='op'>)</span>
 
 <span class='op'>}</span>

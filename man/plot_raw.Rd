@@ -20,7 +20,7 @@ plot_raw(
   xtext = NULL,
   gtext = NULL,
   color = TRUE,
-  linetype = 0,
+  linetype = 1,
   opt = NULL
 )
 }
@@ -86,7 +86,7 @@ fb \%>\%
            , group = "testiculo"
            , color = T
            , ylimits = c(0, 1500, 300)
-           , linetype = 1
+           , linetype = 0
            )
 
 }
