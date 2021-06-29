@@ -205,7 +205,7 @@ layers <- 'plot +
   theme(legend.position = legend
     , panel.border = element_rect(colour = "black", fill=NA)
     , panel.background = element_rect(fill = "transparent")
-    , legend.background = element_rect(fill = "transparent")
+    , legend.background = element_rect(colour = "transparent", fill = "transparent")
     , axis.text.x = element_text(angle = xrotation[1]
                                  , hjust= xrotation[2]
                                  , vjust = xrotation[3])

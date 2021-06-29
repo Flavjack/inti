@@ -1,3 +1,9 @@
+# Version 0.4.2
+
+- *Package* 
+  - `plot_smr()`
+    - Delete legend border
+
 # Version 0.4.1
 
 - *Package* 

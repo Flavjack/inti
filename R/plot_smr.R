@@ -55,15 +55,15 @@
 #'                        )
 #' 
 #' yrs$meancomp %>% 
-#'   plot_smr(type = "bar"
+#'   plot_smr(type = "line"
 #'            , x = "geno"
 #'            , y = "hi"
 #'            , group = "treat"
 #'            , ylimits = c(0, 1, 0.1)
 #'            , color = c("brown", "blue", "black")
 #'            , sig = "sig"
-#'            ) +
-#'   facet_grid(.~ treat)
+#'            ) + theme(legend.position = c(0.15, 0.9), legend.direction="horizontal")
+#'   
 #' 
 #' }
 #' 
@@ -286,7 +286,7 @@ layers <- 'graph +
   theme(legend.position = legend
     , panel.border = element_rect(colour = "black", fill=NA)
     , panel.background = element_rect(fill = "transparent")
-    , legend.background = element_rect(fill = "transparent")
+    , legend.background = element_rect(colour = "transparent", fill = "transparent")
     , axis.text.x = element_text(angle = xrotation[1]
                                  , hjust= xrotation[2]
                                  , vjust = xrotation[3])

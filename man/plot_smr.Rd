@@ -95,15 +95,15 @@ yrs <- yupana_analysis(data = fb
                        )
 
 yrs$meancomp \%>\% 
-  plot_smr(type = "bar"
+  plot_smr(type = "line"
            , x = "geno"
            , y = "hi"
            , group = "treat"
            , ylimits = c(0, 1, 0.1)
            , color = c("brown", "blue", "black")
            , sig = "sig"
-           ) +
-  facet_grid(.~ treat)
+           ) + theme(legend.position = c(0.15, 0.9), legend.direction="horizontal")
+  
 
 }
 
