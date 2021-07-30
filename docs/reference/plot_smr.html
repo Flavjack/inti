@@ -231,7 +231,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>Output from ger_testcomp function</p></td>
+      <td><p>Output from summary data</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -263,7 +263,7 @@
     </tr>
     <tr>
       <th>ylimits</th>
-      <td><p>limits of the y axis</p></td>
+      <td><p>limits of the y axis c(initial, end, brakes)</p></td>
     </tr>
     <tr>
       <th>xrotation</th>
@@ -271,11 +271,11 @@
     </tr>
     <tr>
       <th>xtext</th>
-      <td><p>Text labels in x axis</p></td>
+      <td><p>Text labels in x axis using a vector</p></td>
     </tr>
     <tr>
       <th>gtext</th>
-      <td><p>Text labels in group</p></td>
+      <td><p>Text labels in group using a vector</p></td>
     </tr>
     <tr>
       <th>legend</th>
@@ -292,11 +292,11 @@
     </tr>
     <tr>
       <th>error</th>
-      <td><p>Show the error bar ("ste" or "std").</p></td>
+      <td><p>Show the error bar ("ste" or "std")</p></td>
     </tr>
     <tr>
       <th>color</th>
-      <td><p>colored figure (TRUE), otherwise black &amp; white (FALSE)</p></td>
+      <td><p>colored figure (TRUE), black &amp; white (FALSE) or color vector</p></td>
     </tr>
     <tr>
       <th>opt</th>
@@ -311,6 +311,7 @@
 
     <p>If the table is a out put of <code><a href='mean_comparison.html'>mean_comparison(graph_opts = TRUE)</a></code>
 function. Its contain all the parameter for the plot.</p>
+<p>You could add additional layer to the plot using "+" with ggplot2 options</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>

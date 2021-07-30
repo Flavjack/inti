@@ -27,7 +27,7 @@ plot_raw(
 \arguments{
 \item{data}{raw data}
 
-\item{type}{Type of graphic. c("boxplot", "scatterplot")}
+\item{type}{Type of graphic. "boxplot" or "scatterplot"}
 
 \item{x}{Axis x variable}
 
@@ -41,20 +41,21 @@ plot_raw(
 
 \item{glab}{Title for the legend}
 
-\item{ylimits}{Limits and break of the y axis c(init, end, brakes)}
+\item{ylimits}{Limits and break of the y axis c(initial, end, brakes)}
 
-\item{xlimits}{For scatterplot. Limits and break of the x axis c(init, end, brakes)}
+\item{xlimits}{For scatter plot. Limits and break of the x axis c(initial,
+end, brakes)}
 
 \item{xrotation}{Rotation in x axis c(angle, h, v)}
 
 \item{legend}{the position of legends ("none", "left", "right", "bottom",
 "top", or two-element numeric vector)}
 
-\item{xtext}{Text labels in x axis}
+\item{xtext}{Text labels in x axis using a vector}
 
-\item{gtext}{Text labels in groups}
+\item{gtext}{Text labels in groups using a vector}
 
-\item{color}{Colored figure (TRUE), otherwise black & white (FALSE)}
+\item{color}{Colored figure (TRUE), black & white (FALSE) or color vector}
 
 \item{linetype}{Line type for regression. Default = 0}
 
@@ -65,6 +66,9 @@ plot
 }
 \description{
 Function use the raw data for made a boxplot graphic
+}
+\details{
+You could add additional layer to the plot using "+" with ggplot2 options
 }
 \examples{
 

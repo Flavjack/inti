@@ -78,7 +78,7 @@ observe({
 
     if(Sys.getenv('SHINY_PORT') == "") {
 
-      gs4_auth(T)
+      gs4_auth(email = TRUE)
 
     } else {
 
@@ -97,7 +97,6 @@ observe({
   })
   
 if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
-  
   
 # -------------------------------------------------------------------------
 
@@ -580,7 +579,7 @@ if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
                             , test_comp = input$analysis_test_comparison
                             , sig_level = input$analysis_sig_level
                             , plot_dist = "boxplot"
-                            , plot_diag = TRUE
+                            , plot_diag = FALSE
                             , digits = input$analysis_digits
                             )
     })

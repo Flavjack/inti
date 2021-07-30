@@ -8,8 +8,10 @@ colorlinks: yes
 csl: https://www.zotero.org/styles/crop-science
 vignette: >
   %\VignetteIndexEntry{Stagewise mixed-model analysis}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}

@@ -2,7 +2,7 @@
 #'
 #' Graph summary data into bar o line plot
 #'
-#' @param data Output from ger_testcomp function
+#' @param data Output from summary data
 #' @param type Type of graphic. "bar" or "line"
 #' @param x Axis x variable
 #' @param y Axis y variable
@@ -10,22 +10,24 @@
 #' @param ylab Title for the axis y
 #' @param xlab Title for the axis x
 #' @param glab Title for the legend
-#' @param ylimits limits of the y axis
+#' @param ylimits limits of the y axis c(initial, end, brakes)
 #' @param xrotation Rotation in x axis c(angle, h, v)
-#' @param xtext Text labels in x axis
-#' @param gtext Text labels in group
+#' @param xtext Text labels in x axis using a vector
+#' @param gtext Text labels in group using a vector
 #' @param legend the position of legends ("none", "left", "right", "bottom",
 #'   "top", or two-element numeric vector)
 #' @param sig Column with the significance
 #' @param sigsize Font size in significance letters
-#' @param error Show the error bar ("ste" or "std").
-#' @param color colored figure (TRUE), otherwise black & white (FALSE)
+#' @param error Show the error bar ("ste" or "std")
+#' @param color colored figure (TRUE), black & white (FALSE) or color vector
 #' @param opt Add news layer to the plot
 #'
 #' @details
 #'
 #' If the table is a out put of \code{mean_comparison(graph_opts = TRUE)}
 #' function. Its contain all the parameter for the plot.
+#' 
+#' You could add additional layer to the plot using "+" with ggplot2 options
 #'
 #' @return plot
 #'

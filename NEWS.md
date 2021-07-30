@@ -1,6 +1,7 @@
 # Version 0.4.2
 
 - *Package* 
+  - Include info `plot_smr()` and `plot_raw`
   - `plot_smr()`
     - Delete legend border
 
@@ -11,13 +12,13 @@
     - Add significance font size
   - `plot_raw()` 
     - Allows vector with colors for plots
-    - Include "scatterplot"
+    - Include "scatter plot"
   - `H2cal()` include trial option for MET
   - New video for the version > 0.4.1
   
 - *Yupana*
   - Add equations in regressions plot
-  - Include scatterplot in "Exploratory" module
+  - Include scatter plot in "Exploratory" module
 
 # Version 0.4.0
 
@@ -52,7 +53,7 @@ Changes incompatible with the old versions.
   
 - *Package* 
   - New function: `plot_raw()`
-    - Boxplot graph
+    - Box plot graph
   - Update function: `fieldbook_mvr` --> `yupana_mvr()`
     - Can be used independently
   - symbols to internal data

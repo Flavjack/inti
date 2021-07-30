@@ -26,7 +26,7 @@ plot_smr(
 )
 }
 \arguments{
-\item{data}{Output from ger_testcomp function}
+\item{data}{Output from summary data}
 
 \item{type}{Type of graphic. "bar" or "line"}
 
@@ -42,13 +42,13 @@ plot_smr(
 
 \item{glab}{Title for the legend}
 
-\item{ylimits}{limits of the y axis}
+\item{ylimits}{limits of the y axis c(initial, end, brakes)}
 
 \item{xrotation}{Rotation in x axis c(angle, h, v)}
 
-\item{xtext}{Text labels in x axis}
+\item{xtext}{Text labels in x axis using a vector}
 
-\item{gtext}{Text labels in group}
+\item{gtext}{Text labels in group using a vector}
 
 \item{legend}{the position of legends ("none", "left", "right", "bottom",
 "top", or two-element numeric vector)}
@@ -57,9 +57,9 @@ plot_smr(
 
 \item{sigsize}{Font size in significance letters}
 
-\item{error}{Show the error bar ("ste" or "std").}
+\item{error}{Show the error bar ("ste" or "std")}
 
-\item{color}{colored figure (TRUE), otherwise black & white (FALSE)}
+\item{color}{colored figure (TRUE), black & white (FALSE) or color vector}
 
 \item{opt}{Add news layer to the plot}
 }
@@ -72,6 +72,8 @@ Graph summary data into bar o line plot
 \details{
 If the table is a out put of \code{mean_comparison(graph_opts = TRUE)}
 function. Its contain all the parameter for the plot.
+
+You could add additional layer to the plot using "+" with ggplot2 options
 }
 \examples{
 

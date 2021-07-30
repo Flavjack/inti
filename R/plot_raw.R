@@ -1,29 +1,38 @@
 #' Plot raw data
 #'
-#' @description Function use the raw data for made a boxplot graphic
+#' Function use the raw data for made a boxplot graphic
+#'
 #' @param data raw data
-#' @param type Type of graphic. c("boxplot", "scatterplot")
+#' @param type Type of graphic. "boxplot" or "scatterplot"
 #' @param x Axis x variable
 #' @param y Axis y variable
 #' @param group Group variable
 #' @param ylab Title for the axis y
 #' @param xlab Title for the axis x
 #' @param glab Title for the legend
+#' @param ylimits Limits and break of the y axis c(initial, end, brakes)
+#' @param xlimits For scatter plot. Limits and break of the x axis c(initial,
+#'   end, brakes)
+#' @param xrotation Rotation in x axis c(angle, h, v)
+#' @param xtext Text labels in x axis using a vector
+#' @param gtext Text labels in groups using a vector
 #' @param legend the position of legends ("none", "left", "right", "bottom",
 #'   "top", or two-element numeric vector)
-#' @param ylimits Limits and break of the y axis c(init, end, brakes)
-#' @param xlimits For scatterplot. Limits and break of the x axis c(init, end, brakes)
-#' @param xrotation Rotation in x axis c(angle, h, v)
-#' @param xtext Text labels in x axis
-#' @param gtext Text labels in groups
-#' @param color Colored figure (TRUE), otherwise black & white (FALSE) 
+#' @param color Colored figure (TRUE), black & white (FALSE) or color vector
 #' @param linetype Line type for regression. Default = 0
 #' @param opt Add new layers to the plot
+#'
+#' @details
+#'
+#' You could add additional layer to the plot using "+" with ggplot2 options
+#'
 #' @return plot
+#'
 #' @import dplyr
 #' @import ggplot2
 #' @importFrom stats lm
-#' @export 
+#' @export
+#'
 #' @examples
 #'
 #' \dontrun{

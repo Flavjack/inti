@@ -3,7 +3,7 @@
 .inti.Rproj
 .RData
 .secrets
-cloud.json
 inst/doc
+cloud.json
 analytics.R
 analytics.r

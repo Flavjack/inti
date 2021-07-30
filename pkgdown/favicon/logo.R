@@ -136,3 +136,59 @@ sticker(subplot = logo
         , filename = "pkgdown/favicon/img/tarpuy.png"
         )
 
+
+# -------------------------------------------------------------------------
+# quipolab ----------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+logo <- list.files("pkgdown/favicon/img"
+                   , full.names = T
+                   , pattern = "logo_quipolab.png"
+                   ) %>% 
+  image_read()
+
+sticker(subplot = logo
+        , white_around_sticker = TRUE
+        , s_x = 1.1
+        , s_y = 1.0
+        , s_width = 2.5
+        , s_height = 2.5
+        , package = ""
+        , p_color = "red"
+        , p_size = 15
+        , h_color = "#6b594b"
+        , h_fill = "#ffe701"
+        , h_size = 1
+        # , url = "inkaverse.com"
+        , u_size = 8
+        , u_angle = 90
+        , u_x = 1.8
+        , u_y = 0.7
+        , filename = "pkgdown/favicon/img/quipolab.png"
+        )
+
+logo <- list.files("pkgdown/favicon/img"
+                   , full.names = T
+                   , pattern = "logo_quipolab_w.png"
+                   ) %>% 
+  image_read()
+
+sticker(subplot = logo
+        , white_around_sticker = TRUE
+        , s_x = 1.1
+        , s_y = 1.0
+        , s_width = 2.5
+        , s_height = 2.5
+        , package = ""
+        , p_color = "red"
+        , p_size = 15
+        , h_color = "#6b594b"
+        , h_fill = "#ffe701"
+        , h_size = 1
+        # , url = "inkaverse.com"
+        , u_size = 8
+        , u_angle = 90
+        , u_x = 1.8
+        , u_y = 0.7
+        , filename = "pkgdown/favicon/img/quipolab_w.png"
+        )
