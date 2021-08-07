@@ -12,8 +12,7 @@ library(dplyr)
 
 logo <- list.files("pkgdown/favicon/img"
                    , full.names = T
-                   , pattern = "logo_inkaverse.jpg"
-                   ) %>% 
+                   , pattern = "logo_inkaverse.jpg") %>% 
   image_read() 
 
 sticker(subplot = logo
@@ -33,6 +32,13 @@ sticker(subplot = logo
         , u_y = 0.7
         , filename = "pkgdown/favicon/img/inkaverse.png"
         )
+
+logo <- list.files("pkgdown/favicon/img"
+                   , full.names = T
+                   , pattern = "inkaverse.png") %>%
+  image_read()  %>% 
+  image_transparent('white') %>% 
+  image_write("pkgdown/favicon/img/inkaverse.png")
 
 #> Fechas en el quipo
 
@@ -70,7 +76,14 @@ sticker(subplot = logo
         , u_x = 1.8
         , u_y = 0.7
         , filename = "pkgdown/favicon/img/inti.png"
-        )
+        ) 
+
+logo <- list.files("pkgdown/favicon/img"
+                   , full.names = T
+                   , pattern = "inti.png") %>%
+  image_read()  %>% 
+  image_transparent('white') %>% 
+  image_write("pkgdown/favicon/img/inti.png")
 
 file.copy(from = "pkgdown/favicon/img/inti.png"
           , to = "man/figures/logo.png"
@@ -106,6 +119,13 @@ sticker(subplot = logo
         , filename = "pkgdown/favicon/img/yupana.png"
         )
 
+logo <- list.files("pkgdown/favicon/img"
+                   , full.names = T
+                   , pattern = "yupana.png") %>% 
+  image_read()  %>% 
+  image_transparent('white') %>% 
+  image_write("pkgdown/favicon/img/yupana.png")
+
 # -------------------------------------------------------------------------
 # tarpuy ------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -136,6 +156,12 @@ sticker(subplot = logo
         , filename = "pkgdown/favicon/img/tarpuy.png"
         )
 
+logo <- list.files("pkgdown/favicon/img"
+                   , full.names = T
+                   , pattern = "tarpuy.png") %>% 
+  image_read()  %>% 
+  image_transparent('white') %>% 
+  image_write("pkgdown/favicon/img/tarpuy.png")
 
 # -------------------------------------------------------------------------
 # quipolab ----------------------------------------------------------------
@@ -167,6 +193,12 @@ sticker(subplot = logo
         , filename = "pkgdown/favicon/img/quipolab.png"
         )
 
+logo <- image_read("pkgdown/favicon/img/quipolab.png")  %>% 
+  image_transparent('white') %>% 
+  image_write("pkgdown/favicon/img/quipolab.png")
+
+# -------------------------------------------------------------------------
+
 logo <- list.files("pkgdown/favicon/img"
                    , full.names = T
                    , pattern = "logo_quipolab_w.png"
@@ -192,3 +224,8 @@ sticker(subplot = logo
         , u_y = 0.7
         , filename = "pkgdown/favicon/img/quipolab_w.png"
         )
+
+logo <- image_read("pkgdown/favicon/img/quipolab_w.png")  %>% 
+  image_transparent('white') %>% 
+  image_write("pkgdown/favicon/img/quipolab_w.png")
+
