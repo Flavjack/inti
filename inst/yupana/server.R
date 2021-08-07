@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-05-24
+#> date .: 2021-08-07
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -176,7 +176,8 @@ if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
     validate(need(input$fieldbook_gsheet, "Choose you fb sheet"))
     
     gs() %>%
-      range_read(input$fieldbook_gsheet)
+      range_read(input$fieldbook_gsheet) %>% 
+      select(!starts_with("[") | !ends_with("]")) 
     
     })
   

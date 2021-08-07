@@ -8,6 +8,9 @@
 
 - *Yupana*
   - Legend position load correct
+  - Headers with [] are excluded from the analysis
+  
+> Agradecimiento a Pedro Barriga por sus sugerencias para mejorar `yupana()`
 
 # Version 0.4.1
 
@@ -67,6 +70,8 @@ Changes incompatible with the old versions.
   - Vignettes: comparison between `H2cal()` and `asreml`
   - Add data base for MET
   - Logo for the package and apps
+  
+> Agradecimiento a Khaterine en el diseño de los logos
     
 # Version 0.3.0
 
