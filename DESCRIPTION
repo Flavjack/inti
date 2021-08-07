@@ -21,14 +21,15 @@ Depends:
     tibble,
     R (>= 2.10)
 Imports:
-    lme4,
-    agricolae,
-    FactoMineR,
-    emmeans,
-    purrr,
-    stringr,
-    stringi,
-    DT
+    lme4, 
+    agricolae, 
+    FactoMineR, 
+    emmeans, 
+    purrr, 
+    stringr, 
+    stringi, 
+    DT,
+    qrcode 
 Suggests:
     agridat,
     gsheet,

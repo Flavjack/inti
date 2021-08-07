@@ -909,7 +909,7 @@ output$plot_error <- renderUI({
   grdt <- grdt()
   
   opts <- c("top", "bottom", "left", "right", "none")
-  selection <- grdt$error
+  selection <- grdt$legend
   
   selectInput(
     inputId = "smr_legend"

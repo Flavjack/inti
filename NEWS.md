@@ -1,9 +1,13 @@
 # Version 0.4.2
 
 - *Package* 
+  - Functions for huito app
   - Include info `plot_smr()` and `plot_raw`
   - `plot_smr()`
     - Delete legend border
+
+- *Yupana*
+  - Legend position load correct
 
 # Version 0.4.1
 
