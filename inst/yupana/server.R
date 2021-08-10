@@ -293,9 +293,11 @@ if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
                , gtext = if(input$raw_gtext == "") NULL else raw_gtext
                ) +
       {if(input$raw_type == "scatterplot") {
-        stat_poly_eq(formula = model
-                     , aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"))
-                     , parse = TRUE) } }
+        
+        stat_poly_eq(aes(label =  paste(stat(eq.label), stat(adj.rr.label), sep = "*\", \"*")),
+                     formula = formula)
+        
+        } }
     })
   
   output$plotraw <- renderImage({

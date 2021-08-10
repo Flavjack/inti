@@ -5,6 +5,10 @@
   - Include info `plot_smr()` and `plot_raw`
   - `plot_smr()`
     - Delete legend border
+  - Transparent logos background
+  - New vignette for coding with yupana
+  - Update Rticles and Books template
+  - Fix `web_table()` to export in xlsx
 
 - *Yupana*
   - Legend position load correct

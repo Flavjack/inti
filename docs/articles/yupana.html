@@ -82,6 +82,9 @@
       <a href="../articles/yupana.html">Yupana: experimental design analysis</a>
     </li>
     <li>
+      <a href="../articles/yupana-coding.html">Yupana: coding workflow</a>
+    </li>
+    <li>
       <a href="../articles/rticles.html">Rticles: scientific documents with R</a>
     </li>
     <li>
@@ -143,7 +146,7 @@
 
       
 
-      </header><script src="yupana_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="yupana_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Yupana</h1>
@@ -183,6 +186,20 @@
 </p>
 </div>
 
+</div>
+<div id="base-de-datos" class="section level1">
+<h1 class="hasAnchor">
+<a href="#base-de-datos" class="anchor"></a>Base de datos</h1>
+<p>Los datos deben estar organizado en formato <code>tidy-data</code>.</p>
+<p>Tener en cuenta algunas consideraciones:</p>
+<ul>
+<li>No usar caracteres extraños en la cabeceras, e.i.: %, #, &amp;, $, °, !, ^, etc</li>
+<li>Los datos deben iniciar en la primera fila y columna, e.i. A1</li>
+<li>Evitar usar espacio entre los nombres de las variables, en reemplazo pueden usar "_" o “.”</li>
+</ul>
+<blockquote>
+<p>Las columnas que esten entre corchetes “[]” serán excluidas del análisis</p>
+</blockquote>
 </div>
 <div id="módulos" class="section level1">
 <h1 class="hasAnchor">

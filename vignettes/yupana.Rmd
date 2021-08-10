@@ -42,6 +42,18 @@ Yupana permite:
 </div>
 ```
 
+# Base de datos
+
+Los datos deben estar organizado en formato `tidy-data`. 
+
+Tener en cuenta algunas consideraciones:
+
+- No usar caracteres extraños en la cabeceras, e.i.: %, #, &, $, °, !, ^, etc
+- Los datos deben iniciar en la primera fila y columna, e.i. A1
+- Evitar usar espacio entre los nombres de las variables, en reemplazo pueden usar "_" o "."
+
+> Las columnas que esten entre corchetes "[]" serán excluidas del análisis
+
 # Módulos
 
 ```{r}

@@ -45,7 +45,7 @@
 #' # browseURL(url)
 #'
 #' fb <- gsheet2tbl(url)
-#'
+#' #'
 #' fb %>%
 #'   plot_raw(type = "sca"
 #'            , x = "elt_test"
@@ -53,9 +53,11 @@
 #'            , group = "testiculo"
 #'            , color = T
 #'            , ylimits = c(0, 1500, 300)
-#'            , linetype = 0
-#'            )
-#'
+#'            , linetype = 2
+#'            ) +
+#'   ggpmisc::stat_poly_eq(aes(label =  paste(stat(eq.label), stat(adj.rr.label), sep = "*\", \"*")),
+#'                formula = formula)
+#' 
 #' }
 #' 
 

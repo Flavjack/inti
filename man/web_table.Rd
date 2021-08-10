@@ -10,7 +10,7 @@ web_table(
   digits = 2,
   rnames = FALSE,
   buttons = NULL,
-  file_name = NULL,
+  file_name = "file",
   scrolly = NULL
 )
 }

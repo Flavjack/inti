@@ -37,6 +37,8 @@ navbar:
         href: articles/tarpuy.html
       - text: "Yupana: experimental design analysis"
         href: articles/yupana.html
+      - text: "Yupana: coding workflow"
+        href: articles/yupana-coding.html
       - text: "Rticles: scientific documents with R"
         href: articles/rticles.html
       - text: "Broad-sense heritability in plant breeding"

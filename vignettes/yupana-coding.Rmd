@@ -1,0 +1,281 @@
+---
+title: "Yupana: coding workflow"
+description: 'Reproduce results from Yupana coding'
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{Yupana: coding workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+# Dependencies and setup
+
+```{r setup, echo=TRUE, message=FALSE, warning=FALSE}
+source("http://inkaverse.com/docs.r")
+library(FactoMineR)
+library(cowplot)
+library(magick)
+```
+
+# Import data
+
+```{r, echo=TRUE}
+url <- paste0("https://docs.google.com/spreadsheets/d/"
+              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346") 
+
+# browseURL(url)
+
+fb <- url %>% 
+  gsheet2tbl() %>% 
+  rename_with(tolower) %>% 
+  mutate(across(c(treat, geno, bloque), ~ as.factor(.))) %>% 
+  mutate(across(where(is.factor), ~ gsub("[[:space:]]", "", .)) ) %>% 
+  as.data.frame()
+# str(fb)
+```
+
+# Plots raw data
+
+## Box plot
+
+```{r, echo=TRUE}
+wue <- fb %>% 
+  plot_raw(type = "boxplot"
+           , x = "geno"
+           , y = "wue"
+           , group = "treat"
+           , xlab = "Genotipos"
+           , ylab = "Water use efficiency (g/l)"
+           , ylimits = c(5, 30, 5)
+           , glab = "Tratamientos"
+           )
+
+
+```
+
+## Scatter plot
+
+```{r, echo=TRUE}
+hi <- fb %>% 
+  plot_raw(type = "scatterplot"
+           , x = "hi"
+           , y = "twue"
+           , group = "treat"
+           , xlab = "Harvest Index"
+           , ylab = "Tuber water use efficiency (g/l)"
+           , glab = "Tratamientos"
+           )
+```
+
+## Plot in grids
+
+```{r, fig.cap= fig$caption, echo=TRUE}
+grid <- plot_grid(wue, hi
+                  , nrow = 2
+                  , labels = "AUTO")
+
+ggsave2("files/fig-01.png"
+        , plot = grid
+        , dpi= 300
+        , width = 10
+        , height = 10
+        , scale = 1.5
+        , units = "cm")
+
+fig <- include_figure(
+  figure = "files/fig-01.png"
+  , caption = "Water use effiency in 15 potato genotypes"
+  , notes = "
+  A) Box plot.
+  B) Scatter plot
+  "
+  , label = "__Where:__"
+  )
+fig$figure
+```
+
+# Plot summary data
+
+## Leaf area
+
+```{r, echo=TRUE}
+
+#> Plot summary data
+
+model <- fb %>% 
+  yupana_analysis(response = "lfa"
+                  , model_factors = "geno*treat"
+                  , comparison = c("geno", "treat")
+                  )
+
+lfa <- model$meancomp %>% 
+  plot_smr(type = "bar"
+           , x = "geno"
+           , y = "lfa"
+           , group = "treat"
+           , ylimits = c(0, 12000, 2000)
+           , sig = "sig"
+           , error = "ste"
+           , xlab = "Genotipos"
+           , ylab = "Area foliar (cm^2)"
+           , color = F
+           )
+
+model$anova %>% anova()
+
+model$meancomp %>% web_table()
+
+```
+
+## Tuber water use efficiency
+
+```{r, echo=TRUE}
+model <- fb %>% 
+  yupana_analysis(response = "twue"
+                  , model_factors = "geno*treat"
+                  , comparison = c("geno", "treat")
+                  )
+
+twue <- model$meancomp %>% 
+  plot_smr(type = "line"
+           , x = "geno"
+           , y = "twue"
+           , group = "treat"
+           , ylimits = c(0, 10, 2)
+           , error = "ste"
+           , color = c("blue", "red")
+           ) +
+  labs(x = "Genotipos"
+       , y = "Tuber water use effiency (g/l)"
+       )
+
+model$anova %>% anova()
+
+model$meancomp %>% web_table()
+```
+
+## Plot in grids
+
+```{r gridplot, fig.cap= fig$caption, echo=TRUE}
+grid <- plot_grid(lfa, twue
+                  , nrow = 2
+                  , labels = "AUTO")
+
+ggsave2("files/fig-02.png"
+        , plot = grid
+        , dpi= 300
+        , width = 10
+        , height = 10
+        , scale = 1.5
+        , units = "cm")
+
+fig <- include_figure(
+  figure = "files/fig-02.png"
+  , caption = "Water use effiency in 15 potato genotypes"
+  , notes = "
+  A) Bar plot
+  B) Line plot
+  "
+  , label = "__Where:__"
+  )
+fig$figure
+```
+
+# Multivariate analysis
+
+```{r mv, fig.cap= fig$caption, echo=TRUE}
+#> Principal component Analysis
+
+mv <- fb %>% 
+  yupana_mvr(last_factor = "bloque"
+             , summary_by = c("geno", "treat")
+             , groups = "treat"
+             )
+  
+# sink("files/pca.txt")
+# # Results
+# summary(pca, nbelements = Inf, nb.dec = 2)
+# # Correlation de dimensions
+# dimdesc(pca)
+# sink()
+
+ppi <- 300
+png("files/plot_pca_var.png", width=7*ppi, height=7*ppi, res=ppi)
+
+plot.PCA(mv$pca,
+         choix="var",
+         title="",
+         autoLab = "y", 
+         cex = 0.8,
+         shadowtext = T)
+
+graphics.off()
+
+ppi <- 300
+png("files/plot_pca_ind.png", width=7*ppi, height=7*ppi, res=ppi)
+
+plot.PCA(mv$pca,
+         choix="ind",
+         habillage = 1,
+         title="",
+         autoLab = "y", 
+         cex = 0.8,
+         shadowtext = T,
+         label = "ind",
+         legend = list(bty = "y", x = "topright"))
+
+graphics.off()
+
+# Hierarchical Clustering Analysis
+
+clt <- mv$pca %>% 
+  HCPC(., nb.clust=-1, graph = F)
+
+# sink("files/clu.txt")
+# clus$call$t$tree
+# clus$desc.ind
+# clus$desc.var
+# sink()
+
+ppi <- 300
+png("files/plot_cluster_tree.png", width=7*ppi, height=7*ppi, res=ppi)
+
+plot.HCPC(x = clt, 
+          choice = "tree")
+
+graphics.off()
+
+ppi <- 300
+png("files/plot_cluster_map.png", width=7*ppi, height=7*ppi, res=ppi)
+
+plot.HCPC(x = clt, choice = "map")
+
+graphics.off()
+
+plot.01 <- image_read("files/plot_pca_var.png") %>% grid::rasterGrob()
+plot.02 <- image_read("files/plot_pca_ind.png")  %>% grid::rasterGrob()
+plot.03 <- image_read("files/plot_cluster_map.png") %>% grid::rasterGrob()
+plot.04 <- image_read("files/plot_cluster_tree.png") %>% grid::rasterGrob()
+
+
+plot <- plot_grid(plot.01, plot.02, plot.03, plot.04
+                  , nrow = 2
+                  , labels = "AUTO")
+
+ggsave2("files/fig-03.png"
+        , plot = plot
+        , dpi = 300
+        , width = 13
+        , height = 10
+        , units = "cm")
+
+fig <- include_figure(
+  caption = "Multivariate Analysis: 
+  Principal component Analysis and Hierarchical Clustering Analysis."
+  , figure = "files/fig-03.png"
+  )
+  
+fig$figure
+```

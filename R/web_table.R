@@ -33,12 +33,12 @@ web_table <- function(data
                       , digits = 2
                       , rnames = FALSE
                       , buttons = NULL
-                      , file_name = NULL
+                      , file_name = "file"
                       , scrolly = NULL
                       ){
   
 # -------------------------------------------------------------------------
-
+  
   if(!is.data.frame(data)) stop("Use a data frame or table")
   
   where <- NULL
@@ -52,7 +52,7 @@ web_table <- function(data
   } else {  ext <- c('Scroller') }
   
   botones <- list(
-    list(extend = 'copy', filename = file_name)
+    list(extend = 'copy')
     , list(extend = 'excel', filename = file_name)
     )
   
