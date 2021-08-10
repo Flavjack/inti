@@ -27,15 +27,14 @@ Function to remove outliers in MET experiments
 \examples{
 
 library(inti)
-library(agridat)
 
-outliers <- outliers_remove(
-  data = john.alpha
-  , trait ="yield"
-  , model = "rep + (1|rep:block) + gen"
+rmout <- outliers_remove(
+  data = potato
+  , trait ="hi"
+  , model = "0 + (1|bloque) + geno"
   )
   
-outliers
+rmout$outliers
   
 }
 \references{

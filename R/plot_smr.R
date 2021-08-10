@@ -61,10 +61,11 @@
 #'            , x = "geno"
 #'            , y = "hi"
 #'            , group = "treat"
+#'            , glab = "tratamientos (cm^{-2})"
 #'            , ylimits = c(0, 1, 0.1)
 #'            , color = c("brown", "blue", "black")
 #'            , sig = "sig"
-#'            ) + theme(legend.position = c(0.15, 0.9), legend.direction="horizontal")
+#'            ) + theme(legend.position = c(0.3, 0.9), legend.direction="horizontal")
 #'   
 #' 
 #' }

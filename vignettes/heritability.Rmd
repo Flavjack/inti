@@ -88,19 +88,18 @@ For remove the outliers the function implemented is the Method 4 used for @berna
 
 ```{r pkgs, echo=TRUE}
 library(inti)
-library(agridat)
 ```
 
 ## H2cal function
 
 ```{r fig.width= 7, fig.height=5}
- dt <- john.alpha
+ dt <- potato
  hr <- H2cal(data = dt
-            , trait = "yield"
-            , gen.name = "gen"
-            , rep.n = 3
-            , ran.model = "1 + rep + (1|rep:block) + (1|gen)"
-            , fix.model = "0 + rep + (1|rep:block) + gen"
+            , trait = "stemdw"
+            , gen.name = "geno"
+            , rep.n = 5
+            , ran.model = "1 + (1|bloque) + (1|geno)"
+            , fix.model = "0 + (1|bloque) + geno"
             , emmeans = TRUE
             , plot_diag = TRUE
             , outliers.rm = TRUE
@@ -141,13 +140,9 @@ hr$outliers$random %>% kable(caption = "Outliers random model")
 hr$outliers$fixed %>% kable(caption = "Outliers fixed model")
 ```
 
-<!-- # Comparison: asreml and H2cal -->
+# Comparison: H2cal and asreml
 
-<!-- ```{r} -->
-<!-- shiny::includeHTML("https://inkaverse.com/code/stagewise.html") -->
-<!-- ``` -->
-
-<!-- # References -->
+> https://inkaverse.com/articles/extra/stagewise.html
 
 ::: {#refs}
 :::

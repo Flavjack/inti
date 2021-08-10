@@ -45,7 +45,7 @@
 #' # browseURL(url)
 #'
 #' fb <- gsheet2tbl(url)
-#' #'
+#' 
 #' fb %>%
 #'   plot_raw(type = "sca"
 #'            , x = "elt_test"
@@ -54,6 +54,7 @@
 #'            , color = T
 #'            , ylimits = c(0, 1500, 300)
 #'            , linetype = 2
+#'            , glab = "testiculo (cm^3)"
 #'            ) +
 #'   ggpmisc::stat_poly_eq(aes(label =  paste(stat(eq.label), stat(adj.rr.label), sep = "*\", \"*")),
 #'                formula = formula)
@@ -131,7 +132,31 @@ if(type == "boxplot") {
     color <- color
     
   }
+
+# sci-labels --------------------------------------------------------------
+
+if ( !is.null(xlab) ) { 
   
+  xlab <- xlab %>%
+    gsub(pattern = " ", "~", .)
+  xlab <- eval(expression(parse(text = xlab)))
+  }
+
+if ( !is.null(ylab) ) { #
+  
+  ylab <- ylab %>%
+    gsub(pattern = " ", "~", .)
+  
+  ylab <- eval(expression(parse(text = ylab)))
+  }
+
+if ( !is.null(glab) ) {
+  
+  glab <- glab %>%
+    gsub(pattern = " ", "~", .)
+  glab <- eval(expression(parse(text = glab)))
+  } 
+
 # -------------------------------------------------------------------------
 
 if(type == "boxplot") {

@@ -9,6 +9,8 @@
   - New vignette for coding with yupana
   - Update Rticles and Books template
   - Fix `web_table()` to export in xlsx
+  - `plot_raw` with scientific notation in labels
+  - Include new data set `potato`
 
 - *Yupana*
   - Legend position load correct

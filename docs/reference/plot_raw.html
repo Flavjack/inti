@@ -322,7 +322,7 @@ end, brakes)</p></td>
 <span class='co'># browseURL(url)</span>
 
 <span class='va'>fb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html'>gsheet2tbl</a></span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span>
-<span class='co'>#'</span>
+
 <span class='va'>fb</span> <span class='op'>%&gt;%</span>
   <span class='fu'>plot_raw</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"sca"</span>
            , x <span class='op'>=</span> <span class='st'>"elt_test"</span>
@@ -331,6 +331,7 @@ end, brakes)</p></td>
            , color <span class='op'>=</span> <span class='cn'>T</span>
            , ylimits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1500</span>, <span class='fl'>300</span><span class='op'>)</span>
            , linetype <span class='op'>=</span> <span class='fl'>2</span>
+           , glab <span class='op'>=</span> <span class='st'>"testiculo (cm^3)"</span>
            <span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>ggpmisc</span><span class='fu'>::</span><span class='fu'><a href='https://docs.r4photobiology.info/ggpmisc//reference/stat_poly_eq.html'>stat_poly_eq</a></span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>label <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'>stat</span><span class='op'>(</span><span class='va'>eq.label</span><span class='op'>)</span>, <span class='fu'>stat</span><span class='op'>(</span><span class='va'>adj.rr.label</span><span class='op'>)</span>, sep <span class='op'>=</span> <span class='st'>"*\", \"*"</span><span class='op'>)</span><span class='op'>)</span>,
                formula <span class='op'>=</span> <span class='va'>formula</span><span class='op'>)</span>

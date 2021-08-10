@@ -28,12 +28,10 @@ Imports:
     purrr, 
     stringr, 
     stringi, 
-    DT,
-    qrcode 
+    DT
 Suggests:
     magick,
     cowplot,
-    agridat,
     gsheet,
     knitr,
     rmarkdown

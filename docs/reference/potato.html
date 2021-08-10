@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Barcode generator — huito_barcode • inti</title>
+<title>Water use efficiency in 15 potato genotypes — potato • inti</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,8 +52,10 @@
 
 
 
-<meta property="og:title" content="Barcode generator — huito_barcode" />
-<meta property="og:description" content="Generate bar codes using QR codes" />
+<meta property="og:title" content="Water use efficiency in 15 potato genotypes — potato" />
+<meta property="og:description" content="Experiment to evaluate the physiological response from 15 potatos genotypes
+under water deficit condition. The experiment had a randomized complete block
+design with five replications. The stress started at 30 day after planting." />
 <meta property="og:image" content="https://flavjack.github.io/inti/reference/figures/logo.png" />
 
 
@@ -199,47 +201,45 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Barcode generator</h1>
-    <small class="dont-index">Source: <a href='https://github.com/flavjack/inti/blob/master/R/huito_barcode.R'><code>R/huito_barcode.R</code></a></small>
-    <div class="hidden name"><code>huito_barcode.Rd</code></div>
+    <h1>Water use efficiency in 15 potato genotypes</h1>
+    <small class="dont-index">Source: <a href='https://github.com/flavjack/inti/blob/master/R/potato.R'><code>R/potato.R</code></a></small>
+    <div class="hidden name"><code>potato.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Generate bar codes using QR codes</p>
+    <p>Experiment to evaluate the physiological response from 15 potatos genotypes
+under water deficit condition. The experiment had a randomized complete block
+design with five replications. The stress started at 30 day after planting.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>huito_barcode</span><span class='op'>(</span><span class='va'>text</span>, color <span class='op'>=</span> <span class='st'>"black"</span>, alpha <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>potato</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>text</th>
-      <td><p>text to convert to QR bar code</p></td>
-    </tr>
-    <tr>
-      <th>color</th>
-      <td><p>Bar code color</p></td>
-    </tr>
-    <tr>
-      <th>alpha</th>
-      <td><p>Intensity og the bar code color</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>plot</p>
+    <p>A data frame with 150 rows and 17 variables:</p>
+<dl>
+  <dt>treat</dt><dd><p>Water deficit treatments: sequia, irrigado</p></dd>
+  <dt>geno</dt><dd><p>15 potato genotypes</p></dd>
+  <dt>bloque</dt><dd><p>blocks for the experimentl design</p></dd>
+  <dt>spad_29</dt><dd><p>Relative chlorophyll content (SPAD) at 29 day after planting</p></dd>
+  <dt>spad_83</dt><dd><p>Relative chlorophyll content (SPAD) at 84 day after planting</p></dd>
+  <dt>rwc_84</dt><dd><p>Relative water content (percentage) at 84 day after planting</p></dd>
+  <dt>op_84</dt><dd><p>Osmotic potential (Mpa) at 84 day after planting</p></dd>
+  <dt>leafdw</dt><dd><p>leaf dry weight (g)</p></dd>
+  <dt>stemdw</dt><dd><p>stem dry weight (g)</p></dd>
+  <dt>rootdw</dt><dd><p>root dry weight (g)</p></dd>
+  <dt>tubdw</dt><dd><p>tuber dry weight (g)</p></dd>
+  <dt>biomdw</dt><dd><p>total biomass dry weight (g)</p></dd>
+  <dt>hi</dt><dd><p>harvest index</p></dd>
+  <dt>ttrans</dt><dd><p>total transpiration (l)</p></dd>     
+  <dt>wue</dt><dd><p>water use effiency (g/l)</p></dd> 
+  <dt>twue</dt><dd><p>tuber water use effiency (g/l)</p></dd> 
+  <dt>lfa</dt><dd><p>leaf area (cm2)</p></dd>  
+  
+</dl>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 
-<span class='fu'>huito_barcode</span><span class='op'>(</span><span class='st'>"inkaverse"</span><span class='op'>)</span>
-
-<span class='op'>}</span>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

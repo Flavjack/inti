@@ -82,7 +82,7 @@ url <- paste0("https://docs.google.com/spreadsheets/d/"
 # browseURL(url)
 
 fb <- gsheet2tbl(url)
-#'
+
 fb \%>\%
   plot_raw(type = "sca"
            , x = "elt_test"
@@ -91,6 +91,7 @@ fb \%>\%
            , color = T
            , ylimits = c(0, 1500, 300)
            , linetype = 2
+           , glab = "testiculo (cm^3)"
            ) +
   ggpmisc::stat_poly_eq(aes(label =  paste(stat(eq.label), stat(adj.rr.label), sep = "*\", \"*")),
                formula = formula)

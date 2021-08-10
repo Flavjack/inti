@@ -73,11 +73,6 @@ reference:
     contents:
       - starts_with("tarpuy")
       
-  - title: Huito
-    desc:  Labels designer
-    contents:
-      - starts_with("huito")
-      
   - title: Rticles
     desc:  Write technical docs
     contents:

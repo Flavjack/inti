@@ -94,17 +94,17 @@ For more information review the references.
 \examples{
 
 library(inti)
-library(agridat)
 
- dt <- john.alpha
- hr <- H2cal(data = dt
-            , trait = "yield"
-            , gen.name = "gen"
-            , rep.n = 3
-            , fix.model = "1 + rep + (1|rep:block) + gen"
-            , ran.model = "1 + rep + (1|rep:block) + (1|gen)"
-            , plot_diag = TRUE
+dt <- potato
+
+hr <- H2cal(data = dt
+            , trait = "tubdw"
+            , gen.name = "geno"
+            , rep.n = 5
+            , ran.model = "1 + (1|bloque) + (1|geno)"
+            , fix.model = "0 + (1|bloque) + geno"
             , emmeans = TRUE
+            , plot_diag = TRUE
             , outliers.rm = TRUE
             )
             

@@ -10,10 +10,16 @@ editor_options:
   chunk_output_type: console
 ---
 
-# Dependencies and setup
-
-```{r setup, echo=TRUE, message=FALSE, warning=FALSE}
+```{r setup, include=FALSE}
 source("http://inkaverse.com/docs.r")
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Packages
+
+```{r message=FALSE, warning=FALSE}
+library(inti)
+library(gsheet)
 library(FactoMineR)
 library(cowplot)
 library(magick)
@@ -21,7 +27,7 @@ library(magick)
 
 # Import data
 
-```{r, echo=TRUE}
+```{r}
 url <- paste0("https://docs.google.com/spreadsheets/d/"
               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346") 
 
@@ -40,7 +46,7 @@ fb <- url %>%
 
 ## Box plot
 
-```{r, echo=TRUE}
+```{r}
 wue <- fb %>% 
   plot_raw(type = "boxplot"
            , x = "geno"
@@ -57,7 +63,7 @@ wue <- fb %>%
 
 ## Scatter plot
 
-```{r, echo=TRUE}
+```{r}
 hi <- fb %>% 
   plot_raw(type = "scatterplot"
            , x = "hi"
@@ -71,18 +77,19 @@ hi <- fb %>%
 
 ## Plot in grids
 
-```{r, fig.cap= fig$caption, echo=TRUE}
+```{r, fig.cap= fig$caption}
 grid <- plot_grid(wue, hi
                   , nrow = 2
                   , labels = "AUTO")
 
-ggsave2("files/fig-01.png"
+save_plot("files/fig-01.png"
         , plot = grid
         , dpi= 300
-        , width = 10
-        , height = 10
-        , scale = 1.5
-        , units = "cm")
+        , base_width = 10
+        , base_height = 10
+        , scale = 1.4
+        , units = "cm"
+        )
 
 fig <- include_figure(
   figure = "files/fig-01.png"
@@ -100,7 +107,7 @@ fig$figure
 
 ## Leaf area
 
-```{r, echo=TRUE}
+```{r}
 
 #> Plot summary data
 
@@ -131,7 +138,7 @@ model$meancomp %>% web_table()
 
 ## Tuber water use efficiency
 
-```{r, echo=TRUE}
+```{r}
 model <- fb %>% 
   yupana_analysis(response = "twue"
                   , model_factors = "geno*treat"
@@ -146,6 +153,7 @@ twue <- model$meancomp %>%
            , ylimits = c(0, 10, 2)
            , error = "ste"
            , color = c("blue", "red")
+           , 
            ) +
   labs(x = "Genotipos"
        , y = "Tuber water use effiency (g/l)"
@@ -158,7 +166,7 @@ model$meancomp %>% web_table()
 
 ## Plot in grids
 
-```{r gridplot, fig.cap= fig$caption, echo=TRUE}
+```{r gridplot, fig.cap= fig$caption}
 grid <- plot_grid(lfa, twue
                   , nrow = 2
                   , labels = "AUTO")
@@ -185,7 +193,7 @@ fig$figure
 
 # Multivariate analysis
 
-```{r mv, fig.cap= fig$caption, echo=TRUE}
+```{r mv, fig.cap= fig$caption}
 #> Principal component Analysis
 
 mv <- fb %>% 
@@ -267,8 +275,9 @@ plot <- plot_grid(plot.01, plot.02, plot.03, plot.04
 ggsave2("files/fig-03.png"
         , plot = plot
         , dpi = 300
-        , width = 13
+        , width = 12
         , height = 10
+        , scale = 1.5
         , units = "cm")
 
 fig <- include_figure(
