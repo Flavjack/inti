@@ -9,18 +9,29 @@
 # Packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-cran <- c("knitr", "bookdown", "citr", "gsheet", "cowplot", "magick", "inti")
+cran <- c("devtools", "knitr", "bookdown", "gsheet", "cowplot", "magick", "inti")
+
+git <- c("crsh/citr") # Use zotero for docs citations
 
 suppressPackageStartupMessages({
+  
   for (pkg in cran) { 
     if( !require(pkg, character.only = T) ) {
       install.packages(pkg)
       library(pkg, character.only = T)
     } 
   }
+  
+  for (pkg in git) {
+    if( !require(sub(".*/", "", pkg), character.only = T) ) {
+      devtools::install_github(pkg, upgrade = T)
+      library(sub(".*/", "", pkg), character.only = T)
+    }
+  }
+  
 })
 
-remove(cran, pkg)
+remove(cran, git, pkg)
 
 # -------------------------------------------------------------------------
 # Knitr options -----------------------------------------------------------

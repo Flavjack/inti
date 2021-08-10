@@ -30,8 +30,8 @@ Imports:
     stringi, 
     DT
 Suggests:
-    magick,
     cowplot,
+    magick,
     gsheet,
     knitr,
     rmarkdown

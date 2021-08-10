@@ -30,7 +30,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-source(system.file("extdata", "rticles.r", package = "inti"))
+source("http://inkaverse.com/rticles.r")
 ```
 
 ```{r}
