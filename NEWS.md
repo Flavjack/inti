@@ -9,7 +9,7 @@
   - New vignette for coding with yupana
   - Update Rticles and Books template
   - Fix `web_table()` to export in xlsx
-  - `plot_raw` with scientific notation in labels
+  - `plot_raw()` with scientific notation in labels
   - Include new data set `potato`
 
 - *Yupana*
@@ -77,7 +77,7 @@ Changes incompatible with the old versions.
   - Add data base for MET
   - Logo for the package and apps
   
-> Agradecimiento a Khaterine en el diseño de los logos
+> Agradecimiento a Khaterine por la idea en el diseño de los logos
     
 # Version 0.3.0
 

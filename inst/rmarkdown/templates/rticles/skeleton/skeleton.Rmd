@@ -3,9 +3,9 @@ title: "Rticles: scientific documents with bookdown"
 subtitle: "www.lozanoisla.com"
 author:
   - "Flavio Lozano-Isla $^{1*}$"
-  - "$^{1}$ Agronomist MSc, email: flavjack@gmail.com"
+  - "$^{1}$ Agronomist MSc, email: flozano@lamolina.edu.pe"
 date: "`r if (knitr:::is_html_output()) format(Sys.time(), '%Y-%m-%d  %H:%M')`"
-description: document template for scientific report
+description: document template for scientific documents
 favicon: https://inkaverse.com/img/inkaverse.png
 github-repo: flavjack/rticles
 site: bookdown::bookdown_site
@@ -14,11 +14,11 @@ bookdown::gitbook:
 output: 
   bookdown::html_document2:
     toc: true
-    number_sections: true
     toc_float: true
+    global_numbering: TRUE
   bookdown::word_document2:
     reference_docx: files/style.docx
-    number_sections: false
+    global_numbering: TRUE
 always_allow_html: true
 link-citations: true
 colorlinks: true
@@ -28,6 +28,9 @@ csl: https://www.zotero.org/styles/apa
 editor_options: 
   chunk_output_type: console
 ---
+
+- Ejecutar el bloque de código de `setup` antes de compilar el documento.
+- Run the `setup` code chunk before compiling the document.
 
 ```{r setup, include=FALSE}
 source("http://inkaverse.com/rticles.r")

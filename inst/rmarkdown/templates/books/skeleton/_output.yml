@@ -9,7 +9,7 @@ bookdown::gitbook:
       before: |
         <li> <a href="https://inkaverse.com/" target="blank"> Inkaverse Project </a> </li>
       after:  |
-        <li> <a href="https://flavjack.shinyapps.io/rticles/" target="blank"> Rticles app </a> </li>
+        <li> <a href="https://inkaverse.com/articles/rticles.html" target="blank"> Rticles </a> </li>
     fontsettings:
       theme: white
       family: sans
