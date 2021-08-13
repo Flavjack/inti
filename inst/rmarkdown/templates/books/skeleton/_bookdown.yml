@@ -2,7 +2,7 @@ book_filename: "rticles"
 view: https://github.com/flavjack/rticles/blob/master/%s
 clean: ["docs", "libs", "_book", "rticles.Rmd", "rticles.html"]
 output_dir: docs
-delete_merged_file: TRUE
+delete_merged_file: true
 rmd_files: ["index.Rmd"]
 
 language:

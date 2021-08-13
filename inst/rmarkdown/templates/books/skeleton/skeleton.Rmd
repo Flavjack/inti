@@ -6,6 +6,7 @@ subtitle: "www.inkaverse.com"
 - Open the created folder
 - Open the `rticles.Rproj``
 - Open the `index.Rmd`
+- Run the `setup` chunk
 - Go Build option: `Build book`
 - Wait until the book finish compile
 - Check the example

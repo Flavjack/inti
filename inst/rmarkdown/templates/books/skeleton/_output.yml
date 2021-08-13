@@ -14,7 +14,8 @@ bookdown::gitbook:
       theme: white
       family: sans
       size: 2
-    search: yes
+    search: 
+      engine: fuse
     info: no
     download: 
       - ["rticles.docx", "word"]
