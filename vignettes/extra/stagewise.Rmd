@@ -203,7 +203,7 @@ blues.comp <- merge(blues.asreml
                     , by = c("cultivar", "zone", "location"))
 
 # plot(blues.comp$yield, blues.comp$yield_lsm)
-rs <- cor(blues.comp$yield, blues.comp$yield_lsm) # 1
+rs <- cor(blues.comp$yield, blues.comp$yield_lsm) 
 cat("r =", rs)
 
 blues.comp %>% web_table(digits = 4)
@@ -218,7 +218,7 @@ blups.comp <- merge(blups.asrml, blups.h2cal
                     , by = c("cultivar"))
 
 # plot(blups.comp$yield, blups.comp$predicted.value)
-rs <- cor(blups.comp$yield, blups.comp$predicted.value) # 0.9818724
+rs <- cor(blups.comp$yield, blups.comp$predicted.value) 
 cat("r =", rs)
 
 blups.comp %>% web_table(digits = 4)
@@ -279,7 +279,7 @@ blups.h2cal <- model$blups
 blups.comp <- merge(blups.asreml, blups.h2cal, by = c("cultivar"))
 
 # plot(blups.comp$predicted.value, blups.comp$yield)
-rs <- cor(blups.comp$predicted.value, blups.comp$yield) # 0.9202
+rs <- cor(blups.comp$predicted.value, blups.comp$yield) 
 cat("r =", rs)
 
 blups.comp %>% web_table(digits = 4)

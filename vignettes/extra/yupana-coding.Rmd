@@ -84,7 +84,7 @@ grid <- plot_grid(wue, hi
 
 save_plot("files/fig-01.png"
         , plot = grid
-        , dpi= 300
+        , dpi= 100
         , base_width = 10
         , base_height = 10
         , scale = 1.4
@@ -173,7 +173,7 @@ grid <- plot_grid(lfa, twue
 
 ggsave2("files/fig-02.png"
         , plot = grid
-        , dpi= 300
+        , dpi= 100
         , width = 10
         , height = 10
         , scale = 1.5
@@ -209,7 +209,7 @@ mv <- fb %>%
 # dimdesc(pca)
 # sink()
 
-ppi <- 300
+ppi <- 100
 png("files/plot_pca_var.png", width=7*ppi, height=7*ppi, res=ppi)
 
 plot.PCA(mv$pca,
@@ -221,7 +221,7 @@ plot.PCA(mv$pca,
 
 graphics.off()
 
-ppi <- 300
+ppi <- 100
 png("files/plot_pca_ind.png", width=7*ppi, height=7*ppi, res=ppi)
 
 plot.PCA(mv$pca,
@@ -247,7 +247,7 @@ clt <- mv$pca %>%
 # clus$desc.var
 # sink()
 
-ppi <- 300
+ppi <- 100
 png("files/plot_cluster_tree.png", width=7*ppi, height=7*ppi, res=ppi)
 
 plot.HCPC(x = clt, 
@@ -255,7 +255,7 @@ plot.HCPC(x = clt,
 
 graphics.off()
 
-ppi <- 300
+ppi <- 100
 png("files/plot_cluster_map.png", width=7*ppi, height=7*ppi, res=ppi)
 
 plot.HCPC(x = clt, choice = "map")
@@ -282,9 +282,10 @@ ggsave2("files/fig-03.png"
 
 fig <- include_figure(
   caption = "Multivariate Analysis: 
-  Principal component Analysis and Hierarchical Clustering Analysis."
+  Principal component analysis and hierarchical clustering analysis."
   , figure = "files/fig-03.png"
   )
   
 fig$figure
 ```
+
