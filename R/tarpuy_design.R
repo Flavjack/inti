@@ -209,7 +209,7 @@ if ( length(seed_name)  > 0  ) {
 
 # -------------------------------------------------------------------------
 
-qr_list <- c("qr", "cod", "code", "qr-code")
+qr_list <- c("qr", "cod", "code", "qr-code", "barcode")
 qr_match <- names(arguments_opt) %in% qr_list
 qr_name <- names(arguments_opt)[qr_match == TRUE]
 
@@ -439,7 +439,7 @@ result$design <- result$design %>%
         , sep = "_"
         ) %>% 
   mutate(factors = paste(qr, factors, sep = "_")) %>% 
-  rename('qr-code' = factors )
+  rename('barcode' = factors )
 
 # result ------------------------------------------------------------------
 # -------------------------------------------------------------------------
