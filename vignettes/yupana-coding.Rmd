@@ -22,7 +22,7 @@ library(inti)
 library(gsheet)
 library(FactoMineR)
 library(cowplot)
-library(magick)
+library(png)
 ```
 
 # Import data
@@ -262,10 +262,10 @@ plot.HCPC(x = clt, choice = "map")
 
 graphics.off()
 
-plot.01 <- image_read("files/plot_pca_var.png") %>% grid::rasterGrob()
-plot.02 <- image_read("files/plot_pca_ind.png")  %>% grid::rasterGrob()
-plot.03 <- image_read("files/plot_cluster_map.png") %>% grid::rasterGrob()
-plot.04 <- image_read("files/plot_cluster_tree.png") %>% grid::rasterGrob()
+plot.01 <- readPNG("files/plot_pca_var.png") %>% grid::rasterGrob()
+plot.02 <- readPNG("files/plot_pca_ind.png")  %>% grid::rasterGrob()
+plot.03 <- readPNG("files/plot_cluster_map.png") %>% grid::rasterGrob()
+plot.04 <- readPNG("files/plot_cluster_tree.png") %>% grid::rasterGrob()
 
 
 plot <- plot_grid(plot.01, plot.02, plot.03, plot.04

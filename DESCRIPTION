@@ -31,7 +31,7 @@ Imports:
     DT
 Suggests:
     cowplot,
-    magick,
+    png,
     gsheet,
     knitr,
     rmarkdown
