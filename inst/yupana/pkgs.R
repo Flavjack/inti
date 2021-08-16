@@ -21,5 +21,5 @@ library(cowplot)
 library(corrplot)
 library(tidyverse)
 library(FactoMineR)
-library(ggpmisc) # add equation in regression
+library(ggpmisc) 
 

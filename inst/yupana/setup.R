@@ -18,10 +18,9 @@ cran <- c(
   , "corrplot"
   , "tidyverse"
   , "FactoMineR"
-  , "ggpmisc" # add equation in regression
   )
 
-git <- c("Flavjack/inti")
+git <- c("Flavjack/inti", "aphalo/ggpmisc")
 
 suppressPackageStartupMessages({
   

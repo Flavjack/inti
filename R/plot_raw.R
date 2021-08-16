@@ -56,9 +56,8 @@
 #'            , linetype = 2
 #'            , glab = "testiculo (cm^3)"
 #'            ) +
-#'   ggpmisc::stat_poly_eq(aes(label =  paste(stat(eq.label), stat(adj.rr.label), sep = "*\", \"*")),
-#'                formula = formula)
-#' 
+#'   ggpmisc::stat_poly_eq(aes(label =  paste(stat(eq.label), stat(adj.rr.label), sep = "*\", \"*")))
+#'   
 #' }
 #' 
 

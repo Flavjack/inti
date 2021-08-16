@@ -294,8 +294,7 @@ if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
                ) +
       {if(input$raw_type == "scatterplot") {
         
-        stat_poly_eq(aes(label =  paste(stat(eq.label), stat(adj.rr.label), sep = "*\", \"*")),
-                     formula = formula)
+        ggpmisc::stat_poly_eq(aes(label = paste(stat(eq.label), stat(adj.rr.label), sep = "*\", \"*")))
         
         } }
     })
