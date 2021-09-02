@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-06-04
+#> date .: 2021-09-02
 # -------------------------------------------------------------------------
 
 cran <- c(
@@ -18,9 +18,10 @@ cran <- c(
   , "corrplot"
   , "tidyverse"
   , "FactoMineR"
+  , "ggpmisc"
   )
 
-git <- c("Flavjack/inti", "aphalo/ggpmisc")
+git <- c("Flavjack/inti")
 
 suppressPackageStartupMessages({
   
