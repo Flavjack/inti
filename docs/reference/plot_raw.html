@@ -96,7 +96,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">inti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
       </span>
     </div>
 
@@ -315,26 +315,17 @@ end, brakes)</p></td>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://inkaverse.com/'>inti</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/maxconway/gsheet'>gsheet</a></span><span class='op'>)</span>
 
-<span class='va'>url</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"https://docs.google.com/spreadsheets/d/"</span>
-              , <span class='st'>"1D1KYc5FMTHow_PpW6ijravmkF_z9zES8Incfroi-Tc4/edit#gid=1336259432"</span><span class='op'>)</span>
-<span class='co'># browseURL(url)</span>
-
-<span class='va'>fb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html'>gsheet2tbl</a></span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span>
+<span class='va'>fb</span> <span class='op'>&lt;-</span> <span class='va'>potato</span>
 
 <span class='va'>fb</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>plot_raw</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"sca"</span>
-           , x <span class='op'>=</span> <span class='st'>"elt_test"</span>
-           , y <span class='op'>=</span> <span class='st'>"tam_test"</span>
-           , group <span class='op'>=</span> <span class='st'>"testiculo"</span>
+  <span class='fu'>plot_raw</span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"box"</span>
+           , x <span class='op'>=</span> <span class='st'>"geno"</span>
+           , y <span class='op'>=</span> <span class='st'>"twue"</span>
+           , group <span class='op'>=</span> <span class='st'>"treat"</span>
            , color <span class='op'>=</span> <span class='cn'>T</span>
-           , ylimits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1500</span>, <span class='fl'>300</span><span class='op'>)</span>
-           , linetype <span class='op'>=</span> <span class='fl'>2</span>
-           , glab <span class='op'>=</span> <span class='st'>"testiculo (cm^3)"</span>
-           <span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>ggpmisc</span><span class='fu'>::</span><span class='fu'><a href='https://docs.r4photobiology.info/ggpmisc//reference/stat_poly_eq.html'>stat_poly_eq</a></span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>label <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'>stat</span><span class='op'>(</span><span class='va'>eq.label</span><span class='op'>)</span>, <span class='fu'>stat</span><span class='op'>(</span><span class='va'>adj.rr.label</span><span class='op'>)</span>, sep <span class='op'>=</span> <span class='st'>"*\", \"*"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-  
+           <span class='op'>)</span> 
+           
 <span class='op'>}</span>
 
 </div></pre>

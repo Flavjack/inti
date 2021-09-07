@@ -75,26 +75,17 @@ You could add additional layer to the plot using "+" with ggplot2 options
 \dontrun{
 
 library(inti)
-library(gsheet)
 
-url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1D1KYc5FMTHow_PpW6ijravmkF_z9zES8Incfroi-Tc4/edit#gid=1336259432")
-# browseURL(url)
-
-fb <- gsheet2tbl(url)
+fb <- potato
 
 fb \%>\%
-  plot_raw(type = "sca"
-           , x = "elt_test"
-           , y = "tam_test"
-           , group = "testiculo"
+  plot_raw(type = "box"
+           , x = "geno"
+           , y = "twue"
+           , group = "treat"
            , color = T
-           , ylimits = c(0, 1500, 300)
-           , linetype = 2
-           , glab = "testiculo (cm^3)"
-           ) +
-  ggpmisc::stat_poly_eq(aes(label =  paste(stat(eq.label), stat(adj.rr.label), sep = "*\", \"*")))
-  
+           ) 
+           
 }
 
 }
