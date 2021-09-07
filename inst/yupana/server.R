@@ -733,13 +733,11 @@ observeEvent(input$import_sheet, {
   
 })
 
-
 observeEvent(input$analysis_response, {
   
   gropt <<- NULL
   
 })
-
 
 grdt <- reactive({
   
@@ -785,12 +783,12 @@ grdt <- reactive({
         , ylimits = NA 
         , xrotation = NA 
         , legend = NA 
-        , error = NA 
         , color = NA 
         , opt = NA 
         , xtext = NA 
         , gtext = NA 
-        , sig = NA 
+        , sig = "sig" 
+        , error = "ste"
         , dimension = NA 
         #>
         , model = analysis()$model
@@ -869,18 +867,10 @@ output$smr_sig <- renderUI({
   
   grdt <- grdt()
   
-  opts <- c(grdt$tabvar, "none")
+  opts <- c(grdt$factors, grdt$tabvar, "none")
   
-  if(is.null(gropt)) {
-    
-    selection <- "sig"
-    
-  } else {
-    
-    selection <- grdt$sig
-
-  }
-
+  selection <- if(all(is.na(grdt$data$ste))) {"none"} else {grdt$sig}
+  
 selectInput(
   inputId = "smr_sig"
   , label = "Significance"
@@ -895,7 +885,8 @@ output$smr_error <- renderUI({
   grdt <- grdt()
   
   opts <- c("ste", "std", "none")
-  selection <- grdt$error
+  
+  selection <- if(all(is.na(grdt$data$ste))) {"none"} else {grdt$error}
   
   selectInput(
     inputId = "smr_error"

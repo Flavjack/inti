@@ -2,6 +2,8 @@
 
 - *Yupana*
   - Show equation with adjusted R in scatter plot graph
+  - `sig` include all the variables from summary table
+  - In plots if number of reps is 1 the `sig` and `error` is "none"
 
 # Version 0.4.2
 

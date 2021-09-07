@@ -123,7 +123,7 @@ if(FALSE) {
     mutate(across(where(is.numeric), ~round(., digits = digits)))
   
   info <- comptab %>% 
-    select({{response}}:ncol(.)) %>% 
+    select({{response}}:ncol(.)) %>%
     names()
   
   factors <- comptab %>% 
