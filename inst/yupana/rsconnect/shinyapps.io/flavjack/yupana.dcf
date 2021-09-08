@@ -5,9 +5,9 @@ account: flavjack
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 357871
-bundleId: 5011534
+bundleId: 5013103
 url: https://flavjack.shinyapps.io/yupana/
-when: 1631094959.21201
-lastSyncTime: 1631094959.21201
+when: 1631127589.37593
+lastSyncTime: 1631127589.37593
 asMultiple: FALSE
 asStatic: FALSE
