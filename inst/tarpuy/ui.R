@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-05-24
+#> date .: 2021-09-30
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -29,12 +29,23 @@ if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json", a
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.com/">Tarpuy</a></strong></h3>')
-           , windowTitle = "Tarpuy • app"
-           , position = "fixed-top"
-           , selected = "Intro"
-           , theme = "bootstrap_sandstone.css"  #!
-           , 
+navbarPage(title = div(
+  HTML('<h3><strong><a target="_blank" href="https://inkaverse.com/">Tarpuy</a></strong></h3>')  , div(
+    id = "version"
+    , HTML(paste("<a target='_blank' href='https://inkaverse.com/news/'>inti"
+                 , packageVersion('inti') , "</a>"))
+  )
+  , div(
+    id = "support"
+    , HTML(paste("<a target='_blank' href='https://github.com/sponsors/flavjack' style='color:white'>"
+                 , h4(icon("heart")) , "</a>"))
+    )
+  )
+  , windowTitle = "Tarpuy • app"
+  , selected = "Intro"
+  , theme = "bootstrap_sandstone.css"  #!
+  , position = "fixed-top"
+  , 
 
 # -------------------------------------------------------------------------
 # Yupana Info -------------------------------------------------------------
@@ -247,7 +258,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
 
                              fluidRow(
 
-                               box(title = "Cómo usar Tarpuy?"
+                               box(title = "¿Cómo usar Tarpuy?"
                                    , width = 6
                                    , solidHeader = T
                                    , height = "200px"
@@ -260,12 +271,16 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                                    </p>
                                    <ol>
                                    <li>Introduce el URL de tu documento de google spreadsheets.
+                                   
                                    <li>Introduce el nombre de la hoja donde donde se creará/cargará la información.
+                                   
                                    <li>Debes dar los permisos para editar las hojas haciendo “LOG IN”;
                                    ya que la app requiere los permisos correspondientes para leer y exportar la información generada.
                                    Más información en la politicas de privacidad: <a href="https://inkaverse.com/articles/policy"> https://inkaverse.com/articles/policy</a>
-                                   <li>Cuando des los permisos el botón de "LOG IN" cambiará a color rojo “LOG OUT”.
-                                   Lo que te permitirá interactuar con tu información y analizar tus datos.
+                                   
+                                   <li>En la versión web, cuando des los permisos el botón de "LOG IN" cambiará a “LOG OUT” (color rojo).
+                                    Lo que significa que ahora puedes interactuar con tu información y generar tus datos.
+                                   
                                    <li>Cualquier problema o sugerencia puedes escribir en el rastreador de problemas.
                                    <a href="https://github.com/Flavjack/inti/issues">https://github.com/flavjack/inti/issues</a>
                                    </li>

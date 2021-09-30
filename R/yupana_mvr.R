@@ -30,17 +30,18 @@
 #' library(gsheet)
 #'
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "17vZ6ZqFlEi2XsYyCcZD3WRa0lBQUQDrzMqs-3F0TZ2Y/"
-#'               , "edit#gid=120747730")
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
 #' # browseURL(url)
 #'
 #' fb <- gsheet2tbl(url)
 #' 
-#' mv <- fieldbook_mvr(data = fb
-#'                     , last_factor = "block"
-#'                     , summary_by = c("treat")
-#'                     , groups = "treat"
+#' mv <- yupana_mvr(data = fb
+#'                     , last_factor = "bloque"
+#'                     , summary_by = c("geno", "treat")
+#'                     , groups = NULL
 #'                     )
+#' 
+#' FactoMineR::plot.PCA(mv$pca, choix = "ind", habillage =  mv$param$groups)
 #' 
 #' }
 #' 
@@ -57,8 +58,8 @@ yupana_mvr <- function(data
   if(FALSE) {
     
 data = fb
-last_factor = "block"
-summary_by = c("treat")
+last_factor = NULL
+summary_by = c("treat", "geno")
 groups = "treat"    
 variables = NULL   
     
@@ -68,33 +69,26 @@ variables = NULL
 # fieldbook structure -----------------------------------------------------
 # -------------------------------------------------------------------------
   
-  factor_list <- data %>%
-    {if(!is.null(last_factor)) select(.data = ., 1:{{last_factor}}) else .}  %>% 
-    names()
+  groups <- if(is.null(groups)) summary_by[1] else groups
   
-  vars_num <- data %>%
-    select(!{{factor_list}}) %>% 
-    {if(is.null(variables)) select(., everything()) else select(., {{variables}})} %>% 
-    names() 
-
-  
-  fb <- data %>%
-    select(where(~!all(is.na(.)))) %>%
+  fb <- data %>% 
     {if(!is.null(last_factor)) 
-      mutate(.data = ., across({{factor_list}}, as.factor)) else . } %>% 
-    mutate(across( {{vars_num}}, as.numeric)) %>%
-    select({{summary_by}}, {{vars_num}}) %>%
-    group_by( across( {{summary_by}} )) %>%
+      mutate(.data = ., across(c(1:{{last_factor}}), as.factor)) else .} %>% 
+    {if(!is.null(last_factor)) 
+      mutate(.data = ., across(!c(1:{{last_factor}}), as.numeric)) else .} %>%
+    select(where(~!all(is.na(.)))) %>%
+    {if(!is.null(variables))
+      select(.data = ., {{summary_by}}, {{variables}}) else 
+        select(.data = ., {{summary_by}}, where(is.numeric))} %>%
+    group_by(across({{summary_by}})) %>%
     summarise(across(everything(),  ~ mean(., na.rm = TRUE) ))  %>%
     ungroup() %>% 
-    unite("rnames", {{summary_by}} , sep = "_", remove = FALSE) %>%
+    unite("rnames", {{summary_by}} , sep = "-", remove = FALSE) %>%
     column_to_rownames("rnames") %>% 
     as.data.frame()
-    
   
-  
-  # parameters --------------------------------------------------------------
-  # -------------------------------------------------------------------------
+# parameters --------------------------------------------------------------
+# -------------------------------------------------------------------------
   
   quali_ncol <- which(names(fb) %in% {{summary_by}})
   groups_ncol <- which(names(fb) %in% {{groups}})
@@ -103,10 +97,10 @@ variables = NULL
               , quali_n = quali_ncol
               , groups = groups
               , groups_n = groups_ncol
-  )
+              )
   
-  # pca ---------------------------------------------------------------------
-  # -------------------------------------------------------------------------
+# pca ---------------------------------------------------------------------
+# -------------------------------------------------------------------------
   
   pca_info <- fb %>%
     select(where(~ length(unique(.)) > 1)) %>%  # drop variables with variation
@@ -115,7 +109,7 @@ variables = NULL
         , scale.unit = T
         , quali.sup = quali_ncol
         , graph = FALSE
-    )
+        )
   
   # hcpc --------------------------------------------------------------------
   # -------------------------------------------------------------------------

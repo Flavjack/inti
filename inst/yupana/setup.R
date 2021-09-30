@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-09-02
+#> date .: 2021-09-30
 # -------------------------------------------------------------------------
 
 cran <- c(
@@ -39,7 +39,6 @@ suppressPackageStartupMessages({
     } 
   }
   
+  rm(cran, git, pkg)
+  
 })
-
-rm(cran, git, pkg)
-

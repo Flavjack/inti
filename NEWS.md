@@ -5,6 +5,15 @@
     - Update function and selection paper by meeting
   - `yupana_analysis()`
     - Include last_factor selection
+  - `yupana_mvr()`
+    - Function not need last_factor
+  - Include package version in the apps
+  - Fixed navigation bar in the apps
+    
+- *Yupana*
+  - PCA for individual in the bottom
+  - Include version in the output table
+  - Dimension for plots in multivariate analysis
 
 # Version 0.4.3
 

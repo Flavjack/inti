@@ -30,6 +30,7 @@
 #' @importFrom tibble enframe deframe
 #' @importFrom agricolae SNK.test HSD.test duncan.test
 #' @importFrom grDevices gray.colors
+#' @importFrom utils packageVersion
 #'
 #' @export
 #'
@@ -170,6 +171,7 @@ dimension = "20*10*100"
                    , comparison = paste(comparison, collapse = "*")
                    , test_comp = test_comp
                    , sig_level = sig_level
+                   , version = paste("inti", packageVersion('inti'))
                    )
 
     opts_table <- enframe(graph_opts) %>%

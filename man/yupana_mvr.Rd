@@ -41,17 +41,18 @@ library(inti)
 library(gsheet)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "17vZ6ZqFlEi2XsYyCcZD3WRa0lBQUQDrzMqs-3F0TZ2Y/"
-              , "edit#gid=120747730")
+              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
 # browseURL(url)
 
 fb <- gsheet2tbl(url)
 
-mv <- fieldbook_mvr(data = fb
-                    , last_factor = "block"
-                    , summary_by = c("treat")
-                    , groups = "treat"
+mv <- yupana_mvr(data = fb
+                    , last_factor = "bloque"
+                    , summary_by = c("geno", "treat")
+                    , groups = NULL
                     )
+
+FactoMineR::plot.PCA(mv$pca, choix = "ind", habillage =  mv$param$groups)
 
 }
 

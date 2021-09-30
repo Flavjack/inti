@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-05-24
+#> date .: 2021-09-30
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -29,12 +29,25 @@ if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json", a
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.com/">Yupana</a></strong></h3>')
-           , windowTitle = "Yupana • app"
-           , selected = "Intro"
-           , theme = "bootstrap_sandstone.css" #!
-           , 
-
+navbarPage(title = div(
+  HTML('<h3><strong><a target="_blank" href="https://inkaverse.com/">Yupana</a></strong></h3>')
+  , div(
+    id = "version"
+    , HTML(paste("<a target='_blank' href='https://inkaverse.com/news/'>inti"
+                 , packageVersion('inti') , "</a>"))
+    )
+  , div(
+    id = "support"
+    , HTML(paste("<a target='_blank' href='https://github.com/sponsors/flavjack' style='color:white'>"
+                 , h4(icon("heart")) , "</a>"))
+  )
+  )
+  , windowTitle = "Yupana • app"
+  , selected = "Intro"
+  , theme = "bootstrap_sandstone.css" #!
+  , position = "fixed-top"
+  ,
+           
 # -------------------------------------------------------------------------
 # Yupana Info -------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -120,7 +133,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                                   <p>
                                   Yupana está diseñado pensando en la reproductibilidad de los resultados.
                                   Los análisis realizados se almacenará en la hojas de cálculo privadas de cada usuario.
-                                  Los resultados de yupana pueden ser usados en R o viceversa. Yupana además permite:
+                                  Los resultados de Yupana pueden ser usados en R o viceversa. Yupana además permite:
                                   </p>
                                   <ul>
 
@@ -174,7 +187,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
 
                              fluidRow(
 
-                               box(title = h5("Fieldbook data")
+                               box(title = h5("Fieldbook")
                                    , width = 2
                                    , solidHeader = T,
 
@@ -219,7 +232,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
 
                              fluidRow(
 
-                               box(title = "Cómo usar yupana?"
+                               box(title = "¿Cómo usar Yupana?"
                                    , width = 6
                                    , solidHeader = T
                                    , height = "200px"
@@ -229,22 +242,19 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                                    HTML('
 
                                     <p>
-                                    Para usar yupana es necesario que tus datos esten en una hoja de cálculo de google.
+                                    Para usar Yupana es necesario que tus datos esten en una hoja de cálculo de google.
                                     </p>
                                     <ol>
 
-                                    <li>Introduce el URL de tu documento y coloca el nombre de la hoja donde está tu base de datos
+                                    <li>Introduce el URL de tu documento y selecciona el nombre de la hoja donde está tu base de datos
                                     (información mínima requerida para usar la app).
-
-                                    <li>Introduce el nombre de la hoja donde donde esta el resumen de tus datos.
-                                    Si no tiene aún, puedes generarla en la pestaña "Fieldbook" de la app.
 
                                     <li>Debes dar los permisos para editar las hojas haciendo “LOG IN”;
                                     ya que la app requiere los permisos correspondientes para leer y exportar la información generada.
                                     Más información en la politicas de privacidad: <a href="https://inkaverse.com/articles/policy"> https://inkaverse.com/articles/policy </a>
 
-                                    <li>Cuando des los permisos el botón de "LOG IN" cambiará a color rojo “LOG OUT”.
-                                    Lo que te permitirá interactuar con tu información y analizar tus datos.
+                                    <li>En la versión web, cuando des los permisos el botón de "LOG IN" cambiará a “LOG OUT” (color rojo).
+                                    Lo que significa que ahora puedes interactuar con tu información y analizar tus datos.
 
                                     <li>Cualquier problema o sugerencia puedes escribir en el rastreador de problemas.
                                     <a href="https://github.com/Flavjack/inti/issues">https://github.com/Flavjack/inti/issues</a>
@@ -265,7 +275,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                                    HTML('
 
                                   <p>
-                                  Antes de iniciar a usar yupana ten en cuenta las siguientes recomendaciones.
+                                  Antes de iniciar a usar Yupana ten en cuenta las siguientes recomendaciones.
                                   </p>
                                   <ul>
 
@@ -277,7 +287,7 @@ navbarPage(title = HTML('<h3><strong><a target="_blank" href="https://inkaverse.
                                   Si tienes muchas pestañas que dificultan tu trabajo, puedes ir ocultandolas (<em>click derecho en la pestaña > Ocultar hoja</em>).
                                   Al momento de usar la app puedes especificar qué hoja deseas utilizar y la app extrae la información de la hoja indicada.
 
-                                  <li>Si deseas crear un diseño experimental que luego puede ser usado de forma rápida en yupana,
+                                  <li>Si deseas crear un diseño experimental que luego puede ser usado de forma rápida en Yupana,
                                   puedes usar la app Tarpuy: <a href="https://flavjack.shinyapps.io/tarpuy/">https://flavjack.shinyapps.io/tarpuy/</a>
                                   </li>
                                   </ul>
@@ -776,14 +786,57 @@ tabPanel("Graphics",
                           uiOutput("mvr_groups"),
                           
                           uiOutput("mvr_variables"),
-
-                          textInput(
-                            inputId ="mvr_dimension"
-                            , label = "Dimensions (cm)"
-                            , placeholder = "w*h*dpi"
-                            , value = "14*14*100"
-                            )
                           
+                          conditionalPanel(
+                            condition = "input.mvr_module == 'PCA'",
+                            
+                            textInput(
+                              inputId ="mvr_dimension_pca_var"
+                              , label = "Dimensions (W*H*dpi) - PCA var"
+                              , placeholder = "w*h*dpi"
+                              , value = "16*16*100"
+                            ),
+                            
+                            textInput(
+                              inputId ="mvr_dimension_pca_ind"
+                              , label = "Dimensions (W*H*dpi) - PCA ind"
+                              , placeholder = "w*h*dpi"
+                              , value = "16*16*100"
+                            ),
+                            
+                          ),
+                          
+                          conditionalPanel(
+                            condition = "input.mvr_module == 'HCPC'",
+                            
+                            textInput(
+                              inputId ="mvr_dimension_hcp_tree"
+                              , label = "Dimensions (W*H*dpi) - HCPC tree"
+                              , placeholder = "w*h*dpi"
+                              , value = "16*16*100"
+                            ),
+                            
+                            textInput(
+                              inputId ="mvr_dimension_hcp_map" 
+                              , label = "Dimensions (W*H*dpi) - HCPC map"
+                              , placeholder = "w*h*dpi"
+                              , value = "16*16*100"
+                            ),
+                            
+                          ),
+                          
+                          conditionalPanel(
+                            condition = "input.mvr_module == 'CORR'",
+                            
+                            textInput(
+                              inputId ="mvr_dimension_cor"
+                              , label = "Dimensions (W*H*dpi) - Correlation"
+                              , placeholder = "w*h*dpi"
+                              , value = "19*19*100"
+                            ),
+                            
+                          ),
+
                           ),
 
                    column(width = 10,

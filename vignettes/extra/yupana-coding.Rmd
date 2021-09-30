@@ -141,7 +141,7 @@ model$meancomp %>% web_table()
 ```{r}
 model <- fb %>% 
   yupana_analysis(response = "twue"
-                  , model_factors = "geno*treat"
+                  , model_factors = "block + geno*treat"
                   , comparison = c("geno", "treat")
                   )
 
@@ -197,8 +197,7 @@ fig$figure
 #> Principal component Analysis
 
 mv <- fb %>% 
-  yupana_mvr(last_factor = "bloque"
-             , summary_by = c("geno", "treat")
+  yupana_mvr(summary_by = c("geno", "treat")
              , groups = "treat"
              )
   
@@ -226,7 +225,7 @@ png("files/plot_pca_ind.png", width=7*ppi, height=7*ppi, res=ppi)
 
 plot.PCA(mv$pca,
          choix="ind",
-         habillage = 1,
+         habillage = 2,
          title="",
          autoLab = "y", 
          cex = 0.8,

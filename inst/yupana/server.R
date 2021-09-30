@@ -1380,7 +1380,7 @@ output$plot_color <- renderUI({
     
     validate(need(mvr(), "Choose your factors"))
     
-    dim <- input$mvr_dimension %>% 
+    dim <- input$mvr_dimension_pca_var %>% 
       strsplit(., "[*]") %>% 
       pluck(1) %>% as.numeric()
     
@@ -1410,25 +1410,29 @@ output$plot_color <- renderUI({
     
     validate(need(mvr(), "Choose your factors"))
 
-    dim <- input$mvr_dimension %>% 
+    dim <- input$mvr_dimension_pca_ind %>% 
       strsplit(., "[*]") %>% 
       pluck(1) %>% as.numeric()
     
-    if(!is.na(dim[1])) { ancho <- dim[1] } else {ancho <- input$graph_width}
-    if(!is.na(dim[2])) { alto <- dim[2] } else {alto <- input$graph_height}
-    if(!is.na(dim[3])) { dpi <- dim[3] } else {dpi <- input$graph_dpi}
+    if(!is.na(dim[1])) { ancho <- dim[1]} else {ancho <- input$graph_width}
+    if(!is.na(dim[2])) { alto <- dim[2]} else {alto <- input$graph_height}
+    if(!is.na(dim[3])) { dpi <- dim[3]} else {dpi <- input$graph_dpi}
 
     outfile <- tempfile(fileext = ".png")
 
     png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
 
-    plot.PCA(x = mvr()$pca
+    plot <- plot.PCA(x = mvr()$pca
              , choice = "ind"
              , habillage = mvr()$param$groups_n
              , invisible = "quali"
              , autoLab = "auto"
              , shadowtext = T
-    ) %>% print()
+             , graph.type = "ggplot"
+             ) +
+      theme(legend.position = "bottom")
+    
+    plot %>% print()
 
     graphics.off()
 
@@ -1443,7 +1447,7 @@ output$plot_color <- renderUI({
     
     validate(need(mvr(), "Choose your factors"))
 
-    dim <- input$mvr_dimension %>% 
+    dim <- input$mvr_dimension_hcp_tree %>% 
       strsplit(., "[*]") %>% 
       pluck(1) %>% as.numeric()
     
@@ -1469,13 +1473,13 @@ output$plot_color <- renderUI({
     
     validate(need(mvr(), "Choose your factors"))
 
-    dim <- input$mvr_dimension %>% 
+    dim <- input$mvr_dimension_hcp_map %>% 
       strsplit(., "[*]") %>% 
       pluck(1) %>% as.numeric()
     
-    if(!is.na(dim[1])) { ancho <- dim[1] } else {ancho <- input$graph_width}
-    if(!is.na(dim[2])) { alto <- dim[2] } else {alto <- input$graph_height}
-    if(!is.na(dim[3])) { dpi <- dim[3] } else {dpi <- input$graph_dpi}
+    if(!is.na(dim[1])) { ancho <- dim[1]} else {ancho <- input$graph_width}
+    if(!is.na(dim[2])) { alto <- dim[2]} else {alto <- input$graph_height}
+    if(!is.na(dim[3])) { dpi <- dim[3]} else {dpi <- input$graph_dpi}
 
     outfile <- tempfile(fileext = ".png")
 
@@ -1484,15 +1488,13 @@ output$plot_color <- renderUI({
     plot.HCPC(x = mvr()$hcpc
               , choice = "map"
               , legend = list(x = "topright"
-                              , cex = 0.5
+                              , cex = 0.6
                               , inset = 0.001
                               , box.lty=0
                               )
               , draw.tree = F
               )
     
-    # http://www.sthda.com/english/wiki/add-legends-to-plots-in-r-software-the-easiest-way
-
     graphics.off()
 
     list(src = outfile)
@@ -1505,17 +1507,17 @@ output$plot_color <- renderUI({
     
     validate(need(mvr(), "Choose your factors"))
     
-    dim <- input$mvr_dimension %>% 
+    dim <- input$mvr_dimension_cor %>% 
       strsplit(., "[*]") %>% 
       pluck(1) %>% as.numeric()
     
-    if(!is.na(dim[1])) { ancho <- dim[1] + 5} else {ancho <- input$graph_width + 5}
-    if(!is.na(dim[2])) { alto <- dim[2] + 5} else {alto <- input$graph_height + 5}
-    if(!is.na(dim[3])) { dpi <- dim[3] + 5} else {dpi <- input$graph_dpi + 5}
+    if(!is.na(dim[1])) { ancho <- dim[1]} else {ancho <- input$graph_width}
+    if(!is.na(dim[2])) { alto <- dim[2]} else {alto <- input$graph_height}
+    if(!is.na(dim[3])) { dpi <- dim[3]} else {dpi <- input$graph_dpi}
 
     outfile <- tempfile(fileext = ".png")
 
-    png(outfile, width = ancho, height = alto, units = "cm", res = dpi, pointsize = 8)
+    png(outfile, width = ancho, height = alto, units = "cm", res = dpi, pointsize = 9)
 
     corrplot(mvr()$corr$correlation
              , method = "number"

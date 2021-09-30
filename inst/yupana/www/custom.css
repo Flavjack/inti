@@ -4,3 +4,21 @@ p{ text-align: justify; }
 .shiny-input-container:not(.shiny-input-container-inline) { width: 100%; }
 
 .dropdown-menu{z-index:10000 !important;}
+
+#support{
+  position: fixed;
+  right: 110px;
+  top: 20px;
+}
+
+#version{
+  position: fixed;
+  right: 25px;
+  top: 20px;
+}
+
+.navbar-fixed-top {
+  position: fixed;
+}
+
+body {padding-top: 80px;}

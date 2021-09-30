@@ -77,14 +77,13 @@ if(FALSE) {
   
 # fieldbook structure -----------------------------------------------------
 # -------------------------------------------------------------------------
-  
-  factor_list <- data %>% 
-    {if(!is.null(last_factor)) select(.data = ., 1:{{last_factor}}) else .}  %>% 
-    names()
-  
+
   fb <- data %>%
     {if(!is.null(last_factor)) 
-      mutate(.data = ., across({{factor_list}}, as.factor)) else . } %>% 
+      mutate(.data = ., across(c(1:{{last_factor}}), as.factor)) else 
+        mutate(.data = ., across({{comparison}}, as.factor)) } %>% 
+    {if(!is.null(last_factor)) 
+      mutate(.data = ., across(!c(1:{{last_factor}}), as.numeric)) else .} %>%
     data.frame()
   
 # anova -------------------------------------------------------------------
