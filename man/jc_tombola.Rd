@@ -7,6 +7,7 @@
 jc_tombola(
   data,
   members,
+  papers = 1,
   group,
   gr_lvl,
   status,
@@ -20,6 +21,8 @@ jc_tombola(
 \item{data}{Data frame withe members and their information.}
 
 \item{members}{Columns with the members names.}
+
+\item{papers}{Number of paper by meeting}
 
 \item{group}{Column for arrange the group.}
 

@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-09-07
+#> date .: 2021-09-30
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -573,9 +573,11 @@ if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
     validate(need(input$analysis_response, "Choose your variable"))
     validate(need(input$analysis_model_factors, "Include your model factors"))
     validate(need(input$analysis_comparison, "Include your model comparison"))
+    validate(need(input$analysis_last_factor, "Select your last factor") )
     
     rslt <- yupana_analysis(data = fieldbook()
                             , response = input$analysis_response
+                            , last_factor = input$analysis_last_factor
                             , model_factors = input$analysis_model_factors
                             , comparison = input$analysis_comparison
                             , test_comp = input$analysis_test_comparison

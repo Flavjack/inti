@@ -6,6 +6,7 @@
 \usage{
 yupana_analysis(
   data,
+  last_factor = NULL,
   response,
   model_factors,
   comparison,
@@ -18,6 +19,8 @@ yupana_analysis(
 }
 \arguments{
 \item{data}{Field book data.}
+
+\item{last_factor}{The last factor in your fieldbook.}
 
 \item{response}{Response variable.}
 
@@ -49,18 +52,21 @@ library(inti)
 library(gsheet)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=946957922")
+              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
 # browseURL(url)
 
 fb <- gsheet2tbl(url)
 
 yrs <- yupana_analysis(data = fb
+                       , last_factor = "bloque"
                        , response = "spad_83"
-                       , model_factors = "geno + treat"
+                       , model_factors = "block + geno + treat"
                        , comparison = c("geno", "treat")
                        )
                        
 yrs$meancomp
+
+yrs$anova \%>\% summary()
 
 }
 

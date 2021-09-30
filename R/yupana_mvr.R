@@ -46,11 +46,11 @@
 #' 
 
 yupana_mvr <- function(data
-                          , last_factor = NULL
-                          , summary_by = NULL
-                          , groups = NULL
-                          , variables = NULL
-) {
+                       , last_factor = NULL
+                       , summary_by = NULL
+                       , groups = NULL
+                       , variables = NULL
+                       ) {
   
   where <- NULL
   
@@ -69,7 +69,7 @@ variables = NULL
 # -------------------------------------------------------------------------
   
   factor_list <- data %>%
-    select(1:{{last_factor}}) %>% 
+    {if(!is.null(last_factor)) select(.data = ., 1:{{last_factor}}) else .}  %>% 
     names()
   
   vars_num <- data %>%
@@ -80,7 +80,8 @@ variables = NULL
   
   fb <- data %>%
     select(where(~!all(is.na(.)))) %>%
-    mutate(across( {{factor_list}}, as.factor)) %>%
+    {if(!is.null(last_factor)) 
+      mutate(.data = ., across({{factor_list}}, as.factor)) else . } %>% 
     mutate(across( {{vars_num}}, as.numeric)) %>%
     select({{summary_by}}, {{vars_num}}) %>%
     group_by( across( {{summary_by}} )) %>%

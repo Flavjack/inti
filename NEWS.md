@@ -1,3 +1,11 @@
+# Version 0.4.4
+
+- *Package* 
+  - `jc_tombola()`
+    - Update function and selection paper by meeting
+  - `yupana_analysis()`
+    - Include last_factor selection
+
 # Version 0.4.3
 
 - *Yupana*

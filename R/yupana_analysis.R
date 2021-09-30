@@ -3,6 +3,7 @@
 #' Function to create a complete report of the fieldbook
 #'
 #' @param data Field book data.
+#' @param last_factor The last factor in your fieldbook.
 #' @param response Response variable.
 #' @param comparison Factors to compare
 #' @param model_factors Model used for the experimental design.
@@ -27,31 +28,35 @@
 #' library(gsheet)
 #' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=946957922")
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
 #' # browseURL(url)
 #' 
 #' fb <- gsheet2tbl(url)
 #' 
 #' yrs <- yupana_analysis(data = fb
+#'                        , last_factor = "bloque"
 #'                        , response = "spad_83"
-#'                        , model_factors = "geno + treat"
+#'                        , model_factors = "block + geno + treat"
 #'                        , comparison = c("geno", "treat")
 #'                        )
 #'                        
 #' yrs$meancomp
 #' 
+#' yrs$anova %>% summary()
+#' 
 #' }
 #' 
 
 yupana_analysis <- function(data
-                           , response
-                           , model_factors
-                           , comparison
-                           , test_comp = "SNK"
-                           , sig_level = 0.05
-                           , plot_dist = "boxplot"
-                           , plot_diag = FALSE
-                           , digits = 2
+                            , last_factor = NULL
+                            , response
+                            , model_factors
+                            , comparison
+                            , test_comp = "SNK"
+                            , sig_level = 0.05
+                            , plot_dist = "boxplot"
+                            , plot_diag = FALSE
+                            , digits = 2
                            ) {
   
   where <- NULL
@@ -70,12 +75,24 @@ if(FALSE) {
   
 }
   
+# fieldbook structure -----------------------------------------------------
+# -------------------------------------------------------------------------
+  
+  factor_list <- data %>% 
+    {if(!is.null(last_factor)) select(.data = ., 1:{{last_factor}}) else .}  %>% 
+    names()
+  
+  fb <- data %>%
+    {if(!is.null(last_factor)) 
+      mutate(.data = ., across({{factor_list}}, as.factor)) else . } %>% 
+    data.frame()
+  
 # anova -------------------------------------------------------------------
 # -------------------------------------------------------------------------
   
-  model <- as.formula(paste( {{response}}, model_factors, sep = "~"))
+  model <- as.formula(paste({{response}}, model_factors, sep = "~"))
   
-  model_aov <- aov(model, data)
+  model_aov <- aov(formula = model, data = fb)
   
 # diagnostic plots --------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -100,7 +117,7 @@ if(FALSE) {
 # distribution plots ------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  plotdist <- plot_raw(data
+  plotdist <- plot_raw(fb
                        , type = "boxplot"
                        , y = response
                        , x = comparison[1]
@@ -111,7 +128,7 @@ if(FALSE) {
 # mean comparison ---------------------------------------------------------
 # -------------------------------------------------------------------------
   
-  mc <- mean_comparison(data
+  mc <- mean_comparison(fb
                         , response = response
                         , model_factors = model_factors
                         , comparison = comparison
