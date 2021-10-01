@@ -832,7 +832,7 @@ tabPanel("Graphics",
                               inputId ="mvr_dimension_cor"
                               , label = "Dimensions (W*H*dpi) - Correlation"
                               , placeholder = "w*h*dpi"
-                              , value = "19*19*100"
+                              , value = "18*18*100"
                             ),
                             
                           ),
