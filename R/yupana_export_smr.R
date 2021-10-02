@@ -2,11 +2,7 @@
 #'
 #' Function to export the graph options and model parameters
 #'
-#' @param data Fieldbook data.
-#' @param response Model used for the experimental design.
-#' @param comparison Factor to compare
-#' @param model Model used in the analysis
-#' @param test_comp Type of test comparison
+#' @param data Result from yupana_analysis function.
 #' @param type Plot type
 #' @param ylab Title for the axis y
 #' @param xlab Title for the axis x
@@ -22,7 +18,6 @@
 #' @param color colored figure (TRUE), otherwise black & white (FALSE)
 #' @param opt Add news layer to the plot
 #' @param dimension Dimension of graphs
-#' @param sig_level Level of significance for the test
 #'
 #' @return data frame
 #'
@@ -42,27 +37,24 @@
 #' library(gsheet)
 #' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/"
-#'               , "edit#gid=172957346")
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
 #' # browseURL(url)
 #' 
 #' fb <- gsheet2tbl(url)
 #' 
-#' mc <- mean_comparison(data = fb
-#'                       , response = "hi"
-#'                       , model_factors = "geno*treat"
-#'                       , comparison = c("geno", "treat")
-#'                       )
-#' mc$comparison
+#' smr <- yupana_analysis(data = fb
+#'                        , last_factor = "bloque"
+#'                        , response = "spad_83"
+#'                        , model_factors = "block + geno*treat"
+#'                        , comparison = c("treat")
+#'                        )
+#'                        
+#' gtab <- yupana_export_smr(smr)
 #' 
 #' }
 #' 
 
 yupana_export_smr <- function(data
-                             , response
-                             , comparison
-                             , model
-                             , test_comp = NA
                              , type = NA
                              , xlab = NA
                              , ylab = NA
@@ -77,20 +69,14 @@ yupana_export_smr <- function(data
                              , color = TRUE
                              , opt = NA
                              , dimension = c(20, 10, 100)
-                             , sig_level = NA
                             ) {
   
   where <- NULL
   
   if(FALSE) {
     
-  data <- mc$comparison
-  response <- "hi"
-  model_factors <- "geno + treat + geno*treat"
-  comparison <- c("geno", "treat")
+  data <- smr
   
-test_comp = NA
-sig_level = NA
 type = NA
 xlab = NA
 ylab = NA
@@ -100,14 +86,25 @@ xrotation = "0*0.5*0.5"
 xtext = NA
 gtext = NA
 legend = "top"
-sig = 0.05
+sig = NA
 error = NA
 color = TRUE
 opt = NA
 dimension = "20*10*100"
-    
-    
+
   }
+  
+  options(scipen = 99)
+  
+# arguments ---------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+  response <- data$response
+  model_factors <- data$model_factors
+  comparison <- data$comparison
+  model <- data$model
+  test_comp = data$test_comp
+  sig_level = data$sig_level
   
 # graph table -------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -126,7 +123,7 @@ dimension = "20*10*100"
 
 # color pallete -----------------------------------------------------------
 
-  nlevels <- data %>% 
+  nlevels <- data$meancomp %>%  
     select(.data[[group]]) %>% 
     n_distinct()
   
@@ -138,22 +135,23 @@ dimension = "20*10*100"
         , "#F3BB00" # yellow
         , "#0198CD" # blue
         , "#FE6673" # red
-      ))(length(data[[group]] %>% unique()))
+      ))(nlevels)
     
   } else if (isFALSE(color)) {
     
     color <-   gray.colors(n = nlevels
                             , start = 0.8
-                            , end = 0.3) 
+                            , end = 0.3
+                           ) 
     
   } else { color <- color }
   
   pallete <- color %>%
-    tibble('{colors}' = .)
+    tibble('colors' = .)
   
     graph_opts <- c(type = type
                    , x = x
-                   , y = {{response}}
+                   , y = response
                    , group = group
                    , xlab = xlab
                    , ylab = ylab
@@ -167,29 +165,70 @@ dimension = "20*10*100"
                    , xtext = paste(xtext, collapse = ",")  
                    , opt = opt
                    , dimension = paste(dimension, collapse = "*") 
-                   , model = model
-                   , comparison = paste(comparison, collapse = "*")
-                   , test_comp = test_comp
-                   , sig_level = sig_level
-                   , version = paste("inti", packageVersion('inti'))
                    )
 
     opts_table <- enframe(graph_opts) %>%
-      rename('{arguments}' = .data$name, '{values}' = .data$value) %>%
+      rename('arguments' = .data$name, 'values' = .data$value) %>%
       merge(pallete, ., by = 0, all = TRUE) %>%
       mutate(across(.data$Row.names, as.numeric)) %>%
       arrange(.data$Row.names) %>%
       select(!.data$Row.names)
+    
+    aov_table <- data$anova %>% 
+      anova() %>% 
+      rownames_to_column("Factor") %>% 
+      mutate(across(everything(), as.character)) %>% 
+      tibble() 
+    
+    stat_smr <- data$stats %>% 
+      rownames_to_column() %>% 
+      mutate(across(everything(), as.character)) %>%
+      pivot_longer(!.data$rowname
+                   , names_to = "statistics"
+                   , values_to = "information"
+                   ) %>% 
+      select(!.data$rowname) %>% 
+      tibble::add_row(
+        "statistics" = c("model"
+                           , "version"
+                           )
+        , "information" = c(model
+                              , paste("inti", packageVersion('inti'))
+                              )
+        )
+      
+# -------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 
-    graph_table <- merge(data
-                        , opts_table
-                        , by = 0
-                        , all = TRUE
-                        )  %>%
+    graph_table <- data$meancomp %>% 
+      merge(.
+            , opts_table
+            , by = 0
+            , all = TRUE
+            )  %>%
+      add_column("[plot]" = "||", .before = "colors") %>% 
+      mutate(across(.data$Row.names, as.numeric)) %>%
+      arrange(.data$Row.names) %>%
+      select(!.data$Row.names) %>%
+      add_column("[stats]" = "||") %>%
+      merge(.
+            , stat_smr
+            , by = 0
+            , all = TRUE
+            ) %>%
+      mutate(across(.data$Row.names, as.numeric)) %>%
+      arrange(.data$Row.names) %>%
+      select(!.data$Row.names) %>%
+      add_column("[aov]" = "||") %>%
+      merge(.
+            , aov_table
+            , by = 0
+            , all = TRUE
+      ) %>%
       mutate(across(.data$Row.names, as.numeric)) %>%
       arrange(.data$Row.names) %>%
       select(!.data$Row.names) 
-
+      
 # results -----------------------------------------------------------------
 # -------------------------------------------------------------------------
 

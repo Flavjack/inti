@@ -6,10 +6,6 @@
 \usage{
 yupana_export_smr(
   data,
-  response,
-  comparison,
-  model,
-  test_comp = NA,
   type = NA,
   xlab = NA,
   ylab = NA,
@@ -23,20 +19,11 @@ yupana_export_smr(
   error = NA,
   color = TRUE,
   opt = NA,
-  dimension = c(20, 10, 100),
-  sig_level = NA
+  dimension = c(20, 10, 100)
 )
 }
 \arguments{
-\item{data}{Fieldbook data.}
-
-\item{response}{Model used for the experimental design.}
-
-\item{comparison}{Factor to compare}
-
-\item{model}{Model used in the analysis}
-
-\item{test_comp}{Type of test comparison}
+\item{data}{Result from yupana_analysis function.}
 
 \item{type}{Plot type}
 
@@ -66,8 +53,6 @@ yupana_export_smr(
 \item{opt}{Add news layer to the plot}
 
 \item{dimension}{Dimension of graphs}
-
-\item{sig_level}{Level of significance for the test}
 }
 \value{
 data frame
@@ -83,18 +68,19 @@ library(inti)
 library(gsheet)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/"
-              , "edit#gid=172957346")
+              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
 # browseURL(url)
 
 fb <- gsheet2tbl(url)
 
-mc <- mean_comparison(data = fb
-                      , response = "hi"
-                      , model_factors = "geno*treat"
-                      , comparison = c("geno", "treat")
-                      )
-mc$comparison
+smr <- yupana_analysis(data = fb
+                       , last_factor = "bloque"
+                       , response = "spad_83"
+                       , model_factors = "block + geno*treat"
+                       , comparison = c("geno", "treat")
+                       )
+                       
+gtab <- yupana_export_smr(smr)
 
 }
 

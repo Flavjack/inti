@@ -1230,7 +1230,7 @@ output$plot_color <- renderUI({
     }  else if (input$smr_color == "nos") { FALSE 
         } else { grdt$color }
     
-    yupana_export_smr(data = grdt$data
+    yupana_export_smr(data = analysis() 
                       #> reactive
                      , type = input$smr_type
                      , xlab = input$smr_xlab
@@ -1245,12 +1245,7 @@ output$plot_color <- renderUI({
                      , error = input$smr_error
                      , opt = input$smr_opt
                      , dimension = input$smr_dimension
-                     #> fixed/reactive
-                     , response = grdt$y
-                     , comparison = grdt$comparison
-                     , model = grdt$model
-                     , test_comp = grdt$test_comp
-                     , sig_level = grdt$sig_level
+                     #>
                      , color = color
                      )
     

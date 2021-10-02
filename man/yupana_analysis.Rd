@@ -57,16 +57,16 @@ url <- paste0("https://docs.google.com/spreadsheets/d/"
 
 fb <- gsheet2tbl(url)
 
-yrs <- yupana_analysis(data = fb
+rsl <- yupana_analysis(data = fb
                        , last_factor = "bloque"
                        , response = "spad_83"
                        , model_factors = "block + geno + treat"
                        , comparison = c("geno", "treat")
                        )
                        
-yrs$meancomp
+rsl$meancomp
 
-yrs$anova \%>\% summary()
+rsl$anova \%>\% summary()
 
 }
 

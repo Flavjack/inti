@@ -33,16 +33,16 @@
 #' 
 #' fb <- gsheet2tbl(url)
 #' 
-#' yrs <- yupana_analysis(data = fb
+#' rsl <- yupana_analysis(data = fb
 #'                        , last_factor = "bloque"
 #'                        , response = "spad_83"
 #'                        , model_factors = "block + geno + treat"
 #'                        , comparison = c("geno", "treat")
 #'                        )
 #'                        
-#' yrs$meancomp
+#' rsl$meancomp
 #' 
-#' yrs$anova %>% summary()
+#' rsl$anova %>% summary()
 #' 
 #' }
 #' 
@@ -146,7 +146,6 @@ if(FALSE) {
     select(!{{info}}) %>% 
     names()
   
-  
 # model as text -----------------------------------------------------------
 
   model_formula <- paste(deparse(model, width.cutoff = 500), collapse="")
@@ -165,6 +164,9 @@ if(FALSE) {
     , comparison = comparison
     , factors = factors
     , tabvar = info
+    , model_factors = model_factors
+    , test_comp = test_comp
+    , sig_level = sig_level
     )
 
 }

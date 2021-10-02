@@ -131,7 +131,10 @@ test_comp <- "TUKEY"
     dplyr::mutate(response =  {{response}}, .before = "MSerror") %>%
     merge(mc$parameters, .) %>%
     select(.data$response, everything()) %>% 
-    select(!matches("StudentizedRange|MSD")) 
+    select(!matches("StudentizedRange|MSD")) %>% 
+    rename(ntreats = ntr
+           , comparison = name.t ) %>% 
+    mutate(comparison = gsub(":", "*", .data$comparison))
     
 
 # results -----------------------------------------------------------------
