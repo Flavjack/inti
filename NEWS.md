@@ -1,12 +1,14 @@
 # Version 0.5.0
 
 - *Package* 
-  - `yupana_export_smr` 
+  - `yupana_export_smr` ==> `yupana_export`
     - Extract all the information from `yupana_analysis`
+  - `yupana_import_smr` ==> `yupana_import`
+    - Import information from the web and `yupana_analysis`
 
 - *Yupana*
   - Include statistics and anova table in export results
-  - Clean herders in export data, exclude "{}"
+  - Clean headers in export data, exclude "{}"
 
 # Version 0.4.4
 

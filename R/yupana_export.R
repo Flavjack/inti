@@ -2,7 +2,7 @@
 #'
 #' Function to export the graph options and model parameters
 #'
-#' @param data Result from yupana_analysis function.
+#' @param data Result from yupana_analysis or yupana_import.
 #' @param type Plot type
 #' @param ylab Title for the axis y
 #' @param xlab Title for the axis x
@@ -26,6 +26,7 @@
 #' @importFrom agricolae SNK.test HSD.test duncan.test
 #' @importFrom grDevices gray.colors
 #' @importFrom utils packageVersion
+#' @importFrom stats anova
 #'
 #' @export
 #'
@@ -46,29 +47,45 @@
 #'                        , last_factor = "bloque"
 #'                        , response = "spad_83"
 #'                        , model_factors = "block + geno*treat"
-#'                        , comparison = c("treat")
+#'                        , comparison = c("geno", "treat")
 #'                        )
 #'                        
-#' gtab <- yupana_export_smr(smr)
+#' gtab <- yupana_export(smr)
+#' 
+#' 
+#' #> import
+#' 
+#' url <- paste0("https://docs.google.com/spreadsheets/d/"
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=1987722994")
+#' # browseURL(url)
+#' 
+#' fb <- gsheet2tbl(url)
+#' 
+#' info <- yupana_import(fb)
+#' 
+#' etab <- yupana_export(info, type = "line"
+#' , dimension = c(10, 10, 10)
+#' , xlab = "test"
+#' )
 #' 
 #' }
 #' 
 
-yupana_export_smr <- function(data
-                             , type = NA
-                             , xlab = NA
-                             , ylab = NA
-                             , glab = NA
-                             , ylimits = NA
-                             , xrotation = c(0, 0.5, 0.5)
-                             , xtext = NA
-                             , gtext = NA
-                             , legend = "top"
-                             , sig = NA
-                             , error = NA
-                             , color = TRUE
-                             , opt = NA
-                             , dimension = c(20, 10, 100)
+yupana_export <- function(data
+                              , type = NA
+                              , xlab = NA
+                              , ylab = NA
+                              , glab = NA
+                              , ylimits = NA
+                              , xrotation = c(0, 0.5, 0.5)
+                              , xtext = NA
+                              , gtext = NA
+                              , legend = "top"
+                              , sig = NA
+                              , error = NA
+                              , color = TRUE
+                              , opt = NA
+                              , dimension = c(20, 10, 100)
                             ) {
   
   where <- NULL
@@ -94,10 +111,13 @@ dimension = "20*10*100"
 
   }
   
-  options(scipen = 99)
-  
-# arguments ---------------------------------------------------------------
 # -------------------------------------------------------------------------
+# yupana_analysis() -------------------------------------------------------
+# -------------------------------------------------------------------------
+
+  if(length(data) > 10) { 
+    
+# arguments ---------------------------------------------------------------
 
   response <- data$response
   model_factors <- data$model_factors
@@ -177,8 +197,20 @@ dimension = "20*10*100"
     aov_table <- data$anova %>% 
       anova() %>% 
       rownames_to_column("Factor") %>% 
-      mutate(across(everything(), as.character)) %>% 
-      tibble() 
+      mutate(Sig = case_when(
+        `Pr(>F)` <= 0.001  ~ "***"
+        , `Pr(>F)` <= 0.01  ~ "**"
+        , `Pr(>F)` <= 0.05  ~ "*"
+        , `Pr(>F)` > 0.05 ~ "ns"
+      )) %>% 
+      mutate(across(everything(), as.character)) %>%
+      tibble() %>% 
+      tibble::add_row(Factor = "---") %>% 
+      tibble::add_row(Factor = "Significance"
+                      , `Sum Sq` = "0.001 ***"
+                      , `Mean Sq` = "0.01 **"
+                      , `F value` = "0.05 *"
+                      )
     
     stat_smr <- data$stats %>% 
       rownames_to_column() %>% 
@@ -189,12 +221,16 @@ dimension = "20*10*100"
                    ) %>% 
       select(!.data$rowname) %>% 
       tibble::add_row(
-        "statistics" = c("model"
-                           , "version"
-                           )
-        , "information" = c(model
-                              , paste("inti", packageVersion('inti'))
-                              )
+        "statistics" = c(
+          "model"
+          , "date"
+          , "version"
+          )
+        , "information" = c(
+          model
+          , format(Sys.time(), '%Y-%m-%d %H:%M:%S')
+          , paste("inti", packageVersion('inti'))
+          )
         )
       
 # -------------------------------------------------------------------------
@@ -206,11 +242,11 @@ dimension = "20*10*100"
             , by = 0
             , all = TRUE
             )  %>%
-      add_column("[plot]" = "||", .before = "colors") %>% 
+      tibble::add_column("[plot]" = "||", .before = "colors") %>% 
       mutate(across(.data$Row.names, as.numeric)) %>%
       arrange(.data$Row.names) %>%
       select(!.data$Row.names) %>%
-      add_column("[stats]" = "||") %>%
+      tibble::add_column("[stats]" = "||") %>%
       merge(.
             , stat_smr
             , by = 0
@@ -219,7 +255,7 @@ dimension = "20*10*100"
       mutate(across(.data$Row.names, as.numeric)) %>%
       arrange(.data$Row.names) %>%
       select(!.data$Row.names) %>%
-      add_column("[aov]" = "||") %>%
+      tibble::add_column("[aov]" = "||") %>%
       merge(.
             , aov_table
             , by = 0
@@ -228,10 +264,96 @@ dimension = "20*10*100"
       mutate(across(.data$Row.names, as.numeric)) %>%
       arrange(.data$Row.names) %>%
       select(!.data$Row.names) 
+    
+
+# -------------------------------------------------------------------------
+#> yupana_import
+# -------------------------------------------------------------------------
+
+  } else { 
+    
+    # data <- info
+    
+    pallete <- data$plot_args$color %>% 
+      enframe(value = "colors") %>% 
+      select(!.data$name)
+    
+    ylimites <- if_else(!is.na(ylimits) 
+      , paste0(ylimits, collapse = "*")
+      , paste0(data$plot_args$ylimits, collapse = "*")) %>% 
+      pluck(1)
+    
+    graph_opts <- c(
+      type = data$plot_args$type
+      , x = data$plot_args$x
+      , y = data$plot_args$y
+      , group = data$plot_args$group
+      #>
+      , xlab = if(!is.na(xlab)) xlab else data$plot_args$xlab  
+      , ylab = if(!is.na(ylab)) ylab else data$plot_args$ylab
+      , glab = if(!is.na(glab)) glab else data$plot_args$glab
+      , ylimits = ylimites
+      , xrotation = paste(xrotation, collapse = "*") 
+      , sig = sig
+      , error = error
+      , legend = legend
+      , gtext = if(!is.na(gtext)) paste(gtext, collapse = ",") 
+      , xtext = if(!is.na(xtext)) paste(xtext, collapse = ",")  
+      , opt = opt
+      , dimension = paste(dimension, collapse = "*") 
+      ) %>% 
+      enframe() %>%
+      rename('arguments' = .data$name, 'values' = .data$value) %>%
+      merge(pallete, ., by = 0, all = TRUE) %>%
+      mutate(across(.data$Row.names, as.numeric)) %>%
+      arrange(.data$Row.names) %>%
+      select(!.data$Row.names)  
+ 
+# -------------------------------------------------------------------------
+    
+stat <- data$stats %>% 
+      mutate(information = case_when(
+        statistics == "date" ~ format(Sys.time(), '%Y-%m-%d %H:%M:%S')
+        , statistics == "version" ~ paste("inti", packageVersion('inti'))
+        , TRUE ~ information
+      ))
+
+# -------------------------------------------------------------------------
+
+    graph_table <- data$smr %>% 
+      merge(.
+            , graph_opts
+            , by = 0
+            , all = TRUE
+            ) %>% 
+      tibble::add_column("[plot]" = "||", .before = "colors") %>% 
+      mutate(across(.data$Row.names, as.numeric)) %>%
+      arrange(.data$Row.names) %>%
+      select(!.data$Row.names) %>%
+      tibble::add_column("[stats]" = "||") %>%
+      merge(.
+            , stat
+            , by = 0
+            , all = TRUE
+      ) %>%
+      mutate(across(.data$Row.names, as.numeric)) %>%
+      arrange(.data$Row.names) %>%
+      select(!.data$Row.names) %>%
+      tibble::add_column("[aov]" = "||") %>%
+      merge(.
+            , data$aov
+            , by = 0
+            , all = TRUE
+      ) %>%
+      mutate(across(.data$Row.names, as.numeric)) %>%
+      arrange(.data$Row.names) %>%
+      select(!.data$Row.names) 
       
+  }
+  
 # results -----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  return(graph_table)
+  return(as.data.frame(graph_table))
 
 }

@@ -47,10 +47,10 @@ url <- paste0("https://docs.google.com/spreadsheets/d/"
 fb <- gsheet2tbl(url)
 
 mc <- mean_comparison(data = fb
-                      , response = "hi"
-                      , model_factors = "geno*treat"
+                      , response = "spad_29"
+                      , model_factors = "bloque* geno*treat"
                       , comparison = c("geno", "treat")
-                      , test_comp = "TUKEY"
+                      , test_comp = "SNK"
                       )
 mc$comparison
 mc$stat

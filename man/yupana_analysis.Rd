@@ -60,13 +60,9 @@ fb <- gsheet2tbl(url)
 rsl <- yupana_analysis(data = fb
                        , last_factor = "bloque"
                        , response = "spad_83"
-                       , model_factors = "block + geno + treat"
+                       , model_factors = "block * geno * treat"
                        , comparison = c("geno", "treat")
                        )
-                       
-rsl$meancomp
-
-rsl$anova \%>\% summary()
 
 }
 

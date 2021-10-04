@@ -33,10 +33,10 @@
 #' fb <- gsheet2tbl(url)
 #' 
 #' mc <- mean_comparison(data = fb
-#'                       , response = "hi"
-#'                       , model_factors = "geno*treat"
+#'                       , response = "spad_29"
+#'                       , model_factors = "bloque* geno*treat"
 #'                       , comparison = c("geno", "treat")
-#'                       , test_comp = "TUKEY"
+#'                       , test_comp = "SNK"
 #'                       )
 #' mc$comparison
 #' mc$stat
@@ -56,7 +56,7 @@ if(FALSE) {
   
 data <- fb
 response  <-  "hi"
-model_factors <-  "geno*treat"
+model_factors <-  "bloque*geno*treat"
 comparison <- c("geno", "treat")
 test_comp <- "TUKEY"
   
@@ -132,8 +132,8 @@ test_comp <- "TUKEY"
     merge(mc$parameters, .) %>%
     select(.data$response, everything()) %>% 
     select(!matches("StudentizedRange|MSD")) %>% 
-    rename(ntreats = ntr
-           , comparison = name.t ) %>% 
+    rename(ntreats = .data$ntr
+           , comparison = .data$name.t ) %>% 
     mutate(comparison = gsub(":", "*", .data$comparison))
     
 
