@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-09-30
+#> date .: 2021-10-04
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -645,52 +645,57 @@ tabPanel("Graphics",
                            
                     ),
                     
-                    column(6,
-                           
-                           uiOutput("graph_sheet_save"),
-                           
-                           ),
-                    
-                    column(6,
-                           
-                           radioButtons(inputId = "graph_smr_overwrite"
-                                        , label = "Overwrite"
-                                        , inline = TRUE
-                                        , choices = c("no", "yes")
-                                        )
-                           ),
-                    
-                    column(6,
-                           
-                           actionButton(inputId = "graph_smr_load"
-                                        , label = "Load"
-                                        , class = "btn btn-primary"
-                                        , width = "100%"
-                                        )
-                           
-                           ),
-                    
-                    column(6,
-                           
-                           actionButton(inputId = "graph_smr_save"
-                                        , label = "Save"
-                                        , class = "btn btn-warning"
-                                        , width = "100%"
-                                        )
-                           
-                           ),
-                    
-                    br(),
-                    br()
-                    
                     )
                   
            ),
            
+           #>
+           
            column(8,
                   
-                  uiOutput("plot_smr"),
-                  
+                  fluidRow(
+                        
+                      box(width = 12,
+                          
+                          div(
+                            class = "plotsave",
+                            
+                            div(
+                              actionButton(inputId = "graph_smr_load"
+                                           , label = "Load"
+                                           , class = "btn btn-primary"
+                              ),
+                            ),
+                            
+                            div(
+                              uiOutput("graph_sheet_save"),
+                              ),
+                            div(
+                              radioButtons(inputId = "graph_smr_overwrite"
+                                           , label = "Overwrite"
+                                           , inline = TRUE
+                                           , choices = c("no", "yes")
+                                           ),
+                              ),
+                            
+                              div(
+                                actionButton(inputId = "graph_smr_save"
+                                             , label = "Save"
+                                             , class = "btn btn-warning"
+                                             ),
+                                ),
+                            ),
+                          ),
+                  ),
+                          
+                      br(),
+                      br(),
+                       
+                box(width = 12, 
+                       
+                       uiOutput("plot_smr"),
+                       
+                       ),
            ),
            
            column(2,

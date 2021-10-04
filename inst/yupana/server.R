@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-09-30
+#> date .: 2021-10-04
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -903,9 +903,12 @@ output$smr_xrotation <- renderUI({
 
   plot_opt <- plot_opt()
 
-  selection <- if(is.na(plot_opt$plot_args$xrotation)) "0*0.5*0.5" else
-    paste(plot_opt$plot_args$xrotation, collapse = "*")
-
+  selection <- ifelse(is.na(plot_opt$plot_args$xrotation)
+                      , "0*0.5*0.5"
+                      , paste(plot_opt$plot_args$xrotation, collapse = "*")
+                      ) %>% 
+    pluck(1)
+  
   textInput(
     inputId ="smr_xrotation"
     , label = "X rotation"
@@ -918,9 +921,12 @@ output$smr_xrotation <- renderUI({
 output$smr_dimension <- renderUI({
 
   plot_opt <- plot_opt()
-
-  selection <- if(is.na(plot_opt$plot_args$dimension)) "20*10*100" else
-    paste(plot_opt$plot_args$dimension, collapse = "*")
+  
+  selection <- ifelse(is.na(plot_opt$plot_args$dimension)
+                      , "20*10*100"
+                      , paste(plot_opt$plot_args$dimension, collapse = "*")
+                      ) %>% 
+    pluck(1)
 
   textInput(
     inputId = "smr_dimension"
@@ -1190,11 +1196,15 @@ output$plot_color <- renderUI({
       selection <- input$smr_load_sheet
 
     }
+    
 
-    textInput(inputId = "graph_smr_name"
-              , label = "Sheet export"
-              , value = selection
-              )
+      textInput(inputId = "graph_smr_name"
+                , label = "Sheet export"
+                , value = selection
+                , width = "100%"
+                )
+
+
     })
 
 # -------------------------------------------------------------------------

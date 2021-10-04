@@ -1,5 +1,7 @@
 # Version 0.5.0
 
+- Changes incompatible with the old versions.
+
 - *Package* 
   - `yupana_export_smr` ==> `yupana_export`
     - Extract all the information from `yupana_analysis`
@@ -9,6 +11,7 @@
 - *Yupana*
   - Include statistics and anova table in export results
   - Clean headers in export data, exclude "{}"
+  - Update load/save interface
 
 # Version 0.4.4
 

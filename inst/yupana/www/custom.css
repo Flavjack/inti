@@ -1,5 +1,5 @@
 
-p{ text-align: justify; }
+p{text-align: justify;}
 
 .shiny-input-container:not(.shiny-input-container-inline) { width: 100%; }
 
@@ -22,3 +22,12 @@ p{ text-align: justify; }
 }
 
 body {padding-top: 80px;}
+
+
+.plotsave {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  align-items: center;
+}
+
