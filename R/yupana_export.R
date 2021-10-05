@@ -50,23 +50,23 @@
 #'                        , comparison = c("geno", "treat")
 #'                        )
 #'                        
-#' gtab <- yupana_export(smr)
-#' 
+#' gtab <- yupana_export(smr, type = "line", ylimits = c(0, 100, 2))
 #' 
 #' #> import
 #' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=1987722994")
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=1202800640")
 #' # browseURL(url)
 #' 
 #' fb <- gsheet2tbl(url)
 #' 
 #' info <- yupana_import(fb)
 #' 
-#' etab <- yupana_export(info, type = "line"
-#' , dimension = c(10, 10, 10)
-#' , xlab = "test"
-#' )
+#' etab <- yupana_export(info)
+#' 
+#' info2 <- yupana_import(etab)
+#' 
+#' etab2 <- yupana_export(info2)
 #' 
 #' }
 #' 
@@ -169,23 +169,36 @@ dimension = "20*10*100"
   pallete <- color %>%
     tibble('colors' = .)
   
-    graph_opts <- c(type = type
-                   , x = x
-                   , y = response
-                   , group = group
-                   , xlab = xlab
-                   , ylab = ylab
-                   , glab = glab
-                   , ylimits = paste(ylimits, collapse = "*")  
-                   , xrotation = paste(xrotation, collapse = "*") 
-                   , sig = sig
-                   , error = error
-                   , legend = legend
-                   , gtext = paste(gtext, collapse = ",") 
-                   , xtext = paste(xtext, collapse = ",")  
-                   , opt = opt
-                   , dimension = paste(dimension, collapse = "*") 
-                   )
+  
+  ylim <- ifelse(!is.na(ylimits)
+                 , paste(ylimits, collapse = "*")
+                 , NA) %>% pluck(1)
+  
+  gtext <- ifelse(!is.na(gtext)
+                  , paste(gtext, collapse = ",")
+                  , NA) %>% pluck(1)
+  
+  xtext <- ifelse(!is.na(xtext)
+                  , paste(xtext, collapse = ",")
+                  , NA) %>% pluck(1)
+  
+  graph_opts <- c(type = if(!is.na(type)) type else "bar" 
+                 , x = x
+                 , y = response
+                 , group = group
+                 , xlab = xlab
+                 , ylab = ylab
+                 , glab = glab
+                 , ylimits = ylim
+                 , xrotation = paste(xrotation, collapse = "*")
+                 , sig = sig
+                 , error = error
+                 , legend = legend
+                 , gtext = gtext
+                 , xtext = xtext
+                 , opt = opt
+                 , dimension = paste(dimension, collapse = "*") 
+                 )
 
     opts_table <- enframe(graph_opts) %>%
       rename('arguments' = .data$name, 'values' = .data$value) %>%
@@ -278,11 +291,28 @@ dimension = "20*10*100"
       enframe(value = "colors") %>% 
       select(!.data$name)
     
-    ylimites <- if_else(!is.na(ylimits) 
-      , paste0(ylimits, collapse = "*")
-      , paste0(data$plot_args$ylimits, collapse = "*")) %>% 
-      pluck(1)
     
+    ylimits <- if(is.null(ylimits) || is.na(ylimits) || ylimits == "") { 
+      NA
+    } else if(is.vector(ylimits)) {
+      ylimits %>%
+        paste(., collapse = "*")
+    } else {ylimits}
+    
+    gtext <- if(is.null(gtext) || is.na(gtext) || gtext == "") { 
+      NA
+    } else if(is.vector(gtext)) {
+      gtext %>%
+        paste(., collapse = ",")
+    } else {gtext}
+    
+    xtext <- if(is.null(xtext) || is.na(xtext) || xtext == "") { 
+      NA
+    } else if(is.vector(xtext)) {
+      xtext %>%
+        paste(., collapse = ",")
+    } else {xtext}
+
     graph_opts <- c(
       type = data$plot_args$type
       , x = data$plot_args$x
@@ -292,13 +322,13 @@ dimension = "20*10*100"
       , xlab = if(!is.na(xlab)) xlab else data$plot_args$xlab  
       , ylab = if(!is.na(ylab)) ylab else data$plot_args$ylab
       , glab = if(!is.na(glab)) glab else data$plot_args$glab
-      , ylimits = ylimites
+      , ylimits = ylimits
       , xrotation = paste(xrotation, collapse = "*") 
       , sig = sig
       , error = error
       , legend = legend
-      , gtext = if(!is.na(gtext)) paste(gtext, collapse = ",") 
-      , xtext = if(!is.na(xtext)) paste(xtext, collapse = ",")  
+      , gtext = gtext
+      , xtext = xtext  
       , opt = opt
       , dimension = paste(dimension, collapse = "*") 
       ) %>% 

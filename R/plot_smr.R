@@ -62,10 +62,10 @@
 #'            , y = "hi"
 #'            , group = "treat"
 #'            , glab = "tratamientos (cm^{-2})"
-#'            , ylimits = c(0, 1, 0.1)
-#'            , color = c("brown", "blue", "black")
-#'            , sig = "sig"
-#'            ) + theme(legend.position = c(0.3, 0.9), legend.direction="horizontal")
+#'            , ylimits = ""
+#'            , color = c("brown", "blue")
+#'            , gtext = c("Irrigado", "Dry Down ")
+#'            )
 #'   
 #' 
 #' }
@@ -91,6 +91,31 @@ plot_smr <- function(data
                      , opt = NULL
                      ) {
   
+  
+  if (FALSE) {
+    
+    data <- yrs$meancomp
+    type = NULL
+    x = NULL
+    y = NULL
+    group = NULL
+    xlab = NULL
+    ylab = NULL
+    glab = NULL
+    ylimits = NULL
+    xrotation = c(0, 0.5, 0.5)
+    xtext = NULL
+    gtext = NULL
+    legend = "top"
+    sig = NULL
+    sigsize = 3
+    error = NULL
+    color = TRUE
+    opt = NULL
+    
+    
+  }
+  
 # match args --------------------------------------------------------------
 
 legend <- match.arg(legend, c("top", "left", "right", "bottom", "none"))
@@ -103,6 +128,49 @@ if(!c(y %in% colnames(data))) stop("colum no exist")
 
 if(is.null(group)) {group <- x}
 
+xlab <- if(is.null(xlab) || is.na(xlab) || xlab == "") {NULL} else {xlab}
+ylab <- if(is.null(ylab) || is.na(ylab) || ylab == "") {NULL} else {ylab}
+glab <- if(is.null(glab) || is.na(glab) || glab == "") {NULL} else {glab}
+opt <- if(is.null(opt) || is.na(opt) || opt == "") {NULL} else {opt}
+sig <- if(is.null(sig) || is.na(sig) || sig == "" || sig == "none") {NULL} else {sig}
+error <- if(is.null(error) || is.na(error) || error == "" || error == "none") {NULL} else {error}
+
+color <- if(is.null(color) || is.na(color) || color == "" || color == "yes") {
+  TRUE} else {color}
+
+ylimits <- if(is.null(ylimits) || is.na(ylimits) || ylimits == "") { 
+  NULL
+  } else if(is.character(ylimits)) {
+    ylimits %>%
+          gsub("[[:space:]]", "", .) %>%
+          strsplit(., "[*]") %>%
+          unlist() %>% as.numeric()
+    } else {ylimits}
+
+xtext <- if(is.null(xtext) || is.na(xtext) || xtext == "") {
+  NULL} else if (is.character(xtext)){ 
+    xtext %>%
+      strsplit(., ",") %>%
+      unlist() %>% 
+      base::trimws()
+  } else {xtext}
+
+gtext <- if(is.null(gtext) || is.na(gtext) || gtext == "") {
+  NULL} else if (is.character(gtext)){ 
+    gtext %>%
+      strsplit(., ",") %>%
+      unlist() %>% 
+      base::trimws()
+  } else {gtext}
+
+xrotation <- if(is.null(xrotation) || is.na(xrotation) || xrotation == "") {
+  c(0, 0.5, 0.5)
+  } else if (is.character(xrotation)){ 
+    xrotation %>%
+      gsub("[[:space:]]", "", .) %>%
+      strsplit(., "[*]") %>%
+      unlist() %>% as.numeric()
+  } else {xrotation}
 
 # graph-color -------------------------------------------------------------
 

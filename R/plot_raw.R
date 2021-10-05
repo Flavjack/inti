@@ -45,8 +45,8 @@
 #'   plot_raw(type = "box"
 #'            , x = "geno"
 #'            , y = "twue"
-#'            , group = "treat"
-#'            , color = T
+#'            #, group = "treat"
+#'            , color = "yes"
 #'            ) 
 #'            
 #' }
@@ -80,7 +80,50 @@ plot_raw <- function(data
 if(!c(x %in% colnames(data))) stop("colum no exist")
 if(!c(y %in% colnames(data))) stop("colum no exist")
 
-if(is.null(xrotation)) xrotation <- c(0, 0.5, 0.5) 
+# -------------------------------------------------------------------------
+
+  group <- if(is.null(group) || is.na(group) || group == "") {NULL} else {group}
+  xlab <- if(is.null(xlab) || is.na(xlab) || xlab == "") {NULL} else {xlab}
+  ylab <- if(is.null(ylab) || is.na(ylab) || ylab == "") {NULL} else {ylab}
+  glab <- if(is.null(glab) || is.na(glab) || glab == "") {NULL} else {glab}
+  opt <- if(is.null(opt) || is.na(opt) || opt == "") {NULL} else {opt}
+
+  color <- if(is.null(color) || is.na(color) || color == "" || color == "yes") {
+    TRUE} else if (color == "no") {FALSE} else {color}
+  
+  ylimits <- if(is.null(ylimits) || is.na(ylimits) || ylimits == "") { 
+    NULL
+  } else if(is.character(ylimits)) {
+    ylimits %>%
+      gsub("[[:space:]]", "", .) %>%
+      strsplit(., "[*]") %>%
+      unlist() %>% as.numeric()
+  } else {ylimits}
+  
+  xtext <- if(is.null(xtext) || is.na(xtext) || xtext == "") {
+    NULL} else if (is.character(xtext)){ 
+      xtext %>%
+        strsplit(., ",") %>%
+        unlist() %>% 
+        base::trimws()
+    } else {xtext}
+  
+  gtext <- if(is.null(gtext) || is.na(gtext) || gtext == "") {
+    NULL} else if (is.character(gtext)){ 
+      gtext %>%
+        strsplit(., ",") %>%
+        unlist() %>% 
+        base::trimws()
+    } else {gtext}
+  
+  xrotation <- if(is.null(xrotation) || is.na(xrotation) || xrotation == "") {
+    c(0, 0.5, 0.5)
+  } else if (is.character(xrotation)){ 
+    xrotation %>%
+      gsub("[[:space:]]", "", .) %>%
+      strsplit(., "[*]") %>%
+      unlist() %>% as.numeric()
+  } else {xrotation}
 
 # graph-color -------------------------------------------------------------
 
@@ -98,6 +141,8 @@ if(type == "boxplot") {
   else { ncolors <- length(data[[group]] %>% unique()) }
   
 }
+
+# -------------------------------------------------------------------------
 
   if (isTRUE(color)) {
     

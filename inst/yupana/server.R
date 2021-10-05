@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-10-04
+#> date .: 2021-10-05
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -255,42 +255,21 @@ if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
     validate(need(input$raw_x, "Choose your parameters"))
     validate(need(input$raw_y, "Choose your parameters"))
     
-    y <- if(input$raw_y == "") NULL else input$raw_y
-    x <- if(input$raw_x == "") NULL else input$raw_x
-    
-    model <-  y ~ x
-    
-    raw_xrotation <- input$raw_xrotation %>% 
-      strsplit(., "[*]") %>% 
-      pluck(1) %>% as.numeric()
-    
-    raw_ylimits <- input$raw_ylimits %>% 
-      strsplit(., "[*]") %>% 
-      pluck(1) %>% as.numeric()
-    
-    raw_gtext <- input$raw_gtext %>% 
-      strsplit(., ",") %>% 
-      pluck(1) %>% as.character()
-    
-    raw_xtext <- input$raw_xtext %>% 
-      strsplit(., ",") %>% 
-      pluck(1) %>% as.character()
-    
     fieldbook() %>% 
       plot_raw(type = input$raw_type
-               , x = x
-               , y = y
-               , group = if(input$raw_group == "") NULL else input$raw_group
-               , xlab = if(input$raw_xlab == "") NULL else input$raw_xlab
-               , ylab = if(input$raw_ylab == "") NULL else input$raw_ylab
-               , glab = if(input$raw_glab == "") NULL else input$raw_glab
-               , ylimits = if(input$raw_ylimits == "") NULL else raw_ylimits
-               , xrotation = if(input$raw_xrotation == "") NULL else raw_xrotation
+               , x = input$raw_x
+               , y = input$raw_y
+               , group = input$raw_group
+               , xlab = input$raw_xlab
+               , ylab = input$raw_ylab
+               , glab = input$raw_glab
+               , ylimits = input$raw_ylimits
+               , xrotation = input$raw_xrotation
                , legend = input$raw_legend
-               , color = if(input$raw_color == "yes") TRUE else FALSE
-               , opt = if(input$raw_opt == "") NULL else input$raw_opt
-               , xtext = if(input$raw_xtext == "") NULL else raw_xtext
-               , gtext = if(input$raw_gtext == "") NULL else raw_gtext
+               , color = input$raw_color
+               , opt = input$raw_opt
+               , xtext = input$raw_xtext
+               , gtext = input$raw_gtext
                ) +
       {if(input$raw_type == "scatterplot") {
         
@@ -906,8 +885,7 @@ output$smr_xrotation <- renderUI({
   selection <- ifelse(is.na(plot_opt$plot_args$xrotation)
                       , "0*0.5*0.5"
                       , paste(plot_opt$plot_args$xrotation, collapse = "*")
-                      ) %>% 
-    pluck(1)
+                      ) %>% pluck(1)
   
   textInput(
     inputId ="smr_xrotation"
@@ -1071,32 +1049,6 @@ output$plot_color <- renderUI({
 
     plot_opt <- plot_opt()
 
-    ylimits <- if(input$smr_ylimits == "") NULL else {
-
-      input$smr_ylimits %>%
-        strsplit(., "[*]") %>%
-        unlist() %>% as.numeric()
-
-      }
-
-    xrotation <- if(input$smr_xrotation == "") NULL else {
-
-      input$smr_xrotation %>%
-        strsplit(., "[*]") %>%
-        unlist() %>% as.numeric()
-
-      }
-
-    xlab <- if(input$smr_xlab == "") NULL else input$smr_xlab
-    ylab <- if(input$smr_ylab == "") NULL else input$smr_ylab
-    glab <- if(input$smr_glab == "") NULL else input$smr_glab
-    xtext <- if(input$smr_xtext == "") NULL else input$smr_xtext %>% strsplit(., ",") %>% unlist()
-    gtext <- if(input$smr_gtext == "") NULL else input$smr_gtext %>% strsplit(., ",") %>% unlist()
-
-    opt <- if(input$smr_opt == "") NULL else input$smr_opt
-    sig <- if(input$smr_sig == "none") NULL else input$smr_sig
-    error <- if(input$smr_error == "none") NULL else input$smr_error
-
     color <- if(input$smr_color == "yes") { TRUE
     } else if (input$smr_color == "no") { FALSE
         } else if (input$smr_color == "manual"){ plot_opt$plot_args$color }
@@ -1106,17 +1058,17 @@ output$plot_color <- renderUI({
              , y = input$smr_response
              , x = input$smr_x
              , group = input$smr_group
-             , xlab = xlab
-             , ylab = ylab
-             , glab = glab
-             , ylimits = ylimits
-             , xrotation = xrotation
-             , error = error
-             , sig = sig
+             , xlab = input$smr_xlab
+             , ylab = input$smr_ylab
+             , glab = input$smr_glab
+             , ylimits = input$smr_ylimits
+             , xrotation = input$smr_xrotation
+             , error = input$smr_error
+             , sig = input$smr_sig
              , legend = input$smr_legend
-             , opt = opt
-             , gtext = gtext
-             , xtext = xtext
+             , opt = input$smr_opt
+             , gtext = input$smr_gtext
+             , xtext = input$smr_xtext
              , color = color
              )
     })
@@ -1225,21 +1177,13 @@ output$plot_color <- renderUI({
       }  else if (input$smr_color == "no") { FALSE
       } else { imp_opt$plot$color }
 
-    dim <- input$smr_dimension %>%
-      strsplit(., "[*]") %>%
-      unlist() %>% as.numeric()
-
-    ylim <- input$smr_ylimits %>%
-      strsplit(., "[*]") %>%
-      unlist() %>% as.numeric()
-
     yupana_export(data = dt
                   #> reactive
                   , type = input$smr_type
                   , xlab = input$smr_xlab
                   , ylab = input$smr_ylab
                   , glab = input$smr_glab
-                  , ylimits = ylim
+                  , ylimits = input$smr_ylimits
                   , xrotation = input$smr_xrotation
                   , xtext = input$smr_xtext
                   , gtext = input$smr_gtext
@@ -1247,7 +1191,7 @@ output$plot_color <- renderUI({
                   , sig = input$smr_sig
                   , error = input$smr_error
                   , opt = input$smr_opt
-                  , dimension = dim
+                  , dimension = input$smr_dimension
                   #>
                   , color = color
                   )

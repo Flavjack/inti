@@ -80,23 +80,23 @@ smr <- yupana_analysis(data = fb
                        , comparison = c("geno", "treat")
                        )
                        
-gtab <- yupana_export(smr)
-
+gtab <- yupana_export(smr, type = "line", ylimits = c(0, 100, 2))
 
 #> import
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=1987722994")
+              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=1202800640")
 # browseURL(url)
 
 fb <- gsheet2tbl(url)
 
 info <- yupana_import(fb)
 
-etab <- yupana_export(info, type = "line"
-, dimension = c(10, 10, 10)
-, xlab = "test"
-)
+etab <- yupana_export(info)
+
+info2 <- yupana_import(etab)
+
+etab2 <- yupana_export(info2)
 
 }
 

@@ -316,23 +316,23 @@
                        , comparison <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"geno"</span>, <span class='st'>"treat"</span><span class='op'>)</span>
                        <span class='op'>)</span>
                        
-<span class='va'>gtab</span> <span class='op'>&lt;-</span> <span class='fu'>yupana_export</span><span class='op'>(</span><span class='va'>smr</span><span class='op'>)</span>
-
+<span class='va'>gtab</span> <span class='op'>&lt;-</span> <span class='fu'>yupana_export</span><span class='op'>(</span><span class='va'>smr</span>, type <span class='op'>=</span> <span class='st'>"line"</span>, ylimits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>100</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>#&gt; import</span>
 
 <span class='va'>url</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"https://docs.google.com/spreadsheets/d/"</span>
-              , <span class='st'>"15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=1987722994"</span><span class='op'>)</span>
+              , <span class='st'>"15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=1202800640"</span><span class='op'>)</span>
 <span class='co'># browseURL(url)</span>
 
 <span class='va'>fb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html'>gsheet2tbl</a></span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span>
 
 <span class='va'>info</span> <span class='op'>&lt;-</span> <span class='fu'><a href='yupana_import.html'>yupana_import</a></span><span class='op'>(</span><span class='va'>fb</span><span class='op'>)</span>
 
-<span class='va'>etab</span> <span class='op'>&lt;-</span> <span class='fu'>yupana_export</span><span class='op'>(</span><span class='va'>info</span>, type <span class='op'>=</span> <span class='st'>"line"</span>
-, dimension <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>10</span>, <span class='fl'>10</span><span class='op'>)</span>
-, xlab <span class='op'>=</span> <span class='st'>"test"</span>
-<span class='op'>)</span>
+<span class='va'>etab</span> <span class='op'>&lt;-</span> <span class='fu'>yupana_export</span><span class='op'>(</span><span class='va'>info</span><span class='op'>)</span>
+
+<span class='va'>info2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='yupana_import.html'>yupana_import</a></span><span class='op'>(</span><span class='va'>etab</span><span class='op'>)</span>
+
+<span class='va'>etab2</span> <span class='op'>&lt;-</span> <span class='fu'>yupana_export</span><span class='op'>(</span><span class='va'>info2</span><span class='op'>)</span>
 
 <span class='op'>}</span>
 
