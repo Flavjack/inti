@@ -134,34 +134,10 @@ if(!is.data.frame(data)) {
     drop_na() %>%
     deframe()
   
-  # if(!is.na(xtext)) xtext <- xtext %>% 
-  #   strsplit(split = ",") %>% unlist() 
-  # 
-  # if(!is.na(gtext)) gtext <- gtext %>%
-  #   strsplit(split = ",") %>% unlist()
-  # 
-  # if(!is.na(opt)) opt <- opt %>% 
-  #   gsub(' +', " ", .) %>% gsub("[\r\n]", "", .)
-  # 
-  # if(!is.na(xrotation)) xrotation <- xrotation %>%
-  #   strsplit(split = "[*]") %>%
-  #   unlist() %>%
-  #   as.numeric()
-  # 
-  # if(!is.na(ylimits)) ylimits <- ylimits %>%
-  #   strsplit(split = "[*]") %>%
-  #   unlist() %>%
-  #   as.numeric()
-  # 
-  # dimension <- dimension %>%
-  #   strsplit(split = "[*]") %>%
-  #   unlist() %>%
-  #   as.numeric()
-  
 # plot opts ---------------------------------------------------------------
 
  plot_opts <- list(
-   type = plot_args$type
+   type = if(is.na(plot_args$type)) "bar" else plot_args$type
    , x = plot_args$x
    , y = plot_args$y
    , group = plot_args$group

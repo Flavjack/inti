@@ -182,7 +182,7 @@ dimension = "20*10*100"
                   , paste(xtext, collapse = ",")
                   , NA) %>% pluck(1)
   
-  graph_opts <- c(type = if(!is.na(type)) type else "bar" 
+  graph_opts <- c(type = type
                  , x = x
                  , y = response
                  , group = group
@@ -314,7 +314,7 @@ dimension = "20*10*100"
     } else {xtext}
 
     graph_opts <- c(
-      type = data$plot_args$type
+      type = type
       , x = data$plot_args$x
       , y = data$plot_args$y
       , group = data$plot_args$group
