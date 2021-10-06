@@ -47,7 +47,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">inti</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.4.4.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.4.4.9001</span>
       </span>
     </div>
 
@@ -352,6 +352,7 @@
 <code class="sourceCode R"><span class="va">blues.comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/merge.html">merge</a></span><span class="op">(</span><span class="va">blues.asreml</span> 
                     , <span class="va">blues.h2cal</span> 
                     , by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"cultivar"</span>, <span class="st">"zone"</span>, <span class="st">"location"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">## Online License checked out Wed Oct  6 14:37:52 2021</span>
 
 <span class="co"># plot(blues.comp$yield, blues.comp$yield_lsm)</span>
 <span class="va">rs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/unstructured.html">cor</a></span><span class="op">(</span><span class="va">blues.comp</span><span class="op">$</span><span class="va">yield</span>, <span class="va">blues.comp</span><span class="op">$</span><span class="va">yield_lsm</span><span class="op">)</span> 
@@ -431,29 +432,29 @@
 <span class="co">##    Data: dt.rm</span>
 <span class="co">## Weights: weights</span>
 <span class="co">## </span>
-<span class="co">## REML criterion at convergence: 11933</span>
+<span class="co">## REML criterion at convergence: 11933.2</span>
 <span class="co">## </span>
 <span class="co">## Scaled residuals: </span>
-<span class="co">##    Min     1Q Median     3Q    Max </span>
-<span class="co">## -5.076 -0.331 -0.008  0.370  4.058 </span>
+<span class="co">##     Min      1Q  Median      3Q     Max </span>
+<span class="co">## -5.0760 -0.3308 -0.0084  0.3698  4.0576 </span>
 <span class="co">## </span>
 <span class="co">## Random effects:</span>
 <span class="co">##  Groups                 Name        Variance Std.Dev.</span>
-<span class="co">##  cultivar:zone:location (Intercept)  2209     47.0   </span>
-<span class="co">##  rep:alpha:location     (Intercept)   945     30.7   </span>
-<span class="co">##  cultivar:zone          (Intercept)   130     11.4   </span>
-<span class="co">##  rep:location           (Intercept)   334     18.3   </span>
-<span class="co">##  cultivar               (Intercept)   728     27.0   </span>
-<span class="co">##  zone:location          (Intercept) 48680    220.6   </span>
-<span class="co">##  Residual                            1397     37.4   </span>
+<span class="co">##  cultivar:zone:location (Intercept)  2209.5   47.00  </span>
+<span class="co">##  rep:alpha:location     (Intercept)   944.6   30.73  </span>
+<span class="co">##  cultivar:zone          (Intercept)   129.6   11.38  </span>
+<span class="co">##  rep:location           (Intercept)   334.0   18.28  </span>
+<span class="co">##  cultivar               (Intercept)   728.0   26.98  </span>
+<span class="co">##  zone:location          (Intercept) 48679.8  220.64  </span>
+<span class="co">##  Residual                            1396.8   37.37  </span>
 <span class="co">## Number of obs: 1069, groups:  </span>
 <span class="co">## cultivar:zone:location, 539; rep:alpha:location, 251; cultivar:zone, 90; rep:location, 36; cultivar, 30; zone:location, 18</span>
 <span class="co">## </span>
 <span class="co">## Fixed effects:</span>
 <span class="co">##             Estimate Std. Error t value</span>
-<span class="co">## (Intercept)    813.4       83.9    9.70</span>
-<span class="co">## zonenorth       51.6      129.7    0.40</span>
-<span class="co">## zonesouth       59.7      123.2    0.48</span>
+<span class="co">## (Intercept)   813.35      83.85   9.700</span>
+<span class="co">## zonenorth      51.57     129.67   0.398</span>
+<span class="co">## zonesouth      59.75     123.21   0.485</span>
 <span class="co">## </span>
 <span class="co">## Correlation of Fixed Effects:</span>
 <span class="co">##           (Intr) znnrth</span>
@@ -471,11 +472,11 @@
 <span class="co"># plot(blups.comp$predicted.value, blups.comp$yield)</span>
 <span class="va">rs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/unstructured.html">cor</a></span><span class="op">(</span><span class="va">blups.comp</span><span class="op">$</span><span class="va">predicted.value</span>, <span class="va">blups.comp</span><span class="op">$</span><span class="va">yield</span><span class="op">)</span> 
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"r ="</span>, <span class="va">rs</span><span class="op">)</span>
-<span class="co">## r = 0.9202</span>
+<span class="co">## r = 0.9201732</span>
 
 <span class="va">blups.comp</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../../reference/web_table.html">web_table</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
 <div id="htmlwidget-7436a0b8651ae4265f39" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7436a0b8651ae4265f39">{"x":{"filter":"none","vertical":false,"extensions":["Buttons","Scroller"],"data":[["22455","23286","23524","24054","24521","24984","25512","25965","26362","26742","26777","27110","27125","27130","27543","27546","27548","27590","27592","27593","27599","27600","27605","27609","27669","28128","28209","28949","28950","28954"],[799.6062,829.2253,804.4229,871.042,868.3307,855.0887,839.1676,840.7004,849.6037,859.6556,842.7738,863.9857,875.5788,856.7206,851.0877,842.821,826.2886,849.085,844.0249,856.6981,873.8515,862.3616,831.3956,814.917,853.4611,884.0226,874.3242,898.7078,877.4787,831.2612],[53.4514,53.454,53.4522,53.4502,53.4586,53.4566,53.4506,53.4559,53.5022,53.4513,53.4522,53.4502,53.4507,53.4513,53.4498,53.4627,53.4526,53.4595,53.4534,53.4532,53.4518,53.4528,53.4576,53.4512,53.4569,53.4519,53.4534,53.4608,53.4496,53.4584],["Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable"],[774.2085,793.3491,768.1799,821.6019,832.9218,820.0897,807.9516,801.2365,802.3588,823.093,797.5399,829.5655,832.3283,814.9198,824.0008,814.7511,802.124,817.5921,803.8942,824.6404,841.4552,832.5808,795.3311,746.9311,812.5252,849.1321,836.6204,859.9027,819.0341,800.7321]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>cultivar<\/th>\n      <th>predicted.value<\/th>\n      <th>std.error<\/th>\n      <th>status<\/th>\n      <th>yield<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bt","buttons":[{"extend":"copy"},{"extend":"excel","filename":"file"}],"deferRender":true,"scroller":true,"scrollX":true,"scrollY":"60vh","columnDefs":[{"width":"200px","targets":"_all"},{"className":"dt-right","targets":[1,2,4]}],"initComplete":"function(settings, json) {\n$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});\n}","order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.initComplete"],"jsHooks":[]}</script><p>The BLUPs correlation between <code>H2Cal</code> and <code>asrml</code> is (r = 0.9202)</p>
+<script type="application/json" data-for="htmlwidget-7436a0b8651ae4265f39">{"x":{"filter":"none","vertical":false,"extensions":["Buttons","Scroller"],"data":[["22455","23286","23524","24054","24521","24984","25512","25965","26362","26742","26777","27110","27125","27130","27543","27546","27548","27590","27592","27593","27599","27600","27605","27609","27669","28128","28209","28949","28950","28954"],[799.6062,829.2253,804.4229,871.042,868.3307,855.0887,839.1676,840.7004,849.6037,859.6556,842.7738,863.9857,875.5788,856.7206,851.0877,842.821,826.2886,849.085,844.0249,856.6981,873.8515,862.3616,831.3956,814.917,853.4611,884.0226,874.3242,898.7078,877.4787,831.2612],[53.4514,53.454,53.4522,53.4502,53.4586,53.4566,53.4506,53.4559,53.5022,53.4513,53.4522,53.4502,53.4507,53.4513,53.4498,53.4627,53.4526,53.4595,53.4534,53.4532,53.4518,53.4528,53.4576,53.4512,53.4569,53.4519,53.4534,53.4608,53.4496,53.4584],["Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable","Estimable"],[774.2085,793.3491,768.1799,821.6019,832.9218,820.0897,807.9516,801.2365,802.3588,823.093,797.5399,829.5655,832.3283,814.9198,824.0008,814.7511,802.124,817.5921,803.8942,824.6404,841.4552,832.5808,795.3311,746.9311,812.5252,849.1321,836.6204,859.9027,819.0341,800.7321]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>cultivar<\/th>\n      <th>predicted.value<\/th>\n      <th>std.error<\/th>\n      <th>status<\/th>\n      <th>yield<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bt","buttons":[{"extend":"copy"},{"extend":"excel","filename":"file"}],"deferRender":true,"scroller":true,"scrollX":true,"scrollY":"60vh","columnDefs":[{"width":"200px","targets":"_all"},{"className":"dt-right","targets":[1,2,4]}],"initComplete":"function(settings, json) {\n$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});\n}","order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.initComplete"],"jsHooks":[]}</script><p>The BLUPs correlation between <code>H2Cal</code> and <code>asrml</code> is (r = 0.9201732)</p>
 </div>
 </div>
 <div id="references" class="section level1">

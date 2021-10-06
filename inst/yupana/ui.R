@@ -32,15 +32,15 @@ if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json", a
 navbarPage(title = div(
   HTML('<h3><strong><a target="_blank" href="https://inkaverse.com/">Yupana</a></strong></h3>')
   , div(
-    id = "version"
-    , HTML(paste("<a target='_blank' href='https://inkaverse.com/news/'>inti"
-                 , packageVersion('inti') , "</a>"))
-    )
-  , div(
     id = "support"
     , HTML(paste("<a target='_blank' href='https://github.com/sponsors/flavjack' style='color:white'>"
                  , h4(icon("heart")) , "</a>"))
   )
+  , div(
+    id = "version"
+    , HTML(paste("<a target='_blank' href='https://inkaverse.com/news/'>inti"
+                 , packageVersion('inti') , "</a>"))
+    )
   )
   , windowTitle = "Yupana • app"
   , selected = "Intro"
