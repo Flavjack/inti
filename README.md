@@ -23,21 +23,27 @@ about the ‘inkaverse’ project at <https://inkaverse.com/>.
 ## Installation
 
 To install the stable version from
-[CRAN](https://cran.r-project.org/package=inti), run the following from
-an R console:
+[CRAN](https://cran.r-project.org/package=inti):
 
 ``` r
 install.packages("inti")
 ```
 
 To install the latest development version directly from
-[GitHub](https://github.com/flavjack/inti), run the following from an R
-console:
+[GitHub](https://github.com/flavjack/inti):
 
 ``` r
 if (!require("remotes"))
   install.packages("remotes")
 remotes::install_github("flavjack/inti")
+```
+
+If you need install an specific version of a package:
+
+``` r
+if (!require("remotes"))
+  install.packages("remotes")
+remotes::install_version("inti", version = "0.4.4")
 ```
 
 ## Shiny apps
