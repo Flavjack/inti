@@ -9,7 +9,7 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-source("http://inkaverse.com/docs.r")
+source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
 ```
 
 Yupana es una heramienta interactiva que permite el análisis y gráfica de datos basados en diseños experimentales. 

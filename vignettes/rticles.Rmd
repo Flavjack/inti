@@ -9,7 +9,7 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-source("http://inkaverse.com/docs.r")
+source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
 ```
 
 El paquete `inti` posee planillas para la generación de documentos técnico/científicos usando `Rmarkdown + Bookdown`. Estas plantillas permitirán la elaboración de documentos reproducibles.
