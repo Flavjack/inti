@@ -6,8 +6,8 @@
 #' @param trait Name of the trait.
 #' @param gen.name Name of the genotypes.
 #' @param rep.n Number of replications in the experiment.
-#' @param loc.name Name of the location (default = NULL). See details.
-#' @param loc.n Number of locations (default = 1). See details.
+#' @param env.name Name of the location (default = NULL). See details.
+#' @param env.n Number of locations (default = 1). See details.
 #' @param year.name Name of the years (default = NULL). See details.
 #' @param year.n Number of years (default = 1). See details.
 #' @param fixed.model The fixed effects in the model (BLUEs). See examples.
@@ -42,7 +42,7 @@
 #' For individual experiments is necessary provide the \code{trait},
 #' \code{gen.name}, \code{rep.n}.
 #'
-#' For MET experiments you should \code{loc.n} and \code{loc.name} and/or
+#' For MET experiments you should \code{env.n} and \code{env.name} and/or
 #' \code{year.n} and \code{year.name} according your experiment.
 #'
 #' The BLUEs calculation based in the pairwise comparison could be time
@@ -113,9 +113,9 @@ H2cal <- function(data
                   , trait
                   , gen.name
                   , rep.n
-                  , loc.n = 1
+                  , env.n = 1
                   , year.n = 1
-                  , loc.name = NULL
+                  , env.name = NULL
                   , year.name = NULL
                   , fixed.model
                   , random.model
@@ -127,9 +127,38 @@ H2cal <- function(data
                   , trial = NULL
                   ){
   
-  grp <- emmean <- SE <- Var <- NULL 
+
+# test --------------------------------------------------------------------
+
+  if(FALSE) {
+   
+    data <- dt
+    
+    trait = "tubdw"
+    gen.name = "geno"
+    rep.n = 5
+    env.n = 1
+    year.n = 1
+    env.name = NULL
+    year.name = NULL
+    fixed.model = "0 + (1|bloque) + geno"
+    random.model = "1 + (1|bloque) + (1|geno)"
+    summary = TRUE
+    emmeans = TRUE
+    weights = NULL
+    plot_diag = TRUE
+    outliers.rm = TRUE
+    trial = NULL
+    
+  }
   
-  # outliers remove ---------------------------------------------------------
+# -------------------------------------------------------------------------
+
+  grp <- emmean <- SE <- Var <- where <- NULL 
+  V.g <- V.gxl <- env <- V.gxy <- year <- NULL
+  V.gxlxy <- V.e <- V.p <- vdBLUEs <- vdBLUPs <- NULL
+  
+# outliers remove ---------------------------------------------------------
 
   if ( outliers.rm == TRUE ) {
 
@@ -137,13 +166,13 @@ H2cal <- function(data
                                      , trait = trait
                                      , model = random.model
                                      )
-    dt.rm <- out.rm %>% pluck(1)
+    dt.rm <- out.rm %>% purrr::pluck(1)
 
     out.fm <- data %>% outliers_remove(data = .
                                        , trait = trait
                                        , model = fixed.model
                                        )
-    dt.fm <- out.fm %>% pluck(1)
+    dt.fm <- out.fm %>% purrr::pluck(1)
 
     outliers <- list(fixed = out.fm$outliers, random = out.rm$outliers)
 
@@ -161,11 +190,11 @@ H2cal <- function(data
   
   # fixed genotype effect
   f.md <- as.formula(paste(trait, paste(fixed.model, collapse = " + "), sep = " ~ "))
-  g.fix <- eval(bquote(lmer(.(f.md), weights = weights, data = dt.fm)))
+  g.fix <- eval(bquote(lme4::lmer(.(f.md), weights = weights, data = dt.fm)))
   
   # random genotype effect
   r.md <- as.formula(paste(trait, paste(random.model, collapse = " + "), sep = " ~ "))
-  g.ran <- eval(bquote(lmer(.(r.md), weights = weights, data = dt.rm)))
+  g.ran <- eval(bquote(lme4::lmer(.(r.md), weights = weights, data = dt.rm)))
 
 # Print model summary -----------------------------------------------------
   
@@ -197,24 +226,24 @@ H2cal <- function(data
 
 # -------------------------------------------------------------------------
 
-  ### handle model estimates
+### handle model estimates
 
-  # number of genotypes
+# number of genotypes
 
   gen.n <- g.ran %>%
     summary() %>%
     purrr::pluck("ngrps") %>%
     .[gen.name]
 
-  # genotypic variance component
+# genotypic variance component
 
-  vc.g <- c(VarCorr(g.ran)[[gen.name]])
+  vc.g <- c(lme4::VarCorr(g.ran)[[gen.name]])
 
-  # environment variance component
+# environment variance component
 
-  if(loc.n > 1){
+  if(env.n > 1){
 
-    gxl <- paste(gen.name, loc.name, sep = ":")
+    gxl <- paste(gen.name, env.name, sep = ":")
 
     vc.gxl <- g.ran %>%
       lme4::VarCorr() %>%
@@ -224,31 +253,31 @@ H2cal <- function(data
 
     if( length(strsplit(gxl,":")[[1]]) < 2) {
 
-      message("You should include loc.name in the arguments")
+      message("You should include env.name in the arguments")
 
       vc.gxl <- 0
 
     } else if (identical(vc.gxl, numeric(0))) {
 
-      message("You should include (1|genotype:location) interaction")
+      message("You should include (1|genotype:environment) interaction")
 
       vc.gxl <- 0
 
     }
 
-  } else if (!is.null(loc.name) && loc.n == 1) {
+  } else if (!is.null(env.name) && env.n == 1) {
 
-    message("You should include loc.n in the arguments")
+    message("You should include env.n in the arguments")
 
     vc.gxl <- 0
 
-    } else if (loc.n == 1){
+    } else if (env.n == 1){
 
     vc.gxl <- 0
 
   }
 
-  # year variance component
+# year variance component
 
   if(year.n > 1){
 
@@ -286,11 +315,11 @@ H2cal <- function(data
 
   }
 
-  # location x year variance component (review in MET)
+# environment x year variance component (review in MET)
 
-  if(year.n > 1 && loc.n > 1){
+  if(year.n > 1 && env.n > 1){
 
-    gxlxy <- paste(gen.name, loc.name, year.name, sep = ":")
+    gxlxy <- paste(gen.name, env.name, year.name, sep = ":")
 
     vc.gxlxy <- g.ran %>%
       lme4::VarCorr() %>%
@@ -300,25 +329,25 @@ H2cal <- function(data
 
     if( length(strsplit(gxlxy,":")[[1]]) < 3 ) {
 
-      message("You should include location/years arguments")
+      message("You should include environment/years arguments")
 
       vc.gxlxy <- 0
 
     } else if (identical(vc.gxlxy, numeric(0))) {
 
-      message("You should include (1|genotype:location:year) interaction")
+      message("You should include (1|genotype:environment:year) interaction")
 
       vc.gxlxy <- 0
 
     }
 
-  } else if (year.n == 1 && loc.n == 1){
+  } else if (year.n == 1 && env.n == 1){
 
     vc.gxlxy <- 0
 
   } else {vc.gxlxy <- 0}
 
-  # error variance component
+# error variance component
 
   vc.e <- g.ran %>%
     lme4::VarCorr() %>%
@@ -408,10 +437,10 @@ H2cal <- function(data
 
     smd <- BLUEs %>%
         dplyr::summarise(
-          mean = mean(!!as.name(trait), na.rm = T)
-          , std = sqrt(var(!!as.name(trait), na.rm = T))
-          , min = min(!!as.name(trait))
-          , max = max(!!as.name(trait))
+          mean = mean(.data[[trait]], na.rm = T)
+          , std = sqrt(var(.data[[trait]], na.rm = T))
+          , min = min(.data[[trait]])
+          , max = max(.data[[trait]])
         ) 
     
 # -------------------------------------------------------------------------
@@ -424,39 +453,42 @@ H2cal <- function(data
 
   ## Heritability
 
-  # H2 Standard
-  H2.s <- vc.g/(vc.g + vc.gxl/loc.n + vc.gxy/year.n + vc.gxlxy/(loc.n*year.n) + vc.e/(loc.n*year.n*rep.n))
+  # # H2 Standard
+  # H2.s <- vc.g/(vc.g + vc.gxl/env.n + vc.gxy/year.n + vc.gxlxy/(env.n*year.n) + vc.e/(env.n*year.n*rep.n))
+  # 
+  # # H2 Piepho
+  # H2.p <- vc.g/(vc.g + vdBLUE.avg/2)
+  # 
+  # # H2 Cullis
+  # H2.c <- 1 - (vdBLUP.avg/2/vc.g)
 
-  # H2 Piepho
-  H2.p <- vc.g/(vc.g + vdBLUE.avg/2)
-
-  # H2 Cullis
-  H2.c <- 1 - (vdBLUP.avg/2/vc.g)
-
-  ## Summary table VC & H^2
+## Summary table VC & H^2
 
   vrcp <- dplyr::tibble(
-    variable = trait
+    trait = trait
     , rep = rep.n
     , geno = gen.n
-    , env = loc.n
+    , env = env.n
     , year = year.n
-    , mean = smd$mean
-    , std = smd$std
-    , min = smd$min
-    , max = smd$max
-    , V.g = vc.g
-    , V.gxl = vc.gxl
-    , V.gxy = vc.gxy
-    , V.e = vc.e
-    , h2.s = H2.s
-    , h2.c = H2.c
-    , h2.p = H2.p
     ) %>% 
+    merge(., smd) %>% 
+    mutate(V.g = vc.g) %>% 
+    mutate(V.gxl = vc.gxl) %>% 
+    mutate(V.gxy = vc.gxy) %>% 
+    mutate(V.gxlxy = vc.gxlxy) %>% 
+    mutate(V.e = vc.e) %>% 
+    mutate(V.p = (V.g + V.gxl/env + V.gxy/year + V.gxlxy/(env*year) + V.e/(env*year*rep))) %>%
+    mutate(H2.s = V.g/V.p) %>% 
+    mutate(vdBLUEs = vdBLUE.avg) %>% 
+    mutate(H2.p = V.g/(V.g + vdBLUEs/2)) %>%
+    mutate(vdBLUPs = vdBLUP.avg) %>% 
+    mutate(H2.c = 1 - (vdBLUPs/2/V.g)) %>% 
+    select(where(~ any(. != 0))) %>% 
+    select(!matches("BLUE|BLUP")) %>% 
     {if (!is.null(trial)) dplyr::mutate(.data = ., trial = trial) else .} %>% 
     {if (!is.null(trial)) select(.data = ., trial, everything()) else .}
 
-  ## Results
+# result ------------------------------------------------------------------
 
   rsl <- list(
     tabsmr = vrcp

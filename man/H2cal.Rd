@@ -9,9 +9,9 @@ H2cal(
   trait,
   gen.name,
   rep.n,
-  loc.n = 1,
+  env.n = 1,
   year.n = 1,
-  loc.name = NULL,
+  env.name = NULL,
   year.name = NULL,
   fixed.model,
   random.model,
@@ -32,11 +32,11 @@ H2cal(
 
 \item{rep.n}{Number of replications in the experiment.}
 
-\item{loc.n}{Number of locations (default = 1). See details.}
+\item{env.n}{Number of locations (default = 1). See details.}
 
 \item{year.n}{Number of years (default = 1). See details.}
 
-\item{loc.name}{Name of the location (default = NULL). See details.}
+\item{env.name}{Name of the location (default = NULL). See details.}
 
 \item{year.name}{Name of the years (default = NULL). See details.}
 
@@ -84,7 +84,7 @@ Piepho (BLUEs).
 For individual experiments is necessary provide the \code{trait},
 \code{gen.name}, \code{rep.n}.
 
-For MET experiments you should \code{loc.n} and \code{loc.name} and/or
+For MET experiments you should \code{env.n} and \code{env.name} and/or
 \code{year.n} and \code{year.name} according your experiment.
 
 The BLUEs calculation based in the pairwise comparison could be time

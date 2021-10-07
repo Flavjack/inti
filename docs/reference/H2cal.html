@@ -213,9 +213,9 @@
   <span class='va'>trait</span>,
   <span class='va'>gen.name</span>,
   <span class='va'>rep.n</span>,
-  loc.n <span class='op'>=</span> <span class='fl'>1</span>,
+  env.n <span class='op'>=</span> <span class='fl'>1</span>,
   year.n <span class='op'>=</span> <span class='fl'>1</span>,
-  loc.name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  env.name <span class='op'>=</span> <span class='cn'>NULL</span>,
   year.name <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>fixed.model</span>,
   <span class='va'>random.model</span>,
@@ -247,7 +247,7 @@
       <td><p>Number of replications in the experiment.</p></td>
     </tr>
     <tr>
-      <th>loc.n</th>
+      <th>env.n</th>
       <td><p>Number of locations (default = 1). See details.</p></td>
     </tr>
     <tr>
@@ -255,7 +255,7 @@
       <td><p>Number of years (default = 1). See details.</p></td>
     </tr>
     <tr>
-      <th>loc.name</th>
+      <th>env.name</th>
       <td><p>Name of the location (default = NULL). See details.</p></td>
     </tr>
     <tr>
@@ -315,7 +315,7 @@ Piepho (BLUEs).</p>
 <p>5. Table with the outliers removed for each model.</p>
 <p>For individual experiments is necessary provide the <code>trait</code>,
 <code>gen.name</code>, <code>rep.n</code>.</p>
-<p>For MET experiments you should <code>loc.n</code> and <code>loc.name</code> and/or
+<p>For MET experiments you should <code>env.n</code> and <code>env.name</code> and/or
 <code>year.n</code> and <code>year.name</code> according your experiment.</p>
 <p>The BLUEs calculation based in the pairwise comparison could be time
 consuming with the increase of the number of the genotypes. You can specify
@@ -356,11 +356,10 @@ Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016.</p>
             <span class='op'>)</span>
 </div><div class='img'><img src='H2cal-1.png' alt='' width='700' height='433' /></div><div class='input'>
  <span class='va'>hr</span><span class='op'>$</span><span class='va'>tabsmr</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 16</span>
-#&gt;   variable   rep  geno   env  year  mean   std   min   max   V.g V.gxl V.gxy
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> tubdw        5    15     1     1  31.7  12.1  11.6  53.2  130.     0     0
-#&gt; <span style='color: #949494;'># ... with 4 more variables: V.e &lt;dbl&gt;, h2.s &lt;dbl&gt;, h2.c &lt;dbl&gt;, h2.p &lt;dbl&gt;</span></div><div class='input'> <span class='va'>hr</span><span class='op'>$</span><span class='va'>blues</span>
+</div><div class='output co'>#&gt;   trait rep geno env year     mean      std    min    max      V.g      V.e
+#&gt; 1 tubdw   5   15   1    1 31.71713 12.10921 11.628 53.154 129.7367 168.9607
+#&gt;        V.p      H2.s      H2.p      H2.c
+#&gt; 1 163.5288 0.7933567 0.8847729 0.8753661</div><div class='input'> <span class='va'>hr</span><span class='op'>$</span><span class='va'>blues</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 15 x 6</span>
 #&gt;    geno  tubdw    SE    df lower.CL upper.CL
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>

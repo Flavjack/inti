@@ -11,8 +11,10 @@ nocite: |
   [@schmidt2019Estimating; @schmidt2019Heritability; @bernal-vasquez2016Outliera;  @buntaran2020Cross; @bolker2021Mean]
 vignette: >
   %\VignetteIndexEntry{Broad-sense heritability in plant breeding}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -112,7 +114,7 @@ library(inti)
 hr$model %>% summary()
 ```
 
-## Variance component
+## Variance components
 
 ```{r}
 hr$tabsmr %>% kable(caption = "Variance component table")

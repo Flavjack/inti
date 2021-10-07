@@ -179,8 +179,8 @@ met <- blues.h2cal %>%
   H2cal(trait = "yield"
         , gen.name = "cultivar"
         , rep.n = 4
-        , loc.n = 18
-        , loc.name = "location"
+        , env.n = 18
+        , env.name = "location"
         , fixed.model = "0 + zone + (1|zone:location) + (1|zone:cultivar) + cultivar"
         , random.model = "1 + zone + (1|zone:location) + (1|zone:cultivar) + (1|cultivar)"
         # , plot_diag = T
@@ -260,9 +260,9 @@ library(inti)
 model <- fb %>% 
   H2cal(trait = "yield"
         , gen.name = "cultivar"
-        , loc.name = "location"
+        , env.name = "location"
         , rep.n = 2
-        , loc.n = 18
+        , env.n = 18
         , fixed.model = "0 + zone + (1|rep:location) + (1|rep:alpha:location) + (1|zone:location) + (1|cultivar:zone) + (1|cultivar:zone:location) + cultivar"
         , random.model = "1 + zone + (1|rep:location) + (1|rep:alpha:location) + (1|zone:location) + (1|cultivar:zone) + (1|cultivar:zone:location) + (1|cultivar)"
         , summary = T
