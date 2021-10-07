@@ -1,4 +1,4 @@
-#' Heritability in plant breeding
+#' Broad-sense heritability in plant breeding
 #'
 #' Heritability in plant breeding on a genotype difference basis
 #'
@@ -10,30 +10,34 @@
 #' @param loc.n Number of locations (default = 1). See details.
 #' @param year.name Name of the years (default = NULL). See details.
 #' @param year.n Number of years (default = 1). See details.
-#' @param ran.model The random effects in the model. See examples.
-#' @param fix.model The fixed effects in the model. See examples.
+#' @param fixed.model The fixed effects in the model (BLUEs). See examples.
+#' @param random.model The random effects in the model (BLUPs). See examples.
 #' @param emmeans Use emmeans for calculate the BLUEs (default = FALSE).
 #' @param summary Print summary from random model (default = FALSE).
-#' @param plot_diag Show diagnostic plots (default = FALSE).
+#' @param plot_diag Show diagnostic plots for fixed and random effects (default
+#'   = FALSE).
 #' @param outliers.rm Remove outliers (default = FALSE). See references.
 #' @param weights an optional vector of ‘prior weights’ to be used in the
 #'   fitting process (default = NULL).
-#' @param trial Name of the trial in the results (default = NULL). 
+#' @param trial Column with the name of the trial in the results (default =
+#'   NULL).
 #'
 #' @details
 #'
 #' The function allows to made the calculation for individual or
-#' multi-environmental trials (MET) using th fixed and random model.
+#' multi-environmental trials (MET) using fixed and random model.
 #'
-#' 1. The variance components.
+#' 1. The variance components based in the random model and the population
+#' summary information based in the fixed model (BLUEs).
 #'
-#' 2. Heritability under three approaches: Standard, Cullis and Piepho.
+#' 2. Heritability under three approaches: Standard (ANOVA), Cullis (BLUPs) and
+#' Piepho (BLUEs).
 #'
-#' 3. Best Linear Unbiased Predictors (BLUPs).
+#' 3. Best Linear Unbiased Estimators (BLUEs) ~ fixed effect.
 #'
-#' 4. Best Linear Unbiased Estimators (BLUEs).
+#' 4. Best Linear Unbiased Predictors (BLUPs) ~ random effect.
 #'
-#' 5. Outliers remove.
+#' 5. Table with the outliers removed for each model.
 #'
 #' For individual experiments is necessary provide the \code{trait},
 #' \code{gen.name}, \code{rep.n}.
@@ -41,11 +45,12 @@
 #' For MET experiments you should \code{loc.n} and \code{loc.name} and/or
 #' \code{year.n} and \code{year.name} according your experiment.
 #'
-#' The blues calculation is based in the pairwise comparison and its could takes
-#' time according the number of the genotypes.
+#' The BLUEs calculation based in the pairwise comparison could be time
+#' consuming with the increase of the number of the genotypes. You can specify
+#' \code{emmeans = FALSE} and the calculate of the BLUEs will be faster.
 #'
-#' You can specify as \code{blues = FALSE} for calculate the variance components
-#' and blups faster.
+#' If \code{emmeans = FALSE} you should change 1 by 0 in the fixed model for
+#' exclude the intersect in the analysis and get all the genotypes BLUEs.
 #'
 #' For more information review the references.
 #'
@@ -85,20 +90,20 @@
 #' @examples
 #'
 #' library(inti)
-#' 
+#'
 #' dt <- potato
-#' 
+#'
 #' hr <- H2cal(data = dt
 #'             , trait = "tubdw"
 #'             , gen.name = "geno"
 #'             , rep.n = 5
-#'             , ran.model = "1 + (1|bloque) + (1|geno)"
-#'             , fix.model = "0 + (1|bloque) + geno"
+#'             , fixed.model = "0 + (1|bloque) + geno"
+#'             , random.model = "1 + (1|bloque) + (1|geno)"
 #'             , emmeans = TRUE
 #'             , plot_diag = TRUE
 #'             , outliers.rm = TRUE
 #'             )
-#'             
+#'
 #'  hr$tabsmr
 #'  hr$blues
 #'  hr$blups
@@ -112,8 +117,8 @@ H2cal <- function(data
                   , year.n = 1
                   , loc.name = NULL
                   , year.name = NULL
-                  , ran.model
-                  , fix.model
+                  , fixed.model
+                  , random.model
                   , summary = FALSE
                   , emmeans = FALSE
                   , weights = NULL
@@ -121,8 +126,7 @@ H2cal <- function(data
                   , outliers.rm = FALSE
                   , trial = NULL
                   ){
-
-  # avoid Undefined global functions or variables
+  
   grp <- emmean <- SE <- Var <- NULL 
   
   # outliers remove ---------------------------------------------------------
@@ -131,13 +135,13 @@ H2cal <- function(data
 
     out.rm <- data %>% outliers_remove(data = .
                                      , trait = trait
-                                     , model = ran.model
+                                     , model = random.model
                                      )
     dt.rm <- out.rm %>% pluck(1)
 
     out.fm <- data %>% outliers_remove(data = .
                                        , trait = trait
-                                       , model = fix.model
+                                       , model = fixed.model
                                        )
     dt.fm <- out.fm %>% pluck(1)
 
@@ -155,15 +159,15 @@ H2cal <- function(data
 
 # fit models --------------------------------------------------------------
   
+  # fixed genotype effect
+  f.md <- as.formula(paste(trait, paste(fixed.model, collapse = " + "), sep = " ~ "))
+  g.fix <- eval(bquote(lmer(.(f.md), weights = weights, data = dt.fm)))
+  
   # random genotype effect
-  r.md <- as.formula(paste(trait, paste(ran.model, collapse = " + "), sep = " ~ "))
+  r.md <- as.formula(paste(trait, paste(random.model, collapse = " + "), sep = " ~ "))
   g.ran <- eval(bquote(lmer(.(r.md), weights = weights, data = dt.rm)))
 
-  # fixed genotype effect
-  f.md <- as.formula(paste(trait, paste(fix.model, collapse = " + "), sep = " ~ "))
-  g.fix <- eval(bquote(lmer(.(f.md), weights = weights, data = dt.fm)))
-
-  # Print model summary -----------------------------------------------------
+# Print model summary -----------------------------------------------------
   
   if (summary == TRUE) {
     

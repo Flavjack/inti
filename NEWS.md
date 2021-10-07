@@ -3,10 +3,11 @@
 - Changes incompatible with the old versions.
 
 - *Package* 
-  - `yupana_export_smr` ==> `yupana_export`
+  - `yupana_export_smr` ==> `yupana_export()`
     - Extract all the information from `yupana_analysis`
-  - `yupana_import_smr` ==> `yupana_import`
+  - `yupana_import_smr` ==> `yupana_import()`
     - Import information from the web and `yupana_analysis`
+  - Update function `H2cal()`
 
 - *Yupana*
   - Include statistics and anova table in export results

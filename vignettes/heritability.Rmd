@@ -98,8 +98,8 @@ library(inti)
             , trait = "stemdw"
             , gen.name = "geno"
             , rep.n = 5
-            , ran.model = "1 + (1|bloque) + (1|geno)"
-            , fix.model = "0 + (1|bloque) + geno"
+            , fixed.model = "0 + (1|bloque) + geno"
+            , random.model = "1 + (1|bloque) + (1|geno)"
             , emmeans = TRUE
             , plot_diag = TRUE
             , outliers.rm = TRUE

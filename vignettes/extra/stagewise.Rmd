@@ -157,8 +157,8 @@ model <- 1:length(envs) %>% map(function(x) {
     H2cal(trait = "yield"
           , gen.name = "cultivar"
           , rep.n = 4
-          , ran.model = "1 + (1|rep) + (1|rep:alpha) + (1|cultivar)"
-          , fix.model = "0 + (1|rep) + (1|rep:alpha) + cultivar"
+          , fixed.model = "0 + (1|rep) + (1|rep:alpha) + cultivar"
+          , random.model = "1 + (1|rep) + (1|rep:alpha) + (1|cultivar)"
           # , plot_diag = T
           , emmeans = F
           )
@@ -181,8 +181,8 @@ met <- blues.h2cal %>%
         , rep.n = 4
         , loc.n = 18
         , loc.name = "location"
-        , ran.model = "1 + zone + (1|zone:location) + (1|zone:cultivar) + (1|cultivar)"
-        , fix.model = "0 + zone + (1|zone:location) + (1|zone:cultivar) + cultivar"
+        , fixed.model = "0 + zone + (1|zone:location) + (1|zone:cultivar) + cultivar"
+        , random.model = "1 + zone + (1|zone:location) + (1|zone:cultivar) + (1|cultivar)"
         # , plot_diag = T
         , emmeans = T
         # , weights = blues.h2cal$smith.w
@@ -263,8 +263,8 @@ model <- fb %>%
         , loc.name = "location"
         , rep.n = 2
         , loc.n = 18
-        , ran.model = "1 + zone + (1|rep:location) + (1|rep:alpha:location) + (1|zone:location) + (1|cultivar:zone) + (1|cultivar:zone:location) + (1|cultivar)"
-        , fix.model = "0 + zone + (1|rep:location) + (1|rep:alpha:location) + (1|zone:location) + (1|cultivar:zone) + (1|cultivar:zone:location) + cultivar"
+        , fixed.model = "0 + zone + (1|rep:location) + (1|rep:alpha:location) + (1|zone:location) + (1|cultivar:zone) + (1|cultivar:zone:location) + cultivar"
+        , random.model = "1 + zone + (1|rep:location) + (1|rep:alpha:location) + (1|zone:location) + (1|cultivar:zone) + (1|cultivar:zone:location) + (1|cultivar)"
         , summary = T
         , emmeans = T
         # , plot_diag = T

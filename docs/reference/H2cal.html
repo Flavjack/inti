@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Heritability in plant breeding — H2cal • inti</title>
+<title>Broad-sense heritability in plant breeding — H2cal • inti</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,7 +52,7 @@
 
 
 
-<meta property="og:title" content="Heritability in plant breeding — H2cal" />
+<meta property="og:title" content="Broad-sense heritability in plant breeding — H2cal" />
 <meta property="og:description" content="Heritability in plant breeding on a genotype difference basis" />
 <meta property="og:image" content="https://flavjack.github.io/inti/reference/figures/logo.png" />
 
@@ -199,7 +199,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Heritability in plant breeding</h1>
+    <h1>Broad-sense heritability in plant breeding</h1>
     <small class="dont-index">Source: <a href='https://github.com/flavjack/inti/blob/master/R/H2cal.R'><code>R/H2cal.R</code></a></small>
     <div class="hidden name"><code>H2cal.Rd</code></div>
     </div>
@@ -217,8 +217,8 @@
   year.n <span class='op'>=</span> <span class='fl'>1</span>,
   loc.name <span class='op'>=</span> <span class='cn'>NULL</span>,
   year.name <span class='op'>=</span> <span class='cn'>NULL</span>,
-  <span class='va'>ran.model</span>,
-  <span class='va'>fix.model</span>,
+  <span class='va'>fixed.model</span>,
+  <span class='va'>random.model</span>,
   summary <span class='op'>=</span> <span class='cn'>FALSE</span>,
   emmeans <span class='op'>=</span> <span class='cn'>FALSE</span>,
   weights <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -263,12 +263,12 @@
       <td><p>Name of the years (default = NULL). See details.</p></td>
     </tr>
     <tr>
-      <th>ran.model</th>
-      <td><p>The random effects in the model. See examples.</p></td>
+      <th>fixed.model</th>
+      <td><p>The fixed effects in the model (BLUEs). See examples.</p></td>
     </tr>
     <tr>
-      <th>fix.model</th>
-      <td><p>The fixed effects in the model. See examples.</p></td>
+      <th>random.model</th>
+      <td><p>The random effects in the model (BLUPs). See examples.</p></td>
     </tr>
     <tr>
       <th>summary</th>
@@ -285,7 +285,8 @@ fitting process (default = NULL).</p></td>
     </tr>
     <tr>
       <th>plot_diag</th>
-      <td><p>Show diagnostic plots (default = FALSE).</p></td>
+      <td><p>Show diagnostic plots for fixed and random effects (default
+= FALSE).</p></td>
     </tr>
     <tr>
       <th>outliers.rm</th>
@@ -293,7 +294,8 @@ fitting process (default = NULL).</p></td>
     </tr>
     <tr>
       <th>trial</th>
-      <td><p>Name of the trial in the results (default = NULL).</p></td>
+      <td><p>Column with the name of the trial in the results (default =
+NULL).</p></td>
     </tr>
     </table>
 
@@ -303,20 +305,23 @@ fitting process (default = NULL).</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function allows to made the calculation for individual or
-multi-environmental trials (MET) using th fixed and random model.</p>
-<p>1. The variance components.</p>
-<p>2. Heritability under three approaches: Standard, Cullis and Piepho.</p>
-<p>3. Best Linear Unbiased Predictors (BLUPs).</p>
-<p>4. Best Linear Unbiased Estimators (BLUEs).</p>
-<p>5. Outliers remove.</p>
+multi-environmental trials (MET) using fixed and random model.</p>
+<p>1. The variance components based in the random model and the population
+summary information based in the fixed model (BLUEs).</p>
+<p>2. Heritability under three approaches: Standard (ANOVA), Cullis (BLUPs) and
+Piepho (BLUEs).</p>
+<p>3. Best Linear Unbiased Estimators (BLUEs) ~ fixed effect.</p>
+<p>4. Best Linear Unbiased Predictors (BLUPs) ~ random effect.</p>
+<p>5. Table with the outliers removed for each model.</p>
 <p>For individual experiments is necessary provide the <code>trait</code>,
 <code>gen.name</code>, <code>rep.n</code>.</p>
 <p>For MET experiments you should <code>loc.n</code> and <code>loc.name</code> and/or
 <code>year.n</code> and <code>year.name</code> according your experiment.</p>
-<p>The blues calculation is based in the pairwise comparison and its could takes
-time according the number of the genotypes.</p>
-<p>You can specify as <code>blues = FALSE</code> for calculate the variance components
-and blups faster.</p>
+<p>The BLUEs calculation based in the pairwise comparison could be time
+consuming with the increase of the number of the genotypes. You can specify
+<code>emmeans = FALSE</code> and the calculate of the BLUEs will be faster.</p>
+<p>If <code>emmeans = FALSE</code> you should change 1 by 0 in the fixed model for
+exclude the intersect in the analysis and get all the genotypes BLUEs.</p>
 <p>For more information review the references.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -343,13 +348,13 @@ Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016.</p>
             , trait <span class='op'>=</span> <span class='st'>"tubdw"</span>
             , gen.name <span class='op'>=</span> <span class='st'>"geno"</span>
             , rep.n <span class='op'>=</span> <span class='fl'>5</span>
-            , ran.model <span class='op'>=</span> <span class='st'>"1 + (1|bloque) + (1|geno)"</span>
-            , fix.model <span class='op'>=</span> <span class='st'>"0 + (1|bloque) + geno"</span>
+            , fixed.model <span class='op'>=</span> <span class='st'>"0 + (1|bloque) + geno"</span>
+            , random.model <span class='op'>=</span> <span class='st'>"1 + (1|bloque) + (1|geno)"</span>
             , emmeans <span class='op'>=</span> <span class='cn'>TRUE</span>
             , plot_diag <span class='op'>=</span> <span class='cn'>TRUE</span>
             , outliers.rm <span class='op'>=</span> <span class='cn'>TRUE</span>
             <span class='op'>)</span>
-</div><div class='img'><img src='H2cal-1.png' alt='' width='700' height='433' /></div><div class='input'>            
+</div><div class='img'><img src='H2cal-1.png' alt='' width='700' height='433' /></div><div class='input'>
  <span class='va'>hr</span><span class='op'>$</span><span class='va'>tabsmr</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 16</span>
 #&gt;   variable   rep  geno   env  year  mean   std   min   max   V.g V.gxl V.gxy
