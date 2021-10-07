@@ -118,26 +118,26 @@ hr$model %>% summary()
 hr$tabsmr %>% kable(caption = "Variance component table")
 ```
 
-## Best Linear Unbiased Predictors (BLUPs)
-
-```{r}
-hr$blups %>% kable(caption = "BLUPs")
-```
-
 ## Best Linear Unbiased Estimators (BLUEs)
 
 ```{r}
 hr$blues %>% kable(caption = "BLUEs")
 ```
 
+## Best Linear Unbiased Predictors (BLUPs)
+
+```{r}
+hr$blups %>% kable(caption = "BLUPs")
+```
+
 ## Outliers
 
 ```{r}
-hr$outliers$random %>% kable(caption = "Outliers random model")
+hr$outliers$fixed %>% kable(caption = "Outliers fixed model")
 ```
 
 ```{r}
-hr$outliers$fixed %>% kable(caption = "Outliers fixed model")
+hr$outliers$random %>% kable(caption = "Outliers random model")
 ```
 
 # Comparison: H2cal and asreml
