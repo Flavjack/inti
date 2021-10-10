@@ -91,7 +91,7 @@ if(!c(y %in% colnames(data))) stop("colum no exist")
   color <- if(is.null(color) || is.na(color) || color == "" || color == "yes") {
     TRUE} else if (color == "no") {FALSE} else {color}
   
-  ylimits <- if(is.null(ylimits) || is.na(ylimits) || ylimits == "") { 
+  ylimits <- if(any(is.null(ylimits)) || any(is.na(ylimits)) || any(ylimits == "")) { 
     NULL
   } else if(is.character(ylimits)) {
     ylimits %>%
@@ -116,7 +116,7 @@ if(!c(y %in% colnames(data))) stop("colum no exist")
         base::trimws()
     } else {gtext}
   
-  xrotation <- if(is.null(xrotation) || is.na(xrotation) || xrotation == "") {
+  xrotation <- if(any(is.null(xrotation)) || any(is.na(xrotation)) || any(xrotation == "")) {
     c(0, 0.5, 0.5)
   } else if (is.character(xrotation)){ 
     xrotation %>%

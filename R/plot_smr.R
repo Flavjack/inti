@@ -138,7 +138,7 @@ error <- if(is.null(error) || is.na(error) || error == "" || error == "none") {N
 color <- if(is.null(color) || is.na(color) || color == "" || color == "yes") {
   TRUE} else {color}
 
-ylimits <- if(is.null(ylimits) || is.na(ylimits) || ylimits == "") { 
+ylimits <- if(any(is.null(ylimits)) || any(is.na(ylimits)) || any(ylimits == "")) { 
   NULL
   } else if(is.character(ylimits)) {
     ylimits %>%
@@ -163,7 +163,7 @@ gtext <- if(is.null(gtext) || is.na(gtext) || gtext == "") {
       base::trimws()
   } else {gtext}
 
-xrotation <- if(is.null(xrotation) || is.na(xrotation) || xrotation == "") {
+xrotation <- if(any(is.null(xrotation)) || any(is.na(xrotation)) || any(xrotation == "")) {
   c(0, 0.5, 0.5)
   } else if (is.character(xrotation)){ 
     xrotation %>%
