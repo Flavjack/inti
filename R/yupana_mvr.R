@@ -103,7 +103,7 @@ variables = NULL
 # -------------------------------------------------------------------------
   
   pca_info <- fb %>%
-    select(where(~ length(unique(.)) > 1)) %>%  # drop variables with variation
+    select(where(~ length(unique(.)) > 1)) %>%  # drop variables without variation
     data.frame() %>% 
     PCA(X = .
         , scale.unit = T

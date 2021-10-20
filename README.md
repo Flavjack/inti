@@ -38,7 +38,7 @@ if (!require("remotes"))
 remotes::install_github("flavjack/inti")
 ```
 
-If you need install an specific version of a package:
+If you need install an specific version:
 
 ``` r
 if (!require("remotes"))

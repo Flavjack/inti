@@ -1,6 +1,6 @@
 # Version 0.5.0
 
-- Changes incompatible with the old versions.
+> Changes incompatible with the old versions.
 
 - *Package* 
   - `yupana_export_smr` ==> `yupana_export()`
@@ -74,7 +74,7 @@
 
 # Version 0.4.0
 
-Changes incompatible with the old versions.
+> Changes incompatible with the old versions.
 
 ## Major changes
 
@@ -137,11 +137,13 @@ Changes incompatible with the old versions.
 
 # Version 0.2.0
 
-Changes incompatible with the old versions.
-Arguments changed in the syntax for `fbsm` and `graphics`.
+> Changes incompatible with the old versions.
 
 ## Major changes
 
+- *Package* 
+  - Arguments changed in the syntax for `fbsm` and `graphics`.
+  
 - *Yupana*
   - Delete error messages in console when run the app
   - Change dependency: `ggpubr` --> `cowplot`
