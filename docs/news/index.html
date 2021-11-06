@@ -95,7 +95,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">inti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -237,6 +237,16 @@
 <li>Include statistics and anova table in export results</li>
 <li>Clean headers in export data, exclude “{}”</li>
 <li>Update load/save interface</li>
+</ul>
+</li>
+<li>
+<em>Tarpuy</em>
+<ul>
+<li>Variable list only include arguments with {}
+<ul>
+<li>You can exclude: {evaluation} or {sampling}</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -412,7 +422,7 @@
 </li>
 <li>Export model information</li>
 <li>Overwrite graph info</li>
-<li>Design with 3 factor use <code>facet_grid()</code>
+<li>Design with 3 factor use <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid()</a></code>
 </li>
 <li>Allow import/export information for plots</li>
 <li>Reduce font size in the significance</li>
@@ -543,12 +553,12 @@
 <li>´mean_comparison´ update
 <ul>
 <li>No remove the treatments column</li>
-<li>Allows plot 3 factors comparison <code>facet_grid()</code>
+<li>Allows plot 3 factors comparison <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid()</a></code>
 </li>
 <li>New arguments for plot: xlimits, xrotation, dimension, opt</li>
 <li>Delete redundant arguments; limits, brakes</li>
 <li>Suggest use “*” instead of “:”</li>
-<li>Include additional layers to the plot. e.g. <code>coord_flip()</code>
+<li>Include additional layers to the plot. e.g. <code><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip()</a></code>
 </li>
 <li>Save plot dimensions in the exported sheet</li>
 </ul>
@@ -572,7 +582,7 @@
 <li>
 <em>Tarpuy</em>
 <ul>
-<li>fix auto-install packages in <code><a href="../reference/tarpuy.html">inti::tarpuy(T)</a></code>
+<li>fix auto-install packages in <code>inti::tarpuy(T)</code>
 </li>
 </ul>
 </li>

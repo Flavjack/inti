@@ -13,6 +13,10 @@
   - Include statistics and anova table in export results
   - Clean headers in export data, exclude "{}"
   - Update load/save interface
+  
+- *Tarpuy*
+  - Variable list only include arguments with {}
+    - You can exclude: {evaluation} or {sampling}
 
 # Version 0.4.4
 

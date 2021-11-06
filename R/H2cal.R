@@ -6,8 +6,8 @@
 #' @param trait Name of the trait.
 #' @param gen.name Name of the genotypes.
 #' @param rep.n Number of replications in the experiment.
-#' @param env.name Name of the location (default = NULL). See details.
-#' @param env.n Number of locations (default = 1). See details.
+#' @param env.name Name of the environments (default = NULL). See details.
+#' @param env.n Number of environments (default = 1). See details.
 #' @param year.name Name of the years (default = NULL). See details.
 #' @param year.n Number of years (default = 1). See details.
 #' @param fixed.model The fixed effects in the model (BLUEs). See examples.
@@ -91,7 +91,6 @@
 #' Zystro, J., Colley, M., & Dawson, J. (2018). Alternative Experimental Designs
 #' for Plant Breeding. In Plant Breeding Reviews (pp. 87–117). John Wiley &
 #' Sons, Ltd. https://doi.org/10.1002/9781119521358.ch3
-#'
 #'
 #' @importFrom dplyr filter pull rename mutate all_of
 #' @importFrom purrr pluck as_vector

@@ -46,7 +46,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">inti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -189,7 +189,7 @@
 <div id="how-calculate-the-heritability" class="section level1">
 <h1 class="hasAnchor">
 <a href="#how-calculate-the-heritability" class="anchor"></a>How calculate the Heritability?</h1>
-<p>According <span class="citation"><a href="#ref-schmidt2019Heritability" role="doc-biblioref">Schmidt et al.</a> (<a href="#ref-schmidt2019Heritability" role="doc-biblioref">2019a</a>)</span>, the variance components could be calculated in two ways:</p>
+<p>According <span class="citation">Schmidt et al. (<a href="#ref-schmidt2019Heritability" role="doc-biblioref">2019a</a>)</span>, the variance components could be calculated in two ways:</p>
 <div id="two-stages-approach" class="section level2">
 <h2 class="hasAnchor">
 <a href="#two-stages-approach" class="anchor"></a>1) Two stages approach</h2>
@@ -243,7 +243,7 @@
 <h1 class="hasAnchor">
 <a href="#heritability-function-in-the-package" class="anchor"></a>Heritability function in the package</h1>
 <p>For calculate the standard heritability in MET experiments the number of location and replication should be include manually in the function <code><a href="../reference/H2cal.html">H2cal()</a></code>. In the case of difference number of replication in each experiments, take the maximum value (often done in practice) <span class="citation">(<a href="#ref-schmidt2019Estimating" role="doc-biblioref">Schmidt et al., 2019b</a>)</span>.</p>
-<p>For remove the outliers the function implemented is the Method 4 used for <span class="citation"><a href="#ref-bernal-vasquez2016Outliera" role="doc-biblioref">Bernal-Vasquez et al.</a> (<a href="#ref-bernal-vasquez2016Outliera" role="doc-biblioref">2016</a>)</span>: Bonferroni-Holm using re-scaled MAD for standardizing residuals (BH-MADR).</p>
+<p>For remove the outliers the function implemented is the Method 4 used for <span class="citation">Bernal-Vasquez et al. (<a href="#ref-bernal-vasquez2016Outliera" role="doc-biblioref">2016</a>)</span>: Bonferroni-Holm using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 <div id="load-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-packages" class="anchor"></a>Load packages</h2>
@@ -271,7 +271,7 @@
 <h2 class="hasAnchor">
 <a href="#model-information" class="anchor"></a>Model information</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/summary.asreml.html">summary</a></span><span class="op">(</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/summary.asreml.html">summary</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">## Linear mixed model fit by REML ['lmerMod']</span>
 <span class="co">## Formula: stemdw ~ 1 + (1 | bloque) + (1 | geno)</span>
 <span class="co">##    Data: dt.rm</span>
@@ -298,7 +298,7 @@
 <h2 class="hasAnchor">
 <a href="#variance-components" class="anchor"></a>Variance components</h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">tabsmr</span> <span class="op">%&gt;%</span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Variance component table"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">tabsmr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Variance component table"</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <caption>Variance component table</caption>
 <colgroup>
@@ -361,7 +361,7 @@
 <h2 class="hasAnchor">
 <a href="#best-linear-unbiased-estimators-blues" class="anchor"></a>Best Linear Unbiased Estimators (BLUEs)</h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">blues</span> <span class="op">%&gt;%</span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"BLUEs"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">blues</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"BLUEs"</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <caption>BLUEs</caption>
 <thead><tr class="header">
@@ -500,7 +500,7 @@
 <h2 class="hasAnchor">
 <a href="#best-linear-unbiased-predictors-blups" class="anchor"></a>Best Linear Unbiased Predictors (BLUPs)</h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">blups</span> <span class="op">%&gt;%</span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"BLUPs"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">blups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"BLUPs"</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <caption>BLUPs</caption>
 <thead><tr class="header">
@@ -575,7 +575,7 @@
 <h2 class="hasAnchor">
 <a href="#outliers" class="anchor"></a>Outliers</h2>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">outliers</span><span class="op">$</span><span class="va">fixed</span> <span class="op">%&gt;%</span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Outliers fixed model"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">outliers</span><span class="op">$</span><span class="va">fixed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Outliers fixed model"</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <caption>Outliers fixed model</caption>
 <thead><tr class="header">
@@ -606,7 +606,7 @@
 </tr></tbody>
 </table>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">outliers</span><span class="op">$</span><span class="va">random</span> <span class="op">%&gt;%</span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Outliers random model"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">outliers</span><span class="op">$</span><span class="va">random</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Outliers random model"</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <caption>Outliers random model</caption>
 <thead><tr class="header">
@@ -679,7 +679,7 @@ Schmidt, P., J. Hartung, J. Bennewitz, and H.-P. Piepho. 2019a. Heritability in 
 Schmidt, P., J. Hartung, J. Rath, and H.-P. Piepho. 2019b. Estimating <span>Broad</span>-<span>Sense Heritability</span> with <span>Unbalanced Data</span> from <span>Agricultural Cultivar Trials</span>. Crop Science 59(2): 525–536. doi: <a href="https://doi.org/10.2135/cropsci2018.06.0376">10.2135/cropsci2018.06.0376</a>.
 </div>
 <div id="ref-zystro2018Alternative" class="csl-entry">
-Zystro, J., M. Colley, and J. Dawson. 2018. Alternative <span>Experimental Designs</span> for <span>Plant Breeding</span>. Plant <span>Breeding Reviews</span>. <span>John Wiley &amp; Sons, Ltd</span>. p. 87–117
+Zystro, J., M. Colley, and J. Dawson. 2018. <a href="https://doi.org/10.1002/9781119521358.ch3">Alternative <span>Experimental Designs</span> for <span>Plant Breeding</span></a>. Plant <span>Breeding Reviews</span>. <span>John Wiley &amp; Sons, Ltd</span>. p. 87–117
 </div>
 </div>
 </div>

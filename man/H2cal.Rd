@@ -32,11 +32,11 @@ H2cal(
 
 \item{rep.n}{Number of replications in the experiment.}
 
-\item{env.n}{Number of locations (default = 1). See details.}
+\item{env.n}{Number of environments (default = 1). See details.}
 
 \item{year.n}{Number of years (default = 1). See details.}
 
-\item{env.name}{Name of the location (default = NULL). See details.}
+\item{env.name}{Name of the environments (default = NULL). See details.}
 
 \item{year.name}{Name of the years (default = NULL). See details.}
 

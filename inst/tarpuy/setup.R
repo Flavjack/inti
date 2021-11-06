@@ -36,6 +36,7 @@ suppressPackageStartupMessages({
     } 
   }
   
+  remove(cran, git, pkg)
+  
 })
 
-remove(cran, git, pkg)

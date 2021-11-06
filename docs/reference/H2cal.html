@@ -96,7 +96,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">inti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -248,7 +248,7 @@
     </tr>
     <tr>
       <th>env.n</th>
-      <td><p>Number of locations (default = 1). See details.</p></td>
+      <td><p>Number of environments (default = 1). See details.</p></td>
     </tr>
     <tr>
       <th>year.n</th>
@@ -256,7 +256,7 @@
     </tr>
     <tr>
       <th>env.name</th>
-      <td><p>Name of the location (default = NULL). See details.</p></td>
+      <td><p>Name of the environments (default = NULL). See details.</p></td>
     </tr>
     <tr>
       <th>year.name</th>
@@ -352,64 +352,68 @@ Sons, Ltd. https://doi.org/10.1002/9781119521358.ch3</p>
 <p>Flavio Lozano Isla</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://inkaverse.com/'>inti</a></span><span class='op'>)</span>
-
-<span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='va'>potato</span>
-
-<span class='va'>hr</span> <span class='op'>&lt;-</span> <span class='fu'>H2cal</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>dt</span>
-            , trait <span class='op'>=</span> <span class='st'>"tubdw"</span>
-            , gen.name <span class='op'>=</span> <span class='st'>"geno"</span>
-            , rep.n <span class='op'>=</span> <span class='fl'>5</span>
-            , fixed.model <span class='op'>=</span> <span class='st'>"0 + (1|bloque) + geno"</span>
-            , random.model <span class='op'>=</span> <span class='st'>"1 + (1|bloque) + (1|geno)"</span>
-            , emmeans <span class='op'>=</span> <span class='cn'>TRUE</span>
-            , plot_diag <span class='op'>=</span> <span class='cn'>TRUE</span>
-            , outliers.rm <span class='op'>=</span> <span class='cn'>TRUE</span>
-            <span class='op'>)</span>
-</div><div class='img'><img src='H2cal-1.png' alt='' width='700' height='433' /></div><div class='input'>
- <span class='va'>hr</span><span class='op'>$</span><span class='va'>tabsmr</span>
-</div><div class='output co'>#&gt;   trait rep geno env year     mean      std    min    max      V.g      V.e
-#&gt; 1 tubdw   5   15   1    1 31.71713 12.10921 11.628 53.154 129.7367 168.9607
-#&gt;        V.p repeatability      H2.s      H2.p      H2.c
-#&gt; 1 163.5288     0.7933567 0.7933567 0.8847729 0.8753661</div><div class='input'> <span class='va'>hr</span><span class='op'>$</span><span class='va'>blues</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 15 x 6</span>
-#&gt;    geno  tubdw    SE    df lower.CL upper.CL
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> G01    28.5  4.33  85.3    19.9      37.1
-#&gt; <span style='color: #BCBCBC;'> 2</span> G02    19.7  4.33  85.3    11.1      28.3
-#&gt; <span style='color: #BCBCBC;'> 3</span> G03    38.3  4.33  85.3    29.7      46.9
-#&gt; <span style='color: #BCBCBC;'> 4</span> G04    39.2  4.33  85.3    30.6      47.8
-#&gt; <span style='color: #BCBCBC;'> 5</span> G05    39.2  4.33  85.3    30.5      47.8
-#&gt; <span style='color: #BCBCBC;'> 6</span> G06    11.6  4.33  85.3     3.02     20.2
-#&gt; <span style='color: #BCBCBC;'> 7</span> G07    19.4  4.33  85.3    10.7      28.0
-#&gt; <span style='color: #BCBCBC;'> 8</span> G08    20.7  4.33  85.3    12.1      29.4
-#&gt; <span style='color: #BCBCBC;'> 9</span> G09    50.2  4.33  85.3    41.6      58.8
-#&gt; <span style='color: #BCBCBC;'>10</span> G10    28.2  4.33  85.3    19.6      36.8
-#&gt; <span style='color: #BCBCBC;'>11</span> G11    43.3  4.33  85.3    34.7      51.9
-#&gt; <span style='color: #BCBCBC;'>12</span> G12    32.6  4.33  85.3    24.0      41.2
-#&gt; <span style='color: #BCBCBC;'>13</span> G13    20.9  4.33  85.3    12.3      29.5
-#&gt; <span style='color: #BCBCBC;'>14</span> G14    30.7  4.33  85.3    22.1      39.4
-#&gt; <span style='color: #BCBCBC;'>15</span> G15    53.2  4.33  85.3    44.5      61.8</div><div class='input'> <span class='va'>hr</span><span class='op'>$</span><span class='va'>blups</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 15 x 2</span>
-#&gt;    geno  tubdw
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> G01    28.9
-#&gt; <span style='color: #BCBCBC;'> 2</span> G02    21.1
-#&gt; <span style='color: #BCBCBC;'> 3</span> G03    37.6
-#&gt; <span style='color: #BCBCBC;'> 4</span> G04    38.3
-#&gt; <span style='color: #BCBCBC;'> 5</span> G05    38.3
-#&gt; <span style='color: #BCBCBC;'> 6</span> G06    13.9
-#&gt; <span style='color: #BCBCBC;'> 7</span> G07    20.8
-#&gt; <span style='color: #BCBCBC;'> 8</span> G08    22.0
-#&gt; <span style='color: #BCBCBC;'> 9</span> G09    48.1
-#&gt; <span style='color: #BCBCBC;'>10</span> G10    28.6
-#&gt; <span style='color: #BCBCBC;'>11</span> G11    42.0
-#&gt; <span style='color: #BCBCBC;'>12</span> G12    32.5
-#&gt; <span style='color: #BCBCBC;'>13</span> G13    22.2
-#&gt; <span style='color: #BCBCBC;'>14</span> G14    30.9
-#&gt; <span style='color: #BCBCBC;'>15</span> G15    50.7</div><div class='input'> 
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://inkaverse.com/'>inti</a></span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='va'>potato</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>hr</span> <span class='op'>&lt;-</span> <span class='fu'>H2cal</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>dt</span></span>
+<span class='r-in'>            , trait <span class='op'>=</span> <span class='st'>"tubdw"</span></span>
+<span class='r-in'>            , gen.name <span class='op'>=</span> <span class='st'>"geno"</span></span>
+<span class='r-in'>            , rep.n <span class='op'>=</span> <span class='fl'>5</span></span>
+<span class='r-in'>            , fixed.model <span class='op'>=</span> <span class='st'>"0 + (1|bloque) + geno"</span></span>
+<span class='r-in'>            , random.model <span class='op'>=</span> <span class='st'>"1 + (1|bloque) + (1|geno)"</span></span>
+<span class='r-in'>            , emmeans <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span class='r-in'>            , plot_diag <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span class='r-in'>            , outliers.rm <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span class='r-in'>            <span class='op'>)</span></span>
+<span class='r-plt img'><img src='H2cal-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'> <span class='va'>hr</span><span class='op'>$</span><span class='va'>tabsmr</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   trait rep geno env year     mean      std    min    max      V.g      V.e</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 tubdw   5   15   1    1 31.71713 12.10921 11.628 53.154 129.7367 168.9607</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        V.p repeatability      H2.s      H2.p      H2.c</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 163.5288     0.7933567 0.7933567 0.8847729 0.8753661</span>
+<span class='r-in'> <span class='va'>hr</span><span class='op'>$</span><span class='va'>blues</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 15 x 6</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    geno  tubdw    SE    df lower.CL upper.CL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> G01    28.5  4.33  85.3    19.9      37.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> G02    19.7  4.33  85.3    11.1      28.3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> G03    38.3  4.33  85.3    29.7      46.9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> G04    39.2  4.33  85.3    30.6      47.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> G05    39.2  4.33  85.3    30.5      47.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> G06    11.6  4.33  85.3     3.02     20.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> G07    19.4  4.33  85.3    10.7      28.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> G08    20.7  4.33  85.3    12.1      29.4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> G09    50.2  4.33  85.3    41.6      58.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> G10    28.2  4.33  85.3    19.6      36.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span> G11    43.3  4.33  85.3    34.7      51.9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span> G12    32.6  4.33  85.3    24.0      41.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span> G13    20.9  4.33  85.3    12.3      29.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>14</span> G14    30.7  4.33  85.3    22.1      39.4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>15</span> G15    53.2  4.33  85.3    44.5      61.8</span>
+<span class='r-in'> <span class='va'>hr</span><span class='op'>$</span><span class='va'>blups</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 15 x 2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    geno  tubdw</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> G01    28.9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> G02    21.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> G03    37.6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> G04    38.3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> G05    38.3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> G06    13.9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> G07    20.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> G08    22.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> G09    48.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> G10    28.6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span> G11    42.0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span> G12    32.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span> G13    22.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>14</span> G14    30.9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>15</span> G15    50.7</span>
+<span class='r-in'> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

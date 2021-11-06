@@ -730,7 +730,7 @@ navbarPage(title = div(
                              textInput(inputId = "design_qr"
                                        , label = "QR label"
                                        , placeholder = "QR prefix"
-                                       , value = "FB"
+                                       , value = "TARPUY"
                                        ),
                              
                              fluidRow(

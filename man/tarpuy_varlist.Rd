@@ -22,6 +22,29 @@ The function allows to include the arguments in the sheet that have
   the information of the variables. You should include 3 columns in the
   sheet: \code{{abbreviation}}, \code{{evaluation}} and \code{{sampling}}.
   See examples. The information will be extracted automatically and deploy
-  the list of variable for the fieldbook design. If you will be evaluate the
-  experimental unit one time you should set 1.
+  the list of variable for the fieldbook design.
+}
+\examples{
+
+\dontrun{
+
+library(inti)
+
+url <- paste0("https://docs.google.com/spreadsheets/d/"
+              , "1q0EZmZBt52ca-0VbididjJy2jXTwf06laJpzvkQJWvc/edit#gid=964304762")
+# browseURL(url)
+
+info <- gsheet2tbl(url)
+
+fieldbook <- tarpuy_design(data = info)
+
+url_var <- paste0("https://docs.google.com/spreadsheets/d/"
+       , "1q0EZmZBt52ca-0VbididjJy2jXTwf06laJpzvkQJWvc/edit#gid=92661274")
+       
+varlist <- gsheet2tbl(url_var) 
+
+tarpuy_varlist(fieldbook = fb, varlist = var)
+
+}
+
 }

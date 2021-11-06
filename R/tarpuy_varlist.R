@@ -9,8 +9,7 @@
 #'   the information of the variables. You should include 3 columns in the
 #'   sheet: \code{{abbreviation}}, \code{{evaluation}} and \code{{sampling}}.
 #'   See examples. The information will be extracted automatically and deploy
-#'   the list of variable for the fieldbook design. If you will be evaluate the
-#'   experimental unit one time you should set 1.
+#'   the list of variable for the fieldbook design.
 #'
 #' @return data frame
 #'
@@ -18,120 +17,98 @@
 #' @importFrom tidyr pivot_wider unite
 #' 
 #' @export
+#' @examples
 #'
+#' \dontrun{
+#' 
+#' library(inti)
+#'
+#' url <- paste0("https://docs.google.com/spreadsheets/d/"
+#'               , "1q0EZmZBt52ca-0VbididjJy2jXTwf06laJpzvkQJWvc/edit#gid=964304762")
+#' # browseURL(url)
+#' 
+#' info <- gsheet2tbl(url)
+#'
+#' fieldbook <- tarpuy_design(data = info)
+#' 
+#' url_var <- paste0("https://docs.google.com/spreadsheets/d/"
+#'        , "1q0EZmZBt52ca-0VbididjJy2jXTwf06laJpzvkQJWvc/edit#gid=92661274")
+#'        
+#' varlist <- gsheet2tbl(url_var) 
+#' 
+#' tarpuy_varlist(fieldbook = fb, varlist = var)
+#' 
+#' }
+#' 
 
 tarpuy_varlist <- function(fieldbook
                               , varlist = NULL
                               ) {
+  
+  where <- NULL
 
-  var_list <- Row.names <- plots <- blank <- NULL
-
-  if ( is.null(varlist) ) { return(fieldbook) }
-
-  data <- varlist %>%
-    dplyr::select( starts_with("{") |  ends_with("}") ) %>%
-    select_if(~!all(is.na(.))) %>%
-    dplyr::rename_with(~ gsub("\\{|\\}", "", .)) %>%
-    drop_na()
-
-# match names -------------------------------------------------------------
+# test --------------------------------------------------------------------
+  
+  if (FALSE) {
+    
+    ts <- fieldbook$design
+    
+  }
+  
 # -------------------------------------------------------------------------
-
-  abrv_opt <- c("abbreviation", "sigla", "siglas", "abbrev", "variable", "var")
-  eval_opt <- c("evaluation", "eval", "dap", "dat", "when", "cuando", "evaluar", "evaluate")
+  
+  if ( is.null(varlist) ) { return(fieldbook) }
+  
+# -------------------------------------------------------------------------
+ 
+  vartable <- varlist %>%
+    dplyr::select( starts_with("{") |  ends_with("}") ) %>%
+    select(where(~!all(is.na(.)))) %>% 
+    dplyr::rename_with(~ gsub("\\{|\\}", "", .))
+  
+# -------------------------------------------------------------------------
+  
+  if( nrow(vartable)  == 0 | ncol(vartable)  == 0 ) {
+    
+    return(fieldbook)
+    
+  }
+  
+# -------------------------------------------------------------------------
   smp_opt <- c("sampling", "sample", "samples"
                , "subplot", "subplots"
                , "muestra", "muestras")
-
-  abrv_math <- names(data) %in% abrv_opt
-  abrv_name <- names(data)[abrv_math == TRUE]
-
-  eval_math <- names(data) %in% eval_opt
-  eval_name <- names(data)[eval_math == TRUE]
-
-  smp_math <- names(data) %in% smp_opt
-  smp_name <- names(data)[smp_math == TRUE]
-
-  if( length(abrv_name)  == 0 ) {
-
-    return(fieldbook)
-
-  }
-
-# insert variables --------------------------------------------------------
+  
+  smp_math <- names(vartable) %in% smp_opt
+  sampling <- names(vartable)[smp_math == TRUE]
+  
+  traits <- vartable %>% 
+    { if(length(sampling) > 0)
+    dplyr::mutate(.data = ., {{sampling}} := case_when(
+      is.na( .data[[sampling]] ) ~ 1
+      , TRUE ~ .data[[sampling]]
+    )) %>% 
+        tidyr::uncount(.data[[sampling]], .id = {{sampling}})
+      else . 
+      } %>% 
+    dplyr::mutate(across(everything(), as.character)) %>% 
+    dplyr::rowwise() %>%
+    dplyr::mutate("trait" := paste(across(where(is.character))
+                                       , collapse = "_")) %>% 
+    dplyr::select(.data$trait) %>% 
+    dplyr::mutate("blank" := NA) %>% 
+    tidyr::pivot_wider(names_from = .data$trait, values_from = .data$blank)
+  
+  fieldbook[["design"]] <- merge(fieldbook[["design"]]
+                                 , traits
+                                 , by = c("row.names")
+                                 , all.x = T
+                                 ) %>%
+    dplyr::select(!.data$Row.names) %>%
+    dplyr::arrange(.data$plots)
+    
 # -------------------------------------------------------------------------
-
-  if( length(abrv_name)  > 0 & length(eval_name)  > 0 & length(smp_name)  > 0 ) {
-
-    smp_n <- data[[smp_name]]
-
-    var_cols <- data %>%
-      tidyr::uncount(smp_n, .id = {{smp_name}}) %>%
-      dplyr::mutate(blank := NA) %>%
-      unite("var_list", {{abrv_name}}, {{eval_name}}, {{smp_name}} , sep = "_") %>%
-      distinct(var_list, .keep_all = TRUE) %>%
-      pivot_wider(names_from = var_list, values_from = blank)
-
-    fieldbook[["design"]] <- merge(fieldbook[["design"]], var_cols
-                                   , by = c("row.names"), all.x = T) %>%
-      dplyr::select(!Row.names) %>%
-      dplyr::arrange(plots)
-
-  }
-
-  if( length(abrv_name)  > 0 & length(eval_name) == 0 & length(smp_name)  > 0 ) {
-
-    smp_n <- data[[smp_name]]
-
-    var_cols <- data %>%
-      tidyr::uncount(smp_n, .id = {{smp_name}}) %>%
-      dplyr::mutate(blank := NA) %>%
-      unite("var_list", {{abrv_name}}, {{smp_name}} , sep = "_") %>%
-      distinct(var_list, .keep_all = TRUE) %>%
-      pivot_wider(names_from = var_list, values_from = blank)
-
-    fieldbook[["design"]] <- merge(fieldbook[["design"]], var_cols
-                                   , by = c("row.names"), all.x = T) %>%
-      dplyr::select(!Row.names) %>%
-      dplyr::arrange(plots)
-
-  }
-
-  if( length(abrv_name)  > 0 & length(eval_name) > 0 & length(smp_name)  == 0 ) {
-
-    var_cols <- data %>%
-      mutate(smp_name = 1) %>%
-      unite( {{abrv_name}}, .data[[abrv_name]], .data[[eval_name]], smp_name , sep = "_") %>%
-      dplyr::mutate(blank := NA) %>%
-      distinct(.data[[abrv_name]], .keep_all = TRUE) %>%
-      pivot_wider(names_from = .data[[abrv_name]], values_from = blank)
-
-    fieldbook[["design"]] <- merge(fieldbook[["design"]], var_cols
-                                   , by = c("row.names"), all.x = T) %>%
-      dplyr::select(!Row.names) %>%
-      dplyr::arrange(plots)
-
-  }
-
-  if( length(abrv_name)  > 0 & length(eval_name) == 0 & length(smp_name)  == 0 ) {
-
-    var_cols <- data %>%
-      mutate(smp_name = 1) %>%
-      unite( {{abrv_name}}, .data[[abrv_name]], smp_name , sep = "_" ) %>%
-      dplyr::mutate(blank := NA) %>%
-      distinct(.data[[abrv_name]], .keep_all = TRUE) %>%
-      pivot_wider(names_from = .data[[abrv_name]], values_from = blank)
-
-    fieldbook[["design"]] <- merge(fieldbook[["design"]], var_cols
-                                   , by = c("row.names"), all.x = T) %>%
-      dplyr::select(!Row.names) %>%
-      dplyr::arrange(plots)
-
-  }
-
-# result ------------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-return(fieldbook)
-
+  
+  return(fieldbook)
+  
 }
