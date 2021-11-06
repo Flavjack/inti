@@ -142,7 +142,7 @@ Tanaka, E., & Hui, F. K. C. (2019). Symbolic Formulae for Linear Mixed
 Models. In H. Nguyen (Ed.), Statistics and Data Science (pp. 3–21). Springer.
 
 Zystro, J., Colley, M., & Dawson, J. (2018). Alternative Experimental Designs
-for Plant Breeding. In Plant Breeding Reviews (pp. 87–117). John Wiley &
+for Plant Breeding. In Plant Breeding Reviews (pp. 87–117). John Wiley and
 Sons, Ltd.
 }
 \author{
