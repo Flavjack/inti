@@ -33,9 +33,9 @@
 #' 2. Heritability under three approaches: Standard (ANOVA), Cullis (BLUPs) and
 #' Piepho (BLUEs).
 #'
-#' 3. Best Linear Unbiased Estimators (BLUEs) \~ fixed effect.
+#' 3. Best Linear Unbiased Estimators (BLUEs), fixed effect.
 #'
-#' 4. Best Linear Unbiased Predictors (BLUPs) \~ random effect.
+#' 4. Best Linear Unbiased Predictors (BLUPs), random effect.
 #'
 #' 5. Table with the outliers removed for each model.
 #'
