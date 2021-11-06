@@ -71,12 +71,10 @@
 #' Buntaran, H., Piepho, H., Schmidt, P., Rydén, J., Halling, M., & Forkman, J.
 #' (2020). Cross‐validation of stagewise mixed‐model analysis of Swedish variety
 #' trials with winter wheat and spring barley. Crop Science, 60(5), 2221–2240.
-#' https://doi.org/10.1002/csc2.20177
 #'
 #' Pucher, A., Høgh-Jensen, H., Gondah, J., Hash, C. T., & Haussmann, B. I. G.
 #' (2014). Micronutrient Density and Stability in West African Pearl
 #' Millet—Potential for Biofortification. Crop Science, 54(4), 1709–1720.
-#' https://doi.org/10.2135/cropsci2013.11.0744
 #' 
 #' Schmidt, P., J. Hartung, J. Bennewitz, and H.P. Piepho. 2019. Heritability in
 #' Plant Breeding on a Genotype Difference Basis. Genetics 212(4).
@@ -90,7 +88,7 @@
 #'
 #' Zystro, J., Colley, M., & Dawson, J. (2018). Alternative Experimental Designs
 #' for Plant Breeding. In Plant Breeding Reviews (pp. 87–117). John Wiley &
-#' Sons, Ltd. https://doi.org/10.1002/9781119521358.ch3
+#' Sons, Ltd.
 #'
 #' @importFrom dplyr filter pull rename mutate all_of
 #' @importFrom purrr pluck as_vector
