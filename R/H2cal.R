@@ -33,9 +33,9 @@
 #' 2. Heritability under three approaches: Standard (ANOVA), Cullis (BLUPs) and
 #' Piepho (BLUEs).
 #'
-#' 3. Best Linear Unbiased Estimators (BLUEs) ~ fixed effect.
+#' 3. Best Linear Unbiased Estimators (BLUEs) \~ fixed effect.
 #'
-#' 4. Best Linear Unbiased Predictors (BLUPs) ~ random effect.
+#' 4. Best Linear Unbiased Predictors (BLUPs) \~ random effect.
 #'
 #' 5. Table with the outliers removed for each model.
 #'
@@ -68,13 +68,9 @@
 #' Generalized Lattices: A Case Study on the Transition from ANOVA to REML.”
 #' Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016.
 #' 
-#' Buntaran, H., Piepho, H., Schmidt, P., Rydén, J., Halling, M., & Forkman, J.
-#' (2020). Cross‐validation of stagewise mixed‐model analysis of Swedish variety
-#' trials with winter wheat and spring barley. Crop Science, 60(5), 2221–2240.
-#'
-#' Pucher, A., Høgh-Jensen, H., Gondah, J., Hash, C. T., & Haussmann, B. I. G.
-#' (2014). Micronutrient Density and Stability in West African Pearl
-#' Millet—Potential for Biofortification. Crop Science, 54(4), 1709–1720.
+#' Buntaran, H., Piepho, H., Schmidt, P., Ryden, J., Halling, M., and Forkman, J.
+#' (2020). Cross validation of stagewise mixed model analysis of Swedish variety
+#' trials with winter wheat and spring barley. Crop Science, 60(5).
 #' 
 #' Schmidt, P., J. Hartung, J. Bennewitz, and H.P. Piepho. 2019. Heritability in
 #' Plant Breeding on a Genotype Difference Basis. Genetics 212(4).
@@ -83,12 +79,11 @@
 #' Sense Heritability with Unbalanced Data from Agricultural Cultivar Trials.
 #' Crop Science 59(2).
 #'
-#' Tanaka, E., & Hui, F. K. C. (2019). Symbolic Formulae for Linear Mixed
-#' Models. In H. Nguyen (Ed.), Statistics and Data Science (pp. 3–21). Springer.
+#' Tanaka, E., and Hui, F. K. C. (2019). Symbolic Formulae for Linear Mixed
+#' Models. In H. Nguyen (Ed.), Statistics and Data Science. Springer.
 #'
-#' Zystro, J., Colley, M., & Dawson, J. (2018). Alternative Experimental Designs
-#' for Plant Breeding. In Plant Breeding Reviews (pp. 87–117). John Wiley and
-#' Sons, Ltd.
+#' Zystro, J., Colley, M., and Dawson, J. (2018). Alternative Experimental Designs
+#' for Plant Breeding. In Plant Breeding Reviews. John Wiley and Sons, Ltd.
 #'
 #' @importFrom dplyr filter pull rename mutate all_of
 #' @importFrom purrr pluck as_vector
