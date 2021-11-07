@@ -1,6 +1,6 @@
 # Version 0.5.0
 
-> Changes incompatible with the old versions.
+> Changes are incompatible with the old versions.
 
 - *Package* 
   - `yupana_export_smr` ==> `yupana_export()`
