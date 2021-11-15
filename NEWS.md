@@ -1,3 +1,9 @@
+# Version 0.5.1
+
+- *Package* 
+  - `H2cal()`: BLUEs from H2cal may be wrong if other fixed effects in the model.
+    - Thanks Jim Holland (@ncsumaize) for the suggestion to improve the function.
+
 # Version 0.5.0
 
 > Changes are incompatible with the old versions.

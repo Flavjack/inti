@@ -66,6 +66,9 @@ logo <- list.files("pkgdown/favicon/img/"
 # inti --------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
+library(huito)
+library(tidyverse)
+
 label <- label_layout(size = c(5.08, 5.08)
                       , border_color = NA
                       , border_width = 0
@@ -110,139 +113,144 @@ logo <- list.files("pkgdown/favicon/img/"
 # yupana ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-logo <- list.files("pkgdown/favicon/img"
-                   , full.names = T
-                   , pattern = "logo_yupana"
-                   ) %>% 
-  image_read()
+library(huito)
+library(tidyverse)
 
-sticker(subplot = logo
-        , white_around_sticker = TRUE
-        , s_x = 1.0
-        , s_y = 0.90
-        , s_width = 1.7
-        , s_height = 1.7
-        , package = ""
-        , p_color = "red"
-        , p_size = 15
-        , h_color = "#6b594b"
-        , h_fill = "#ffe701"
-        , h_size = 1
-        , url = "inkaverse.com"
-        , u_size = 8
-        , u_angle = 90
-        , u_x = 1.8
-        , u_y = 0.7
-        , filename = "pkgdown/favicon/img/yupana.png"
-        )
+# huito_fonts()
 
-logo <- list.files("pkgdown/favicon/img"
+label <- label_layout(size = c(5.08, 5.08)
+                      , border_color = NA
+                      , border_width = 0
+                      , background = "#ffe701"
+) %>% 
+  include_image(value = "pkgdown/favicon/img/logo_yupana.jpeg" 
+                , size = c(4.4, 4.4)
+                , position = c(2.54, 2)
+  ) %>%
+  include_shape(size = 4.1
+                , border_width = 3
+                , border_color = "#505456"
+                , margin = -0.8
+                , position = c(2.54, 2.54)
+                , panel_color = "pink"
+                , panel_size = 5.08
+  ) %>%
+  include_text(value = "inkaverse.com"
+               , size = 6
+               , position = c(3.6, 0.75)
+               , angle = 30
+               , color = "white") %>%
+  label_print(filename = "pkgdown/favicon/img/yupana"
+              , margin = 0
+              , paper = c(5.5, 5.5)
+              , viewer = T
+              , smpres = 200
+              , mode = "c"
+              )
+
+logo <- list.files("pkgdown/favicon/img/"
                    , full.names = T
-                   , pattern = "yupana.png") %>% 
-  image_read()  %>% 
-  image_transparent('white') %>% 
+                   , pattern = "yupana.pdf") %>%
+  image_read_pdf()  %>% 
+  image_crop(geometry = "600x600+40") %>% 
+  image_crop(geometry = "560x600-40") %>% 
+  image_transparent('pink') %>% 
   image_write("pkgdown/favicon/img/yupana.png")
+
 
 # -------------------------------------------------------------------------
 # tarpuy ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-logo <- list.files("pkgdown/favicon/img"
-                   , full.names = T
-                   , pattern = "logo_tarpuy"
-                   ) %>% 
-  image_read()
+library(huito)
+library(tidyverse)
 
-sticker(subplot = logo
-        , white_around_sticker = TRUE
-        , s_x = 1.0
-        , s_y = 0.87
-        , s_width = 1.7
-        , s_height = 1.7
-        , package = ""
-        , p_color = "red"
-        , p_size = 15
-        , h_color = "#6b594b"
-        , h_fill = "#ffe701"
-        , h_size = 1
-        , url = "inkaverse.com"
-        , u_size = 8
-        , u_angle = 90
-        , u_x = 1.8
-        , u_y = 0.7
-        , filename = "pkgdown/favicon/img/tarpuy.png"
-        )
+# huito_fonts()
 
-logo <- list.files("pkgdown/favicon/img"
+label <- label_layout(size = c(5.08, 5.08)
+                      , border_color = NA
+                      , border_width = 0
+                      , background = "#ffe701"
+) %>% 
+  include_image(value = "pkgdown/favicon/img/logo_tarpuy.jpg" 
+                , size = c(3.95, 3.95)
+                , position = c(2.57, 2.21)
+  ) %>%
+  include_shape(size = 4.1
+                , border_width = 3
+                , border_color = "#505456"
+                , margin = -0.8
+                , position = c(2.54, 2.54)
+                , panel_color = "pink"
+                , panel_size = 5.08
+  ) %>%
+  include_text(value = "inkaverse.com"
+               , size = 6
+               , position = c(3.6, 0.75)
+               , angle = 30
+               , color = "white") %>%
+  label_print(filename = "pkgdown/favicon/img/tarpuy"
+              , margin = 0
+              , paper = c(5.5, 5.5)
+              , viewer = T
+              , smpres = 200
+              , mode = "s"
+              )
+
+logo <- list.files("pkgdown/favicon/img/"
                    , full.names = T
-                   , pattern = "tarpuy.png") %>% 
-  image_read()  %>% 
-  image_transparent('white') %>% 
+                   , pattern = "tarpuy.pdf") %>%
+  image_read_pdf()  %>% 
+  image_crop(geometry = "600x600+40") %>% 
+  image_crop(geometry = "560x600-40") %>% 
+  image_transparent('pink') %>% 
   image_write("pkgdown/favicon/img/tarpuy.png")
 
 # -------------------------------------------------------------------------
 # quipolab ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-logo <- list.files("pkgdown/favicon/img"
+library(huito)
+library(tidyverse)
+
+# huito_fonts()
+
+label <- label_layout(size = c(5.08, 5.08)
+                      , border_color = NA
+                      , border_width = 0
+                      , background = "#ffe701"
+) %>% 
+  include_image(value = "pkgdown/favicon/img/logo_quipolab_w.png" 
+                , size = c(5.5, 5.5)
+                , position = c(2.77, 2.5)
+  ) %>%
+  include_shape(size = 4.1
+                , border_width = 3
+                , border_color = "#505456"
+                , margin = -0.8
+                , position = c(2.54, 2.54)
+                , panel_color = "pink"
+                , panel_size = 5.08
+  ) %>%
+  include_text(value = "inkaverse.com"
+               , size = 6
+               , position = c(3.6, 0.75)
+               , angle = 30
+               , color = "white") %>%
+  label_print(filename = "pkgdown/favicon/img/quipolab_w"
+              , margin = 0
+              , paper = c(5.5, 5.5)
+              , viewer = T
+              , smpres = 200
+              , mode = "c"
+  )
+
+logo <- list.files("pkgdown/favicon/img/"
                    , full.names = T
-                   , pattern = "logo_quipolab.png"
-                   ) %>% 
-  image_read()
-
-sticker(subplot = logo
-        , white_around_sticker = TRUE
-        , s_x = 1.1
-        , s_y = 1.0
-        , s_width = 2.5
-        , s_height = 2.5
-        , package = ""
-        , p_color = "red"
-        , p_size = 15
-        , h_color = "#6b594b"
-        , h_fill = "#ffe701"
-        , h_size = 1
-        # , url = "inkaverse.com"
-        , u_size = 8
-        , u_angle = 90
-        , u_x = 1.8
-        , u_y = 0.7
-        , filename = "pkgdown/favicon/img/quipolab.png"
-        )
-
-logo <- image_read("pkgdown/favicon/img/quipolab.png")  %>% 
-  image_transparent('white') %>% 
+                   , pattern = "quipolab_w.pdf") %>%
+  image_read_pdf()  %>% 
+  image_crop(geometry = "600x600+40") %>% 
+  image_crop(geometry = "560x600-40") %>% 
+  image_transparent('pink') %>% 
   image_write("pkgdown/favicon/img/quipolab.png")
-
-# -------------------------------------------------------------------------
-
-logo <- list.files("pkgdown/favicon/img"
-                   , full.names = T
-                   , pattern = "logo_quipolab_w.png"
-                   ) %>% 
-  image_read()
-
-sticker(subplot = logo
-        , white_around_sticker = TRUE
-        , s_x = 1.1
-        , s_y = 1.0
-        , s_width = 2.5
-        , s_height = 2.5
-        , package = ""
-        , p_color = "red"
-        , p_size = 15
-        , h_color = "#6b594b"
-        , h_fill = "#ffe701"
-        , h_size = 1
-        # , url = "inkaverse.com"
-        , u_size = 8
-        , u_angle = 90
-        , u_x = 1.8
-        , u_y = 0.7
-        , filename = "pkgdown/favicon/img/quipolab_w.png"
-        )
-
-logo <- image_read("pkgdown/favicon/img/quipolab_w.png")  %>% 
-  image_transparent('white') %>% 
-  image_write("pkgdown/favicon/img/quipolab_w.png")
 

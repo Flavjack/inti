@@ -24,6 +24,8 @@ The shiny apps are based in the functions developed in the package <https://inka
 <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/sbpBD5CyUGM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 ```
 
+In the case you need to change the email account o renew the credentials to access to the apps you can use `googlesheets4::gs4_token()`.
+
 ## Tarpuy
 
 Ease way to deploy field-book experimental plans.

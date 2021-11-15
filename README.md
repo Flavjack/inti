@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# inti <img src="man/figures/logo.png" align="right" alt="" width="120" />
+# inti <img src="man/figures/logo.png" align="right" alt="" width="200" />
 
 <!-- badges: start -->
 

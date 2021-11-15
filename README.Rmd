@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# inti <img src="man/figures/logo.png" align="right" alt="" width="120" />
+# inti <img src="man/figures/logo.png" align="right" alt="" width="200" />
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/inti)](https://CRAN.R-project.org/package=inti)

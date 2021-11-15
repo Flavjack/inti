@@ -151,10 +151,10 @@ H2cal <- function(data
     year.n = 1
     env.name = NULL
     year.name = NULL
-    fixed.model = "0 + (1|bloque) + geno"
+    fixed.model = "1 + (1|bloque) + geno"
     random.model = "1 + (1|bloque) + (1|geno)"
     summary = TRUE
-    emmeans = TRUE
+    emmeans = FALSE
     weights = NULL
     plot_diag = TRUE
     outliers.rm = TRUE
@@ -243,7 +243,7 @@ H2cal <- function(data
   gen.n <- g.ran %>%
     summary() %>%
     purrr::pluck("ngrps") %>%
-    .[gen.name]
+    .[{{gen.name}}]
 
 # genotypic variance component
 
@@ -389,32 +389,25 @@ H2cal <- function(data
       
     } else if (emmeans == FALSE) {
       
-      count <- vcov(g.fix) %>%
-        purrr::pluck("Dimnames") %>%
-        purrr::pluck(1) %>%
-        stringr::str_detect(gen.name) %>%
-        summary(.) %>%
-        purrr::pluck("FALSE") %>% 
-        as.numeric()
-      
-      if(length(count) == 0) { count <- 0 }
-  
       BLUEs <- g.fix %>%
         lme4::fixef() %>%
         data.frame() %>% 
         rownames_to_column({{gen.name}}) %>% 
         dplyr::rename(!!trait := .) %>% 
-        mutate(across({{gen.name}}, ~stringr::str_replace(., gen.name, ""))) %>% 
         mutate(across({{trait}}, as.numeric)) %>% 
         mutate(smith.w = diag(solve(vcov(g.fix)))) %>% 
-        dplyr::slice((count+1):NROW(.))  
+        #>
+        dplyr::filter(grepl({{gen.name}}, .data[[gen.name]])) %>% 
+        mutate(across({{gen.name}}, ~stringr::str_replace(., gen.name, "")))
       
       vdBLUE.avg <- g.fix %>%
         vcov(.) %>%
         base::as.matrix(.) %>%
         diag(.) %>%
         enframe() %>%
-        dplyr::slice((count+1):NROW(.)) %>% 
+        #>
+        dplyr::filter(grepl({{gen.name}}, .data$name)) %>% 
+        ##>
         select(!.data$name) %>% 
         deframe() %>% 
         mean()
@@ -422,7 +415,7 @@ H2cal <- function(data
     }
 
 
-# Best Linear Unbiased Predictors (BLUP) - random model -------------------
+# Best Linear Unbiased Predictors (BLUP) :: random model -------------------
 
       BLUPs <- g.ran %>%
         stats::coef() %>%
