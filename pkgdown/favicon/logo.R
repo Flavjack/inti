@@ -43,9 +43,7 @@ label <- label_layout(size = c(5.08, 5.08)
               , mode = "c"
               )
 
-logo <- list.files("pkgdown/favicon/img/"
-                   , full.names = T
-                   , pattern = "inkaverse.pdf") %>%
+logo <- label %>%
   image_read_pdf()  %>% 
   image_crop(geometry = "600x600+40") %>% 
   image_crop(geometry = "560x600-40") %>% 
@@ -73,7 +71,7 @@ label <- label_layout(size = c(5.08, 5.08)
                       , border_color = NA
                       , border_width = 0
                       , background = "#ffe701"
-) %>% 
+                      ) %>% 
   include_image(value = "pkgdown/favicon/img/logo_inti.jpg" 
                 , size = c(3.97, 3.97)
                 , position = c(2.54, 2.35)
@@ -99,9 +97,7 @@ label <- label_layout(size = c(5.08, 5.08)
               , mode = "c"
               )
 
-logo <- list.files("pkgdown/favicon/img/"
-                   , full.names = T
-                   , pattern = "inti.pdf") %>%
+logo <- label %>%
   image_read_pdf()  %>% 
   image_crop(geometry = "600x600+40") %>% 
   image_crop(geometry = "560x600-40") %>% 
@@ -148,9 +144,7 @@ label <- label_layout(size = c(5.08, 5.08)
               , mode = "c"
               )
 
-logo <- list.files("pkgdown/favicon/img/"
-                   , full.names = T
-                   , pattern = "yupana.pdf") %>%
+logo <- label %>%
   image_read_pdf()  %>% 
   image_crop(geometry = "600x600+40") %>% 
   image_crop(geometry = "560x600-40") %>% 
@@ -171,7 +165,7 @@ label <- label_layout(size = c(5.08, 5.08)
                       , border_color = NA
                       , border_width = 0
                       , background = "#ffe701"
-) %>% 
+                      ) %>% 
   include_image(value = "pkgdown/favicon/img/logo_tarpuy.jpg" 
                 , size = c(3.95, 3.95)
                 , position = c(2.57, 2.21)
@@ -194,12 +188,10 @@ label <- label_layout(size = c(5.08, 5.08)
               , paper = c(5.5, 5.5)
               , viewer = T
               , smpres = 200
-              , mode = "s"
+              , mode = "c"
               )
 
-logo <- list.files("pkgdown/favicon/img/"
-                   , full.names = T
-                   , pattern = "tarpuy.pdf") %>%
+logo <- label %>%
   image_read_pdf()  %>% 
   image_crop(geometry = "600x600+40") %>% 
   image_crop(geometry = "560x600-40") %>% 
@@ -242,12 +234,9 @@ label <- label_layout(size = c(5.08, 5.08)
               , paper = c(5.5, 5.5)
               , viewer = T
               , smpres = 200
-              , mode = "c"
-  )
+              , mode = "c")
 
-logo <- list.files("pkgdown/favicon/img/"
-                   , full.names = T
-                   , pattern = "quipolab_w.pdf") %>%
+logo <- label %>%
   image_read_pdf()  %>% 
   image_crop(geometry = "600x600+40") %>% 
   image_crop(geometry = "560x600-40") %>% 

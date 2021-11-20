@@ -63,28 +63,20 @@ tarpuy_design <- function(data,
 
   plots <- Row.names <- factors <- NULL
   
+
+# test --------------------------------------------------------------------
+  
   if(FALSE) {
     
-    data <- fb
+    url <- "https://docs.google.com/spreadsheets/d/1CKaS9qgMoG9kc3ZIX-4DWfbHg4Vgj7KqMyNZCzL7bsY/edit#gid=450554551"
     
-    ncolum <- data %>% 
-      as.data.frame() %>% 
-      select(dplyr::contains("value")) %>% 
-      pluck(1)[1] %>% 
-      as.numeric()
+    data <- gsheet2tbl(url)
     
-    if(length(ncolum) == 0)
-    
-    
-    treat_fcts <- data %>%
-      select(!starts_with("{") | !ends_with("}")) %>% 
-      select(1:{{ncolum}}) %>% 
-      as.list() %>% 
-      lapply(., function(x) unique(x)) %>% 
-      map(discard, is.na) %>% 
-      lengths() %>% 
-      prod()
-    
+    n_factors = 1
+    type = "crd"
+    rep = 2
+    serie = 2
+    seed = 0
     
   }
 
@@ -113,7 +105,7 @@ treatments_levels <- data_fb %>%
   select( {{treatments_names}} ) %>%
   as.list() %>%
   lapply(., function(x) unique(x)) %>% 
-  purrr::map(discard, is.na)
+  purrr::map(purrr::discard, is.na)
 
 # extract arguments -------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -148,7 +140,7 @@ nfc_name <- names(arguments_opt)[nfc_match == TRUE]
 if ( length(nfc_name)  > 0 ) {
 
   n_factors <- arguments_opt %>%
-    pluck( nfc_name ) %>%
+    purrr::pluck( nfc_name ) %>%
     as.numeric()
 
 } else { n_factors }
@@ -161,7 +153,7 @@ type_name <- names(arguments_opt)[type_match == TRUE]
 
 if ( length( type_name )  > 0 ) {
 
-  type <- arguments_opt %>% pluck( type_name )
+  type <- arguments_opt %>% purrr::pluck( type_name )
 
 } else { type }
 
@@ -174,7 +166,7 @@ rep_name <- names(arguments_opt)[rep_match == TRUE]
 if ( length(rep_name)  > 0 ) {
 
   rep <- arguments_opt %>%
-    pluck( rep_name ) %>%
+    purrr::pluck( rep_name ) %>%
     as.numeric()
 
 } else { rep }
@@ -188,7 +180,7 @@ serie_name <- names(arguments_opt)[serie_match == TRUE]
 if ( length(serie_name)  > 0 ) {
 
   serie <- arguments_opt %>%
-    pluck("serie") %>%
+    purrr::pluck("serie") %>%
     as.numeric()
 
 } else { serie }
@@ -202,7 +194,7 @@ seed_name <- names(arguments_opt)[seed_match == TRUE]
 if ( length(seed_name)  > 0  ) {
 
   seed <- arguments_opt %>%
-    pluck("seed") %>%
+    purrr::pluck("seed") %>%
     as.numeric()
 
 } else { seed }
@@ -216,7 +208,7 @@ qr_name <- names(arguments_opt)[qr_match == TRUE]
 if ( length(qr_name)  > 0  ) {
   
   qr <- arguments_opt %>%
-    pluck("qr") %>%
+    purrr::pluck("qr") %>%
     # iconv(., "latin1", "ASCII//TRANSLIT") %>% 
     stringi::stri_trans_general("Latin-ASCII") %>%
     stringr::str_to_upper() %>% 
@@ -321,8 +313,8 @@ treat_fcts <- treatments_levels[treat_name]
 
           twofact_lvl <- treat_fcts[1:2]
           treat_name <- twofact_lvl %>% names()
-          fact1 <- twofact_lvl %>% pluck(1)
-          fact2 <- twofact_lvl %>% pluck(2)
+          fact1 <- twofact_lvl %>% purrr::pluck(1)
+          fact2 <- twofact_lvl %>% purrr::pluck(2)
           
           if (type == "split-crd") {
 
@@ -337,7 +329,7 @@ treat_fcts <- treatments_levels[treat_name]
 
             result <- list(
               design = design %>%
-              pluck("book") %>%
+                purrr::pluck("book") %>%
               rename_with(~ {{ treat_name }}, tail(names(.), 2))
               )
           }
