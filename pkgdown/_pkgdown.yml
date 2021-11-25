@@ -76,6 +76,7 @@ reference:
   - title: Rticles
     desc:  Write technical docs
     contents:
+      - gdoc_rticle
       - web_table
       - footnotes
       - starts_with("include")

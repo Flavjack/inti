@@ -1,8 +1,10 @@
 # Version 0.5.1
 
 - *Package* 
-  - `H2cal()`: BLUEs from H2cal may be wrong if other fixed effects in the model.
+  - `H2cal()`: BLUEs from H2cal may be wrong if other fixed effects in the model (#10).
     - Thanks Jim Holland (@ncsumaize) for the suggestion to improve the function.
+  - New function: `gdoc_rticle()`
+    - Use Articul8 Add-ons from Google docs to build a Rticles
 
 # Version 0.5.0
 
