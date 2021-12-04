@@ -1,17 +1,17 @@
 pandoc: 2.14.2
-pkgdown: 1.6.1
+pkgdown: 2.0.0
 pkgdown_sha: ~
 articles:
   apps: apps.html
-  extra/stagewise: stagewise.html
-  extra/yupana-coding: yupana-coding.html
+  stagewise: extra/stagewise.html
+  yupana-coding: extra/yupana-coding.html
   heritability: heritability.html
   policy: policy.html
   rticles: rticles.html
   tarpuy: tarpuy.html
   yupana: yupana.html
-last_built: 2021-11-25T16:51Z
+last_built: 2021-12-04T14:35Z
 urls:
-  reference: https://inkaverse.com//reference
-  article: https://inkaverse.com//articles
+  reference: https://inkaverse.com/reference
+  article: https://inkaverse.com/articles
 

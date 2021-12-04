@@ -1,26 +1,29 @@
 url: https://inkaverse.com/
 
-home:
-  title: Inkaverse
-  description: Tools and Statistical Procedures in Plant Science
-  author: Flavio Lozano-Isla
-  links:
-  - text: Support the project
-    href: https://github.com/sponsors/flavjack
+development:
+  mode: auto
+  
+authors:
+  Flavio Lozano-Isla:
+    href: https://lozanoisla.com/
+  QuipoLab:
+    href: https://www.quipolab.com/
 
 template:
+  bootstrap: 5
+  bootswatch: sandstone
+  params:
+    ganalytics: G-804H2EJ8RN
   opengraph:
     image:
       src: https://flavjack.github.io/inti/reference/figures/logo.png
-  params:
-    bootswatch: cerulean
-    ganalytics: G-804H2EJ8RN
-    docsearch:
-      api_key: f3d6fbee3fef1a17738422273d5317f5
-      index_name: inti
 
-development:
-  mode: auto
+home:
+  title: Inkaverse
+  description: Tools and Statistical Procedures in Plant Science
+  links:
+  - text: Support the project
+    href: https://github.com/sponsors/flavjack
 
 navbar:
   left:
@@ -76,7 +79,7 @@ reference:
   - title: Rticles
     desc:  Write technical docs
     contents:
-      - gdoc_rticle
+      - gdoc2rmd
       - web_table
       - footnotes
       - starts_with("include")

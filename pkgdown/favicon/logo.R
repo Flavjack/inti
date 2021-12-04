@@ -3,7 +3,6 @@
 # -------------------------------------------------------------------------
 
 library(huito)
-library(tidyverse)
 
 #> open https://github.com/terinjokes/StickersStandard
 
@@ -110,7 +109,6 @@ logo <- label %>%
 # -------------------------------------------------------------------------
 
 library(huito)
-library(tidyverse)
 
 # huito_fonts()
 
@@ -203,36 +201,53 @@ logo <- label %>%
 # -------------------------------------------------------------------------
 
 library(huito)
-library(tidyverse)
 
-# huito_fonts()
+huito_fonts(c("Righteous", "Fredoka One"))
 
 label <- label_layout(size = c(5.08, 5.08)
                       , border_color = NA
                       , border_width = 0
-                      , background = "#ffe701"
-) %>% 
-  include_image(value = "pkgdown/favicon/img/logo_quipolab_w.png" 
-                , size = c(5.5, 5.5)
-                , position = c(2.77, 2.5)
-  ) %>%
+                      , background = NA
+                      ) %>% 
+  include_image(value = "pkgdown/favicon/img/quipo_icon.png" 
+                , size = c(1.5, 1.5)
+                , position = c(1.45, 3)
+                ) %>%
   include_shape(size = 4.1
                 , border_width = 3
-                , border_color = "#505456"
+                , border_color = "black"
                 , margin = -0.8
                 , position = c(2.54, 2.54)
                 , panel_color = "pink"
                 , panel_size = 5.08
-  ) %>%
-  include_text(value = "inkaverse.com"
+                ) %>%
+  include_image(value = "pkgdown/favicon/img/bulb.png" 
+                , size = c(1.1, 1.1)
+                , position = c(2.99, 3.54)
+                , opts = 'image_transparent("white")'
+                ) %>%
+  include_text(value = "uipo"
+               , size = 32
+               , position = c(3.35, 2.75)
+               , font = "Righteous"
+               ) %>% 
+
+  include_text(value = "Lab"
+               , size = 25
+               , position = c(2.89, 1.75)
+               , font = "Fredoka One"
+               , color = "#0a3faf"
+               ) %>% 
+  include_text(value = "quipolab.com"
                , size = 6
                , position = c(3.6, 0.75)
-               , angle = 30
-               , color = "white") %>%
-  label_print(filename = "pkgdown/favicon/img/quipolab_w"
+               , angle = 29
+               , font = "Righteous"
+               , color = "white") %>% 
+  label_print(filename = "pkgdown/favicon/img/quipolab"
               , margin = 0
               , paper = c(5.5, 5.5)
-              , viewer = T
+              , viewer = F
               , smpres = 200
               , mode = "c")
 
