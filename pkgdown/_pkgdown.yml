@@ -16,7 +16,7 @@ template:
     ganalytics: G-804H2EJ8RN
   opengraph:
     image:
-      src: https://flavjack.github.io/inti/reference/figures/logo.png
+      src: man/figures/logo.png
 
 home:
   title: Inkaverse
