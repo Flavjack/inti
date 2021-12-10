@@ -3,7 +3,7 @@
 - *Package* 
   - `H2cal()`: BLUEs from H2cal may be wrong if other fixed effects in the model (#10).
     - Thanks Jim Holland (@ncsumaize) for the suggestion to improve the function.
-  - New function: `gdoc2rmd()`
+  - New functions: `gdoc2rmd()`, `table2rmd()`, `figure2rmd()`
     - Use Articul8 Add-ons from Google docs to build Rticles
   - Update pkgdown
 

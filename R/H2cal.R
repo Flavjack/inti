@@ -198,11 +198,11 @@ H2cal <- function(data
 
 # fit models --------------------------------------------------------------
   
-  # fixed genotype effect
+  #> fixed genotype effect
   f.md <- as.formula(paste(trait, paste(fixed.model, collapse = " + "), sep = " ~ "))
   g.fix <- eval(bquote(lme4::lmer(.(f.md), weights = weights, data = dt.fm)))
   
-  # random genotype effect
+  #> random genotype effect
   r.md <- as.formula(paste(trait, paste(random.model, collapse = " + "), sep = " ~ "))
   g.ran <- eval(bquote(lme4::lmer(.(r.md), weights = weights, data = dt.rm)))
 
@@ -214,7 +214,7 @@ H2cal <- function(data
     
   }
 
-  # Plot models -------------------------------------------------------------
+# Plot models -------------------------------------------------------------
 
   if (plot_diag == TRUE) {
 
@@ -233,11 +233,10 @@ H2cal <- function(data
     par(mfrow=c(1,1))
 
   }
-
-# -------------------------------------------------------------------------
-
-### handle model estimates
-
+  
+  
+# handle model estimates --------------------------------------------------
+  
 # number of genotypes
 
   gen.n <- g.ran %>%
@@ -365,9 +364,9 @@ H2cal <- function(data
     dplyr::filter(grp == "Residual") %>%
     dplyr::pull(vcov)
   
-
-## Best Linear Unbiased Estimators (BLUE) :: fixed model
-    
+  
+# Best Linear Unbiased Estimators (BLUE) :: fixed model -------------------
+  
     if(emmeans == TRUE){
       
       BLUE <- g.fix %>%
@@ -378,7 +377,8 @@ H2cal <- function(data
         tibble::as_tibble() %>%
         dplyr::rename(!!trait := 'emmean') 
       
-      # mean variance of a difference between genotypes (BLUEs)
+      
+# mean variance of a difference between genotypes (BLUEs) -----------------
       
       vdBLUE.avg <- BLUE %>%
         purrr::pluck("contrasts") %>%
@@ -413,8 +413,7 @@ H2cal <- function(data
         mean()
       
     }
-
-
+  
 # Best Linear Unbiased Predictors (BLUP) :: random model -------------------
 
       BLUPs <- g.ran %>%
@@ -428,14 +427,14 @@ H2cal <- function(data
         {if (!is.null(trial)) select(.data = ., trial, everything()) else .}
       
 # mean variance of a difference between genotypes (BLUPs) -----------------
-
+  
       vdBLUP.avg <- g.ran %>%
         lme4::ranef(condVar = TRUE) %>%
         purrr::pluck(gen.name) %>%
         attr("postVar") %>%
         purrr::as_vector(.) %>%
         mean(.)*2
-
+  
 # Summary table of adjusted means (BLUEs) ---------------------------------
 
     smd <- BLUEs %>%

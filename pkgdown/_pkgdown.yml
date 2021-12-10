@@ -8,7 +8,7 @@ authors:
     href: https://lozanoisla.com/
   QuipoLab:
     href: https://www.quipolab.com/
-
+    
 template:
   bootstrap: 5
   bootswatch: sandstone
@@ -17,14 +17,14 @@ template:
   opengraph:
     image:
       src: man/figures/logo.png
-
+      
 home:
   title: Inkaverse
   description: Tools and Statistical Procedures in Plant Science
   links:
   - text: Support the project
     href: https://github.com/sponsors/flavjack
-
+    
 navbar:
   left:
     - text: ""
@@ -64,26 +64,22 @@ navbar:
       href: https://github.com/sponsors/Flavjack
 
 reference:
-
   - title: Yupana
     desc:  Data analysis
     contents:
       - starts_with("yupana")
       - starts_with("plot")
-      
   - title: Tarpuy
     desc:  Experimental designs
     contents:
       - starts_with("tarpuy")
-      
   - title: Rticles
-    desc:  Write technical docs
+    desc:  Write technical documents
     contents:
-      - gdoc2rmd
-      - web_table
-      - footnotes
+      - ends_with("2rmd")
       - starts_with("include")
-      
+      - footnotes
+      - web_table
   - title: Plant breeding
     desc: Algorithms and calculations
     contents:
@@ -91,10 +87,10 @@ reference:
       - metamorphosis
       - outliers_remove
       - mean_comparison
-      
   - title: Extra
     desc: Miscellaneous
     contents:
       - jc_tombola
       - colortext
-
+      
+      

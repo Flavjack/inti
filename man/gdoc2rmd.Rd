@@ -4,14 +4,16 @@
 \alias{gdoc2rmd}
 \title{Google docs to Rmarkdown}
 \usage{
-gdoc2rmd(file, export = "files", md = TRUE)
+gdoc2rmd(file, export = "files", prefix_fig = "Figure", prefix_tab = "Table")
 }
 \arguments{
 \item{file}{Zip file path from Articul8 exported in  md format}
 
-\item{export}{path to export the files. Default work directory}
+\item{export}{path to export the files. Default file directory}
 
-\item{md}{Conserve md file. Default = TRUE}
+\item{prefix_fig}{Prefix for the name of the figure}
+
+\item{prefix_tab}{Prefix for the name of the table}
 }
 \value{
 folder

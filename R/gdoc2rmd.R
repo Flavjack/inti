@@ -3,8 +3,9 @@
 #' Use Articul8 Add-ons from Google docs to build Rticles
 #'
 #' @param file Zip file path from Articul8 exported in  md format
-#' @param export path to export the files. Default work directory
-#' @param md Conserve md file. Default = TRUE
+#' @param export path to export the files. Default file directory
+#' @param prefix_fig Prefix for the name of the figure
+#' @param prefix_tab Prefix for the name of the table
 #'
 #' @return folder
 #' 
@@ -12,56 +13,10 @@
 #' 
 
 gdoc2rmd <- function(file
-                        , export = "files"
-                        , md = TRUE
-){
-  
-  figure_md <- function(text
-                        , path = export
-                        , opts = NA
-  ) {
-    
-    opt <- text %>% 
-      tibble::enframe() %>% 
-      tidyr::separate_rows(.data$value, sep = "^(\\!\\[)") %>% 
-      tidyr::separate_rows(.data$value, sep = "(\\]\\()") %>% 
-      tidyr::separate_rows(.data$value, sep = "(\\)\\{)") %>% 
-      tidyr::separate_rows(.data$value, sep = "(\\{)") %>% 
-      tidyr::separate_rows(.data$value, sep = "(\\})") %>% 
-      dplyr::na_if("") %>% 
-      tidyr::drop_na(.data$value) %>% 
-      tibble::rownames_to_column() %>% 
-      dplyr::mutate(type = dplyr::case_when(
-        grepl("img_", .data$value) ~ "figure"
-        , grepl("#fig", .data$value) ~ "id"
-        , rowname %in% 1 ~ "title"
-        , TRUE ~ "options"
-      )) %>% 
-      dplyr::select(.data$type, .data$value) %>% 
-      tibble::deframe() %>% 
-      as.list()
-    
-    if(!is.na(opts)) {
-      opt$options <- opts
-    }
-    
-    fig <- paste0(
-      "\n\n"
-      , "```{r "
-      , opt$options
-      , ", fig.cap= '"
-      , opt$title %>% trimws()
-      , "'}\n\n"
-      , "knitr::include_graphics('"
-      , paste0(path, "/", opt$figure)
-      , "')\n\n```"
-    ) 
-    
-    fig
-    
-  }
-  
-  # unzip files -------------------------------------------------------------
+                     , export = "files"
+                     , prefix_fig = "Figure"
+                     , prefix_tab = "Table"
+                     ){
   
   zip <- file %>% 
     utils::unzip(overwrite = T, exdir = export)
@@ -71,11 +26,9 @@ gdoc2rmd <- function(file
     readLines() %>% 
     tibble::enframe() %>%
     dplyr::rowwise() %>%
-    dplyr::mutate(text = dplyr::case_when(
-      grepl(pattern = "#fig:", value) ~ value %>% figure_md(path = export)
-      , TRUE ~ value
-    )) %>% 
-    dplyr::select(.data$text) %>% 
+    dplyr::mutate(value = figure2rmd(.data$value, path = export, prefix = prefix_fig)) %>% 
+    dplyr::mutate(value = table2rmd(.data$value, prefix = prefix_tab)) %>% 
+    dplyr::select(.data$value) %>% 
     tibble::deframe() %>% 
     writeLines(con = paste0(export,"/_doc.Rmd"))
   
