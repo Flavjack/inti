@@ -21,3 +21,4 @@ analytics.r
 setup.R
 setup.r
 ^vignettes/extra/
+^CRAN-SUBMISSION$
