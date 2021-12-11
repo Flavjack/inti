@@ -9,11 +9,14 @@ authors:
   QuipoLab:
     href: https://www.quipolab.com/
     html: "<img src='https://inkaverse.com/img/quipolab.png' align='middle' width=70>"
+  Inkaverse:
+    href: https://inkaverse.com/
+    html: "<img src='https://inkaverse.com/img/inkaverse.png' align='middle' width=70>"
   footer:
     roles: [cre]
     text: "Desarrollado por"
   sidebar:
-    roles: [aut, ctb]
+    roles: [aut, ctb, cph]
 
 template:
   bootstrap: 5

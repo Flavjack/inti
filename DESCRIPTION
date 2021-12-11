@@ -12,7 +12,8 @@ Date: 2021-12-11
 Authors@R: c(
     person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com", role = c("aut", "cre")
           , comment = c(ORCID = "0000-0002-0714-669X")),
-    person("QuipoLab", role = c("ctb"))
+    person("QuipoLab", role = c("ctb")),
+    person("Inkaverse", role = c("cph"))
     )
 URL: https://inkaverse.com/, https://github.com/flavjack/inti
 BugReports: https://github.com/flavjack/inti/issues/
