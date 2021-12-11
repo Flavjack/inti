@@ -350,13 +350,25 @@ navbarPage(title = div(
 
                              </div>
 
-                                   ')
-
+                                   '),
+                             
+                             br(),
+                             
+                             HTML('
+              <div id=footer style="width:100%; margin:auto;">
+              <div style="display:inline-block; width:100%">
+              <p style="text-align:center">
+              <a target="_blank" href="https://huito.inkaverse.com/">
+              <img src="https://huito.inkaverse.com/logo.png" style="height:80px" title="huito"></a>
+              <span style="display:block;"><small>Huito</small></span>
+              </p></div>
+              </div>
+                    ')
+              
                       )
-
+            
                     )
-
-
+            
            ),
 
            tabPanel("Plex",
