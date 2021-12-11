@@ -3,7 +3,7 @@
 \docType{data}
 \name{met}
 \alias{met}
-\title{Swedish cultivar trial data.}
+\title{Swedish cultivar trial data}
 \format{
 A data frame with 1069 rows and 8 variables: 
 

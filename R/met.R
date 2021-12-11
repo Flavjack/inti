@@ -1,4 +1,4 @@
-#' Swedish cultivar trial data.
+#' Swedish cultivar trial data
 #'
 #' The datasets were obtained from official Swedish cultivar tests. Dry matter
 #' yield was analyzed. All trials were laid out as alpha-designs with two

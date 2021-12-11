@@ -2,7 +2,7 @@
 % Please edit documentation in R/colortext.R
 \name{colortext}
 \alias{colortext}
-\title{Colourise text for display in the terminal.}
+\title{Colourise text for display in the terminal}
 \usage{
 colortext(text, fg = "red", bg = NULL)
 }

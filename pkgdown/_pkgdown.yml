@@ -2,13 +2,19 @@ url: https://inkaverse.com/
 
 development:
   mode: auto
-  
+
 authors:
   Flavio Lozano-Isla:
     href: https://lozanoisla.com/
   QuipoLab:
     href: https://www.quipolab.com/
-    
+    html: "<img src='https://inkaverse.com/img/quipolab.png' align='middle' width=70>"
+  footer:
+    roles: [cre]
+    text: "Desarrollado por"
+  sidebar:
+    roles: [aut, ctb]
+
 template:
   bootstrap: 5
   bootswatch: sandstone
@@ -17,23 +23,46 @@ template:
   opengraph:
     image:
       src: man/figures/logo.png
-      
+
 home:
   title: Inkaverse
   description: Tools and Statistical Procedures in Plant Science
   links:
   - text: Support the project
     href: https://github.com/sponsors/flavjack
-    
+
 navbar:
-  left:
-    - text: ""
+  structure:
+    left: [intro, home, apps, articles, privacy, reference, news]
+    right: [search, github, sponsor]
+  components:
+    home:
       icon: fa-home fa-lg
       href: index.html
-    - text: "Apps"
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/flavjack/inti/
+    sponsor:
+      icon: fas fa-heart fa-lg
+      href: https://github.com/sponsors/Flavjack
+    reference:
+      text: "Functions"
+      icon: fa-file-code fa-lg
+      href: reference/index.html
+    news:
+      text: "News"
+      icon: fa-file-alt fa-lg
+      href: news/index.html
+    privacy:
+      text: "Privacy Policy"
+      icon: fa-shield-alt fa-lg
+      href: articles/policy.html
+    apps:
+      text: "Apps"
       icon: fa-gamepad fa-lg
       href: articles/apps.html
-    - text: "Articles"
+    articles:
+      text: "Articles"
       icon: fa-book fa-lg
       menu:
       - text: "Tarpuy: field-book experimental plans"
@@ -44,53 +73,42 @@ navbar:
         href: articles/extra/yupana-coding.html
       - text: "Rticles: scientific documents with R"
         href: articles/rticles.html
+      - text: -------
       - text: "Broad-sense heritability in plant breeding"
         href: articles/heritability.html
       - text: "Stagewise mixed-model analysis"
         href: articles/extra/stagewise.html
-    - text: "Privacy Policy"
-      icon: fa-shield-alt fa-lg
-      href: articles/policy.html
-    - text: "Functions"
-      icon: fa-file-code fa-lg
-      href: reference/index.html
-    - text: "News"
-      icon: fa-file-alt fa-lg
-      href: news/index.html
-  right:
-    - icon: fab fa-github fa-lg
-      href: https://github.com/flavjack/inti/
-    - icon: fas fa-heart fa-lg
-      href: https://github.com/sponsors/Flavjack
 
 reference:
-  - title: Yupana
-    desc:  Data analysis
-    contents:
-      - starts_with("yupana")
-      - starts_with("plot")
-  - title: Tarpuy
-    desc:  Experimental designs
-    contents:
-      - starts_with("tarpuy")
-  - title: Rticles
-    desc:  Write technical documents
-    contents:
-      - ends_with("2rmd")
-      - starts_with("include")
-      - footnotes
-      - web_table
-  - title: Plant breeding
-    desc: Algorithms and calculations
-    contents:
-      - H2cal
-      - metamorphosis
-      - outliers_remove
-      - mean_comparison
-  - title: Extra
-    desc: Miscellaneous
-    contents:
-      - jc_tombola
-      - colortext
-      
-      
+- title: Yupana
+  desc:  Data analysis
+- contents:
+  - starts_with("yupana")
+  - starts_with("plot")
+- title: Tarpuy
+  desc:  Experimental designs
+- contents:
+  - starts_with("tarpuy")
+- title: Rticles
+  desc:  Write technical documents
+- contents:
+  - ends_with("2rmd")
+  - starts_with("include")
+  - footnotes
+  - web_table
+- title: Plant breeding
+  desc: Algorithms and calculations
+- contents:
+  - H2cal
+  - metamorphosis
+  - outliers_remove
+  - mean_comparison
+- title: Datasets
+- contents:
+  - potato 
+  - met
+- title: Miscellaneous
+- contents:
+  - jc_tombola
+  - colortext
+

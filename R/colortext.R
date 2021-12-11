@@ -1,4 +1,4 @@
-#' Colourise text for display in the terminal.
+#' Colourise text for display in the terminal
 #'
 #' If R is not currently running in a system that supports terminal colours
 #' the text will be returned unchanged.

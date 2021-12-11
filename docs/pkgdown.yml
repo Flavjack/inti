@@ -1,5 +1,5 @@
 pandoc: 2.14.2
-pkgdown: 2.0.0
+pkgdown: 2.0.1
 pkgdown_sha: ~
 articles:
   apps: apps.html
@@ -10,7 +10,7 @@ articles:
   rticles: rticles.html
   tarpuy: tarpuy.html
   yupana: yupana.html
-last_built: 2021-12-10T12:52Z
+last_built: 2021-12-11T01:15Z
 urls:
   reference: https://inkaverse.com/reference
   article: https://inkaverse.com/articles
