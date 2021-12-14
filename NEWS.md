@@ -1,3 +1,12 @@
+# Version 0.5.2
+
+- *Package* 
+ - Fix path to install Tarpuy dependencies
+ 
+- *Task:*
+  - Fix factor in tarpuy field-book
+  - p-rep design
+
 # Version 0.5.1
 
 - *Package* 
