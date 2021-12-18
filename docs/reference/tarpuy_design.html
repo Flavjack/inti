@@ -109,12 +109,12 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">tarpuy_design</span><span class="op">(</span>
   <span class="va">data</span>,
-  n_factors <span class="op">=</span> <span class="fl">1</span>,
+  nfactors <span class="op">=</span> <span class="fl">1</span>,
   type <span class="op">=</span> <span class="st">"crd"</span>,
   rep <span class="op">=</span> <span class="fl">2</span>,
   serie <span class="op">=</span> <span class="fl">2</span>,
   seed <span class="op">=</span> <span class="fl">0</span>,
-  qr <span class="op">=</span> <span class="st">"fb"</span>
+  barcode <span class="op">=</span> <span class="cn">NA</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -123,7 +123,7 @@
     <dl><dt>data</dt>
 <dd><p>Experimental design data frame with the factors and level. See
 examples.</p></dd>
-<dt>n_factors</dt>
+<dt>nfactors</dt>
 <dd><p>Number of factor in the experiment(default = 1). See
 details.</p></dd>
 <dt>type</dt>
@@ -135,8 +135,8 @@ details.</p></dd>
 <dt>seed</dt>
 <dd><p>Replicability of draw results (default = 0) always random. See
 details.</p></dd>
-<dt>qr</dt>
-<dd><p>Bar code prefix for data collection.</p></dd>
+<dt>barcode</dt>
+<dd><p>Barcode prefix for data collection.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -147,9 +147,9 @@ details.</p></dd>
     <p>The function allows to include the arguments in the sheet that have
   the information of the design. You should include 2 columns in the sheet:
   <code>{arguments}</code> and <code>{values}</code>. See examples. The information will
-  be extracted automatically and deploy the design. <code>n_factors</code> = 1:
-  crd, rcbd, lsd, lattice. <code>n_factors</code> = 2 (factorial): split_crd,
-  split_rcbd <code>n_factors</code> &gt;= 2 (factorial): crd, rcbd, lsd.</p>
+  be extracted automatically and deploy the design. <code>nfactors</code> = 1:
+  crd, rcbd, lsd, lattice. <code>nfactors</code> = 2 (factorial): split-crd,
+  split-rcbd split-lsd <code>nfactors</code> &gt;= 2 (factorial): crd, rcbd, lsd.</p>
     </div>
 
     <div class="section level2">
@@ -161,15 +161,12 @@ details.</p></dd>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/maxconway/gsheet" class="external-link">gsheet</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"https://docs.google.com/spreadsheets/d/"</span></span>
-<span class="r-in">              , <span class="st">"1wXzDc6OFOFgDgjGiZX8qYB8hzvgspoPf-qUS5AsScus/edit#gid=1296863855"</span><span class="op">)</span></span>
+<span class="r-in">              , <span class="st">"183upHd4wriZz2UnInoo5Ate5YFdk7cZlhE0sMQ2x5iw/edit#gid=532773890"</span><span class="op">)</span></span>
 <span class="r-in"><span class="co"># browseURL(url)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">fb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html" class="external-link">gsheet2tbl</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">fb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html" class="external-link">gsheet2tbl</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span> </span>
 <span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">tarpuy_design</span><span class="op">(</span>data <span class="op">=</span> <span class="va">fb</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
+<span class="r-in"><span class="fu">tarpuy_design</span><span class="op">(</span>data <span class="op">=</span> <span class="va">fb</span><span class="op">)</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>

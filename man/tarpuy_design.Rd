@@ -6,19 +6,19 @@
 \usage{
 tarpuy_design(
   data,
-  n_factors = 1,
+  nfactors = 1,
   type = "crd",
   rep = 2,
   serie = 2,
   seed = 0,
-  qr = "fb"
+  barcode = NA
 )
 }
 \arguments{
 \item{data}{Experimental design data frame with the factors and level. See
 examples.}
 
-\item{n_factors}{Number of factor in the experiment(default = 1). See
+\item{nfactors}{Number of factor in the experiment(default = 1). See
 details.}
 
 \item{type}{Type of experimental arrange  (default = "crd"). See details.}
@@ -30,7 +30,7 @@ details.}
 \item{seed}{Replicability of draw results (default = 0) always random. See
 details.}
 
-\item{qr}{Bar code prefix for data collection.}
+\item{barcode}{Barcode prefix for data collection.}
 }
 \value{
 A list with the fieldbook design
@@ -42,9 +42,9 @@ Function to deploy experimental designs
 The function allows to include the arguments in the sheet that have
   the information of the design. You should include 2 columns in the sheet:
   \code{{arguments}} and \code{{values}}. See examples. The information will
-  be extracted automatically and deploy the design. \code{n_factors} = 1:
-  crd, rcbd, lsd, lattice. \code{n_factors} = 2 (factorial): split_crd,
-  split_rcbd \code{n_factors} >= 2 (factorial): crd, rcbd, lsd.
+  be extracted automatically and deploy the design. \code{nfactors} = 1:
+  crd, rcbd, lsd, lattice. \code{nfactors} = 2 (factorial): split-crd,
+  split-rcbd split-lsd \code{nfactors} >= 2 (factorial): crd, rcbd, lsd.
 }
 \examples{
 
@@ -54,15 +54,12 @@ library(inti)
 library(gsheet)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1wXzDc6OFOFgDgjGiZX8qYB8hzvgspoPf-qUS5AsScus/edit#gid=1296863855")
+              , "183upHd4wriZz2UnInoo5Ate5YFdk7cZlhE0sMQ2x5iw/edit#gid=532773890")
 # browseURL(url)
 
-fb <- gsheet2tbl(url)
+fb <- gsheet2tbl(url) 
 
-
-tarpuy_design(data = fb)
-
-
+tarpuy_design(data = fb) 
 
 }
 }

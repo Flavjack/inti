@@ -29,21 +29,22 @@ The function allows to include the arguments in the sheet that have
 \dontrun{
 
 library(inti)
+library(gsheet)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1q0EZmZBt52ca-0VbididjJy2jXTwf06laJpzvkQJWvc/edit#gid=964304762")
+              , "183upHd4wriZz2UnInoo5Ate5YFdk7cZlhE0sMQ2x5iw/edit#gid=532773890")
 # browseURL(url)
 
-info <- gsheet2tbl(url)
+info <- gsheet2tbl(url) 
 
 fieldbook <- tarpuy_design(data = info)
 
 url_var <- paste0("https://docs.google.com/spreadsheets/d/"
-       , "1q0EZmZBt52ca-0VbididjJy2jXTwf06laJpzvkQJWvc/edit#gid=92661274")
+       , "183upHd4wriZz2UnInoo5Ate5YFdk7cZlhE0sMQ2x5iw/edit#gid=1335288687")
        
 varlist <- gsheet2tbl(url_var) 
 
-tarpuy_varlist(fieldbook = fb, varlist = var)
+tarpuy_varlist(fieldbook = fieldbook, varlist = varlist)
 
 }
 

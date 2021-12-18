@@ -4,21 +4,21 @@
 #'
 #' @param data Experimental design data frame with the factors and level. See
 #'   examples.
-#' @param n_factors Number of factor in the experiment(default = 1). See
+#' @param nfactors Number of factor in the experiment(default = 1). See
 #'   details.
 #' @param type Type of experimental arrange  (default = "crd"). See details.
 #' @param rep  Number of replications in the experiment (default = 3).
 #' @param serie Digits in the plot id (default = 2).
 #' @param seed Replicability of draw results (default = 0) always random. See
 #'   details.
-#' @param qr Bar code prefix for data collection.
+#' @param barcode Barcode prefix for data collection.
 #'
 #' @details The function allows to include the arguments in the sheet that have
 #'   the information of the design. You should include 2 columns in the sheet:
 #'   \code{{arguments}} and \code{{values}}. See examples. The information will
-#'   be extracted automatically and deploy the design. \code{n_factors} = 1:
-#'   crd, rcbd, lsd, lattice. \code{n_factors} = 2 (factorial): split_crd,
-#'   split_rcbd \code{n_factors} >= 2 (factorial): crd, rcbd, lsd.
+#'   be extracted automatically and deploy the design. \code{nfactors} = 1:
+#'   crd, rcbd, lsd, lattice. \code{nfactors} = 2 (factorial): split-crd,
+#'   split-rcbd split-lsd \code{nfactors} >= 2 (factorial): crd, rcbd, lsd.
 #'
 #' @return A list with the fieldbook design
 #'
@@ -40,46 +40,26 @@
 #' library(gsheet)
 #' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "1wXzDc6OFOFgDgjGiZX8qYB8hzvgspoPf-qUS5AsScus/edit#gid=1296863855")
+#'               , "183upHd4wriZz2UnInoo5Ate5YFdk7cZlhE0sMQ2x5iw/edit#gid=532773890")
 #' # browseURL(url)
 #' 
-#' fb <- gsheet2tbl(url)
+#' fb <- gsheet2tbl(url) 
 #' 
-#' 
-#' tarpuy_design(data = fb)
-#' 
-#' 
+#' tarpuy_design(data = fb) 
 #' 
 #' }
 
-tarpuy_design <- function(data,
-                             n_factors = 1,
-                             type = "crd",
-                             rep = 2,
-                             serie = 2,
-                             seed = 0,
-                             qr = "fb"
+tarpuy_design <- function(data
+                          , nfactors = 1
+                          , type = "crd"
+                          , rep = 2
+                          , serie = 2
+                          , seed = 0
+                          , barcode = NA
                              ) {
 
-  plots <- Row.names <- factors <- NULL
+  plots <- Row.names <- factors <- where <- NULL
   
-
-# test --------------------------------------------------------------------
-  
-  if(FALSE) {
-    
-    url <- "https://docs.google.com/spreadsheets/d/1CKaS9qgMoG9kc3ZIX-4DWfbHg4Vgj7KqMyNZCzL7bsY/edit#gid=450554551"
-    
-    data <- gsheet2tbl(url)
-    
-    n_factors = 1
-    type = "crd"
-    rep = 2
-    serie = 2
-    seed = 0
-    
-  }
-
 # design type -------------------------------------------------------------
 # -------------------------------------------------------------------------
 
@@ -88,198 +68,134 @@ type <- match.arg(type, c(
   , "split-crd", "split-rcbd"
   ))
 
-# fix and clean data ------------------------------------------------------
+
+# data arguments ----------------------------------------------------------
 # -------------------------------------------------------------------------
 
-data_fb <- data %>%
-  select(!starts_with("{") | !ends_with("}")) %>%
-  select_if(~ !all(is.na(.))) %>%
-  rename_with(~ gsub("\\s+|\\.", "_", .)) %>%
-  mutate(across(everything(), ~ gsub(" ", "_", .))) %>%
-  dplyr::tibble()
-
-treatments_names <- data_fb %>% 
-  names() 
-
-treatments_levels <- data_fb %>%
-  select( {{treatments_names}} ) %>%
-  as.list() %>%
-  lapply(., function(x) unique(x)) %>% 
-  purrr::map(purrr::discard, is.na)
-
-# extract arguments -------------------------------------------------------
-# -------------------------------------------------------------------------
+dt_factors <- data %>%
+  dplyr::select(where(~!all(is.na(.)))) %>% 
+  dplyr::select(!starts_with("{") | !ends_with("}")) %>%
+  dplyr::rename_with(~ gsub("\\s+|\\.", "_", .)) %>%
+  dplyr::mutate(across(everything(), ~ gsub(" ", "-", .))) %>%
+  dplyr::na_if("NULL") 
 
 arguments <- data %>%
-  select(starts_with("{") | ends_with("}")) %>%
-  rename_with(~ gsub("\\{|\\}", "", .)) %>%
-  drop_na()
-
-col_arg <- c(
-  "argument", "arguments", "argumento", "argumentos"
-  , "parameter", "parameters", "parametro", "parametros"
-  )
-
-col_match <- names(arguments) %in% col_arg
-col_name <- names(arguments)[col_match == TRUE]
-
-if ( length(col_name)  > 0  )  {
-
-  arguments_opt <- arguments %>%
-    tibble::deframe()
-
-} else { arguments_opt <- data.frame() }
-
-# arguments values --------------------------------------------------------
-# -------------------------------------------------------------------------
-
-nfc_list <- c( "nFactor", "nFactors", "factors", "factor", "nfactors", "factores" )
-nfc_match <- names(arguments_opt) %in% nfc_list
-nfc_name <- names(arguments_opt)[nfc_match == TRUE]
-
-if ( length(nfc_name)  > 0 ) {
-
-  n_factors <- arguments_opt %>%
-    purrr::pluck( nfc_name ) %>%
-    as.numeric()
-
-} else { n_factors }
+  dplyr::select(where(~!all(is.na(.)))) %>% 
+  dplyr::select(starts_with("{") | ends_with("}")) %>%
+  dplyr::rename_with(~ gsub("\\{|\\}", "", .)) %>%
+  tidyr::drop_na() %>% 
+  tibble::deframe() %>% 
+  as.list()
 
 # -------------------------------------------------------------------------
-
-type_list <- c( "type", "design", "tipo" )
-type_match <- names(arguments_opt) %in% type_list
-type_name <- names(arguments_opt)[type_match == TRUE]
-
-if ( length( type_name )  > 0 ) {
-
-  type <- arguments_opt %>% purrr::pluck( type_name )
-
-} else { type }
-
 # -------------------------------------------------------------------------
 
-rep_list <- c( "r", "rep", "replication", "replicates")
-rep_match <- names(arguments_opt) %in% rep_list
-rep_name <- names(arguments_opt)[rep_match == TRUE]
-
-if ( length(rep_name)  > 0 ) {
-
-  rep <- arguments_opt %>%
-    purrr::pluck( rep_name ) %>%
-    as.numeric()
-
-} else { rep }
-
-# -------------------------------------------------------------------------
-
-serie_list <- c("serie", "series", "digits", "pdigits", "plotdigits")
-serie_match <- names(arguments_opt) %in% serie_list
-serie_name <- names(arguments_opt)[serie_match == TRUE]
-
-if ( length(serie_name)  > 0 ) {
-
-  serie <- arguments_opt %>%
-    purrr::pluck("serie") %>%
-    as.numeric()
-
-} else { serie }
-
-# -------------------------------------------------------------------------
-
-seed_list <- c("seed", "Seed", "seeds", "semilla")
-seed_match <- names(arguments_opt) %in% seed_list
-seed_name <- names(arguments_opt)[seed_match == TRUE]
-
-if ( length(seed_name)  > 0  ) {
-
-  seed <- arguments_opt %>%
-    purrr::pluck("seed") %>%
-    as.numeric()
-
-} else { seed }
-
-# -------------------------------------------------------------------------
-
-qr_list <- c("qr", "cod", "code", "qr-code", "barcode")
-qr_match <- names(arguments_opt) %in% qr_list
-qr_name <- names(arguments_opt)[qr_match == TRUE]
-
-if ( length(qr_name)  > 0  ) {
+if(length(dt_factors) == 0) {
   
-  qr <- arguments_opt %>%
-    purrr::pluck("qr") %>%
-    # iconv(., "latin1", "ASCII//TRANSLIT") %>% 
-    stringi::stri_trans_general("Latin-ASCII") %>%
-    stringr::str_to_upper() %>% 
-    gsub("[[:space:]]", "-", .)
+  print("Factors without levels")
   
-} else { 
+  return(fieldbook <- NULL)
   
-  qr <- qr %>% 
-    # iconv(., "latin1", "ASCII//TRANSLIT") %>% 
-    stringi::stri_trans_general("Latin-ASCII") %>%
-    stringr::str_to_upper() %>% 
-    gsub("[[:space:]]", "-", .)
-  
-  }
+}
 
-# factor numbers ----------------------------------------------------------
 # -------------------------------------------------------------------------
 
-treat_name <- names(treatments_levels)[1:n_factors]
-treat_fcts <- treatments_levels[treat_name]
+nfactors <- if(is.null(arguments$nfactors) || is.na(arguments$nfactors) || arguments$nfactors == "") { nfactors
+} else {arguments$nfactors} %>% 
+  as.numeric()
+
+type <- if(is.null(arguments$type) || is.na(arguments$type) || arguments$type == "") { type
+} else {arguments$type}
+
+rep <- if(is.null(arguments$rep) || is.na(arguments$rep) || arguments$rep == "") { rep
+} else {arguments$rep} %>% 
+  as.numeric()
+
+serie <- if(is.null(arguments$serie) || is.na(arguments$serie) || arguments$serie == "") { serie
+} else {arguments$serie} %>% 
+  as.numeric()
+
+seed <- if(is.null(arguments$seed) || is.na(arguments$seed) || arguments$seed == "") { seed
+} else {arguments$seed} %>% 
+  as.numeric()
+
+barcode <- if(is.null(arguments$barcode) || is.na(arguments$barcode) || arguments$barcode == "") { barcode
+} else {arguments$barcode} %>% 
+  stringi::stri_trans_general("Latin-ASCII") %>%
+  stringr::str_to_upper() %>% 
+  gsub("[[:space:]]", "-", .)
+
+
+# -------------------------------------------------------------------------
+
+factor_names <- dt_factors %>%
+  names() %>% 
+  .[1:arguments$nfactors] %>% 
+  stats::na.omit()
+
+if(length(factor_names) != nfactors) {
+  
+  print("Number of factor are different with the column factors")
+  
+  return(fieldbook <- NULL)
+  
+}
+
+factor_levels <- dt_factors %>%
+  dplyr::select({{factor_names}}) %>% 
+  as.list() %>%
+  purrr::map(base::unique) %>% 
+  purrr::map(stats::na.omit) %>% 
+  purrr::map(as.vector)
+  
 
 # n_factor = 1 ------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-          if (n_factors == 1) {
+    fb <- if (nfactors == 1) {
             
-            onefact <- treat_fcts %>% pluck(1)
+            factors <- factor_levels[[1]]
             
             if (type == "crd") {
+              
               design <- agricolae::design.crd(
-                trt = onefact,
-                r = rep,
-                serie = serie,
-                seed = seed
-              )
-
-              result <- list(
-                design = design %>%
-                pluck("book") %>%
-                dplyr::rename({{ treat_name }} := "onefact")
+                trt = factors
+                , r = rep
+                , serie = serie
+                , seed = seed
                 )
+
+              fb_info <- design$book %>%
+                dplyr::rename( {{factor_names}} := "factors")
+                
             }
 
             if (type == "rcbd") {
+              
               design <- agricolae::design.rcbd(
-                trt = onefact,
-                r = rep,
-                serie = serie,
-                seed = seed
-              )
+                trt = factors
+                , r = rep
+                , serie = serie
+                , seed = seed
+                )
 
-              result <- list(
-                design = design %>%
-                  pluck("book") %>%
-                  dplyr::rename({{ treat_name }} := "onefact")
-              )
+              fb_info <- design$book %>%
+                dplyr::rename( {{factor_names}} := "factors")
+              
             }
 
             if (type == "lsd") {
 
               design <- agricolae::design.lsd(
-                trt = onefact,
-                r = rep,
-                serie = serie,
-                seed = seed
+                trt = factors
+                , r = rep
+                , serie = serie
+                , seed = seed
               )
-              result <- list(
-                design = design %>%
-                  pluck("book") %>%
-                  dplyr::rename({{ treat_name }} := "onefact")
-              )
+              
+              fb_info <- design$book %>%
+                dplyr::rename( {{factor_names}} := "factors")
+              
             }
 
             if (type == "lattice") { # fix rename column?
@@ -287,17 +203,14 @@ treat_fcts <- treatments_levels[treat_name]
               if( rep > 3 ) { rep <- 3 }
 
               design <- agricolae::design.lattice(
-                trt = onefact,
-                r = rep,
-                serie = serie,
-                seed = seed
-              )
+                trt = factors
+                , r = rep
+                , serie = serie
+                , seed = seed
+                )
 
-              result <- list(
-                design = design %>%
-                  pluck("book") %>%
-                  dplyr::rename({{ treat_name }} := "trt")
-              )
+              fb_info <- design$book %>%
+                dplyr::rename( {{factor_names}} := "trt")
 
             }
 
@@ -306,137 +219,81 @@ treat_fcts <- treatments_levels[treat_name]
 # n_factor >= 2 -----------------------------------------------------------
 # -------------------------------------------------------------------------
 
-        if( n_factors == 2 & startsWith(type, "split") ) {
-
-# split-plot --------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-          twofact_lvl <- treat_fcts[1:2]
-          treat_name <- twofact_lvl %>% names()
-          fact1 <- twofact_lvl %>% purrr::pluck(1)
-          fact2 <- twofact_lvl %>% purrr::pluck(2)
+        if( nfactors == 2 & startsWith(type, "split") ) {
           
-          if (type == "split-crd") {
+          model <- type %>% gsub("split-", "", .)
+            
+            factor1 <- factor_levels[[1]]
+            factor2 <- factor_levels[[2]]
 
             design <- agricolae::design.split(
-              trt1 = fact1,
-              trt2 = fact2,
+              trt1 = factor1,
+              trt2 = factor2,
               r = rep,
-              design = "crd",
+              design = model,
               serie = serie,
               seed = seed
             )
-
-            result <- list(
-              design = design %>%
-                purrr::pluck("book") %>%
-              rename_with(~ {{ treat_name }}, tail(names(.), 2))
-              )
-          }
-
-          if (type == "split-rcbd") {
-
-            design <- agricolae::design.split(
-              trt1 = fact1,
-              trt2 = fact2,
-              r = rep,
-              design = "rcbd",
-              serie = serie,
-              seed = seed
-            )
-
-            result <- list(
-              design = design %>%
-              pluck("book") %>%
-              rename_with(~ {{ treat_name }}, tail(names(.), 2))
-              )
-          }
-
+            
+            fb_info <- design$book %>%
+              dplyr::rename_with(~ {{ factor_names }}, tail(names(.), 2))
+            
         }
 
 # factorial ---------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-        if ( n_factors >= 2 && ( type == "crd" | type == "rcbd" | type == "lsd" ) ) {
+        if ( nfactors >= 2 & ( type == "crd" | type == "rcbd" | type == "lsd" ) ) {
           
-          treat_lvls <- lengths(treat_fcts)
+          factors <- lengths(factor_levels)
 
           design <- agricolae::design.ab(
-            trt = treat_lvls,
-            r = rep,
-            serie = serie,
-            design = type,
-            seed = seed
+            trt = factors
+            , r = rep
+            , serie = serie
+            , design = type
+            , seed = seed
           )
-
-          # rename cols -------------------------------------------------------------
-          # -------------------------------------------------------------------------
-
-          col_rnm <- function(renamed_fb, treat, new_names) {
-
-            oldn <- renamed_fb %>%
-              dplyr::select({{treat}}) %>%
-              unique() %>%
-              as_vector()
-
-            names <- structure(as.character(new_names),
-                               names = as.character(oldn))
-
-            renamed_fb %>%
-              mutate(across({{treat}}, ~dplyr::recode(.x = ., !!!names))) %>%
-              select({{treat}})
+          
+          
+          fb <- design$book %>%
+            dplyr::rename_with(~ {{ factor_names }}, tail(names(.), nfactors)) 
+          
+          fb_factors <- fb %>% 
+            dplyr::select(!{{factor_names}}) %>% 
+            names()
+          
+          fb_info <- 1:length(factor_names) %>% purrr::map( function(x) {
             
-            }
-
-          # -------------------------------------------------------------------------
-
-          renamed_fb <- design %>%
-            pluck("book") %>%
-            rename_with(~ {{ treat_name }}, tail(names(.), n_factors))
-
-          ini <- length(renamed_fb) - n_factors + 1
-          fin <- length(renamed_fb)
-
-          fb_recoded <- lapply(ini:fin, function(x) {
+            factor <- names(factors)[x]
+            levels <- factor_levels[[factor]] 
             
-            colnm <- colnames(renamed_fb)[x]
+            org_names <- fb %>% 
+              dplyr::select({{factor}}) %>% 
+              unique() %>%  
+              tibble::deframe() %>% 
+              as.vector()
             
-            renamed_fb %>%
-              col_rnm(renamed_fb = .,
-                      treat = {{colnm}},
-                      new_names = treat_fcts[[colnm]]
-              )
+            names <- structure(as.character(levels), names = as.character(org_names))
             
-            })
-
-          result <- list(
-            design = do.call(cbind, fb_recoded) %>%
-            tibble() %>%
-            merge(renamed_fb %>% select(!{{ treat_name }}),
-                  .,
-                  by = 0) %>%
-            dplyr::arrange(plots) %>%
-            select(!Row.names)
-            )
+            fb %>% 
+              dplyr::select(fb_factors, {{factor}}) %>% 
+              dplyr::mutate(across({{factor}}, ~dplyr::recode(.x = ., !!!names)))
+            
+          }) %>% 
+            Reduce(function(...) merge(..., all=T), .)
+          
         }
-
+          
 # include qr --------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-result$design <- result$design %>% 
-  unite(.
-        , factors
-        , c(names(.))
-        , remove=FALSE
-        , sep = "_"
-        ) %>% 
-  mutate(factors = paste(qr, factors, sep = "_")) %>% 
-  rename('barcode' = factors )
+fb <- fb_info %>% 
+  dplyr::mutate(exp = barcode, .before = 1) %>% 
+  tidyr::unite(col = "barcode", everything(), remove = F, sep = "_") %>% 
+  dplyr::select(!exp)
 
-# result ------------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-  return(result)
-
+list(fieldbook = fb)
+  
 }
 

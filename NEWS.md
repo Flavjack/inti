@@ -1,12 +1,14 @@
 # Version 0.5.2
 
 - *Package* 
- - Fix path to install Tarpuy dependencies
+  - Fix CRAN comments
+  - Fix path to install Tarpuy dependencies
+  - Include huito logo in apps
+  - Fix factors in tarpuy field-book export
+  - Update code from `tarpuy_design()`
+  - Update barcode column for split usin "_"
+  - Update function `tarpuy_plex()`
  
-- *Task:*
-  - Fix factor in tarpuy field-book
-  - p-rep design
-
 # Version 0.5.1
 
 - *Package* 

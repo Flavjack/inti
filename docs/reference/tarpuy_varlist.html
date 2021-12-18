@@ -136,21 +136,22 @@
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://inkaverse.com/">inti</a></span><span class="op">)</span></span>
+<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/maxconway/gsheet" class="external-link">gsheet</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"https://docs.google.com/spreadsheets/d/"</span></span>
-<span class="r-in">              , <span class="st">"1q0EZmZBt52ca-0VbididjJy2jXTwf06laJpzvkQJWvc/edit#gid=964304762"</span><span class="op">)</span></span>
+<span class="r-in">              , <span class="st">"183upHd4wriZz2UnInoo5Ate5YFdk7cZlhE0sMQ2x5iw/edit#gid=532773890"</span><span class="op">)</span></span>
 <span class="r-in"><span class="co"># browseURL(url)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html" class="external-link">gsheet2tbl</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html" class="external-link">gsheet2tbl</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">fieldbook</span> <span class="op">&lt;-</span> <span class="fu"><a href="tarpuy_design.html">tarpuy_design</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">info</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">url_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"https://docs.google.com/spreadsheets/d/"</span></span>
-<span class="r-in">       , <span class="st">"1q0EZmZBt52ca-0VbididjJy2jXTwf06laJpzvkQJWvc/edit#gid=92661274"</span><span class="op">)</span></span>
+<span class="r-in">       , <span class="st">"183upHd4wriZz2UnInoo5Ate5YFdk7cZlhE0sMQ2x5iw/edit#gid=1335288687"</span><span class="op">)</span></span>
 <span class="r-in">       </span>
 <span class="r-in"><span class="va">varlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html" class="external-link">gsheet2tbl</a></span><span class="op">(</span><span class="va">url_var</span><span class="op">)</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu">tarpuy_varlist</span><span class="op">(</span>fieldbook <span class="op">=</span> <span class="va">fb</span>, varlist <span class="op">=</span> <span class="va">var</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">tarpuy_varlist</span><span class="op">(</span>fieldbook <span class="op">=</span> <span class="va">fieldbook</span>, varlist <span class="op">=</span> <span class="va">varlist</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>

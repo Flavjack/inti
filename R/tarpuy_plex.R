@@ -71,79 +71,50 @@ tarpuy_plex <- function(data = NULL
                           , serie = 2
                           , seed = 0
                          ) {
-
-  # idea <- goal <- hypothesis <-  rationale <- objectives <-  plan <- NA
-  # institutions <- researchers <- manager <- location <- altitude <- NA
-  # georeferencing <- environment <- start <- end <- album <- github <- NA
-  # fieldbook <- NULL
-  # nfactor = 1
-  # design = "crd"
-  # rep = 2
-  # serie = 2
-  # seed = 0
-
+  
+  
   PLEX <- INFORMATION <- DAI <- NULL
-
+  
 # arguments ---------------------------------------------------------------
-
-  # start <- "2020-08-15" ; end <- "2020-12-03"
-
-  start  <-  start %>% as.Date(format = "%Y-%m-%d")
-  end  <-  end %>% as.Date(format = "%Y-%m-%d")
   
-  if (is.na(start)) {
-    
-    start  <-  Sys.Date() %>% as.Date(format = "%Y-%m-%d")
-    
-  } 
+  start <- if(is.null(start) || is.na(start)) { 
+    format(Sys.time(), '%Y-%m-%d') %>% 
+      as.Date() } else { start %>% as.Date(format = "%Y-%m-%d")} 
   
-  if (is.na(end) | end == Sys.Date() ) {
-
-    end  <-  start + 90 
-    
-    } 
+  end <- if(is.null(end) || is.na(end) ) {
+    format(Sys.time(), '%Y-%m-%d') %>% 
+      as.Date() + 90 } else { end %>% as.Date(format = "%Y-%m-%d") } 
 
 # fieldbook name ----------------------------------------------------------
   
-  # fieldbook <- NULL
-  # about <- "Sëed germinatión 1/2"
-  # location <- "Lä Molína, Lima, Perú"
-
-  if( is.null(fieldbook) &
-      !is.null(location) & !is.null(start[1]) & !is.null(about) ) {
+  loc <- if(is.null(location) || is.na(location) || location == "") { "INKAVERSE" 
+    } else {location} %>% 
+    stringi::stri_trans_general("Latin-ASCII") %>%
+    stringr::str_to_upper() %>% 
+    strsplit(., "[[:punct:]]") %>% 
+    unlist() %>% 
+    trimws() %>% 
+    gsub(" ", "-", .) %>% 
+    pluck(1)
+  
+  info <- if(is.null(about) || is.na(about) || about == "") { "TARPUY" 
+    } else {about} %>% 
+    stringi::stri_trans_general("Latin-ASCII") %>%
+    stringr::str_to_upper() %>% 
+    strsplit(., "[[:punct:]]") %>% 
+    unlist() %>% 
+    trimws() %>% 
+    gsub(" ", "-", .) %>% 
+    pluck(1)
+  
+  fbname <- if(is.null(fieldbook) || is.na(fieldbook) || fieldbook == "") {
     
-    fbname <- paste(strsplit(location, ",") %>% unlist() %>% pluck(1)
-                    , as.character(start[1])
-                    , about
-                    , sep = " "
-                    ) %>%
-      # iconv(., "latin1", "ASCII//TRANSLIT") %>% 
-      stringi::stri_trans_general("Latin-ASCII") %>%
-      stringr::str_to_upper()
+    paste(loc, start, info, sep = "_")
     
-    qrcode <- paste(strsplit(location, ",") %>% unlist() %>% pluck(1)
-                    , as.character(start[1])
-                    , sep = "_"
-                    ) %>%
-      # iconv(., "latin1", "ASCII//TRANSLIT") %>% 
-      stringi::stri_trans_general("Latin-ASCII") %>%
-      stringr::str_to_upper() %>% 
-      gsub("[[:space:]]", "-", .)
-      
+    } else { fieldbook } 
     
-  } else {
+  barcode <-  paste(loc, start, sep = "_")
     
-    fbname <- fieldbook
-    
-    qrcode <- fieldbook %>%
-      # iconv(., "latin1", "ASCII//TRANSLIT") %>% 
-      stringi::stri_trans_general("Latin-ASCII") %>%
-      stringr::str_to_upper() %>% 
-      gsub("[[:space:]]", "-", .)
-    
-  }
-    
-
 # plex -----------------------------------------------------------------------
 
 if ( is.null(data) ) {
@@ -157,13 +128,13 @@ if ( is.null(data) ) {
              , INSTITUTIONS = institutions
              , RESEARCHERS = researchers
              , MANAGER = manager
-             , LOCATION = location
+             , LOCATION = loc
              , ALTITUDE = altitude
              , GEOREFERENCING = georeferencing
              , ENVIRONMENT = environment
              , "START EXPERIMENT" = as.character.Date(start)
              , "END EXPERIMENT" = as.character.Date(end)
-             , ABOUT = about
+             , ABOUT = info
              , "FIELDBOOK NAME" = fbname
              , GITHUB = github
              , ALBUM = album
@@ -201,7 +172,7 @@ dsg_info <-  c(nfactors = nfactor
               , rep = rep
               , serie = serie
               , seed = seed
-              , qr = qrcode
+              , barcode = barcode
               ) %>%
   enframe() %>%
   rename('{arguments}' = .data$name, '{values}' = .data$value)

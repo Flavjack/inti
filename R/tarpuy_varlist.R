@@ -22,21 +22,22 @@
 #' \dontrun{
 #' 
 #' library(inti)
-#'
+#' library(gsheet)
+#' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "1q0EZmZBt52ca-0VbididjJy2jXTwf06laJpzvkQJWvc/edit#gid=964304762")
+#'               , "183upHd4wriZz2UnInoo5Ate5YFdk7cZlhE0sMQ2x5iw/edit#gid=532773890")
 #' # browseURL(url)
 #' 
-#' info <- gsheet2tbl(url)
+#' info <- gsheet2tbl(url) 
 #'
 #' fieldbook <- tarpuy_design(data = info)
 #' 
 #' url_var <- paste0("https://docs.google.com/spreadsheets/d/"
-#'        , "1q0EZmZBt52ca-0VbididjJy2jXTwf06laJpzvkQJWvc/edit#gid=92661274")
+#'        , "183upHd4wriZz2UnInoo5Ate5YFdk7cZlhE0sMQ2x5iw/edit#gid=1335288687")
 #'        
 #' varlist <- gsheet2tbl(url_var) 
 #' 
-#' tarpuy_varlist(fieldbook = fb, varlist = var)
+#' tarpuy_varlist(fieldbook = fieldbook, varlist = varlist)
 #' 
 #' }
 #' 
@@ -47,14 +48,6 @@ tarpuy_varlist <- function(fieldbook
   
   where <- NULL
 
-# test --------------------------------------------------------------------
-  
-  if (FALSE) {
-    
-    ts <- fieldbook$design
-    
-  }
-  
 # -------------------------------------------------------------------------
   
   if ( is.null(varlist) ) { return(fieldbook) }
@@ -99,11 +92,11 @@ tarpuy_varlist <- function(fieldbook
     dplyr::mutate("blank" := NA) %>% 
     tidyr::pivot_wider(names_from = .data$trait, values_from = .data$blank)
   
-  fieldbook[["design"]] <- merge(fieldbook[["design"]]
-                                 , traits
-                                 , by = c("row.names")
-                                 , all.x = T
-                                 ) %>%
+  fieldbook[["fieldbook"]] <- merge(fieldbook[["fieldbook"]]
+                                    , traits
+                                    , by = c("row.names")
+                                    , all.x = T
+                                    ) %>%
     dplyr::select(!.data$Row.names) %>%
     dplyr::arrange(.data$plots)
     

@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-05-09
+#> date .: 2021-12-06
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -186,7 +186,7 @@ if (file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
 
     } else if (input$plex_nfactors == 2) {
 
-      type <- c("crd", "rcbd", "lsd", "split-crd", "split-rcbd")
+      type <- c("crd", "rcbd", "lsd", "split-crd", "split-rcbd", "split-lsd")
 
     } else if (input$plex_nfactors > 2) {
 
@@ -207,12 +207,6 @@ if (file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
 
   plex <- reactive({
     
-    if( input$plex_fieldbook == "" ) {
-      
-      fbname <- NULL
-      
-    } else { fbname <- input$plex_fieldbook }
-    
     plex <- tarpuy_plex(data = NULL
                            , idea = input$plex_idea
                            , goal = input$plex_goal
@@ -230,7 +224,7 @@ if (file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
                            , start = input$plex_dates[1]
                            , end = input$plex_dates[2]
                            , about = input$plex_about
-                           , fieldbook = fbname
+                           , fieldbook = input$plex_fieldbook
                            , album = input$plex_album
                            , github = input$plex_github
                            , nfactor = input$plex_nfactors
@@ -349,7 +343,7 @@ output$design_type <- renderUI({
 
   } else if (input$design_nfactors == 2) {
 
-    type <- c("crd", "rcbd", "lsd", "split-crd", "split-rcbd")
+    type <- c("crd", "rcbd", "lsd", "split-crd", "split-rcbd", "split-lsd")
 
   } else if (input$design_nfactors > 2) {
 
@@ -372,49 +366,16 @@ observeEvent(input$export_design, {
   
   validate(need(input$fieldbook_url, "LogIn and create or insert a url"))
   
-  # fieldbook ---------------------------------------------------------------
+# fieldbook ---------------------------------------------------------------
   
   if ( input$gsheet_design %in% sheet_names(gs()) ) {
     
-    fieldbook <-  gs() %>%
+    fb <- gs() %>%
       range_read(input$gsheet_design)
     
   } else { fieldbook <- NULL }
   
-# check level in the table ------------------------------------------------
-
-  ncolum <- fieldbook %>% 
-    as.data.frame() %>% 
-    select(dplyr::contains("value")) %>% 
-    pluck(1)[1] %>% 
-    as.numeric()
-  
-  if(length(ncolum) != 0) {
-    
-    treat_fcts <- fieldbook %>%
-      select(!starts_with("{") | !ends_with("}")) %>% 
-      select(1:{{ncolum}}) %>% 
-      as.list() %>% 
-      lapply(., function(x) unique(x)) %>% 
-      map(discard, is.na) %>% 
-      lengths() %>% 
-      prod()
-    
-  } else if (length(ncolum) == 0) {
-    
-    treat_fcts <- fieldbook %>% 
-      select(1:input$design_nfactors) %>% 
-      as.list() %>% 
-      lapply(., function(x) unique(x)) %>% 
-      map(discard, is.na) %>% 
-      lengths() %>% 
-      prod()
-    
-  }
-  
-  validate(need(treat_fcts >= 2, "Factors without enough levels"))
-
-  # variables ---------------------------------------------------------------
+# variables ---------------------------------------------------------------
 
   if ( input$gsheet_varlist %in% sheet_names(gs()) ) {
 
@@ -423,38 +384,41 @@ observeEvent(input$export_design, {
 
   } else { variables <- NULL }
 
-  # -------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 
-    fbds <- fieldbook %>%
+  fieldbook <- fb %>%
       tarpuy_design(
-        n_factors = input$design_nfactors
+        nfactors = input$design_nfactors
         , type = input$design_type
         , rep = input$design_rep
         , serie = input$design_serie
         , seed = input$design_seed
-        , qr = input$design_qr
-      ) %>%
-      tarpuy_varlist(variables)
+        , barcode = input$design_qr
+      )
   
+  sheet_export <- input$gsheet_fb %>% gsub("[[:space:]]", "_", .)
   
-    sheet_export <- input$gsheet_fb %>% gsub("[[:space:]]", "_", .)
-
+  if(!is.null(fieldbook)) {
+    
+    fbds <- fieldbook %>% tarpuy_varlist(variables)
+    
     if (input$export_design_overwrite == "no" & !sheet_export %in% sheet_names(gs())) {
-
-      sheet_add(ss = gs(), sheet = sheet_export)
-
-      fbds$desig %>%
+      
+      fbds$fieldbook %>%
         as.data.frame() %>%
         write_sheet(ss = gs(), sheet = sheet_export)
-
+      
     } else if(input$export_design_overwrite == "yes") {
-
-      fbds$desig %>%
+      
+      fbds$fieldbook %>%
         as.data.frame() %>%
         write_sheet(ss = gs(), sheet = sheet_export)
-
+      
     } else {  print ("sheet already exist") }
-
+    
+    
+  } else {"Insert factor levels"}
+  
 # -------------------------------------------------------------------------
 
   if (!"sketch" %in% sheet_names(gs()) & sheet_export %in% sheet_names(gs()) ) {
