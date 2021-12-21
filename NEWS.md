@@ -4,9 +4,9 @@
   - Fix CRAN comments
   - Fix path to install Tarpuy dependencies
   - Include huito logo in apps
-  - Fix factors in tarpuy field-book export
+  - Fix factors in Tarpuy field-book export
   - Update code from `tarpuy_design()`
-  - Update barcode column for split usin "_"
+  - Update barcode column for split using "_"
   - Update function `tarpuy_plex()`
  
 # Version 0.5.1

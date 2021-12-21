@@ -48,12 +48,12 @@ Deben crearse una cuenta en los siguientes servicios:
   
   <div style="display:inline-block; width:32%">
   <p style="text-align:center; vertical-align:middle">
-  <a target="_blank" href="https://www.zotero.org/user/register"><img src="https://www.zotero.org/static/images/bs4theme/zotero-logo.1519312231.svg" style="height:50px" title="Zotero" alt="Zotero"></a> 
+  <a target="_blank" href="https://www.zotero.org/user/register"><img src="files/zotero.png" style="height:100px" title="Zotero" alt="Zotero"></a> 
   </p></div>
   
   <div style="display:inline-block; width:32%"> 
   <p style="text-align:center; vertical-align:middle"> 
-  <a target="_blank" href="https://github.com/join?source=login"><img src="https://www.enriquedans.com/wp-content/uploads/2018/06/GitHub-Octocat.jpg" style="height:100px" title="GitHub" alt="GitHub"></a></p>
+  <a target="_blank" href="https://github.com/join?source=login"><img src="files/github.jpg" style="height:100px" title="GitHub" alt="GitHub"></a></p>
   </div>
   
 </div>
@@ -78,22 +78,22 @@ Deben crearse una cuenta en los siguientes servicios:
   
   <div style="display:inline-block; width:24%">
   <p style="text-align:center; vertical-align:middle">
-  <a target="_blank" href="https://www.zotero.org/download/"><img src="https://www.zotero.org/static/images/bs4theme/zotero-logo.1519312231.svg" style="height:50px" title="Zotero" alt="Zotero"></a> 
+  <a target="_blank" href="https://www.zotero.org/download/"><img src="files/zotero.svg" style="height:50px" title="Zotero" alt="Zotero"></a> 
   </p></div>
   
   <div style="display:inline-block; width:24%">
   <p style="text-align:center; vertical-align:middle">
-  <a target="_blank" href="https://cran.r-project.org/"><img src="https://cran.r-project.org/Rlogo.svg" style="height:60px" title="R cran" alt="R cran"></a> 
+  <a target="_blank" href="https://cran.r-project.org/"><img src="files/r-cran.svg" style="height:50px" title="R cran" alt="R cran"></a> 
   </p></div>
   
   <div style="display:inline-block; width:24%"> 
   <p style="text-align:center; vertical-align:middle">
-  <a target="_blank" href="https://www.rstudio.com/products/rstudio/download/"><img src="https://d33wubrfki0l68.cloudfront.net/62bcc8535a06077094ca3c29c383e37ad7334311/a263f/assets/img/logo.svg" style="height:60px" title="Rstudio" alt="Rstudio"></a> 
+  <a target="_blank" href="https://www.rstudio.com/products/rstudio/download/"><img src="files/rstudio.svg" style="height:50px" title="Rstudio" alt="Rstudio"></a> 
   </p></div>
   
   <div style="display:inline-block; width:24%"> 
   <p style="text-align:center; vertical-align:middle"> 
-  <a target="_blank" href="https://git-scm.com/downloads"><img src="https://git-scm.com/images/logo@2x.png" style="height:50px" title="Git" alt="Git"></a> 
+  <a target="_blank" href="https://git-scm.com/downloads"><img src="files/git.png" style="height:50px" title="Git" alt="Git"></a> 
   </p></div>
   
 </div>
@@ -106,12 +106,12 @@ Deben crearse una cuenta en los siguientes servicios:
   
   <div style="display:inline-block; width:49%">
   <p style="text-align:center; vertical-align:middle">
-  <a target="_blank" href="http://zotfile.com/"><img src="https://flavjack.github.io/inti/img/zotfile.png" style="height:50px" title="ZotFile" alt="ZotFile"></a> 
+  <a target="_blank" href="http://zotfile.com/"><img src="files/zotfile.png" style="height:50px" title="ZotFile" alt="ZotFile"></a> 
   </p></div>
   
   <div style="display:inline-block; width:49%">
   <p style="text-align:center; vertical-align:middle">
-  <a target="_blank" href="https://retorque.re/zotero-better-bibtex/"><img src="https://flavjack.github.io/inti/img/bibtex.png" style="height:50px" title="Better BibTeX" alt="BBTeX"></a> 
+  <a target="_blank" href="https://retorque.re/zotero-better-bibtex/"><img src="files/bibtex.png" style="height:50px" title="Better BibTeX" alt="BBTeX"></a> 
   </p></div>
   
 </div>
@@ -133,7 +133,7 @@ Los usuarios de `Windows`, pueden instalar estas aplicaciones entre otras desde 
 <div style="display:inline-block; width:100%"> 
 
 <p style="text-align:center; vertical-align:middle"> 
-<a target="_blank" href="https://ninite.com/"><img src="https://d8f7mp21btv4f.cloudfront.net/crystal/img/brand-95c4357c0068bf934474cf8b7721890a.png" style="height:80px" title="ninite" alt="ninite"></a> 
+<a target="_blank" href="https://ninite.com/"><img src="files/ninite.png" style="height:80px" title="ninite" alt="ninite"></a> 
 </p>
   
 </div>
