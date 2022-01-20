@@ -2,19 +2,25 @@
 title: "Broad-sense heritability in plant breeding"
 description: 'How to calculate the heritability in plant breeding'
 author: "Maria Belen Kistner & Flavio Lozano-Isla"
-output: rmarkdown::html_vignette
-bibliography: [files/pkgs.bib, files/book.bib]
-link-citations: true
-colorlinks: yes
-csl: https://www.zotero.org/styles/crop-science
-nocite: |  
-  [@schmidt2019Estimating; @schmidt2019Heritability; @bernal-vasquez2016Outliera;  @buntaran2020Cross; @bolker2021Mean]
+output:
+  bookdown::html_document2:
+    base_format: rmarkdown::html_vignette
+    toc: true
+    number_sections: false
+pkgdown:
+  as_is: true
 vignette: >
   %\VignetteIndexEntry{Broad-sense heritability in plant breeding}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
+bibliography: [files/pkgs.bib, files/book.bib]
+link-citations: true
+colorlinks: yes
+csl: https://www.zotero.org/styles/crop-science
+nocite: |  
+  [@schmidt2019Estimating; @schmidt2019Heritability; @bernal-vasquez2016Outliera;  @buntaran2020Cross; @bolker2021Mean]
 ---
 
 ```{r setup, include=FALSE}

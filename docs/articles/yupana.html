@@ -39,14 +39,14 @@
     
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
   <a class="nav-link" href="../index.html">
@@ -123,6 +123,7 @@
   </div>
 </nav><div class="container template-article">
 
+
 <div class="row">
   <main id="main"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Yupana</h1>
@@ -134,7 +135,7 @@
 
     
     
-<p>Yupana es una heramienta interactiva que permite el análisis y gráfica de datos basados en diseños experimentales.</p>
+<p>Yupana es una heramienta interactiva que permite el análisis y gráfica de datos basados en diseños experimentales (Table <a href="#tab:modules">1</a>).</p>
 <p>Yupana permite:</p>
 <ul>
 <li>Análisis de datos con distintos modelos estadisticos</li>
@@ -162,9 +163,9 @@
 </div>
 
 </div>
-<div class="section level1">
-<h1 id="base-de-datos">Base de datos<a class="anchor" aria-label="anchor" href="#base-de-datos"></a>
-</h1>
+<div class="section level2">
+<h2 id="base-de-datos">Base de datos<a class="anchor" aria-label="anchor" href="#base-de-datos"></a>
+</h2>
 <p>Los datos deben estar organizado en formato <code>tidy-data</code>.</p>
 <p>Tener en cuenta algunas consideraciones:</p>
 <ul>
@@ -176,11 +177,12 @@
 <p>Las columnas que esten entre corchetes “[]” serán excluidas del análisis</p>
 </blockquote>
 </div>
-<div class="section level1">
-<h1 id="módulos">Módulos<a class="anchor" aria-label="anchor" href="#m%C3%B3dulos"></a>
-</h1>
+<div class="section level2">
+<h2 id="módulos">Módulos<a class="anchor" aria-label="anchor" href="#m%C3%B3dulos"></a>
+</h2>
 <table class="table">
-<caption>Módulos de la aplicación Yupana</caption>
+<caption>
+<span id="tab:modules">Table 1: </span>Módulos de la aplicación Yupana</caption>
 <colgroup>
 <col width="3%">
 <col width="96%">
@@ -214,15 +216,16 @@
 </tbody>
 </table>
 </div>
-<div class="section level1">
-<h1 id="graphics">Graphics<a class="anchor" aria-label="anchor" href="#graphics"></a>
-</h1>
-<p>A continuación se presentará los parámetros y opciones que pueden ser modificadas dentro de la aplicación para la generación de gráficos.</p>
 <div class="section level2">
-<h2 id="opciones-de-gráfico">Opciones de gráfico<a class="anchor" aria-label="anchor" href="#opciones-de-gr%C3%A1fico"></a>
+<h2 id="graphics">Graphics<a class="anchor" aria-label="anchor" href="#graphics"></a>
 </h2>
+<p>Los parámetros de los gráficos generados en la app pueden ser guardadas en hojas de cálculo de google y luego pueden ser cargadas (Table <a href="#tab:param">2</a>).</p>
+<div class="section level3">
+<h3 id="opciones-de-gráfico">Opciones de gráfico<a class="anchor" aria-label="anchor" href="#opciones-de-gr%C3%A1fico"></a>
+</h3>
 <table class="table">
-<caption>Lista de argumentos, descripción y opciones para la generación de gráficos en la aplicación Yupana</caption>
+<caption>
+<span id="tab:param">Table 2: </span>Lista de argumentos, descripción y opciones para la generación de gráficos en la aplicación Yupana</caption>
 <colgroup>
 <col width="10%">
 <col width="57%">
@@ -316,36 +319,41 @@
 </tr>
 </tbody>
 </table>
-<p><small>Nota:</small> <small>Opciones basadas en la función: <code><a href="../reference/plot_smr.html">plot_smr()</a></code></small></p>
-<div class="section level3">
-<h3 id="argumentos-y-valores">Argumentos y valores<a class="anchor" aria-label="anchor" href="#argumentos-y-valores"></a>
-</h3>
+<p><small>Nota:</small>
+<small>Opciones basadas en la función: <code><a href="../reference/plot_smr.html">plot_smr()</a></code></small></p>
+<div class="section level4">
+<h4 id="argumentos-y-valores">Argumentos y valores<a class="anchor" aria-label="anchor" href="#argumentos-y-valores"></a>
+</h4>
 <div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:tparam"></span>
 <img src="files/graph-table.png" alt="Parámetros en `{arguments}` y `{values}` para la generación de gráficos en la aplicación Yupana." width="98%"><p class="caption">
-Parámetros en <code>{arguments}</code> y <code>{values}</code> para la generación de gráficos en la aplicación Yupana.
+Figure 1: Parámetros en <code>{arguments}</code> y <code>{values}</code> para la generación de gráficos en la aplicación Yupana.
 </p>
 </div>
 <div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:plot"></span>
 <img src="files/graph-figure.png" alt="Figura basada en los `{arguments}` y `{values}` de la tabla anterior." width="98%"><p class="caption">
-Figura basada en los <code>{arguments}</code> y <code>{values}</code> de la tabla anterior.
+Figure 2: Figura basada en los <code>{arguments}</code> y <code>{values}</code> de la tabla anterior.
 </p>
 </div>
-<p>La apliación por defecto genera un gama de colores <code>{colors}</code> en una escala de grises. Los colores pueden ser modificados de forma manual por sus nombres en ingles o usando los valores <code>HEX</code>. En este caso se cambió la escala de grises por los colores verde (green) y rojo (red).</p>
+<p>La apliación por defecto genera un gama de colores <code>{colors}</code> en una escala de grises. Los colores pueden ser modificados de forma manual por sus nombres en ingles o usando los valores <code>HEX</code>. En este caso se cambió la escala de grises por los colores verde (green) y rojo (red) (Figure <a href="#fig:tparam">1</a>, <a href="#fig:plot">2</a>).</p>
 </div>
 </div>
-<div class="section level2">
-<h2 id="incluir-nuevas-capas-opt">Incluir nuevas capas <code>opt</code><a class="anchor" aria-label="anchor" href="#incluir-nuevas-capas-opt"></a>
-</h2>
-<p>Yupana a partir de la versión 0.2.0 permite la inclusión de capas adicionales a los gráficos. Puedes incluir dicha información en <code>opt</code> de los <code>{arguments}</code>.</p>
+<div class="section level3">
+<h3 id="incluir-nuevas-capas-opt">Incluir nuevas capas <code>opt</code><a class="anchor" aria-label="anchor" href="#incluir-nuevas-capas-opt"></a>
+</h3>
+<p>Yupana a partir de la versión 0.2.0 permite la inclusión de capas adicionales a los gráficos. Puedes incluir dicha información en <code>opt</code> de los <code>{arguments}</code> (Figure <a href="#fig:opt">3</a>, <a href="#fig:topt">4</a>).</p>
 <p>Puedes incluir diversas capas descritas para el paquete <code>ggplot2</code>.</p>
 <div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:opt"></span>
 <img src="files/graph-figure-grid.png" alt="Gráfico con la inclusión de la capa `facet_grid()`" width="98%"><p class="caption">
-Gráfico con la inclusión de la capa <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid()</a></code>
+Figure 3: Gráfico con la inclusión de la capa <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid()</a></code>
 </p>
 </div>
 <div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:topt"></span>
 <img src="files/graph-table-grid.png" alt="Inclusión de `facet_grid(tratamiento ~ .)` en `opt` de los `{arguments}` en Yupana." width="98%"><p class="caption">
-Inclusión de <code>facet_grid(tratamiento ~ .)</code> en <code>opt</code> de los <code>{arguments}</code> en Yupana.
+Figure 4: Inclusión de <code>facet_grid(tratamiento ~ .)</code> en <code>opt</code> de los <code>{arguments}</code> en Yupana.
 </p>
 </div>
 </div>
@@ -363,7 +371,7 @@ Inclusión de <code>facet_grid(tratamiento ~ .)</code> en <code>opt</code> de lo
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

@@ -83,9 +83,9 @@ if(!c(y %in% colnames(data))) stop("colum no exist")
 # -------------------------------------------------------------------------
 
   group <- if(is.null(group) || is.na(group) || group == "") {NULL} else {group}
-  xlab <- if(is.null(xlab) || is.na(xlab) || xlab == "") {NULL} else {xlab}
-  ylab <- if(is.null(ylab) || is.na(ylab) || ylab == "") {NULL} else {ylab}
-  glab <- if(is.null(glab) || is.na(glab) || glab == "") {NULL} else {glab}
+  xlab <- if(is.null(xlab) || is.na(xlab) ) {NULL} else {xlab}
+  ylab <- if(is.null(ylab) || is.na(ylab) ) {NULL} else {ylab}
+  glab <- if(is.null(glab) || is.na(glab) ) {NULL} else {glab}
   opt <- if(is.null(opt) || is.na(opt) || opt == "") {NULL} else {opt}
 
   color <- if(is.null(color) || is.na(color) || color == "" || color == "yes") {

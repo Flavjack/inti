@@ -100,8 +100,9 @@ yrs$meancomp \%>\%
   plot_smr(type = "line"
            , x = "geno"
            , y = "hi"
+           , xlab = ""
            , group = "treat"
-           , glab = "tratamientos (cm^{-2})"
+           , glab = "Tratamientos"
            , ylimits = ""
            , color = c("brown", "blue")
            , gtext = c("Irrigado", "Dry Down ")

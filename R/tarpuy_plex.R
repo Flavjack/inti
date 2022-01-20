@@ -128,7 +128,7 @@ if ( is.null(data) ) {
              , INSTITUTIONS = institutions
              , RESEARCHERS = researchers
              , MANAGER = manager
-             , LOCATION = loc
+             , LOCATION = location
              , ALTITUDE = altitude
              , GEOREFERENCING = georeferencing
              , ENVIRONMENT = environment

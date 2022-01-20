@@ -1,4 +1,10 @@
-# Version 0.5.2
+# inti 0.5.3
+
+- Complete location name in experimental information
+- Avoid labels in axis and legend using `""`
+- Update vignettes using bookdown
+
+# inti 0.5.2
 
 - *Package* 
   - Fix CRAN comments
@@ -9,7 +15,7 @@
   - Update barcode column for split using "_"
   - Update function `tarpuy_plex()`
  
-# Version 0.5.1
+# inti 0.5.1
 
 - *Package* 
   - `H2cal()`: BLUEs from H2cal may be wrong if other fixed effects in the model (#10).
@@ -18,7 +24,7 @@
     - Use Articul8 Add-ons from Google docs to build Rticles
   - Update pkgdown
 
-# Version 0.5.0
+# inti 0.5.0
 
 > Changes are incompatible with the old versions.
 
@@ -38,7 +44,7 @@
   - Variable list only include arguments with {}
     - You can exclude: {evaluation} or {sampling}
 
-# Version 0.4.4
+# inti 0.4.4
 
 - *Package* 
   - `jc_tombola()`
@@ -55,14 +61,14 @@
   - Include version in the output table
   - Dimension for plots in multivariate analysis
 
-# Version 0.4.3
+# inti 0.4.3
 
 - *Yupana*
   - Show equation with adjusted R in scatter plot graph
   - `sig` include all the variables from the summary table
   - In plots if the number of reps is 1 the `sig` and `error` is "none"
 
-# Version 0.4.2
+# inti 0.4.2
 
 - *Package* 
   - Include info `plot_smr()` and `plot_raw`
@@ -81,7 +87,7 @@
   
 > Agradecimiento a Pedro Barriga por sus sugerencias para mejorar `yupana()`
 
-# Version 0.4.1
+# inti 0.4.1
 
 - *Package* 
   - `plot_smr()`
@@ -96,7 +102,7 @@
   - Add equations in regressions plot
   - Include scatter plot in "Exploratory" module
 
-# Version 0.4.0
+# inti 0.4.0
 
 > Changes incompatible with the old versions.
 
@@ -142,7 +148,7 @@
   
 > Agradecimiento a Khaterine por la idea en el diseño de los logos
     
-# Version 0.3.0
+# inti 0.3.0
 
 - *Yupana*
   - Fix `{arguments}` from `xlimits` to `ylimits`
@@ -159,7 +165,7 @@
     - `xtext`: labels for the x level
     - `gtext`: labels for the group levels
 
-# Version 0.2.0
+# inti 0.2.0
 
 > Changes incompatible with the old versions.
 
@@ -200,7 +206,7 @@
 - *Tarpuy*
   - fix auto-install packages in `inti::tarpuy(T)`
 
-# Version 0.1.3
+# inti 0.1.3
 
 ## Major changes
 
@@ -219,7 +225,7 @@
   - Include video for local installation
   - Suppress messages when load apps
 
-# Version 0.1.2
+# inti 0.1.2
 
 ## Major changes
 
@@ -228,7 +234,7 @@
   - CRAN error: `include_table`
   - Search engine in the web page
 
-# Version 0.1.1
+# inti 0.1.1
 
 ## Major changes
 
@@ -261,7 +267,7 @@
 - *rticles*
   - update app with the new bookdown release
 
-# Version 0.1.0
+# inti 0.1.0
 
 - First package release
 

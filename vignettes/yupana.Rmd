@@ -1,7 +1,13 @@
 ---
 title: "Yupana"
 description: 'Yupana: experimental design analysis'
-output: rmarkdown::html_vignette
+output:
+  bookdown::html_document2:
+    base_format: rmarkdown::html_vignette
+    toc: true
+    number_sections: false
+pkgdown:
+  as_is: true
 vignette: >
   %\VignetteIndexEntry{Yupana}
   %\VignetteEngine{knitr::rmarkdown}
@@ -12,7 +18,7 @@ vignette: >
 source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
 ```
 
-Yupana es una heramienta interactiva que permite el análisis y gráfica de datos basados en diseños experimentales. 
+Yupana es una heramienta interactiva que permite el análisis y gráfica de datos basados en diseños experimentales (Table \@ref(tab:modules)). 
 
 Yupana permite:
 
@@ -56,7 +62,7 @@ Tener en cuenta algunas consideraciones:
 
 # Módulos
 
-```{r}
+```{r modules}
 url <- "https://docs.google.com/spreadsheets/d/1nLP-dH9-dsVMXgsU7Z02EbgWvMIBKG5IYVRHAJCN-Z0/edit#gid=0"
 url %>% 
   gsheet2tbl() %>% 
@@ -65,11 +71,11 @@ url %>%
 
 # Graphics
 
-A continuación se presentará los parámetros y opciones que pueden ser modificadas dentro de la aplicación para la generación de gráficos.
+Los parámetros de los gráficos generados en la app pueden ser guardadas en hojas de cálculo de google y luego pueden ser cargadas (Table \@ref(tab:param)).  
 
 ## Opciones de gráfico
 
-```{r}
+```{r param}
 url <- "https://docs.google.com/spreadsheets/d/1nLP-dH9-dsVMXgsU7Z02EbgWvMIBKG5IYVRHAJCN-Z0/edit#gid=1216293392"
 url %>% 
   gsheet2tbl() %>% 
@@ -82,36 +88,36 @@ url %>%
 
 ### Argumentos y valores
 
-```{r fig.cap= fig$caption}
+```{r tparam, fig.cap= fig$caption}
 dir <- "files/graph-table.png"
 fig <- dir %>% 
   include_figure(caption = "Parámetros en `{arguments}` y `{values}` para la generación de gráficos en la aplicación Yupana.")
 fig$figure
 ```
 
-```{r, fig.cap= fig$caption}
+```{r plot, fig.cap= fig$caption}
 dir <- "files/graph-figure.png"
 fig <- dir %>%
   include_figure(caption = "Figura basada en los `{arguments}` y `{values}` de la tabla anterior.")
 fig$figure
 ```
 
-La apliación por defecto genera un gama de colores `{colors}` en una escala de grises. Los colores pueden ser modificados de forma manual por sus nombres en ingles o usando los valores `HEX`. En este caso se cambió la escala de grises por los colores verde (green) y rojo (red).
+La apliación por defecto genera un gama de colores `{colors}` en una escala de grises. Los colores pueden ser modificados de forma manual por sus nombres en ingles o usando los valores `HEX`. En este caso se cambió la escala de grises por los colores verde (green) y rojo (red) (Figure \@ref(fig:tparam), \@ref(fig:plot)).
 
 ## Incluir nuevas capas `opt`
 
-Yupana a partir de la versión 0.2.0 permite la inclusión de capas adicionales a los gráficos. Puedes incluir dicha información en `opt` de los `{arguments}`.
+Yupana a partir de la versión 0.2.0 permite la inclusión de capas adicionales a los gráficos. Puedes incluir dicha información en `opt` de los `{arguments}` (Figure \@ref(fig:opt), \@ref(fig:topt)).
 
 Puedes incluir diversas capas descritas para el paquete `ggplot2`.
 
-```{r, fig.cap= fig$caption}
+```{r opt, fig.cap= fig$caption}
 dir <- "files/graph-figure-grid.png"
 fig <- dir %>% 
   include_figure(caption = "Gráfico con la inclusión de la capa `facet_grid()`")
 fig$figure
 ```
 
-```{r, fig.cap= fig$caption}
+```{r topt, fig.cap= fig$caption}
 dir <- "files/graph-table-grid.png"
 fig <- dir %>% 
   include_figure(caption = "Inclusión de `facet_grid(tratamiento ~ .)` en `opt` de los `{arguments}` en Yupana.")

@@ -39,14 +39,14 @@
     
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
   <a class="nav-link" href="../index.html">
@@ -123,6 +123,7 @@
   </div>
 </nav><div class="container template-article">
 
+
 <div class="row">
   <main id="main"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Broad-sense heritability in plant breeding</h1>
@@ -135,19 +136,20 @@
 
     
     
-<div class="section level1">
-<h1 id="broad-sense-heritability-h2">Broad-sense heritability (<span class="math inline">\(H^2\)</span>)<a class="anchor" aria-label="anchor" href="#broad-sense-heritability-h2"></a>
-</h1>
+<div class="section level2">
+<h2 id="broad-sense-heritability-h2">Broad-sense heritability (<span class="math inline">\(H^2\)</span>)<a class="anchor" aria-label="anchor" href="#broad-sense-heritability-h2"></a>
+</h2>
 <p>Broad-sense heritability (<span class="math inline">\(H^2\)</span>) is defined as the proportion of phenotypic variance that is attributable to an overall genetic variance for the genotype <span class="citation">(<a href="#ref-schmidt2019Estimating" role="doc-biblioref">Schmidt et al., 2019b</a>)</span>. There are usually additional interpretations associated with <span class="math inline">\(H^2\)</span>: <em>(i)</em> It is equivalent to the coefficient of determination of a linear regression of the unobservable genotypic value on the observed phenotype; <em>(ii)</em> It is also the squared correlation between predicted phenotypic value and genotypic value; and <em>(iii)</em> It represents the proportion of the selection differential (<span class="math inline">\(S\)</span>) that can be realized as the response to selection (<span class="math inline">\(R\)</span>) <span class="citation">(<a href="#ref-falconer2005Introduction" role="doc-biblioref">Falconer and Mackay, 2005</a>)</span>.</p>
 <p>There are two main reasons why heritability on an entry-mean basis is of interest in plant breeding <span class="citation">(<a href="#ref-schmidt2019Heritability" role="doc-biblioref">Schmidt et al., 2019a</a>)</span>:</p>
 <ol style="list-style-type: decimal">
 <li>It is plugged into the breeder’s Equation to predict the response to selection.</li>
 <li>It is a descriptive measure used to assess the usefulness and precision of results from cultivar evaluation trials.</li>
 </ol>
-<div class="section level2">
-<h2 id="breeders-equation">Breeder´s equation<a class="anchor" aria-label="anchor" href="#breeders-equation"></a>
-</h2>
-<p><span class="math display">\[\Delta G=H^2S\]</span> Where:</p>
+<div class="section level3">
+<h3 id="breeders-equation">Breeder´s equation<a class="anchor" aria-label="anchor" href="#breeders-equation"></a>
+</h3>
+<p><span class="math display">\[\Delta G=H^2S\]</span>
+Where:</p>
 <ul>
 <li>
 <span class="math inline">\(\Delta G\)</span> is the genetic gain</li>
@@ -156,47 +158,48 @@
 </ul>
 </div>
 </div>
-<div class="section level1">
-<h1 id="usual-problems">Usual Problems<a class="anchor" aria-label="anchor" href="#usual-problems"></a>
-</h1>
+<div class="section level2">
+<h2 id="usual-problems">Usual Problems<a class="anchor" aria-label="anchor" href="#usual-problems"></a>
+</h2>
 <p>In practice, most trials are conducted in a multienvironment trial (MET) presente unbalanced data as not all cultivars are tested at each environment or simply when plot data is lost or when the number of replicates at each location varies between genotypes <span class="citation">(<a href="#ref-schmidt2019Estimating" role="doc-biblioref">Schmidt et al., 2019b</a>)</span>. However, the standard method for estimating heritability implicitly assumes balanced data, independent genotype effects, and homogeneous variances.</p>
 </div>
-<div class="section level1">
-<h1 id="how-calculate-the-heritability">How calculate the Heritability?<a class="anchor" aria-label="anchor" href="#how-calculate-the-heritability"></a>
-</h1>
-<p>According <span class="citation">Schmidt et al. (<a href="#ref-schmidt2019Heritability" role="doc-biblioref">2019a</a>)</span>, the variance components could be calculated in two ways:</p>
 <div class="section level2">
-<h2 id="two-stages-approach">1) Two stages approach<a class="anchor" aria-label="anchor" href="#two-stages-approach"></a>
+<h2 id="how-calculate-the-heritability">How calculate the Heritability?<a class="anchor" aria-label="anchor" href="#how-calculate-the-heritability"></a>
 </h2>
-<p>For the two stage approach, in the first stage each experiment is analyzed individually according their experiment design (Lattice, CRBD, etc) <span class="citation">(<a href="#ref-zystro2018Alternative" role="doc-biblioref">Zystro et al., 2018</a>)</span>. And for the second stage environments are denotes a year-by-location interaction. This approach assumes a single variance for genotype-by-environment interactions (GxE), even when multiple locations were tested across multiple years <span class="citation">(<a href="#ref-buntaran2020Cross" role="doc-biblioref">Buntaran et al., 2020</a>)</span>.</p>
+<p>According <span class="citation">Schmidt et al. (<a href="#ref-schmidt2019Heritability" role="doc-biblioref">2019a</a>)</span>, the variance components could be calculated in two ways:</p>
 <div class="section level3">
-<h3 id="model">Model<a class="anchor" aria-label="anchor" href="#model"></a>
+<h3 id="two-stages-approach">1) Two stages approach<a class="anchor" aria-label="anchor" href="#two-stages-approach"></a>
 </h3>
+<p>For the two stage approach, in the first stage each experiment is analyzed individually according their experiment design (Lattice, CRBD, etc) <span class="citation">(<a href="#ref-zystro2018Alternative" role="doc-biblioref">Zystro et al., 2018</a>)</span>. And for the second stage environments are denotes a year-by-location interaction. This approach assumes a single variance for genotype-by-environment interactions (GxE), even when multiple locations were tested across multiple years <span class="citation">(<a href="#ref-buntaran2020Cross" role="doc-biblioref">Buntaran et al., 2020</a>)</span>.</p>
+<div class="section level4">
+<h4 id="model">Model<a class="anchor" aria-label="anchor" href="#model"></a>
+</h4>
 <p><span class="math display">\[y_{ikt}=\mu\ +\ G_i+E_t+GxE_{it}+\varepsilon_{ikt}\]</span></p>
 </div>
-<div class="section level3">
-<h3 id="phenotypic-variance">Phenotypic variance<a class="anchor" aria-label="anchor" href="#phenotypic-variance"></a>
-</h3>
+<div class="section level4">
+<h4 id="phenotypic-variance">Phenotypic variance<a class="anchor" aria-label="anchor" href="#phenotypic-variance"></a>
+</h4>
 <p><span class="math display">\[\sigma_p^2=\sigma_g^2+\frac{\sigma_{g\cdot e}^2}{n_e}+\frac{\sigma_{\varepsilon}^2}{n_e\cdot n_r}\]</span></p>
 </div>
 </div>
-<div class="section level2">
-<h2 id="one-stage-approach">2) One stage approach<a class="anchor" aria-label="anchor" href="#one-stage-approach"></a>
-</h2>
+<div class="section level3">
+<h3 id="one-stage-approach">2) One stage approach<a class="anchor" aria-label="anchor" href="#one-stage-approach"></a>
+</h3>
 <p>For the one stage approach only one model is used for the MET analysis. The environmental effects are included via separate year, and location main interaction effects.</p>
 <p><span class="math display">\[y_{ikt}=\mu+G_i+Y_m+E_q+YxE_{mq}+GxY_{im}+GxE_{iq}+GxYxE_{imq}+\varepsilon_{ikmq}\]</span></p>
-<div class="section level3">
-<h3 id="phenotypic-variance-1">Phenotypic variance<a class="anchor" aria-label="anchor" href="#phenotypic-variance-1"></a>
-</h3>
+<div class="section level4">
+<h4 id="phenotypic-variance-1">Phenotypic variance<a class="anchor" aria-label="anchor" href="#phenotypic-variance-1"></a>
+</h4>
 <p><span class="math display">\[\sigma_p^2=\sigma_g^2+\frac{\sigma_{g\cdot e}^2}{n_e}+\frac{\sigma_{g\cdot y}^2}{n_y}+\frac{\sigma_{g\cdot y\cdot e}^2}{n_y\cdot n_e}+\ \frac{\sigma_{\epsilon}^2}{n_e\cdot n_y\cdot n_r}\]</span></p>
 </div>
 </div>
 </div>
-<div class="section level1">
-<h1 id="differentes-heritability-calculations">Differentes heritability calculations<a class="anchor" aria-label="anchor" href="#differentes-heritability-calculations"></a>
-</h1>
+<div class="section level2">
+<h2 id="differentes-heritability-calculations">Differentes heritability calculations<a class="anchor" aria-label="anchor" href="#differentes-heritability-calculations"></a>
+</h2>
 <table class="table">
-<caption>Differentes heritability calculation</caption>
+<caption>
+<span id="tab:unnamed-chunk-1">Table 1: </span>Differentes heritability calculation</caption>
 <colgroup>
 <col width="25%">
 <col width="35%">
@@ -214,20 +217,20 @@
 </tr></tbody>
 </table>
 </div>
-<div class="section level1">
-<h1 id="heritability-function-in-the-package">Heritability function in the package<a class="anchor" aria-label="anchor" href="#heritability-function-in-the-package"></a>
-</h1>
+<div class="section level2">
+<h2 id="heritability-function-in-the-package">Heritability function in the package<a class="anchor" aria-label="anchor" href="#heritability-function-in-the-package"></a>
+</h2>
 <p>For calculate the standard heritability in MET experiments the number of location and replication should be include manually in the function <code><a href="../reference/H2cal.html">H2cal()</a></code>. In the case of difference number of replication in each experiments, take the maximum value (often done in practice) <span class="citation">(<a href="#ref-schmidt2019Estimating" role="doc-biblioref">Schmidt et al., 2019b</a>)</span>.</p>
 <p>For remove the outliers the function implemented is the Method 4 used for <span class="citation">Bernal-Vasquez et al. (<a href="#ref-bernal-vasquez2016Outliera" role="doc-biblioref">2016</a>)</span>: Bonferroni-Holm using re-scaled MAD for standardizing residuals (BH-MADR).</p>
-<div class="section level2">
-<h2 id="load-packages">Load packages<a class="anchor" aria-label="anchor" href="#load-packages"></a>
-</h2>
+<div class="section level3">
+<h3 id="load-packages">Load packages<a class="anchor" aria-label="anchor" href="#load-packages"></a>
+</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://inkaverse.com/">inti</a></span><span class="op">)</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="h2cal-function">H2cal function<a class="anchor" aria-label="anchor" href="#h2cal-function"></a>
-</h2>
+<div class="section level3">
+<h3 id="h2cal-function">H2cal function<a class="anchor" aria-label="anchor" href="#h2cal-function"></a>
+</h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"> <span class="va">dt</span> <span class="op">&lt;-</span> <span class="va">potato</span>
  <span class="va">hr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/H2cal.html">H2cal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dt</span>
@@ -242,9 +245,9 @@
             <span class="op">)</span></code></pre></div>
 <p><img src="heritability_files/figure-html/unnamed-chunk-2-1.png" width="98%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="model-information">Model information<a class="anchor" aria-label="anchor" href="#model-information"></a>
-</h2>
+<div class="section level3">
+<h3 id="model-information">Model information<a class="anchor" aria-label="anchor" href="#model-information"></a>
+</h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/summary.asreml.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">## Linear mixed model fit by REML ['lmerMod']</span>
@@ -269,13 +272,14 @@
 <span class="co">##             Estimate Std. Error t value</span>
 <span class="co">## (Intercept)    12.51       1.19   10.51</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="variance-components">Variance components<a class="anchor" aria-label="anchor" href="#variance-components"></a>
-</h2>
+<div class="section level3">
+<h3 id="variance-components">Variance components<a class="anchor" aria-label="anchor" href="#variance-components"></a>
+</h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">tabsmr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Variance component table"</span><span class="op">)</span></code></pre></div>
 <table style="width:100%;" class="table">
-<caption>Variance component table</caption>
+<caption>
+<span id="tab:unnamed-chunk-4">Table 2: </span>Variance component table</caption>
 <colgroup>
 <col width="5%">
 <col width="3%">
@@ -332,13 +336,14 @@
 </tr></tbody>
 </table>
 </div>
-<div class="section level2">
-<h2 id="best-linear-unbiased-estimators-blues">Best Linear Unbiased Estimators (BLUEs)<a class="anchor" aria-label="anchor" href="#best-linear-unbiased-estimators-blues"></a>
-</h2>
+<div class="section level3">
+<h3 id="best-linear-unbiased-estimators-blues">Best Linear Unbiased Estimators (BLUEs)<a class="anchor" aria-label="anchor" href="#best-linear-unbiased-estimators-blues"></a>
+</h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">blues</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"BLUEs"</span><span class="op">)</span></code></pre></div>
 <table class="table">
-<caption>BLUEs</caption>
+<caption>
+<span id="tab:unnamed-chunk-5">Table 3: </span>BLUEs</caption>
 <thead><tr class="header">
 <th align="left">geno</th>
 <th align="right">stemdw</th>
@@ -471,13 +476,14 @@
 </tbody>
 </table>
 </div>
-<div class="section level2">
-<h2 id="best-linear-unbiased-predictors-blups">Best Linear Unbiased Predictors (BLUPs)<a class="anchor" aria-label="anchor" href="#best-linear-unbiased-predictors-blups"></a>
-</h2>
+<div class="section level3">
+<h3 id="best-linear-unbiased-predictors-blups">Best Linear Unbiased Predictors (BLUPs)<a class="anchor" aria-label="anchor" href="#best-linear-unbiased-predictors-blups"></a>
+</h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">blups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"BLUPs"</span><span class="op">)</span></code></pre></div>
 <table class="table">
-<caption>BLUPs</caption>
+<caption>
+<span id="tab:unnamed-chunk-6">Table 4: </span>BLUPs</caption>
 <thead><tr class="header">
 <th align="left">geno</th>
 <th align="right">stemdw</th>
@@ -546,13 +552,14 @@
 </tbody>
 </table>
 </div>
-<div class="section level2">
-<h2 id="outliers">Outliers<a class="anchor" aria-label="anchor" href="#outliers"></a>
-</h2>
+<div class="section level3">
+<h3 id="outliers">Outliers<a class="anchor" aria-label="anchor" href="#outliers"></a>
+</h3>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">outliers</span><span class="op">$</span><span class="va">fixed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Outliers fixed model"</span><span class="op">)</span></code></pre></div>
 <table class="table">
-<caption>Outliers fixed model</caption>
+<caption>
+<span id="tab:unnamed-chunk-7">Table 5: </span>Outliers fixed model</caption>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">bloque</th>
@@ -583,7 +590,8 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hr</span><span class="op">$</span><span class="va">outliers</span><span class="op">$</span><span class="va">random</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Outliers random model"</span><span class="op">)</span></code></pre></div>
 <table class="table">
-<caption>Outliers random model</caption>
+<caption>
+<span id="tab:unnamed-chunk-8">Table 6: </span>Outliers random model</caption>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="left">bloque</th>
@@ -628,9 +636,9 @@
 </table>
 </div>
 </div>
-<div class="section level1">
-<h1 id="comparison-h2cal-and-asreml">Comparison: H2cal and asreml<a class="anchor" aria-label="anchor" href="#comparison-h2cal-and-asreml"></a>
-</h1>
+<div class="section level2">
+<h2 id="comparison-h2cal-and-asreml">Comparison: H2cal and asreml<a class="anchor" aria-label="anchor" href="#comparison-h2cal-and-asreml"></a>
+</h2>
 <blockquote>
 <p><a href="https://inkaverse.com/articles/extra/stagewise.html" class="uri">https://inkaverse.com/articles/extra/stagewise.html</a></p>
 </blockquote>
@@ -671,7 +679,7 @@ Zystro, J., M. Colley, and J. Dawson. 2018. <a href="https://doi.org/10.1002/978
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

@@ -60,8 +60,9 @@
 #'   plot_smr(type = "line"
 #'            , x = "geno"
 #'            , y = "hi"
+#'            , xlab = ""
 #'            , group = "treat"
-#'            , glab = "tratamientos (cm^{-2})"
+#'            , glab = "Tratamientos"
 #'            , ylimits = ""
 #'            , color = c("brown", "blue")
 #'            , gtext = c("Irrigado", "Dry Down ")
@@ -128,9 +129,9 @@ if(!c(y %in% colnames(data))) stop("colum no exist")
 
 if(is.null(group)) {group <- x}
 
-xlab <- if(is.null(xlab) || is.na(xlab) || xlab == "") {NULL} else {xlab}
-ylab <- if(is.null(ylab) || is.na(ylab) || ylab == "") {NULL} else {ylab}
-glab <- if(is.null(glab) || is.na(glab) || glab == "") {NULL} else {glab}
+xlab <- if(is.null(xlab) || is.na(xlab) ) {NULL} else {xlab}
+ylab <- if(is.null(ylab) || is.na(ylab) ) {NULL} else {ylab}
+glab <- if(is.null(glab) || is.na(glab) ) {NULL} else {glab}
 opt <- if(is.null(opt) || is.na(opt) || opt == "") {NULL} else {opt}
 sig <- if(is.null(sig) || is.na(sig) || sig == "" || sig == "none") {NULL} else {sig}
 error <- if(is.null(error) || is.na(error) || error == "" || error == "none") {NULL} else {error}
