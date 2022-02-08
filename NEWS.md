@@ -1,8 +1,11 @@
 # inti 0.5.3
 
-- Complete location name in experimental information
-- Avoid labels in axis and legend using `""`
-- Update vignettes using bookdown
+- Complete location name in experimental information.
+- Avoid labels in axis and legend using `""`.
+- Update vignettes using bookdown.
+- Fix table summary in `H2cal()`.
+- Update diagnostic plot in `plot_diag()` to lm and lmerMod.
+- Update code for logIn modules in apps.
 
 # inti 0.5.2
 

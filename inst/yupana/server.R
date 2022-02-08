@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-10-06
+#> date .: 2022-02-07
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -47,6 +47,8 @@ observe({
 })
   
 # auth --------------------------------------------------------------------
+  
+  if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
 
   gar_shiny_auth(session)
 
@@ -95,8 +97,6 @@ observe({
     as_sheets_id( fieldbook_url() )
 
   })
-  
-if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
   
 # -------------------------------------------------------------------------
 
@@ -260,9 +260,9 @@ if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
                , x = input$raw_x
                , y = input$raw_y
                , group = input$raw_group
-               , xlab = input$raw_xlab
-               , ylab = input$raw_ylab
-               , glab = input$raw_glab
+               , xlab = if(input$raw_xlab == "") input$raw_x else input$raw_xlab
+               , ylab = if(input$raw_ylab == "") input$raw_y else input$raw_ylab
+               , glab = if(input$raw_glab == "") NULL else input$raw_glab
                , ylimits = input$raw_ylimits
                , xrotation = input$raw_xrotation
                , legend = input$raw_legend
@@ -1055,12 +1055,12 @@ output$plot_color <- renderUI({
 
     plot_smr(data = plot_opt$smr
              , type = input$smr_type
-             , y = input$smr_response
              , x = input$smr_x
+             , y = input$smr_response
              , group = input$smr_group
-             , xlab = input$smr_xlab
-             , ylab = input$smr_ylab
-             , glab = input$smr_glab
+             , xlab = if(input$smr_xlab == "") input$smr_x else input$smr_xlab
+             , ylab = if(input$smr_ylab == "") input$smr_response else input$smr_ylab
+             , glab = if(input$smr_glab == "") NULL else input$smr_glab
              , ylimits = input$smr_ylimits
              , xrotation = input$smr_xrotation
              , error = input$smr_error

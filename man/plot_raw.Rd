@@ -82,8 +82,10 @@ fb \%>\%
   plot_raw(type = "box"
            , x = "geno"
            , y = "twue"
-           #, group = "treat"
-           , color = "yes"
+           , group = ""
+           , ylab = NULL
+           , xlab = NULL
+           , glab = ""
            ) 
            
 }

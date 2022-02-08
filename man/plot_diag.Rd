@@ -4,14 +4,39 @@
 \alias{plot_diag}
 \title{Diagnostic plots}
 \usage{
-plot_diag(model)
+plot_diag(model, title = NA)
 }
 \arguments{
-\item{model}{Statistical model.}
+\item{model}{Statistical model}
+
+\item{title}{Plot title}
 }
 \value{
 plots
 }
 \description{
 Function to plot the diagnostic of models
+}
+\examples{
+
+\dontrun{
+
+dt <- potato
+
+lm <- aov(stemdw ~ bloque + geno*treat, dt)
+
+plot(lm, which = 1)
+plot_diag(lm)[3]
+
+plot(lm, which = 2)
+plot_diag(lm)[2]
+
+plot(lm, which = 3)
+plot_diag(lm)[4]
+
+plot(lm, which = 4)
+plot_diag(lm)[1]
+
+}
+
 }

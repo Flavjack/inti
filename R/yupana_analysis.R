@@ -25,18 +25,13 @@
 #' \dontrun{
 #'
 #' library(inti)
-#' library(gsheet)
 #' 
-#' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
-#' # browseURL(url)
-#' 
-#' fb <- gsheet2tbl(url)
+#' fb <- potato
 #' 
 #' rsl <- yupana_analysis(data = fb
 #'                        , last_factor = "bloque"
 #'                        , response = "spad_83"
-#'                        , model_factors = "block * geno * treat"
+#'                        , model_factors = "geno * treat"
 #'                        , comparison = c("geno", "treat")
 #'                        )
 #' 
@@ -109,7 +104,9 @@ if(FALSE) {
     
   }
   
-  plotdiag <- plot_diag(model_aov)
+  plotdiag <- plot_diag(model = model_aov
+                        , title = response
+                        )
   
 
 # distribution plots ------------------------------------------------------

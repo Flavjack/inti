@@ -40,15 +40,8 @@
 #' \dontrun{
 #'
 #' library(inti)
-#' library(gsheet)
 #' 
-#' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/"
-#'               , "edit#gid=172957346")
-#' # browseURL(url)
-#' 
-#' fb <- gsheet2tbl(url)
-#' 
+#' fb <- potato#' 
 #' 
 #' yrs <- yupana_analysis(data = fb
 #'                        , response = "hi"
@@ -67,8 +60,7 @@
 #'            , color = c("brown", "blue")
 #'            , gtext = c("Irrigado", "Dry Down ")
 #'            )
-#'   
-#' 
+#'            
 #' }
 #' 
 
@@ -127,7 +119,7 @@ if(!c(y %in% colnames(data))) stop("colum no exist")
 
 # -------------------------------------------------------------------------
 
-if(is.null(group)) {group <- x}
+group <- if(is.null(group) || group == "") {x} else {group}
 
 xlab <- if(is.null(xlab) || is.na(xlab) ) {NULL} else {xlab}
 ylab <- if(is.null(ylab) || is.na(ylab) ) {NULL} else {ylab}
@@ -224,6 +216,10 @@ if ( !is.null(glab) ) {
   
 } 
 
+lab_x <- if(is.null(xlab)) x else xlab
+lab_y <- if(is.null(ylab)) y else ylab
+lab_group <- if(is.null(glab)) group else glab
+
 # type --------------------------------------------------------------------
 
 plotdt <- data %>% 
@@ -249,9 +245,9 @@ if(type == "barra") {
       , na.rm = T
     ) +
     labs(
-      x = if(is.null(xlab)) x else xlab
-      , y = if(is.null(ylab)) y else ylab
-      , fill = if(is.null(glab)) group else glab
+      x = lab_x
+      , y = lab_y
+      , fill = lab_group
     ) +
     
     {
@@ -303,11 +299,11 @@ if (type == "linea") {
                     , color = .data[[group]]
                     , linetype = .data[[group]]
     ) ,  size = 1 ) +
-    labs(x = if(is.null(xlab)) x else xlab
-         , y = if(is.null(ylab)) y else ylab
-         , shape = if(is.null(glab)) group else glab
-         , color = if(is.null(glab)) group else glab
-         , linetype = if(is.null(glab)) group else glab
+    labs(x = lab_x
+         , y = lab_y
+         , shape = lab_group
+         , color = lab_group
+         , linetype = lab_group
     ) +
     
     {
