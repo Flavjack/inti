@@ -44,6 +44,7 @@ shinyServer(function(input, output, session) {
 
 # auth --------------------------------------------------------------------
 
+  source("auth.R")
   if (file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
   
   gar_shiny_auth(session)

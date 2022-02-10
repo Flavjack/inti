@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2022-02-07
+#> date .: 2022-02-10
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -48,8 +48,9 @@ observe({
   
 # auth --------------------------------------------------------------------
   
+  source("auth.R")
   if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
-
+  
   gar_shiny_auth(session)
 
 # longin vs local ---------------------------------------------------------
