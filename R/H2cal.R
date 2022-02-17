@@ -15,7 +15,7 @@
 #' @param emmeans Use emmeans for calculate the BLUEs (default = FALSE).
 #' @param summary Print summary from random model (default = FALSE).
 #' @param plot_diag Show diagnostic plots for fixed and random effects (default
-#'   = FALSE).
+#'   = FALSE). Options: "base", "ggplot". .
 #' @param outliers.rm Remove outliers (default = FALSE). See references.
 #' @param weights an optional vector of ‘prior weights’ to be used in the
 #'   fitting process (default = NULL).
@@ -67,11 +67,11 @@
 #' Bernal Vasquez, Angela Maria, et al. “Outlier Detection Methods for
 #' Generalized Lattices: A Case Study on the Transition from ANOVA to REML.”
 #' Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016.
-#' 
-#' Buntaran, H., Piepho, H., Schmidt, P., Ryden, J., Halling, M., and Forkman, J.
-#' (2020). Cross validation of stagewise mixed model analysis of Swedish variety
-#' trials with winter wheat and spring barley. Crop Science, 60(5).
-#' 
+#'
+#' Buntaran, H., Piepho, H., Schmidt, P., Ryden, J., Halling, M., and Forkman,
+#' J. (2020). Cross validation of stagewise mixed model analysis of Swedish
+#' variety trials with winter wheat and spring barley. Crop Science, 60(5).
+#'
 #' Schmidt, P., J. Hartung, J. Bennewitz, and H.P. Piepho. 2019. Heritability in
 #' Plant Breeding on a Genotype Difference Basis. Genetics 212(4).
 #'
@@ -82,8 +82,9 @@
 #' Tanaka, E., and Hui, F. K. C. (2019). Symbolic Formulae for Linear Mixed
 #' Models. In H. Nguyen (Ed.), Statistics and Data Science. Springer.
 #'
-#' Zystro, J., Colley, M., and Dawson, J. (2018). Alternative Experimental Designs
-#' for Plant Breeding. In Plant Breeding Reviews. John Wiley and Sons, Ltd.
+#' Zystro, J., Colley, M., and Dawson, J. (2018). Alternative Experimental
+#' Designs for Plant Breeding. In Plant Breeding Reviews. John Wiley and Sons,
+#' Ltd.
 #'
 #' @importFrom dplyr filter pull rename mutate all_of
 #' @importFrom purrr pluck as_vector
@@ -173,21 +174,21 @@ H2cal <- function(data
                                      , trait = trait
                                      , model = random.model
                                      )
-    dt.rm <- out.rm %>% purrr::pluck(1)
+    dt.rm <- out.rm %>% purrr::pluck(1) 
 
     out.fm <- data %>% outliers_remove(data = .
                                        , trait = trait
                                        , model = fixed.model
                                        )
-    dt.fm <- out.fm %>% purrr::pluck(1)
+    dt.fm <- out.fm %>% purrr::pluck(1) 
 
     outliers <- list(fixed = out.fm$outliers, random = out.rm$outliers)
 
-  } else {
+  } else if (outliers.rm == FALSE) {
 
-    dt.rm <- data
+    dt.rm <- data 
 
-    dt.fm <- data
+    dt.fm <- data 
 
     outliers <- NULL
 
@@ -213,15 +214,39 @@ H2cal <- function(data
 
 # Plot models -------------------------------------------------------------
   
-  diag.fix <- inti::plot_diag(g.fix, title = paste("Fixed model:", trait))
-  diag.ran <- inti::plot_diag(g.ran, title = paste("Random model:", trait))
+  fm.title <- paste("Fixed model:", trait)
+  rm.title <- paste("Random model:", trait)
   
-  diag.plot <- list(fixed = diag.fix, random = diag.ran)
-  
-  if (plot_diag == TRUE) {
+  if (plot_diag == TRUE || plot_diag == "base") {
     
+    diag.plot <- NULL
+    
+    prp <- par(no.readonly = TRUE)
+    on.exit(par(prp))   
+    
+    par(mfrow=c(2,4))
+    hist(resid(g.fix), main = fm.title)
+    qqnorm(resid(g.fix), main = fm.title); qqline(resid(g.fix))
+    plot(fitted(g.fix), resid(g.fix, type = "pearson"), main = fm.title); abline(h=0)
+    plot(resid(g.fix), main = fm.title)
+    #>
+    hist(resid(g.ran), main = rm.title)
+    qqnorm(resid(g.ran), main = rm.title); qqline(resid(g.ran))
+    plot(fitted(g.ran), resid(g.ran, type = "pearson"), main = rm.title); abline(h=0)
+    plot(resid(g.ran), main = rm.title)
+    par(mfrow=c(1,1))
+    
+  } else if (plot_diag == "ggplot") {
+    
+    diag.fix <- inti::plot_diag(g.fix, title = fm.title)
+    diag.ran <- inti::plot_diag(g.ran, title = rm.title)
+    
+    diag.plot <- list(fixed = diag.fix, random = diag.ran)
+      
     grid::grid.newpage()
-    grid::pushViewport(grid::viewport(layout = grid::grid.layout(2, 4)))
+    grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow = 2
+                                                                 , ncol = 4
+                                                                 )))
     
     vplayout <- function(x, y) 
       grid::viewport(layout.pos.row = x, layout.pos.col = y)
@@ -234,8 +259,7 @@ H2cal <- function(data
     print(diag.ran$residual, vp = vplayout(2, 3))
     print(diag.ran$homoscedasticity, vp = vplayout(2, 4))
     
-    #> https://data.library.virginia.edu/diagnostic-plots/
-    } 
+    } else {diag.plot <- NULL}
   
 # Model estimates --------------------------------------------------
   

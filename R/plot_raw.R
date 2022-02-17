@@ -45,10 +45,17 @@
 #'   plot_raw(type = "box"
 #'            , x = "geno"
 #'            , y = "twue"
-#'            , group = ""
+#'            , group = NULL
 #'            , ylab = NULL
 #'            , xlab = NULL
 #'            , glab = ""
+#'            ) 
+#'            
+#' fb %>%
+#'   plot_raw(type = "sca"
+#'            , x = "hi"
+#'            , y = "twue"
+#'            , group = ""
 #'            ) 
 #'            
 #' }
@@ -78,10 +85,10 @@ plot_raw <- function(data
 if (FALSE) {
   
   data <- potato
-  type = "box"
-  x = "geno"
+  type = "scat"
+  x = "hi"
   y = "twue"
-  group = ""
+  group = NULL
   color = "yes"
   
   xlab = "test"
@@ -240,6 +247,8 @@ if(type == "boxplot") {
     {if(!is.null(xtext)) scale_x_discrete(labels = xtext)} 
   
 } else if(type == "scatterplot") {
+  
+  group <- if(x == group) {group <- NULL} else {group}
 
   plotdt <- data %>% 
     mutate(across({{group}}, as.factor))
