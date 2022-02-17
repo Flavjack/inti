@@ -6,6 +6,7 @@
 - Fix table summary in `H2cal()`.
 - Update diagnostic plot in `plot_diag()` to lm and lmerMod.
 - Update code for logIn modules in apps.
+- Update correlation graph in yupana.
 
 # inti 0.5.2
 

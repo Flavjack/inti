@@ -15,7 +15,7 @@ cran <- c(
   , "googleAuthR"
   , "shinydashboard"
   , "cowplot"
-  , "corrplot"
+  , "psych"
   , "tidyverse"
   , "FactoMineR"
   , "ggpmisc"

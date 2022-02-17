@@ -1458,14 +1458,16 @@ output$plot_color <- renderUI({
     outfile <- tempfile(fileext = ".png")
 
     png(outfile, width = ancho, height = alto, units = "cm", res = dpi, pointsize = 9)
-
-    corrplot(mvr()$corr$correlation
-             , method = "number"
-             , tl.col = "black"
-             , tl.srt = 45
-             , 
-             )
-
+    
+    pairs.panels(mvr()$corr$correlation
+                 , hist.col="red"
+                 , pch = 21
+                 , method = "pearson"
+                 , stars = TRUE
+                 , scale = FALSE
+                 , lm = TRUE
+                 ) 
+    
     graphics.off()
 
     list(src = outfile)
