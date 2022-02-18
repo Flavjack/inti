@@ -158,7 +158,7 @@
 fitting process (default = NULL).</p></dd>
 <dt>plot_diag</dt>
 <dd><p>Show diagnostic plots for fixed and random effects (default
-= FALSE).</p></dd>
+= FALSE). Options: "base", "ggplot". .</p></dd>
 <dt>outliers.rm</dt>
 <dd><p>Remove outliers (default = FALSE). See references.</p></dd>
 <dt>trial</dt>
@@ -196,9 +196,9 @@ exclude the intersect in the analysis and get all the genotypes BLUEs.</p>
     <p>Bernal Vasquez, Angela Maria, et al. “Outlier Detection Methods for
 Generalized Lattices: A Case Study on the Transition from ANOVA to REML.”
 Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016.</p>
-<p>Buntaran, H., Piepho, H., Schmidt, P., Ryden, J., Halling, M., and Forkman, J.
-(2020). Cross validation of stagewise mixed model analysis of Swedish variety
-trials with winter wheat and spring barley. Crop Science, 60(5).</p>
+<p>Buntaran, H., Piepho, H., Schmidt, P., Ryden, J., Halling, M., and Forkman,
+J. (2020). Cross validation of stagewise mixed model analysis of Swedish
+variety trials with winter wheat and spring barley. Crop Science, 60(5).</p>
 <p>Schmidt, P., J. Hartung, J. Bennewitz, and H.P. Piepho. 2019. Heritability in
 Plant Breeding on a Genotype Difference Basis. Genetics 212(4).</p>
 <p>Schmidt, P., J. Hartung, J. Rath, and H.P. Piepho. 2019. Estimating Broad
@@ -206,8 +206,9 @@ Sense Heritability with Unbalanced Data from Agricultural Cultivar Trials.
 Crop Science 59(2).</p>
 <p>Tanaka, E., and Hui, F. K. C. (2019). Symbolic Formulae for Linear Mixed
 Models. In H. Nguyen (Ed.), Statistics and Data Science. Springer.</p>
-<p>Zystro, J., Colley, M., and Dawson, J. (2018). Alternative Experimental Designs
-for Plant Breeding. In Plant Breeding Reviews. John Wiley and Sons, Ltd.</p>
+<p>Zystro, J., Colley, M., and Dawson, J. (2018). Alternative Experimental
+Designs for Plant Breeding. In Plant Breeding Reviews. John Wiley and Sons,
+Ltd.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -223,60 +224,72 @@ for Plant Breeding. In Plant Breeding Reviews. John Wiley and Sons, Ltd.</p>
 <span class="r-in"><span class="va">dt</span> <span class="op">&lt;-</span> <span class="va">potato</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">hr</span> <span class="op">&lt;-</span> <span class="fu">H2cal</span><span class="op">(</span>data <span class="op">=</span> <span class="va">dt</span></span>
-<span class="r-in">            , trait <span class="op">=</span> <span class="st">"tubdw"</span></span>
+<span class="r-in">            , trait <span class="op">=</span> <span class="st">"stemdw"</span></span>
 <span class="r-in">            , gen.name <span class="op">=</span> <span class="st">"geno"</span></span>
 <span class="r-in">            , rep.n <span class="op">=</span> <span class="fl">5</span></span>
 <span class="r-in">            , fixed.model <span class="op">=</span> <span class="st">"0 + (1|bloque) + geno"</span></span>
 <span class="r-in">            , random.model <span class="op">=</span> <span class="st">"1 + (1|bloque) + (1|geno)"</span></span>
 <span class="r-in">            , emmeans <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in">            , plot_diag <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in">            , plot_diag <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span class="r-in">            , outliers.rm <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in">            <span class="op">)</span></span>
-<span class="r-plt img"><img src="H2cal-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 <span class="r-in"> <span class="va">hr</span><span class="op">$</span><span class="va">tabsmr</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   trait rep geno env year     mean      std    min    max      V.g      V.e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 tubdw   5   15   1    1 31.71713 12.10921 11.628 53.154 129.7367 168.9607</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        V.p repeatability      H2.s      H2.p      H2.c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 163.5288     0.7933567 0.7933567 0.8847729 0.8753661</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    trait rep geno env year     mean      std   min    max      V.g      V.e</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 stemdw   5   15   1    1 12.59867 4.749994 2.818 22.302 19.96002 9.410932</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        V.p repeatability     H2.s      H2.p      H2.c</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 21.84221      0.913828 0.913828 0.9502395 0.9533473</span>
 <span class="r-in"> <span class="va">hr</span><span class="op">$</span><span class="va">blues</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 15 x 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    geno  tubdw    SE    df lower.CL upper.CL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> G01    28.5  4.33  85.3    19.9      37.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> G02    19.7  4.33  85.3    11.1      28.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> G03    38.3  4.33  85.3    29.7      46.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> G04    39.2  4.33  85.3    30.6      47.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> G05    39.2  4.33  85.3    30.5      47.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> G06    11.6  4.33  85.3     3.02     20.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> G07    19.4  4.33  85.3    10.7      28.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> G08    20.7  4.33  85.3    12.1      29.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> G09    50.2  4.33  85.3    41.6      58.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> G10    28.2  4.33  85.3    19.6      36.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> G11    43.3  4.33  85.3    34.7      51.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> G12    32.6  4.33  85.3    24.0      41.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> G13    20.9  4.33  85.3    12.3      29.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> G14    30.7  4.33  85.3    22.1      39.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> G15    53.2  4.33  85.3    44.5      61.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    geno  stemdw    SE    df lower.CL upper.CL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> G01    15.7   1.03  120.   13.7      17.8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> G02    10.1   1.03  120.    8.08     12.2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> G03     9.70  1.03  120.    7.65     11.7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> G04    15.2   1.03  120.   13.1      17.2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> G05    12.9   1.09  123.   10.7      15.0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> G06    22.3   1.03  120.   20.3      24.3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> G07     2.82  1.03  120.    0.778     4.86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> G08    10.4   1.03  120.    8.38     12.5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> G09    15.7   1.03  120.   13.6      17.7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> G10     9.24  1.03  120.    7.20     11.3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> G11     6.42  1.03  120.    4.38      8.47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> G12    16.1   1.03  120.   14.1      18.2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> G13    14.6   1.03  120.   12.6      16.7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> G14    16.3   1.03  120.   14.3      18.3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> G15    11.5   1.03  120.    9.43     13.5 </span>
 <span class="r-in"> <span class="va">hr</span><span class="op">$</span><span class="va">blups</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 15 x 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    geno  tubdw</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> G01    28.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> G02    21.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> G03    37.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> G04    38.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> G05    38.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> G06    13.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> G07    20.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> G08    22.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> G09    48.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> G10    28.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> G11    42.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> G12    32.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> G13    22.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> G14    30.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> G15    50.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    geno  stemdw</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> G01    15.6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> G02    10.2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> G03     9.82</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> G04    15.1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> G05    12.8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> G06    20.6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> G07     3.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> G08    10.5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> G09    15.5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> G10     9.39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> G11     6.70</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> G12    15.9 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> G13    14.5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> G14    16.1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> G15    11.5 </span>
+<span class="r-in"> <span class="va">hr</span><span class="op">$</span><span class="va">outliers</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fixed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    bloque geno stemdw     resi  res_MAD rawp.BHStud index adjp bholm out_flag</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68     IV  G05  80.65 60.36709 18.84505           0    68    0     0  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     bloque geno stemdw     resi   res_MAD  rawp.BHStud index         adjp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68      IV  G05  80.65 61.39925 18.886676 0.0000000000    68 0.0000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100     IV  G06  33.52 12.02340  3.698449 0.0002169207   100 0.0002169207</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          bholm out_flag</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68  0.00000000  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100 0.03232119  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"> </span>
 </code></pre></div>
     </div>

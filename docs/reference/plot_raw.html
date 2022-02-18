@@ -189,8 +189,17 @@ end, brakes)</p></dd>
 <span class="r-in">  <span class="fu">plot_raw</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"box"</span></span>
 <span class="r-in">           , x <span class="op">=</span> <span class="st">"geno"</span></span>
 <span class="r-in">           , y <span class="op">=</span> <span class="st">"twue"</span></span>
-<span class="r-in">           <span class="co">#, group = "treat"</span></span>
-<span class="r-in">           , color <span class="op">=</span> <span class="st">"yes"</span></span>
+<span class="r-in">           , group <span class="op">=</span> <span class="cn">NULL</span></span>
+<span class="r-in">           , ylab <span class="op">=</span> <span class="cn">NULL</span></span>
+<span class="r-in">           , xlab <span class="op">=</span> <span class="cn">NULL</span></span>
+<span class="r-in">           , glab <span class="op">=</span> <span class="st">""</span></span>
+<span class="r-in">           <span class="op">)</span> </span>
+<span class="r-in">           </span>
+<span class="r-in"><span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">plot_raw</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"sca"</span></span>
+<span class="r-in">           , x <span class="op">=</span> <span class="st">"hi"</span></span>
+<span class="r-in">           , y <span class="op">=</span> <span class="st">"twue"</span></span>
+<span class="r-in">           , group <span class="op">=</span> <span class="st">""</span></span>
 <span class="r-in">           <span class="op">)</span> </span>
 <span class="r-in">           </span>
 <span class="r-in"><span class="op">}</span></span>

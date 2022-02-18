@@ -107,19 +107,46 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_diag</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_diag</span><span class="op">(</span><span class="va">model</span>, title <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>model</dt>
-<dd><p>Statistical model.</p></dd>
+<dd><p>Statistical model</p></dd>
+<dt>title</dt>
+<dd><p>Plot title</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>plots</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">dt</span> <span class="op">&lt;-</span> <span class="va">potato</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">lm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">stemdw</span> <span class="op">~</span> <span class="va">bloque</span> <span class="op">+</span> <span class="va">geno</span><span class="op">*</span><span class="va">treat</span>, <span class="va">dt</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lm</span>, which <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">plot_diag</span><span class="op">(</span><span class="va">lm</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lm</span>, which <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">plot_diag</span><span class="op">(</span><span class="va">lm</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lm</span>, which <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">plot_diag</span><span class="op">(</span><span class="va">lm</span><span class="op">)</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lm</span>, which <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">plot_diag</span><span class="op">(</span><span class="va">lm</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
