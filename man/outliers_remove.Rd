@@ -30,7 +30,7 @@ library(inti)
 
 rmout <- outliers_remove(
   data = potato
-  , trait ="hi"
+  , trait ="stemdw"
   , model = "0 + (1|bloque) + geno"
   )
   

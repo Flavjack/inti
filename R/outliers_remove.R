@@ -31,7 +31,7 @@
 #'
 #' rmout <- outliers_remove(
 #'   data = potato
-#'   , trait ="hi"
+#'   , trait ="stemdw"
 #'   , model = "0 + (1|bloque) + geno"
 #'   )
 #'   
@@ -67,7 +67,7 @@ outliers_remove <- function(data
     select({{model_fact}}) %>%
     relocate({{trait}}, .after = last_col()) %>%
     drop_na() %>%
-    cbind(., resi, res_MAD, rawp.BHStud)
+    cbind.data.frame(., resi, res_MAD, rawp.BHStud)
 
   # Produce a Bonferroni-Holm tests for the adjusted p-values
 

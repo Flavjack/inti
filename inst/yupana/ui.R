@@ -13,7 +13,7 @@
 
 #> devtools::install_github("flavjack/inti")
 
-source("msgs.R")
+source("www/msgs.R")
 suppressPackageStartupMessages({source("pkgs.R")})
 
 # -------------------------------------------------------------------------

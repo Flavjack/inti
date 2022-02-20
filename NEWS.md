@@ -1,3 +1,8 @@
+# inti 0.5.4
+
+- `outliers_remove()`: change `cbind()` by `cbind.data.frame()`
+- Fix apps auth
+
 # inti 0.5.3
 
 - Complete location name in experimental information.

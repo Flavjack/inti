@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-12-18
+#> date .: 2021-12-20
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -44,7 +44,7 @@ shinyServer(function(input, output, session) {
 
 # auth --------------------------------------------------------------------
 
-  source("auth.R")
+  source("www/auth.R")
   if (file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
   
   gar_shiny_auth(session)

@@ -145,17 +145,13 @@ Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">rmout</span> <span class="op">&lt;-</span> <span class="fu">outliers_remove</span><span class="op">(</span></span>
 <span class="r-in">  data <span class="op">=</span> <span class="va">potato</span></span>
-<span class="r-in">  , trait <span class="op">=</span><span class="st">"hi"</span></span>
+<span class="r-in">  , trait <span class="op">=</span><span class="st">"stemdw"</span></span>
 <span class="r-in">  , model <span class="op">=</span> <span class="st">"0 + (1|bloque) + geno"</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in">  </span>
 <span class="r-in"><span class="va">rmout</span><span class="op">$</span><span class="va">outliers</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     bloque geno   hi       resi   res_MAD  rawp.BHStud index         adjp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68      IV  G05 0.19 -0.3299352 -7.261199 3.836931e-13    68 3.836931e-13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 124     II  G15 0.45 -0.1742304 -3.834454 1.258434e-04   124 1.258434e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            bholm out_flag</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68  5.755396e-11  OUTLIER</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 124 1.875067e-02  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    bloque geno stemdw     resi  res_MAD rawp.BHStud index adjp bholm out_flag</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68     IV  G05  80.65 60.36709 18.84505           0    68    0     0  OUTLIER</span>
 <span class="r-in">  </span>
 </code></pre></div>
     </div>
