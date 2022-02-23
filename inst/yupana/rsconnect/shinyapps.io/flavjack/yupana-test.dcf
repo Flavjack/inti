@@ -1,0 +1,13 @@
+name: yupana-test
+title: yupana-test
+username:
+account: flavjack
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5717114
+bundleId: 5609792
+url: https://flavjack.shinyapps.io/yupana-test/
+when: 1645625068.13979
+lastSyncTime: 1645625068.13979
+asMultiple: FALSE
+asStatic: FALSE

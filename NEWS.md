@@ -1,7 +1,8 @@
 # inti 0.5.4
 
-- `outliers_remove()`: change `cbind()` by `cbind.data.frame()`
-- Fix apps auth
+- `outliers_remove()`: change `cbind()` by `cbind.data.frame()`.
+- Fix apps auth.
+- Thanks to Uwe Ligges to allow consecutive CRAN updates.
 
 # inti 0.5.3
 

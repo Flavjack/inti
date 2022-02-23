@@ -343,7 +343,7 @@ navbarPage(title = div(
 
                              <div style="display:inline-block; width:100%">
                              <p style="text-align:center">
-                             <a target="_blank" href="https://flavjack.shinyapps.io/yupanapro/">
+                             <a target="_blank" href="https://flavjack.shinyapps.io/yupana/">
                              <img src="https://flavjack.github.io/inti/img/yupana.png" style="height:80px" title="yupana"></a>
                              <span style="display:block;"><small>Yupana</small></span>
                              </p></div>
