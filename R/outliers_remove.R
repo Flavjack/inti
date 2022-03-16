@@ -66,7 +66,7 @@ outliers_remove <- function(data
   newdt <- data %>%
     select({{model_fact}}) %>%
     relocate({{trait}}, .after = last_col()) %>%
-    drop_na() %>%
+    drop_na() %>% # fix model test bug?
     cbind.data.frame(., resi, res_MAD, rawp.BHStud)
 
   # Produce a Bonferroni-Holm tests for the adjusted p-values

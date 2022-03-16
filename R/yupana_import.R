@@ -18,7 +18,7 @@
 #' library(gsheet)
 #' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=1583299871")
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=338518609")
 #' # browseURL(url)
 #' 
 #' fb <- gsheet2tbl(url)
@@ -42,7 +42,7 @@ yupana_import <- function(data){
   
 if(!is.data.frame(data)) {
   
-  # data <- rsl
+  # data <- fb
 
   smr <- data$meancomp
   
@@ -99,17 +99,17 @@ if(!is.data.frame(data)) {
   smr <- data %>% 
     select(1:.data$`[plot]`) %>% 
     select(!.data$`[plot]`) %>% 
-    filter(!across(everything(), is.na))
+    filter(if_any(everything(), ~ !is.na(.)))
   
   aov <- data %>%
     select(.data$`[aov]`:length(.)) %>% 
     select(!c(.data$`[aov]`)) %>% 
-    filter(!across(everything(), is.na))
+    filter(if_any(everything(), ~ !is.na(.)))
   
   stats <- data %>%
     select(.data$`[stats]`:.data$`[aov]`) %>% 
     select(!c(.data$`[stats]`, .data$`[aov]`)) %>% 
-    filter(!across(everything(), is.na))
+    filter(if_any(everything(), ~ !is.na(.)))
   
   stats_args <- stats %>% 
     deframe() %>% 
@@ -119,7 +119,7 @@ if(!is.data.frame(data)) {
     select(.data$`[plot]`:.data$`[stats]`) %>% 
     select(!c(.data$`[plot]`, .data$`[stats]`)) %>% 
     select(!colors) %>% 
-    filter(!across(everything(), is.na)) 
+    filter(if_any(everything(), ~ !is.na(.)))
   
   plot_args <- plot %>% 
     deframe() %>% 

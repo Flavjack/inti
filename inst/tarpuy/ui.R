@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-09-30
+#> date .: 2022-03-26
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -175,7 +175,7 @@ navbarPage(title = div(
 
                              fluidRow(
 
-                               box(title = h5("Info")
+                               box(title = h5("Information")
                                    , width = 2
                                    , solidHeader = T,
 
@@ -192,7 +192,7 @@ navbarPage(title = div(
 
                                    textInput(inputId = "gsheet_design"
                                              , label = NULL
-                                             , value = "dsg"
+                                             , value = "design"
                                              , placeholder = "Sheet name"
                                    ),
 
@@ -204,21 +204,21 @@ navbarPage(title = div(
 
                                    textInput(inputId = "gsheet_varlist"
                                              , label = NULL
-                                             , value = "var"
+                                             , value = "variables"
                                              , placeholder = "Sheet name"
                                    ),
 
                                ),
 
-                               box(title = h5("Fieldbook")
+                               box(title = #h5("Fieldbook")
                                    , width = 2
                                    , solidHeader = T,
 
-                                   textInput(inputId = "gsheet_fb"
-                                             , label = NULL
-                                             , value = "fb"
-                                             , placeholder = "Sheet name"
-                                   ),
+                                   # textInput(inputId = "gsheet_fb"
+                                   #           , label = NULL
+                                   #           , value = "fb"
+                                   #           , placeholder = "Sheet name"
+                                   # ),
 
                                ),
 
@@ -657,18 +657,6 @@ navbarPage(title = div(
                                       )
                                )
                              
-                             
-
-                             
-                             
-
-
-
-
-
-
-
-                             
                              )
                       )
 
@@ -749,6 +737,16 @@ navbarPage(title = div(
                                
                                column(6,
                                       
+                                      textInput(inputId = "fb2export"
+                                                , label = "Sheet export"
+                                                , placeholder = "sheet name"
+                                                , value = "fb"
+                                      ),
+                                      
+                               ),
+                               
+                               column(6,
+                                      
                                       radioButtons(inputId = "export_design_overwrite"
                                                  , label = "Overwrite"
                                                  , inline = TRUE
@@ -756,12 +754,11 @@ navbarPage(title = div(
                                                  )
                                       ),
                                
-                               column(6,
+                               column(12,
                                       
                                       actionButton(inputId = "export_design"
                                                    , label = "Generate"
                                                    , class = "btn btn-success"
-                                                   , width = "100%"
                                                    )
                                       )
                                
@@ -800,6 +797,9 @@ tabPanel("Sketch",
                                , inline = TRUE
                                , selected = "Sketch"
                                ),
+                  
+                  
+                  uiOutput("sketch_sheets"), 
 
                   uiOutput("sketch_options"),
 

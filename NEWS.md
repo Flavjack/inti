@@ -1,3 +1,10 @@
+# inti 0.5.5
+
+- Update `yupana_import()` using `if_any()` instead `across()`
+- Tarpuy: in `dsg` the column `qr` ==> `barcode`
+- Tarypu: export field-book in specific sheet
+- Tarpuy: select sheet for field-book sketch
+
 # inti 0.5.4
 
 - `outliers_remove()`: change `cbind()` by `cbind.data.frame()`.

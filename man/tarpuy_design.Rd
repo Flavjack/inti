@@ -54,7 +54,7 @@ library(inti)
 library(gsheet)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "183upHd4wriZz2UnInoo5Ate5YFdk7cZlhE0sMQ2x5iw/edit#gid=532773890")
+              , "1tDcLZZ9C80uBJK8RRW6_WIyxiL8bIHACStJyf8avuCU/edit#gid=59220990")
 # browseURL(url)
 
 fb <- gsheet2tbl(url) 

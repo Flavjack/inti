@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-12-20
+#> date .: 2022-03-26
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -396,7 +396,7 @@ observeEvent(input$export_design, {
         , barcode = input$design_qr
       )
   
-  sheet_export <- input$gsheet_fb %>% gsub("[[:space:]]", "_", .)
+  sheet_export <- input$fb2export %>% gsub("[[:space:]]", "_", .)
   
   if(!is.null(fieldbook)) {
     
@@ -432,6 +432,7 @@ observeEvent(input$export_design, {
 # tarpuy sketch -----------------------------------------------------------
 # -------------------------------------------------------------------------
 
+
 # preview sketch ----------------------------------------------------------
 
   gsheet_fb <- reactive({
@@ -456,24 +457,38 @@ observeEvent(input$export_design, {
                 style="height:580px; width:100%; scrolling=no")
 
   })
+  
+  
+
+# sketch sheets -----------------------------------------------------------
+
+  sketch_sheets <- eventReactive(input$update_sketch,{
+    
+    names <- gs() %>% sheet_names()
+    
+  })
+  
+  output$sketch_sheets <-  renderUI({
+    
+    selectizeInput(
+      inputId = "sketch_sheets"
+      , label = NULL
+      , choices = c("choose" = ""
+                    , sketch_sheets())
+      , multiple = FALSE
+    )
+    
+  })
 
   # options -----------------------------------------------------------------
 
-  fb_factors <- eventReactive(input$update_sketch, {
-
-    validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
-
-    validate( need( input$gsheet_fb %in% sheet_names(gs())
-                    , "Create your fieldbook") )
+  output$sketch_options <- renderUI({
+    
+    validate( need( input$sketch_sheets, "Insert your fieldbook" ) )
 
     factors <- gs() %>%
-      range_read( input$gsheet_fb ) %>% names()
+          range_read( input$sketch_sheets ) %>% names()
 
-  })
-  
-  output$sketch_options <- renderUI({
-
-    factors <- fb_factors()
 
     tagList(
 
@@ -517,13 +532,14 @@ observeEvent(input$export_design, {
   plot_sketch <- reactive({
 
     validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
+    validate( need( input$sketch_sheets, "Insert your fieldbook" ) )
     validate( need( input$sketch_factor, "Select your design factor") )
     validate( need( input$sketch_dim, "Select your blocking factor") )
 
-    if ( input$gsheet_fb %in% sheet_names(gs()) ) {
+    if ( input$sketch_sheets %in% sheet_names(gs()) ) {
 
       fb_sketch <- gs() %>%
-        range_read( input$gsheet_fb )
+        range_read( input$sketch_sheets )
     }
 
     if ( input$sketch_xlab == "" | is.null(input$sketch_xlab) ){ sketch_xlab <- NULL } else {sketch_xlab <- input$sketch_xlab}
