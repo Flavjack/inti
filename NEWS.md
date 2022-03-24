@@ -1,9 +1,12 @@
 # inti 0.5.5
 
-- Update `yupana_import()` using `if_any()` instead `across()`
+- Yupana: update `yupana_import()` using `if_any()` instead `across()`
 - Tarpuy: in `dsg` the column `qr` ==> `barcode`
+- Tarpuy: update sheets names in `intro` section
 - Tarypu: export field-book in specific sheet
 - Tarpuy: select sheet for field-book sketch
+- Tarpuy: create field-book only with the factor list
+- Tarpuy: column with [] are omitted in the field-book generation
 
 # inti 0.5.4
 

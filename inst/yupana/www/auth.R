@@ -1,6 +1,8 @@
+suppressPackageStartupMessages({
 library(googleAuthR)
 library(gargle)
 library(httr)
+})
 
 # check loaded package
 check_package_loaded <- function(package_name){

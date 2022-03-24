@@ -37,11 +37,10 @@ shinyServer(function(input, output, session) {
     if(Sys.getenv('SHINY_PORT') == "") {
 
       session$onSessionEnded(stopApp)
-
     }
 
   })
-
+  
 # auth --------------------------------------------------------------------
 
   source("www/auth.R")

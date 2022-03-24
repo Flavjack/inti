@@ -44,5 +44,6 @@ yupana <- function(dependencies = FALSE) {
                 , launch.browser = TRUE
                 , port = 1221
                 )
+  
 }
 
