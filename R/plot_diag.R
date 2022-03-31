@@ -17,6 +17,8 @@
 #' 
 #' lm <- aov(stemdw ~ bloque + geno*treat, dt)
 #' 
+#' #lm <- lme4::lmer(stemdw ~ bloque + (1|geno:treat), dt)
+#'  
 #' plot(lm, which = 1)
 #' plot_diag(lm)[3]
 #' 
@@ -38,11 +40,11 @@ plot_diag <- function( model, title = NA) {
   
   title <- if(is.null(title) || is.na(title) ) {""} else {title}
   
-  dt <- if ( class(model) == "lm" || class(model) == "aov" ) {
+  dt <- if ( inherits(model, "lm") || inherits(model, "aov") ) {
     
     ggplot2::fortify(model)
     
-  } else if ( class(model) == "lmerMod" ) {
+  } else if ( inherits(model, "lmerMod") ) {
     
     lme4::fortify.merMod(model)
     
