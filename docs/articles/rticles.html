@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,26 +137,44 @@
 
     
     
-<p>El paquete <code>inti</code> posee planillas para la generación de documentos técnico/científicos usando <code>Rmarkdown + Bookdown</code>. Estas plantillas permitirán la elaboración de documentos reproducibles.</p>
+<p>El paquete <code>inti</code> posee planillas para la generación de
+documentos técnico/científicos usando <code>Rmarkdown + Bookdown</code>.
+Estas plantillas permitirán la elaboración de documentos
+reproducibles.</p>
 <p align="center"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/videoseries?list=PLSQMdOu57lj9HTZNed2-q3WpQfIGraA1V" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 <div class="section level2">
 <h2 id="herramientas-para-documentos-reproducibles">Herramientas para documentos reproducibles<a class="anchor" aria-label="anchor" href="#herramientas-para-documentos-reproducibles"></a>
 </h2>
-<p>Para la construcción de documentos técnico/científicos con R, deben crearse algunas cuentas e instalar los programas que necesitamos. Estas herramientas son independientes del sistema operativo, de acceso libre y pueden ser usadas para la investigación reproducible.</p>
+<p>Para la construcción de documentos técnico/científicos con R, deben
+crearse algunas cuentas e instalar los programas que necesitamos. Estas
+herramientas son independientes del sistema operativo, de acceso libre y
+pueden ser usadas para la investigación reproducible.</p>
 <blockquote>
-<p>El listado de herramientas son una recomendación basada en mi experiencia, y no son las únicas herramientas.</p>
+<p>El listado de herramientas son una recomendación basada en mi
+experiencia, y no son las únicas herramientas.</p>
 </blockquote>
 <div class="section level3">
 <h3 id="cuentas">Cuentas<a class="anchor" aria-label="anchor" href="#cuentas"></a>
 </h3>
 <blockquote>
-<p>Se recomienda usar el mismo correo para todas las cuentas. El uso de correos diferentes para cada servicio dificultará el flujo de trabajo.</p>
+<p>Se recomienda usar el mismo correo para todas las cuentas. El uso de
+correos diferentes para cada servicio dificultará el flujo de
+trabajo.</p>
 </blockquote>
 <p>Deben crearse una cuenta en los siguientes servicios:</p>
 <ol style="list-style-type: decimal">
-<li><p><code>Google (Gmail)</code>. Se recomienda que tengan una cuenta de Google ya que nos permitirá tener acceso a <code>Gsuit</code> que posee un conjunto de herramientas gratuitas en línea. Estas herramientas son un buen complemento para el trabajo en equipo y puedes acceder a ellos desde distintos dispositivos móviles.</p></li>
-<li><p><code>Zotero</code>. Será nuestra biblioteca virtual, y una de las herramientas que más usaremos, ya que nos permitirá organizar nuestro trabajo y citar los documentos en nuestros manuscritos.</p></li>
-<li><p><code>GitHub</code>. Es un servicio de repositorio de código. Nos ayudará organizar nuestros proyectos y códigos. Nos permite visualizar los historiales de cambio de nuestro proyecto, compartir nuestro código y generar páginas webs para publicar documentos en línea.</p></li>
+<li><p><code>Google (Gmail)</code>. Se recomienda que tengan una cuenta
+de Google ya que nos permitirá tener acceso a <code>Gsuit</code> que
+posee un conjunto de herramientas gratuitas en línea. Estas herramientas
+son un buen complemento para el trabajo en equipo y puedes acceder a
+ellos desde distintos dispositivos móviles.</p></li>
+<li><p><code>Zotero</code>. Será nuestra biblioteca virtual, y una de
+las herramientas que más usaremos, ya que nos permitirá organizar
+nuestro trabajo y citar los documentos en nuestros manuscritos.</p></li>
+<li><p><code>GitHub</code>. Es un servicio de repositorio de código. Nos
+ayudará organizar nuestros proyectos y códigos. Nos permite visualizar
+los historiales de cambio de nuestro proyecto, compartir nuestro código
+y generar páginas webs para publicar documentos en línea.</p></li>
 </ol>
 <div class="section level4">
 <h4 id="links-para-crear-las-cuentas">Links para crear las cuentas<a class="anchor" aria-label="anchor" href="#links-para-crear-las-cuentas"></a>
@@ -187,13 +205,26 @@
 <h3 id="programas">Programas<a class="anchor" aria-label="anchor" href="#programas"></a>
 </h3>
 <blockquote>
-<p>Instalar los siguientes programas en el orden que se mencionan, para evitar conflictos en su funcionamiento.</p>
+<p>Instalar los siguientes programas en el orden que se mencionan, para
+evitar conflictos en su funcionamiento.</p>
 </blockquote>
 <ol style="list-style-type: decimal">
-<li><p><code>Zotero</code>. Es un gestor de referencias bibliográficas, libre, abierto y gratuito desarrollado por el Center for History and New Media de la Universidad George Mason.</p></li>
-<li><p><code>R CRAN</code>. Es un entorno de lenguaje de programación con un enfoque al análisis estadístico. El software R viene por defecto con funcionalidades básicas y para ampliar estas debemos instalar paquetes. R actualmente nos permite hacer distintas tareas comó análisis estadísticos, generación de gráficos, escritura de documentos, desarrollo de aplicaciones webs, etc.</p></li>
-<li><p><code>RStudio</code>. RStudio es un entorno de desarrollo integrado para el lenguaje de programación R, dedicado a la computación estadística y gráficos.</p></li>
-<li><p><code>Git</code>. Git es un software de control de versiones. Esta pensando en la eficiencia y la confiabilidad del mantenimiento de versiones de aplicaciones. Git nos permitirá usar <code>bash</code> en windows a través del terminal en RStudio.</p></li>
+<li><p><code>Zotero</code>. Es un gestor de referencias bibliográficas,
+libre, abierto y gratuito desarrollado por el Center for History and New
+Media de la Universidad George Mason.</p></li>
+<li><p><code>R CRAN</code>. Es un entorno de lenguaje de programación
+con un enfoque al análisis estadístico. El software R viene por defecto
+con funcionalidades básicas y para ampliar estas debemos instalar
+paquetes. R actualmente nos permite hacer distintas tareas comó análisis
+estadísticos, generación de gráficos, escritura de documentos,
+desarrollo de aplicaciones webs, etc.</p></li>
+<li><p><code>RStudio</code>. RStudio es un entorno de desarrollo
+integrado para el lenguaje de programación R, dedicado a la computación
+estadística y gráficos.</p></li>
+<li><p><code>Git</code>. Git es un software de control de versiones.
+Esta pensando en la eficiencia y la confiabilidad del mantenimiento de
+versiones de aplicaciones. Git nos permitirá usar <code>bash</code> en
+windows a través del terminal en RStudio.</p></li>
 </ol>
 <div class="section level4">
 <h4 id="links-de-los-programas-para-instalar">Links de los programas para instalar<a class="anchor" aria-label="anchor" href="#links-de-los-programas-para-instalar"></a>
@@ -249,7 +280,8 @@
 <div class="section level3">
 <h3 id="herramientas-adicionales">Herramientas adicionales<a class="anchor" aria-label="anchor" href="#herramientas-adicionales"></a>
 </h3>
-<p>Existen alguna herramientas básicas que NO deben faltar en tú computador:</p>
+<p>Existen alguna herramientas básicas que NO deben faltar en tú
+computador:</p>
 <ul>
 <li>Chrome (buscador web)</li>
 <li>Foxit Reader (lector de PDFs)</li>
@@ -257,7 +289,8 @@
 <li>Google Backup and Sync (servicio de sincronización de datos)</li>
 <li>ShareX (herramienta para captura de pantalla)</li>
 </ul>
-<p>Los usuarios de <code>Windows</code>, pueden instalar estas aplicaciones entre otras desde <code>ninite</code>.</p>
+<p>Los usuarios de <code>Windows</code>, pueden instalar estas
+aplicaciones entre otras desde <code>ninite</code>.</p>
 <div style="display:inline-block; width:100%"> 
 
 <p style="text-align:center; vertical-align:middle"> 
@@ -269,7 +302,9 @@
 <div class="section level3">
 <h3 id="chocolatey-opcional">Chocolatey (opcional)<a class="anchor" aria-label="anchor" href="#chocolatey-opcional"></a>
 </h3>
-<p>Si eres usuario de windows, puedes instalar todas las herramientas mencionadas desde el administrador de paquetes <code>chocolatey</code> a través de <code>PowerShell</code>.</p>
+<p>Si eres usuario de windows, puedes instalar todas las herramientas
+mencionadas desde el administrador de paquetes <code>chocolatey</code> a
+través de <code>PowerShell</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>open https<span class="sc">:</span><span class="er">//</span>chocolatey.org<span class="sc">/</span>packages</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Start<span class="sc">-</span>Process powershell <span class="sc">-</span>Verb runAs</span>
@@ -301,12 +336,14 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Desarrollado por <a href="https://lozanoisla.com/" class="external-link">Flavio Lozano-Isla</a>.</p>
+<p>Desarrollado por <a href="https://lozanoisla.com/" class="external-link">Flavio
+Lozano-Isla</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
     </footer>

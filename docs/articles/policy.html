@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -140,13 +140,23 @@
 <div class="section level2">
 <h2 id="privacy-policy-for-apps-that-access-google-apis">Privacy policy for apps that access Google APIs<a class="anchor" aria-label="anchor" href="#privacy-policy-for-apps-that-access-google-apis"></a>
 </h2>
-<p><em>Inkaverse</em> maintains several web apps that make it easier to work with Google APIs from R:</p>
+<p><em>Inkaverse</em> maintains several web apps that make it easier to
+work with Google APIs from R:</p>
 <ul>
-<li><p><a href="https://flavjack.shinyapps.io/yupanapro/" class="external-link">Yupana</a> wraps the <a href="https://developers.google.com/sheets/api/" class="external-link">Sheets API</a></p></li>
-<li><p><a href="https://flavjack.shinyapps.io/tarpuy/" class="external-link">Tarpuy</a> wraps the <a href="https://developers.google.com/sheets/api/" class="external-link">Sheets API</a></p></li>
+<li><p><a href="https://flavjack.shinyapps.io/yupanapro/" class="external-link">Yupana</a>
+wraps the <a href="https://developers.google.com/sheets/api/" class="external-link">Sheets
+API</a></p></li>
+<li><p><a href="https://flavjack.shinyapps.io/tarpuy/" class="external-link">Tarpuy</a> wraps
+the <a href="https://developers.google.com/sheets/api/" class="external-link">Sheets
+API</a></p></li>
 </ul>
-<p>The apps are governed by common policies recorded here. These apps use internal resources owned by the “inkaverse” project on Google Cloud Platform. That is the name you will see in a consent screen. Exception: gmailr does NOT use any resources owned by inkaverse Package, due to <a href="https://developers.google.com/terms/api-services-user-data-policy#additional-requirements-for-specific-api-scopes" class="external-link">special requirements</a> around Gmail and its scopes.</p>
-<p>Your use of Google APIs with these apps are subject to each API’s respective terms of service. See <a href="https://developers.google.com/terms/" class="external-link uri">https://developers.google.com/terms/</a>.</p>
+<p>The apps are governed by common policies recorded here. These apps
+use internal resources owned by the “inkaverse” project on Google Cloud
+Platform. That is the name you will see in a consent screen. Exception:
+gmailr does NOT use any resources owned by inkaverse Package, due to <a href="https://developers.google.com/terms/api-services-user-data-policy#additional-requirements-for-specific-api-scopes" class="external-link">special
+requirements</a> around Gmail and its scopes.</p>
+<p>Your use of Google APIs with these apps are subject to each API’s
+respective terms of service. See <a href="https://developers.google.com/terms/" class="external-link uri">https://developers.google.com/terms/</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="privacy">Privacy<a class="anchor" aria-label="anchor" href="#privacy"></a>
@@ -157,38 +167,72 @@
 <div class="section level4">
 <h4 id="accessing-user-data">Accessing user data<a class="anchor" aria-label="anchor" href="#accessing-user-data"></a>
 </h4>
-<p>The applications access Google resources from your local machine or web. Your machine communicates directly with the Google APIs.</p>
-<p>The inkaverse API Packages project never receives your data or the permission to access your data. The owners of the project can only see anonymous, aggregated information about usage of tokens obtained through its OAuth client, such as which APIs and endpoints are being used.</p>
-<p>The package includes functions that you can execute in order to read or modify your own data. This can only happen after you provide a token, which requires that you authenticate yourself as a specific Google user and authorize these actions.</p>
-<p>The package can help you get a token by guiding you through the OAuth flow in the browser. There you must consent to allow the inkaverse API Packages to operate on your behalf. The OAuth consent screen will describe the scope of what is being authorized, e.g., it will name the target API(s) and whether you are authorizing “read only” or “read and write” access.</p>
-<p>There are two ways to use these apps without authorizing the inkaverse API Packages: bring your own service account token or configure the package to use an OAuth client of your choice.</p>
+<p>The applications access Google resources from your local machine or
+web. Your machine communicates directly with the Google APIs.</p>
+<p>The inkaverse API Packages project never receives your data or the
+permission to access your data. The owners of the project can only see
+anonymous, aggregated information about usage of tokens obtained through
+its OAuth client, such as which APIs and endpoints are being used.</p>
+<p>The package includes functions that you can execute in order to read
+or modify your own data. This can only happen after you provide a token,
+which requires that you authenticate yourself as a specific Google user
+and authorize these actions.</p>
+<p>The package can help you get a token by guiding you through the OAuth
+flow in the browser. There you must consent to allow the inkaverse API
+Packages to operate on your behalf. The OAuth consent screen will
+describe the scope of what is being authorized, e.g., it will name the
+target API(s) and whether you are authorizing “read only” or “read and
+write” access.</p>
+<p>There are two ways to use these apps without authorizing the
+inkaverse API Packages: bring your own service account token or
+configure the package to use an OAuth client of your choice.</p>
 </div>
 <div class="section level4">
 <h4 id="scopes">Scopes<a class="anchor" aria-label="anchor" href="#scopes"></a>
 </h4>
-<p>Overview of the scopes requested by various inkaverse API Packages and their rationale:</p>
+<p>Overview of the scopes requested by various inkaverse API Packages
+and their rationale:</p>
 <ul>
-<li>Sheets (read/write): The <a href="https://googlesheets4.tidyverse.org/" class="external-link">googlesheets4 package</a> used in the apps allows you to manage your spreadsheets and therefore the default scopes include read/write access. The googlesheets4 package makes it possible for you to get a token with more limited scope, e.g. read only.</li>
+<li>Sheets (read/write): The <a href="https://googlesheets4.tidyverse.org/" class="external-link">googlesheets4 package</a>
+used in the apps allows you to manage your spreadsheets and therefore
+the default scopes include read/write access. The googlesheets4 package
+makes it possible for you to get a token with more limited scope,
+e.g. read only.</li>
 </ul>
 </div>
 <div class="section level4">
 <h4 id="sharing-user-data">Sharing user data<a class="anchor" aria-label="anchor" href="#sharing-user-data"></a>
 </h4>
-<p>The package only communicate with Google APIs. No user data is shared with the owners of the inkaverse API Package or any other servers.</p>
+<p>The package only communicate with Google APIs. No user data is shared
+with the owners of the inkaverse API Package or any other servers.</p>
 </div>
 <div class="section level4">
 <h4 id="storing-user-data">Storing user data<a class="anchor" aria-label="anchor" href="#storing-user-data"></a>
 </h4>
-<p>The package may store your credentials on your local machine, for later reuse by you. Use caution when using these packages on a shared machine.</p>
-<p>By default, an OAuth token is cached in a local file, such as ~/.R/gargle/gargle-oauth. See the documentation for <a href="https://gargle.r-lib.org/reference/gargle_options.html" class="external-link">gargle::gargle_options()</a> and <a href="https://gargle.r-lib.org/reference/credentials_user_oauth2.html" class="external-link">gargle::credentials_user_oauth2()</a> for information on how to control the location of the token cache or suppress token caching, globally or at the individual token level.</p>
+<p>The package may store your credentials on your local machine, for
+later reuse by you. Use caution when using these packages on a shared
+machine.</p>
+<p>By default, an OAuth token is cached in a local file, such as
+~/.R/gargle/gargle-oauth. See the documentation for <a href="https://gargle.r-lib.org/reference/gargle_options.html" class="external-link">gargle::gargle_options()</a>
+and <a href="https://gargle.r-lib.org/reference/credentials_user_oauth2.html" class="external-link">gargle::credentials_user_oauth2()</a>
+for information on how to control the location of the token cache or
+suppress token caching, globally or at the individual token level.</p>
 </div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="policies-for-authors-of-packages-or-other-applications">Policies for authors of packages or other applications<a class="anchor" aria-label="anchor" href="#policies-for-authors-of-packages-or-other-applications"></a>
 </h2>
-<p>Do not use an API key or client ID from the inkaverse API Packages in an external package or tool. Per the Google User Data Policy <a href="https://developers.google.com/terms/api-services-user-data-policy" class="external-link uri">https://developers.google.com/terms/api-services-user-data-policy</a>, your application must accurately represent itself when authenticating to Google API services.</p>
-<p>If you use the inkaverse package inside another package or application that executes its own logic — as opposed to code in the inkaverse API Packages or by the user — you must communicate this clearly to the user. Do not use credentials from the inkaverse API Package; instead, use credentials associated with your project or your user.</p>
+<p>Do not use an API key or client ID from the inkaverse API Packages in
+an external package or tool. Per the Google User Data Policy <a href="https://developers.google.com/terms/api-services-user-data-policy" class="external-link uri">https://developers.google.com/terms/api-services-user-data-policy</a>,
+your application must accurately represent itself when authenticating to
+Google API services.</p>
+<p>If you use the inkaverse package inside another package or
+application that executes its own logic — as opposed to code in the
+inkaverse API Packages or by the user — you must communicate this
+clearly to the user. Do not use credentials from the inkaverse API
+Package; instead, use credentials associated with your project or your
+user.</p>
 <!-- # References -->
 <!-- https://www.tidyverse.org/google_privacy_policy/#storing-user-data -->
 </div>
@@ -200,12 +244,14 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Desarrollado por <a href="https://lozanoisla.com/" class="external-link">Flavio Lozano-Isla</a>.</p>
+<p>Desarrollado por <a href="https://lozanoisla.com/" class="external-link">Flavio
+Lozano-Isla</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
     </footer>
