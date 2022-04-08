@@ -33,7 +33,6 @@ knitr::opts_chunk$set(
   , message = FALSE # Avoid print messages in the export file
   , warning = FALSE # Avoid print messages in the export file
   , collapse = TRUE # Collapse text output into source blocks
-  # , tidy = TRUE # Reformat R source code
   )
 
 # -------------------------------------------------------------------------

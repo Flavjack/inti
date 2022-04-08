@@ -2,7 +2,7 @@
 # R packages dependencies and configuration -------------------------------
 # -------------------------------------------------------------------------
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date   .: 2021-04-28
+#> date   .: 2022-04-07
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -13,18 +13,14 @@ cran <- c(
   "devtools" # Developer tools
   , "inti" # Tools and Statistical Procedures in Plant Science
   , "knitr" # Write docs using R 
-  , "bookdown" # Write articles and technical documents
   , "tidyverse" # Data manipulation
   , "gsheet" # Read open google sheets docs
-  , "readxl" # Read/write excel files
   , "googlesheets4" # Read/write google sheets docs
   , "googledrive" # Download/Upload files from googledrive
-  , "agricolae" # Agriculture data analysis and designs
   , "GerminaR" # Germination analysis
   , "FactoMineR" # Multivariate data analysis
-  , "heatmaply" # Correlation plot
-  , "cowplot" # Layout for grid figures 
-  , "magick" # Import multiple format files
+  , "psych" # Correlation plot
+  , "huito" # label design
   , "grid" # Import images as R object
   )
 
@@ -60,6 +56,7 @@ knitr::opts_chunk$set(
   , echo = FALSE # Avoid print code in the export file
   , message = FALSE # Avoid print messages in the export file
   , warning = FALSE # Avoid print messages in the export file
+  , collapse = TRUE # Collapse text output into source blocks
   )
 
 # -------------------------------------------------------------------------
