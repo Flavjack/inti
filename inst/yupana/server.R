@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2022-02-20
+#> date .: 2022-04-28
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -606,6 +606,8 @@ observe({
       inti::web_table(data = analysis()$meancomp
                       , digits = input$analysis_digits
                       , file_name = input$analysis_response
+                      , scrolly = "50vh"
+                      , columnwidth = "50px"
                       )
 
     })
@@ -613,7 +615,7 @@ observe({
   output$smrstats <- DT::renderDataTable(server = FALSE, {
 
     mc <- analysis()$stats %>%
-      inti::web_table(buttons = "copy", scrolly = "15vh")
+      inti::web_table(buttons = "copy", scrolly = "10vh", columnwidth = NULL)
 
   })
 
@@ -1462,9 +1464,9 @@ output$plot_color <- renderUI({
     pairs.panels(mvr()$corr$correlation
                  , hist.col="red"
                  , pch = 21
-                 , method = "pearson"
+                 , method = input$mvr_cor_method
                  , stars = TRUE
-                 , scale = FALSE
+                 , scale = input$mvr_cor_scale
                  , lm = TRUE
                  ) 
     

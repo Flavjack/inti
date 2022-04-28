@@ -11,7 +11,9 @@ web_table(
   rnames = FALSE,
   buttons = NULL,
   file_name = "file",
-  scrolly = NULL
+  scrolly = NULL,
+  columnwidth = "200px",
+  width = "100\%"
 )
 }
 \arguments{
@@ -27,7 +29,11 @@ web_table(
 
 \item{file_name}{Excel file name}
 
-\item{scrolly}{Windows height to show the table. Default "60vh"}
+\item{scrolly}{Windows height to show the table. Default "45vh"}
+
+\item{columnwidth}{Column width. Default '200px'}
+
+\item{width}{Width in pixels or percentage (Defaults to automatic sizing)}
 }
 \value{
 table in markdown format for html documents

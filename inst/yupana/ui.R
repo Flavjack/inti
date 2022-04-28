@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-10-06
+#> date .: 2022-04-28
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -848,12 +848,27 @@ tabPanel("Graphics",
                           conditionalPanel(
                             condition = "input.mvr_module == 'CORR'",
                             
+                            selectInput(
+                              inputId = "mvr_cor_method"
+                              , label = "Correlation method"
+                              , choices = c("pearson","spearman","kendall")
+                              ),
+                            
+                            radioButtons(inputId = "mvr_cor_scale"
+                                         , label = "Correlation scale"
+                                         , choices = c("yes" = TRUE
+                                                       , "no" = FALSE
+                                                       )
+                                         , inline = TRUE
+                            ),
+                            
                             textInput(
                               inputId ="mvr_dimension_cor"
                               , label = "Dimensions (W*H*dpi) - Correlation"
                               , placeholder = "w*h*dpi"
                               , value = "18*18*100"
-                            ),
+                            )
+                            
                             
                           ),
 

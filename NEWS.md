@@ -1,3 +1,11 @@
+# inti 0.5.6
+
+- Package: `web_table()`
+  - `autoWidth = TRUE` 
+  - `columnwidth` argument
+  - `width` argument
+- Yupana: add `scale` and `method` in correlation plot
+
 # inti 0.5.5
 
 - Yupana: update `yupana_import()` using `if_any()` instead `across()`
