@@ -96,9 +96,9 @@ yrs$meancomp \%>\%
            , xlab = ""
            , group = "treat"
            , glab = "Tratamientos"
-           , ylimits = ""
-           , color = c("brown", "blue")
-           , gtext = c("Irrigado", "Dry Down ")
+           , ylimits = c(0, 1, 0.2)
+           , color = c("red", "black")
+           , gtext = c("Irrigado", "Sequia")
            )
            
 }

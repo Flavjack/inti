@@ -56,9 +56,9 @@
 #'            , xlab = ""
 #'            , group = "treat"
 #'            , glab = "Tratamientos"
-#'            , ylimits = ""
-#'            , color = c("brown", "blue")
-#'            , gtext = c("Irrigado", "Dry Down ")
+#'            , ylimits = c(0, 1, 0.2)
+#'            , color = c("red", "black")
+#'            , gtext = c("Irrigado", "Sequia")
 #'            )
 #'            
 #' }
@@ -128,7 +128,7 @@ opt <- if(is.null(opt) || is.na(opt) || opt == "") {NULL} else {opt}
 sig <- if(is.null(sig) || is.na(sig) || sig == "" || sig == "none") {NULL} else {sig}
 error <- if(is.null(error) || is.na(error) || error == "" || error == "none") {NULL} else {error}
 
-color <- if(is.null(color) || is.na(color) || color == "" || color == "yes") {
+color <- if(length(color) <= 1 && (is.null(color) || is.na(color) || color == "" || color == "yes")) {
   TRUE} else {color}
 
 ylimits <- if(any(is.null(ylimits)) || any(is.na(ylimits)) || any(ylimits == "")) { 
@@ -140,7 +140,7 @@ ylimits <- if(any(is.null(ylimits)) || any(is.na(ylimits)) || any(ylimits == "")
           unlist() %>% as.numeric()
     } else {ylimits}
 
-xtext <- if(is.null(xtext) || is.na(xtext) || xtext == "") {
+xtext <- if(length(xtext) <= 1 && (is.null(xtext) || is.na(xtext) || xtext == "")) {
   NULL} else if (is.character(xtext)){ 
     xtext %>%
       strsplit(., ",") %>%
@@ -148,7 +148,7 @@ xtext <- if(is.null(xtext) || is.na(xtext) || xtext == "") {
       base::trimws()
   } else {xtext}
 
-gtext <- if(is.null(gtext) || is.na(gtext) || gtext == "") {
+gtext <- if (length(gtext) <= 1 && (is.null(gtext) || is.na(gtext) || gtext == "")) {
   NULL} else if (is.character(gtext)){ 
     gtext %>%
       strsplit(., ",") %>%

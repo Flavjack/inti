@@ -4,6 +4,8 @@
   - `autoWidth = TRUE` 
   - `columnwidth` argument
   - `width` argument
+  - `plot_smr()`: fix "length(x) = 2 > 1' in coercion to 'logical(1)"
+  - New function: `split_folder()`
 - Yupana: add `scale` and `method` in correlation plot
 
 # inti 0.5.5
