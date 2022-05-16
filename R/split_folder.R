@@ -37,7 +37,7 @@ split_folder <- function(folder, export
     dt <- listfiles %>% 
       tibble::enframe() %>% 
       dplyr::mutate(size_mb = file.size(.data$value)*(9.537*10^-7 )) %>% 
-      dplyr::mutate(size_sum = purrr::accumulate(.data$size_mb, ~ifelse(.x + .y <= .data$size, .x + .y, .y))) %>% 
+      dplyr::mutate(size_sum = purrr::accumulate(.data$size_mb, ~ifelse(.x + .y <= size, .x + .y, .y))) %>% 
       dplyr::mutate(split = cumsum(.data$size_mb == .data$size_sum))
     
   } else if (units == "number") {
@@ -45,9 +45,8 @@ split_folder <- function(folder, export
     dt <- listfiles %>% 
       tibble::enframe() %>% 
       dplyr::mutate(img = 1) %>% 
-      dplyr::mutate(size_sum = purrr::accumulate(.data$img, ~ifelse(.x + .y <= .data$size, .x + .y, .y))) %>% 
+      dplyr::mutate(size_sum = purrr::accumulate(.data$img, ~ifelse(.x + .y <= size, .x + .y, .y))) %>% 
       dplyr::mutate(split = cumsum(.data$img == .data$size_sum))  
-    
     
   }
   
