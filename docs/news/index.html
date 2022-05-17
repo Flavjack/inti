@@ -101,26 +101,36 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.5.5" id="inti-055">inti 0.5.5<a class="anchor" aria-label="anchor" href="#inti-055"></a></h2><p class="text-muted">CRAN release: 2022-04-01</p>
-<ul><li>Yupana: update <code><a href="../reference/yupana_import.html">yupana_import()</a></code> using
-<code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">if_any()</a></code> instead <code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across()</a></code>
+<h2 class="pkg-version" data-toc-text="0.5.6" id="inti-056">inti 0.5.6<a class="anchor" aria-label="anchor" href="#inti-056"></a></h2>
+<ul><li>Package: <code><a href="../reference/web_table.html">web_table()</a></code>
+<ul><li><code>autoWidth = TRUE</code></li>
+<li>
+<code>columnwidth</code> argument</li>
+<li>
+<code>width</code> argument</li>
+</ul></li>
+<li>Fix <code><a href="../reference/plot_smr.html">plot_smr()</a></code>: “length(x) = 2 &gt; 1’ in coercion to ’logical(1)”</li>
+<li>New function: <code><a href="../reference/split_folder.html">split_folder()</a></code>
 </li>
-<li>Tarpuy: in <code>dsg</code> the column <code>qr</code> ==&gt;
-<code>barcode</code>
+<li>Yupana: add <code>scale</code> and <code>method</code> in correlation plot</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.5.5" id="inti-055">inti 0.5.5<a class="anchor" aria-label="anchor" href="#inti-055"></a></h2><p class="text-muted">CRAN release: 2022-04-01</p>
+<ul><li>Yupana: update <code><a href="../reference/yupana_import.html">yupana_import()</a></code> using <code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">if_any()</a></code> instead <code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across()</a></code>
+</li>
+<li>Tarpuy: in <code>dsg</code> the column <code>qr</code> ==&gt; <code>barcode</code>
 </li>
 <li>Tarpuy: update sheets names in <code>intro</code> section</li>
 <li>Tarypu: export field-book in specific sheet</li>
 <li>Tarpuy: select sheet for field-book sketch</li>
 <li>Tarpuy: create field-book only with the factor list</li>
 <li>Tarpuy: column with [] are omitted in the field-book generation</li>
-<li>CRAN comments: if (class(model) == “lmerMod”) =&gt; if ( is(model,
-“lmerMod”)</li>
+<li>CRAN comments: if (class(model) == “lmerMod”) =&gt; if ( is(model, “lmerMod”)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.4" id="inti-054">inti 0.5.4<a class="anchor" aria-label="anchor" href="#inti-054"></a></h2><p class="text-muted">CRAN release: 2022-02-22</p>
 <ul><li>
-<code><a href="../reference/outliers_remove.html">outliers_remove()</a></code>: change <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> by
-<code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind.data.frame()</a></code>.</li>
+<code><a href="../reference/outliers_remove.html">outliers_remove()</a></code>: change <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> by <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind.data.frame()</a></code>.</li>
 <li>Fix apps auth.</li>
 <li>Thanks to Uwe Ligges to allow consecutive CRAN updates.</li>
 </ul></div>
@@ -130,8 +140,7 @@
 <li>Avoid labels in axis and legend using <code>""</code>.</li>
 <li>Update vignettes using bookdown.</li>
 <li>Fix table summary in <code><a href="../reference/H2cal.html">H2cal()</a></code>.</li>
-<li>Update diagnostic plot in <code><a href="../reference/plot_diag.html">plot_diag()</a></code> to lm and
-lmerMod.</li>
+<li>Update diagnostic plot in <code><a href="../reference/plot_diag.html">plot_diag()</a></code> to lm and lmerMod.</li>
 <li>Update code for logIn modules in apps.</li>
 <li>Update correlation graph in yupana.</li>
 </ul></div>
@@ -155,13 +164,10 @@ lmerMod.</li>
 <ul><li>
 <em>Package</em>
 <ul><li>
-<code><a href="../reference/H2cal.html">H2cal()</a></code>: BLUEs from H2cal may be wrong if other fixed
-effects in the model (<a href="https://github.com/flavjack/inti/issues/10" class="external-link">#10</a>).
-<ul><li>Thanks Jim Holland (<a href="https://github.com/ncsumaize" class="external-link">@ncsumaize</a>) for the suggestion to improve the
-function.</li>
+<code><a href="../reference/H2cal.html">H2cal()</a></code>: BLUEs from H2cal may be wrong if other fixed effects in the model (<a href="https://github.com/flavjack/inti/issues/10" class="external-link">#10</a>).
+<ul><li>Thanks Jim Holland (<a href="https://github.com/ncsumaize" class="external-link">@ncsumaize</a>) for the suggestion to improve the function.</li>
 </ul></li>
-<li>New functions: <code><a href="../reference/gdoc2rmd.html">gdoc2rmd()</a></code>, <code><a href="../reference/table2rmd.html">table2rmd()</a></code>,
-<code><a href="../reference/figure2rmd.html">figure2rmd()</a></code>
+<li>New functions: <code><a href="../reference/gdoc2rmd.html">gdoc2rmd()</a></code>, <code><a href="../reference/table2rmd.html">table2rmd()</a></code>, <code><a href="../reference/figure2rmd.html">figure2rmd()</a></code>
 <ul><li>Use Articul8 Add-ons from Google docs to build Rticles</li>
 </ul></li>
 <li>Update pkgdown</li>
@@ -181,8 +187,7 @@ function.</li>
 </ul></li>
 <li>
 <code>yupana_import_smr</code> ==&gt; <code><a href="../reference/yupana_import.html">yupana_import()</a></code>
-<ul><li>Import information from the web and
-<code>yupana_analysis</code>
+<ul><li>Import information from the web and <code>yupana_analysis</code>
 </li>
 </ul></li>
 <li>Update function <code><a href="../reference/H2cal.html">H2cal()</a></code>
@@ -233,10 +238,8 @@ function.</li>
 <em>Yupana</em>
 <ul><li>Show equation with adjusted R in scatter plot graph</li>
 <li>
-<code>sig</code> include all the variables from the summary
-table</li>
-<li>In plots if the number of reps is 1 the <code>sig</code> and
-<code>error</code> is “none”</li>
+<code>sig</code> include all the variables from the summary table</li>
+<li>In plots if the number of reps is 1 the <code>sig</code> and <code>error</code> is “none”</li>
 </ul></li>
 </ul></div>
     <div class="section level2">
@@ -264,8 +267,7 @@ table</li>
 <li>Headers with [] are excluded in the analysis</li>
 </ul></li>
 </ul><blockquote>
-<p>Agradecimiento a Pedro Barriga por sus sugerencias para mejorar
-<code><a href="../reference/yupana.html">yupana()</a></code></p>
+<p>Agradecimiento a Pedro Barriga por sus sugerencias para mejorar <code><a href="../reference/yupana.html">yupana()</a></code></p>
 </blockquote>
 </div>
     <div class="section level2">
@@ -300,8 +302,7 @@ table</li>
 <h3 id="major-changes-0-4-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-4-0"></a></h3>
 <ul><li>
 <em>Rticles</em>
-<ul><li>Deprecated: <code>create_rticles()</code> &amp;
-<code>rticles()</code>
+<ul><li>Deprecated: <code>create_rticles()</code> &amp; <code>rticles()</code>
 </li>
 <li>Deprecated shiny app: <code>rticles</code>
 </li>
@@ -339,8 +340,7 @@ table</li>
 <ul><li>New function: <code><a href="../reference/plot_raw.html">plot_raw()</a></code>
 <ul><li>Box plot graph</li>
 </ul></li>
-<li>Update function: <code>fieldbook_mvr</code> –&gt;
-<code><a href="../reference/yupana_mvr.html">yupana_mvr()</a></code>
+<li>Update function: <code>fieldbook_mvr</code> –&gt; <code><a href="../reference/yupana_mvr.html">yupana_mvr()</a></code>
 <ul><li>Can be used independently</li>
 </ul></li>
 <li>symbols to internal data
@@ -348,8 +348,7 @@ table</li>
 </ul></li>
 <li>rename functions</li>
 <li>Include new logo</li>
-<li>Vignettes: comparison between <code><a href="../reference/H2cal.html">H2cal()</a></code> and
-<code>asreml</code>
+<li>Vignettes: comparison between <code><a href="../reference/H2cal.html">H2cal()</a></code> and <code>asreml</code>
 </li>
 <li>Add data base for MET</li>
 <li>Logo for the package and apps</li>
@@ -363,8 +362,7 @@ table</li>
 <h2 class="pkg-version" data-toc-text="0.3.0" id="inti-030">inti 0.3.0<a class="anchor" aria-label="anchor" href="#inti-030"></a></h2><p class="text-muted">CRAN release: 2021-04-24</p>
 <ul><li>
 <em>Yupana</em>
-<ul><li>Fix <code>{arguments}</code> from <code>xlimits</code> to
-<code>ylimits</code>
+<ul><li>Fix <code>{arguments}</code> from <code>xlimits</code> to <code>ylimits</code>
 </li>
 <li>Update tables style</li>
 </ul></li>
@@ -375,11 +373,9 @@ table</li>
 <li>
 <em>Package</em>
 <ul><li>Vignette for describe the arguments and options in Yupana</li>
-<li>Delete redundant functions <code>info_figure()</code> &amp;
-<code>info_grahics()</code>
+<li>Delete redundant functions <code>info_figure()</code> &amp; <code>info_grahics()</code>
 </li>
-<li>Update functions: <code><a href="../reference/include_figure.html">include_figure()</a></code> &amp;
-<code><a href="../reference/include_figure.html">include_figure()</a></code>
+<li>Update functions: <code><a href="../reference/include_figure.html">include_figure()</a></code> &amp; <code><a href="../reference/include_figure.html">include_figure()</a></code>
 </li>
 <li>Update function <code><a href="../reference/plot_smr.html">plot_smr()</a></code> include:
 <ul><li>
@@ -398,14 +394,12 @@ table</li>
 <h3 id="major-changes-0-2-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-2-0"></a></h3>
 <ul><li>
 <em>Package</em>
-<ul><li>Arguments changed in the syntax for <code>fbsm</code> and
-<code>graphics</code>.</li>
+<ul><li>Arguments changed in the syntax for <code>fbsm</code> and <code>graphics</code>.</li>
 </ul></li>
 <li>
 <em>Yupana</em>
 <ul><li>Delete error messages in console when run the app</li>
-<li>Change dependency: <code>ggpubr</code> –&gt;
-<code>cowplot</code>
+<li>Change dependency: <code>ggpubr</code> –&gt; <code>cowplot</code>
 </li>
 <li>Multivariate analysis need factor levels n&gt;2</li>
 <li>Allows copy the <code>Statistics</code> table</li>
@@ -428,8 +422,7 @@ table</li>
 <li>New arguments for plot: xlimits, xrotation, dimension, opt</li>
 <li>Delete redundant arguments; limits, brakes</li>
 <li>Suggest use “*” instead of “:”</li>
-<li>Include additional layers to the plot.
-e.g. <code><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip()</a></code>
+<li>Include additional layers to the plot. e.g. <code><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip()</a></code>
 </li>
 <li>Save plot dimensions in the exported sheet</li>
 </ul></li>
@@ -501,15 +494,13 @@ e.g. <code><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" cl
 <li>
 <em>Yupana</em>
 <ul><li>Graphs: button for generate and refresh graphs</li>
-<li>Fieldbook: <code>plot_label</code> in fieldbook summary for label
-axis in plots</li>
+<li>Fieldbook: <code>plot_label</code> in fieldbook summary for label axis in plots</li>
 <li>Analysis: export analysis with sheet name</li>
 <li>Analysis: round digits in export table</li>
 </ul></li>
 <li>
 <em>Package</em>
-<ul><li>new functions: <code>info_figure()</code> &amp;
-<code>info_table()</code>
+<ul><li>new functions: <code>info_figure()</code> &amp; <code>info_table()</code>
 </li>
 <li>update pkgdown documentation</li>
 </ul></li>
@@ -542,13 +533,11 @@ axis in plots</li>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Desarrollado por <a href="https://lozanoisla.com/" class="external-link">Flavio
-Lozano-Isla</a>.</p>
+  <p></p><p>Desarrollado por <a href="https://lozanoisla.com/" class="external-link">Flavio Lozano-Isla</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

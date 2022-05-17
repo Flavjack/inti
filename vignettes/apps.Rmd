@@ -101,18 +101,6 @@ An open-source R package to deploys flexible and reproducible labels using layer
 <span style="display:block;"><small>Huito</small></span>
 </p></div>
 
-<!-- <div style="display:inline-block; width:24%"> -->
-<!-- <p style="text-align:center"> -->
-<!-- <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9QUoA6JLuv0nBTYacuyrbg"><img src="https://lozanoisla.com/img/youtube.png" style="height:80px" title="Demo" alt="Demo"></a>  -->
-<!-- <span style="display:block;"><small>Demo</small></span> -->
-<!-- </p></div> -->
-
-<!-- <div style="display:inline-block; width:24%"> -->
-<!-- <p style="text-align:center"> -->
-<!-- <a target="_blank" href="https://flavjack.shinyapps.io/germinaquant/"><img src="https://flavjack.github.io/GerminaR/img/germinaquant.png" style="height:80px" title="GerminaQuant" alt="GerminaQuant for R"></a> -->
-<!-- <span style="display:block;"><small>GerminaQuant</small></span> -->
-<!-- </p></div> -->
-
 <div style="display:inline-block; width:49%">
 <p style="text-align:center">
 <a target="_blank" href="https://huito.inkaverse.com/"><img src="https://pkgdown.r-lib.org/reference/figures/logo.png" style="height:80px" title="Huito"></a> 
@@ -145,7 +133,7 @@ GerminaR is the first platform base in open source package to calculate and grap
 
 <div style="display:inline-block; width:24%">
 <p style="text-align:center">
-<a target="_blank" href="https://flavjack.shinyapps.io/germinaquant/"><img src="https://flavjack.github.io/GerminaR/img/germinaquant.png" style="height:80px" title="GerminaQuant" alt="GerminaQuant for R"></a>
+<a target="_blank" href="https://flavjack.shinyapps.io/germinaquant/"><img src="https://germinar.inkaverse.com/img/GerminaQuant.png" style="height:80px" title="GerminaQuant" alt="GerminaQuant for R"></a>
 <span style="display:block;"><small>GerminaQuant</small></span>
 </p></div>
 

@@ -112,6 +112,7 @@ reference:
   - met
 - title: Miscellaneous
 - contents:
+  - split_folder
   - jc_tombola
   - colortext
 
