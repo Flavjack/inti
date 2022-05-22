@@ -1,3 +1,10 @@
+# inti 0.5.7
+
+- Update functions to quarto: 
+  - `figure2rmd()`
+  - `table2rmd()` 
+  - `gdocs2rmd()`
+
 # inti 0.5.6
 
 - Package: `web_table()`

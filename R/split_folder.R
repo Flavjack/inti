@@ -23,7 +23,8 @@
 #' }
 #' 
 
-split_folder <- function(folder, export
+split_folder <- function(folder
+                         , export
                          , units = "megas" 
                          , size = 500
                          , zip = TRUE

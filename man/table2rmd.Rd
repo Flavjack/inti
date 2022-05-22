@@ -4,17 +4,13 @@
 \alias{table2rmd}
 \title{Table to Rmarkdown}
 \usage{
-table2rmd(text, opts = NA, prefix = "Table")
+table2rmd(text)
 }
 \arguments{
-\item{text}{String with the table information}
-
-\item{opts}{chunk options in brackets.}
-
-\item{prefix}{Prefix for the name of the table}
+\item{text}{Markdown text with table information (string)}
 }
 \value{
-Mutated string
+string mutated
 }
 \description{
 Use Articul8 Add-ons from Google docs to build Rticles

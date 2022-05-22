@@ -4,19 +4,17 @@
 \alias{figure2rmd}
 \title{Figure to Rmarkdown}
 \usage{
-figure2rmd(text, path = ".", opts = NA, prefix = "Figure")
+figure2rmd(text, path = ".", opts = NA)
 }
 \arguments{
-\item{text}{String with the table information}
+\item{text}{Markdown text with figure information (string)}
 
-\item{path}{Path of the image fot the figure}
+\item{path}{Image path for figures (path: ".")}
 
-\item{opts}{chunk options in brackets.}
-
-\item{prefix}{Prefix for the name of the figure}
+\item{opts}{chunk options in brackets (string: NA)}
 }
 \value{
-Mutated string
+string mutated
 }
 \description{
 Use Articul8 Add-ons from Google docs to build Rticles

@@ -2,12 +2,11 @@
 #'
 #' Use Articul8 Add-ons from Google docs to build Rticles
 #'
-#' @param text String with the table information
-#' @param path Path of the image fot the figure
-#' @param opts chunk options in brackets. 
-#' @param prefix Prefix for the name of the figure
+#' @param text Markdown text with figure information (string)
+#' @param path Image path for figures (path: ".")
+#' @param opts chunk options in brackets (string: NA)
 #'
-#' @return Mutated string
+#' @return string mutated
 #' 
 #' @export
 #' 
@@ -15,77 +14,50 @@
 figure2rmd <- function(text
                        , path = "."
                        , opts = NA
-                       , prefix = "Figure"
                        ) {
   
-  result <- if(isTRUE(grepl("^\\!\\[", text))) {
+  # path <- tempdir()
+  # text <- "The experiment was carried out in a complete randomized block design with two irrigation treatments with five replications of each genotype per treatment. In well-watered (WW) treatment, plants were irrigated according to their transpiration demand ([Figure  @fig:id.z21kyltlev9z]:A) and in water deficit (WD) treatment, the water supply was gradually reduced until the wilting point [(Ray & Sinclair, 1998)](https://www.zotero.org/google-docs/?y2XuVg). At 35 dap, before the stress initiation, the pots were watered to soaking and then allowed to drain overnight [(Bhatnagar-Mathur et al., 2007)](https://www.zotero.org/google-docs/?aBxXpi). The next morning, the pots were sealed in a plastic bag secured with a twist tie to prevent water loss except by transpiration and arranged in the greenhouse according to the experimental design. Thereafter, all the pots were weighed and this weight was defined as the initial pot weight. The inter-daily weight of the pots was measured for ten days to calculate the initial dry down parameters for treatment application ([Figure  @fig:id.z21kyltlev9z]:B). The WD treatment started at 45 dap which coincides with the beginning of tuber initiation."
+  # text <- "![(A) Fraction of transpirable soil water (FTSW). (B) Daily transpiration in 15 potato genotypes under well-watered (WW) and water deficit (WD) conditions.](img_0.png){#fig-id.olts8je85fk5}"
+  
+  # text %>% gsub("!\\[(.+)\\](.+)", "\\1", .) 
+  
+  result <- if(isTRUE(grepl("^\\!\\[", text))) { # 
     
     opt <- text %>% 
-      tibble::enframe() %>% 
-      dplyr::mutate(info =  gsub("\\!\\[(.+)", "\\1", .data$value)) %>% 
-      dplyr::mutate(title = gsub("(\\{|\\])(.*)\\}", "", .data$info) %>%  trimws()) %>% 
-      dplyr::mutate(img =  regmatches(.data$info
-                                      , gregexpr("img_[[:digit:]][[:punct:]][[:alpha:]]+"
-                                                 , .data$info, perl=TRUE))) %>% 
-      dplyr::mutate(chunk = regmatches(.data$info
-                                       , gregexpr("\\{(.*)\\}\\]"
-                                                  , .data$info, perl=TRUE)) %>% 
-                      gsub("\\{|\\}|\\]", "",.)) %>% 
+      tibble::enframe(name = "num") %>% 
+      dplyr::mutate(id = gsub(".+?\\)\\{\\#(.*)\\}", "\\1", .data$value) %>% gsub(":", "-", .)) %>% 
+      dplyr::mutate(title = gsub("!\\[(.+)\\](.+)", "\\1", .data$value)) %>% 
+      dplyr::mutate(path = gsub(".+?\\]\\((.*)\\)\\{(.+)", "\\1", .data$value)) %>% 
+      dplyr::select(!c(.data$value)) %>% 
+      tidyr::pivot_longer(!.data$num) %>% 
+      dplyr::mutate(opt = dplyr::case_when(
+        .data$name %in% "id" ~ paste0("#| label: ", .data$value)
+        , .data$name %in% "title" ~ paste0("#| fig-cap: '", .data$value, "'")
+        , .data$name %in% "path" ~ paste0("\nknitr::include_graphics('", file.path(path, .data$value) %>% gsub("\\\\", "\\/", .),"')")
+      )) %>% 
+      dplyr::select(.data$opt) %>% 
+      purrr::as_vector() %>% 
+      paste0(collapse = "\n")
       
-      dplyr::mutate(name =  regmatches(.data$info
-                                       , gregexpr("\\{\\#fig\\:(.*)\\}"
-                                                  , .data$info, perl=TRUE)) %>% 
-                      gsub("\\{\\#fig\\:|\\}", "",.) %>% gsub("\\.", "", .)
-      ) %>% 
-      dplyr::select(!c(.data$value, .data$info)) %>% 
-      dplyr::mutate(id := "figure") %>% 
-      dplyr::mutate(across(everything(), as.character)) %>% 
-      tidyr::pivot_longer(!.data$id) %>% 
-      dplyr::select(!.data$id) %>% 
-      dplyr::na_if("character(0)") %>% 
-      tibble::deframe() %>% 
-      as.list()
-    
-    chunk_opts <- if(!is.na(opts)) { opts 
-    } else if (is.na(opt$chunk)) { opt$name
-    } else { paste(opt$name, opt$chunk, sep = ", ")}
-    
     chunk <- paste0(
-      "\n\n"
-      , "```{r "
-      , chunk_opts
-      , ", fig.cap= '"
-      , opt$title
-      , "'}\n\n"
-      , "knitr::include_graphics('"
-      , paste0(path, "/", opt$img)
-      , "')\n\n```"
-    ) 
+      "```{r}\n"
+      , opt
+      , "\n```"
+      ) 
     
-  } else if(isTRUE(grepl("\\[Figure", text))) {
+    # chunk %>% cat()
     
-    cite <- text %>% 
-      regmatches(.
-                 , gregexpr("\\[Figure(.+)\\]\\:"
-                            , ., perl=TRUE)) %>% 
-      regmatches(.
-                 , gregexpr("\\@fig:(.+)[^\\]\\:]"
-                            , ., perl=TRUE)) %>% 
-      gsub("\\@", "\\@ref(", .) %>% 
-      paste0(prefix, " \\\\", ., ")") %>% 
-      gsub("\\.", "", .)
-    
-    
-    parrafo <- text %>% 
-      gsub("\\[Figure(.+)\\:", cite, .)
-    
-    
-  } else {
-    
-    text
-    
-  }
-  
+    } else if(isTRUE(grepl("fig\\:", text))) {
+      
+      cite <- text %>% 
+        gsub("fig\\:", "fig-", .)
+      
+    } else {
+      
+      text
+      
+    }
   
   return(result)
   
