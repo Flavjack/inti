@@ -53,9 +53,10 @@
 #'            
 #' fb %>%
 #'   plot_raw(type = "sca"
-#'            , x = "hi"
+#'            , x = "geno"
 #'            , y = "twue"
-#'            , group = ""
+#'            , group = "treat"
+#'            , color = c("red", "blue")
 #'            ) 
 #'            
 #' }
@@ -127,8 +128,8 @@ if(!c(y %in% colnames(data))) stop("colum no exist")
   
   opt <- if(is.null(opt) || is.na(opt) || opt == "") {NULL} else {opt}
 
-  color <- if(is.null(color) || is.na(color) || color == "" || color == "yes") {
-    TRUE} else if (color == "no") {FALSE} else {color}
+  color <- if(length(color) <= 1 && (is.null(color) || is.na(color) || color == "" || color == "yes")) {
+    TRUE} else {color}
   
   ylimits <- if(any(is.null(ylimits)) || any(is.na(ylimits)) || any(ylimits == "")) { 
     NULL
@@ -139,7 +140,7 @@ if(!c(y %in% colnames(data))) stop("colum no exist")
       unlist() %>% as.numeric()
   } else {ylimits}
   
-  xtext <- if(is.null(xtext) || is.na(xtext) || xtext == "") {
+  xtext <- if(length(xtext) <= 1 && (is.null(xtext) || is.na(xtext) || xtext == "")) {
     NULL} else if (is.character(xtext)){ 
       xtext %>%
         strsplit(., ",") %>%
@@ -147,7 +148,7 @@ if(!c(y %in% colnames(data))) stop("colum no exist")
         base::trimws()
     } else {xtext}
   
-  gtext <- if(is.null(gtext) || is.na(gtext) || gtext == "") {
+  gtext <- if (length(gtext) <= 1 && (is.null(gtext) || is.na(gtext) || gtext == "")) {
     NULL} else if (is.character(gtext)){ 
       gtext %>%
         strsplit(., ",") %>%

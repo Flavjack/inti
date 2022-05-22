@@ -4,6 +4,7 @@
   - `figure2rmd()`
   - `table2rmd()` 
   - `gdocs2rmd()`
+ - Fix `plot_raw()`: "length(x) = 2 > 1' in coercion to 'logical(1)"
 
 # inti 0.5.6
 

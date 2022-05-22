@@ -90,9 +90,10 @@ fb \%>\%
            
 fb \%>\%
   plot_raw(type = "sca"
-           , x = "hi"
+           , x = "geno"
            , y = "twue"
-           , group = ""
+           , group = "treat"
+           , color = c("red", "blue")
            ) 
            
 }
