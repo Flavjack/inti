@@ -21,13 +21,11 @@ label <- label_layout(size = c(5.08, 5.08)
                 , size = c(3.97, 3.97)
                 , position = c(2.55, 2.06)
                 ) %>%
-  include_shape(size = 4.1
+  include_shape(size = 5.08
                 , border_width = 3
                 , border_color = "#505456"
-                , margin = -0.8
                 , position = c(2.54, 2.54)
                 , panel_color = "pink"
-                , panel_size = 5.08
                 ) %>%
   include_text(value = "inkaverse.com"
                , size = 6
@@ -76,13 +74,11 @@ label <- label_layout(size = c(5.08, 5.08)
                 , size = c(3.97, 3.97)
                 , position = c(2.54, 2.35)
   ) %>%
-  include_shape(size = 4.1
+  include_shape(size = 5.08
                 , border_width = 3
                 , border_color = "#505456"
-                , margin = -0.8
                 , position = c(2.54, 2.54)
                 , panel_color = "pink"
-                , panel_size = 5.08
   ) %>%
   include_text(value = "inkaverse.com"
                , size = 6
@@ -126,13 +122,11 @@ label <- label_layout(size = c(5.08, 5.08)
                 , size = c(4.4, 4.4)
                 , position = c(2.54, 2)
                 ) %>%
-  include_shape(size = 4.1
+  include_shape(size = 5.08
                 , border_width = 3
                 , border_color = "#505456"
-                , margin = -0.8
                 , position = c(2.54, 2.54)
                 , panel_color = "pink"
-                , panel_size = 5.08
                 ) %>%
   include_text(value = "inkaverse.com"
                , size = 6
@@ -173,13 +167,11 @@ label <- label_layout(size = c(5.08, 5.08)
                 , size = c(3.95, 3.95)
                 , position = c(2.57, 2.21)
                 ) %>%
-  include_shape(size = 4.1
+  include_shape(size = 5.08
                 , border_width = 3
                 , border_color = "#505456"
-                , margin = -0.8
                 , position = c(2.54, 2.54)
                 , panel_color = "pink"
-                , panel_size = 5.08
                 ) %>%
   include_text(value = "inkaverse.com"
                , size = 6
@@ -224,13 +216,11 @@ label <- label_layout(size = c(5.08, 5.08)
                 , size = c(1.5, 1.5)
                 , position = c(1.45, 3)
                 ) %>%
-  include_shape(size = 4.1
+  include_shape(size = 5.08
                 , border_width = 3
                 , border_color = "black"
-                , margin = -0.8
                 , position = c(2.54, 2.54)
                 , panel_color = "pink"
-                , panel_size = 5.08
                 ) %>%
   include_image(value = "pkgdown/favicon/img/bulb.png" 
                 , size = c(1.1, 1.1)
