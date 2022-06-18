@@ -8,13 +8,13 @@ jc_tombola(
   data,
   members,
   papers = 1,
-  group,
-  gr_lvl,
-  status,
-  st_lvl,
-  frq,
-  date,
-  seed = NULL
+  group = NA,
+  gr_lvl = NA,
+  status = NA,
+  st_lvl = "active",
+  frq = 7,
+  date = NA,
+  seed = NA
 )
 }
 \arguments{
@@ -45,7 +45,8 @@ data frame with the schedule for the JC
 Function for arrange journal club schedule
 }
 \details{
-The function could consider n levels for \code{gr_lvl}. In the case of two
-level the third level will be both. The suggested levels for \code{st_lvl}
-are: active or spectator. Only the active members will enter in the schedule.
+The function could consider n levels for \code{gr_lvl}. In the case of more
+levels using "both" or "all" will be the combination. The suggested levels 
+for \code{st_lvl} are: active or spectator. Only the "active" members will 
+enter in the schedule.
 }

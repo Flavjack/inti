@@ -1,10 +1,11 @@
 # inti 0.5.7
 
-- Update functions to quarto: 
+- Update functions bookdown to quarto: 
   - `figure2rmd()`
   - `table2rmd()` 
   - `gdocs2rmd()`
  - Fix `plot_raw()`: "length(x) = 2 > 1' in coercion to 'logical(1)"
+ - Update `jc_tombola()`
 
 # inti 0.5.6
 

@@ -15,9 +15,10 @@
 #'
 #' @details
 #'
-#' The function could consider n levels for \code{gr_lvl}. In the case of two
-#' level the third level will be both. The suggested levels for \code{st_lvl}
-#' are: active or spectator. Only the active members will enter in the schedule.
+#' The function could consider n levels for \code{gr_lvl}. In the case of more
+#' levels using "both" or "all" will be the combination. The suggested levels 
+#' for \code{st_lvl} are: active or spectator. Only the "active" members will 
+#' enter in the schedule.
 #'
 #' @return data frame with the schedule for the JC
 #' 
@@ -27,46 +28,74 @@
 jc_tombola <- function(data
                        , members
                        , papers = 1
-                       , group
-                       , gr_lvl
-                       , status
-                       , st_lvl
-                       , frq
-                       , date
-                       , seed = NULL
+                       , group = NA
+                       , gr_lvl = NA
+                       , status = NA
+                       , st_lvl = "active"
+                       , frq = 7
+                       , date = NA
+                       , seed = NA
                        ){
+
+# test --------------------------------------------------------------------
   
+if (FALSE) {
+
+source("https://inkaverse.com/setup.r")
+url <- paste0("https://docs.google.com/spreadsheets/d/"
+              , "15TaF0lCCByg0dgOLqfoTlLbAWnau8IiLOklpS4cvm4M")
+gs <- as_sheets_id(url)
+
+data <- gs %>% 
+  range_read("members") 
+
+members = "Member"
+papers = 1
+# group = "Language"
+# gr_lvl = c("english")
+status = "Status"
+st_lvl = "activo"
+frq = 7
+date = "2022-06-30"
+
+group = NA
+gr_lvl = NA
+
+  
+}
+  
+# -------------------------------------------------------------------------
+
 grp <- NULL
 
-date <- as.Date(date)
+date <- as.Date(date) 
 
-if(is.null(seed)){ set.seed(date) } else {set.seed(seed)} 
+if(is.na(seed)){ set.seed(date)} else {set.seed(seed)} 
 
-dt <- data %>% 
-  mutate(across(c({{members}}, {{group}}, {{status}}), as.character)) 
+param <- c({{members}}, {{group}}, {{status}}) %>% purrr::discard(is.na)
 
-gr.lvl <- dt %>% 
-  select({{group}}) %>% 
-  mutate( {{group}} := case_when(
-    {{group}} %in% gr_lvl ~ {{group}}
-    , TRUE ~ paste0(gr_lvl, collapse = ' ')
-  )) %>% 
-  tidyr::separate_rows({{group}}) %>% 
-  unique() %>% 
-  rownames_to_column() %>% 
-  select({{group}}, .data$rowname) %>% 
-  deframe()
-  
-jc <- dt %>%
-  dplyr::filter(.data[[status]] %in% st_lvl) %>%
-  mutate( {{group}} := case_when(
-    .data[[group]] %in% gr_lvl ~ .data[[group]]
-    , TRUE ~ paste0(gr_lvl, collapse = ' ')
-  )) %>% 
-  tidyr::separate_rows({{group}}, sep = ' ') %>% 
-  mutate(ngrp = case_when(
-    .data[[group]] %in% gr_lvl ~ gr.lvl[.data[[group]]]
-    ))
+jc <- data %>% 
+  dplyr::select(param) %>% 
+  dplyr::mutate(dplyr::across(everything(), as.character)) %>%
+  {
+    if(!is.na(status)) {dplyr::filter(.data = ., .data[[status]] %in% st_lvl)} else {.}
+  } %>% 
+  {
+    if(!is.na(group)) {
+      
+      dplyr::mutate("{group}" := dplyr::case_when(
+        .data[[group]] %in% gr_lvl ~ as.character(.data[[group]])
+        , .data[[group]] %in% c("both", "all") ~ paste(gr_lvl, collapse = " ")
+        , TRUE ~ "exclude"
+      )) %>% 
+        tidyr::separate_rows(.data[[group]], sep = " ")
+      
+    } else {
+      mutate(.data = ., group = row.names(.))
+    }
+  }
+
+group <- if(is.na(group)) {"group"} else {group}
 
 tb <- jc %>% 
   {
