@@ -51,17 +51,14 @@ data <- gs %>%
 
 members = "Member"
 papers = 1
-# group = "Language"
-# gr_lvl = c("english")
+group = "Language"
+gr_lvl = c("english")
 status = "Status"
 st_lvl = "activo"
 frq = 7
 date = "2022-06-30"
+seed = NA
 
-group = NA
-gr_lvl = NA
-
-  
 }
   
 # -------------------------------------------------------------------------
@@ -75,7 +72,7 @@ if(is.na(seed)){ set.seed(date)} else {set.seed(seed)}
 param <- c({{members}}, {{group}}, {{status}}) %>% purrr::discard(is.na)
 
 jc <- data %>% 
-  dplyr::select(param) %>% 
+  dplyr::select({{param}}) %>% 
   dplyr::mutate(dplyr::across(everything(), as.character)) %>%
   {
     if(!is.na(status)) {dplyr::filter(.data = ., .data[[status]] %in% st_lvl)} else {.}
@@ -83,12 +80,12 @@ jc <- data %>%
   {
     if(!is.na(group)) {
       
-      dplyr::mutate("{group}" := dplyr::case_when(
+      dplyr::mutate(.data = ., "{group}" := dplyr::case_when(
         .data[[group]] %in% gr_lvl ~ as.character(.data[[group]])
         , .data[[group]] %in% c("both", "all") ~ paste(gr_lvl, collapse = " ")
         , TRUE ~ "exclude"
       )) %>% 
-        tidyr::separate_rows(.data[[group]], sep = " ")
+        tidyr::separate_rows(data = ., .data[[group]], sep = " ")
       
     } else {
       mutate(.data = ., group = row.names(.))
@@ -112,7 +109,7 @@ tb <- jc %>%
       dplyr::ungroup(x = ., .data[[group]] ) } else {.}
 
   } %>%
-  dplyr::select(.data$grp, {{group}}, members) %>% 
+  dplyr::select(.data$grp, {{group}}, {{members}}) %>% 
   dplyr::mutate(grp = date + rep(seq(0, nrow(.)/length(gr_lvl)*frq, by = frq)
                                  , each = papers
                                  , len = nrow(.))) %>%

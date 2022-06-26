@@ -7,15 +7,18 @@
 figure2rmd(text, path = ".", opts = NA)
 }
 \arguments{
-\item{text}{Markdown text with figure information (string)}
+\item{text}{Markdown text with figure information [string]}
 
-\item{path}{Image path for figures (path: ".")}
+\item{path}{Image path for figures [path: "." (base directory)]}
 
-\item{opts}{chunk options in brackets (string: NA)}
+\item{opts}{chunk options in brackets [string: NA]}
 }
 \value{
 string mutated
 }
 \description{
 Use Articul8 Add-ons from Google docs to build Rticles
+}
+\details{
+Quarto option can be included in the title using "{{}}" separated by commas.
 }

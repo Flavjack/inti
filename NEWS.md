@@ -25,7 +25,7 @@
 - Tarypu: export field-book in specific sheet
 - Tarpuy: select sheet for field-book sketch
 - Tarpuy: create field-book only with the factor list
-- Tarpuy: column with [] are omitted in the field-book generation
+- Tarpuy: column with [] in `design` are omitted in the field-book generation
 - CRAN comments: if (class(model) == "lmerMod") => if ( is(model, "lmerMod") 
 
 # inti 0.5.4

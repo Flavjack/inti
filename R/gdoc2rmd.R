@@ -2,8 +2,8 @@
 #'
 #' Use Articul8 Add-ons from Google docs to build Rticles
 #'
-#' @param file Zip file path from Articul8 exported in md format (path)
-#' @param export Path to export the files (path: "docs")
+#' @param file Zip file path from Articul8 exported in md format [path]
+#' @param export Path to export the files [path: NA (file directory)]
 #'
 #' @return path
 #' 
@@ -11,8 +11,12 @@
 #' 
 
 gdoc2rmd <- function(file
-                     , export = "docs"
+                     , export = NA
                      ){
+  
+  export <- if(is.na(export)) {
+    file %>% gsub(".zip", "", .) %>% file.path()
+  } else {export}
   
   zip <- file %>% 
     utils::unzip(overwrite = T, exdir = export)

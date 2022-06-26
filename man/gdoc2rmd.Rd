@@ -4,12 +4,12 @@
 \alias{gdoc2rmd}
 \title{Google docs to Rmarkdown}
 \usage{
-gdoc2rmd(file, export = "docs")
+gdoc2rmd(file, export = NA)
 }
 \arguments{
-\item{file}{Zip file path from Articul8 exported in md format (path)}
+\item{file}{Zip file path from Articul8 exported in md format [path]}
 
-\item{export}{Path to export the files (path: "docs")}
+\item{export}{Path to export the files [path: NA (file directory)]}
 }
 \value{
 path
