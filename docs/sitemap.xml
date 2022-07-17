@@ -46,10 +46,16 @@
     <loc>https://inkaverse.com/reference/colortext.html</loc>
   </url>
   <url>
+    <loc>https://inkaverse.com/reference/figure2qmd.html</loc>
+  </url>
+  <url>
     <loc>https://inkaverse.com/reference/figure2rmd.html</loc>
   </url>
   <url>
     <loc>https://inkaverse.com/reference/footnotes.html</loc>
+  </url>
+  <url>
+    <loc>https://inkaverse.com/reference/gdoc2qmd.html</loc>
   </url>
   <url>
     <loc>https://inkaverse.com/reference/gdoc2rmd.html</loc>
@@ -98,6 +104,9 @@
   </url>
   <url>
     <loc>https://inkaverse.com/reference/split_folder.html</loc>
+  </url>
+  <url>
+    <loc>https://inkaverse.com/reference/table2qmd.html</loc>
   </url>
   <url>
     <loc>https://inkaverse.com/reference/table2rmd.html</loc>

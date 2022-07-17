@@ -15,7 +15,7 @@
 #' @export
 #' 
 
-figure2rmd <- function(text
+figure2qmd <- function(text
                        , path = "."
                        , opts = NA
                        ) {
@@ -68,7 +68,9 @@ figure2rmd <- function(text
     } else if(isTRUE(grepl("fig\\:", text))) {
       
       cite <- text %>% 
-        gsub("fig\\:", "fig-", .)
+        gsub("fig\\:", "fig-", .) %>% 
+        gsub("]:", "]", .) %>% 
+        gsub("Figure", "", .)
       
     } else {
       

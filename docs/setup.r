@@ -2,7 +2,7 @@
 # R packages dependencies and configuration -------------------------------
 # -------------------------------------------------------------------------
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date   .: 2022-04-07
+#> date   .: 2022-07-17
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -17,7 +17,6 @@ cran <- c(
   , "gsheet" # Read open google sheets docs
   , "googlesheets4" # Read/write google sheets docs
   , "googledrive" # Download/Upload files from googledrive
-  , "GerminaR" # Germination analysis
   , "FactoMineR" # Multivariate data analysis
   , "psych" # Correlation plot
   , "huito" # label design
@@ -53,7 +52,7 @@ remove(cran, git, pkg)
 knitr::opts_chunk$set(
     fig.align = "center" # Center images in the export file
   , out.width = "98%" # Figure width in html
-  , echo = FALSE # Avoid print code in the export file
+  # , echo = FALSE # Avoid print code in the export file
   , message = FALSE # Avoid print messages in the export file
   , warning = FALSE # Avoid print messages in the export file
   , collapse = TRUE # Collapse text output into source blocks

@@ -10,7 +10,7 @@
 #' @export
 #' 
 
-gdoc2rmd <- function(file
+gdoc2qmd <- function(file
                      , export = NA
                      ){
   
@@ -26,9 +26,9 @@ gdoc2rmd <- function(file
     readLines() %>% 
     tibble::enframe() %>%
     dplyr::rowwise() %>%
-    dplyr::mutate(value = figure2rmd(.data$value, path = export)) %>% 
-    dplyr::mutate(value = table2rmd(.data$value)) %>%
-    dplyr::mutate(value = gsub("```Unknown element type at this position: UNSUPPORTED```", "\n", .data$value)) %>% 
+    dplyr::mutate(value = figure2qmd(.data$value, path = export)) %>% 
+    dplyr::mutate(value = table2qmd(.data$value)) %>%
+    dplyr::mutate(value = gsub("```Unknown element type at this position: UNSUPPORTED```", "\\\\newpage \n\n", .data$value)) %>% 
     dplyr::select(.data$value) %>% 
     tibble::deframe() %>% 
     writeLines(con = file.path(export, "_doc.Rmd") %>% gsub("\\\\", "\\/", .))

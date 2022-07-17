@@ -1,7 +1,7 @@
 url: https://inkaverse.com/
 
-development:
-  mode: auto
+# development:
+#   mode: auto
 
 authors:
   Flavio Lozano-Isla:
@@ -79,8 +79,8 @@ navbar:
       - text: -------
       - text: "Broad-sense heritability in plant breeding"
         href: articles/heritability.html
-      - text: "Stagewise mixed-model analysis"
-        href: articles/extra/stagewise.html
+      # - text: "Stagewise mixed-model analysis"
+      #   href: articles/extra/stagewise.html
 
 reference:
 - title: Yupana

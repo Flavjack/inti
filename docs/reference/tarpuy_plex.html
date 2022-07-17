@@ -50,7 +50,6 @@
     <a class="dropdown-item" href="../articles/rticles.html">Rticles: scientific documents with R</a>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item" href="../articles/heritability.html">Broad-sense heritability in plant breeding</a>
-    <a class="dropdown-item" href="../articles/extra/stagewise.html">Stagewise mixed-model analysis</a>
   </div>
 </li>
 <li class="nav-item">
@@ -107,91 +106,144 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">tarpuy_plex</span><span class="op">(</span>
-  data <span class="op">=</span> <span class="cn">NULL</span>,
-  idea <span class="op">=</span> <span class="cn">NULL</span>,
-  goal <span class="op">=</span> <span class="cn">NULL</span>,
-  hypothesis <span class="op">=</span> <span class="cn">NULL</span>,
-  rationale <span class="op">=</span> <span class="cn">NULL</span>,
-  objectives <span class="op">=</span> <span class="cn">NULL</span>,
-  plan <span class="op">=</span> <span class="cn">NULL</span>,
-  institutions <span class="op">=</span> <span class="cn">NULL</span>,
-  researchers <span class="op">=</span> <span class="cn">NULL</span>,
-  manager <span class="op">=</span> <span class="cn">NULL</span>,
-  location <span class="op">=</span> <span class="cn">NULL</span>,
-  altitude <span class="op">=</span> <span class="cn">NULL</span>,
-  georeferencing <span class="op">=</span> <span class="cn">NULL</span>,
-  environment <span class="op">=</span> <span class="cn">NULL</span>,
-  start <span class="op">=</span> <span class="cn">NA</span>,
-  end <span class="op">=</span> <span class="cn">NA</span>,
-  about <span class="op">=</span> <span class="cn">NULL</span>,
-  fieldbook <span class="op">=</span> <span class="cn">NULL</span>,
-  album <span class="op">=</span> <span class="cn">NULL</span>,
-  github <span class="op">=</span> <span class="cn">NULL</span>,
-  nfactor <span class="op">=</span> <span class="fl">2</span>,
-  design <span class="op">=</span> <span class="st">"rcbd"</span>,
-  rep <span class="op">=</span> <span class="fl">3</span>,
-  serie <span class="op">=</span> <span class="fl">2</span>,
-  seed <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tarpuy_plex</span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  idea <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  goal <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  hypothesis <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rationale <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  objectives <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  plan <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  institutions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  researchers <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  manager <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  location <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  altitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  georeferencing <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  environment <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  start <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  end <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  about <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fieldbook <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  album <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  github <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  nfactor <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  design <span class="op">=</span> <span class="st">"rcbd"</span>,</span>
+<span>  rep <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  serie <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p>Data with the fieldbook information.</p></dd>
+
+
 <dt>idea</dt>
 <dd><p>How the idea was born.</p></dd>
+
+
 <dt>goal</dt>
 <dd><p>The main goal of the project.</p></dd>
+
+
 <dt>hypothesis</dt>
 <dd><p>What are the expected results.</p></dd>
+
+
 <dt>rationale</dt>
 <dd><p>Based in which evidence is planned the experiment.</p></dd>
+
+
 <dt>objectives</dt>
 <dd><p>The objectives of the project.</p></dd>
+
+
 <dt>plan</dt>
 <dd><p>General description of the project (M &amp; M).</p></dd>
+
+
 <dt>institutions</dt>
 <dd><p>Institutions involved in the project.</p></dd>
+
+
 <dt>researchers</dt>
 <dd><p>Persons involved in the project.</p></dd>
+
+
 <dt>manager</dt>
 <dd><p>Persons responsible of the collection of the data.</p></dd>
+
+
 <dt>location</dt>
 <dd><p>Location of the project.</p></dd>
+
+
 <dt>altitude</dt>
 <dd><p>Altitude of the experiment (m.a.s.l).</p></dd>
+
+
 <dt>georeferencing</dt>
 <dd><p>Georeferencing information.</p></dd>
+
+
 <dt>environment</dt>
 <dd><p>Environment of the experiment (greenhouse, lab, etc).</p></dd>
+
+
 <dt>start</dt>
 <dd><p>The date of the start of the experiments.</p></dd>
+
+
 <dt>end</dt>
 <dd><p>The date of the end of the experiments.</p></dd>
+
+
 <dt>about</dt>
 <dd><p>Short description of the project.</p></dd>
+
+
 <dt>fieldbook</dt>
 <dd><p>Name or ID for the fieldbook/project.</p></dd>
+
+
 <dt>album</dt>
 <dd><p>link with the photos of the project.</p></dd>
+
+
 <dt>github</dt>
 <dd><p>link with the github repository.</p></dd>
+
+
 <dt>nfactor</dt>
 <dd><p>Number of factors for the design.</p></dd>
+
+
 <dt>design</dt>
 <dd><p>Type of design.</p></dd>
+
+
 <dt>rep</dt>
 <dd><p>Number of replication.</p></dd>
+
+
 <dt>serie</dt>
 <dd><p>Number of digits in the plots.</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>Seed for the randomization.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>data frame or list of arguments:</p><ol><li><p>info</p></li>
+    
+
+<p>data frame or list of arguments:</p>
+<p></p>
+<ol><li><p>info</p></li>
 <li><p>variables</p></li>
 <li><p>design</p></li>
 <li><p>logbook</p></li>
@@ -212,7 +264,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

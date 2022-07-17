@@ -1,9 +1,9 @@
 # inti 0.5.7
 
 - Update functions bookdown to quarto: 
-  - `figure2rmd()`
-  - `table2rmd()` 
-  - `gdocs2rmd()`
+  - `figure2rmd()` ==> `figure2qmd()`
+  - `table2rmd()` ==> `table2qmd()`
+  - `gdocs2rmd()` ==> `gdocs2qmd()`
  - Fix `plot_raw()`: "length(x) = 2 > 1' in coercion to 'logical(1)"
  - Update `jc_tombola()`
 

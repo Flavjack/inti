@@ -50,7 +50,6 @@
     <a class="dropdown-item" href="../articles/rticles.html">Rticles: scientific documents with R</a>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item" href="../articles/heritability.html">Broad-sense heritability in plant breeding</a>
-    <a class="dropdown-item" href="../articles/extra/stagewise.html">Stagewise mixed-model analysis</a>
   </div>
 </li>
 <li class="nav-item">
@@ -107,39 +106,54 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">yupana_reshape</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">last_factor</span>,
-  <span class="va">sep</span>,
-  <span class="va">new_colname</span>,
-  from_var <span class="op">=</span> <span class="cn">NULL</span>,
-  to_var <span class="op">=</span> <span class="cn">NULL</span>,
-  exc_factors <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">yupana_reshape</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">last_factor</span>,</span>
+<span>  <span class="va">sep</span>,</span>
+<span>  <span class="va">new_colname</span>,</span>
+<span>  from_var <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  to_var <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  exc_factors <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p>Field book raw data.</p></dd>
+
+
 <dt>last_factor</dt>
 <dd><p>The last factor in your field book.</p></dd>
+
+
 <dt>sep</dt>
 <dd><p>Character that separates the last value.</p></dd>
+
+
 <dt>new_colname</dt>
 <dd><p>The new name for the column created.</p></dd>
+
+
 <dt>from_var</dt>
 <dd><p>The first variable in case you want to exclude several.
 variables.</p></dd>
+
+
 <dt>to_var</dt>
 <dd><p>The last variable in case you want to exclude several
 variables.</p></dd>
+
+
 <dt>exc_factors</dt>
 <dd><p>Factor to exclude during the reshape.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>data frame</p>
+    
+
+<p>data frame</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -157,7 +171,7 @@ will help to create the column <code>rep</code> and the new variable name will b
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>
