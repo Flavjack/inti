@@ -70,7 +70,7 @@ figure2qmd <- function(text
       cite <- text %>% 
         gsub("fig\\:", "fig-", .) %>% 
         gsub("]:", "]", .) %>% 
-        gsub("Figure", "", .)
+        gsub("Figure  \\@", "\\@", .)
       
     } else {
       

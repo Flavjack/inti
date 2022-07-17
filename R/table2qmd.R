@@ -46,7 +46,7 @@ table2qmd <- function(text) {
     cite <- text %>% 
       gsub("tbl\\:", "tbl-", .) %>% 
       gsub("]:", "]", .) %>% 
-      gsub("Table ", "", .)
+      gsub("Table  \\@", "\\@", .)
     
   } else {
     
