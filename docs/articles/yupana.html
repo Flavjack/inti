@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -179,6 +179,11 @@
 <div class="section level2">
 <h2 id="módulos">Módulos<a class="anchor" aria-label="anchor" href="#m%C3%B3dulos"></a>
 </h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://docs.google.com/spreadsheets/d/1nLP-dH9-dsVMXgsU7Z02EbgWvMIBKG5IYVRHAJCN-Z0/edit#gid=0"</span></span>
+<span><span class="va">url</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html" class="external-link">gsheet2tbl</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/include_table.html">include_table</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Módulos de la aplicación Yupana"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>
 <span id="tab:modules">Table 1: </span>Módulos de la aplicación Yupana</caption>
@@ -222,6 +227,15 @@
 <div class="section level3">
 <h3 id="opciones-de-gráfico">Opciones de gráfico<a class="anchor" aria-label="anchor" href="#opciones-de-gr%C3%A1fico"></a>
 </h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://docs.google.com/spreadsheets/d/1nLP-dH9-dsVMXgsU7Z02EbgWvMIBKG5IYVRHAJCN-Z0/edit#gid=1216293392"</span></span>
+<span><span class="va">url</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html" class="external-link">gsheet2tbl</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/include_table.html">include_table</a></span><span class="op">(</span>    </span>
+<span>    caption <span class="op">=</span> <span class="st">"Lista de argumentos, descripción y opciones para la generación de gráficos en la aplicación Yupana"</span></span>
+<span>    , notes <span class="op">=</span> <span class="st">"Opciones basadas en la función: `plot_smr()`"</span></span>
+<span>    , label <span class="op">=</span> <span class="st">"Nota:"</span></span>
+<span>    <span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>
 <span id="tab:param">Table 2: </span>Lista de argumentos, descripción y opciones para la generación de gráficos en la aplicación Yupana</caption>
@@ -323,12 +337,22 @@
 <div class="section level4">
 <h4 id="argumentos-y-valores">Argumentos y valores<a class="anchor" aria-label="anchor" href="#argumentos-y-valores"></a>
 </h4>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="st">"files/graph-table.png"</span></span>
+<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="va">dir</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/include_figure.html">include_figure</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Parámetros en `{arguments}` y `{values}` para la generación de gráficos en la aplicación Yupana."</span><span class="op">)</span></span>
+<span><span class="va">fig</span><span class="op">$</span><span class="va">figure</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:tparam"></span>
 <img src="files/graph-table.png" alt="Parámetros en `{arguments}` y `{values}` para la generación de gráficos en la aplicación Yupana." width="98%"><p class="caption">
 Figure 1: Parámetros en <code>{arguments}</code> y <code>{values}</code> para la generación de gráficos en la aplicación Yupana.
 </p>
 </div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="st">"files/graph-figure.png"</span></span>
+<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="va">dir</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/include_figure.html">include_figure</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figura basada en los `{arguments}` y `{values}` de la tabla anterior."</span><span class="op">)</span></span>
+<span><span class="va">fig</span><span class="op">$</span><span class="va">figure</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:plot"></span>
 <img src="files/graph-figure.png" alt="Figura basada en los `{arguments}` y `{values}` de la tabla anterior." width="98%"><p class="caption">
@@ -343,12 +367,22 @@ Figure 2: Figura basada en los <code>{arguments}</code> y <code>{values}</code> 
 </h3>
 <p>Yupana a partir de la versión 0.2.0 permite la inclusión de capas adicionales a los gráficos. Puedes incluir dicha información en <code>opt</code> de los <code>{arguments}</code> (Figure <a href="#fig:opt">3</a>, <a href="#fig:topt">4</a>).</p>
 <p>Puedes incluir diversas capas descritas para el paquete <code>ggplot2</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="st">"files/graph-figure-grid.png"</span></span>
+<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="va">dir</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/include_figure.html">include_figure</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Gráfico con la inclusión de la capa `facet_grid()`"</span><span class="op">)</span></span>
+<span><span class="va">fig</span><span class="op">$</span><span class="va">figure</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:opt"></span>
 <img src="files/graph-figure-grid.png" alt="Gráfico con la inclusión de la capa `facet_grid()`" width="98%"><p class="caption">
 Figure 3: Gráfico con la inclusión de la capa <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid()</a></code>
 </p>
 </div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="st">"files/graph-table-grid.png"</span></span>
+<span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="va">dir</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/include_figure.html">include_figure</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Inclusión de `facet_grid(tratamiento ~ .)` en `opt` de los `{arguments}` en Yupana."</span><span class="op">)</span></span>
+<span><span class="va">fig</span><span class="op">$</span><span class="va">figure</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:topt"></span>
 <img src="files/graph-table-grid.png" alt="Inclusión de `facet_grid(tratamiento ~ .)` en `opt` de los `{arguments}` en Yupana." width="98%"><p class="caption">

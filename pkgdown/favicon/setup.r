@@ -52,9 +52,9 @@ remove(cran, git, pkg)
 knitr::opts_chunk$set(
     fig.align = "center" # Center images in the export file
   , out.width = "98%" # Figure width in html
-  # , echo = FALSE # Avoid print code in the export file
+  , echo = FALSE # Avoid print code in the export file
   , message = FALSE # Avoid print messages in the export file
-  , warning = FALSE # Avoid print messages in the export file
+  , warning = FALSE # Avoid print warnings in the export file
   , collapse = TRUE # Collapse text output into source blocks
   )
 
