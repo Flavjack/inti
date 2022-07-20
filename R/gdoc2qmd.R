@@ -13,7 +13,7 @@
 gdoc2qmd <- function(file
                      , export = NA
                      ){
-  
+
   export <- if(is.na(export)) {
     file %>% gsub(".zip", "", .) %>% file.path()
   } else {export}

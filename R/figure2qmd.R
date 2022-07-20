@@ -26,8 +26,30 @@ figure2qmd <- function(text
   # text <- "![Choose the images. {{fig-width: “50%”, echo: true}}](img_1.png){#fig:id.bzfoh3m13vt1}"
   
   # text %>% gsub(".+\\{\\{(.+)\\}\\}(.+)", "\\1", .)
-
-  result <- if(isTRUE(grepl("^\\!\\[", text))) { # 
+  # text <- "![null|null](img_6.  jpg)  "
+  
+  # result %>% cat()
+  
+  result <- if(isTRUE(grepl("null|null", text))) { 
+    
+    opt <- text %>% 
+      gsub("[[:blank:]]", "", .) %>% 
+      gsub(".+](.*)", "\\1", .) %>% 
+      gsub("\\(|\\)", "'", .) %>% 
+      gsub("img", file.path(path, "img"), .) %>% 
+      paste("knitr::include_graphics(", ., ")") %>% 
+      gsub("[[:blank:]]", "", .)
+    
+    chunk <- paste(
+      "```{r}\n\n"
+      , opt
+      , "\n\n```"
+    ) %>% 
+      gsub("[[:blank:]]", "", .)
+    
+    # chunk %>% cat()
+    
+    } else if (isTRUE(grepl("^\\!\\[", text))) { # 
     
     opt <- text %>% 
       tibble::enframe(name = "num") %>% 
@@ -67,7 +89,7 @@ figure2qmd <- function(text
     
     } else if(isTRUE(grepl("fig\\:", text))) {
       
-      cite <- text %>% 
+      cite <- text %>%
         gsub("fig\\:", "fig-", .) %>% 
         gsub("]:", "]", .) %>% 
         gsub("Figure  \\@", "\\@", .)
