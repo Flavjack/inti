@@ -20,5 +20,5 @@ string mutated
 Use Articul8 Add-ons from Google docs to build Rticles
 }
 \details{
-Quarto option can be included in the title using "{{}}" separated by commas.
+Quarto option can be included in the title using "{{}}" separated by commas
 }

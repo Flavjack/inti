@@ -31,14 +31,14 @@ table2qmd <- function(text) {
       dplyr::select(.data$opt) %>% 
       purrr::as_vector() %>% 
       paste0(collapse = "\n")
-      
+    
     chunk <- paste0(
       "```{r}\n"
       , opt
       , "\n\nknitr::kable(NA)"
       , "\n```"
-    ) 
-    
+    )
+
     # chunk %>% cat()
     
   } else if(isTRUE(grepl("tbl\\:", text))) {

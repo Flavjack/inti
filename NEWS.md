@@ -6,6 +6,7 @@
   - `gdocs2rmd()` ==> `gdocs2qmd()`
  - Fix `plot_raw()`: "length(x) = 2 > 1' in coercion to 'logical(1)"
  - Update `jc_tombola()`
+ - `outliers_remove(drop.na = FALSE)` allows avoid drop NA values by default 
 
 # inti 0.5.6
 

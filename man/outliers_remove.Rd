@@ -4,7 +4,7 @@
 \alias{outliers_remove}
 \title{Remove outliers}
 \usage{
-outliers_remove(data, trait, model)
+outliers_remove(data, trait, model, drop_na = TRUE)
 }
 \arguments{
 \item{data}{Experimental design data frame with the factors and traits.}
@@ -12,6 +12,8 @@ outliers_remove(data, trait, model)
 \item{trait}{Name of the trait.}
 
 \item{model}{The fixed or random effects in the model.}
+
+\item{drop_na}{drop NA values from the data.frame}
 }
 \value{
 list. 1. Table with date without outliers. 2. The outliers in the
@@ -31,10 +33,11 @@ library(inti)
 rmout <- outliers_remove(
   data = potato
   , trait ="stemdw"
-  , model = "0 + (1|bloque) + geno"
+  , model = "0 + treat*geno + (1|bloque) + geno"
+  , drop_na = FALSE
   )
-  
-rmout$outliers
+
+rmout
   
 }
 \references{
