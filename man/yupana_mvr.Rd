@@ -9,7 +9,7 @@ yupana_mvr(
   last_factor = NULL,
   summary_by = NULL,
   groups = NULL,
-  variables = NULL
+  variables = NA
 )
 }
 \arguments{
@@ -32,28 +32,4 @@ Multivariate analysis for PCA and HCPC
 \details{
 Compute and plot information for multivariate analysis (PCA, HCPC and
 correlation).
-}
-\examples{
-
-\dontrun{
-
-library(inti)
-library(gsheet)
-
-url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
-# browseURL(url)
-
-fb <- gsheet2tbl(url)
-
-mv <- yupana_mvr(data = fb
-                    , last_factor = "bloque"
-                    , summary_by = c("geno", "treat")
-                    , groups = NULL
-                    )
-
-FactoMineR::plot.PCA(mv$pca, choix = "ind", habillage =  mv$param$groups)
-
-}
-
 }

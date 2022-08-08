@@ -856,8 +856,8 @@ tabPanel("Graphics",
                             
                             radioButtons(inputId = "mvr_cor_scale"
                                          , label = "Correlation scale"
-                                         , choices = c("yes" = TRUE
-                                                       , "no" = FALSE
+                                         , choices = c("no" = FALSE
+                                                       , "yes" = TRUE
                                                        )
                                          , inline = TRUE
                             ),

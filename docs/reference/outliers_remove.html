@@ -109,7 +109,7 @@ residuals standardized by the re scaled MAD (BH MADR).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">outliers_remove</span><span class="op">(</span><span class="va">data</span>, <span class="va">trait</span>, <span class="va">model</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">outliers_remove</span><span class="op">(</span><span class="va">data</span>, <span class="va">trait</span>, <span class="va">model</span>, drop_na <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -124,6 +124,10 @@ residuals standardized by the re scaled MAD (BH MADR).</p>
 
 <dt>model</dt>
 <dd><p>The fixed or random effects in the model.</p></dd>
+
+
+<dt>drop_na</dt>
+<dd><p>drop NA values from the data.frame</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -152,12 +156,182 @@ Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016.</p>
 <span class="r-in"><span><span class="va">rmout</span> <span class="op">&lt;-</span> <span class="fu">outliers_remove</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">potato</span></span></span>
 <span class="r-in"><span>  , trait <span class="op">=</span><span class="st">"stemdw"</span></span></span>
-<span class="r-in"><span>  , model <span class="op">=</span> <span class="st">"0 + (1|bloque) + geno"</span></span></span>
+<span class="r-in"><span>  , model <span class="op">=</span> <span class="st">"0 + treat*geno + (1|bloque) + geno"</span></span></span>
+<span class="r-in"><span>  , drop_na <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span>  </span></span>
-<span class="r-in"><span><span class="va">rmout</span><span class="op">$</span><span class="va">outliers</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    bloque geno stemdw     resi  res_MAD rawp.BHStud index adjp bholm out_flag</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68     IV  G05  80.65 60.36709 18.84505           0    68    0     0  OUTLIER</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">rmout</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        treat geno bloque stemdw</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     sequia  G01     II  14.87</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     sequia  G02     IV   8.63</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   irrigado  G01    III     NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     sequia  G02      I   6.58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   irrigado  G03     II  12.63</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   irrigado  G04      V  17.46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   irrigado  G01      I  15.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   irrigado  G05     IV  14.55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     sequia  G06     II  21.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    sequia  G05      I     NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  irrigado  G01     II  18.13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    sequia  G07     II   3.70</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  irrigado  G08     II  12.48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  irrigado  G06    III  29.49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15  irrigado  G09    III  16.96</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16  irrigado  G10     II   8.20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17    sequia  G11      I   7.90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18    sequia  G12    III   9.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19  irrigado  G07      I   2.48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20  irrigado  G04     II  20.75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21  irrigado  G13     II  18.97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22  irrigado  G14    III  14.57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23  irrigado  G04     IV  18.84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24    sequia  G04      V   8.79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25    sequia  G08      V   8.17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26    sequia  G04    III  12.53</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27    sequia  G01     IV  16.26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28  irrigado  G10      I  11.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29  irrigado  G08      V  11.18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30  irrigado  G02      V  12.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31  irrigado  G07    III   4.78</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32  irrigado  G08      I  12.52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33  irrigado  G14      V  23.96</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34  irrigado  G03      I  11.18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35    sequia  G13    III   7.79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36    sequia  G01      V  11.97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37    sequia  G03      I   9.03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38  irrigado  G15    III  11.17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39  irrigado  G03     IV  12.20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40  irrigado  G09     IV  18.17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41  irrigado  G11     II   4.90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42    sequia  G03      V   8.73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43    sequia  G11    III   5.56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44  irrigado  G06      V  23.77</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45    sequia  G05      V     NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46    sequia  G08     IV   8.44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47  irrigado  G11     IV   7.53</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48    sequia  G11     II   3.11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49  irrigado  G10    III  14.77</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50    sequia  G06     IV  17.45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51    sequia  G09      I  13.36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52  irrigado  G11      I   7.27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53    sequia  G11     IV   5.72</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54  irrigado  G15     IV  11.76</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55  irrigado  G13     IV  19.83</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56    sequia  G14      V  12.94</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57  irrigado  G02     IV  14.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58  irrigado  G09     II  19.20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59  irrigado  G02    III  12.12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60    sequia  G08    III  10.10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61  irrigado  G06     II  24.35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62    sequia  G13     IV  11.52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63    sequia  G14    III  13.37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64    sequia  G04     II  15.02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65  irrigado  G11    III  10.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66  irrigado  G07     II   1.71</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67  irrigado  G08     IV  14.28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68    sequia  G05     IV     NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69  irrigado  G04      I  12.80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70  irrigado  G11      V   7.99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71  irrigado  G12      I  19.60</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72    sequia  G14     IV  13.97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73    sequia  G07    III   3.09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74  irrigado  G03    III   8.56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75    sequia  G01      I  10.44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76    sequia  G04      I  13.73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77    sequia  G03     II   8.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78  irrigado  G15     II  11.78</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79    sequia  G12     IV  12.30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80    sequia  G12      I  13.91</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81    sequia  G08      I   5.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82    sequia  G05     II     NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83    sequia  G02     II   8.46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84    sequia  G10      I   9.84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85    sequia  G15      I  11.43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86  irrigado  G07      V   1.71</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 87    sequia  G10      V   6.36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 88    sequia  G13     II  12.34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89    sequia  G07      V   2.71</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90    sequia  G03    III   7.16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 91    sequia  G15     IV  11.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 92    sequia  G13      I  12.23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 93    sequia  G03     IV   8.37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 94  irrigado  G10      V  11.74</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95    sequia  G13      V  11.82</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 96    sequia  G09     II  17.02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97  irrigado  G14     IV  17.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 98  irrigado  G01      V  13.80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 99    sequia  G01    III  15.37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100 irrigado  G06     IV  33.52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 101   sequia  G04     IV  12.56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 102 irrigado  G15      V  12.13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 103 irrigado  G13    III  17.36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 104 irrigado  G02     II  12.58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 105   sequia  G08     II  10.31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 106 irrigado  G04    III  19.29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 107   sequia  G02      V   8.39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108   sequia  G06      V  13.12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 109 irrigado  G15      I  12.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 110 irrigado  G13      V  18.16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 111 irrigado  G05      V  12.03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 112   sequia  G09    III  16.71</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 113   sequia  G09      V  10.97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 114   sequia  G10     II   7.44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 115 irrigado  G07     IV   4.06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 116 irrigado  G05      I  13.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 117 irrigado  G02      I   8.54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118   sequia  G05    III     NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 119 irrigado  G12     II  17.81</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 120   sequia  G15    III  10.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 121 irrigado  G13      I  16.27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 122   sequia  G14     II  17.86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 123   sequia  G12     II  16.82</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 124   sequia  G15     II  11.82</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 125 irrigado  G09      V  14.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 126   sequia  G06      I  16.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 127   sequia  G09     IV  14.02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 128   sequia  G15      V  10.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 129 irrigado  G14      I  19.93</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 130   sequia  G06    III  17.45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 131 irrigado  G01     IV  16.97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 132 irrigado  G12    III  19.78</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 133   sequia  G12      V  14.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 134 irrigado  G12      V  17.61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 135   sequia  G11      V   3.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136 irrigado  G12     IV  19.87</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 137 irrigado  G09      I  16.05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 138   sequia  G02    III   9.76</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 139   sequia  G07      I   2.97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 140 irrigado  G08    III  11.61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 141 irrigado  G06      I  26.46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 142 irrigado  G10     IV     NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 143 irrigado  G03      V  10.76</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 144   sequia  G07     IV   0.97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 145 irrigado  G05    III  15.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 146   sequia  G14      I  10.62</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 147   sequia  G10    III  11.27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 148 irrigado  G14     II  17.86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 149 irrigado  G05     II  16.57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 150   sequia  G10     IV   6.58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $outliers</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        treat geno bloque stemdw       resi   res_MAD  rawp.BHStud index</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   irrigado  G01    III  24.19   6.520276  4.031041 5.553035e-05     3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    sequia  G05      I  11.14 -13.467719 -8.326170 0.000000e+00    10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45    sequia  G05      V  11.52 -13.006525 -8.041046 8.881784e-16    45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68    sequia  G05     IV  80.65  54.860861 33.916722 0.000000e+00    68</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82    sequia  G05     II  11.65 -13.422893 -8.298457 0.000000e+00    82</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118   sequia  G05    III  10.02 -14.963724 -9.251048 0.000000e+00   118</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 142 irrigado  G10     IV   5.03  -5.949139 -3.677946 2.351195e-04   142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             adjp        bholm out_flag</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   5.553035e-05 8.051901e-03  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  0.000000e+00 0.000000e+00  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45  8.881784e-16 1.296740e-13  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68  0.000000e+00 0.000000e+00  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82  0.000000e+00 0.000000e+00  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118 0.000000e+00 0.000000e+00  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 142 2.351195e-04 3.385720e-02  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span>  </span></span>
 </code></pre></div>
     </div>

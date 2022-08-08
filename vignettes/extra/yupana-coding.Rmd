@@ -57,8 +57,6 @@ wue <- fb %>%
            , ylimits = c(5, 30, 5)
            , glab = "Tratamientos"
            )
-
-
 ```
 
 ## Scatter plot
@@ -197,7 +195,8 @@ fig$figure
 #> Principal component Analysis
 
 mv <- fb %>% 
-  yupana_mvr(summary_by = c("geno", "treat")
+  yupana_mvr(last_factor = "bloque"
+             , summary_by = c("geno", "treat")
              , groups = "treat"
              )
   

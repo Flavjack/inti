@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2022-04-28
+#> date .: 2022-08-08
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -1234,7 +1234,6 @@ output$plot_color <- renderUI({
     
     last_factor <- fieldbook() %>% names()
     
-    
     selectInput(inputId = "mvr_last_factor"
                 , label = "Last Factor"
                 , selected = input$fb_last_factor
@@ -1273,7 +1272,6 @@ output$plot_color <- renderUI({
     
     })
   
-  
   output$mvr_variables <- renderUI({
     
     validate(need(input$mvr_last_factor, "Insert variables"))
@@ -1285,35 +1283,24 @@ output$plot_color <- renderUI({
     selectInput(inputId = "mvr_variables"
                 , label = "Variables"
                 , multiple = TRUE
-                , choices = c("all", mvr_variables)
-    )
-    
+                , choices = c("all"
+                              , mvr_variables)
+                )
   })
 
 # -------------------------------------------------------------------------
   
   mvr <- reactive({
     
-    validate(need(input$mvr_variables, "Choose your variables"))
-
-    n <- fieldbook() %>%
-      select(input$mvr_factors)  %>% 
-      select(!starts_with("{") | !ends_with("}")) %>% 
-      as.list() %>% 
-      map(discard, is.na) %>% 
-      lengths() %>% 
-      prod()
-    
-    validate(need(n > 2, "The factors should have more than 2 levels"))
+    validate(need(input$mvr_variables, "Select your variables"))
     
     yupana_mvr(
       data = fieldbook()
       , last_factor = input$mvr_last_factor
       , summary_by = input$mvr_factors
       , groups = input$mvr_groups
-      , variables = if(input$mvr_variables == "all") NULL else input$mvr_variables
+      , variables = input$mvr_variables
       )
-    
   })
 
 # -------------------------------------------------------------------------
@@ -1333,12 +1320,8 @@ output$plot_color <- renderUI({
     outfile <- tempfile(fileext = ".png")
 
     png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
-
-    plot.PCA(x = mvr()$pca
-             , choix = "var"
-             , autoLab = "auto"
-             , shadowtext = T
-    ) %>% print()
+    
+    mvr()$plots$pca_var %>% print()
 
     graphics.off()
 
@@ -1364,17 +1347,7 @@ output$plot_color <- renderUI({
 
     png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
 
-    plot <- plot.PCA(x = mvr()$pca
-             , choice = "ind"
-             , habillage = mvr()$param$groups_n
-             , invisible = "quali"
-             , autoLab = "auto"
-             , shadowtext = T
-             , graph.type = "ggplot"
-             ) +
-      theme(legend.position = "bottom")
-    
-    plot %>% print()
+    mvr()$plots$pca_ind %>% print()
 
     graphics.off()
 
@@ -1401,7 +1374,9 @@ output$plot_color <- renderUI({
 
     png(outfile, width = ancho, height = alto, units = "cm", res = dpi)
 
-    plot.HCPC(x = mvr()$hcpc, choice = "tree")
+    plot.HCPC(x = mvr()$hcpc
+              , choice = "tree"
+              )
 
     graphics.off()
 
@@ -1461,14 +1436,16 @@ output$plot_color <- renderUI({
 
     png(outfile, width = ancho, height = alto, units = "cm", res = dpi, pointsize = 9)
     
-    pairs.panels(mvr()$corr$correlation
-                 , hist.col="red"
-                 , pch = 21
-                 , method = input$mvr_cor_method
-                 , stars = TRUE
-                 , scale = input$mvr_cor_scale
-                 , lm = TRUE
-                 ) 
+    mvr()$data %>% 
+      select(where(is.numeric)) %>% 
+      pairs.panels(x = .
+                   , hist.col="red"
+                   , pch = 21
+                   , method = input$mvr_cor_method
+                   , stars = TRUE
+                   , scale = input$mvr_cor_scale
+                   , lm = TRUE
+                   ) 
     
     graphics.off()
 

@@ -7,6 +7,9 @@
  - Fix `plot_raw()`: "length(x) = 2 > 1' in coercion to 'logical(1)"
  - Update `jc_tombola()`
  - `outliers_remove(drop.na = FALSE)` allows avoid drop NA values by default 
+ - `H2cal()` outliers are changed to NA in the data.frame
+ - `yupana_mvr()`: update function for correlation and PCA
+ - Yupana: update multivariate analysis
 
 # inti 0.5.6
 

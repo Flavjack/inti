@@ -22,49 +22,15 @@
 #'
 #' @export
 #'
-#' @examples
-#'
-#' \dontrun{
-#'
-#' library(inti)
-#' library(gsheet)
-#'
-#' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346")
-#' # browseURL(url)
-#'
-#' fb <- gsheet2tbl(url)
-#' 
-#' mv <- yupana_mvr(data = fb
-#'                     , last_factor = "bloque"
-#'                     , summary_by = c("geno", "treat")
-#'                     , groups = NULL
-#'                     )
-#' 
-#' FactoMineR::plot.PCA(mv$pca, choix = "ind", habillage =  mv$param$groups)
-#' 
-#' }
-#' 
 
 yupana_mvr <- function(data
                        , last_factor = NULL
                        , summary_by = NULL
                        , groups = NULL
-                       , variables = NULL
+                       , variables = NA
                        ) {
   
   where <- NULL
-  
-  if(FALSE) {
-    
-data = fb
-last_factor = NULL
-summary_by = c("treat", "geno")
-groups = "treat"    
-variables = NULL   
-    
-    
-  }
   
 # fieldbook structure -----------------------------------------------------
 # -------------------------------------------------------------------------
@@ -77,15 +43,18 @@ variables = NULL
     {if(!is.null(last_factor)) 
       mutate(.data = ., across(!c(1:{{last_factor}}), as.numeric)) else .} %>%
     select(where(~!all(is.na(.)))) %>%
-    {if(!is.null(variables))
-      select(.data = ., {{summary_by}}, {{variables}}) else 
-        select(.data = ., {{summary_by}}, where(is.numeric))} %>%
+    {if( "all" %in% variables || is.na(variables) )
+      select(.data = ., {{summary_by}}, where(is.numeric)) else
+      select(.data = ., {{summary_by}}, {{variables}}) 
+        } %>%
     group_by(across({{summary_by}})) %>%
     summarise(across(everything(),  ~ mean(., na.rm = TRUE) ))  %>%
     ungroup() %>% 
     unite("rnames", {{summary_by}} , sep = "-", remove = FALSE) %>%
     column_to_rownames("rnames") %>% 
     as.data.frame()
+  
+  # str(fb)
   
 # parameters --------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -99,43 +68,80 @@ variables = NULL
               , groups_n = groups_ncol
               )
   
+# condtions ---------------------------------------------------------------
+
+  n <- fb %>%
+    select(par$quali)  %>% 
+    as.list() %>% 
+    purrr::map(discard, is.na) %>% 
+    lengths() %>% 
+    prod()
+  
+  if(n <= 2) stop("The factors should have more than 2 levels")
+  
 # pca ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
   
   pca_info <- fb %>%
     select(where(~ length(unique(.)) > 1)) %>%  # drop variables without variation
-    data.frame() %>% 
     PCA(X = .
         , scale.unit = T
         , quali.sup = quali_ncol
         , graph = FALSE
         )
   
-  # hcpc --------------------------------------------------------------------
-  # -------------------------------------------------------------------------
+  plot_pca_var <- FactoMineR::plot.PCA(x = pca_info
+                           , choix = "var"
+                           , autoLab = "auto"
+                           , shadowtext = T
+                           , graph.type = "ggplot"
+                           ) 
   
-  clt_info <- HCPC(res = pca_info
+  legend <- if(nlevels(fb[[par$groups]]) > 20) "none" else "bottom"
+  
+  plot_pca_ind <- FactoMineR::plot.PCA(x = pca_info
+                   , choice = "ind"
+                   , habillage = par$groups_n
+                   , invisible = "quali"
+                   , autoLab = "auto"
+                   , shadowtext = T
+                   , graph.type = "ggplot"
+                   ) +
+    theme(legend.position = legend) 
+  
+# hcpc --------------------------------------------------------------------
+# -------------------------------------------------------------------------
+  
+  clt_info <- FactoMineR::HCPC(res = pca_info
                    , nb.clust = -1
                    , graph = FALSE
                    )
   
-  # Correlation -------------------------------------------------------------
-  # -------------------------------------------------------------------------
+  # plot.HCPC(x = clt_info
+  #           , choice = "map"
+  #           , legend = list(x = "topright"
+  #                           , cex = 0.6
+  #                           , inset = 0.001
+  #                           , box.lty=0
+  #                           )
+  #           , draw.tree = F
+  #           )
   
-  cor <- fb %>% 
-    select(where(is.numeric)) %>%
-    select(where(~ length(unique(.)) > 1)) %>% # drop variables without variation
-    agricolae::correlation(method = "pearson")
+# plot --------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+plots <- list(pca_var = plot_pca_var
+              , pca_ind = plot_pca_ind)
   
-  # results -----------------------------------------------------------------
-  # -------------------------------------------------------------------------
+# results -----------------------------------------------------------------
+# -------------------------------------------------------------------------
   
-  multvr = list(
+multvr = list(
     pca = pca_info
     , hcpc = clt_info
-    , corr = cor
     , data = fb
     , param = par
-  )
+    , plots = plots
+    )
   
 }

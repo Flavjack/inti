@@ -140,7 +140,6 @@ H2cal <- function(data
                   ){
   
   
-
 # -------------------------------------------------------------------------
   
   if (FALSE) {
@@ -173,12 +172,15 @@ H2cal <- function(data
     out.rm <- data %>% outliers_remove(data = .
                                      , trait = trait
                                      , model = random.model
+                                     , drop_na = FALSE
                                      )
+    
     dt.rm <- out.rm %>% purrr::pluck(1) 
 
     out.fm <- data %>% outliers_remove(data = .
                                        , trait = trait
                                        , model = fixed.model
+                                       , drop_na = FALSE
                                        )
     dt.fm <- out.fm %>% purrr::pluck(1) 
 
