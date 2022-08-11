@@ -1,4 +1,4 @@
-#' Figure to Rmarkdown
+#' Figure to Quarto format
 #'
 #' Use Articul8 Add-ons from Google docs to build Rticles
 #'

@@ -1,4 +1,4 @@
-#' Table to Rmarkdown
+#' Table to Quarto format
 #'
 #' Use Articul8 Add-ons from Google docs to build Rticles
 #'

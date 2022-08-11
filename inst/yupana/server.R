@@ -321,154 +321,6 @@ observe({
 
   })
 
-# reshape module ----------------------------------------------------------
-
-  output$last_factor_rs <- renderUI({
-
-    if ( !is.null(fieldbook()) ) {
-
-      fieldbook_names <- fieldbook() %>%
-        names()
-
-      selectInput(inputId = "last_factor_rs"
-                  , label = "Last factor"
-                  , choices = c("choose" = ""
-                                , fieldbook_names)
-      )
-
-    } else { print ("Insert sheet name") }
-
-  })
-
-  output$from_var_rs <- renderUI({
-    
-    validate( need( input$last_factor_rs, "Insert last factor" ) )
-
-    if ( !is.null(fieldbook()) && input$last_factor_rs != "" ) {
-
-      fieldbook_varnames <- fieldbook() %>%
-        select( !c(1:input$last_factor_rs)  ) %>%
-        names()
-
-      selectInput(inputId = "from_var_rs"
-                  , label = "From variable (optional)"
-                  , choices = c("choose" = ""
-                                , fieldbook_varnames)
-      )
-
-    } else { print ("Insert last factor") }
-
-  })
-
-  output$to_var_rs <- renderUI({
-    
-    validate( need( input$last_factor_rs, "Insert last factor" ) )
-    
-    if ( !is.null(fieldbook()) && input$last_factor_rs != "" ) {
-
-      fieldbook_varnames <- fieldbook() %>%
-        select( !c(1:input$last_factor_rs)  ) %>%
-        names()
-
-      selectInput(inputId = "to_var_rs"
-                  , label = "To variable (optional)"
-                  , choices = c("choose" = ""
-                                , fieldbook_varnames)
-      )
-
-    } else { print ("Insert last factor") }
-
-  })
-
-  output$exc_fact_rs <- renderUI({
-    
-    validate( need( input$last_factor_rs, "Insert last factor" ) )
-
-    if ( !is.null( fieldbook() ) && input$last_factor_rs != ""  ) {
-
-      exc_fact_rs <- fieldbook() %>%
-        select( 1:input$last_factor_rs ) %>%
-        names()
-
-      selectInput(inputId = "exc_fact_rs"
-                  , label = "Exclude Factors (optional)"
-                  , multiple = TRUE
-                  , choices = c("choose" = ""
-                                , exc_fact_rs)
-      )
-
-    } else { print("Insert last factor") }
-
-  })
-
-# -------------------------------------------------------------------------
-
-  output$fb_rsp <- renderUI({
-
-    tagList(
-
-      uiOutput("last_factor_rs"),
-
-      textInput(inputId = "fbrs_sep"
-                , label = "Separator"
-                , value = ""
-                , placeholder = "e.g: var_flw --> '_'"
-      ),
-
-      textInput(inputId = "fbrs_newcol"
-                , label = "New column"
-                , value = ""
-                , placeholder = "Column name"
-      ),
-
-      uiOutput("from_var_rs"),
-
-      uiOutput("to_var_rs"),
-
-      uiOutput("exc_fact_rs"),
-
-      actionButton(inputId = "fbrs_generate"
-                   , label = "Generate"
-                   , class = "btn btn-warning"
-      )
-    )
-
-  })
-
-  # -------------------------------------------------------------------------
-
-  observeEvent(input$fbrs_generate, {
-
-    validate( need( input$fieldbook_url, "LogIn and insert a url" ) )
-
-    if ( !is.null( fieldbook() ) && input$last_factor_rs != "" )  {
-
-      fbrs <- yupana_reshape(data = fieldbook()
-                            , last_factor = input$last_factor_rs
-                            , sep = input$fbrs_sep
-                            , new_colname = input$fbrs_newcol
-                            , from_var = input$from_var_rs
-                            , to_var = input$to_var_rs
-                            , exc_factors = input$exc_fact_rs
-                             )
-
-      if ( !"fbrs" %in% sheet_names(gs()) ) {
-
-        sheet_add(ss = gs(), .after = input$fieldbook_gsheet, sheet = "fbrs")
-
-        fbrs %>% sheet_write(ss = gs(), sheet = "fbrs")
-
-      } else { print ("sheet already exist") }
-
-    }
-
-  })
-
-# modules linked ----------------------------------------------------------
-
-  output$fb_modules <- renderUI({ uiOutput("fb_rsp") })
-  
-
 # Yupana: Analysis --------------------------------------------------------
 # -------------------------------------------------------------------------
   
@@ -1521,7 +1373,155 @@ output$plot_color <- renderUI({
 
     }
   })
+  
+# reshape module ----------------------------------------------------------
+# -------------------------------------------------------------------------
 
+output$last_factor_rs <- renderUI({
+  
+  if ( !is.null(fieldbook()) ) {
+    
+    fieldbook_names <- fieldbook() %>%
+      names()
+    
+    selectInput(inputId = "last_factor_rs"
+                , label = "Last factor"
+                , choices = c("choose" = ""
+                              , fieldbook_names)
+    )
+    
+  } else { print ("Insert sheet name") }
+  
+})
+
+output$from_var_rs <- renderUI({
+  
+  validate( need( input$last_factor_rs, "Insert last factor" ) )
+  
+  if ( !is.null(fieldbook()) && input$last_factor_rs != "" ) {
+    
+    fieldbook_varnames <- fieldbook() %>%
+      select( !c(1:input$last_factor_rs)  ) %>%
+      names()
+    
+    selectInput(inputId = "from_var_rs"
+                , label = "From variable (optional)"
+                , choices = c("choose" = ""
+                              , fieldbook_varnames)
+    )
+    
+  } else { print ("Insert last factor") }
+  
+})
+
+output$to_var_rs <- renderUI({
+  
+  validate( need( input$last_factor_rs, "Insert last factor" ) )
+  
+  if ( !is.null(fieldbook()) && input$last_factor_rs != "" ) {
+    
+    fieldbook_varnames <- fieldbook() %>%
+      select( !c(1:input$last_factor_rs)  ) %>%
+      names()
+    
+    selectInput(inputId = "to_var_rs"
+                , label = "To variable (optional)"
+                , choices = c("choose" = ""
+                              , fieldbook_varnames)
+    )
+    
+  } else { print ("Insert last factor") }
+  
+})
+
+output$exc_fact_rs <- renderUI({
+  
+  validate( need( input$last_factor_rs, "Insert last factor" ) )
+  
+  if ( !is.null( fieldbook() ) && input$last_factor_rs != ""  ) {
+    
+    exc_fact_rs <- fieldbook() %>%
+      select( 1:input$last_factor_rs ) %>%
+      names()
+    
+    selectInput(inputId = "exc_fact_rs"
+                , label = "Exclude Factors (optional)"
+                , multiple = TRUE
+                , choices = c("choose" = ""
+                              , exc_fact_rs)
+    )
+    
+  } else { print("Insert last factor") }
+  
+})
+
+# -------------------------------------------------------------------------
+
+output$fb_rsp <- renderUI({
+  
+  tagList(
+    
+    uiOutput("last_factor_rs"),
+    
+    textInput(inputId = "fbrs_sep"
+              , label = "Separator"
+              , value = ""
+              , placeholder = "e.g: var_flw --> '_'"
+    ),
+    
+    textInput(inputId = "fbrs_newcol"
+              , label = "New column"
+              , value = ""
+              , placeholder = "Column name"
+    ),
+    
+    uiOutput("from_var_rs"),
+    
+    uiOutput("to_var_rs"),
+    
+    uiOutput("exc_fact_rs"),
+    
+    actionButton(inputId = "fbrs_generate"
+                 , label = "Generate"
+                 , class = "btn btn-warning"
+    )
+  )
+  
+})
+
+# -------------------------------------------------------------------------
+
+observeEvent(input$fbrs_generate, {
+  
+  validate( need( input$fieldbook_url, "LogIn and insert a url" ) )
+  
+  if ( !is.null( fieldbook() ) && input$last_factor_rs != "" )  {
+    
+    fbrs <- yupana_reshape(data = fieldbook()
+                           , last_factor = input$last_factor_rs
+                           , sep = input$fbrs_sep
+                           , new_colname = input$fbrs_newcol
+                           , from_var = input$from_var_rs
+                           , to_var = input$to_var_rs
+                           , exc_factors = input$exc_fact_rs
+    )
+    
+    if ( !"fbrs" %in% sheet_names(gs()) ) {
+      
+      sheet_add(ss = gs(), .after = input$fieldbook_gsheet, sheet = "fbrs")
+      
+      fbrs %>% sheet_write(ss = gs(), sheet = "fbrs")
+      
+    } else { print ("sheet already exist") }
+    
+  }
+  
+})
+
+# modules linked ----------------------------------------------------------
+  
+output$fb_modules <- renderUI({ uiOutput("fb_rsp") })
+  
 # end yupana --------------------------------------------------------------
 # -------------------------------------------------------------------------
 

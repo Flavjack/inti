@@ -4,6 +4,7 @@
 #'
 #' @param file Zip file path from Articul8 exported in md format [path]
 #' @param export Path to export the files [path: NA (file directory)]
+#' @param format Output format [string: "qmd" "rmd"]
 #'
 #' @return path
 #' 
@@ -16,6 +17,7 @@
 
 gdoc2qmd <- function(file
                      , export = NA
+                     , format = "qmd"
                      ){
 
   export <- if(is.na(export)) {
@@ -32,8 +34,19 @@ gdoc2qmd <- function(file
     dplyr::rowwise() %>%
     dplyr::mutate(value = gsub("```Unknown element type at this position: UNSUPPORTED```", "\\\\newpage \n\n", .data$value)) %>%
     dplyr::mutate(value = gsub("> END", "```{r}\nknitr::knit_exit() \n```", .data$value)) %>% 
-    dplyr::mutate(value = figure2qmd(.data$value, path = export)) %>% 
-    dplyr::mutate(value = table2qmd(.data$value)) %>%
+    {
+      if(format == "qmd") {
+        
+        dplyr::mutate(.data = ., value = figure2qmd(text = .data$value, path = export)) %>% 
+        dplyr::mutate(.data = ., value = table2qmd(text = .data$value))
+        
+      } else if (format == "rmd") {
+        
+        dplyr::mutate(.data = ., value = figure2rmd(text = .data$value, path = export)) %>% 
+        dplyr::mutate(.data = ., value = table2rmd(text = .data$value)) 
+        
+      }
+    } %>% 
     dplyr::select(.data$value) %>% 
     tibble::deframe() %>% 
     writeLines(con = file.path(export, "_doc.Rmd") %>% gsub("\\\\", "\\/", .))

@@ -2,7 +2,7 @@
 % Please edit documentation in R/figure2qmd.R
 \name{figure2qmd}
 \alias{figure2qmd}
-\title{Figure to Rmarkdown}
+\title{Figure to Quarto format}
 \usage{
 figure2qmd(text, path = ".", opts = NA)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/table2qmd.R
 \name{table2qmd}
 \alias{table2qmd}
-\title{Table to Rmarkdown}
+\title{Table to Quarto format}
 \usage{
 table2qmd(text)
 }
