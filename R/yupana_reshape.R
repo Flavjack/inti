@@ -55,7 +55,7 @@ yupana_reshape <- function(data
     {if (!is.null(exc_factors)) select(., !{{exc_factors}} ) else .}  %>%
     pivot_longer(cols = !c(1:{{last_factor}}),
                  names_to = c("variables", {{new_colname}}),
-                 names_sep = paste0("_(?!.*",{{sep}},")"),
+                 names_sep = paste0("\\", {{sep}}, "(?!.*\\", {{sep}}, ")"),
                  values_to = c("values")) %>%
     pivot_wider(names_from = .data$variables, values_from = .data$values)
 

@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2022-08-08
+#> date .: 2022-08-14
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -1376,12 +1376,70 @@ output$plot_color <- renderUI({
   
 # reshape module ----------------------------------------------------------
 # -------------------------------------------------------------------------
+  
+# select sheet to reshape -------------------------------------------------
+
+output$reshape_sheet <- renderUI({
+    
+    validate(need(fieldbook_url(), "LogIn and insert a url") )
+    
+    info <- gs4_get(gs())
+    
+    names <- info$sheets$name 
+    
+    selectInput(inputId = "reshape_sheet"
+                , label = NULL
+                , choices = c("choose" = ""
+                              , names)
+    )
+  })
+
+# reshape preview sheet ---------------------------------------------------
+  
+  reshape_sheet_url <- reactive({
+    
+    validate(need(input$reshape_sheet, "LogIn and insert a url") )
+    
+    info <- gs4_get(gs())
+    
+    url <-  info$spreadsheet_url
+    
+    id <- info$sheets %>%
+      filter(name == input$reshape_sheet) %>%
+      pluck("id")
+    
+    fb_url <- paste(url, id, sep = "#gid=")
+    
+  })
+
+  output$fieldbook_preview <- renderUI({
+    
+    validate(need(reshape_sheet_url(), "LogIn and insert a url") )
+    
+    tags$iframe(src = reshape_sheet_url()
+                , style="height:580px; width:100%; scrolling=no")
+    
+  })
+
+# import sheet to reshape -------------------------------------------------
+
+fb2reshape <- reactive({
+    
+    validate(need(input$reshape_sheet, "Choose you fb sheet"))
+    
+    gs() %>%
+      range_read(input$reshape_sheet) %>% 
+      select(!starts_with("[") | !ends_with("]")) 
+    
+  })
+  
+# -------------------------------------------------------------------------
 
 output$last_factor_rs <- renderUI({
   
-  if ( !is.null(fieldbook()) ) {
+  if ( !is.null(fb2reshape()) ) {
     
-    fieldbook_names <- fieldbook() %>%
+    fieldbook_names <- fb2reshape() %>%
       names()
     
     selectInput(inputId = "last_factor_rs"
@@ -1398,9 +1456,9 @@ output$from_var_rs <- renderUI({
   
   validate( need( input$last_factor_rs, "Insert last factor" ) )
   
-  if ( !is.null(fieldbook()) && input$last_factor_rs != "" ) {
+  if ( !is.null(fb2reshape()) && input$last_factor_rs != "" ) {
     
-    fieldbook_varnames <- fieldbook() %>%
+    fieldbook_varnames <- fb2reshape() %>%
       select( !c(1:input$last_factor_rs)  ) %>%
       names()
     
@@ -1418,9 +1476,9 @@ output$to_var_rs <- renderUI({
   
   validate( need( input$last_factor_rs, "Insert last factor" ) )
   
-  if ( !is.null(fieldbook()) && input$last_factor_rs != "" ) {
+  if ( !is.null(fb2reshape()) && input$last_factor_rs != "" ) {
     
-    fieldbook_varnames <- fieldbook() %>%
+    fieldbook_varnames <- fb2reshape() %>%
       select( !c(1:input$last_factor_rs)  ) %>%
       names()
     
@@ -1438,9 +1496,9 @@ output$exc_fact_rs <- renderUI({
   
   validate( need( input$last_factor_rs, "Insert last factor" ) )
   
-  if ( !is.null( fieldbook() ) && input$last_factor_rs != ""  ) {
+  if ( !is.null( fb2reshape() ) && input$last_factor_rs != ""  ) {
     
-    exc_fact_rs <- fieldbook() %>%
+    exc_fact_rs <- fb2reshape() %>%
       select( 1:input$last_factor_rs ) %>%
       names()
     
@@ -1455,11 +1513,51 @@ output$exc_fact_rs <- renderUI({
   
 })
 
-# -------------------------------------------------------------------------
+# save reshaped sheet -----------------------------------------------------
 
-output$fb_rsp <- renderUI({
+output$reshape4save <- renderUI({
+  
+  textInput(inputId = "reshape4save"
+            , label = "Sheet export"
+            , value = "reshaped"
+            , width = "100%"
+            )
+})
+
+observeEvent(input$fbrs_generate, {
+  
+  validate( need( input$fieldbook_url, "LogIn and insert a url" ) )
+  
+  if ( !is.null( fb2reshape() ) && input$last_factor_rs != "" )  {
+    
+    fbrs <- yupana_reshape(data = fb2reshape()
+                           , last_factor = input$last_factor_rs
+                           , sep = input$fbrs_sep
+                           , new_colname = input$fbrs_newcol
+                           , from_var = input$from_var_rs
+                           , to_var = input$to_var_rs
+                           , exc_factors = input$exc_fact_rs
+                           )
+    
+    if ( !input$reshape4save %in% sheet_names(gs()) ) {
+      
+      sheet_add(ss = gs(), sheet = input$reshape4save)
+      
+      fbrs %>% sheet_write(ss = gs(), sheet = input$reshape4save)
+      
+    } else { print ("sheet already exist") }
+    
+  }
+  
+})
+
+# module interface --------------------------------------------------------
+
+output$reshape_ui <- renderUI({
   
   tagList(
+    
+    uiOutput("reshape_sheet"),
     
     uiOutput("last_factor_rs"),
     
@@ -1473,54 +1571,25 @@ output$fb_rsp <- renderUI({
               , label = "New column"
               , value = ""
               , placeholder = "Column name"
-    ),
+    )
     
-    uiOutput("from_var_rs"),
+    , uiOutput("from_var_rs")
     
-    uiOutput("to_var_rs"),
+    , uiOutput("to_var_rs")
     
-    uiOutput("exc_fact_rs"),
+    , uiOutput("exc_fact_rs")
     
-    actionButton(inputId = "fbrs_generate"
+    , uiOutput("reshape4save")
+    
+    , actionButton(inputId = "fbrs_generate"
                  , label = "Generate"
                  , class = "btn btn-warning"
-    )
+                 )
   )
   
 })
 
-# -------------------------------------------------------------------------
-
-observeEvent(input$fbrs_generate, {
-  
-  validate( need( input$fieldbook_url, "LogIn and insert a url" ) )
-  
-  if ( !is.null( fieldbook() ) && input$last_factor_rs != "" )  {
-    
-    fbrs <- yupana_reshape(data = fieldbook()
-                           , last_factor = input$last_factor_rs
-                           , sep = input$fbrs_sep
-                           , new_colname = input$fbrs_newcol
-                           , from_var = input$from_var_rs
-                           , to_var = input$to_var_rs
-                           , exc_factors = input$exc_fact_rs
-    )
-    
-    if ( !"fbrs" %in% sheet_names(gs()) ) {
-      
-      sheet_add(ss = gs(), .after = input$fieldbook_gsheet, sheet = "fbrs")
-      
-      fbrs %>% sheet_write(ss = gs(), sheet = "fbrs")
-      
-    } else { print ("sheet already exist") }
-    
-  }
-  
-})
-
-# modules linked ----------------------------------------------------------
-  
-output$fb_modules <- renderUI({ uiOutput("fb_rsp") })
+output$fb_modules <- renderUI({ uiOutput("reshape_ui") })
   
 # end yupana --------------------------------------------------------------
 # -------------------------------------------------------------------------
