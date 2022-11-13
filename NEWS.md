@@ -1,3 +1,9 @@
+# inti 0.5.9
+
+- Yupana - fieldbook module:
+  - [ ] Create a filter function and module: `yupana_filter()` 
+  - [ ] Preview result?
+
 # inti 0.5.8
 
 - `gdocs2qmd(format)` allow transform to quarto or Rmarkdown format
@@ -5,8 +11,6 @@
 - Yupana - fieldbook module:
   - [X] Use "_" or "." to separate the traits factors: `yupana_reshape()`
   - [X] Load and Save in specific sheet
-  - [ ] Create a filter function and module: `yupana_filter()` 
-  - [ ] Preview result?
 
 # inti 0.5.7
 

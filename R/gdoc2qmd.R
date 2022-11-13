@@ -10,7 +10,7 @@
 #' 
 #' @details 
 #' 
-#' If you add "> END" will replace by "knitr::knit_exit()"
+#' If you add "|# END" will replace by "knitr::knit_exit()"
 #' 
 #' @export
 #' 
@@ -33,7 +33,7 @@ gdoc2qmd <- function(file
     tibble::enframe() %>%
     dplyr::rowwise() %>%
     dplyr::mutate(value = gsub("```Unknown element type at this position: UNSUPPORTED```", "\\\\newpage \n\n", .data$value)) %>%
-    dplyr::mutate(value = gsub("> END", "```{r}\nknitr::knit_exit() \n```", .data$value)) %>% 
+    dplyr::mutate(value = gsub("\\#\\| END", "```{r}\nknitr::knit_exit() \n```", .data$value)) %>% 
     {
       if(format == "qmd") {
         

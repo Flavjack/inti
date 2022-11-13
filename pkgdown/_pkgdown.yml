@@ -95,6 +95,7 @@ reference:
 - title: Rticles
   desc:  Write technical documents
 - contents:
+  - ends_with("2qmd")
   - ends_with("2rmd")
   - starts_with("include")
   - footnotes
