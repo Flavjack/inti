@@ -7,6 +7,7 @@
 # inti 0.5.8
 
 - `gdocs2qmd(format)` allow transform to quarto or Rmarkdown format
+- Update RStudio download link to posit
 
 - Yupana - fieldbook module:
   - [X] Use "_" or "." to separate the traits factors: `yupana_reshape()`
