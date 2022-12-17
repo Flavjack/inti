@@ -78,7 +78,7 @@ dt_factors <- data %>%
   dplyr::select(!starts_with("{") | !ends_with("}")) %>%
   dplyr::rename_with(~ gsub("\\s+|\\.", "_", .)) %>%
   dplyr::mutate(across(everything(), ~ gsub(" ", "-", .))) %>%
-  dplyr::mutate(across(where(is.character), ~ na_if(.x, "NULL")))
+  dplyr::mutate(across(where(is.character), ~ na_if(.x, "NULL"))) # check merge!
 
 # -------------------------------------------------------------------------
 

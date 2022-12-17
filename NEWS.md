@@ -1,5 +1,6 @@
 # inti 0.5.9
 
+- Fix for dev dplyr (Thanks @hadley)
 - Yupana - fieldbook module:
   - [ ] Create a filter function and module: `yupana_filter()` 
   - [ ] Preview result?
@@ -11,7 +12,7 @@
 
 - Yupana - fieldbook module:
   - [X] Use "_" or "." to separate the traits factors: `yupana_reshape()`
-  - [X] Load and Save in specific sheet
+  - [X] Load and Save in a specific sheet
 
 # inti 0.5.7
 
