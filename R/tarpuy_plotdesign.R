@@ -84,6 +84,7 @@ tarpuy_plotdesign <- function(data
       ))(length(data[[factor]] %>% unique()))
 
 plot <- dsg %>%
+  mutate(across({{factor}}, as.factor)) %>% 
   ggplot(aes(x = .data$cols, y = .data$rows, fill = .data[[factor]])) +
   geom_tile(color = "black", size = 0.5) +
   geom_text(aes(label = .data[[fill]])) +

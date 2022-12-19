@@ -1,0 +1,112 @@
+---
+title: "xcode"
+format: html
+editor_options: 
+  chunk_output_type: console
+---
+```{r}
+library(tidyverse)
+```
+
+# Experimental designs
+
+## Arguments
+
+nfactors (for the experimental design)
+design
+1: crd, cbd, augmented, lattice, alpha
+2: crd, crbd, split.plot, strp.plot, p.rep
+3+: crd, crbd
+factors (list)
+replication
+seed
+zigzag (design layout: F or T) 
+qrinfo
+
+## Idea
+
+According the nfactors the function will take the elements list (use the list name) and convert to dataframe (enframe) and use the row number to create the replications. for each replication will include the random values for sorting. Include the design. At the final include the row and column number based in the zigzag option to be used in spatial correction. merge the factor columns with the qrinfo for unique ID and reconstruct the field-book
+
+## Function
+
+```{r}
+replication <- 4
+seed <- NULL
+zigzag <- T
+qrinfo <- "inkaverse"
+
+dim <- NA #c(8, 6)
+
+nfactors  <- 2
+design <- "rcbd"
+factors  <- list("geno" = c("a1", "b2", "c3", "d4", "d4")
+                 , "salt stress" = c(0, 50, 200, 200)
+                 , time = c(30, 60, 90)
+                 )
+
+# CRD & RCBD
+
+set.seed(seed)
+
+dfactors <- factors %>% 
+  purrr::map(base::unique) %>% 
+  purrr::map(stats::na.omit) %>% 
+  purrr::map(~gsub("[[:space:]]", ".", .)) %>% 
+  purrr::set_names(gsub("[[:space:]]", "." , names(.))) %>% 
+  .[1:nfactors]
+  
+block.factor <- if(design %in% "crbd") {"block"} else {"rep"}
+
+name.factors <- names(dfactors)
+  
+nrows <- if(anyNA(dim)) {replication} else {dim[1]}
+
+ncols <- if(anyNA(dim)) {
+  
+  dfactors %>% 
+    lengths() %>% 
+    prod()*replication/nrows
+  
+  } else {dim[2]}
+  
+fb <- dfactors %>% 
+  expand.grid() %>% 
+  mutate(ntreat = as.numeric(row.names(.))) %>% 
+  uncount(replication, .id = {{block.factor}}) %>% 
+  arrange(.data[[block.factor]], ntreat) %>% 
+  {
+    if(design %in% "rcbd") {
+      group_by(.data = ., .data[[block.factor]]) %>% 
+      mutate(.data = ., order = sample.int(n())) %>% 
+      ungroup({{block.factor}}) %>%
+      arrange(.data = ., .data[[block.factor]], order) %>% 
+      mutate(.data = ., plot = 100*.data[[block.factor]] + order)
+    } else if (design %in% "crd") {
+      mutate(.data = ., order = sample.int(n())) %>%
+      arrange(.data = ., order) %>% 
+      mutate(plot = 100 + order)
+    }
+  } %>% 
+  mutate(rows = rep(1:nrows,  each = nrow(.)/nrows )) %>% 
+  mutate(cols = rep(1:ncols, times = nrow(.)/ncols )) %>%
+  mutate(icols = (ncols - cols) + 1) %>% 
+  { 
+    if(isTRUE(zigzag))
+      mutate(.data = .
+             , cols = case_when(
+               rows %% 2 == 0 ~ as.character(icols)
+               , rows %% 2 == 1 ~ as.character(cols)
+      )) else {.}
+    } %>% 
+  select(plot, {{name.factors}}, everything()) %>% 
+  mutate(across(cols, as.numeric)) %>% 
+  mutate(qrinfo = qrinfo) %>% 
+  tidyr::unite("qrcode", qrinfo, plot, {{name.factors}}, cols, rows
+               , sep = "-", remove = F) %>% 
+  select(!c(icols, qrinfo)) 
+  
+fb %>% 
+  arrange(rows, cols) %>% 
+  inti::tarpuy_plotdesign(factor = c("geno"), fill = "plot")
+```
+

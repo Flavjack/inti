@@ -1,6 +1,7 @@
 # inti 0.5.9
 
 - Fix for dev dplyr (Thanks @hadley)
+- `tarpuy_plotdesign()` autoconvert as factor for plot design
 - Yupana - fieldbook module:
   - [ ] Create a filter function and module: `yupana_filter()` 
   - [ ] Preview result?
