@@ -30,15 +30,15 @@ According the nfactors the function will take the elements list (use the list na
 ## Function
 
 ```{r}
-replication <- 4
+rep <- 4
 seed <- NULL
 zigzag <- T
-qrinfo <- "inkaverse"
+qrprefix <- "inkaverse"
 
 dim <- NA #c(8, 6)
 
 nfactors  <- 2
-design <- "rcbd"
+design <-  "crd" # "rcbd"
 factors  <- list("geno" = c("a1", "b2", "c3", "d4", "d4")
                  , "salt stress" = c(0, 50, 200, 200)
                  , time = c(30, 60, 90)
@@ -59,20 +59,20 @@ block.factor <- if(design %in% "crbd") {"block"} else {"rep"}
 
 name.factors <- names(dfactors)
   
-nrows <- if(anyNA(dim)) {replication} else {dim[1]}
+nrows <- if(anyNA(dim)) {rep} else {dim[1]}
 
 ncols <- if(anyNA(dim)) {
   
   dfactors %>% 
     lengths() %>% 
-    prod()*replication/nrows
+    prod()*rep/nrows
   
   } else {dim[2]}
   
 fb <- dfactors %>% 
   expand.grid() %>% 
   mutate(ntreat = as.numeric(row.names(.))) %>% 
-  uncount(replication, .id = {{block.factor}}) %>% 
+  uncount(rep, .id = {{block.factor}}) %>% 
   arrange(.data[[block.factor]], ntreat) %>% 
   {
     if(design %in% "rcbd") {
@@ -80,11 +80,11 @@ fb <- dfactors %>%
       mutate(.data = ., order = sample.int(n())) %>% 
       ungroup({{block.factor}}) %>%
       arrange(.data = ., .data[[block.factor]], order) %>% 
-      mutate(.data = ., plot = 100*.data[[block.factor]] + order)
+      mutate(.data = ., plots = 100*.data[[block.factor]] + order)
     } else if (design %in% "crd") {
       mutate(.data = ., order = sample.int(n())) %>%
       arrange(.data = ., order) %>% 
-      mutate(plot = 100 + order)
+      mutate(plots = 100 + order)
     }
   } %>% 
   mutate(rows = rep(1:nrows,  each = nrow(.)/nrows )) %>% 
@@ -98,15 +98,31 @@ fb <- dfactors %>%
                , rows %% 2 == 1 ~ as.character(cols)
       )) else {.}
     } %>% 
-  select(plot, {{name.factors}}, everything()) %>% 
+  select(plots, {{name.factors}}, everything()) %>% 
   mutate(across(cols, as.numeric)) %>% 
-  mutate(qrinfo = qrinfo) %>% 
-  tidyr::unite("qrcode", qrinfo, plot, {{name.factors}}, cols, rows
+  mutate(qrprefix = qrprefix) %>% 
+  tidyr::unite("barcode", qrprefix, plots, {{name.factors}}, cols, rows
                , sep = "-", remove = F) %>% 
-  select(!c(icols, qrinfo)) 
+  select(!c(icols, qrprefix)) 
+
+result <- list(
+  fieldbook = fb
+  , parameters = list(
+    nfactors = nfactors
+    , factors = factors
+    , design = design
+    , rep = rep 
+    , zigzag = zigzag
+    , dim = c(nrows, ncols)
+    , seed = seed
+    , factornames = name.factors
+  )
+)
+
   
 fb %>% 
-  arrange(rows, cols) %>% 
-  inti::tarpuy_plotdesign(factor = c("geno"), fill = "plot")
+  arrange(rows, cols) %>%
+  inti::tarpuy_plotdesign(factor = c("geno"), fill = "plots")
+
 ```
 

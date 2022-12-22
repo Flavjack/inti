@@ -5,7 +5,6 @@
 #' @param data Experimental design data frame with the factors and level. See
 #'   examples.
 #' @param factor Vector with the name of the columns with the factors.
-#' @param dim Dimension for reshape the design arrangement.
 #' @param fill  Value for fill the experimental units (default = "plots").
 #' @param xlab Title for x axis.
 #' @param ylab Title for y axis.
@@ -27,8 +26,7 @@
 #'
 
 tarpuy_plotdesign <- function(data
-                        , factor
-                        , dim = NULL
+                        , factor = NA
                         , fill = "plots"
                         , xlab = NULL
                         , ylab = NULL
@@ -37,41 +35,17 @@ tarpuy_plotdesign <- function(data
 
 # -------------------------------------------------------------------------
 
+  # data <- fb
   # xlab <- ylab <- glab <- NULL
-  # fill <- "plots"
+  # factor <- "geno"
 
-  if (is.null(xlab)) { xlab <-  "Experimental Units" }
-  if (is.null(ylab)) { ylab <-  "Blocks" }
-  if (is.null(glab)) { glab <- factor }
+# -------------------------------------------------------------------------
 
- if ( is.numeric(dim) ) {
-
-    ncols <- dim[1]
-    nrows <- dim[2]
-
-  } else if ( any(dim %in% names(data)) ) {
-
-    nrows <- data %>%
-      select(.data[[dim]]) %>%
-      unique() %>%
-      deframe() %>% length()
-
-    ncols <- data %>%
-      nrow() / nrows
-
-  }  else if ( is.character(dim) ) {
-
-    dim <- dim %>%
-      strsplit(., "x") %>% deframe() %>% as.numeric()
-
-    ncols <- dim[1]
-    nrows <- dim[2]
-
-  }
-
-  dsg <- data %>%
-    mutate(cols = rep(1:ncols, times = nrow(.)/ncols )) %>%
-    mutate(rows = rep(1:nrows,  each = nrow(.)/nrows ))
+  design <- data %>% purrr::pluck(1)
+  
+  param <- data %>% purrr::pluck(2)
+  
+  factor <- if(is.na(factor) | is.null(factor)) { param$factornames[1] }
 
 # plot --------------------------------------------------------------------
 
@@ -81,26 +55,30 @@ tarpuy_plotdesign <- function(data
         , "#F3BB00" # yellow
         , "#0198CD" # blue
         , "#FE6673" # red
-      ))(length(data[[factor]] %>% unique()))
+      ))(length(param$factors[[factor]]))
 
-plot <- dsg %>%
+# -------------------------------------------------------------------------
+
+  if (is.null(xlab)) { xlab <-  "columns" }
+  if (is.null(ylab)) { ylab <-  "row" }
+  if (is.null(glab)) { glab <- factor }
+
+# -------------------------------------------------------------------------
+
+plot <- design %>%
   mutate(across({{factor}}, as.factor)) %>% 
+  arrange(.data$rows, .data$cols) %>%
   ggplot(aes(x = .data$cols, y = .data$rows, fill = .data[[factor]])) +
   geom_tile(color = "black", size = 0.5) +
   geom_text(aes(label = .data[[fill]])) +
-  scale_x_continuous(expand = c(0, 0), n.breaks = ncols) +
-  scale_y_continuous(expand = c(0, 0), n.breaks = nrows, trans = 'reverse') +
+  scale_y_continuous(expand = c(0, 0), trans = 'reverse', n.breaks = param$dim[1]) +
+  scale_x_continuous(expand = c(0, 0), n.breaks = param$dim[2]) +
   scale_fill_manual(values = color_grps) +
   labs(x = xlab, y = ylab, fill = glab) +
   theme_bw() +
   theme(legend.position = "top")
 
-plot
-
-# result ------------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-  return(plot)
+return(plot)
 
 }
 

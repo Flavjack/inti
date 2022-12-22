@@ -25,6 +25,7 @@
 #' @param nfactor Number of factors for the design.
 #' @param design Type of design.
 #' @param rep Number of replication.
+#' @param zigzag Experiment layout in zigzag [logic: F]
 #' @param serie Number of digits in the plots.
 #' @param seed Seed for the randomization.
 #'
@@ -68,6 +69,7 @@ tarpuy_plex <- function(data = NULL
                           , nfactor = 2
                           , design = "rcbd"
                           , rep = 3
+                          , zigzag = FALSE
                           , serie = 2
                           , seed = 0
                          ) {
@@ -170,9 +172,10 @@ factors <- c(paste0("factor", 1:nfactor))
 dsg_info <-  c(nfactors = nfactor
               , type = design
               , rep = rep
+              , zigzag = zigzag
               , serie = serie
               , seed = seed
-              , barcode = barcode
+              , fbname = barcode
               ) %>%
   enframe() %>%
   rename('{arguments}' = .data$name, '{values}' = .data$value)
@@ -192,7 +195,7 @@ first_col <- c("Activities (DAI)"
                ) %>%
   enframe(value = "Dates") %>% select(!.data$name)
 
-ttable <- c(DAI = seq.int(from = -15, to = finish, by = 5)) %>%
+ttable <- c(DAI = seq.int(from = -30, to = finish, by = 5)) %>%
   enframe() %>%
   mutate(date =  format( .data$value + start, "%d/%b")) %>%
   select(date, DAI = .data$value) %>%

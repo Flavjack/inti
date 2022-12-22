@@ -6,8 +6,7 @@
 \usage{
 tarpuy_plotdesign(
   data,
-  factor,
-  dim = NULL,
+  factor = NA,
   fill = "plots",
   xlab = NULL,
   ylab = NULL,
@@ -19,8 +18,6 @@ tarpuy_plotdesign(
 examples.}
 
 \item{factor}{Vector with the name of the columns with the factors.}
-
-\item{dim}{Dimension for reshape the design arrangement.}
 
 \item{fill}{Value for fill the experimental units (default = "plots").}
 
