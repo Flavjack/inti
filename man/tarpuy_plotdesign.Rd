@@ -37,3 +37,27 @@ Plot fieldbook sketch designs based in experimental design
 The function allows to plot the experimental design according the
   field experiment design.
 }
+\examples{
+
+\dontrun{
+
+library(inti)
+library(gsheet)
+
+url <- paste0("https://docs.google.com/spreadsheets/d/"
+              , "1grAv_2po804pPGg9nj1o5nli01IcEGvSevDruq_ssHk/edit#gid=1807254932")
+# browseURL(url)
+
+fb <- gsheet2tbl(url) 
+
+dsg <- fb \%>\% tarpuy_design() 
+
+dsg
+
+dsg \%>\% str()
+
+dsg \%>\% 
+  tarpuy_plotdesign()
+
+}
+}

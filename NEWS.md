@@ -4,6 +4,10 @@
 - `tarpuy_plotdesign()` 
   - Autoconvert as factor for plot design
   - Default names in plot to "row" and "columns"
+- New function: `design_repblock` for "rcbd", "crd" for any factor number
+- Yupana create by default the sheet `locale = "en_US"` to use the decimal point
+
+
 - Yupana - fieldbook module:
   - [ ] Create a filter function and module: `yupana_filter()` 
   - [ ] Preview result?

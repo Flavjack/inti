@@ -9,7 +9,7 @@
 #' @param type Type of experimental arrange  (default = "crd"). See details.
 #' @param rep  Number of replications in the experiment (default = 3).
 #' @param zigzag Experiment layout in zigzag [logic: F].
-#' @param serie Digits in the plot id (default = 2).
+#' @param serie Number to start the plot id [numeric: 100].
 #' @param seed Replicability of draw results (default = 0) always random. See
 #'   details.
 #' @param fbname Barcode prefix for data collection.
@@ -41,14 +41,14 @@
 #' library(gsheet)
 #' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "1grAv_2po804pPGg9nj1o5nli01IcEGvSevDruq_ssHk/edit#gid=244058650")
+#'               , "1grAv_2po804pPGg9nj1o5nli01IcEGvSevDruq_ssHk/edit#gid=1595426169")
 #' # browseURL(url)
 #' 
 #' fb <- gsheet2tbl(url) 
 #' 
 #' dsg <- fb %>% tarpuy_design() 
 #' 
-#' dsg
+#' dsg %>% str()
 #' 
 #' dsg %>% 
 #'   tarpuy_plotdesign()
@@ -60,7 +60,7 @@ tarpuy_design <- function(data
                           , type = "crd"
                           , rep = 2
                           , zigzag = FALSE
-                          , serie = 2
+                          , serie = 100
                           , seed = NULL
                           , fbname = NA
                           ) {
@@ -84,10 +84,7 @@ type <- match.arg(type, c(
 dt_factors <- data %>%
   dplyr::select(where(~!all(is.na(.)))) %>% 
   dplyr::select(!starts_with("[") | !ends_with("]")) %>%
-  dplyr::select(!starts_with("{") | !ends_with("}")) %>%
-  dplyr::rename_with(~ gsub("\\s+|\\.", "_", .)) %>%
-  dplyr::mutate(across(everything(), ~ gsub(" ", "-", .))) %>%
-  dplyr::mutate(across(where(is.character), ~ na_if(.x, "NULL"))) # check merge!
+  dplyr::select(!starts_with("{") | !ends_with("}"))
 
 # -------------------------------------------------------------------------
 
@@ -186,127 +183,20 @@ if(length(factor_names) != nfactors) {
 
 factor_levels <- dt_factors %>%
   dplyr::select({{factor_names}}) %>% 
-  as.list() %>%
-  purrr::map(base::unique) %>% 
-  purrr::map(stats::na.omit) %>% 
-  purrr::map(as.vector)
-  
-# n_factor = 1 ------------------------------------------------------------
-# -------------------------------------------------------------------------
+  as.list() 
 
-    fb <- if (nfactors == 1) {
-            
-            factors <- factor_levels[[1]]
-            
-            if (type == "crd" || type == "rcbd") {
-              
-              design <- design_repblock(
-                nfactors = 1
-                , factors = factor_levels
-                , type = type
-                , rep = rep
-                , zigzag = zigzag
-                , serie = serie
-                , seed = seed
-                , fbname = fbname
-              )
+design <- design_repblock(
+  nfactors = nfactors
+  , factors = factor_levels
+  , type = type
+  , rep = rep
+  , zigzag = zigzag
+  , serie = serie
+  , seed = seed
+  , fbname = fbname
+  ) %>% purrr::pluck(1)
 
-             design$fieldbook 
-                
-            }
-
-            if (type == "lsd") { # need update
-
-              design <- agricolae::design.lsd(
-                trt = factors
-                , r = rep
-                , serie = serie
-                , seed = seed
-              )
-              
-              fb_info <- design$book %>%
-                dplyr::rename( {{factor_names}} := "factors")
-              
-              fb <- fb_info %>% 
-                dplyr::mutate(exp = fbname, .before = 1) %>% 
-                tidyr::unite(col = "fbname", everything(), remove = F, sep = "_") %>% 
-                dplyr::select(!exp)
-              
-            }
-
-            if (type == "lattice") {  # need update
-
-              if( rep > 3 ) { rep <- 3 }
-
-              design <- agricolae::design.lattice(
-                trt = factors
-                , r = rep
-                , serie = serie
-                , seed = seed
-                )
-
-              fb_info <- design$book %>%
-                dplyr::rename( {{factor_names}} := "trt")
-              
-              fb <- fb_info %>% 
-                dplyr::mutate(exp = fbname, .before = 1) %>% 
-                tidyr::unite(col = "fbname", everything(), remove = F, sep = "_") %>% 
-                dplyr::select(!exp)
-
-            }
-
-          }
-
-# n_factor >= 2 -----------------------------------------------------------
-# -------------------------------------------------------------------------
-
-    fb <- if( nfactors == 2 & startsWith(type, "split") ) {  # need update
-          
-          model <- type %>% gsub("split-", "", .)
-            
-            factor1 <- factor_levels[[1]]
-            factor2 <- factor_levels[[2]]
-
-            design <- agricolae::design.split(
-              trt1 = factor1,
-              trt2 = factor2,
-              r = rep,
-              design = model,
-              serie = serie,
-              seed = seed
-            )
-            
-            fb_info <- design$book %>%
-              dplyr::rename_with(~ {{ factor_names }}, tail(names(.), 2))
-            
-            fb <- fb_info %>% 
-              dplyr::mutate(exp = fbname, .before = 1) %>% 
-              tidyr::unite(col = "fbname", everything(), remove = F, sep = "_") %>% 
-              dplyr::select(!exp)
-            
-        }
-
-# factorial ---------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-    fb <- if ( nfactors >= 2 & ( type == "crd" | type == "rcbd" | type == "lsd" ) ) {
-          
-          design <- design_repblock(
-            nfactors = nfactors
-            , factors = factor_levels
-            , type = type
-            , rep = rep
-            , zigzag = zigzag
-            , serie = serie
-            , seed = seed
-            , fbname = fbname
-          )
-          
-          design$fieldbook 
-          
-        }
-          
-list(fieldbook = fb)
+return(design)
   
 }
 

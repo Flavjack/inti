@@ -126,3 +126,37 @@ fb %>%
 
 ```
 
+# Test function
+
+```{r}
+library(inti)
+library(gsheet)
+
+url <- paste0("https://docs.google.com/spreadsheets/d/"
+             , "1grAv_2po804pPGg9nj1o5nli01IcEGvSevDruq_ssHk/edit#gid=1807254932")
+# browseURL(url)
+
+fb <- gsheet2tbl(url)
+dsg <- fb %>% tarpuy_design()
+dsg %>% str()
+dsg %>%
+   tarpuy_plotdesign()
+
+url2 <- paste0("https://docs.google.com/spreadsheets/d/"
+               , "1grAv_2po804pPGg9nj1o5nli01IcEGvSevDruq_ssHk/edit#gid=1547389271")
+
+variables <- gsheet2tbl(url2)
+
+ds <- dsg %>% tarpuy_varlist(variables)
+
+gs <- url %>% googlesheets4::as_sheets_id()
+
+ds %>% googlesheets4::write_sheet(ss = gs, sheet = "fb")
+
+
+sketch <- gs %>% range_read("fb")
+
+sketch %>% tarpuy_plotdesign(factor = "geno")
+```
+
+

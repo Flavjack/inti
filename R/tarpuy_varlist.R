@@ -46,8 +46,14 @@ tarpuy_varlist <- function(fieldbook
                               , varlist = NULL
                               ) {
   
-  where <- NULL
 
+  # varlist <- variables
+  # fieldbook <- dsg
+  
+# -------------------------------------------------------------------------
+  
+  where <- NULL
+  
 # -------------------------------------------------------------------------
   
   if ( is.null(varlist) ) { return(fieldbook) }
@@ -92,16 +98,16 @@ tarpuy_varlist <- function(fieldbook
     dplyr::mutate("blank" := NA) %>% 
     tidyr::pivot_wider(names_from = .data$trait, values_from = .data$blank)
   
-  fieldbook[["fieldbook"]] <- merge(fieldbook[["fieldbook"]]
-                                    , traits
-                                    , by = c("row.names")
-                                    , all.x = T
-                                    ) %>%
+  fb <- merge(fieldbook
+              , traits
+              , by = c("row.names")
+              , all.x = T
+              ) %>%
     dplyr::select(!.data$Row.names) %>%
     dplyr::arrange(.data$plots)
     
 # -------------------------------------------------------------------------
   
-  return(fieldbook)
+  return(fb)
   
 }

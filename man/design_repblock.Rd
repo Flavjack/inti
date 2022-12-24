@@ -11,7 +11,7 @@ design_repblock(
   rep = 3,
   zigzag = FALSE,
   dim = NA,
-  serie = 2,
+  serie = 100,
   seed = 0,
   fbname = "inkaverse"
 )
@@ -21,7 +21,7 @@ design_repblock(
 
 \item{factors}{Lists with names and factor vector [list].}
 
-\item{type}{Type of experimental arrange [string: "crd" "rcbd"]}
+\item{type}{Type of experimental arrange [string: "crd" "rcbd" "lsd"]}
 
 \item{rep}{Number of replications in the experiment [numeric: 3].}
 
@@ -29,7 +29,7 @@ design_repblock(
 
 \item{dim}{Experimental design dimension in row and columns [numeric vector]}
 
-\item{serie}{Digits in the plots number [numeric: 2].}
+\item{serie}{Number to start the plot id [numeric: 100].}
 
 \item{seed}{Replicability from randomization [numeric: NULL].}
 
@@ -47,8 +47,8 @@ Function to deploy field-book experiment for CRD and RCBD
 
 library(inti)
 
-factores <- list("geno" = c("a1", "b2", "c3", "d4", "d4")
-                 , "salt stress" = c(0, 50, 200, 200)
+factores <- list("geno" = c("A", "B", "C", "D", "D", 1, NA, NA, NULL, "NA")
+                 , "salt stress" = c(0, 50, 200, 200, "T0", NA, NULL, "NULL")
                  , time = c(30, 60, 90)
                  )
 
@@ -58,9 +58,11 @@ fb <-design_repblock(nfactors = 2
                      , rep = 4
                      , zigzag = T
                      )
+                     
+dsg <- fb$fieldbook
 
 fb \%>\%   
-  tarpuy_plotdesign(fill = "plots")
+  tarpuy_plotdesign(fill = "geno")
 
 fb$parameters
 

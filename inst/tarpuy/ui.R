@@ -485,6 +485,7 @@ navbarPage(title = div(
                                                                       , "Field"
                                                                       , "Greenhouse"
                                                                       , "Laboratory"
+                                                                      , "Others"
                                                                       )
                                                         , width = "100%"
                                                         )
@@ -608,7 +609,6 @@ navbarPage(title = div(
                              
                              fluidRow(
                                
-                               
                                column(7,
                                       
                                       numericInput(
@@ -630,18 +630,35 @@ navbarPage(title = div(
                                                    )
                                       )
                                ),
-
-                             uiOutput("plex_design"),
+                             
+                             fluidRow( 
+                               
+                               column(7,
+                                      
+                                      uiOutput("plex_design")
+                                      
+                                      ),
+                               
+                               column(5,
+                                      
+                                      selectizeInput(
+                                        inputId = "plex_zigzag",
+                                        label = "Zigzag",
+                                        choices = c("FALSE", "TRUE")
+                                      )
+                               ),
+                               
+                               
+                               ), 
                              
                              fluidRow(
 
                                column(6,
                                       
                                       numericInput(inputId = "plex_serie"
-                                                   , label = "Plot digits"
-                                                   , value = 2
-                                                   , max = 3
-                                                   , min = 1
+                                                   , label = "Plots serie"
+                                                   , value = 100
+                                                   , min = 100
                                                    )
                                       
                                       ),
@@ -705,10 +722,9 @@ navbarPage(title = div(
                                column(6,
                                       
                                       numericInput(inputId = "design_serie"
-                                                   , label = "Plot digits"
-                                                   , value = 2
-                                                   , max = 3
-                                                   , min = 1
+                                                   , label = "Plots serie"
+                                                   , value = 100
+                                                   , min = 0
                                                    ),
                                       
                                       ),
@@ -737,6 +753,14 @@ navbarPage(title = div(
                                
                                column(6,
                                       
+                                      selectInput(inputId = "design_zigzag"
+                                                  , label = "Zigzag"
+                                                  , choices = c("FALSE",  "TRUE")
+                                      )
+                               ),
+                               
+                               column(6,
+                                      
                                       textInput(inputId = "fb2export"
                                                 , label = "Sheet export"
                                                 , placeholder = "sheet name"
@@ -747,20 +771,20 @@ navbarPage(title = div(
                                
                                column(6,
                                       
-                                      radioButtons(inputId = "export_design_overwrite"
-                                                 , label = "Overwrite"
-                                                 , inline = TRUE
-                                                 , choices = c("no", "yes")
-                                                 )
-                                      ),
-                               
-                               column(12,
-                                      
                                       actionButton(inputId = "export_design"
                                                    , label = "Generate"
                                                    , class = "btn btn-success"
                                                    )
+                                      ),
+                               
+                               column(6,
+                                      
+                                      radioButtons(inputId = "export_design_overwrite"
+                                                   , label = "Overwrite"
+                                                   , inline = TRUE
+                                                   , choices = c("no", "yes")
                                       )
+                               ),
                                
                                ),
                              

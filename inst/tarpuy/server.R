@@ -133,7 +133,9 @@ shinyServer(function(input, output, session) {
     
     gs_created <<- gs4_create(
       name = paste("Tarpuy", format(Sys.time(), '%Y-%m-%d  %H:%M'))
-      , sheets = "tarpuy")
+      , sheets = "tarpuy"
+      , locale = "en_US"
+      )
     
     # updt link ---------------------------------------------------------------
 
@@ -181,15 +183,21 @@ shinyServer(function(input, output, session) {
 
     if(input$plex_nfactors == 1) {
 
-      type <- c("crd", "rcbd", "lsd", "lattice")
+      type <- c("crd", "rcbd"
+                # , "lsd", "lattice"
+                )
 
     } else if (input$plex_nfactors == 2) {
 
-      type <- c("crd", "rcbd", "lsd", "split-crd", "split-rcbd", "split-lsd")
+      type <- c("crd", "rcbd"
+                # , "lsd", "split-crd", "split-rcbd", "split-lsd"
+                )
 
     } else if (input$plex_nfactors > 2) {
 
-      type <- c("crd", "rcbd", "lsd")
+      type <- c("crd", "rcbd"
+                # , "lsd"
+                )
 
     }
 
@@ -207,30 +215,31 @@ shinyServer(function(input, output, session) {
   plex <- reactive({
     
     plex <- tarpuy_plex(data = NULL
-                           , idea = input$plex_idea
-                           , goal = input$plex_goal
-                           , hypothesis = input$plex_hypothesis
-                           , rationale = input$plex_rationale
-                           , objectives = input$plex_objectives
-                           , plan = input$plex_plan
-                           , institutions = input$plex_institutions
-                           , researchers = input$plex_researchers
-                           , manager = input$plex_manager
-                           , location = input$plex_location
-                           , altitude = input$plex_altitude
-                           , georeferencing = input$plex_georeferencing
-                           , environment = input$plex_environment
-                           , start = input$plex_dates[1]
-                           , end = input$plex_dates[2]
-                           , about = input$plex_about
-                           , fieldbook = input$plex_fieldbook
-                           , album = input$plex_album
-                           , github = input$plex_github
-                           , nfactor = input$plex_nfactors
-                           , design = input$plex_design
-                           , rep = input$plex_rep
-                           , serie = input$plex_serie
-                           , seed = input$plex_seed
+                         , idea = input$plex_idea
+                         , goal = input$plex_goal
+                         , hypothesis = input$plex_hypothesis
+                         , rationale = input$plex_rationale
+                         , objectives = input$plex_objectives
+                         , plan = input$plex_plan
+                         , institutions = input$plex_institutions
+                         , researchers = input$plex_researchers
+                         , manager = input$plex_manager
+                         , location = input$plex_location
+                         , altitude = input$plex_altitude
+                         , georeferencing = input$plex_georeferencing
+                         , environment = input$plex_environment
+                         , start = input$plex_dates[1]
+                         , end = input$plex_dates[2]
+                         , about = input$plex_about
+                         , fieldbook = input$plex_fieldbook
+                         , album = input$plex_album
+                         , github = input$plex_github
+                         , nfactor = input$plex_nfactors
+                         , design = input$plex_design
+                         , rep = input$plex_rep
+                         , serie = input$plex_serie
+                         , seed = input$plex_seed
+                         , zigzag = input$plex_zigzag
                            )
 
   })
@@ -248,7 +257,7 @@ shinyServer(function(input, output, session) {
 
       plex()$plex %>% sheet_write(ss = gs(), sheet = input$gsheet_info)
 
-    } else { print ("sheet already exist") }
+    } else { print ("sheet already exist: info") }
 
 
 # varlist -----------------------------------------------------------------
@@ -259,7 +268,7 @@ shinyServer(function(input, output, session) {
 
       plex()$variables %>% sheet_write(ss = gs(), sheet = input$gsheet_varlist)
 
-    } else { print ("sheet already exist") }
+    } else { print ("sheet already exist: varlist") }
 
 
 # design ------------------------------------------------------------------
@@ -270,7 +279,7 @@ shinyServer(function(input, output, session) {
 
       plex()$design %>% sheet_write(ss = gs(), sheet = input$gsheet_design)
 
-    } else { print ("sheet already exist") }
+    } else { print ("sheet already exist: design") }
 
 # logbook -----------------------------------------------------------------
 
@@ -279,8 +288,9 @@ shinyServer(function(input, output, session) {
       sheet_add(ss = gs(), sheet = input$plex_logbook)
 
       plex()$logbook %>% sheet_write(ss = gs(), sheet = input$plex_logbook)
-
-    } else { print ("sheet created") }
+      
+      print ("sheet created: logbook")
+    } 
 
 # timetable ---------------------------------------------------------------
 
@@ -289,8 +299,9 @@ shinyServer(function(input, output, session) {
       sheet_add(ss = gs(), sheet = input$plex_timetable)
 
       plex()$timetable %>% sheet_write(ss = gs(), sheet = input$plex_timetable)
-
-    } else { print ("sheet created") }
+      
+      print ("sheet created: timetible")
+    } 
 
 # budget ------------------------------------------------------------------
 
@@ -299,9 +310,19 @@ shinyServer(function(input, output, session) {
       sheet_add(ss = gs(), sheet = input$plex_budget)
 
       plex()$budget %>% sheet_write(ss = gs(), sheet = input$plex_budget)
+      
+      print ("sheet created: budget")
+    } 
+    
 
-    } else { print ("sheet created") }
-
+# -------------------------------------------------------------------------
+    
+    if ( "tarpuy" %in% sheet_names(gs()) ) { 
+      
+      gs() %>% sheet_delete(sheet = "tarpuy")
+      
+    }
+    
   })
 
 # tarpuy design -----------------------------------------------------------
@@ -338,15 +359,21 @@ output$design_type <- renderUI({
 
   if(input$design_nfactors == 1) {
 
-    type <- c("crd", "rcbd", "lsd", "lattice")
+    type <- c("crd", "rcbd"
+              # , "lsd", "lattice"
+              )
 
   } else if (input$design_nfactors == 2) {
 
-    type <- c("crd", "rcbd", "lsd", "split-crd", "split-rcbd", "split-lsd")
+    type <- c("crd", "rcbd"
+              # , "lsd", "split-crd", "split-rcbd", "split-lsd"
+              )
 
   } else if (input$design_nfactors > 2) {
 
-    type <- c("crd", "rcbd", "lsd")
+    type <- c("crd", "rcbd"
+              # , "lsd"
+              )
 
   }
 
@@ -391,9 +418,10 @@ observeEvent(input$export_design, {
         , type = input$design_type
         , rep = input$design_rep
         , serie = input$design_serie
+        , zigzag = as.logical(input$design_zigzag)
         , seed = input$design_seed
-        , barcode = input$design_qr
-      )
+        , fbname = input$design_qr
+      ) 
   
   sheet_export <- input$fb2export %>% gsub("[[:space:]]", "_", .)
   
@@ -403,18 +431,15 @@ observeEvent(input$export_design, {
     
     if (input$export_design_overwrite == "no" & !sheet_export %in% sheet_names(gs())) {
       
-      fbds$fieldbook %>%
-        as.data.frame() %>%
+      fbds %>% 
         write_sheet(ss = gs(), sheet = sheet_export)
       
     } else if(input$export_design_overwrite == "yes") {
       
-      fbds$fieldbook %>%
-        as.data.frame() %>%
+      fbds %>% 
         write_sheet(ss = gs(), sheet = sheet_export)
       
     } else {  print ("sheet already exist") }
-    
     
   } else {"Insert factor levels"}
   
@@ -471,7 +496,7 @@ observeEvent(input$export_design, {
     
     selectizeInput(
       inputId = "sketch_sheets"
-      , label = NULL
+      , label = "Fieldbook"
       , choices = c("choose" = ""
                     , sketch_sheets())
       , multiple = FALSE
@@ -499,14 +524,6 @@ observeEvent(input$export_design, {
                   , width = "100%"
       ),
 
-      selectInput(inputId = "sketch_dim"
-                  , label = "Block factor"
-                  , multiple = FALSE
-                  , choices = c(""
-                                , factors)
-                  , width = "100%"
-      ),
-
       selectInput(inputId = "sketch_fill"
                   , label = "Fill factor"
                   , multiple = FALSE
@@ -516,45 +533,41 @@ observeEvent(input$export_design, {
                   , width = "100%"
       ),
 
-      textInput(inputId = "sketch_dim2"
-                , label = "Block factor (optional)"
-                , value = NA
-                , placeholder = "NcolxNrow"
-                , width = "100%"
-      )
     )
 
   })
+  
+fb_sketch <- reactive({
+  
+  if ( input$sketch_sheets %in% sheet_names(gs()) ) {
+    
+     gs() %>%
+      range_read( input$sketch_sheets )
+  }
+  
+})
 
-  # plot --------------------------------------------------------------------
+# plot --------------------------------------------------------------------
 
   plot_sketch <- reactive({
 
     validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
     validate( need( input$sketch_sheets, "Insert your fieldbook" ) )
     validate( need( input$sketch_factor, "Select your design factor") )
-    validate( need( input$sketch_dim, "Select your blocking factor") )
-
-    if ( input$sketch_sheets %in% sheet_names(gs()) ) {
-
-      fb_sketch <- gs() %>%
-        range_read( input$sketch_sheets )
-    }
+    
+# -------------------------------------------------------------------------
 
     if ( input$sketch_xlab == "" | is.null(input$sketch_xlab) ){ sketch_xlab <- NULL } else {sketch_xlab <- input$sketch_xlab}
     if ( input$sketch_ylab == "" | is.null(input$sketch_ylab) ){ sketch_ylab <- NULL } else {sketch_ylab <- input$sketch_ylab}
     if ( input$sketch_glab == "" | is.null(input$sketch_glab) ){ sketch_glab <- NULL } else {sketch_glab <- input$sketch_glab}
 
-    if ( input$sketch_dim2 != "" ) { blocking <- input$sketch_dim2 } else { blocking <- input$sketch_dim }
-
-    plot_sketch <-  tarpuy_plotdesign(data = fb_sketch
-                                , factor = input$sketch_factor
-                                , dim = blocking
-                                , fill = input$sketch_fill
-                                , xlab = sketch_xlab
-                                , ylab = sketch_ylab
-                                , glab = sketch_glab
-    )
+    plot_sketch <-  tarpuy_plotdesign(data = fb_sketch()
+                                      , factor = input$sketch_factor
+                                      , fill = input$sketch_fill
+                                      , xlab = sketch_xlab
+                                      , ylab = sketch_ylab
+                                      , glab = sketch_glab
+                                      )
   })
 
   # -------------------------------------------------------------------------

@@ -24,6 +24,29 @@
 #' 
 #' @export
 #'
+#' @examples
+#' 
+#' \dontrun{
+#'
+#' library(inti)
+#' library(gsheet)
+#' 
+#' url <- paste0("https://docs.google.com/spreadsheets/d/"
+#'               , "1grAv_2po804pPGg9nj1o5nli01IcEGvSevDruq_ssHk/edit#gid=1807254932")
+#' # browseURL(url)
+#' 
+#' fb <- gsheet2tbl(url) 
+#' 
+#' dsg <- fb %>% tarpuy_design() 
+#' 
+#' dsg
+#' 
+#' dsg %>% str()
+#' 
+#' dsg %>% 
+#'   tarpuy_plotdesign()
+#' 
+#' }
 
 tarpuy_plotdesign <- function(data
                         , factor = NA
@@ -35,17 +58,43 @@ tarpuy_plotdesign <- function(data
 
 # -------------------------------------------------------------------------
 
+  # data <- dsg <- sketch
+  # factor <- "rows"
   # data <- fb
   # xlab <- ylab <- glab <- NULL
   # factor <- "geno"
 
 # -------------------------------------------------------------------------
-
-  design <- data %>% purrr::pluck(1)
   
-  param <- data %>% purrr::pluck(2)
-  
-  factor <- if(is.na(factor) | is.null(factor)) { param$factornames[1] }
+  if( is.data.frame(data) ) {
+    
+    design <- data %>% list() %>%  purrr::pluck(1)
+    
+    param <- NULL
+    
+    factor <- if(is.na(factor) | is.null(factor)) { names(design)[3] } else {factor}
+    
+    lengthfactor <- nlevels(as.factor(design[[factor]])) 
+    
+    nrow <- design$rows %>% unique() %>% length()
+    
+    ncol <- design$cols %>% unique() %>% length()
+    
+  } else if ( length(data) > 1 ) {
+    
+    design <- data %>% purrr::pluck(1)
+    
+    param <- data %>% purrr::pluck(2)
+    
+    factor <- if(is.na(factor) | is.null(factor)) { param$factornames[1] }
+    
+    lengthfactor <- length(param$factors[[factor]])
+    
+    nrow <-  param$dim[1]
+    
+    ncol <-  param$dim[2]
+    
+  }
 
 # plot --------------------------------------------------------------------
 
@@ -55,7 +104,7 @@ tarpuy_plotdesign <- function(data
         , "#F3BB00" # yellow
         , "#0198CD" # blue
         , "#FE6673" # red
-      ))(length(param$factors[[factor]]))
+      ))(lengthfactor)
 
 # -------------------------------------------------------------------------
 
@@ -66,13 +115,12 @@ tarpuy_plotdesign <- function(data
 # -------------------------------------------------------------------------
 
 plot <- design %>%
-  mutate(across({{factor}}, as.factor)) %>% 
   arrange(.data$rows, .data$cols) %>%
-  ggplot(aes(x = .data$cols, y = .data$rows, fill = .data[[factor]])) +
+  ggplot(aes(x = .data$cols, y = .data$rows, fill = as.factor(.data[[factor]]))) +
   geom_tile(color = "black", size = 0.5) +
   geom_text(aes(label = .data[[fill]])) +
-  scale_y_continuous(expand = c(0, 0), trans = 'reverse', n.breaks = param$dim[1]) +
-  scale_x_continuous(expand = c(0, 0), n.breaks = param$dim[2]) +
+  scale_y_continuous(expand = c(0, 0), trans = 'reverse', breaks = 1:nrow) +
+  scale_x_continuous(expand = c(0, 0), breaks = 1:ncol) +
   scale_fill_manual(values = color_grps) +
   labs(x = xlab, y = ylab, fill = glab) +
   theme_bw() +

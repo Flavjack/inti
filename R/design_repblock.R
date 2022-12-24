@@ -4,10 +4,10 @@
 #'
 #' @param nfactors Number of factor in the experiment [numeric: 1].
 #' @param factors Lists with names and factor vector [list].
-#' @param type Type of experimental arrange [string: "crd" "rcbd"]
+#' @param type Type of experimental arrange [string: "crd" "rcbd" "lsd"]
 #' @param rep  Number of replications in the experiment [numeric: 3].
 #' @param zigzag Experiment layout in zigzag [logic: F].
-#' @param serie Digits in the plots number [numeric: 2].
+#' @param serie Number to start the plot id [numeric: 100].
 #' @param dim Experimental design dimension in row and columns [numeric vector]
 #' @param seed Replicability from randomization [numeric: NULL].
 #' @param fbname Bar code prefix for data collection [string: "inkaverse"].
@@ -22,8 +22,8 @@
 #'
 #' library(inti)
 #' 
-#' factores <- list("geno" = c("a1", "b2", "c3", "d4", "d4")
-#'                  , "salt stress" = c(0, 50, 200, 200)
+#' factores <- list("geno" = c("A", "B", "C", "D", "D", 1, NA, NA, NULL, "NA")
+#'                  , "salt stress" = c(0, 50, 200, 200, "T0", NA, NULL, "NULL")
 #'                  , time = c(30, 60, 90)
 #'                  )
 #' 
@@ -33,9 +33,11 @@
 #'                      , rep = 4
 #'                      , zigzag = T
 #'                      )
+#'                      
+#' dsg <- fb$fieldbook
 #' 
 #' fb %>%   
-#'   tarpuy_plotdesign(fill = "plots")
+#'   tarpuy_plotdesign(fill = "geno")
 #' 
 #' fb$parameters
 #' 
@@ -47,12 +49,15 @@ design_repblock <- function(nfactors = 1
                             , rep = 3
                             , zigzag = FALSE
                             , dim = NA
-                            , serie = 2
+                            , serie = 100
                             , seed = 0
                             , fbname = "inkaverse"
                             ) {
   
-  dfactors <- factors %>% 
+  # factors <- factores
+  
+  dfactors <- factors %>%
+    purrr::map(~ gsub("NA|NULL", NA, .)) %>% 
     purrr::map(base::unique) %>% 
     purrr::map(stats::na.omit) %>% 
     purrr::map(~gsub("[[:space:]]", ".", .)) %>% 
@@ -73,6 +78,16 @@ design_repblock <- function(nfactors = 1
     
   } else {dim[2]}
   
+  
+  if(type == "lsd") {
+    
+    rep <- dfactors[[1]] %>% length()
+    
+    nrows <- rep
+    
+    ncols <- rep
+  }
+  
   fb <- dfactors %>% 
     expand.grid() %>% 
     dplyr::mutate(ntreat = as.numeric(row.names(.))) %>% 
@@ -81,19 +96,27 @@ design_repblock <- function(nfactors = 1
     {
       if(type %in% "rcbd") {
         dplyr::group_by(.data = ., .data[[block.factor]]) %>% 
-          dplyr::mutate(.data = ., order = sample.int(n())) %>% 
+          dplyr::mutate(.data = ., sort = sample.int(n())) %>% 
           dplyr::ungroup({{block.factor}}) %>%
-          dplyr::arrange(.data = ., .data[[block.factor]], .data$order) %>% 
-          dplyr::mutate(.data = ., plots = 100*.data[[block.factor]] + .data$order)
+          dplyr::arrange(.data = ., .data[[block.factor]], .data$sort) %>% 
+          dplyr::mutate(.data = ., plots = serie*.data[[block.factor]] + .data$sort) %>% 
+          dplyr::mutate(rows = rep(1:nrows,  each = nrow(.)/nrows )) %>% 
+          dplyr::mutate(cols = rep(1:ncols, times = nrow(.)/ncols )) %>%
+          dplyr::mutate(icols = (ncols - .data$cols) + 1)
       } else if (type %in% "crd") {
-        dplyr::mutate(.data = ., order = sample.int(n())) %>%
-          dplyr::arrange(.data = ., .data$order) %>% 
-          dplyr::mutate(plots = 100 + .data$order)
+        dplyr::mutate(.data = ., sort = sample.int(n())) %>%
+          dplyr::arrange(.data = ., .data$sort) %>% 
+          dplyr::mutate(plots = serie + .data$sort) %>% 
+          dplyr::mutate(rows = rep(1:nrows,  each = nrow(.)/nrows )) %>% 
+          dplyr::mutate(cols = rep(1:ncols, times = nrow(.)/ncols )) %>%
+          dplyr::mutate(icols = (ncols - .data$cols) + 1)
+      } else if (type %in% "lsd") {
+          dplyr::mutate(.data = ., plots = serie*.data[[block.factor]] + .data$ntreat) %>% 
+          dplyr::mutate(rows = rep(1:nrows,  each = nrow(.)/nrows )) %>% 
+          dplyr::mutate(cols = rep(1:ncols, times = nrow(.)/ncols )) %>%
+          dplyr::mutate(icols = rep(seq(rep), rep) + rep(seq(rep),each=rep) - 1) 
       }
     } %>% 
-    dplyr::mutate(rows = rep(1:nrows,  each = nrow(.)/nrows )) %>% 
-    dplyr::mutate(cols = rep(1:ncols, times = nrow(.)/ncols )) %>%
-    dplyr::mutate(icols = (ncols - .data$cols) + 1) %>% 
     { 
       if(isTRUE(zigzag))
         dplyr::mutate(.data = .
@@ -102,11 +125,11 @@ design_repblock <- function(nfactors = 1
                  , rows %% 2 == 1 ~ as.character(.data$cols)
                )) else {.}
     } %>% 
-    dplyr::select(.data$plots, {{name.factors}}, everything()) %>% 
+    dplyr::select(.data$plots, {{name.factors}}, .data$ntreat, .data$sort, everything()) %>% 
     dplyr::mutate(across(.data$cols, as.numeric)) %>% 
     dplyr::mutate(fbname = fbname) %>% 
     tidyr::unite("barcode", .data$fbname, .data$plots, {{name.factors}}, .data$cols, .data$rows
-                 , sep = "-", remove = F) %>% 
+                 , sep = "_", remove = F) %>% 
     dplyr::select(!c(.data$icols, .data$fbname)) 
   
   result <- list(
