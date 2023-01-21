@@ -159,4 +159,112 @@ sketch <- gs %>% range_read("fb")
 sketch %>% tarpuy_plotdesign(factor = "geno")
 ```
 
+# Trait export
+
+```{r}
+library(tidyverse)
+
+#> manual
+
+traits <- list(
+  list(variable = "altura de planta"
+       , abbreviation = "altp"
+       , format = "numeric"
+       , when = "30, 40, 50"
+       , sample = 3
+       , units = "cm"
+       , details = NA
+       , minimum = 0
+       , maximum = 100
+      )
+  , list(variable = "severidad"
+         , abbreviation = "svr"
+        , format = "categorical"
+        , when = "30, 40, 50"
+        , sample = 1
+        , units = "scale"
+        , details = NA
+        , categories = "1, 3, 5, 7, 9"
+        )
+  ,  list(variable = "foto"
+          , abbreviation = "foto"
+          , format = "photo"
+          , when = "hrv, pshrv"
+          , sample = 1
+          , units = "image"
+          , details = NA
+          )
+  ,  list(variable = "germinacion"
+          , abbreviation = "ger"
+          , format = "boolean"
+          , when = "30, 40, 50"
+          , sample = 1
+          , units = "logical"
+          , details = NA
+          )
+  ) 
+
+# Table source
+
+url <- paste0("https://docs.google.com/spreadsheets/d/"
+             , "1P0bzNNj6kjse6Dmq-ivezItaGaWD4zCAwEg4A5rzZO8/edit#gid=2010838420") 
+
+tabtraits <- gsheet2tbl(url)
+
+traits <- tabtraits %>% 
+  dplyr::mutate(across(everything(), as.character)) %>% 
+  dplyr::rename_with(~ gsub("\\{|\\}", "", .)) %>% 
+  rownames_to_column() %>% 
+  pivot_longer(!.data$rowname) %>% 
+  group_split(rowname, .keep = FALSE)  %>% 
+  map(~.x %>%  deframe) 
+
+cols <- c("trait" = NA_real_,	"format" = NA_real_,	"default" = NA_real_,	"minimum" = NA_real_,	"maximum" = NA_real_,	"details" = NA_real_, "categories" = NA_real_)
+
+#> export to fieldbook app
+
+table <- traits %>% 
+  bind_rows() %>% 
+  tibble::add_column(!!!cols[!names(cols) %in% names(.)]) %>% 
+  separate_rows(when) %>% 
+  rownames_to_column() %>% 
+  dplyr::mutate(across(samples, as.numeric)) %>% 
+  tidyr::uncount(samples, .id = "samples") %>% 
+  dplyr::rowwise() %>%
+    dplyr::mutate("trait" := paste(c(abbreviation, when, samples)
+                                       , collapse = "_")) %>% 
+  group_by(abbreviation, when, samples) %>% 
+  arrange(when) %>% 
+  ungroup() %>% 
+  rownames_to_column("realPosition") %>% 
+  mutate(isVisible = "true") %>% 
+  mutate(defaultValue = case_when(
+    format %in% "boolean" ~ "false"
+    , TRUE ~ ""
+  )) %>% 
+  rowwise() %>% 
+  mutate(categories = case_when(
+   format %in% "categorical" ~ .data$categories %>% 
+     gsub("[[:blank:]]", "", .) %>% 
+     strsplit(",|;") %>% 
+     unlist() %>% 
+     map_chr(\(x) paste0('{"label":"', x, '","value":"', x, '"}')) %>% 
+     paste0(collapse = ", ") %>% 
+     paste0("[", ., "]")
+   , TRUE ~ as.character("[]")
+  )) %>% 
+  dplyr::select(trait
+         , format
+         , defaultValue
+         , minimum
+         , maximum
+         , details
+         , categories
+         , isVisible
+         , realPosition
+         ) 
+
+table %>% write_delim(file = "traitsx.trt", delim = ",", quote = "all", na = '""')
+```
+
 

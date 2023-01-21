@@ -25,15 +25,14 @@
 #' library(gsheet)
 #' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "183upHd4wriZz2UnInoo5Ate5YFdk7cZlhE0sMQ2x5iw/edit#gid=532773890")
-#' # browseURL(url)
+#'               , "1P0bzNNj6kjse6Dmq-ivezItaGaWD4zCAwEg4A5rzZO8/edit#gid=1361041882")
 #' 
-#' info <- gsheet2tbl(url) 
+#' design <- gsheet2tbl(url) 
 #'
-#' fieldbook <- tarpuy_design(data = info)
+#' fieldbook <- tarpuy_design(data = design)
 #' 
 #' url_var <- paste0("https://docs.google.com/spreadsheets/d/"
-#'        , "183upHd4wriZz2UnInoo5Ate5YFdk7cZlhE0sMQ2x5iw/edit#gid=1335288687")
+#'        , "1P0bzNNj6kjse6Dmq-ivezItaGaWD4zCAwEg4A5rzZO8/edit#gid=2010838420")
 #'        
 #' varlist <- gsheet2tbl(url_var) 
 #' 
@@ -46,10 +45,6 @@ tarpuy_varlist <- function(fieldbook
                               , varlist = NULL
                               ) {
   
-
-  # varlist <- variables
-  # fieldbook <- dsg
-  
 # -------------------------------------------------------------------------
   
   where <- NULL
@@ -61,9 +56,13 @@ tarpuy_varlist <- function(fieldbook
 # -------------------------------------------------------------------------
  
   vartable <- varlist %>%
-    dplyr::select( starts_with("{") |  ends_with("}") ) %>%
+    dplyr::mutate(across(everything(), as.character)) %>% 
+    dplyr::select( starts_with("{") |  ends_with("}")) %>%
+    dplyr::rename_with(~ gsub("\\{|\\}", "", .)) %>% 
+    dplyr::select(!.data$format) %>% 
     select(where(~!all(is.na(.)))) %>% 
-    dplyr::rename_with(~ gsub("\\{|\\}", "", .))
+    separate_rows(.data$when) 
+    
   
 # -------------------------------------------------------------------------
   
@@ -82,14 +81,12 @@ tarpuy_varlist <- function(fieldbook
   sampling <- names(vartable)[smp_math == TRUE]
   
   traits <- vartable %>% 
-    { if(length(sampling) > 0)
-    dplyr::mutate(.data = ., {{sampling}} := case_when(
-      is.na( .data[[sampling]] ) ~ 1
-      , TRUE ~ .data[[sampling]]
-    )) %>% 
-        tidyr::uncount(.data[[sampling]], .id = {{sampling}})
-      else . 
-      } %>% 
+    {
+      if(length(sampling) > 0) {
+        dplyr::mutate(.data = ., across({{sampling}}, as.numeric)) %>% 
+          tidyr::uncount(data = ., .data[[sampling]], .id = {{sampling}}) 
+      } else .
+    } %>% 
     dplyr::mutate(across(everything(), as.character)) %>% 
     dplyr::rowwise() %>%
     dplyr::mutate("trait" := paste(across(where(is.character))
@@ -98,11 +95,12 @@ tarpuy_varlist <- function(fieldbook
     dplyr::mutate("blank" := NA) %>% 
     tidyr::pivot_wider(names_from = .data$trait, values_from = .data$blank)
   
-  fb <- merge(fieldbook
-              , traits
-              , by = c("row.names")
-              , all.x = T
-              ) %>%
+  fb <- fieldbook %>% 
+    merge(.
+          , traits
+          , by = c("row.names")
+          , all.x = T
+          ) %>%
     dplyr::select(!.data$Row.names) %>%
     dplyr::arrange(.data$plots)
     

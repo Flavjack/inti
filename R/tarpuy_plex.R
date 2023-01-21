@@ -70,7 +70,7 @@ tarpuy_plex <- function(data = NULL
                           , design = "rcbd"
                           , rep = 3
                           , zigzag = FALSE
-                          , serie = 2
+                          , serie = 100
                           , seed = 0
                          ) {
   
@@ -154,21 +154,26 @@ if ( is.null(data) ) {
 
 # variables ---------------------------------------------------------------
 
-var_list <- tibble(variable = rep(NA, 5)
-                   , siglas = rep(NA, 5) # abbreviation
-                   , evaluation = rep(NA, 5) # evaluation, eval dap dat
-                   , sampling = rep(NA, 5) # sampling sample subplot muestra
-                   , units = rep(NA, 5)
-                   , description = rep(NA, 5)
+var_list <- tibble(variable = rep(NA, 8)
+                   , abbreviation = rep(NA, 8) 
+                   , when = rep(NA, 8) 
+                   , samples = rep(NA, 8) 
+                   , format = c("numeric", "categorical", "boolean", "text"
+                                , "photo", "audio", "counter", "location")
+                   , units = rep(NA, 8)
+                   , details = rep(NA, 8)
+                   , categories = rep(NA, 8)
                    ) %>%
-  rename('{siglas}' = .data$siglas
-         , '{evaluation}' = .data$evaluation
-         , '{sampling}' = .data$sampling)
+  rename('{abbreviation}' = .data$abbreviation
+         , '{when}' = .data$when
+         , '{samples}' = .data$samples
+         , '{format}' = .data$format
+         )
 
 # design ------------------------------------------------------------------
 
 factors <- c(paste0("factor", 1:nfactor))
-
+  
 dsg_info <-  c(nfactors = nfactor
               , type = design
               , rep = rep

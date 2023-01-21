@@ -1,4 +1,4 @@
-# inti 0.5.9
+# inti 0.6.0
 
 - Fix for dev dplyr (Thanks @hadley)
 - `tarpuy_plotdesign()` 
@@ -6,11 +6,8 @@
   - Default names in plot to "row" and "columns"
 - New function: `design_repblock` for "rcbd", "crd" for any factor number
 - Yupana create by default the sheet `locale = "en_US"` to use the decimal point
-
-
-- Yupana - fieldbook module:
-  - [ ] Create a filter function and module: `yupana_filter()` 
-  - [ ] Preview result?
+- `yupana_mvr` allow to select specific numeric variables
+- `tarpuy_varlist` adapted to field book app
 
 # inti 0.5.8
 

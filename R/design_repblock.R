@@ -27,11 +27,12 @@
 #'                  , time = c(30, 60, 90)
 #'                  )
 #' 
-#' fb <-design_repblock(nfactors = 2
+#' fb <-design_repblock(nfactors = 1
 #'                      , factors = factores
 #'                      , type = "crd"
 #'                      , rep = 4
 #'                      , zigzag = T
+#'                      , seed = 0
 #'                      )
 #'                      
 #' dsg <- fb$fieldbook
@@ -50,11 +51,13 @@ design_repblock <- function(nfactors = 1
                             , zigzag = FALSE
                             , dim = NA
                             , serie = 100
-                            , seed = 0
+                            , seed = NULL
                             , fbname = "inkaverse"
                             ) {
   
   # factors <- factores
+  
+  set.seed(seed)
   
   dfactors <- factors %>%
     purrr::map(~ gsub("NA|NULL", NA, .)) %>% 
@@ -97,7 +100,7 @@ design_repblock <- function(nfactors = 1
       if(type %in% "rcbd") {
         dplyr::group_by(.data = ., .data[[block.factor]]) %>% 
           dplyr::mutate(.data = ., sort = sample.int(n())) %>% 
-          dplyr::ungroup({{block.factor}}) %>%
+          dplyr::ungroup() %>%
           dplyr::arrange(.data = ., .data[[block.factor]], .data$sort) %>% 
           dplyr::mutate(.data = ., plots = serie*.data[[block.factor]] + .data$sort) %>% 
           dplyr::mutate(rows = rep(1:nrows,  each = nrow(.)/nrows )) %>% 
@@ -125,10 +128,10 @@ design_repblock <- function(nfactors = 1
                  , rows %% 2 == 1 ~ as.character(.data$cols)
                )) else {.}
     } %>% 
-    dplyr::select(.data$plots, {{name.factors}}, .data$ntreat, .data$sort, everything()) %>% 
+    dplyr::select(.data$plots, .data$ntreat, {{name.factors}}, .data$sort, everything()) %>% 
     dplyr::mutate(across(.data$cols, as.numeric)) %>% 
     dplyr::mutate(fbname = fbname) %>% 
-    tidyr::unite("barcode", .data$fbname, .data$plots, {{name.factors}}, .data$cols, .data$rows
+    tidyr::unite("barcode", .data$fbname, .data$plots, {{name.factors}}, .data$rows, .data$cols
                  , sep = "_", remove = F) %>% 
     dplyr::select(!c(.data$icols, .data$fbname)) 
   

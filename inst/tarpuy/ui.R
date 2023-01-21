@@ -204,7 +204,7 @@ navbarPage(title = div(
 
                                    textInput(inputId = "gsheet_varlist"
                                              , label = NULL
-                                             , value = "variables"
+                                             , value = "traits"
                                              , placeholder = "Sheet name"
                                    ),
 

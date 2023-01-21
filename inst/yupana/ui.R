@@ -2,7 +2,7 @@
 # yupana ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 #> open https://flavjack.github.io/inti/
-#> open https://flavjack.shinyapps.io/yupanapro/
+#> open https://flavjack.shinyapps.io/yupana/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
 #> date .: 2022-04-28
 # -------------------------------------------------------------------------
@@ -67,7 +67,7 @@ navbarPage(title = div(
                       meta_social(
                         title = "Yupana",
                         description = "Yupana: platform for statistical data analysis",
-                        url = "https://flavjack.shinyapps.io/yupanapro/",
+                        url = "https://flavjack.shinyapps.io/yupana/",
                         image = "https://flavjack.github.io/inti/img/yupana.png",
                         image_alt = "inkaverse.com"
                       )
