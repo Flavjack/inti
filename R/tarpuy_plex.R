@@ -153,18 +153,87 @@ if ( is.null(data) ) {
 }
 
 # variables ---------------------------------------------------------------
-
-var_list <- tibble(variable = rep(NA, 8)
-                   , abbreviation = rep(NA, 8) 
-                   , when = rep(NA, 8) 
-                   , samples = rep(NA, 8) 
-                   , format = c("numeric", "categorical", "boolean", "text"
-                                , "photo", "audio", "counter", "location")
-                   , units = rep(NA, 8)
-                   , details = rep(NA, 8)
-                   , categories = rep(NA, 8)
-                   ) %>%
-  rename('{abbreviation}' = .data$abbreviation
+  
+var_list <- traits <- list(
+  list(format = "numeric"
+        , variable = "X"
+       , abbreviation = "X"
+       , when = "X"
+       , samples = NA
+       , units = "X"
+       , details = NA
+       , minimum = "X"
+       , maximum = "X"
+       )
+  , list(format = "categorical"
+         , variable = "X"
+         , abbreviation = "X"
+         , when = "X"
+         , samples = NA
+         , units = "X"
+         , details = NA
+         , categories = "X"
+         )
+  ,  list(format = "boolean"
+          , variable = "X"
+          , abbreviation = "X"
+          , when = "X"
+          , samples = NA
+          , units = "X"
+          , details = NA
+          )
+  ,  list(format = "counter"
+          , variable = "X"
+          , abbreviation = "X"
+          , when = "X"
+          , samples = NA
+          , units = "X"
+          , details = NA
+          )
+  ,  list(format = "photo"
+          , variable = "X"
+          , abbreviation = "X"
+          , when = "X"
+          , samples = NA
+          , units = "X"
+          , details = NA
+          )
+  ,  list(format = "audio"
+          , variable = "X"
+          , abbreviation = "X"
+          , when = "X"
+          , samples = NA
+          , units = "X"
+          , details = NA
+          )
+  ,  list(format = "text"
+          , variable = "X"
+          , abbreviation = "X"
+          , when = "X"
+          , samples = NA
+          , units = "X"
+          , details = NA
+          )
+  ,  list(format = "location"
+          , variable = "X"
+          , abbreviation = "X"
+          , when = "X"
+          , samples = NA
+          , units = "X"
+          , details = NA
+          )
+  ) %>% 
+    dplyr::bind_rows() %>% 
+    dplyr::select(.data$variable
+                  , .data$abbreviation
+                  , .data$when
+                  , .data$samples
+                  , .data$format
+                  , .data$units
+                  , .data$details
+                  , .data$categories
+                  ) %>%
+    rename('{abbreviation}' = .data$abbreviation
          , '{when}' = .data$when
          , '{samples}' = .data$samples
          , '{format}' = .data$format

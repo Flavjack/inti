@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2022-03-26
+#> date .: 2023-01-21
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -51,7 +51,7 @@ navbarPage(title = div(
 # Yupana Info -------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-           tabPanel("Intro"
+           tabPanel("Intro", icon = icon("home") 
                     
                     , bs_theme_dependencies("flatly") #!
                     
@@ -308,7 +308,7 @@ navbarPage(title = div(
                                   Si tienes muchas pestañas que dificultan tu trabajo, puedes ir ocultandolas (<em>click derecho en la pestaña > Ocultar hoja</em>).
                                   Al momento de usar la app puedes especificar qué hoja deseas utilizar y la app extrae la información de la hoja indicada.
                                   <li>Si deseas analizar los datos experimentales de tu proyecto, puedes usar la app Yupana:
-                                  <a href="https://flavjack.shinyapps.io/yupanapro/">https://flavjack.shinyapps.io/yupanapro/</a>
+                                  <a href="https://flavjack.shinyapps.io/yupana/">https://flavjack.shinyapps.io/yupana/</a>
                                   </li>
                                   </ul>
                                   <p>
@@ -371,7 +371,7 @@ navbarPage(title = div(
             
            ),
 
-           tabPanel("Plex",
+           tabPanel(div(h5(icon("seedling"),  "Plex")),
 
                     # Yupana Fieldbook --------------------------------------------------------
                     # -------------------------------------------------------------------------
@@ -682,7 +682,7 @@ navbarPage(title = div(
 
            ),
 
-           tabPanel("Fieldbook",
+           tabPanel(div(h5(icon("book"), "Fieldbook")),
 
                     fluidRow(
 
@@ -806,7 +806,7 @@ navbarPage(title = div(
 
            ),
 
-tabPanel("Sketch",
+tabPanel(div(h5(icon("pen-ruler"), "Sketch")) ,
 
          fluidRow(
 
@@ -846,7 +846,83 @@ tabPanel("Sketch",
            ),
 
 
+         ),
+
+
+# connect -----------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+tabPanel(div(h5(icon("plug-circle-check"), "Connection")),
+         
+         fluidRow(
+           
+           column(2,
+                  
+                  h5(icon("mobile-screen-button"), "Field Book app"),
+                  
+                  br(),
+                  
+                  radioButtons(inputId = "connection_sheet_preview"
+                               , label = h5(icon("magnifying-glass"), "Preview") 
+                               , choices = c("Traits"
+                                             , "Field Book")
+                               , inline = TRUE
+                               , selected = "Traits"
+                  ),
+                  
+                  fluidRow(
+                    
+                    h5(icon("wheat-awn"), "Traits"),
+                    
+                    uiOutput("connection_sheet_traits"),
+                    
+                  ),
+                  
+                  fluidRow(
+                    
+                    h5(icon("book"), "Field Book"),
+                    
+                    uiOutput("connection_sheet_fieldbook"),
+                    
+                    uiOutput("connection_fieldbook_lastfactor"),
+                    
+                  ),
+                  
+                  br(),
+                  
+                  fluidRow(
+                    
+                    h5(icon("cloud-arrow-down"), "Download Files"),
+                    
+                    column(6,
+                           
+                           uiOutput("connection_traits_download"),
+                           
+                           ),
+                    
+                    column(6,
+                           
+                           uiOutput("connection_fieldbook_download"),
+                           
+                    ),
+                    
+                  ),
+                  
+                  
+           ),
+           
+           column(10,
+                  
+                  uiOutput("connection_sheet_preview"),
+                  
+                  br(),
+                  br()
+                  
+           )
+           
          )
+
+)
 
 # Tarpuy end code ---------------------------------------------------------
 # -------------------------------------------------------------------------

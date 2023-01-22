@@ -12,7 +12,7 @@ design_repblock(
   zigzag = FALSE,
   dim = NA,
   serie = 100,
-  seed = 0,
+  seed = NULL,
   fbname = "inkaverse"
 )
 }
@@ -52,11 +52,12 @@ factores <- list("geno" = c("A", "B", "C", "D", "D", 1, NA, NA, NULL, "NA")
                  , time = c(30, 60, 90)
                  )
 
-fb <-design_repblock(nfactors = 2
+fb <-design_repblock(nfactors = 1
                      , factors = factores
                      , type = "crd"
                      , rep = 4
                      , zigzag = T
+                     , seed = 0
                      )
                      
 dsg <- fb$fieldbook

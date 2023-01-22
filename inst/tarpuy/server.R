@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2022-03-26
+#> date .: 2023-01-21
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -664,7 +664,172 @@ fb_sketch <- reactive({
     }
 
   })
+
+
+
+# connection --------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+output$connection_sheet_fieldbook <- renderUI({
   
+  validate(need(fieldbook_url(), "LogIn and insert a url") )
+  
+  info <- gs4_get(gs())
+  
+  names <- info$sheets$name 
+  
+  selectInput(inputId = "connection_sheet_fieldbook"
+              , label = NULL
+              , choices = c("choose" = ""
+                            , names)
+  )
+})
+
+output$connection_sheet_traits <- renderUI({
+  
+  validate(need(fieldbook_url(), "LogIn and insert a url") )
+  
+  info <- gs4_get(gs())
+  
+  names <- info$sheets$name 
+  
+  selectInput(inputId = "connection_sheet_traits"
+              , label = NULL
+              , choices = c("choose" = ""
+                            , names)
+  )
+})
+
+# -------------------------------------------------------------------------
+
+connection_sheet_preview <- reactive({
+  
+  info <- gs4_get(gs())
+  
+  url <- info$spreadsheet_url
+  
+  id <- if(input$connection_sheet_preview == "Field Book") {
+  
+    info$sheets %>%
+      filter(name %in% input$connection_sheet_fieldbook) %>%
+      pluck("id")
+    
+  } else {
+    
+    info$sheets %>%
+      filter(name %in% input$connection_sheet_traits) %>%
+      pluck("id")
+    
+  }
+  
+  preview <- paste(url, id, sep = "#gid=")
+  
+})
+
+output$connection_sheet_preview <- renderUI({
+  
+  validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
+  
+  tags$iframe(src = connection_sheet_preview(),
+              style="height:580px; width:100%; scrolling=no")
+  
+})
+
+# -------------------------------------------------------------------------
+
+traits <- reactive({
+  
+  validate(need(input$connection_sheet_traits, "Need table with traits"))
+  
+  gs() %>%
+    googlesheets4::range_read(sheet = input$connection_sheet_traits) 
+  
+})
+
+fieldbook <- reactive({
+  
+  validate(need(input$connection_sheet_fieldbook, "Need field book table"))
+  
+  gs() %>%
+    googlesheets4::range_read(sheet = input$connection_sheet_fieldbook) 
+  
+})
+
+# -------------------------------------------------------------------------
+
+output$connection_fieldbook_lastfactor <- renderUI({
+  
+  validate(need(fieldbook(), "LogIn and insert a url") )
+  
+  names <- fieldbook() %>% names()
+  
+  selectInput(inputId = "connection_fieldbook_lastfactor"
+              , label = NULL
+              , choices = c("choose" = ""
+                            , names)
+  )
+})
+
+# -------------------------------------------------------------------------
+
+fbapp <- reactive({
+  
+  tarpuy_fbapp(fieldbook = fieldbook()
+               , last_factor = input$connection_fieldbook_lastfactor
+               , traits = traits()
+               )
+})
+
+# -------------------------------------------------------------------------
+
+output$connection_traits_trt <- downloadHandler(
+  
+  filename = function() {
+    paste('traits-', Sys.Date(), '.trt', sep='')
+  },
+  content = function(con) {
+    fbapp()$traits %>% 
+      write_delim(file = con, delim = ",", quote = "all", na = '""')
+  }
+)
+
+output$connection_fieldbook_csv <- downloadHandler(
+  
+  filename = function() {
+    paste('fieldbook-', Sys.Date(), '.csv', sep='')
+  },
+  content = function(con) {
+    fbapp()$fieldbook %>% 
+      write.csv(file = con)
+  }
+)
+
+# -------------------------------------------------------------------------
+
+output$connection_traits_download <- renderUI({
+  
+  validate(need(input$connection_fieldbook_lastfactor, ""))
+  validate(need(input$connection_sheet_traits, ""))
+
+  downloadButton(outputId = 'connection_traits_trt'
+                 , label =  h6('Traits') 
+                 , icon = icon("download", "fa-2x") 
+  )
+  
+})
+
+output$connection_fieldbook_download <- renderUI({
+  
+  validate(need(input$connection_fieldbook_lastfactor, ""))
+  validate(need(input$connection_sheet_traits, ""))
+
+  downloadButton(outputId = 'connection_fieldbook_csv'
+                 , label = h6('FieldBook')
+                 , icon = icon("download", "fa-2x")
+  )
+  
+})
+
 # end app -----------------------------------------------------------------
 # -------------------------------------------------------------------------
 

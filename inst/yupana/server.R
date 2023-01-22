@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2022-08-14
+#> date .: 2023-01-21
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------

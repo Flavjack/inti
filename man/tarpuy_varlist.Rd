@@ -32,15 +32,14 @@ library(inti)
 library(gsheet)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "183upHd4wriZz2UnInoo5Ate5YFdk7cZlhE0sMQ2x5iw/edit#gid=532773890")
-# browseURL(url)
+              , "1P0bzNNj6kjse6Dmq-ivezItaGaWD4zCAwEg4A5rzZO8/edit#gid=1361041882")
 
-info <- gsheet2tbl(url) 
+design <- gsheet2tbl(url) 
 
-fieldbook <- tarpuy_design(data = info)
+fieldbook <- tarpuy_design(data = design)
 
 url_var <- paste0("https://docs.google.com/spreadsheets/d/"
-       , "183upHd4wriZz2UnInoo5Ate5YFdk7cZlhE0sMQ2x5iw/edit#gid=1335288687")
+       , "1P0bzNNj6kjse6Dmq-ivezItaGaWD4zCAwEg4A5rzZO8/edit#gid=2010838420")
        
 varlist <- gsheet2tbl(url_var) 
 

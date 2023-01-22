@@ -8,6 +8,7 @@
 - Yupana create by default the sheet `locale = "en_US"` to use the decimal point
 - `yupana_mvr` allow to select specific numeric variables
 - `tarpuy_varlist` adapted to field book app
+- Tarpuy: new module for use the information in Field Book app <https://play.google.com/store/apps/details?id=com.fieldbook.tracker>
 
 # inti 0.5.8
 

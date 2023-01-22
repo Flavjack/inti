@@ -9,19 +9,19 @@ yupana_mvr(
   last_factor = NULL,
   summary_by = NULL,
   groups = NULL,
-  variables = NA
+  variables = NULL
 )
 }
 \arguments{
 \item{data}{Field book data.}
 
-\item{last_factor}{The last factor in your fieldbook.}
+\item{last_factor}{The last factor in your fieldbook  [string: NULL].}
 
 \item{summary_by}{Variables for group the analysis.}
 
 \item{groups}{Groups for color in PCA.}
 
-\item{variables}{Variables to be use in the analysis.}
+\item{variables}{Variables to be use in the analysis  [string: NULL].}
 }
 \value{
 result and plots
@@ -32,4 +32,28 @@ Multivariate analysis for PCA and HCPC
 \details{
 Compute and plot information for multivariate analysis (PCA, HCPC and
 correlation).
+}
+\examples{
+
+\dontrun{
+
+library(inti)
+
+fb <- inti::potato 
+
+mv <- yupana_mvr(data = fb
+                 , last_factor = "geno"
+                 , summary_by = c("geno", "treat")
+                 , groups = "treat"
+                 , variables = c("all")
+                 #, variables = c("wue", "twue")
+                 )
+                 
+mv$plot[1] 
+
+mv$data
+
+
+}
+
 }

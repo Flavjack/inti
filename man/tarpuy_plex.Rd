@@ -29,7 +29,7 @@ tarpuy_plex(
   design = "rcbd",
   rep = 3,
   zigzag = FALSE,
-  serie = 2,
+  serie = 100,
   seed = 0
 )
 }
