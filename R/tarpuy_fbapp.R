@@ -90,7 +90,7 @@ tarpuy_fbapp <- function(fieldbook = NULL
   
 # -------------------------------------------------------------------------
 
-  traits <- if(is_tibble(traits)) {
+  traits <- if(tibble::is_tibble(traits)) {
     
     traits %>% 
       dplyr::mutate(across(everything(), as.character)) %>% 
@@ -111,25 +111,25 @@ tarpuy_fbapp <- function(fieldbook = NULL
   table <- traits %>% 
     dplyr::bind_rows() %>% 
     tibble::add_column(!!!cols[!names(cols) %in% names(.)]) %>% 
-    tidyr::separate_rows(when) %>% 
+    tidyr::separate_rows(.data$when) %>% 
     tibble::rownames_to_column() %>% 
-    dplyr::mutate(across(samples, as.numeric)) %>% 
-    tidyr::uncount(samples, .id = "samples") %>% 
+    dplyr::mutate(across(.data$samples, as.numeric)) %>% 
+    tidyr::uncount(.data$samples, .id = "samples") %>% 
     dplyr::rowwise() %>%
-    dplyr::mutate("trait" := paste(c(abbreviation, when, samples)
+    dplyr::mutate("trait" := paste(c(.data$abbreviation, .data$when, .data$samples)
                                    , collapse = "_")) %>% 
-    dplyr::group_by(abbreviation, when, samples) %>% 
-    dplyr::arrange(when) %>% 
+    dplyr::group_by(.data$abbreviation, .data$when, .data$samples) %>% 
+    dplyr::arrange(.data$when) %>% 
     dplyr::ungroup() %>% 
     tibble::rownames_to_column("realPosition") %>% 
     dplyr::mutate(isVisible = "true") %>% 
     dplyr::mutate(defaultValue = dplyr::case_when(
-      format %in% "boolean" ~ "false"
+      .data$format %in% "boolean" ~ "false"
       , TRUE ~ ""
     )) %>% 
     dplyr::rowwise() %>% 
     dplyr::mutate(categories = case_when(
-      format %in% "categorical" ~ .data$categories %>% 
+      .data$format %in% "categorical" ~ .data$categories %>% 
         gsub("[[:blank:]]", "", .) %>% 
         strsplit(",|;") %>% 
         unlist() %>% 
@@ -138,15 +138,15 @@ tarpuy_fbapp <- function(fieldbook = NULL
         paste0("[", ., "]")
       , TRUE ~ as.character("[]")
     )) %>% 
-    dplyr::select(trait
-                  , format
-                  , defaultValue
-                  , minimum
-                  , maximum
-                  , details
-                  , categories
-                  , isVisible
-                  , realPosition
+    dplyr::select(.data$trait
+                  , .data$format
+                  , .data$defaultValue
+                  , .data$minimum
+                  , .data$maximum
+                  , .data$details
+                  , .data$categories
+                  , .data$isVisible
+                  , .data$realPosition
                   ) 
   
   # table %>% write_delim(file = "traitsx.trt", delim = ",", quote = "all", na = '""')

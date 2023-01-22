@@ -5,6 +5,7 @@ editor_options:
   chunk_output_type: console
 ---
 ```{r}
+source("https://lozanoisla.com/setup.r")
 library(tidyverse)
 ```
 

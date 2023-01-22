@@ -60,8 +60,8 @@ tarpuy_varlist <- function(fieldbook
     dplyr::select( starts_with("{") |  ends_with("}")) %>%
     dplyr::rename_with(~ gsub("\\{|\\}", "", .)) %>% 
     dplyr::select(!.data$format) %>% 
-    select(where(~!all(is.na(.)))) %>% 
-    separate_rows(.data$when) 
+    dplyr::select(where(~!all(is.na(.)))) %>% 
+    tidyr::separate_rows(.data$when) 
     
   
 # -------------------------------------------------------------------------
