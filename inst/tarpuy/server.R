@@ -764,7 +764,7 @@ output$connection_fieldbook_lastfactor <- renderUI({
   names <- fieldbook() %>% names()
   
   selectInput(inputId = "connection_fieldbook_lastfactor"
-              , label = NULL
+              , label = "Last Factor"
               , choices = c("choose" = ""
                             , names)
   )
