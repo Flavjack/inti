@@ -268,4 +268,24 @@ table <- traits %>%
 table %>% write_delim(file = "traitsx.trt", delim = ",", quote = "all", na = '""')
 ```
 
+```{r}
+source("https://lozanoisla.com/setup.r")
+
+url_ds <- paste0("https://docs.google.com/spreadsheets/d/"
+        , "17OiKYKI7NLx1G4o86maXTa7CAwDgivmrfy9xNWKu8hw/edit#gid=1320383494")
+
+gs <- as_sheets_id(url_ds)
+
+ds <- gs %>% 
+  range_read("design")
+
+fb <- ds %>% tarpuy_design()
+
+traits <- gs %>% 
+  range_read("traits", col_types = "c") 
+
+fbapp <- tarpuy_traits(fb, last_factor = "cols", traits)
+
+dsg <- fbapp[[1]]
+```
 

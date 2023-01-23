@@ -9,6 +9,7 @@
 - `yupana_mvr` allow to select specific numeric variables
 - `tarpuy_varlist` adapted to field book app
 - Tarpuy: new module for use the information in Field Book app <https://play.google.com/store/apps/details?id=com.fieldbook.tracker>
+- Rename function: `tarpuy_varlist` ==> `tarpuy_traits`
 
 # inti 0.5.8
 

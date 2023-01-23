@@ -406,7 +406,7 @@ observeEvent(input$export_design, {
   if ( input$gsheet_varlist %in% sheet_names(gs()) ) {
 
     variables <- gs() %>%
-      range_read(input$gsheet_varlist)
+      range_read(input$gsheet_varlist, col_types = "c")
 
   } else { variables <- NULL }
 
@@ -427,16 +427,19 @@ observeEvent(input$export_design, {
   
   if(!is.null(fieldbook)) {
     
-    fbds <- fieldbook %>% tarpuy_varlist(variables)
+    fbds <- tarpuy_traits(fieldbook = fieldbook
+                          , last_factor = NULL
+                          , traits = variables
+                          )
     
     if (input$export_design_overwrite == "no" & !sheet_export %in% sheet_names(gs())) {
       
-      fbds %>% 
+      fbds$fieldbook %>% 
         write_sheet(ss = gs(), sheet = sheet_export)
       
     } else if(input$export_design_overwrite == "yes") {
       
-      fbds %>% 
+      fbds$fieldbook %>% 
         write_sheet(ss = gs(), sheet = sheet_export)
       
     } else {  print ("sheet already exist") }
@@ -742,7 +745,8 @@ traits <- reactive({
   validate(need(input$connection_sheet_traits, "Need table with traits"))
   
   gs() %>%
-    googlesheets4::range_read(sheet = input$connection_sheet_traits) 
+    googlesheets4::range_read(sheet = input$connection_sheet_traits
+                              , col_types = "c") 
   
 })
 
@@ -774,7 +778,7 @@ output$connection_fieldbook_lastfactor <- renderUI({
 
 fbapp <- reactive({
   
-  tarpuy_fbapp(fieldbook = fieldbook()
+  tarpuy_traits(fieldbook = fieldbook()
                , last_factor = input$connection_fieldbook_lastfactor
                , traits = traits()
                )
@@ -799,7 +803,7 @@ output$connection_fieldbook_csv <- downloadHandler(
     paste('fieldbook-', Sys.Date(), '.csv', sep='')
   },
   content = function(con) {
-    fbapp()$fieldbook %>% 
+    fbapp()$fb %>% 
       write.csv(file = con)
   }
 )
