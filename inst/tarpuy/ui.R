@@ -852,7 +852,7 @@ tabPanel(div(h5(icon("pen-ruler"), "Sketch")) ,
 # connect -----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-tabPanel(div(h5(icon("plug-circle-check"), "Connection")),
+tabPanel(div(h5(icon("plug-circle-check"), "Mobile")),
          
          fluidRow(
            

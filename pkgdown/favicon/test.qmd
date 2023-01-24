@@ -1,0 +1,291 @@
+---
+title: "xcode"
+format: html
+editor_options: 
+  chunk_output_type: console
+---
+```{r}
+source("https://lozanoisla.com/setup.r")
+library(tidyverse)
+```
+
+# Experimental designs
+
+## Arguments
+
+nfactors (for the experimental design)
+design
+1: crd, cbd, augmented, lattice, alpha
+2: crd, crbd, split.plot, strp.plot, p.rep
+3+: crd, crbd
+factors (list)
+replication
+seed
+zigzag (design layout: F or T) 
+qrinfo
+
+## Idea
+
+According the nfactors the function will take the elements list (use the list name) and convert to dataframe (enframe) and use the row number to create the replications. for each replication will include the random values for sorting. Include the design. At the final include the row and column number based in the zigzag option to be used in spatial correction. merge the factor columns with the qrinfo for unique ID and reconstruct the field-book
+
+## Function
+
+```{r}
+rep <- 4
+seed <- NULL
+zigzag <- T
+qrprefix <- "inkaverse"
+
+dim <- NA #c(8, 6)
+
+nfactors  <- 2
+design <-  "crd" # "rcbd"
+factors  <- list("geno" = c("a1", "b2", "c3", "d4", "d4")
+                 , "salt stress" = c(0, 50, 200, 200)
+                 , time = c(30, 60, 90)
+                 )
+
+# CRD & RCBD
+
+set.seed(seed)
+
+dfactors <- factors %>% 
+  purrr::map(base::unique) %>% 
+  purrr::map(stats::na.omit) %>% 
+  purrr::map(~gsub("[[:space:]]", ".", .)) %>% 
+  purrr::set_names(gsub("[[:space:]]", "." , names(.))) %>% 
+  .[1:nfactors]
+  
+block.factor <- if(design %in% "crbd") {"block"} else {"rep"}
+
+name.factors <- names(dfactors)
+  
+nrows <- if(anyNA(dim)) {rep} else {dim[1]}
+
+ncols <- if(anyNA(dim)) {
+  
+  dfactors %>% 
+    lengths() %>% 
+    prod()*rep/nrows
+  
+  } else {dim[2]}
+  
+fb <- dfactors %>% 
+  expand.grid() %>% 
+  mutate(ntreat = as.numeric(row.names(.))) %>% 
+  uncount(rep, .id = {{block.factor}}) %>% 
+  arrange(.data[[block.factor]], ntreat) %>% 
+  {
+    if(design %in% "rcbd") {
+      group_by(.data = ., .data[[block.factor]]) %>% 
+      mutate(.data = ., order = sample.int(n())) %>% 
+      ungroup({{block.factor}}) %>%
+      arrange(.data = ., .data[[block.factor]], order) %>% 
+      mutate(.data = ., plots = 100*.data[[block.factor]] + order)
+    } else if (design %in% "crd") {
+      mutate(.data = ., order = sample.int(n())) %>%
+      arrange(.data = ., order) %>% 
+      mutate(plots = 100 + order)
+    }
+  } %>% 
+  mutate(rows = rep(1:nrows,  each = nrow(.)/nrows )) %>% 
+  mutate(cols = rep(1:ncols, times = nrow(.)/ncols )) %>%
+  mutate(icols = (ncols - cols) + 1) %>% 
+  { 
+    if(isTRUE(zigzag))
+      mutate(.data = .
+             , cols = case_when(
+               rows %% 2 == 0 ~ as.character(icols)
+               , rows %% 2 == 1 ~ as.character(cols)
+      )) else {.}
+    } %>% 
+  select(plots, {{name.factors}}, everything()) %>% 
+  mutate(across(cols, as.numeric)) %>% 
+  mutate(qrprefix = qrprefix) %>% 
+  tidyr::unite("barcode", qrprefix, plots, {{name.factors}}, cols, rows
+               , sep = "-", remove = F) %>% 
+  select(!c(icols, qrprefix)) 
+
+result <- list(
+  fieldbook = fb
+  , parameters = list(
+    nfactors = nfactors
+    , factors = factors
+    , design = design
+    , rep = rep 
+    , zigzag = zigzag
+    , dim = c(nrows, ncols)
+    , seed = seed
+    , factornames = name.factors
+  )
+)
+
+  
+fb %>% 
+  arrange(rows, cols) %>%
+  inti::tarpuy_plotdesign(factor = c("geno"), fill = "plots")
+
+```
+
+# Test function
+
+```{r}
+library(inti)
+library(gsheet)
+
+url <- paste0("https://docs.google.com/spreadsheets/d/"
+             , "1grAv_2po804pPGg9nj1o5nli01IcEGvSevDruq_ssHk/edit#gid=1807254932")
+# browseURL(url)
+
+fb <- gsheet2tbl(url)
+dsg <- fb %>% tarpuy_design()
+dsg %>% str()
+dsg %>%
+   tarpuy_plotdesign()
+
+url2 <- paste0("https://docs.google.com/spreadsheets/d/"
+               , "1grAv_2po804pPGg9nj1o5nli01IcEGvSevDruq_ssHk/edit#gid=1547389271")
+
+variables <- gsheet2tbl(url2)
+
+ds <- dsg %>% tarpuy_varlist(variables)
+
+gs <- url %>% googlesheets4::as_sheets_id()
+
+ds %>% googlesheets4::write_sheet(ss = gs, sheet = "fb")
+
+
+sketch <- gs %>% range_read("fb")
+
+sketch %>% tarpuy_plotdesign(factor = "geno")
+```
+
+# Trait export
+
+```{r}
+library(tidyverse)
+
+#> manual
+
+traits <- list(
+  list(variable = "altura de planta"
+       , abbreviation = "altp"
+       , format = "numeric"
+       , when = "30, 40, 50"
+       , sample = 3
+       , units = "cm"
+       , details = NA
+       , minimum = 0
+       , maximum = 100
+      )
+  , list(variable = "severidad"
+         , abbreviation = "svr"
+        , format = "categorical"
+        , when = "30, 40, 50"
+        , sample = 1
+        , units = "scale"
+        , details = NA
+        , categories = "1, 3, 5, 7, 9"
+        )
+  ,  list(variable = "foto"
+          , abbreviation = "foto"
+          , format = "photo"
+          , when = "hrv, pshrv"
+          , sample = 1
+          , units = "image"
+          , details = NA
+          )
+  ,  list(variable = "germinacion"
+          , abbreviation = "ger"
+          , format = "boolean"
+          , when = "30, 40, 50"
+          , sample = 1
+          , units = "logical"
+          , details = NA
+          )
+  ) 
+
+# Table source
+
+url <- paste0("https://docs.google.com/spreadsheets/d/"
+             , "1P0bzNNj6kjse6Dmq-ivezItaGaWD4zCAwEg4A5rzZO8/edit#gid=2010838420") 
+
+tabtraits <- gsheet2tbl(url)
+
+traits <- tabtraits %>% 
+  dplyr::mutate(across(everything(), as.character)) %>% 
+  dplyr::rename_with(~ gsub("\\{|\\}", "", .)) %>% 
+  rownames_to_column() %>% 
+  pivot_longer(!.data$rowname) %>% 
+  group_split(rowname, .keep = FALSE)  %>% 
+  map(~.x %>%  deframe) 
+
+cols <- c("trait" = NA_real_,	"format" = NA_real_,	"default" = NA_real_,	"minimum" = NA_real_,	"maximum" = NA_real_,	"details" = NA_real_, "categories" = NA_real_)
+
+#> export to fieldbook app
+
+table <- traits %>% 
+  bind_rows() %>% 
+  tibble::add_column(!!!cols[!names(cols) %in% names(.)]) %>% 
+  separate_rows(when) %>% 
+  rownames_to_column() %>% 
+  dplyr::mutate(across(samples, as.numeric)) %>% 
+  tidyr::uncount(samples, .id = "samples") %>% 
+  dplyr::rowwise() %>%
+    dplyr::mutate("trait" := paste(c(abbreviation, when, samples)
+                                       , collapse = "_")) %>% 
+  group_by(abbreviation, when, samples) %>% 
+  arrange(when) %>% 
+  ungroup() %>% 
+  rownames_to_column("realPosition") %>% 
+  mutate(isVisible = "true") %>% 
+  mutate(defaultValue = case_when(
+    format %in% "boolean" ~ "false"
+    , TRUE ~ ""
+  )) %>% 
+  rowwise() %>% 
+  mutate(categories = case_when(
+   format %in% "categorical" ~ .data$categories %>% 
+     gsub("[[:blank:]]", "", .) %>% 
+     strsplit(",|;") %>% 
+     unlist() %>% 
+     map_chr(\(x) paste0('{"label":"', x, '","value":"', x, '"}')) %>% 
+     paste0(collapse = ", ") %>% 
+     paste0("[", ., "]")
+   , TRUE ~ as.character("[]")
+  )) %>% 
+  dplyr::select(trait
+         , format
+         , defaultValue
+         , minimum
+         , maximum
+         , details
+         , categories
+         , isVisible
+         , realPosition
+         ) 
+
+table %>% write_delim(file = "traitsx.trt", delim = ",", quote = "all", na = '""')
+```
+
+```{r}
+source("https://lozanoisla.com/setup.r")
+
+url_ds <- paste0("https://docs.google.com/spreadsheets/d/"
+        , "17OiKYKI7NLx1G4o86maXTa7CAwDgivmrfy9xNWKu8hw/edit#gid=1320383494")
+
+gs <- as_sheets_id(url_ds)
+
+ds <- gs %>% 
+  range_read("design")
+
+fb <- ds %>% tarpuy_design()
+
+traits <- gs %>% 
+  range_read("traits", col_types = "c") 
+
+fbapp <- tarpuy_traits(fb, last_factor = "cols", traits)
+
+dsg <- fbapp[[1]]
+```
+
