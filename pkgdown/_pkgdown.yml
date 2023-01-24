@@ -35,6 +35,8 @@ home:
     href: https://github.com/sponsors/flavjack
 
 navbar:
+  bg: dark
+  type: light
   structure:
     left: [intro, home, apps, articles, privacy, reference, news]
     right: [search, github, sponsor]
