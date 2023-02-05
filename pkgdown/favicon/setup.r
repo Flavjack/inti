@@ -2,7 +2,7 @@
 # R packages dependencies and configuration -------------------------------
 # -------------------------------------------------------------------------
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date   .: 2022-07-17
+#> date   .: 2023-02-03
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -21,7 +21,7 @@ cran <- c(
   , "psych" # Correlation plot
   , "huito" # label design
   , "grid" # Import images as R object
-  )
+)
 
 git <- c("crsh/citr") # Use zotero for docs citations
 
@@ -34,12 +34,12 @@ suppressPackageStartupMessages({
     } 
   }
   
-  for (pkg in git) { 
-    if( !require(sub(".*/", "", pkg), character.only = T) ) {
-      devtools::install_github(pkg, upgrade = T)
-      library(sub(".*/", "", pkg), character.only = T)
-    } 
-  }
+  # for (pkg in git) { 
+  #   if( !require(sub(".*/", "", pkg), character.only = T) ) {
+  #     devtools::install_github(pkg, upgrade = T)
+  #     library(sub(".*/", "", pkg), character.only = T)
+  #   } 
+  # }
   
 })
 
@@ -50,25 +50,25 @@ remove(cran, git, pkg)
 # -------------------------------------------------------------------------
 
 knitr::opts_chunk$set(
-    fig.align = "center" # Center images in the export file
+  fig.align = "center" # Center images in the export file
   , out.width = "98%" # Figure width in html
-  , echo = FALSE # Avoid print code in the export file
+  # , echo = FALSE # Avoid print code in the export file
   , message = FALSE # Avoid print messages in the export file
   , warning = FALSE # Avoid print warnings in the export file
   , collapse = TRUE # Collapse text output into source blocks
-  )
+)
 
 # -------------------------------------------------------------------------
 # Compile options ---------------------------------------------------------
 # -------------------------------------------------------------------------
 
 options(
-    OutDec= "." # Use "." instead of "," in the decimal values
+  OutDec= "." # Use "." instead of "," in the decimal values
   , scipen = 99 # Avoid use "6e-04"
   , knitr.kable.NA = "" # NA values will appear as empty cell
   , knitr.table.format = "pipe" # Format for export tables
   , citr.use_betterbiblatex = FALSE # For zotero addin 
-  ) 
+) 
 
 # -------------------------------------------------------------------------
 # Authorize googledrive & googlesheets ------------------------------------
@@ -76,4 +76,3 @@ options(
 
 googlesheets4::gs4_auth(T)
 googledrive::drive_auth(T)
-

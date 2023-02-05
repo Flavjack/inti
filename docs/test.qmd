@@ -289,3 +289,70 @@ fbapp <- tarpuy_traits(fb, last_factor = "cols", traits)
 dsg <- fbapp[[1]]
 ```
 
+
+# Lattice design
+
+```{r}
+library(agricolae)
+library(tidyverse)
+
+# triple lattice
+trt<-LETTERS[1:9]
+outdesign<-design.lattice(trt,r=3,serie=2, seed = 20) # triple lattice design ( 9 trt)
+
+
+# simple lattice
+trt<-1:100
+outdesign<-design.lattice(trt,r=2,serie=3, seed = 20)
+
+```
+
+```{r}
+factors = list(genos = LETTERS[1:9])
+
+rep = 3 # "triple" (r = 3) or "simple" (r = 2)
+zigzag = FALSE
+serie = 100
+seed = 20
+fbname = "inkaverse"
+
+
+set.seed(seed)
+  
+dfactors <- factors %>%
+  purrr::map(~ gsub("NA|NULL", NA, .)) %>% 
+  purrr::map(base::unique) %>% 
+  purrr::map(stats::na.omit) %>% 
+  purrr::map(~gsub("[[:space:]]", ".", .)) %>% 
+  purrr::set_names(gsub("[[:space:]]", "." , names(.)))
+
+block <-  dfactors %>% 
+  pluck(1) %>% 
+  length()
+
+k <- block %>% 
+  sqrt()
+
+outdesign$sketch
+todo <- outdesign$book
+
+nrows <- k
+ncols <- block*k
+
+fb <- dfactors %>% 
+  expand.grid() %>% 
+  dplyr::mutate(ntreat = as.numeric(row.names(.))) %>% 
+  tidyr::uncount(rep, .id = "rep") %>% 
+  dplyr::mutate(block = ntreat) %>% 
+  dplyr::arrange(.data$rep, .data$block) %>% 
+  dplyr::mutate(plots = serie*.data$rep + .data$ntreat) %>% 
+  dplyr::mutate(rows = rep(1:nrows,  each = nrow(.)/nrows )) %>% 
+  dplyr::mutate(cols = rep(1:ncols, times = nrow(.)/ncols ))
+
+
+
+```
+
+
+
+
