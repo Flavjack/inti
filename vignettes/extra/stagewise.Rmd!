@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Best Linear Unbiased Predictors (BLUP) is used in plant breeding experiments for the selection of the best lines in multi-environmental trials (MET).
 
-In this section, a comparison will be made between the `H2Cal()` function of the inti package [@R-inti] and the code using the `asrml` package published by @buntaran2020Cross. 
+In this section, a comparison will be made between the `H2Cal()` function of the inti package [@R-inti] and the code using the `asreml` package published by @buntaran2020Cross. 
 
 For the comparison we will use the two methods described by @buntaran2020Cross. (i) The "two-stage" analysis, using two stages, the first to calculate the BLUEs and the second the BLUPs. (ii) The "one stage" analysis using only one model to calculate the BLUPs.
 
@@ -209,7 +209,7 @@ cat("r =", rs)
 blues.comp %>% web_table(digits = 4)
 ```
 
-The BLUEs correlation between `H2Cal` and `asrml` is (r = `r rs`)
+The BLUEs correlation between `H2Cal` and `asreml` is (r = `r rs`)
 
 ## BLUPs comparison
 
@@ -285,7 +285,7 @@ cat("r =", rs)
 blups.comp %>% web_table(digits = 4)
 ```
 
-The BLUPs correlation between `H2Cal` and `asrml` is (r = `r rs`)
+The BLUPs correlation between `H2Cal` and `asreml` is (r = `r rs`)
 
 # References
 
