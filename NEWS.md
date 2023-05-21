@@ -1,3 +1,17 @@
+# inti 0.6.1?
+
+- Tarpuy: 
+  - Include google sheet and docs in PLEX
+  - Allow empty rows and without filling
+  - Drop values in sheet traits with "X" 
+
+
+#> to improve:
+
+- Only generate traits sheets
+- Include lattice
+
+
 # inti 0.6.0
 
 - Fix for dev dplyr (Thanks @hadley)

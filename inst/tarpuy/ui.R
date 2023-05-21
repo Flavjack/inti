@@ -394,12 +394,14 @@ navbarPage(title = div(
                                                               , "fieldbook"
                                                               , "album"
                                                               , "github"
+                                                              , "gdocs"
                                                               )
                                                 , selected = c("manager"
                                                                , "location"
                                                                , "dates"
                                                                , "about"
                                                                , "environment"
+                                                               , "gdocs"
                                                                )
                              ),
 
@@ -422,11 +424,6 @@ navbarPage(title = div(
                                        , width = "100%"
                                        , value = NA
                                        , placeholder = "sheet name"
-                             ),
-
-                             actionButton(inputId = "plex_generate"
-                                          , label = "Generate"
-                                          , class = "btn btn-success"
                              )
 
                              ),
@@ -562,6 +559,17 @@ navbarPage(title = div(
                                                         , value = NA
                                               )
 
+                             ),
+                             
+                             conditionalPanel(condition =  ' input["plex_fields"].includes("gdocs") ',
+                                              
+                                              textInput(inputId = "plex_gdocs"
+                                                        , label = "Google Docs"
+                                                        , width = "100%"
+                                                        , placeholder = "url or link"
+                                                        , value = NA
+                                              )
+                                              
                              )
                       ),
 
@@ -672,7 +680,36 @@ navbarPage(title = div(
                                                    )
                                       
                                       )
+                               ),
+                             
+                             br(),
+                             
+                             fluidRow(
+                               
+                               column(12,
+                                      
+                                      checkboxGroupInput(inputId = "plex_sheetcreate"
+                                                         , label = h5(icon("cloud-arrow-up"), "Experimental plan")
+                                                         , choices = c("fieldbook"
+                                                                       , "design"
+                                                                       , "traits"
+                                                                       )
+                                                         , selected = c("fieldbook"
+                                                                        , "design"
+                                                                        , "traits"
+                                                                        )
+                                      )
+                               ),
+                                      
+                               
+                               column(12,
+                                      
+                                      actionButton(inputId = "plex_generate"
+                                                   , label = "Generate"
+                                                   , class = "btn btn-success"
+                                                   )
                                )
+                             )
                              
                              )
                       )

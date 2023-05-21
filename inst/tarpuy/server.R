@@ -234,13 +234,14 @@ shinyServer(function(input, output, session) {
                          , fieldbook = input$plex_fieldbook
                          , album = input$plex_album
                          , github = input$plex_github
+                         , gdocs = input$plex_gdocs
                          , nfactor = input$plex_nfactors
                          , design = input$plex_design
                          , rep = input$plex_rep
                          , serie = input$plex_serie
                          , seed = input$plex_seed
                          , zigzag = input$plex_zigzag
-                           )
+                        )
 
   })
 

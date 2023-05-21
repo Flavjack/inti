@@ -64,19 +64,19 @@
 #' library(gsheet)
 #' 
 #' url_fb <- paste0("https://docs.google.com/spreadsheets/d/"
-#'        , "17OiKYKI7NLx1G4o86maXTa7CAwDgivmrfy9xNWKu8hw/edit#gid=124648622")
+#'        , "17coCIWBIzQSUAvzC6rkfjPj7i1Ob1dcx-L1tAsBUO5s/edit#gid=731057423")
 #'        
 #' fb <- gsheet2tbl(url_fb) 
 #' 
 #' url_ds <- paste0("https://docs.google.com/spreadsheets/d/"
-#'        , "17OiKYKI7NLx1G4o86maXTa7CAwDgivmrfy9xNWKu8hw/edit#gid=1320383494")
+#'        , "17coCIWBIzQSUAvzC6rkfjPj7i1Ob1dcx-L1tAsBUO5s/edit#gid=470588086")
 #'        
 #' ds <- gsheet2tbl(url_ds) 
 #' 
 #' fb <- ds %>% tarpuy_design()
 #' 
 #' url_trt <- paste0("https://docs.google.com/spreadsheets/d/"
-#'        , "17OiKYKI7NLx1G4o86maXTa7CAwDgivmrfy9xNWKu8hw/edit#gid=122219206")
+#'        , "17coCIWBIzQSUAvzC6rkfjPj7i1Ob1dcx-L1tAsBUO5s/edit#gid=470588086")
 #'        
 #' traits <- gsheet2tbl(url_trt) 
 #' 
@@ -120,18 +120,19 @@ tarpuy_traits <- function(fieldbook = NULL
       traits %>% 
         dplyr::mutate(across(everything(), as.character)) %>% 
         dplyr::rename_with(~ gsub("\\{|\\}", "", .)) %>% 
-        tidyr::drop_na(c(.data$abbreviation, .data$when, .data$format)) %>% 
+        tidyr::drop_na(c("abbreviation", "when", "format")) %>% 
         tibble::rownames_to_column() %>% 
-        tidyr::pivot_longer(!.data$rowname) %>% 
+        tidyr::pivot_longer(!"rowname") %>% 
         dplyr::group_split(.data$rowname, .keep = FALSE)  %>% 
         purrr::map(~.x %>% deframe) 
       } else if (purrr::is_list(traits)) { traits } 
     } %>% 
     dplyr::bind_rows() %>% 
-    tibble::add_column(!!!cols[!names(cols) %in% names(.)]) 
+    tibble::add_column(!!!cols[!names(cols) %in% names(.)]) %>% 
+    dplyr::filter(!grepl("X", .data$abbreviation))
   
   traitsnames <- traitstb %>% 
-    dplyr::select(.data$abbreviation, .data$when, .data$samples) %>% 
+    dplyr::select("abbreviation", "when", "samples") %>% 
     purrr::discard(~all(is.na(.))) %>% 
     names()
   
@@ -171,16 +172,16 @@ tarpuy_traits <- function(fieldbook = NULL
         paste0("[", ., "]")
       , TRUE ~ as.character("[]")
     )) %>% 
-    dplyr::select(.data$trait
-                  , .data$format
-                  , .data$defaultValue
-                  , .data$minimum
-                  , .data$maximum
-                  , .data$details
-                  , .data$categories
-                  , .data$isVisible
-                  , .data$realPosition
-                  ) 
+    dplyr::select(all_of(c("trait"
+                  , "format"
+                  , "defaultValue"
+                  , "minimum"
+                  , "maximum"
+                  , "details"
+                  , "categories"
+                  , "isVisible"
+                  , "realPosition"
+                  )))
   
   # fbapp %>% write_delim(file = "traitsx.trt", delim = ",", quote = "all", na = '""')
   
