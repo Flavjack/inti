@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2023-01-21
+#> date .: 2023-05-21
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -174,8 +174,8 @@ shinyServer(function(input, output, session) {
 
   })
 
-  # tarpuy plex -------------------------------------------------------------
-  # -------------------------------------------------------------------------
+# tarpuy plex -------------------------------------------------------------
+# -------------------------------------------------------------------------
 
   # design type -------------------------------------------------------------
 
@@ -209,8 +209,9 @@ shinyServer(function(input, output, session) {
     )
 
   })
+  
 
-  # -------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 
   plex <- reactive({
     
@@ -244,15 +245,33 @@ shinyServer(function(input, output, session) {
                         )
 
   })
+  
+# sheets to create --------------------------------------------------------
 
-  observeEvent(input$plex_generate, {
+output$plex_sheets2create <- renderUI({
+  
+  sheets <- c(input$gsheet_info, input$gsheet_design, input$gsheet_varlist)
+  
+  checkboxGroupInput(inputId = "plex_sheet2create"
+                     , label = h5(icon("cloud-arrow-up"), "Experimental plan")
+                     , choices = sheets
+                     , selected = sheets
+  )
+  
+  
+})  
+  
+
+# -------------------------------------------------------------------------
+  
+observeEvent(input$plex_generate, {
 
     validate( need( input$fieldbook_url, "LogIn and create or insert a url" ) )
 
 
 # info --------------------------------------------------------------------
 
-    if ( !input$gsheet_info %in% sheet_names(gs()) ) {
+    if ( !input$gsheet_info %in% sheet_names(gs()) & input$gsheet_info %in% input$plex_sheet2create) {
 
       sheet_add(ss = gs(), sheet = input$gsheet_info)
 
@@ -263,7 +282,7 @@ shinyServer(function(input, output, session) {
 
 # varlist -----------------------------------------------------------------
 
-    if ( !input$gsheet_varlist %in% sheet_names(gs()) ) {
+    if ( !input$gsheet_varlist %in% sheet_names(gs()) & input$gsheet_varlist %in% input$plex_sheet2create) {
 
       sheet_add(ss = gs(), sheet = input$gsheet_varlist, .after = input$gsheet_info)
 
@@ -274,7 +293,7 @@ shinyServer(function(input, output, session) {
 
 # design ------------------------------------------------------------------
 
-    if ( !input$gsheet_design %in% sheet_names(gs()) ) {
+    if ( !input$gsheet_design %in% sheet_names(gs()) & input$gsheet_design %in% input$plex_sheet2create) {
 
       sheet_add(ss = gs(), sheet = input$gsheet_design, .after = input$gsheet_varlist)
 

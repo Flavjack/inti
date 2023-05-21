@@ -74,19 +74,19 @@ library(inti)
 library(gsheet)
 
 url_fb <- paste0("https://docs.google.com/spreadsheets/d/"
-       , "17OiKYKI7NLx1G4o86maXTa7CAwDgivmrfy9xNWKu8hw/edit#gid=124648622")
+       , "17coCIWBIzQSUAvzC6rkfjPj7i1Ob1dcx-L1tAsBUO5s/edit#gid=731057423")
        
 fb <- gsheet2tbl(url_fb) 
 
 url_ds <- paste0("https://docs.google.com/spreadsheets/d/"
-       , "17OiKYKI7NLx1G4o86maXTa7CAwDgivmrfy9xNWKu8hw/edit#gid=1320383494")
+       , "17coCIWBIzQSUAvzC6rkfjPj7i1Ob1dcx-L1tAsBUO5s/edit#gid=470588086")
        
 ds <- gsheet2tbl(url_ds) 
 
 fb <- ds \%>\% tarpuy_design()
 
 url_trt <- paste0("https://docs.google.com/spreadsheets/d/"
-       , "17OiKYKI7NLx1G4o86maXTa7CAwDgivmrfy9xNWKu8hw/edit#gid=122219206")
+       , "17coCIWBIzQSUAvzC6rkfjPj7i1Ob1dcx-L1tAsBUO5s/edit#gid=470588086")
        
 traits <- gsheet2tbl(url_trt) 
 

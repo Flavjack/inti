@@ -23,8 +23,9 @@ tarpuy_plex(
   end = NA,
   about = NULL,
   fieldbook = NULL,
-  album = NULL,
+  gdocs = NULL,
   github = NULL,
+  album = NULL,
   nfactor = 2,
   design = "rcbd",
   rep = 3,
@@ -70,9 +71,11 @@ tarpuy_plex(
 
 \item{fieldbook}{Name or ID for the fieldbook/project.}
 
-\item{album}{link with the photos of the project.}
+\item{gdocs}{link for Google Docs}
 
 \item{github}{link with the github repository.}
+
+\item{album}{link with the photos of the project.}
 
 \item{nfactor}{Number of factors for the design.}
 

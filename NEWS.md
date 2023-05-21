@@ -1,16 +1,15 @@
-# inti 0.6.1?
+# inti 0.6.1
 
 - Tarpuy: 
   - Include google sheet and docs in PLEX
   - Allow empty rows and without filling
   - Drop values in sheet traits with "X" 
-
+  - Only generate traits sheets
+  - Seed is set by default 
 
 #> to improve:
 
-- Only generate traits sheets
 - Include lattice
-
 
 # inti 0.6.0
 

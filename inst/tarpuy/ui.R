@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2023-01-21
+#> date .: 2023-05-21
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -213,12 +213,8 @@ navbarPage(title = div(
                                box(title = #h5("Fieldbook")
                                    , width = 2
                                    , solidHeader = T,
-
-                                   # textInput(inputId = "gsheet_fb"
-                                   #           , label = NULL
-                                   #           , value = "fb"
-                                   #           , placeholder = "Sheet name"
-                                   # ),
+                                   
+                                   #> gap()
 
                                ),
 
@@ -688,17 +684,8 @@ navbarPage(title = div(
                                
                                column(12,
                                       
-                                      checkboxGroupInput(inputId = "plex_sheetcreate"
-                                                         , label = h5(icon("cloud-arrow-up"), "Experimental plan")
-                                                         , choices = c("fieldbook"
-                                                                       , "design"
-                                                                       , "traits"
-                                                                       )
-                                                         , selected = c("fieldbook"
-                                                                        , "design"
-                                                                        , "traits"
-                                                                        )
-                                      )
+                                      uiOutput("plex_sheets2create"),
+
                                ),
                                       
                                
