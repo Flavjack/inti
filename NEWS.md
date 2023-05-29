@@ -6,7 +6,16 @@
   - Drop values in sheet traits with "X" 
   - Only generate traits sheets
   - Seed is set by default 
-
+  
+- Deprecated:
+  - include_figure()
+  
+- New function
+  - include_pdf()
+  
+- gdocs2qmd()
+  - Word document with different output structure
+  
 #> to improve:
 
 - Include lattice

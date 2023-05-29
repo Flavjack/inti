@@ -4,7 +4,7 @@
 \alias{gdoc2qmd}
 \title{Google docs to Rmarkdown}
 \usage{
-gdoc2qmd(file, export = NA, format = "qmd")
+gdoc2qmd(file, export = NA, format = "qmd", type = "asis")
 }
 \arguments{
 \item{file}{Zip file path from Articul8 exported in md format [path]}
@@ -12,6 +12,8 @@ gdoc2qmd(file, export = NA, format = "qmd")
 \item{export}{Path to export the files [path: NA (file directory)]}
 
 \item{format}{Output format [string: "qmd" "rmd"]}
+
+\item{type}{output file type [strig: "asis" "list", "listfull", "full"]}
 }
 \value{
 path
