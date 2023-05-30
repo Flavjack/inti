@@ -22,7 +22,7 @@ gdoc2qmd <- function(file
                      , type = "asis"
                      ){
   
-  # file <- "manuscript.zip"
+  # file <- "manuscript.zip"; format = "qmd"; export = NA
   # type <- "full"
 
   export <- if(is.na(export)) {
@@ -48,6 +48,12 @@ gdoc2qmd <- function(file
     dplyr::filter(!grepl("\\|", .data$value)) %>% 
     dplyr::filter(!grepl("#tbl", .data$value)) %>% 
     dplyr::filter(!grepl("#fig", .data$value))
+  
+  tt <- txtonly %>% 
+    filter(if_all(everything(), ~ . != "")) %>% 
+    head(1) %>% 
+    deframe() %>% 
+    as.vector()
   
   fig <- txt %>% 
     dplyr::filter(grepl("#fig", .data$value)) %>% 
@@ -78,6 +84,9 @@ gdoc2qmd <- function(file
     tibble::as_tibble() %>% 
     tidyr::fill("group", .direction = "up") %>% 
     tidyr::drop_na(.data$group) %>% 
+    dplyr::group_by(.data$group) %>% 
+    dplyr::slice(n(), 1:(n() - 1)) %>% 
+    dplyr::ungroup() %>% 
     dplyr::group_split(.data$group) %>%
     purrr::map_dfr(~ add_row(.x, .after = grepl("#tbl", .x))) %>% 
     dplyr::mutate(across(.data$value, ~ ifelse(is.na(.), "\\newpage", .))) %>% 
@@ -117,7 +126,7 @@ gdoc2qmd <- function(file
       if(format == "qmd") {
         
         dplyr::mutate(.data = ., value = figure2qmd(text = .data$value, path = export)) %>% 
-        dplyr::mutate(.data = ., value = table2qmd(text = .data$value))
+        dplyr::mutate(.data = ., value = table2qmd(text = .data$value, type))
         
       } else if (format == "rmd") {
         
@@ -126,6 +135,11 @@ gdoc2qmd <- function(file
         
       }
     } %>% 
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# abstract", .$value, ignore.case = TRUE))) %>% 
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# reference", .$value, ignore.case = TRUE))) %>% 
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# result", .$value, ignore.case = TRUE)))  %>% 
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# discussion", .$value, ignore.case = TRUE))) %>% 
+    tibble::add_row(value = paste(tt, "\n\n"), .before = which(grepl("# abstract", .$value, ignore.case = TRUE))) %>% 
     dplyr::select(.data$value) %>% 
     tibble::add_row(value = "\n```{r}\nknitr::knit_exit() \n```", ) %>%
     tibble::deframe() %>% 

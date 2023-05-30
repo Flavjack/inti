@@ -4,10 +4,12 @@
 \alias{table2qmd}
 \title{Table to Quarto format}
 \usage{
-table2qmd(text)
+table2qmd(text, type = "asis")
 }
 \arguments{
 \item{text}{Markdown text with table information (string)}
+
+\item{type}{output file type [strig: "asis" "list", "listfull", "full"]}
 }
 \value{
 string mutated
