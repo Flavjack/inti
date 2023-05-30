@@ -75,7 +75,7 @@ hi <- fb %>%
 
 ## Plot in grids
 
-```{r, fig.cap= fig$caption}
+```{r, fig.cap= "Water use effiency in 15 potato genotypes A) Box plot B) Scatter plot."}
 grid <- plot_grid(wue, hi
                   , nrow = 2
                   , labels = "AUTO")
@@ -89,16 +89,7 @@ save_plot("files/fig-01.png"
         , units = "cm"
         )
 
-fig <- include_figure(
-  figure = "files/fig-01.png"
-  , caption = "Water use effiency in 15 potato genotypes"
-  , notes = "
-  A) Box plot.
-  B) Scatter plot
-  "
-  , label = "__Where:__"
-  )
-fig$figure
+knitr::include_graphics("files/fig-01.png")
 ```
 
 # Plot summary data
@@ -164,7 +155,7 @@ model$meancomp %>% web_table()
 
 ## Plot in grids
 
-```{r gridplot, fig.cap= fig$caption}
+```{r gridplot, fig.cap= "Water use effiency in 15 potato genotypes A) Bar plot B) Line plot."}
 grid <- plot_grid(lfa, twue
                   , nrow = 2
                   , labels = "AUTO")
@@ -177,21 +168,12 @@ ggsave2("files/fig-02.png"
         , scale = 1.5
         , units = "cm")
 
-fig <- include_figure(
-  figure = "files/fig-02.png"
-  , caption = "Water use effiency in 15 potato genotypes"
-  , notes = "
-  A) Bar plot
-  B) Line plot
-  "
-  , label = "__Where:__"
-  )
-fig$figure
+knitr::include_graphics("files/fig-02.png")
 ```
 
 # Multivariate analysis
 
-```{r mv, fig.cap= fig$caption}
+```{r mv, fig.cap= "Multivariate Analysis: Principal component analysis and hierarchical clustering analysis."}
 #> Principal component Analysis
 
 mv <- fb %>% 
@@ -278,12 +260,6 @@ ggsave2("files/fig-03.png"
         , scale = 1.5
         , units = "cm")
 
-fig <- include_figure(
-  caption = "Multivariate Analysis: 
-  Principal component analysis and hierarchical clustering analysis."
-  , figure = "files/fig-03.png"
-  )
-  
-fig$figure
+knitr::include_graphics("files/fig-03.png")
 ```
 

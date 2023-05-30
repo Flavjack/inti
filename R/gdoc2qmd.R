@@ -42,7 +42,7 @@ gdoc2qmd <- function(file
     dplyr::filter(!.data$value %in% "# ") %>% 
     dplyr::mutate(across("value"
                          , ~ gsub("```Unknown element type at this position: UNSUPPORTED```", "", .))) %>%
-    head(which(startsWith(.$value, c('#| END', "#| end"))) - 1)
+    utils::head(which(startsWith(.$value, c('#| END', "#| end"))) - 1)
   
   txtonly <- txt %>% 
     dplyr::filter(!grepl("\\|", .data$value)) %>% 
@@ -50,9 +50,9 @@ gdoc2qmd <- function(file
     dplyr::filter(!grepl("#fig", .data$value))
   
   tt <- txtonly %>% 
-    filter(if_all(everything(), ~ . != "")) %>% 
-    head(1) %>% 
-    deframe() %>% 
+    dplyr::filter(if_all(everything(), ~ . != "")) %>% 
+    utils::head(1) %>% 
+    tibble::deframe() %>% 
     as.vector()
   
   fig <- txt %>% 

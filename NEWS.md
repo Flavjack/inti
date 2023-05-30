@@ -1,3 +1,8 @@
+# inti 0.6.2
+
+- To improve:
+  - Include lattice
+
 # inti 0.6.1
 
 - Tarpuy: 
@@ -16,10 +21,6 @@
 - gdocs2qmd()
   - Word document with different output structure
   
-#> to improve:
-
-- Include lattice
-
 # inti 0.6.0
 
 - Fix for dev dplyr (Thanks @hadley)

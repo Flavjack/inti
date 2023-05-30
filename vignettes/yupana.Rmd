@@ -88,18 +88,14 @@ url %>%
 
 ### Argumentos y valores
 
-```{r tparam, fig.cap= fig$caption}
-dir <- "files/graph-table.png"
-fig <- dir %>% 
-  include_figure(caption = "Parámetros en `{arguments}` y `{values}` para la generación de gráficos en la aplicación Yupana.")
-fig$figure
+```{r tparam, fig.cap= "Parámetros en `{arguments}` y `{values}` para la generación de gráficos en la aplicación Yupana."}
+
+knitr::include_graphics("files/graph-table.png")
 ```
 
-```{r plot, fig.cap= fig$caption}
-dir <- "files/graph-figure.png"
-fig <- dir %>%
-  include_figure(caption = "Figura basada en los `{arguments}` y `{values}` de la tabla anterior.")
-fig$figure
+```{r plot, fig.cap= "Figura basada en los `{arguments}` y `{values}` de la tabla anterior."}
+
+knitr::include_graphics("files/graph-figure.png")
 ```
 
 La apliación por defecto genera un gama de colores `{colors}` en una escala de grises. Los colores pueden ser modificados de forma manual por sus nombres en ingles o usando los valores `HEX`. En este caso se cambió la escala de grises por los colores verde (green) y rojo (red) (Figure \@ref(fig:tparam), \@ref(fig:plot)).
@@ -110,17 +106,13 @@ Yupana a partir de la versión 0.2.0 permite la inclusión de capas adicionales 
 
 Puedes incluir diversas capas descritas para el paquete `ggplot2`.
 
-```{r opt, fig.cap= fig$caption}
-dir <- "files/graph-figure-grid.png"
-fig <- dir %>% 
-  include_figure(caption = "Gráfico con la inclusión de la capa `facet_grid()`")
-fig$figure
+```{r opt, fig.cap= "Gráfico con la inclusión de la capa `facet_grid()`"}
+
+knitr::include_graphics("files/graph-figure.png")
 ```
 
-```{r topt, fig.cap= fig$caption}
-dir <- "files/graph-table-grid.png"
-fig <- dir %>% 
-  include_figure(caption = "Inclusión de `facet_grid(tratamiento ~ .)` en `opt` de los `{arguments}` en Yupana.")
-fig$figure
+```{r topt, fig.cap= "Inclusión de `facet_grid(tratamiento ~ .)` en `opt` de los `{arguments}` en Yupana."}
+
+knitr::include_graphics("files/graph-table-grid.png")
 ```
 
