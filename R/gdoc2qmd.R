@@ -23,7 +23,7 @@ gdoc2qmd <- function(file
                      ){
   
   # file <- choose.files() ; format = "qmd"; export = NA
-  # type <- "fulllist"
+  # type <- "listfull"
 
   export <- if(is.na(export)) {
     file %>% gsub(".zip", "", .) %>% file.path()
@@ -60,11 +60,12 @@ gdoc2qmd <- function(file
     dplyr::group_split(.data$value) %>% 
     rev() %>% 
     purrr::map_dfr(~ add_row(.x, .before = grepl("#fig", .x))) %>% 
-    dplyr::mutate(across(.data$value, ~ ifelse(is.na(.), "\\newpage", .))) 
+    dplyr::mutate(across(.data$value, ~ ifelse(is.na(.), "\\newpage", .))) %>% 
+    dplyr::mutate(across(.data$value, ~gsub("}", "}", .))) 
   
   figx <- fig %>% 
     dplyr::rowwise() %>% 
-    dplyr::mutate(across(.data$value, ~gsub("\\{#fig:(.*)\\}", paste0("{#fig:", .data$name ,"}"), .)))
+    dplyr::mutate(across(.data$value, ~gsub("\\{#fig:(.*)\\}", paste0("{#fig:", .data$name ,"}"), .))) 
   
   figlist <- fig %>% 
     dplyr::mutate(value = case_when(
@@ -89,7 +90,8 @@ gdoc2qmd <- function(file
     dplyr::group_split(.data$group) %>%
     purrr::map_dfr(~ add_row(.x, .after = grepl("#tbl", .x))) %>% 
     dplyr::mutate(across(.data$value, ~ ifelse(is.na(.), "\\newpage", .))) %>% 
-    dplyr::select(!.data$group) 
+    dplyr::select(!.data$group) %>% 
+    dplyr::mutate(across(.data$value, ~gsub("}", "}", .))) 
   
   tabx <- tab %>% 
     dplyr::rowwise() %>% 
@@ -124,13 +126,13 @@ gdoc2qmd <- function(file
     {
       if(format == "qmd") {
         
-        dplyr::mutate(.data = ., value = figure2qmd(text = .data$value, path = export)) %>% 
-        dplyr::mutate(.data = ., value = table2qmd(text = .data$value, type))
+        dplyr::mutate(.data = ., value = inti::figure2qmd(text = .data$value, path = export)) %>% 
+        dplyr::mutate(.data = ., value = inti::table2qmd(text = .data$value, type))
         
       } else if (format == "rmd") {
         
-        dplyr::mutate(.data = ., value = figure2rmd(text = .data$value, path = export)) %>% 
-        dplyr::mutate(.data = ., value = table2rmd(text = .data$value)) 
+        dplyr::mutate(.data = ., value = inti::figure2rmd(text = .data$value, path = export)) %>% 
+        dplyr::mutate(.data = ., value = inti::table2rmd(text = .data$value)) 
         
       }
     } %>% 
