@@ -22,8 +22,8 @@ gdoc2qmd <- function(file
                      , type = "asis"
                      ){
   
-  # file <- "manuscript.zip"; format = "qmd"; export = NA
-  # type <- "full"
+  # file <- choose.files() ; format = "qmd"; export = NA
+  # type <- "fulllist"
 
   export <- if(is.na(export)) {
     file %>% gsub(".zip", "", .) %>% file.path()
@@ -38,11 +38,10 @@ gdoc2qmd <- function(file
     .[grep('.md', .)] %>%
     readLines() %>% 
     tibble::enframe() %>%
-    dplyr::rowwise() %>% 
     dplyr::filter(!.data$value %in% "# ") %>% 
-    dplyr::mutate(across("value"
-                         , ~ gsub("```Unknown element type at this position: UNSUPPORTED```", "", .))) %>%
-    utils::head(which(startsWith(.$value, c('#| END', "#| end"))) - 1)
+    dplyr::mutate(value = gsub("```Unknown element type at this position: UNSUPPORTED```"
+                               , "\n\n", .data$value)) %>% 
+    utils::head(which(startsWith(.$value, '#| END')), -1)
   
   txtonly <- txt %>% 
     dplyr::filter(!grepl("\\|", .data$value)) %>% 

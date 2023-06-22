@@ -1,5 +1,9 @@
 # inti 0.6.2
 
+- gdocs2qmd()
+  - Bug with: "```Unknown element type at this position: UNSUPPORTED```"
+
+
 - To improve:
   - Include lattice
 
