@@ -41,7 +41,8 @@ gdoc2qmd <- function(file
     dplyr::filter(!.data$value %in% "# ") %>% 
     dplyr::mutate(value = gsub("```Unknown element type at this position: UNSUPPORTED```"
                                , "\n\n", .data$value)) %>% 
-    utils::head(which(startsWith(.$value, '#| END')), -1)
+    utils::head(which(startsWith(.$value, '#| END')), -1) |> 
+    dplyr::rowwise()
   
   txtonly <- txt %>% 
     dplyr::filter(!grepl("\\|", .data$value)) %>% 
@@ -60,8 +61,7 @@ gdoc2qmd <- function(file
     dplyr::group_split(.data$value) %>% 
     rev() %>% 
     purrr::map_dfr(~ add_row(.x, .before = grepl("#fig", .x))) %>% 
-    dplyr::mutate(across(.data$value, ~ ifelse(is.na(.), "\\newpage", .))) %>% 
-    dplyr::mutate(across(.data$value, ~gsub("}", "}", .))) 
+    dplyr::mutate(across(.data$value, ~ ifelse(is.na(.), "\\newpage", .))) 
   
   figx <- fig %>% 
     dplyr::rowwise() %>% 
@@ -73,7 +73,7 @@ gdoc2qmd <- function(file
       , grepl("#fig", .data$value) ~ .data$value
       , TRUE  ~ "\n\n"
     )) %>% 
-    dplyr::mutate(across(.data$value, ~gsub("\\((.*)\\)", "()", .))) 
+    dplyr::mutate(across(.data$value, ~gsub("\\]\\((.*)\\)\\{", "](){", .))) 
   
   tab <- txt %>% 
     dplyr::filter(grepl("^\\|", .data$value) | grepl("#tbl", .data$value)) %>% 
@@ -140,8 +140,8 @@ gdoc2qmd <- function(file
     tibble::add_row(value = "\\newpage", .before = which(grepl("# reference", .$value, ignore.case = TRUE))) %>% 
     tibble::add_row(value = "\\newpage", .before = which(grepl("# result", .$value, ignore.case = TRUE)))  %>% 
     tibble::add_row(value = "\\newpage", .before = which(grepl("# discussion", .$value, ignore.case = TRUE))) %>% 
-    tibble::add_row(value = paste(tt, "\n\n"), .before = which(grepl("# abstract", .$value, ignore.case = TRUE))) %>% 
-    dplyr::select(.data$value) %>% 
+    tibble::add_row(value = paste(tt, "\n\n"), .before = which(grepl("# abstract", .$value, ignore.case = TRUE))) %>%
+     dplyr::select(.data$value) %>% 
     tibble::add_row(value = "\n```{r}\nknitr::knit_exit() \n```", ) %>%
     tibble::deframe() %>% 
     writeLines(con = file.path(export, "_doc.Rmd") %>% gsub("\\\\", "\\/", .))
