@@ -4,7 +4,6 @@
   - Bug with: "```Unknown element type at this position: UNSUPPORTED```"
   - The function works for articles and thesis
 
-
 - To improve:
   - Include lattice
 

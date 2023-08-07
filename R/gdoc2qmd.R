@@ -40,7 +40,7 @@ gdoc2qmd <- function(file
     readLines() %>% 
     tibble::enframe() %>%
     dplyr::filter(!.data$value %in% "# ") %>% 
-    dplyr::filter(!.data$value %in% "---") %>% 
+    # dplyr::filter(!.data$value %in% "---") %>%
     dplyr::mutate(value = gsub("```Unknown element type at this position: UNSUPPORTED```"
                                , "\n\n", .data$value)) %>% 
     {
@@ -99,21 +99,28 @@ gdoc2qmd <- function(file
   
   tab <- txt %>% 
     dplyr::filter(grepl("^\\|", .data$value) | grepl("#tbl", .data$value)) %>% 
-    dplyr::mutate(group = case_when(
-      grepl("^:", .data$value) ~ as.character(.data$name)
-      , TRUE ~ NA
-    )) %>% 
-    tibble::as_tibble() %>% 
-    tidyr::fill("group", .direction = "up") %>% 
-    tidyr::drop_na(.data$group) %>% 
-    dplyr::group_by(.data$group) %>% 
-    dplyr::slice(n(), 1:(n() - 1)) %>% 
-    dplyr::ungroup() %>% 
-    dplyr::group_split(.data$group) %>%
-    purrr::map_dfr(~ add_row(.x, .after = grepl("#tbl", .x))) %>% 
-    dplyr::mutate(across(.data$value, ~ ifelse(is.na(.), "\\newpage", .))) %>% 
-    dplyr::select(!.data$group) %>% 
-    dplyr::mutate(across(.data$value, ~gsub("}", "}", .))) 
+    {
+      if(nrow(. > 1)) { 
+        
+        dplyr::mutate(.data = ., group = case_when(
+          grepl(pattern = "^:", x = .data$value) ~ as.character(.data$name)
+          , TRUE ~ NA
+        )) %>% 
+          tibble::as_tibble(x = .) %>% 
+          tidyr::fill(data = ., "group", .direction = "up", ) %>% 
+          tidyr::drop_na(data = ., .data$group) %>% 
+          dplyr::group_by(.data = ., .data$group) %>% 
+          dplyr::slice(.data = ., n(), 1:(n() - 1)) %>% 
+          dplyr::ungroup() %>% 
+          dplyr::group_split(.tbl = ., .data$group) %>%
+          purrr::map_dfr(~ add_row(.x, .after = grepl("#tbl", .x))) %>% 
+          dplyr::mutate(.data = ., across(.data$value, ~ ifelse(is.na(.), "\\newpage", .))) %>% 
+          dplyr::select(.data = ., !.data$group) %>% 
+          dplyr::mutate(.data = ., across(.data$value, ~gsub("}", "}", .))) 
+        
+        } else { . }
+    }  
+    
   
   tabx <- tab %>% 
     dplyr::rowwise() %>% 
