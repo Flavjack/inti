@@ -13,7 +13,7 @@
 #' 
 #' Document rendering until certain point: "#| end"
 #' Include for next page: "#| newpage"
-#' You can include the params for a cover page
+#' You can include the cover page params using "#|" in a Google docs table
 #' 
 #' @export
 #' 
@@ -61,7 +61,11 @@ gdoc2qmd <- function(file
     as.list() 
   
   txt <- text %>% 
-    .[-(1:(max(which(grepl("\\| \\#\\|", .$value))))), ]
+      {
+        if(length(params) >0) {
+          .[-(1:(max(which(grepl("\\| \\#\\|", .$value))))), ]
+        } else {.}
+      }
 
   txtonly <- txt %>% 
     dplyr::filter(!grepl("\\|", .data$value)) %>% 
