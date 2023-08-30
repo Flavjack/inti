@@ -24,4 +24,5 @@ Use Articul8 Add-ons from Google docs to build Rticles
 \details{
 Document rendering until certain point: "#| end"
 Include for next page: "#| newpage"
+You can include the params for a cover page
 }
