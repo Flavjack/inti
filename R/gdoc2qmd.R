@@ -13,6 +13,7 @@
 #' 
 #' Document rendering until certain point: "#| end"
 #' Include for next page: "#| newpage"
+#' You can include the cover page params using "#|" in a Google docs table
 #' 
 #' @export
 #' 
@@ -35,12 +36,11 @@ gdoc2qmd <- function(file
   
 # -------------------------------------------------------------------------
   
-  txt <-  zip %>% 
+  text <-  zip %>% 
     .[grep('.md', .)] %>%
     readLines() %>% 
     tibble::enframe() %>%
-    dplyr::filter(!.data$value %in% "# ") %>% 
-    # dplyr::filter(!.data$value %in% "---") %>%
+    dplyr::filter(!grepl("^#+ $", .data$value)) %>%  
     dplyr::mutate(value = gsub("```Unknown element type at this position: UNSUPPORTED```"
                                , "\n\n", .data$value)) %>% 
     {
@@ -51,6 +51,22 @@ gdoc2qmd <- function(file
     mutate(across(.data$value, ~ gsub("#\\| newpage", "\\\\newpage", .))) %>% 
     dplyr::rowwise() 
   
+  params <- text %>% 
+    dplyr::filter(str_detect(.data$value, "\\| \\#\\|")) %>% 
+    dplyr::mutate(across(everything(), ~gsub("\\| \\#\\|", "", .))) %>% 
+    dplyr::mutate(across(.data$value, ~gsub("\\|$", "", .))) %>% 
+    tidyr::separate(.data$value, c("name", "value"), sep = "\\|") %>% 
+    dplyr::mutate(across(everything(), ~trimws(.))) %>% 
+    tibble::deframe() %>% 
+    as.list() 
+  
+  txt <- text %>% 
+      {
+        if(length(params) >0) {
+          .[-(1:(max(which(grepl("\\| \\#\\|", .$value))))), ]
+        } else {.}
+      }
+
   txtonly <- txt %>% 
     dplyr::filter(!grepl("\\|", .data$value)) %>% 
     dplyr::filter(!grepl("#tbl", .data$value)) %>% 
@@ -184,6 +200,10 @@ gdoc2qmd <- function(file
   # -------------------------------------------------------------------------
 
   doc <- list.files(path = export, pattern = "_doc", full.names = T)
+  
+  
+  return(list(path = doc
+              , params = params))
   
 }
 
