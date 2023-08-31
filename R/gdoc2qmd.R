@@ -176,7 +176,7 @@ gdoc2qmd <- function(file
       } else {.}
     } %>%
     dplyr::select(.data$value) %>% 
-    tibble::add_row(value = "\n```{r}\nknitr::knit_exit() \n```", ) %>%
+    # tibble::add_row(value = "\n```{r}\nknitr::knit_exit() \n```", ) %>%
     tibble::deframe() %>% 
     writeLines(con = file.path(export, "_doc.Rmd") %>% gsub("\\\\", "\\/", .))
 
