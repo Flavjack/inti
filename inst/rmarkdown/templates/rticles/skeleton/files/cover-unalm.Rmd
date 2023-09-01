@@ -1,0 +1,28 @@
+
+:::{custom-style="institution"}
+`r params$institution`
+:::
+  
+:::{custom-style="faculty"}
+`r params$faculty`
+:::
+  
+```{r}
+list.files(path = "files", pattern = paste0("logo-", params$template), full.names = T) %>% 
+  knitr::include_graphics()
+```
+
+:::{custom-style="title"}
+`r params$title`
+:::
+  
+:::{custom-style="cover"}
+`r params$type`
+
+`r params$student`
+
+`r params$location`
+
+`r params$date`
+:::
+
