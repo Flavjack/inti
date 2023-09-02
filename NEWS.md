@@ -10,6 +10,7 @@
   - The function works for articles and thesis
   - Include the cover page using a table
   - Include R markdown templates from RStudio 
+  - Rticles vignettes updated
 
 # inti 0.6.1
 
