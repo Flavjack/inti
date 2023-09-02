@@ -19,7 +19,7 @@ list.files(path = "files", pattern = paste0("logo-", params$template), full.name
 :::{custom-style="cover"}
 `r params$type`
 
-`r params$student`
+`r params$author`
 
 `r params$location`
 

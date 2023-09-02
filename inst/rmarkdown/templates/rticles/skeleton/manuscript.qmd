@@ -9,7 +9,7 @@ format:
     toc: false
     toc-title: Indice
     section-numbers: true
-    reference-doc: "files/style_rticle.docx"
+    reference-doc: "files/style_unalm.docx"
     output-file: "manuscript"
 editor_options: 
   chunk_output_type: console
@@ -23,7 +23,7 @@ crossref:
   tbl-prefix: Tabla
 # params:
 #   template: ""
-#   student: ""
+#   author: ""
 #   advisor: ""
 #   coadvisor: ""
 #   location: ""
@@ -39,7 +39,7 @@ crossref:
 #| label: setup
 
 source("http://inkaverse.com/docs.r")
-doc <- inti::gdoc2qmd(file = "manuscript.zip", format = "qmd")
+doc <- inti::gdoc2qmd(file = "manuscript.zip", type = "asis")
 params <- doc$params
 ```
 
@@ -47,11 +47,13 @@ params <- doc$params
 #| eval: true
 #| results: 'asis'
 
-cover <- list.files(path = "files/"
+if(length(params) > 0) {
+ cover <- list.files(path = "files/"
                     , pattern = paste0("cover-", params$template)
                     , full.names = T) %>% 
   knitr::knit_child(quiet = TRUE) %>% 
   cat(sep = '\n')
+ }
 ```
 
 ```{r}

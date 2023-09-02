@@ -18,7 +18,7 @@ El paquete `inti` permite usar un plantilla (template) para la generar documento
 <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?si=Db7O5gwumpxCNc3T&amp;list=PLSQMdOu57lj9HTZNed2-q3WpQfIGraA1V" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ```
 
-# Herramienntas
+# Herramientas
 
 Para el desarrollo de documentos técnico/científicos con R, deben crearse algunas cuentas e instalar los programas que necesitamos. La mayoria de estas herramientas son libres e independientes del sistema operativo y pueden ser usadas para investigación reproducible.
 
