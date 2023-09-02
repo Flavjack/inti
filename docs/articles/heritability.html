@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -138,8 +138,8 @@
 <div class="section level2">
 <h2 id="broad-sense-heritability-h2">Broad-sense heritability (<span class="math inline">\(H^2\)</span>)<a class="anchor" aria-label="anchor" href="#broad-sense-heritability-h2"></a>
 </h2>
-<p>Broad-sense heritability (<span class="math inline">\(H^2\)</span>) is defined as the proportion of phenotypic variance that is attributable to an overall genetic variance for the genotype <span class="citation">(<a href="#ref-schmidt2019Estimating" role="doc-biblioref">Schmidt et al., 2019b</a>)</span>. There are usually additional interpretations associated with <span class="math inline">\(H^2\)</span>: <em>(i)</em> It is equivalent to the coefficient of determination of a linear regression of the unobservable genotypic value on the observed phenotype; <em>(ii)</em> It is also the squared correlation between predicted phenotypic value and genotypic value; and <em>(iii)</em> It represents the proportion of the selection differential (<span class="math inline">\(S\)</span>) that can be realized as the response to selection (<span class="math inline">\(R\)</span>) <span class="citation">(<a href="#ref-falconer2005Introduction" role="doc-biblioref">Falconer and Mackay, 2005</a>)</span>.</p>
-<p>There are two main reasons why heritability on an entry-mean basis is of interest in plant breeding <span class="citation">(<a href="#ref-schmidt2019Heritability" role="doc-biblioref">Schmidt et al., 2019a</a>)</span>:</p>
+<p>Broad-sense heritability (<span class="math inline">\(H^2\)</span>) is defined as the proportion of phenotypic variance that is attributable to an overall genetic variance for the genotype <span class="citation">(<a href="#ref-schmidt2019Estimating">Schmidt et al., 2019b</a>)</span>. There are usually additional interpretations associated with <span class="math inline">\(H^2\)</span>: <em>(i)</em> It is equivalent to the coefficient of determination of a linear regression of the unobservable genotypic value on the observed phenotype; <em>(ii)</em> It is also the squared correlation between predicted phenotypic value and genotypic value; and <em>(iii)</em> It represents the proportion of the selection differential (<span class="math inline">\(S\)</span>) that can be realized as the response to selection (<span class="math inline">\(R\)</span>) <span class="citation">(<a href="#ref-falconer2005Introduction">Falconer and Mackay, 2005</a>)</span>.</p>
+<p>There are two main reasons why heritability on an entry-mean basis is of interest in plant breeding <span class="citation">(<a href="#ref-schmidt2019Heritability">Schmidt et al., 2019a</a>)</span>:</p>
 <ol style="list-style-type: decimal">
 <li>It is plugged into the breeder’s Equation to predict the response to selection.</li>
 <li>It is a descriptive measure used to assess the usefulness and precision of results from cultivar evaluation trials.</li>
@@ -160,16 +160,16 @@ Where:</p>
 <div class="section level2">
 <h2 id="usual-problems">Usual Problems<a class="anchor" aria-label="anchor" href="#usual-problems"></a>
 </h2>
-<p>In practice, most trials are conducted in a multienvironment trial (MET) presente unbalanced data as not all cultivars are tested at each environment or simply when plot data is lost or when the number of replicates at each location varies between genotypes <span class="citation">(<a href="#ref-schmidt2019Estimating" role="doc-biblioref">Schmidt et al., 2019b</a>)</span>. However, the standard method for estimating heritability implicitly assumes balanced data, independent genotype effects, and homogeneous variances.</p>
+<p>In practice, most trials are conducted in a multienvironment trial (MET) presente unbalanced data as not all cultivars are tested at each environment or simply when plot data is lost or when the number of replicates at each location varies between genotypes <span class="citation">(<a href="#ref-schmidt2019Estimating">Schmidt et al., 2019b</a>)</span>. However, the standard method for estimating heritability implicitly assumes balanced data, independent genotype effects, and homogeneous variances.</p>
 </div>
 <div class="section level2">
 <h2 id="how-calculate-the-heritability">How calculate the Heritability?<a class="anchor" aria-label="anchor" href="#how-calculate-the-heritability"></a>
 </h2>
-<p>According <span class="citation">Schmidt et al. (<a href="#ref-schmidt2019Heritability" role="doc-biblioref">2019a</a>)</span>, the variance components could be calculated in two ways:</p>
+<p>According <span class="citation">Schmidt et al. (<a href="#ref-schmidt2019Heritability">2019a</a>)</span>, the variance components could be calculated in two ways:</p>
 <div class="section level3">
 <h3 id="two-stages-approach">1) Two stages approach<a class="anchor" aria-label="anchor" href="#two-stages-approach"></a>
 </h3>
-<p>For the two stage approach, in the first stage each experiment is analyzed individually according their experiment design (Lattice, CRBD, etc) <span class="citation">(<a href="#ref-zystro2018Alternative" role="doc-biblioref">Zystro et al., 2018</a>)</span>. And for the second stage environments are denotes a year-by-location interaction. This approach assumes a single variance for genotype-by-environment interactions (GxE), even when multiple locations were tested across multiple years <span class="citation">(<a href="#ref-buntaran2020Cross" role="doc-biblioref">Buntaran et al., 2020</a>)</span>.</p>
+<p>For the two stage approach, in the first stage each experiment is analyzed individually according their experiment design (Lattice, CRBD, etc) <span class="citation">(<a href="#ref-zystro2018Alternative">Zystro et al., 2018</a>)</span>. And for the second stage environments are denotes a year-by-location interaction. This approach assumes a single variance for genotype-by-environment interactions (GxE), even when multiple locations were tested across multiple years <span class="citation">(<a href="#ref-buntaran2020Cross">Buntaran et al., 2020</a>)</span>.</p>
 <div class="section level4">
 <h4 id="model">Model<a class="anchor" aria-label="anchor" href="#model"></a>
 </h4>
@@ -219,8 +219,8 @@ Where:</p>
 <div class="section level2">
 <h2 id="heritability-function-in-the-package">Heritability function in the package<a class="anchor" aria-label="anchor" href="#heritability-function-in-the-package"></a>
 </h2>
-<p>For calculate the standard heritability in MET experiments the number of location and replication should be include manually in the function <code><a href="../reference/H2cal.html">H2cal()</a></code>. In the case of difference number of replication in each experiments, take the maximum value (often done in practice) <span class="citation">(<a href="#ref-schmidt2019Estimating" role="doc-biblioref">Schmidt et al., 2019b</a>)</span>.</p>
-<p>For remove the outliers the function implemented is the Method 4 used for <span class="citation">Bernal-Vasquez et al. (<a href="#ref-bernal-vasquez2016Outliera" role="doc-biblioref">2016</a>)</span>: Bonferroni-Holm using re-scaled MAD for standardizing residuals (BH-MADR).</p>
+<p>For calculate the standard heritability in MET experiments the number of location and replication should be include manually in the function <code><a href="../reference/H2cal.html">H2cal()</a></code>. In the case of difference number of replication in each experiments, take the maximum value (often done in practice) <span class="citation">(<a href="#ref-schmidt2019Estimating">Schmidt et al., 2019b</a>)</span>.</p>
+<p>For remove the outliers the function implemented is the Method 4 used for <span class="citation">Bernal-Vasquez et al. (<a href="#ref-bernal-vasquez2016Outliera">2016</a>)</span>: Bonferroni-Holm using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 <div class="section level3">
 <h3 id="load-packages">Load packages<a class="anchor" aria-label="anchor" href="#load-packages"></a>
 </h3>
