@@ -9,7 +9,7 @@ format:
     toc: false
     toc-title: Indice
     section-numbers: true
-    reference-doc: "files/style_unalm.docx"
+    reference-doc: "files/style_rticle.docx"
     output-file: "manuscript"
 editor_options: 
   chunk_output_type: console
