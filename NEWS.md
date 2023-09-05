@@ -1,12 +1,16 @@
+# inti 0.6.3
+
+- To improve:
+  - Include lattice
+
 # inti 0.6.2
 
 - gdocs2qmd()
   - Bug with: "```Unknown element type at this position: UNSUPPORTED```"
   - The function works for articles and thesis
   - Include the cover page using a table
-
-- To improve:
-  - Include lattice
+  - Include R markdown templates from RStudio 
+  - Rticles vignettes updated
 
 # inti 0.6.1
 

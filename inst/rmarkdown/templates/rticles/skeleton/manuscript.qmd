@@ -1,0 +1,65 @@
+---
+format:
+  html:
+    toc: true
+    toc-location: left
+    number-sections: true
+    self-contained: true
+  docx:
+    toc: false
+    toc-title: Indice
+    section-numbers: true
+    reference-doc: "files/style_rticle.docx"
+    output-file: "manuscript"
+editor_options: 
+  chunk_output_type: console
+execute:
+  echo: false
+  warning: false
+crossref:
+  fig-title: Figura
+  fig-prefix: Figura
+  tbl-title: Tabla
+  tbl-prefix: Tabla
+# params:
+#   template: ""
+#   author: ""
+#   advisor: ""
+#   coadvisor: ""
+#   location: ""
+#   date: ""
+#   institution: ""
+#   faculty: ""
+#   program: ""
+#   type: ""
+#   title: ""
+---
+
+```{r}
+#| label: setup
+
+source("http://inkaverse.com/docs.r")
+doc <- inti::gdoc2qmd(file = "manuscript.zip", type = "asis")
+params <- doc$params
+```
+
+```{r}
+#| eval: true
+#| results: 'asis'
+
+if(length(params) > 0) {
+ cover <- list.files(path = "files/"
+                    , pattern = paste0("cover-", params$template)
+                    , full.names = T) %>% 
+  knitr::knit_child(quiet = TRUE) %>% 
+  cat(sep = '\n')
+ }
+```
+
+```{r}
+#| results: 'asis'
+
+doc$path %>% 
+  knitr::knit_child(quiet = TRUE) %>% 
+  cat(sep = '\n')
+```
