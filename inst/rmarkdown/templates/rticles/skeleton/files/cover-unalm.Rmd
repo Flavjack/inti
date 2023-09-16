@@ -8,7 +8,7 @@
 :::
   
 ```{r}
-list.files(path = "files", pattern = paste0("logo-", params$template), full.names = T) %>% 
+list.files(path = "files", pattern = paste0("logo-", params$theme), full.names = T) %>% 
   knitr::include_graphics()
 ```
 

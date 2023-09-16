@@ -22,7 +22,7 @@ crossref:
   tbl-title: Tabla
   tbl-prefix: Tabla
 # params:
-#   template: ""
+#   theme: ""
 #   author: ""
 #   advisor: ""
 #   coadvisor: ""
@@ -49,7 +49,7 @@ params <- doc$params
 
 if(length(params) > 0) {
  cover <- list.files(path = "files/"
-                    , pattern = paste0("cover-", params$template)
+                    , pattern = paste0("cover-", params$theme)
                     , full.names = T) %>% 
   knitr::knit_child(quiet = TRUE) %>% 
   cat(sep = '\n')
