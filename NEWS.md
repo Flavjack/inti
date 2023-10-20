@@ -1,11 +1,20 @@
 # inti 0.6.3
 
-- To improve:
+- `gdocs2qmd()`
+  - change params: template ==> theme
+  - reference-doc: style_rticle.docx
+
+- Yupana2improve:
+  - Observation plots
+  - Include distribution in sketch design
+  - Improve PCA supplementary variables
+  - Select the dimension in PCA
+  - Sub module for PCA with variable contribution and dimension correlation
   - Include lattice
 
 # inti 0.6.2
 
-- gdocs2qmd()
+- `gdocs2qmd()`
   - Bug with: "```Unknown element type at this position: UNSUPPORTED```"
   - The function works for articles and thesis
   - Include the cover page using a table
