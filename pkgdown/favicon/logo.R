@@ -261,3 +261,45 @@ sticker <- logo %>%
   image_transparent('pink') %>% 
   image_write("pkgdown/favicon/img/quipolab.png")
 
+
+# -------------------------------------------------------------------------
+# slogan ------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+font <- c("Special Elite")
+
+huito_fonts(font)
+
+logo <- list.files("pkgdown/favicon/img"
+                   , full.names = T
+                   , pattern = "png|jpg") 
+
+label <- label_layout(size = c(20, 5)
+                      , border_color = NA
+                      , border_width = 1
+                      ) %>% 
+  include_image(value = "pkgdown/favicon/img/inkaverse.png"
+                , size = c(4.5, 4.5)
+                , position = c(2.1, 2.5)
+                ) %>% 
+  include_text(value = "Flavio L."
+               , size = 90
+               , position = c(11.8, 2.5)
+               , angle = 0
+               , color = "black"
+               , font
+               ) 
+
+label %>% label_print()
+
+logo <- label %>% 
+  label_print(filename = tempfile()
+              , margin = 0
+              , paper = c(20, 5)
+              , mode = "complete"
+              )
+
+sticker <- logo %>%
+  image_read_pdf()  %>% 
+  image_write("pkgdown/favicon/img/slogan.png")
+
