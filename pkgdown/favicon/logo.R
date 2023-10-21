@@ -286,11 +286,20 @@ label <- label_layout(size = c(20, 5)
                 , size = c(4.5, 4.5)
                 , position = c(2.1, 2.5)
                 ) %>% 
-  include_text(value = "Flavio L."
-               , size = 90
-               , position = c(11.5, 2.5)
+  include_text(value = "Flavio\nLozano Isla"
+               , size = 50
+               , position = c(4.5, 3)
                , angle = 0
                , color = "black"
+               , opts = "hjust = 0"
+               , font[1]
+               ) %>% 
+  include_text(value = "Plant breeder & Bioinformatician"
+               , size = 20
+               , position = c(4.5, 0.5)
+               , angle = 0
+               , color = "darkgreen"
+               , opts = "hjust = 0"
                , font[1]
                ) 
 
@@ -305,5 +314,5 @@ logo <- label %>%
 
 sticker <- logo %>%
   image_read_pdf()  %>% 
-  image_write("pkgdown/favicon/img/slogan.png")
+  image_write("pkgdown/favicon/img/slogan2.png")
 
