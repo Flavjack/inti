@@ -266,7 +266,11 @@ sticker <- logo %>%
 # slogan ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
+library(huito)
+
 font <- c("Special Elite")
+font <- c("Playpen Sans")
+font <- c("Fredericka the Great")
 
 huito_fonts(font)
 
@@ -284,10 +288,10 @@ label <- label_layout(size = c(20, 5)
                 ) %>% 
   include_text(value = "Flavio L."
                , size = 90
-               , position = c(11.8, 2.5)
+               , position = c(11.5, 2.5)
                , angle = 0
                , color = "black"
-               , font
+               , font[1]
                ) 
 
 label %>% label_print()
