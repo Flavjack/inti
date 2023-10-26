@@ -8,7 +8,8 @@
 #'   details.
 #' @param type Type of experimental arrange  (default = "crd"). See details.
 #' @param rep  Number of replications in the experiment (default = 3).
-#' @param zigzag Experiment layout in zigzag [logic: F].
+#' @param zigzag Experiment layout in zigzag [logic: FALSE].
+#' @param nrows Experimental design dimension by rows [numeric: value]
 #' @param serie Number to start the plot id [numeric: 100].
 #' @param seed Replicability of draw results (default = 0) always random. See
 #'   details.
@@ -22,14 +23,6 @@
 #'   split-rcbd split-lsd \code{nfactors} >= 2 (factorial): crd, rcbd, lsd.
 #'
 #' @return A list with the fieldbook design
-#'
-#' @import dplyr
-#' @importFrom purrr pluck as_vector
-#' @importFrom stringr str_detect str_to_upper
-#' @importFrom tibble tibble
-#' @importFrom utils tail
-#' @importFrom tidyr unite
-#' @importFrom purrr discard
 #' 
 #' @export
 #' 
@@ -41,7 +34,7 @@
 #' library(gsheet)
 #' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "1grAv_2po804pPGg9nj1o5nli01IcEGvSevDruq_ssHk/edit#gid=1595426169")
+#'               , "1_BVzChX_-lzXhB7HAm6FeSrwq9iKfZ39_Sl8NFC6k7U/edit#gid=203993025")
 #' # browseURL(url)
 #' 
 #' fb <- gsheet2tbl(url) 
@@ -60,12 +53,15 @@ tarpuy_design <- function(data
                           , type = "crd"
                           , rep = 2
                           , zigzag = FALSE
+                          , nrows = NA
                           , serie = 100
                           , seed = NULL
                           , fbname = NA
                           ) {
 
 plots <- Row.names <- factors <- where <- NULL
+
+# data <- fb
   
 # design type -------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -147,15 +143,16 @@ type <- if(is.null(arguments$type) || is.na(arguments$type) || arguments$type ==
 } else {arguments$type}
 
 rep <- if(is.null(arguments$rep) || is.na(arguments$rep) || arguments$rep == "") { rep
-} else {arguments$rep} %>% 
-  as.numeric()
+} else {arguments$rep} %>% as.numeric()
 
 zigzag <- if(is.null(arguments$zigzag) || is.na(arguments$zigzag) || arguments$zigzag == "") { zigzag
 } else {arguments$zigzag} %>% as.logical()
 
+nrows <- if(is.null(arguments$nrows) || is.na(arguments$nrows) || arguments$nrows == "") { rep
+} else {arguments$nrows} %>% as.numeric()
+
 serie <- if(is.null(arguments$serie) || is.na(arguments$serie) || arguments$serie == "") { serie
-} else {arguments$serie} %>% 
-  as.numeric()
+} else {arguments$serie} %>% as.numeric()
 
 seed <- if(is.null(arguments$seed) || is.na(arguments$seed) || arguments$seed == "" || arguments$seed == "0") { NULL
 } else {arguments$seed %>% as.numeric()} 
@@ -191,6 +188,7 @@ design <- design_repblock(
   , type = type
   , rep = rep
   , zigzag = zigzag
+  , nrows = nrows
   , serie = serie
   , seed = seed
   , fbname = fbname

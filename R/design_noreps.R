@@ -3,10 +3,10 @@
 #' Function to deploy field-book experiment without replications
 #'
 #' @param factors Lists with names and factor vector [list].
-#' @param type Randomized [logic: FALSE, TRUE ]
+#' @param type Randomization in the list [string: sorted, unsorted]
 #' @param zigzag Experiment layout in zigzag [logic: FALSE].
 #' @param serie Number to start the plot id [numeric: 1000].
-#' @param nrows Experimental design dimension [numeric: value]
+#' @param nrows Experimental design dimension by rows [numeric: value]
 #' @param seed Replicability from randomization [numeric: NULL].
 #' @param fbname Bar code prefix for data collection [string: "inkaverse"].
 #'
@@ -31,14 +31,14 @@
 #' dsg <- fb$fieldbook
 #' 
 #' fb %>%   
-#'   tarpuy_plotdesign(fill = "plots") + theme(legend.position = "none")
+#'   tarpuy_plotdesign(fill = "plots") 
 #' 
 #' fb$parameters
 #' 
 #' }
 
 design_noreps <- function(factors
-                            , type = FALSE
+                            , type = "sorted"
                             , zigzag = FALSE
                             , nrows = NA
                             , serie = 1000
@@ -82,22 +82,22 @@ design_noreps <- function(factors
     dplyr::arrange(.data = ., sort) %>% 
     dplyr::mutate(rows = rep(1:nrows,  each = {{ncols}})[1:lengths(dfactors)] ) %>% 
     dplyr::mutate(cols = rep(1:ncols, times = {{nrows}})[1:lengths(dfactors)] ) %>% 
-    dplyr::mutate(icols = (ncols - cols) + 1) %>% 
+    dplyr::mutate(icols = (ncols - .data$cols) + 1) %>% 
+    dplyr::mutate(plots = serie + .data$sort) %>% 
     { 
       if(isTRUE(zigzag))
         dplyr::mutate(.data = .
-               , cols = case_when(
-                 rows %% 2 == 0 ~ as.character(icols)
-                 , rows %% 2 == 1 ~ as.character(cols)
-               )) else {.}
+                      , cols = case_when(
+                        rows %% 2 == 0 ~ as.character(.data$icols)
+                        , rows %% 2 == 1 ~ as.character(.data$cols)
+                      )) else {.}
     } %>% 
-    dplyr::mutate(across(c(.data$cols, .data$rows), as.numeric)) %>% 
-    dplyr::mutate(.data = ., plots = serie*.data$rows + .data$cols) %>% 
-    dplyr::select(plots, ntreat, {{name.factors}}, sort, everything()) %>% 
+    dplyr::select(.data$plots, .data$ntreat, {{name.factors}}, .data$sort, everything()) %>% 
+    dplyr::mutate(across(.data$cols, as.numeric)) %>% 
     dplyr::mutate(fbname = fbname) %>% 
-    tidyr::unite("barcode", fbname, plots, {{name.factors}}, rows, cols
+    tidyr::unite("barcode", .data$fbname, .data$plots, {{name.factors}}, .data$rows, .data$cols
                  , sep = "_", remove = F) %>% 
-    dplyr::select(!c(icols, fbname)) 
+    dplyr::select(!c(.data$icols, .data$fbname)) 
   
   result <- list(
     fieldbook = fb

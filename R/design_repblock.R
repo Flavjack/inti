@@ -8,7 +8,7 @@
 #' @param rep  Number of replications in the experiment [numeric: 3].
 #' @param zigzag Experiment layout in zigzag [logic: F].
 #' @param serie Number to start the plot id [numeric: 100].
-#' @param dim Experimental design dimension in row and columns [numeric vector]
+#' @param nrows Experimental design dimension by rows [numeric: value]
 #' @param seed Replicability from randomization [numeric: NULL].
 #' @param fbname Bar code prefix for data collection [string: "inkaverse"].
 #'
@@ -27,18 +27,19 @@
 #'                  , time = c(30, 60, 90)
 #'                  )
 #' 
-#' fb <-design_repblock(nfactors = 1
+#' fb <-design_repblock(nfactors = 2
 #'                      , factors = factores
-#'                      , type = "crd"
-#'                      , rep = 4
+#'                      , type = "rcbd"
+#'                      , rep = 5
 #'                      , zigzag = T
 #'                      , seed = 0
+#'                      , nrows = 12
 #'                      )
 #'                      
 #' dsg <- fb$fieldbook
 #' 
 #' fb %>%   
-#'   tarpuy_plotdesign(fill = "geno")
+#'   tarpuy_plotdesign(fill = "plots") 
 #' 
 #' fb$parameters
 #' 
@@ -49,13 +50,13 @@ design_repblock <- function(nfactors = 1
                             , type = "crd"
                             , rep = 3
                             , zigzag = FALSE
-                            , dim = NA
+                            , nrows = NA
                             , serie = 100
                             , seed = NULL
                             , fbname = "inkaverse"
                             ) {
   
-  # factors <- factores
+  # factors <- factores; nrows = 6
   
   set.seed(seed)
   
@@ -67,19 +68,15 @@ design_repblock <- function(nfactors = 1
     purrr::set_names(gsub("[[:space:]]", "." , names(.))) %>% 
     .[1:nfactors]
   
+  nrowsfb <- dfactors %>% lengths() %>% prod()*rep
+
   block.factor <- if(type %in% "rcbd") {"block"} else {"rep"}
   
   name.factors <- names(dfactors)
   
-  nrows <- if(anyNA(dim)) {rep} else {dim[1]}
+  nrows <- if(anyNA(nrows)) {rep} else {nrows}
   
-  ncols <- if(anyNA(dim)) {
-    
-    dfactors %>% 
-      lengths() %>% 
-      prod()*rep/nrows
-    
-  } else {dim[2]}
+  ncols <- nrowsfb/nrows; ncols <- ceiling(ncols)
   
   
   if(type == "lsd") {
@@ -103,19 +100,19 @@ design_repblock <- function(nfactors = 1
           dplyr::ungroup() %>%
           dplyr::arrange(.data = ., .data[[block.factor]], .data$sort) %>% 
           dplyr::mutate(.data = ., plots = serie*.data[[block.factor]] + .data$sort) %>% 
-          dplyr::mutate(rows = rep(1:nrows,  each = nrow(.)/nrows )) %>% 
-          dplyr::mutate(cols = rep(1:ncols, times = nrow(.)/ncols )) %>%
+          dplyr::mutate(rows = rep(1:nrows,  each = {{ncols}})[1:nrowsfb] ) %>% 
+          dplyr::mutate(cols = rep(1:ncols, times = {{nrows}})[1:nrowsfb] ) %>%
           dplyr::mutate(icols = (ncols - .data$cols) + 1)
       } else if (type %in% "crd") {
         dplyr::mutate(.data = ., sort = sample.int(n())) %>%
           dplyr::arrange(.data = ., .data$sort) %>% 
           dplyr::mutate(plots = serie + .data$sort) %>% 
-          dplyr::mutate(rows = rep(1:nrows,  each = nrow(.)/nrows )) %>% 
-          dplyr::mutate(cols = rep(1:ncols, times = nrow(.)/ncols )) %>%
+          dplyr::mutate(rows = rep(1:nrows,  each = {{ncols}})[1:nrowsfb] ) %>% 
+          dplyr::mutate(cols = rep(1:ncols, times = {{nrows}})[1:nrowsfb] ) %>%
           dplyr::mutate(icols = (ncols - .data$cols) + 1)
       } else if (type %in% "lsd") {
           dplyr::mutate(.data = ., plots = serie*.data[[block.factor]] + .data$ntreat) %>% 
-          dplyr::mutate(rows = rep(1:nrows,  each = nrow(.)/nrows )) %>% 
+          dplyr::mutate(rows = rep(1:nrows,  each = {{ncols}})[1:lengths(dfactors)]) %>% 
           dplyr::mutate(cols = rep(1:ncols, times = nrow(.)/ncols )) %>%
           dplyr::mutate(icols = rep(seq(rep), rep) + rep(seq(rep),each=rep) - 1) 
       }

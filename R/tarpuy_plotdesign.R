@@ -114,17 +114,19 @@ tarpuy_plotdesign <- function(data
 
 # -------------------------------------------------------------------------
 
+legend <- if(nlevels(design[[factor]]) > 20) "none" else "top"
+ 
 plot <- design %>%
   arrange(.data$rows, .data$cols) %>%
   ggplot(aes(x = .data$cols, y = .data$rows, fill = as.factor(.data[[factor]]))) +
-  geom_tile(color = "black", size = 0.5) +
+  geom_tile(color = "black", linewidth = 0.5) +
   geom_text(aes(label = .data[[fill]])) +
   scale_y_continuous(expand = c(0, 0), trans = 'reverse', breaks = 1:nrow) +
   scale_x_continuous(expand = c(0, 0), breaks = 1:ncol) +
   scale_fill_manual(values = color_grps) +
   labs(x = xlab, y = ylab, fill = glab) +
   theme_bw() +
-  theme(legend.position = "top")
+  theme(legend.position = legend) 
 
 return(plot)
 

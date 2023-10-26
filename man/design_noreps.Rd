@@ -6,10 +6,10 @@
 \usage{
 design_noreps(
   factors,
-  type = FALSE,
+  type = "sorted",
   zigzag = FALSE,
   nrows = NA,
-  serie = 100,
+  serie = 1000,
   seed = NULL,
   fbname = "inkaverse"
 )
@@ -17,13 +17,13 @@ design_noreps(
 \arguments{
 \item{factors}{Lists with names and factor vector [list].}
 
-\item{type}{Randomized [logic: FALSE, TRUE ]}
+\item{type}{Randomization in the list [string: sorted, unsorted]}
 
 \item{zigzag}{Experiment layout in zigzag [logic: FALSE].}
 
-\item{nrows}{Experimental design dimension [numeric: value]}
+\item{nrows}{Experimental design dimension by rows [numeric: value]}
 
-\item{serie}{Number to start the plot id [numeric: 100].}
+\item{serie}{Number to start the plot id [numeric: 1000].}
 
 \item{seed}{Replicability from randomization [numeric: NULL].}
 
@@ -44,15 +44,15 @@ library(inti)
 factores <- list("geno" = c(1:200))
 
 fb <- design_noreps(factors = factores
-                     , type = FALSE
+                     , type = F
                      , zigzag = T
-                     , nrows = 10
+                     , nrows = 9
                      )
                      
 dsg <- fb$fieldbook
 
 fb \%>\%   
-  tarpuy_plotdesign(fill = "geno", factor = "rows")
+  tarpuy_plotdesign(fill = "plots") 
 
 fb$parameters
 

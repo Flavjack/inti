@@ -10,7 +10,7 @@ design_repblock(
   type = "crd",
   rep = 3,
   zigzag = FALSE,
-  dim = NA,
+  nrows = NA,
   serie = 100,
   seed = NULL,
   fbname = "inkaverse"
@@ -27,7 +27,7 @@ design_repblock(
 
 \item{zigzag}{Experiment layout in zigzag [logic: F].}
 
-\item{dim}{Experimental design dimension in row and columns [numeric vector]}
+\item{nrows}{Experimental design dimension by rows [numeric: value]}
 
 \item{serie}{Number to start the plot id [numeric: 100].}
 
@@ -52,18 +52,19 @@ factores <- list("geno" = c("A", "B", "C", "D", "D", 1, NA, NA, NULL, "NA")
                  , time = c(30, 60, 90)
                  )
 
-fb <-design_repblock(nfactors = 1
+fb <-design_repblock(nfactors = 2
                      , factors = factores
-                     , type = "crd"
-                     , rep = 4
+                     , type = "rcbd"
+                     , rep = 5
                      , zigzag = T
                      , seed = 0
+                     , nrows = 12
                      )
                      
 dsg <- fb$fieldbook
 
 fb \%>\%   
-  tarpuy_plotdesign(fill = "geno")
+  tarpuy_plotdesign(fill = "plots") 
 
 fb$parameters
 

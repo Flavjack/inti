@@ -3,14 +3,16 @@
 - `gdocs2qmd()`
   - change params: template ==> theme
   - reference-doc: style_rticle.docx
+- Tarpuy
+  - Field book design allows different number of rows  
+  - Design without replication (observation plots) ==> `design_noreps()`
 
 - Yupana2improve:
-  - Observation plots
-  - Include distribution in sketch design
   - Improve PCA supplementary variables
   - Select the dimension in PCA
   - Sub module for PCA with variable contribution and dimension correlation
   - Include lattice
+  - Include LCD
 
 # inti 0.6.2
 

@@ -10,6 +10,7 @@ tarpuy_design(
   type = "crd",
   rep = 2,
   zigzag = FALSE,
+  nrows = NA,
   serie = 100,
   seed = NULL,
   fbname = NA
@@ -26,7 +27,9 @@ details.}
 
 \item{rep}{Number of replications in the experiment (default = 3).}
 
-\item{zigzag}{Experiment layout in zigzag [logic: F].}
+\item{zigzag}{Experiment layout in zigzag [logic: FALSE].}
+
+\item{nrows}{Experimental design dimension by rows [numeric: value]}
 
 \item{serie}{Number to start the plot id [numeric: 100].}
 
@@ -57,7 +60,7 @@ library(inti)
 library(gsheet)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1grAv_2po804pPGg9nj1o5nli01IcEGvSevDruq_ssHk/edit#gid=1595426169")
+              , "1_BVzChX_-lzXhB7HAm6FeSrwq9iKfZ39_Sl8NFC6k7U/edit#gid=203993025")
 # browseURL(url)
 
 fb <- gsheet2tbl(url) 

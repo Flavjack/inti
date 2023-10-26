@@ -27,6 +27,7 @@
 #' @param design Type of design.
 #' @param rep Number of replication.
 #' @param zigzag Experiment layout in zigzag [logic: F]
+#' @param nrows Experimental design dimension by rows [numeric: value]
 #' @param serie Number of digits in the plots.
 #' @param seed Seed for the randomization.
 #'
@@ -72,6 +73,7 @@ tarpuy_plex <- function(data = NULL
                         , design = "rcbd"
                         , rep = 3
                         , zigzag = FALSE
+                        , nrows = NA
                         , serie = 100
                         , seed = 0
                          ) {
@@ -247,11 +249,14 @@ var_list <- traits <- list(
 factors <- c(paste0("factor", 1:nfactor))
   
 seedset <- if(seed == 0) sample(1:9999, 1) else seed
+
+nrowsx <- if(is.na(nrows)) {rep} else {nrows}
   
 dsg_info <-  c(nfactors = nfactor
               , type = design
               , rep = rep
               , zigzag = zigzag
+              , nrows = nrows
               , serie = serie
               , seed = seedset
               , fbname = barcode

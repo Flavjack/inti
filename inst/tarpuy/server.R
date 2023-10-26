@@ -439,6 +439,7 @@ observeEvent(input$export_design, {
         , rep = input$design_rep
         , serie = input$design_serie
         , zigzag = as.logical(input$design_zigzag)
+        , nrows = input$design_rep
         , seed = input$design_seed
         , fbname = input$design_qr
       ) 

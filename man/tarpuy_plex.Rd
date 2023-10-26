@@ -30,6 +30,7 @@ tarpuy_plex(
   design = "rcbd",
   rep = 3,
   zigzag = FALSE,
+  nrows = NA,
   serie = 100,
   seed = 0
 )
@@ -84,6 +85,8 @@ tarpuy_plex(
 \item{rep}{Number of replication.}
 
 \item{zigzag}{Experiment layout in zigzag [logic: F]}
+
+\item{nrows}{Experimental design dimension by rows [numeric: value]}
 
 \item{serie}{Number of digits in the plots.}
 
