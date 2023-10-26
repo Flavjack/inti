@@ -58,7 +58,7 @@ tarpuy_plotdesign <- function(data
 
 # -------------------------------------------------------------------------
 
-  # data <- dsg <- sketch
+  # data <- fb dsg <- sketch
   # factor <- "rows"
   # data <- fb
   # xlab <- ylab <- glab <- NULL

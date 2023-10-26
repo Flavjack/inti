@@ -3,6 +3,7 @@
 export("%>%")
 export(H2cal)
 export(colortext)
+export(design_noreps)
 export(design_repblock)
 export(figure2qmd)
 export(figure2rmd)
