@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,6 +112,7 @@
 <span>  type <span class="op">=</span> <span class="st">"crd"</span>,</span>
 <span>  rep <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  zigzag <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  nrows <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  serie <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fbname <span class="op">=</span> <span class="cn">NA</span></span>
@@ -139,7 +140,11 @@ details.</p></dd>
 
 
 <dt>zigzag</dt>
-<dd><p>Experiment layout in zigzag [logic: F].</p></dd>
+<dd><p>Experiment layout in zigzag [logic: FALSE].</p></dd>
+
+
+<dt>nrows</dt>
+<dd><p>Experimental design dimension by rows [numeric: value]</p></dd>
 
 
 <dt>serie</dt>
@@ -180,14 +185,12 @@ details.</p></dd>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/maxconway/gsheet" class="external-link">gsheet</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"https://docs.google.com/spreadsheets/d/"</span></span></span>
-<span class="r-in"><span>              , <span class="st">"1grAv_2po804pPGg9nj1o5nli01IcEGvSevDruq_ssHk/edit#gid=1595426169"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>              , <span class="st">"1_BVzChX_-lzXhB7HAm6FeSrwq9iKfZ39_Sl8NFC6k7U/edit#gid=1868565342"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># browseURL(url)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html" class="external-link">gsheet2tbl</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span> </span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dsg</span> <span class="op">&lt;-</span> <span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">tarpuy_design</span><span class="op">(</span><span class="op">)</span> </span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dsg</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dsg</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
 <span class="r-in"><span>  <span class="fu"><a href="tarpuy_plotdesign.html">tarpuy_plotdesign</a></span><span class="op">(</span><span class="op">)</span></span></span>

@@ -260,4 +260,3 @@ sticker <- logo %>%
   image_crop(geometry = "560x600-40") %>% 
   image_transparent('pink') %>% 
   image_write("pkgdown/favicon/img/quipolab.png")
-

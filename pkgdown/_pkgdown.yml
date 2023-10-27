@@ -109,7 +109,7 @@ reference:
   - metamorphosis
   - outliers_remove
   - mean_comparison
-  - design_repblock
+  - starts_with("design")
 - title: Datasets
 - contents:
   - potato 

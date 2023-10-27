@@ -63,7 +63,7 @@ design_noreps <- function(factors
   
   name.factors <- names(dfactors)
   
-  nrows <- if(is.na(nrows)) {rep*10} else {nrows}
+  nrows <- if(is.na(nrows) | nrows == 1) {x <- 10} else {nrows}
   
   ncols <- dfactors %>% 
     unlist() %>% 

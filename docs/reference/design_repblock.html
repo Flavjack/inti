@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,7 +112,7 @@
 <span>  type <span class="op">=</span> <span class="st">"crd"</span>,</span>
 <span>  rep <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  zigzag <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  dim <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  nrows <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  serie <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fbname <span class="op">=</span> <span class="st">"inkaverse"</span></span>
@@ -141,8 +141,8 @@
 <dd><p>Experiment layout in zigzag [logic: F].</p></dd>
 
 
-<dt>dim</dt>
-<dd><p>Experimental design dimension in row and columns [numeric vector]</p></dd>
+<dt>nrows</dt>
+<dd><p>Experimental design dimension by rows [numeric: value]</p></dd>
 
 
 <dt>serie</dt>
@@ -176,18 +176,19 @@
 <span class="r-in"><span>                 , time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">60</span>, <span class="fl">90</span><span class="op">)</span></span></span>
 <span class="r-in"><span>                 <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fb</span> <span class="op">&lt;-</span><span class="fu">design_repblock</span><span class="op">(</span>nfactors <span class="op">=</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span><span class="va">fb</span> <span class="op">&lt;-</span><span class="fu">design_repblock</span><span class="op">(</span>nfactors <span class="op">=</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span>                     , factors <span class="op">=</span> <span class="va">factores</span></span></span>
-<span class="r-in"><span>                     , type <span class="op">=</span> <span class="st">"crd"</span></span></span>
-<span class="r-in"><span>                     , rep <span class="op">=</span> <span class="fl">4</span></span></span>
+<span class="r-in"><span>                     , type <span class="op">=</span> <span class="st">"rcbd"</span></span></span>
+<span class="r-in"><span>                     , rep <span class="op">=</span> <span class="fl">5</span></span></span>
 <span class="r-in"><span>                     , zigzag <span class="op">=</span> <span class="cn">T</span></span></span>
 <span class="r-in"><span>                     , seed <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span>                     , nrows <span class="op">=</span> <span class="fl">20</span></span></span>
 <span class="r-in"><span>                     <span class="op">)</span></span></span>
 <span class="r-in"><span>                     </span></span>
 <span class="r-in"><span><span class="va">dsg</span> <span class="op">&lt;-</span> <span class="va">fb</span><span class="op">$</span><span class="va">fieldbook</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>   </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="tarpuy_plotdesign.html">tarpuy_plotdesign</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"geno"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="tarpuy_plotdesign.html">tarpuy_plotdesign</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"plots"</span><span class="op">)</span> </span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">fb</span><span class="op">$</span><span class="va">parameters</span></span></span>
 <span class="r-in"><span></span></span>
