@@ -1,3 +1,11 @@
+# inti2improve
+
+  - Improve PCA supplementary variables
+  - Select the dimension in PCA
+  - Sub module for PCA with variable contribution and dimension correlation
+  - Include lattice
+  - Include LCD
+
 # inti 0.6.3
 
 - `gdocs2qmd()`
@@ -6,13 +14,7 @@
 - Tarpuy
   - Field book design allows different number of rows  
   - Design without replication (observation plots) ==> `design_noreps()`
-
-- Yupana2improve:
-  - Improve PCA supplementary variables
-  - Select the dimension in PCA
-  - Sub module for PCA with variable contribution and dimension correlation
-  - Include lattice
-  - Include LCD
+  - Fix traits name order
 
 # inti 0.6.2
 

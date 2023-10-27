@@ -250,13 +250,13 @@ factors <- c(paste0("factor", 1:nfactor))
   
 seedset <- if(seed == 0) sample(1:9999, 1) else seed
 
-nrowsx <- if(is.na(nrows)) {rep} else {nrows}
+nrowsx <- if(is.na(nrows)) {nrowsx <- rep} else {nrowsx <- nrows}
   
 dsg_info <-  c(nfactors = nfactor
               , type = design
               , rep = rep
               , zigzag = zigzag
-              , nrows = nrows
+              , nrows = nrowsx
               , serie = serie
               , seed = seedset
               , fbname = barcode

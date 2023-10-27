@@ -32,7 +32,7 @@
 #' library(gsheet)
 #' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "1grAv_2po804pPGg9nj1o5nli01IcEGvSevDruq_ssHk/edit#gid=1807254932")
+#'               , "1_BVzChX_-lzXhB7HAm6FeSrwq9iKfZ39_Sl8NFC6k7U/edit#gid=1834109539")
 #' # browseURL(url)
 #' 
 #' fb <- gsheet2tbl(url) 
@@ -114,7 +114,7 @@ tarpuy_plotdesign <- function(data
 
 # -------------------------------------------------------------------------
 
-legend <- if(nlevels(design[[factor]]) > 20) "none" else "top"
+legend <- if(nlevels(as.factor(design[[factor]])) > 20) "none" else "top"
  
 plot <- design %>%
   arrange(.data$rows, .data$cols) %>%

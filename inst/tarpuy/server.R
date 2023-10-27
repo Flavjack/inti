@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2023-05-21
+#> date .: 2023-10-26
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -180,8 +180,12 @@ shinyServer(function(input, output, session) {
   # design type -------------------------------------------------------------
 
   output$plex_design <- renderUI({
-
-    if(input$plex_nfactors == 1) {
+    
+    if(input$plex_nfactors == 1 & input$plex_rep == 1) {
+      
+      type <- c("sorted", "unsorted")
+      
+    } else if(input$plex_nfactors == 1) {
 
       type <- c("crd", "rcbd"
                 # , "lsd", "lattice"

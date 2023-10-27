@@ -630,7 +630,7 @@ navbarPage(title = div(
                                       numericInput(inputId = "plex_rep"
                                                    , label = "Replications"
                                                    , value = 3
-                                                   , min = 2
+                                                   , min = 1
                                                    )
                                       )
                                ),

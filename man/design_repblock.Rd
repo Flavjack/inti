@@ -58,7 +58,7 @@ fb <-design_repblock(nfactors = 2
                      , rep = 5
                      , zigzag = T
                      , seed = 0
-                     , nrows = 12
+                     , nrows = 20
                      )
                      
 dsg <- fb$fieldbook

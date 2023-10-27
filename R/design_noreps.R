@@ -20,12 +20,12 @@
 #'
 #' library(inti)
 #' 
-#' factores <- list("geno" = c(1:200))
+#' factores <- list("geno" = c(1:99))
 #' 
 #' fb <- design_noreps(factors = factores
-#'                      , type = F
-#'                      , zigzag = T
-#'                      , nrows = 9
+#'                      , type = "sorted"
+#'                      , zigzag = F
+#'                      , nrows = 10
 #'                      )
 #'                      
 #' dsg <- fb$fieldbook
@@ -41,7 +41,7 @@ design_noreps <- function(factors
                             , type = "sorted"
                             , zigzag = FALSE
                             , nrows = NA
-                            , serie = 1000
+                            , serie = 100
                             , seed = NULL
                             , fbname = "inkaverse"
                             ) {
@@ -63,7 +63,7 @@ design_noreps <- function(factors
   
   name.factors <- names(dfactors)
   
-  nrows <- if(anyNA(nrows)) {rep} else {nrows}
+  nrows <- if(is.na(nrows)) {rep*10} else {nrows}
   
   ncols <- dfactors %>% 
     unlist() %>% 
@@ -73,10 +73,10 @@ design_noreps <- function(factors
     expand.grid() %>% 
     dplyr::mutate(ntreat = as.numeric(row.names(.))) %>% 
     {
-      if(isTRUE(type)) { 
+      if(type == "unsorted") { 
         dplyr::mutate(.data = ., sort = sample.int(n()))
-      } else if (isFALSE(type)) { 
-        dplyr::mutate(.data = ., sort = ntreat)
+      } else if (type == "sorted") { 
+        dplyr::mutate(.data = ., sort = .data$ntreat)
         }
     } %>% 
     dplyr::arrange(.data = ., sort) %>% 

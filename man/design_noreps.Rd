@@ -9,7 +9,7 @@ design_noreps(
   type = "sorted",
   zigzag = FALSE,
   nrows = NA,
-  serie = 1000,
+  serie = 100,
   seed = NULL,
   fbname = "inkaverse"
 )
@@ -41,12 +41,12 @@ Function to deploy field-book experiment without replications
 
 library(inti)
 
-factores <- list("geno" = c(1:200))
+factores <- list("geno" = c(1:99))
 
 fb <- design_noreps(factors = factores
-                     , type = F
-                     , zigzag = T
-                     , nrows = 9
+                     , type = "sorted"
+                     , zigzag = F
+                     , nrows = 10
                      )
                      
 dsg <- fb$fieldbook

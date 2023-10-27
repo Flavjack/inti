@@ -34,14 +34,12 @@
 #' library(gsheet)
 #' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "1_BVzChX_-lzXhB7HAm6FeSrwq9iKfZ39_Sl8NFC6k7U/edit#gid=203993025")
+#'               , "1_BVzChX_-lzXhB7HAm6FeSrwq9iKfZ39_Sl8NFC6k7U/edit#gid=1868565342")
 #' # browseURL(url)
 #' 
 #' fb <- gsheet2tbl(url) 
 #' 
 #' dsg <- fb %>% tarpuy_design() 
-#' 
-#' dsg %>% str()
 #' 
 #' dsg %>% 
 #'   tarpuy_plotdesign()
@@ -67,7 +65,8 @@ plots <- Row.names <- factors <- where <- NULL
 # -------------------------------------------------------------------------
 
 type <- match.arg(type, c(
-  "crd", "rcbd", "lsd", "lattice"
+  "sorted", "unsorted"
+  , "crd", "rcbd", "lsd", "lattice"
   , "split-crd", "split-rcbd"
   ))
 
@@ -182,18 +181,32 @@ factor_levels <- dt_factors %>%
   dplyr::select({{factor_names}}) %>% 
   as.list() 
 
-design <- design_repblock(
-  nfactors = nfactors
-  , factors = factor_levels
-  , type = type
-  , rep = rep
-  , zigzag = zigzag
-  , nrows = nrows
-  , serie = serie
-  , seed = seed
-  , fbname = fbname
-  ) %>% purrr::pluck(1)
-
+design <- if(nfactors == 1 & rep == 1) {
+  
+  design_noreps(factors = factor_levels
+                , type = type 
+                , zigzag = zigzag
+                , nrows = nrows
+                , serie = serie
+                , seed = seed
+                , fbname = fbname
+                ) %>% purrr::pluck(1)
+  } else {
+    
+    design_repblock(
+      nfactors = nfactors
+      , factors = factor_levels
+      , type = type
+      , rep = rep
+      , zigzag = zigzag
+      , nrows = nrows
+      , serie = serie
+      , seed = seed
+      , fbname = fbname
+      )  %>% purrr::pluck(1)
+  
+}
+  
 return(design)
   
 }

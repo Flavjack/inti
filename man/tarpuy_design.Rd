@@ -60,14 +60,12 @@ library(inti)
 library(gsheet)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1_BVzChX_-lzXhB7HAm6FeSrwq9iKfZ39_Sl8NFC6k7U/edit#gid=203993025")
+              , "1_BVzChX_-lzXhB7HAm6FeSrwq9iKfZ39_Sl8NFC6k7U/edit#gid=1868565342")
 # browseURL(url)
 
 fb <- gsheet2tbl(url) 
 
 dsg <- fb \%>\% tarpuy_design() 
-
-dsg \%>\% str()
 
 dsg \%>\% 
   tarpuy_plotdesign()
