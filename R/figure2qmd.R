@@ -8,7 +8,7 @@
 #' 
 #' @details
 #' 
-#' Quarto option can be included in the title using "{{}}" separated by commas
+#' Quarto option can be included in the title using "\{\{\}\}" separated by commas
 #'
 #' @return string mutated
 #' 
