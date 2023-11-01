@@ -5,6 +5,11 @@
   - Sub module for PCA with variable contribution and dimension correlation
   - Include lattice
   - Include LCD
+  
+# inti 0.6.4
+
+- Tarpuy:
+  - Alows to exclude or delete `{when}` or `{sample}` colums 
 
 # inti 0.6.3
 
