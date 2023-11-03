@@ -6,7 +6,7 @@
 #' @param last_factor Last factor in the field book [string: colnames]
 #' @param traits Traits information [dataframe or list].
 #'
-#' @details For the traits parameters you can used shown in the field Book app
+#' @details For the traits parameters you can used shown in the Field Book app
 #'
 #' @return list
 #' 
@@ -64,7 +64,7 @@
 #' library(gsheet)
 #' 
 #' url_fb <- paste0("https://docs.google.com/spreadsheets/d/"
-#'        , "1kIoI__uHQpZ8qXMPFoZpimBhywU8J0Rw49KgjJcovMY/edit#gid=353107276")
+#'        , "1kIoI__uHQpZ8qXMPFoZpimBhywU8J0Rw49KgjJcovMY/edit#gid=2128359606")
 #'        
 #' fb <- gsheet2tbl(url_fb) 
 #' 
@@ -163,7 +163,7 @@ tarpuy_traits <- function(fieldbook = NULL
     dplyr::mutate(isVisible = "true") %>% 
     dplyr::mutate(defaultValue = dplyr::case_when(
       .data$format %in% "boolean" ~ "false"
-      , TRUE ~ ""
+      , TRUE ~ .data$defaultValue
     )) %>% 
     dplyr::rowwise() %>% 
     dplyr::mutate(categories = case_when(

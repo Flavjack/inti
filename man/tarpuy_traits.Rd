@@ -20,7 +20,7 @@ list
 Function to export field book and traits for be used in field book app.
 }
 \details{
-For the traits parameters you can used shown in the field Book app
+For the traits parameters you can used shown in the Field Book app
 }
 \examples{
 
@@ -74,7 +74,7 @@ library(inti)
 library(gsheet)
 
 url_fb <- paste0("https://docs.google.com/spreadsheets/d/"
-       , "1kIoI__uHQpZ8qXMPFoZpimBhywU8J0Rw49KgjJcovMY/edit#gid=353107276")
+       , "1kIoI__uHQpZ8qXMPFoZpimBhywU8J0Rw49KgjJcovMY/edit#gid=2128359606")
        
 fb <- gsheet2tbl(url_fb) 
 
