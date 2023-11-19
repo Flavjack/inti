@@ -11,6 +11,8 @@
 - Tarpuy:
   - Alows to exclude or delete `{when}` or `{sample}` colums
   - Allow `defaultValue` for numeric traits
+- Rticles
+  - Include images using markdown syntax `![]()`
 
 # inti 0.6.3
 

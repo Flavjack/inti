@@ -48,11 +48,13 @@ gdoc2qmd <- function(file
         dplyr::slice(.data = ., 1:(which(x = .$value == '#| end')-1))
       } else { . }
     } %>% 
-    mutate(across(.data$value, ~ gsub("#\\| newpage", "\\\\newpage", .))) %>% 
+    dplyr::mutate(across(.data$value, ~ gsub("#\\| newpage", "\\\\newpage", .))) %>%
+    dplyr::mutate(across(.data$value, ~gsub("!\\[null", "||||![null", .))) %>% 
+    tidyr::separate_longer_delim(.data$value, delim = "||") %>% 
     dplyr::rowwise() 
   
   params <- text %>% 
-    dplyr::filter(str_detect(.data$value, "\\| \\#\\|")) %>% 
+    dplyr::filter(stringr::str_detect(.data$value, "\\| \\#\\|")) %>% 
     dplyr::mutate(across(everything(), ~gsub("\\| \\#\\|", "", .))) %>% 
     dplyr::mutate(across(.data$value, ~gsub("\\|$", "", .))) %>% 
     tidyr::separate(.data$value, c("name", "value"), sep = "\\|") %>% 
@@ -90,7 +92,6 @@ gdoc2qmd <- function(file
       }  else {.}
     }
     
-  
   figx <- fig %>% 
     dplyr::rowwise() %>% 
     {
@@ -137,7 +138,6 @@ gdoc2qmd <- function(file
         } else { . }
     }  
     
-  
   tabx <- tab %>% 
     dplyr::rowwise() %>% 
     dplyr::mutate(across(.data$value, ~gsub("\\{#tbl:(.*)\\}", paste0("{#tbl:", .data$name ,"}"), .)))
