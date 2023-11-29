@@ -13,6 +13,9 @@
   - Allow `defaultValue` for numeric traits
 - Rticles
   - Include images using markdown syntax `![]()`
+  
+  
+=> Fix if "defaultvalue" is in the trait table
 
 # inti 0.6.3
 
