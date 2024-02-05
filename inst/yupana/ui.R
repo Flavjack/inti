@@ -924,15 +924,15 @@ tabPanel("Fieldbook", icon = icon("book"),
          
 ),
 
-nav_spacer(),
-nav_item(
+bslib::nav_spacer(),
+bslib::nav_item(
   tags$a(
     shiny::icon("heart"), "support",
     href = "https://github.com/sponsors/flavjack",
     target = "_blank"
   )),
 
-nav_item(
+bslib::nav_item(
   tags$a(
     shiny::icon("github"), paste("Inti ", packageVersion('inti')),
     href = "https://github.com/sponsors/flavjack",

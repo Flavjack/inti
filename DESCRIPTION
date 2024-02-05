@@ -10,7 +10,7 @@ Description: The 'inti' package is part of the 'inkaverse' project for developin
     Learn more about the 'inkaverse' project at <https://inkaverse.com/>.
 Date: 2024-02-05
 Authors@R: c(
-    person("Flavio", "Lozano-Isla", email = "flavjack@gmail.com", role = c("aut", "cre")
+    person("Flavio", "Lozano-Isla", email = "flozanoisla@gmail.com", role = c("aut", "cre")
           , comment = c(ORCID = "0000-0002-0714-669X")),
     person("QuipoLab", role = c("ctb")),
     person("Inkaverse", role = c("cph"))
