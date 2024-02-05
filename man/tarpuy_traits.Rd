@@ -86,7 +86,7 @@ ds <- gsheet2tbl(url_ds)
 fb <- ds \%>\% tarpuy_design()
 
 url_trt <- paste0("https://docs.google.com/spreadsheets/d/"
-       , "1kIoI__uHQpZ8qXMPFoZpimBhywU8J0Rw49KgjJcovMY/edit#gid=1056776892")
+       , "1fBSnEq6CmYKK9Pdxlz0egEEflezJRnlAOylQwbythBE/edit#gid=179601173")
        
 traits <- gsheet2tbl(url_trt) 
 

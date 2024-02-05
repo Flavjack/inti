@@ -1,10 +1,10 @@
 # -------------------------------------------------------------------------
-# tarpuy ------------------------------------------------------------------
+# Tarpuy ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2023-10-26
+#> date .: 2024-02-05
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -736,19 +736,32 @@ connection_sheet_preview <- reactive({
   
   url <- info$spreadsheet_url
   
-  id <- if(input$connection_sheet_preview == "Field Book") {
+  # id <- if(input$connection_sheet_preview == "Field-Book") {
+  # 
+  #   info$sheets %>%
+  #     filter(name %in% input$connection_sheet_fieldbook) %>%
+  #     pluck("id")
+  #   
+  # } else if (input$connection_sheet_preview == "Traits")  {
+  #   
+  #   info$sheets %>%
+  #     filter(name %in% input$connection_sheet_traits) %>%
+  #     pluck("id")
+  #   
+  # }
   
-    info$sheets %>%
-      filter(name %in% input$connection_sheet_fieldbook) %>%
-      pluck("id")
-    
-  } else {
+  id <- if (input$connection_sheet_preview == "Traits")  {
     
     info$sheets %>%
       filter(name %in% input$connection_sheet_traits) %>%
       pluck("id")
     
-  }
+  } else {
+    
+    info$sheets %>%
+      filter(name %in% input$connection_sheet_fieldbook) %>%
+      pluck("id")
+  } 
   
   preview <- paste(url, id, sep = "#gid=")
   

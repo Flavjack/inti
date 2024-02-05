@@ -1,10 +1,10 @@
 # -------------------------------------------------------------------------
-# yupana ------------------------------------------------------------------
+# Yupana ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2023-01-21
+#> date .: 2024-02-05
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -1003,14 +1003,13 @@ output$plot_color <- renderUI({
       selection <- input$smr_load_sheet
 
     }
-    
 
       textInput(inputId = "graph_smr_name"
-                , label = "Sheet export"
+                , label = NULL
                 , value = selection
+                , placeholder = "Sheet to export"
                 , width = "100%"
                 )
-
 
     })
 

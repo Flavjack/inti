@@ -1,10 +1,10 @@
 # -------------------------------------------------------------------------
-# yupana ------------------------------------------------------------------
+# Yupana ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupana/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2023-01-21
+#> date .: 2024-02-05
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -31,34 +31,20 @@ if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json", a
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-navbarPage(title = div(
-  HTML('<h3><strong><a target="_blank" href="https://inkaverse.com/">Yupana</a></strong></h3>')
-  , div(
-    id = "support"
-    , HTML(paste("<a target='_blank' href='https://github.com/sponsors/flavjack' style='color:white'>"
-                 , h4(icon("heart")) , "</a>"))
-  )
-  , div(
-    id = "version"
-    , HTML(paste("<a target='_blank' href='https://inkaverse.com/news/'>inti"
-                 , packageVersion('inti') , "</a>"))
-    )
-  )
-  , windowTitle = "Yupana • app"
-  , selected = "Intro"
-  , theme = "bootstrap_sandstone.css" #!
-  , position = "fixed-top"
-  ,
+navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/">YUPANA</a></strong>')
+           , windowTitle = "Yupana • app"
+           , selected = "Intro"
+           , theme =  bslib::bs_theme(version = 5, bootswatch = 'sandstone')
+           , tags$style(HTML("p{ text-align: justify; }"))
+           , position = "fixed-top"
+           , tags$style(HTML("body {padding-top: 50px;}"))
+           ,
            
 # -------------------------------------------------------------------------
 # Yupana Info -------------------------------------------------------------
 # -------------------------------------------------------------------------
 
            tabPanel("Intro", icon = icon("home")
-                    
-                    , bs_theme_dependencies("flatly") #!
-                    
-                    , includeCSS("www/custom.css")
                     , tags$head(includeHTML(("www/analytics.html")))
                     , tags$head(tags$link(rel="shortcut icon"
                                           , href="https://flavjack.github.io/inti/img/inkaverse.png")),
@@ -108,7 +94,6 @@ navbarPage(title = div(
 
                              box(title = "Presentacion"
                                  , solidHeader = T
-                                 , background = "green"
                                  , width = 12
                                  , status = "primary",
 
@@ -126,7 +111,6 @@ navbarPage(title = div(
 
                              box(title = "Caracteristicas"
                                  , solidHeader = T
-                                 , background = "green"
                                  , width = 12
                                  , status = "primary",
 
@@ -346,7 +330,9 @@ navbarPage(title = div(
 # Exploratory -------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-tabPanel(h5(icon("magnifying-glass-chart"), "Exploratory"),
+tabPanel("Exploratory", icon = icon("magnifying-glass-chart"),
+  
+  # h5(icon("magnifying-glass-chart"), "Exploratory"),
          
          fluidRow(
            
@@ -512,7 +498,9 @@ tabPanel(h5(icon("magnifying-glass-chart"), "Exploratory"),
 # Yupana Analysis ---------------------------------------------------------
 # -------------------------------------------------------------------------
 
-tabPanel(h5(icon("chart-simple"), "Analysis"),
+tabPanel("Analysis", icon = icon("chart-simple"),
+  
+  # h5(icon("chart-simple"), "Analysis"),
          
 fluidRow(
   
@@ -587,7 +575,9 @@ fluidRow(
 
 ),
 
-tabPanel(h5(icon("feather-pointed"), "Graphics"),
+tabPanel("Graphics", icon = icon("feather-pointed"),
+  
+  # h5(icon("feather-pointed"), "Graphics"),
          
          fluidRow(
            
@@ -669,8 +659,10 @@ tabPanel(h5(icon("feather-pointed"), "Graphics"),
            column(8,
                   
                   fluidRow(
-                        
-                      box(width = 12,
+                    
+                    box(width = 2),
+                    
+                    box(width = 1,
                           
                           div(
                             class = "plotsave",
@@ -679,19 +671,29 @@ tabPanel(h5(icon("feather-pointed"), "Graphics"),
                               actionButton(inputId = "graph_smr_load"
                                            , label = "Load"
                                            , class = "btn btn-primary"
-                              ),
-                            ),
+                                           ),
+                            ))),
+                    
+                    box(width = 3,
                             
                             div(
                               uiOutput("graph_sheet_save"),
                               ),
+                          ),
+                    
+                            
+                      box(width = 2,
+                            
                             div(
                               radioButtons(inputId = "graph_smr_overwrite"
                                            , label = "Overwrite"
                                            , inline = TRUE
                                            , choices = c("no", "yes")
                                            ),
-                              ),
+                              )
+                          ),
+                    
+                    box(width = 1,
                             
                               div(
                                 actionButton(inputId = "graph_smr_save"
@@ -700,7 +702,9 @@ tabPanel(h5(icon("feather-pointed"), "Graphics"),
                                              ),
                                 ),
                             ),
-                          ),
+                    
+                    box(width = 3),
+                    
                   ),
                           
                       br(),
@@ -783,8 +787,9 @@ tabPanel(h5(icon("feather-pointed"), "Graphics"),
 
 ),
 
-        tabPanel(h5(icon("gears"), "Multivariate"),
-
+        tabPanel("Multivariate", icon = icon("gears"),
+          
+          # h5(icon("gears"), "Multivariate"),
 
                  fluidRow(
 
@@ -888,7 +893,9 @@ tabPanel(h5(icon("feather-pointed"), "Graphics"),
 # Yupana Fieldbook --------------------------------------------------------
 # -------------------------------------------------------------------------
 
-tabPanel(h5(icon("book"), "Fieldbook"),
+tabPanel("Fieldbook", icon = icon("book"),
+  
+  # h5(icon("book"), "Fieldbook"),
          
          fluidRow(
            
@@ -915,7 +922,22 @@ tabPanel(h5(icon("book"), "Fieldbook"),
            
          )
          
-)
+),
+
+nav_spacer(),
+nav_item(
+  tags$a(
+    shiny::icon("heart"), "support",
+    href = "https://github.com/sponsors/flavjack",
+    target = "_blank"
+  )),
+
+nav_item(
+  tags$a(
+    shiny::icon("github"), paste("Inti ", packageVersion('inti')),
+    href = "https://github.com/sponsors/flavjack",
+    target = "_blank"
+  )),
 
 # Yupana end code ---------------------------------------------------------
 # -------------------------------------------------------------------------

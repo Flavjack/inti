@@ -1,6 +1,7 @@
 ---
 title: "Yupana: coding workflow"
 description: 'Reproduce results from Yupana coding'
+author: "Flavio Lozano-Isla"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEncoding{UTF-8}
@@ -36,7 +37,7 @@ url <- paste0("https://docs.google.com/spreadsheets/d/"
 fb <- url %>% 
   gsheet2tbl() %>% 
   rename_with(tolower) %>% 
-  mutate(across(c(treat, geno, bloque), ~ as.factor(.))) %>% 
+  mutate(across(c(riego, geno, bloque), ~ as.factor(.))) %>% 
   mutate(across(where(is.factor), ~ gsub("[[:space:]]", "", .)) ) %>% 
   as.data.frame()
 # str(fb)
@@ -51,7 +52,7 @@ wue <- fb %>%
   plot_raw(type = "boxplot"
            , x = "geno"
            , y = "wue"
-           , group = "treat"
+           , group = "riego"
            , xlab = "Genotipos"
            , ylab = "Water use efficiency (g/l)"
            , ylimits = c(5, 30, 5)
@@ -66,7 +67,7 @@ hi <- fb %>%
   plot_raw(type = "scatterplot"
            , x = "hi"
            , y = "twue"
-           , group = "treat"
+           , group = "riego"
            , xlab = "Harvest Index"
            , ylab = "Tuber water use efficiency (g/l)"
            , glab = "Tratamientos"
@@ -102,15 +103,15 @@ knitr::include_graphics("files/fig-01.png")
 
 model <- fb %>% 
   yupana_analysis(response = "lfa"
-                  , model_factors = "geno*treat"
-                  , comparison = c("geno", "treat")
+                  , model_factors = "geno*riego"
+                  , comparison = c("geno", "riego")
                   )
 
 lfa <- model$meancomp %>% 
   plot_smr(type = "bar"
            , x = "geno"
            , y = "lfa"
-           , group = "treat"
+           , group = "riego"
            , ylimits = c(0, 12000, 2000)
            , sig = "sig"
            , error = "ste"
@@ -130,15 +131,15 @@ model$meancomp %>% web_table()
 ```{r}
 model <- fb %>% 
   yupana_analysis(response = "twue"
-                  , model_factors = "block + geno*treat"
-                  , comparison = c("geno", "treat")
+                  , model_factors = "block + geno*riego"
+                  , comparison = c("geno", "riego")
                   )
 
 twue <- model$meancomp %>% 
   plot_smr(type = "line"
            , x = "geno"
            , y = "twue"
-           , group = "treat"
+           , group = "riego"
            , ylimits = c(0, 10, 2)
            , error = "ste"
            , color = c("blue", "red")
@@ -178,8 +179,8 @@ knitr::include_graphics("files/fig-02.png")
 
 mv <- fb %>% 
   yupana_mvr(last_factor = "bloque"
-             , summary_by = c("geno", "treat")
-             , groups = "treat"
+             , summary_by = c("geno", "riego")
+             , groups = "riego"
              )
   
 # sink("files/pca.txt")

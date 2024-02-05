@@ -1,10 +1,10 @@
 # -------------------------------------------------------------------------
-# tarpuy ------------------------------------------------------------------
+# Tarpuy ------------------------------------------------------------------
 # -------------------------------------------------------------------------
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2024-02-04
+#> date .: 2024-02-05
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -30,24 +30,12 @@ if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json", a
 # -------------------------------------------------------------------------
 
 navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/">TARPUY</a></strong>')
-             
-  #            div(
-  # HTML('<h3><strong><a target="_blank" href="https://inkaverse.com/">Tarpuy</a></strong></h3>')  , div(
-  #   id = "version"
-  #   , HTML(paste("<a target='_blank' href='https://inkaverse.com/news/'>inti"
-  #                , packageVersion('inti') , "</a>"))
-  # )
-  # , div(
-  #   id = "support"
-  #   , HTML(paste("<a target='_blank' href='https://github.com/sponsors/flavjack' style='color:white'>"
-  #                , h4(icon("heart")) , "</a>"))
-  #   )
-  # )
   , windowTitle = "Tarpuy • app"
   , selected = "Intro"
   , theme =  bslib::bs_theme(version = 5, bootswatch = 'sandstone')
   , tags$style(HTML("p{ text-align: justify; }"))
-  # , position = "fixed-top"
+  , position = "fixed-top"
+  , tags$style(HTML("body {padding-top: 50px;}"))
   ,
 
 # -------------------------------------------------------------------------
@@ -55,9 +43,6 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
 # -------------------------------------------------------------------------
 
            tabPanel("Intro", icon = icon("home") 
-                    #>
-                    # , includeCSS("www/custom.css")
-                    #
                     , tags$head(includeHTML(("www/analytics.html")))
                     , tags$head(tags$link(rel="shortcut icon"
                                           , href="https://flavjack.github.io/inti/img/inkaverse.png")),
@@ -895,14 +880,14 @@ tabPanel("Mobile", icon = icon("plug-circle-check"),
            
            column(2,
                   
-                  h5(icon("mobile-screen-button"), "Field Book app"),
+                  h5(icon("mobile-screen-button"), HTML('<a target="_blank" href="https://inkaverse.com/">Field-Book (PhenoApp)</a>')),
                   
                   br(),
                   
                   radioButtons(inputId = "connection_sheet_preview"
                                , label = h5(icon("magnifying-glass"), "Preview") 
                                , choices = c("Traits"
-                                             , "Field Book")
+                                             , "Field-Book")
                                , inline = TRUE
                                , selected = "Traits"
                   ),
@@ -917,7 +902,7 @@ tabPanel("Mobile", icon = icon("plug-circle-check"),
                   
                   fluidRow(
                     
-                    h5(icon("book"), "Field Book"),
+                    h5(icon("book"), "Field-Book"),
                     
                     uiOutput("connection_sheet_fieldbook"),
                     
@@ -959,7 +944,22 @@ tabPanel("Mobile", icon = icon("plug-circle-check"),
            
          )
 
-)
+),
+
+nav_spacer(),
+nav_item(
+  tags$a(
+    shiny::icon("heart"), "support",
+    href = "https://github.com/sponsors/flavjack",
+    target = "_blank"
+  )),
+
+nav_item(
+  tags$a(
+    shiny::icon("github"), paste("Inti ", packageVersion('inti')),
+    href = "https://github.com/sponsors/flavjack",
+    target = "_blank"
+  )),
 
 # Tarpuy end code ---------------------------------------------------------
 # -------------------------------------------------------------------------

@@ -1,6 +1,7 @@
 ---
 title: "Rticles"
 description: 'Rticles: scientific documents with R'
+author: "Flavio Lozano-Isla"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Rticles}

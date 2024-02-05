@@ -1,6 +1,7 @@
 ---
 title: "Tarpuy"
 description: 'Tarpuy: field-book experimental plans'
+author: "Flavio Lozano-Isla"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Tarpuy}

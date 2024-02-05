@@ -76,7 +76,7 @@
 #' fb <- ds %>% tarpuy_design()
 #' 
 #' url_trt <- paste0("https://docs.google.com/spreadsheets/d/"
-#'        , "1kIoI__uHQpZ8qXMPFoZpimBhywU8J0Rw49KgjJcovMY/edit#gid=1056776892")
+#'        , "1fBSnEq6CmYKK9Pdxlz0egEEflezJRnlAOylQwbythBE/edit#gid=179601173")
 #'        
 #' traits <- gsheet2tbl(url_trt) 
 #' 
@@ -111,8 +111,8 @@ tarpuy_traits <- function(fieldbook = NULL
     
 # -------------------------------------------------------------------------
   
-  cols <- c("trait" = NA_real_,	"format" = NA_real_,	"default" = NA_real_
-            ,	"minimum" = NA_real_,	"maximum" = NA_real_,	"details" = NA_real_
+  cols <- c("trait" = NA_real_, "format" = NA_real_, "default" = NA_real_
+            , "minimum" = NA_real_,	"maximum" = NA_real_, "details" = NA_real_
             , "categories" = NA_real_)
   
 # -------------------------------------------------------------------------
@@ -131,6 +131,7 @@ tarpuy_traits <- function(fieldbook = NULL
     } %>% 
     dplyr::bind_rows() %>% 
     tibble::add_column(!!!cols[!names(cols) %in% names(.)]) %>% 
+    dplyr::rename("defaultValue" = "default") %>% 
     dplyr::filter(!grepl("X", .data$abbreviation))
   
   traitsnames <- traitstb %>% 
@@ -163,7 +164,7 @@ tarpuy_traits <- function(fieldbook = NULL
     dplyr::mutate(isVisible = "true") %>% 
     dplyr::mutate(defaultValue = dplyr::case_when(
       .data$format %in% "boolean" ~ "false"
-      , TRUE ~ .data$defaultValue
+      , TRUE ~ as.character(.data$defaultValue)
     )) %>% 
     dplyr::rowwise() %>% 
     dplyr::mutate(categories = case_when(

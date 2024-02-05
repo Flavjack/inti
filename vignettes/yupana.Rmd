@@ -1,6 +1,7 @@
 ---
 title: "Yupana"
 description: 'Yupana: experimental design analysis'
+author: "Flavio Lozano-Isla"
 output:
   bookdown::html_document2:
     base_format: rmarkdown::html_vignette

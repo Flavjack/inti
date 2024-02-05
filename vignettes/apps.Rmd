@@ -1,6 +1,7 @@
 ---
 title: "Apps"
 description: 'inti: interactive apps'
+author: "Flavio Lozano-Isla"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Apps}
