@@ -935,7 +935,7 @@ bslib::nav_item(
 bslib::nav_item(
   tags$a(
     shiny::icon("github"), paste("Inti ", packageVersion('inti')),
-    href = "https://github.com/sponsors/flavjack",
+    href = "https://inkaverse.com/news/",
     target = "_blank"
   )),
 

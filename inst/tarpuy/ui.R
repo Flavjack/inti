@@ -880,7 +880,7 @@ tabPanel("Mobile", icon = icon("plug-circle-check"),
            
            column(2,
                   
-                  h5(icon("mobile-screen-button"), HTML('<a target="_blank" href="https://inkaverse.com/">Field-Book (PhenoApp)</a>')),
+                  h5(icon("mobile-screen-button"), HTML('<a target="_blank" href="https://play.google.com/store/apps/details?id=com.fieldbook.tracker&hl=en_US">Field-Book (PhenoApp)</a>')),
                   
                   br(),
                   
@@ -957,7 +957,7 @@ bslib::nav_item(
 bslib::nav_item(
   tags$a(
     shiny::icon("github"), paste("Inti ", packageVersion('inti')),
-    href = "https://github.com/sponsors/flavjack",
+    href = "https://inkaverse.com/news/",
     target = "_blank"
   )),
 
