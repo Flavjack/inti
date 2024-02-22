@@ -6,6 +6,12 @@
   - Include lattice
   - Include LCD
   
+# inti 0.6.5
+
+- Rticles
+  - Fix title position in article
+  - Fix figure caption and cross reference
+
 # inti 0.6.4
 
 - Update bootstrap in apps

@@ -187,8 +187,9 @@ gdoc2qmd <- function(file
     tibble::add_row(value = "\\newpage", .before = which(grepl("# discussion", .$value, ignore.case = TRUE))) %>% 
     {
       if (any(grepl(pattern = '# abstract', x = .$value, ignore.case = TRUE))) {
-        tibble::add_row(.data = ., value = paste(tt, sep = "\n\n"),
-                        .before = which(x = grepl(pattern = "# abstract", x = .$value, ignore.case = TRUE)))
+        tibble::add_row(.data = ., value = paste(tt, "\n\n"),
+                        .before = which(x = grepl(pattern = "# abstract", x = .$value
+                                                  , ignore.case = TRUE)))
       } else {.}
     } %>%
     dplyr::select(.data$value) %>% 
