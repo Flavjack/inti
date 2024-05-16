@@ -1,19 +1,23 @@
-Name: Yupana
-Description: Interactive data analysis.
-Binding: yupana
-Interactive: true
-
-Name: Tarpuy
-Description: Field experimental designs.
-Binding: tarpuy
-Interactive: true
-
 Name: Google Authentication
 Description: Google authentication process.
 Binding: GoogleAuth
 Interactive: false
 
+
+Name: Tarpuy
+Description: Field experimental designs.
+Binding: tarpuy_full
+Interactive: true
+
+
+Name: Yupana
+Description: Interactive data analysis.
+Binding: yupana_full
+Interactive: true
+
+
 Name: Renew Authentication
 Description: Renew Google authentication user.
 Binding: RenewAuth
 Interactive: false
+

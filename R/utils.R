@@ -19,3 +19,16 @@ RenewAuth <- function() {
 }
 
 
+yupana_full <- function() {
+  
+  inti::yupana(dependencies = TRUE)
+  
+}
+
+
+tarpuy_full <- function() {
+  
+  inti::tarpuy(dependencies = TRUE)
+  
+}
+
