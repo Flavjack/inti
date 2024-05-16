@@ -33,14 +33,14 @@ message(
   head
   , "\n"
   , colortext("- ")
-  , colortext("If is the first time running the app consider install the dependencies:")
-  , "\n\n"
-  , colortext("> ")
-  , colortext("inti::tarpuy(dependencies = TRUE)", "green")
+  , colortext("More info: ")
+  , colortext("\n\n")
+  , colortext("> https://inkaverse.com/", "blue")
   , "\n\n"
   , colortext("- ")
-  , colortext("More info: ")
-  , colortext("https://inkaverse.com/articles/apps", "blue")
+  , colortext("Citation: ")
+  , colortext("\n\n")
+  , colortext("> https://inkaverse.com/authors.html#citation", "green")
   , "\n"
   , end
 )
