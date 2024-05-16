@@ -7,6 +7,9 @@
     <loc>https://inkaverse.com/articles/apps.html</loc>
   </url>
   <url>
+    <loc>https://inkaverse.com/articles/extra/stagewise.html</loc>
+  </url>
+  <url>
     <loc>https://inkaverse.com/articles/extra/yupana-coding.html</loc>
   </url>
   <url>
@@ -61,7 +64,13 @@
     <loc>https://inkaverse.com/reference/gdoc2qmd.html</loc>
   </url>
   <url>
+    <loc>https://inkaverse.com/reference/gdoc2rmd.html</loc>
+  </url>
+  <url>
     <loc>https://inkaverse.com/reference/H2cal.html</loc>
+  </url>
+  <url>
+    <loc>https://inkaverse.com/reference/include_figure.html</loc>
   </url>
   <url>
     <loc>https://inkaverse.com/reference/include_pdf.html</loc>
@@ -125,6 +134,9 @@
   </url>
   <url>
     <loc>https://inkaverse.com/reference/tarpuy_traits.html</loc>
+  </url>
+  <url>
+    <loc>https://inkaverse.com/reference/tarpuy_varlist.html</loc>
   </url>
   <url>
     <loc>https://inkaverse.com/reference/web_table.html</loc>
