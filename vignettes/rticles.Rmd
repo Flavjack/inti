@@ -3,8 +3,8 @@ title: "Rticles"
 description: 'Rticles: scientific documents with R'
 author: "Flavio Lozano-Isla"
 output:
-  bookdown::pdf_book:
-    keep_tex: true
+  # bookdown::pdf_book:
+  #   keep_tex: true
   bookdown::html_document2:
     base_format: rmarkdown::html_vignette
     toc: true

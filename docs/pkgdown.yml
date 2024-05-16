@@ -1,15 +1,15 @@
-pandoc: 3.1.9
-pkgdown: 2.0.7
+pandoc: 3.1.11
+pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   apps: apps.html
-  yupana-coding: extra/yupana-coding.html
   heritability: heritability.html
   policy: policy.html
   rticles: rticles.html
   tarpuy: tarpuy.html
+  yupana-coding: extra/yupana-coding.html
   yupana: yupana.html
-last_built: 2024-02-06T14:57Z
+last_built: 2024-05-16T05:59Z
 urls:
   reference: https://inkaverse.com/reference
   article: https://inkaverse.com/articles
