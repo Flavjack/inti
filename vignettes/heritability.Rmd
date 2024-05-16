@@ -3,6 +3,8 @@ title: "Broad-sense heritability in plant breeding"
 description: 'How to calculate the heritability in plant breeding'
 author: "Maria Belen Kistner & Flavio Lozano-Isla"
 output:
+  # bookdown::pdf_book:
+  #   keep_tex: true
   bookdown::html_document2:
     base_format: rmarkdown::html_vignette
     toc: true
@@ -34,18 +36,17 @@ Broad-sense heritability ($H^2$) is defined as the proportion of phenotypic vari
 
 There are two main reasons why heritability on an entry-mean basis is of interest in plant breeding [@schmidt2019Heritability]:
 
-1. It is plugged into the breeder’s Equation to predict the response to selection.
-2. It is a descriptive measure used to assess the usefulness and precision of results from cultivar evaluation trials. 
+1.  It is plugged into the breeder’s Equation to predict the response to selection.
+2.  It is a descriptive measure used to assess the usefulness and precision of results from cultivar evaluation trials.
 
 ## Breeder´s equation
 
-$$\Delta G=H^2S$$
-Where: 
+$$\Delta G=H^2S$$ Where:
 
-- $\Delta G$ is the genetic gain
-- $S$ is the mean phenotypic value of the selected genotypes, expressed as a deviation from the population mean.
+-   $\Delta G$ is the genetic gain
+-   $S$ is the mean phenotypic value of the selected genotypes, expressed as a deviation from the population mean.
 
-# Usual Problems 
+# Usual Problems
 
 In practice, most trials are conducted in a multienvironment trial (MET) presente unbalanced data as not all cultivars are tested at each environment or simply when plot data is lost or when the number of replicates at each location varies between genotypes [@schmidt2019Estimating]. However, the standard method for estimating heritability implicitly assumes balanced data, independent genotype effects, and homogeneous variances.
 
@@ -150,7 +151,7 @@ hr$outliers$random %>% kable(caption = "Outliers random model")
 
 # Comparison: H2cal and asreml
 
-> https://inkaverse.com/articles/extra/stagewise.html
+> <https://inkaverse.com/articles/extra/stagewise.html>
 
 ::: {#refs}
 :::
@@ -158,4 +159,3 @@ hr$outliers$random %>% kable(caption = "Outliers random model")
 ```{r references, echo=FALSE}
 if(!file.exists("files/pkgs.bib")){write_bib(c(.packages()),'files/pkgs.bib')}
 ```
-

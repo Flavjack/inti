@@ -2,11 +2,20 @@
 title: "Yupana: coding workflow"
 description: 'Reproduce results from Yupana coding'
 author: "Flavio Lozano-Isla"
-output: rmarkdown::html_vignette
+output:
+  bookdown::pdf_book:
+    keep_tex: true
+  bookdown::html_document2:
+    base_format: rmarkdown::html_vignette
+    toc: true
+    number_sections: false
+pkgdown:
+  as_is: true
 vignette: >
   %\VignetteEncoding{UTF-8}
   %\VignetteIndexEntry{Yupana: coding workflow}
   %\VignetteEngine{knitr::rmarkdown}
+always_allow_html: true
 editor_options: 
   chunk_output_type: console
 ---

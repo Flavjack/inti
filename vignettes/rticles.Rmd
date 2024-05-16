@@ -2,7 +2,15 @@
 title: "Rticles"
 description: 'Rticles: scientific documents with R'
 author: "Flavio Lozano-Isla"
-output: rmarkdown::html_vignette
+output:
+  bookdown::pdf_book:
+    keep_tex: true
+  bookdown::html_document2:
+    base_format: rmarkdown::html_vignette
+    toc: true
+    number_sections: false
+pkgdown:
+  as_is: true
 vignette: >
   %\VignetteIndexEntry{Rticles}
   %\VignetteEngine{knitr::rmarkdown}

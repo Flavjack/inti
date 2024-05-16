@@ -8,3 +8,12 @@ Description: Field experimental designs.
 Binding: tarpuy
 Interactive: true
 
+Name: Google Authentication
+Description: Google authentication process.
+Binding: GoogleAuth
+Interactive: false
+
+Name: Renew Authentication
+Description: Renew Google authentication user.
+Binding: RenewAuth
+Interactive: false
