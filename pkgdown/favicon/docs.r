@@ -13,9 +13,9 @@ cran <- c("knitr", "inti", "gsheet")
 
 suppressPackageStartupMessages({
   for (pkg in cran) { 
-    if( !require(pkg, character.only = T) ) {
+    if( !require(pkg, character.only = TRUE) ) {
       install.packages(pkg)
-      library(pkg, character.only = T)
+      library(pkg, character.only = TRUE)
     } 
   }
 })

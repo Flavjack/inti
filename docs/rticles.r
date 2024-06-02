@@ -18,16 +18,16 @@ git <- c("crsh/citr") # Use zotero for docs citations
 suppressPackageStartupMessages({
   
   for (pkg in cran) { 
-    if( !require(pkg, character.only = T) ) {
+    if( !require(pkg, character.only = TRUE) ) {
       install.packages(pkg)
-      library(pkg, character.only = T)
+      library(pkg, character.only = TRUE)
     } 
   }
   
   for (pkg in git) {
-    if( !require(sub(".*/", "", pkg), character.only = T) ) {
-      devtools::install_github(pkg, upgrade = T)
-      library(sub(".*/", "", pkg), character.only = T)
+    if( !require(sub(".*/", "", pkg), character.only = TRUE) ) {
+      devtools::install_github(pkg, upgrade = TRUE)
+      library(sub(".*/", "", pkg), character.only = TRUE)
     }
   }
   

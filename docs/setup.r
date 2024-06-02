@@ -2,7 +2,7 @@
 # R packages dependencies and configuration -------------------------------
 # -------------------------------------------------------------------------
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date   .: 2023-02-03
+#> date   .: 2024-06-01
 # -------------------------------------------------------------------------
 
 #> source("https://inkaverse.com/setup.r")
@@ -30,9 +30,9 @@ git <- c("crsh/citr") # Use zotero for docs citations
 suppressPackageStartupMessages({
   
   for (pkg in cran) { 
-    if( !require(pkg, character.only = T) ) {
+    if( !require(pkg, character.only = TRUE) ) {
       install.packages(pkg)
-      library(pkg, character.only = T)
+      library(pkg, character.only = TRUE)
     } 
   }
   
@@ -76,5 +76,5 @@ options(
 # Authorize googledrive & googlesheets ------------------------------------
 # -------------------------------------------------------------------------
 
-googlesheets4::gs4_auth(T)
-googledrive::drive_auth(T)
+googlesheets4::gs4_auth(TRUE)
+googledrive::drive_auth(TRUE)
