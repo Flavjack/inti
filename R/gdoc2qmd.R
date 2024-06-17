@@ -83,7 +83,7 @@ gdoc2qmd <- function(file
   
   fig <- txt %>% 
     dplyr::filter(grepl("#fig", .data$value)) %>% 
-    dplyr::group_split(.data$value) %>% 
+    split(1:nrow(.)) %>% 
     purrr::map_dfr(~ add_row(.x, .before = grepl("#fig", .x))) %>% 
     {
       if(length(.) != 0) {
@@ -117,18 +117,16 @@ gdoc2qmd <- function(file
     dplyr::filter(grepl("^\\|", .data$value) | grepl("#tbl", .data$value)) %>% 
     {
       if(nrow(. > 1)) { 
-        
         dplyr::mutate(.data = ., group = case_when(
           grepl(pattern = "^:", x = .data$value) ~ as.character(.data$name)
           , TRUE ~ NA
         )) %>% 
-          tibble::as_tibble(x = .) %>% 
-          tidyr::fill(data = ., "group", .direction = "up", ) %>% 
+          tidyr::fill(data = ., group, .direction = "up") %>% 
           tidyr::drop_na(data = ., .data$group) %>% 
           dplyr::group_by(.data = ., .data$group) %>% 
           dplyr::slice(.data = ., n(), 1:(n() - 1)) %>% 
           dplyr::ungroup() %>% 
-          dplyr::group_split(.tbl = ., .data$group) %>%
+          split(1:nrow(.)) %>% 
           purrr::map_dfr(~ add_row(.x, .after = grepl("#tbl", .x))) %>% 
           dplyr::mutate(.data = ., across(.data$value, ~ ifelse(is.na(.), "\\newpage", .))) %>% 
           dplyr::select(.data = ., !.data$group) %>% 
