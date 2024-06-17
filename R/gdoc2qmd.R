@@ -41,6 +41,7 @@ gdoc2qmd <- function(file
     readLines() %>% 
     tibble::enframe() %>%
     dplyr::filter(!grepl("^#+ $", .data$value)) %>%  
+    dplyr::filter(!grepl("^#$", .data$value)) %>%  
     dplyr::mutate(value = gsub("```Unknown element type at this position: UNSUPPORTED```"
                                , "\n\n", .data$value)) %>% 
     {
@@ -82,9 +83,7 @@ gdoc2qmd <- function(file
   
   fig <- txt %>% 
     dplyr::filter(grepl("#fig", .data$value)) %>% 
-    tibble::as_tibble() %>% 
     dplyr::group_split(.data$value) %>% 
-    rev() %>% 
     purrr::map_dfr(~ add_row(.x, .before = grepl("#fig", .x))) %>% 
     {
       if(length(.) != 0) {
