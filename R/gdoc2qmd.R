@@ -115,26 +115,15 @@ gdoc2qmd <- function(file
   
   tab <- txt %>% 
     dplyr::filter(grepl("^\\|", .data$value) | grepl("#tbl", .data$value)) %>% 
-    {
-      if(nrow(. > 1)) { 
-        dplyr::mutate(.data = ., group = case_when(
-          grepl(pattern = "^:", x = .data$value) ~ as.character(.data$name)
-          , TRUE ~ NA
-        )) %>% 
-          tidyr::fill(data = ., group, .direction = "up") %>% 
-          tidyr::drop_na(data = ., .data$group) %>% 
-          dplyr::group_by(.data = ., .data$group) %>% 
-          dplyr::slice(.data = ., n(), 1:(n() - 1)) %>% 
-          dplyr::ungroup() %>% 
-          split(1:nrow(.)) %>% 
-          purrr::map_dfr(~ add_row(.x, .after = grepl("#tbl", .x))) %>% 
-          dplyr::mutate(.data = ., across(.data$value, ~ ifelse(is.na(.), "\\newpage", .))) %>% 
-          dplyr::select(.data = ., !.data$group) %>% 
-          dplyr::mutate(.data = ., across(.data$value, ~gsub("}", "}", .))) 
-        
-        } else { . }
-    }  
-    
+    ungroup() %>% 
+    mutate(group = case_when(
+      grepl("#tbl", .data$value) ~ .data$name
+    )) %>% 
+    tidyr::fill(., group, .direction = "up") %>% 
+    split(.$group) %>% 
+    purrr::map_dfr(~ bind_rows(tibble(name = NA, value = NA), .x)) %>% 
+    dplyr::mutate(.data = ., across(.data$value, ~ ifelse(is.na(.), "\\newpage", .)))
+
   tabx <- tab %>% 
     dplyr::rowwise() %>% 
     dplyr::mutate(across(.data$value, ~gsub("\\{#tbl:(.*)\\}", paste0("{#tbl:", .data$name ,"}"), .)))
@@ -151,15 +140,15 @@ gdoc2qmd <- function(file
 
   manuscript <- if(type == "full") {
     
-    dplyr::bind_rows(txtonly, tablist, figlist, tabx, figx)
+    dplyr::bind_rows(txtonly, figlist, tablist, figx, tabx)
     
   } else if (type == "listfull") {
     
-    dplyr::bind_rows(txtonly, tab, fig)
+    dplyr::bind_rows(txtonly, fig, tab)
     
   } else if (type == "list") {
     
-    dplyr::bind_rows(txtonly, tablist, figlist)
+    dplyr::bind_rows(txtonly, figlist, tablist)
     
   } else if (type == "asis") { txt } 
    
@@ -178,10 +167,14 @@ gdoc2qmd <- function(file
         
       }
     } %>% 
-    tibble::add_row(value = "\\newpage", .before = which(grepl("# abstract", .$value, ignore.case = TRUE))) %>% 
-    tibble::add_row(value = "\\newpage", .before = which(grepl("# reference", .$value, ignore.case = TRUE))) %>% 
-    tibble::add_row(value = "\\newpage", .before = which(grepl("# result", .$value, ignore.case = TRUE)))  %>% 
-    tibble::add_row(value = "\\newpage", .before = which(grepl("# discussion", .$value, ignore.case = TRUE))) %>% 
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# statmets", .$value, ignore.case = TRUE))) %>% 
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# declarations", .$value, ignore.case = TRUE))) %>% 
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# abstract$", .$value, ignore.case = TRUE))) %>% 
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# introduction$", .$value, ignore.case = TRUE))) %>% 
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# materials and methods$", .$value, ignore.case = TRUE))) %>%
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# results$", .$value, ignore.case = TRUE)))  %>% 
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# discussion$", .$value, ignore.case = TRUE))) %>% 
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# references$", .$value, ignore.case = TRUE))) %>% 
     {
       if (any(grepl(pattern = '# abstract', x = .$value, ignore.case = TRUE))) {
         tibble::add_row(.data = ., value = paste(tt, "\n\n"),
