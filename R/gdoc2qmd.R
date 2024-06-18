@@ -167,8 +167,7 @@ gdoc2qmd <- function(file
         
       }
     } %>% 
-    tibble::add_row(value = "\\newpage", .before = which(grepl("# statmets", .$value, ignore.case = TRUE))) %>% 
-    tibble::add_row(value = "\\newpage", .before = which(grepl("# declarations", .$value, ignore.case = TRUE))) %>% 
+    tibble::add_row(value = "\\newpage", .before = which(grepl("statements and declarations$", .$value, ignore.case = TRUE))) %>% 
     tibble::add_row(value = "\\newpage", .before = which(grepl("# abstract$", .$value, ignore.case = TRUE))) %>% 
     tibble::add_row(value = "\\newpage", .before = which(grepl("# introduction$", .$value, ignore.case = TRUE))) %>% 
     tibble::add_row(value = "\\newpage", .before = which(grepl("# materials and methods$", .$value, ignore.case = TRUE))) %>%
