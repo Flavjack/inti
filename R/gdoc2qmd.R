@@ -24,8 +24,7 @@ gdoc2qmd <- function(file
                      , type = "asis"
                      ){
   
-  # file <- choose.files() ; format = "qmd"; export = NA
-  # type <- "listfull"
+  # file <- choose.files() ; format = "qmd"; export = NA; type <- "listfull"
 
   export <- if(is.na(export)) {
     file %>% gsub(".zip", "", .) %>% file.path()
@@ -120,6 +119,8 @@ gdoc2qmd <- function(file
       grepl("#tbl", .data$value) ~ .data$name
     )) %>% 
     tidyr::fill(., group, .direction = "up") %>% 
+    split(.$group) %>% 
+    purrr::map_dfr(~ slice(.data = ., c(n(),  1:(n()-1)))) %>% 
     split(.$group) %>% 
     purrr::map_dfr(~ bind_rows(tibble(name = NA, value = NA), .x)) %>% 
     dplyr::mutate(.data = ., across(.data$value, ~ ifelse(is.na(.), "\\newpage", .)))
