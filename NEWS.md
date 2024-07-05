@@ -8,8 +8,12 @@
   
 # inti 0.6.6
 
+- Package
+  - Update function to remove outliers => "`remove_outliers`"
+  
 - Rticles
   - Fix Tables and Figures order in final document
+  
   
 # inti 0.6.5
 

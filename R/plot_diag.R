@@ -52,7 +52,7 @@ plot_diag <- function( model, title = NA) {
   
   # Histogram
   p1 <- ggplot(dt , aes(.data$.resid)) +
-    geom_histogram(aes_string(y = "..density..", fill = "..count.."), 
+    geom_histogram(aes(y = after_stat(density)), 
                    color = "black", fill = "grey82", bins = 30) + 
     stat_function(fun = stats::dnorm, color = "blue", args = list(mean = 0, sd = sd(dt$.resid))) +
     theme_bw() +
@@ -96,7 +96,7 @@ plot_diag <- function( model, title = NA) {
          , subtitle = "Homoscedasticity" 
          )
   
-  p5 <-ggplot(dt, aes(stats::hatvalues(model), .data$.resid)) + 
+  p5 <- ggplot(dt, aes(stats::hatvalues(model), .data$.resid)) + 
     stat_smooth(method="loess", na.rm=TRUE) +
     xlab("Leverage")+ylab("Standardized Residuals") +
     ggtitle("Residual vs Leverage Plot") + 
