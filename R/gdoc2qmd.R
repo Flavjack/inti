@@ -114,11 +114,11 @@ gdoc2qmd <- function(file
   
   tab <- txt %>% 
     dplyr::filter(grepl("^\\|", .data$value) | grepl("#tbl", .data$value)) %>% 
-    ungroup() %>% 
-    mutate(group = case_when(
+    dplyr::ungroup() %>% 
+    dplyr::mutate(group = case_when(
       grepl("#tbl", .data$value) ~ .data$name
     )) %>% 
-    tidyr::fill(., group, .direction = "up") %>% 
+    tidyr::fill(., .data$group, .direction = "up") %>% 
     split(.$group) %>% 
     purrr::map_dfr(~ slice(.data = ., c(n(),  1:(n()-1)))) %>% 
     split(.$group) %>% 

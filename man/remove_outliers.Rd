@@ -9,11 +9,11 @@ remove_outliers(data, formula, drop_na = TRUE, plot_diag = FALSE)
 \arguments{
 \item{data}{Experimental design data frame with the factors and traits.}
 
+\item{formula}{mixed model formula.}
+
 \item{drop_na}{drop NA values from the data.frame}
 
-\item{trait}{Name of the trait.}
-
-\item{model}{The fixed or random effects in the model.}
+\item{plot_diag}{Diagnostic plot based in the raw and clean data}
 }
 \value{
 list. 1. Table with date without outliers. 2. The outliers in the
@@ -30,11 +30,10 @@ Function to remove outliers in MET experiments
 
 library(inti)
 
-rmout <- remove_outliers(
-  data = potato
-  , formula = stemdw ~ 0 + (1|bloque) + treat*geno  + geno
+rmout <- remove_outliers(data = potato
+  , formula = stemdw ~ 0 + (1|bloque) + treat*geno
   , drop_na = FALSE
-  , plot_diag = TRUE 
+  , plot_diag = FALSE 
   )
 
 rmout

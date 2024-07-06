@@ -3,9 +3,9 @@
 #' Function to remove outliers in MET experiments
 #'
 #' @param data Experimental design data frame with the factors and traits.
-#' @param trait Name of the trait.
-#' @param model The fixed or random effects in the model.
+#' @param formula mixed model formula.
 #' @param drop_na drop NA values from the data.frame
+#' @param plot_diag Diagnostic plot based in the raw and clean data
 #'
 #' @description
 #'
@@ -30,11 +30,10 @@
 #'
 #' library(inti)
 #'
-#' rmout <- remove_outliers(
-#'   data = potato
-#'   , formula = stemdw ~ 0 + (1|bloque) + treat*geno  + geno
+#' rmout <- remove_outliers(data = potato
+#'   , formula = stemdw ~ 0 + (1|bloque) + treat*geno
 #'   , drop_na = FALSE
-#'   , plot_diag = TRUE 
+#'   , plot_diag = FALSE 
 #'   )
 #' 
 #' rmout
@@ -47,7 +46,7 @@ remove_outliers <- function(data
                             ) {
   
   # data = potato; drop_na = TRUE; plot_diag = TRUE
-  # formula = stemdw ~ 0  + (1|bloque) + treat*geno+ geno
+  # formula = stemdw ~ 0  + (1|bloque) + treat*geno
   
   out_flag <- bholm <- NULL
 

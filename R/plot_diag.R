@@ -7,17 +7,19 @@
 #'
 #' @return plots
 #' 
+#' @importFrom stats density
+#' 
 #' @export
 #' 
 #' @examples
 #' 
 #' \dontrun{
 #' 
-#' dt <- potato
+#' library(inti)
 #' 
-#' lm <- aov(stemdw ~ bloque + geno*treat, dt)
+#' lm <- aov(stemdw ~ bloque + geno*treat, data = potato)
 #' 
-#' #lm <- lme4::lmer(stemdw ~ bloque + (1|geno:treat), dt)
+#' #lm <- lme4::lmer(stemdw ~ bloque + (1|geno:treat), data = potato)
 #'  
 #' plot(lm, which = 1)
 #' plot_diag(lm)[3]
@@ -52,7 +54,7 @@ plot_diag <- function( model, title = NA) {
   
   # Histogram
   p1 <- ggplot(dt , aes(.data$.resid)) +
-    geom_histogram(aes(y = after_stat(density)), 
+    geom_histogram(aes(y = ggplot2::after_stat(density)), 
                    color = "black", fill = "grey82", bins = 30) + 
     stat_function(fun = stats::dnorm, color = "blue", args = list(mean = 0, sd = sd(dt$.resid))) +
     theme_bw() +
