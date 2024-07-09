@@ -30,10 +30,10 @@
 #'
 #' library(inti)
 #'
-#' rmout <- outliers_remove(
-#'   data = potato
+#' rmout <- potato %>% outliers_remove(
+#'   data = .
 #'   , trait ="stemdw"
-#'   , model = "0 + treat*geno + (1|bloque) + geno"
+#'   , model = "0 + treat*geno + (1|bloque)"
 #'   , drop_na = FALSE
 #'   )
 #' 

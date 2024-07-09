@@ -2,7 +2,7 @@
 % Please edit documentation in R/remove_outliers.R
 \name{remove_outliers}
 \alias{remove_outliers}
-\title{Remove outliers}
+\title{Remove outliers using mixed models}
 \usage{
 remove_outliers(data, formula, drop_na = TRUE, plot_diag = FALSE)
 }
@@ -30,10 +30,9 @@ Function to remove outliers in MET experiments
 
 library(inti)
 
-rmout <- remove_outliers(data = potato
+rmout <- potato \%>\%
+  remove_outliers(data = .
   , formula = stemdw ~ 0 + (1|bloque) + treat*geno
-  , drop_na = FALSE
-  , plot_diag = FALSE 
   )
 
 rmout

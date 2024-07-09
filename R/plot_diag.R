@@ -19,7 +19,7 @@
 #' 
 #' lm <- aov(stemdw ~ bloque + geno*treat, data = potato)
 #' 
-#' #lm <- lme4::lmer(stemdw ~ bloque + (1|geno:treat), data = potato)
+#' # lm <- potato %>% lme4::lmer(stemdw ~ (1|bloque) + geno*treat, data = .)
 #'  
 #' plot(lm, which = 1)
 #' plot_diag(lm)[3]
@@ -36,7 +36,9 @@
 #' }
 #' 
 
-plot_diag <- function( model, title = NA) {
+plot_diag <- function(model, title = NA) {
+  
+  # model  <-  potato %>% lme4::lmer(stemdw ~ (1|bloque) + geno*treat, data = .)
   
   stopifnot(class(model) %in% c("lm", "aov", "lmerMod"))
   
@@ -104,7 +106,6 @@ plot_diag <- function( model, title = NA) {
     ggtitle("Residual vs Leverage Plot") + 
     scale_size_continuous("Cook's Distance", range=c(1,5)) + 
     theme_bw() + theme(legend.position="bottom")
-  
   
   return(list(histogram = p1
               , qqplot = p2

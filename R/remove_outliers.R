@@ -1,4 +1,4 @@
-#' Remove outliers
+#' Remove outliers using mixed models
 #'
 #' Function to remove outliers in MET experiments
 #'
@@ -29,13 +29,12 @@
 #' @examples
 #'
 #' library(inti)
-#'
-#' rmout <- remove_outliers(data = potato
-#'   , formula = stemdw ~ 0 + (1|bloque) + treat*geno
-#'   , drop_na = FALSE
-#'   , plot_diag = FALSE 
-#'   )
 #' 
+#' rmout <- potato %>%
+#'   remove_outliers(data = .
+#'   , formula = stemdw ~ 0 + (1|bloque) + treat*geno
+#'   )
+#'
 #' rmout
 #'   
 
@@ -49,7 +48,8 @@ remove_outliers <- function(data
   # formula = stemdw ~ 0  + (1|bloque) + treat*geno
   
   out_flag <- bholm <- NULL
-
+  
+  formula <- as.formula(formula)
   factors <- all.vars(formula)
   trait <- factors[1]
   mdfct <- factors[-1]
@@ -98,29 +98,13 @@ remove_outliers <- function(data
     {if (isTRUE(drop_na)) {drop_na(data = ., any_of({{trait}}))} else {.}} %>% 
     select({{factors}}) %>%
     relocate({{trait}}, .after = last_col())
-  
-  diag <- if(plot_diag == TRUE) {
     
-    mdi <- model %>% 
-      plot_diag() %>% 
-      cowplot::plot_grid(plotlist = ., nrow = 1
-                         , labels = "Row Data")
-    
-    mdf <- lme4::lmer(formula, nwdt) %>% 
-      plot_diag() %>% 
-      cowplot::plot_grid(plotlist = ., nrow = 1
-                       , labels = "Clean Data")
-    
-    list(mdi, mdf) %>% 
-      cowplot::plot_grid(plotlist = ., nrow = 2)
-    
-    } else { NULL }
-  
+  modelf <- lme4::lmer(formula = formula, data = nwdt)
 
   list(
     data = nwdt
     , outliers = outliers
-    , plot_diag = diag
+    , model = list(raw = model, clean = modelf)
     )
 
 }

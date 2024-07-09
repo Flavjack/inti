@@ -25,7 +25,7 @@ library(inti)
 
 lm <- aov(stemdw ~ bloque + geno*treat, data = potato)
 
-#lm <- lme4::lmer(stemdw ~ bloque + (1|geno:treat), data = potato)
+# lm <- potato \%>\% lme4::lmer(stemdw ~ (1|bloque) + geno*treat, data = .)
  
 plot(lm, which = 1)
 plot_diag(lm)[3]
