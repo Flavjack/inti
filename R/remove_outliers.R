@@ -33,6 +33,7 @@
 #' rmout <- potato %>%
 #'   remove_outliers(data = .
 #'   , formula = stemdw ~ 0 + (1|bloque) + treat*geno
+#'   , plot_diag = FALSE
 #'   )
 #'
 #' rmout
@@ -40,7 +41,7 @@
 
 remove_outliers <- function(data
                             , formula
-                            , drop_na = TRUE
+                            , drop_na = FALSE
                             , plot_diag = FALSE
                             ) {
   
@@ -100,11 +101,28 @@ remove_outliers <- function(data
     relocate({{trait}}, .after = last_col())
     
   modelf <- lme4::lmer(formula = formula, data = nwdt)
+  
+  diagplot <- if(isTRUE(plot_diag)) {
+    
+    raw <- data %>% 
+      plot_diagnostic(formula) %>% 
+      cowplot::plot_grid(nrow = 1, plotlist = ., labels = "Raw data")
+    
+    clean <- nwdt %>% 
+      plot_diagnostic(formula) %>% 
+      cowplot::plot_grid(nrow = 1, plotlist = ., labels = "Clean data")
+    
+    list(raw, clean) %>% 
+      cowplot::plot_grid(nrow = 2, plotlist = .)
+    
+    } else { NULL }
+  
 
   list(
-    data = nwdt
+    data = list(raw = data, clean = nwdt)
     , outliers = outliers
+    , diagplot = diagplot
     , model = list(raw = model, clean = modelf)
     )
-
+  
 }

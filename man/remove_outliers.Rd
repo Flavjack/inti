@@ -4,7 +4,7 @@
 \alias{remove_outliers}
 \title{Remove outliers using mixed models}
 \usage{
-remove_outliers(data, formula, drop_na = TRUE, plot_diag = FALSE)
+remove_outliers(data, formula, drop_na = FALSE, plot_diag = FALSE)
 }
 \arguments{
 \item{data}{Experimental design data frame with the factors and traits.}
@@ -33,6 +33,7 @@ library(inti)
 rmout <- potato \%>\%
   remove_outliers(data = .
   , formula = stemdw ~ 0 + (1|bloque) + treat*geno
+  , plot_diag = FALSE
   )
 
 rmout
