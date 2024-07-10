@@ -34,6 +34,7 @@
 #'   remove_outliers(data = .
 #'   , formula = stemdw ~ 0 + (1|bloque) + treat*geno
 #'   , plot_diag = FALSE
+#'   , drop_na = FALSE
 #'   )
 #'
 #' rmout
@@ -45,7 +46,7 @@ remove_outliers <- function(data
                             , plot_diag = FALSE
                             ) {
   
-  # data = potato; drop_na = TRUE; plot_diag = TRUE
+  # data = potato; drop_na = F; plot_diag = T
   # formula = stemdw ~ 0  + (1|bloque) + treat*geno
   
   out_flag <- bholm <- NULL
@@ -55,10 +56,16 @@ remove_outliers <- function(data
   trait <- factors[1]
   mdfct <- factors[-1]
   
-  model <- lme4::lmer(formula, data)
+  rawdt <- data %>% 
+    tibble::rownames_to_column("index") %>% 
+    tidyr::drop_na({{trait}}) %>% 
+    dplyr::select("index", {{factors}}) %>%
+    dplyr::relocate({{trait}}, .after = last_col()) 
+  
+  modeli <- lme4::lmer(formula, rawdt)
   
   # re-scaled MAD
-  resi <- cbind(residuals(model, type = "response"))
+  resi <- cbind(residuals(modeli, type = "response"))
   medi <- median(resi, na.rm = TRUE)
   MAD <- median((abs(resi-medi)), na.rm = TRUE)
   re_MAD <- MAD*1.4826
@@ -71,10 +78,7 @@ remove_outliers <- function(data
   # Calculate adjusted p-values
   rawp.BHStud <- 2 * (1 - pnorm(abs(res_MAD))) 
 
-  newdt <- data %>%
-    select({{factors}}) %>%
-    relocate({{trait}}, .after = last_col()) %>%
-    drop_na() %>% # fix model test bug?
+  newdt <- rawdt %>% 
     cbind.data.frame(., resi, res_MAD, rawp.BHStud)
 
   # Produce a Bonferroni-Holm tests for the adjusted p-values
@@ -87,30 +91,35 @@ remove_outliers <- function(data
     rownames_to_column("index") %>% 
     mutate(out_flag = ifelse(bholm <0.05, "OUTLIER", "."))
 
-  outliers <- cbind(newdt, BHStud_test) %>%
+  outliers <- merge(newdt, BHStud_test) %>%
     dplyr::filter(out_flag %in% "OUTLIER")
 
-  nwdt <- cbind(newdt, BHStud_test) %>%
-    mutate({{trait}} := case_when(
+  cleandt <- merge(newdt, BHStud_test) %>%
+    dplyr::mutate({{trait}} := case_when(
       !out_flag %in% "OUTLIER" ~ as.character(.data[[trait]])
       , TRUE ~ NA_character_
     )) %>% 
-    mutate(across({{trait}}, as.numeric)) %>% 
+    dplyr::mutate(across({{trait}}, as.numeric)) %>% 
     {if (isTRUE(drop_na)) {drop_na(data = ., any_of({{trait}}))} else {.}} %>% 
-    select({{factors}}) %>%
-    relocate({{trait}}, .after = last_col())
-    
-  modelf <- lme4::lmer(formula = formula, data = nwdt)
+    dplyr::select(1:{{trait}}) %>% 
+    dplyr::mutate(across(.data$index, ~ as.numeric(.))) %>% 
+    dplyr::arrange(.data$index)
+  
+  modelf <- lme4::lmer(formula, cleandt)
   
   diagplot <- if(isTRUE(plot_diag)) {
     
-    raw <- data %>% 
+    raw <- rawdt %>% 
+      tidyr::drop_na({{trait}}) %>%
       plot_diagnostic(formula) %>% 
-      cowplot::plot_grid(nrow = 1, plotlist = ., labels = "Raw data")
+      cowplot::plot_grid(nrow = 1, plotlist = .
+                         , labels = paste("Raw data:", {{trait}}))
     
-    clean <- nwdt %>% 
+    clean <- cleandt %>% 
+      tidyr::drop_na({{trait}}) %>%
       plot_diagnostic(formula) %>% 
-      cowplot::plot_grid(nrow = 1, plotlist = ., labels = "Clean data")
+      cowplot::plot_grid(nrow = 1, plotlist = .
+                         , labels = paste("Clean data:", trait))
     
     list(raw, clean) %>% 
       cowplot::plot_grid(nrow = 2, plotlist = .)
@@ -119,10 +128,10 @@ remove_outliers <- function(data
   
 
   list(
-    data = list(raw = data, clean = nwdt)
+    data = list(raw = rawdt, clean = cleandt)
     , outliers = outliers
     , diagplot = diagplot
-    , model = list(raw = model, clean = modelf)
+    , model = list(raw = modeli, clean = modelf)
     )
   
 }

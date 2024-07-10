@@ -9,8 +9,8 @@
 # inti 0.6.6
 
 - Package
-  - Update function to outliers_remove => "`remove_outliers`"
-  - Update function `plot_diag()` 
+  - New function related `outliers_remove()` => "`remove_outliers`" to work with formula
+  - New function related `plot_diag()`  => "`plot_diagnostic`" to work with formula
   
 - Rticles
   - Fix Tables and Figures order in final document

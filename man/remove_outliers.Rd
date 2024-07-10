@@ -34,6 +34,7 @@ rmout <- potato \%>\%
   remove_outliers(data = .
   , formula = stemdw ~ 0 + (1|bloque) + treat*geno
   , plot_diag = FALSE
+  , drop_na = FALSE
   )
 
 rmout
