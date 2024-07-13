@@ -88,13 +88,15 @@ remove_outliers <- function(data
   BHStud_test <- tibble(adjp = rawp.BHStud
                         , bholm = test.BHStud
                         ) %>% 
-    rownames_to_column("index") %>% 
+    # rownames_to_column("index") %>% 
     mutate(out_flag = ifelse(bholm <0.05, "OUTLIER", "."))
-
-  outliers <- merge(newdt, BHStud_test) %>%
+  
+  mrgdt <- cbind(newdt, BHStud_test)
+  
+  outliers <- mrgdt %>%
     dplyr::filter(out_flag %in% "OUTLIER")
 
-  cleandt <- merge(newdt, BHStud_test) %>%
+  cleandt <- mrgdt %>%
     dplyr::mutate({{trait}} := case_when(
       !out_flag %in% "OUTLIER" ~ as.character(.data[[trait]])
       , TRUE ~ NA_character_
