@@ -30,7 +30,7 @@ fieldbook <- inti::potato
 
 traits <- list(
   list(variable = "altura de planta"
-       , abbreviation = "altp"
+       , trait = "altp"
        , format = "numeric"
        , when = "30, 40, 50"
        , samples = 3
@@ -40,8 +40,8 @@ traits <- list(
        , maximum = 100
        )
   , list(variable = "severidad"
-         , abbreviation = "svr"
-         , format = "categorical"
+         , trait = "svr"
+         , format = "scategorical"
          , when = "30, 40, 50"
          , samples = 1
          , units = "scale"
@@ -49,7 +49,7 @@ traits <- list(
          , categories = "1, 3, 5, 7, 9"
   )
   ,  list(variable = "foto"
-          , abbreviation = "foto"
+          , trait = "foto"
           , format = "photo"
           , when = "hrv, pshrv"
           , samples = 1
@@ -57,7 +57,7 @@ traits <- list(
           , details = NA
   )
   ,  list(variable = "germinacion"
-          , abbreviation = "ger"
+          , trait = "ger"
           , format = "boolean"
           , when = "30, 40, 50"
           , samples = 1
@@ -74,19 +74,19 @@ library(inti)
 library(gsheet)
 
 url_fb <- paste0("https://docs.google.com/spreadsheets/d/"
-       , "1kIoI__uHQpZ8qXMPFoZpimBhywU8J0Rw49KgjJcovMY/edit#gid=2128359606")
+       , "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1607116093#gid=1607116093")
        
 fb <- gsheet2tbl(url_fb) 
 
 url_ds <- paste0("https://docs.google.com/spreadsheets/d/"
-       , "1kIoI__uHQpZ8qXMPFoZpimBhywU8J0Rw49KgjJcovMY/edit#gid=1559599083")
+       , "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1278145622#gid=1278145622")
        
 ds <- gsheet2tbl(url_ds) 
 
 fb <- ds \%>\% tarpuy_design()
 
 url_trt <- paste0("https://docs.google.com/spreadsheets/d/"
-       , "1fBSnEq6CmYKK9Pdxlz0egEEflezJRnlAOylQwbythBE/edit#gid=179601173")
+       , "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1665653985#gid=1665653985")
        
 traits <- gsheet2tbl(url_trt) 
 

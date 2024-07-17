@@ -15,7 +15,6 @@ cran <- c(
   , "googleAuthR"
   , "shinydashboard"
   , "tidyverse"
-  , "stringi"
 )
 
 git <- c("Flavjack/inti")

@@ -31,7 +31,6 @@ Imports:
     emmeans, 
     purrr, 
     stringr, 
-    stringi,
     googlesheets4,
     DT
 Suggests:

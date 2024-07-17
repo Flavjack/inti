@@ -20,7 +20,7 @@
 #' 
 #' traits <- list(
 #'   list(variable = "altura de planta"
-#'        , abbreviation = "altp"
+#'        , trait = "altp"
 #'        , format = "numeric"
 #'        , when = "30, 40, 50"
 #'        , samples = 3
@@ -30,8 +30,8 @@
 #'        , maximum = 100
 #'        )
 #'   , list(variable = "severidad"
-#'          , abbreviation = "svr"
-#'          , format = "categorical"
+#'          , trait = "svr"
+#'          , format = "scategorical"
 #'          , when = "30, 40, 50"
 #'          , samples = 1
 #'          , units = "scale"
@@ -39,7 +39,7 @@
 #'          , categories = "1, 3, 5, 7, 9"
 #'   )
 #'   ,  list(variable = "foto"
-#'           , abbreviation = "foto"
+#'           , trait = "foto"
 #'           , format = "photo"
 #'           , when = "hrv, pshrv"
 #'           , samples = 1
@@ -47,7 +47,7 @@
 #'           , details = NA
 #'   )
 #'   ,  list(variable = "germinacion"
-#'           , abbreviation = "ger"
+#'           , trait = "ger"
 #'           , format = "boolean"
 #'           , when = "30, 40, 50"
 #'           , samples = 1
@@ -64,19 +64,19 @@
 #' library(gsheet)
 #' 
 #' url_fb <- paste0("https://docs.google.com/spreadsheets/d/"
-#'        , "1kIoI__uHQpZ8qXMPFoZpimBhywU8J0Rw49KgjJcovMY/edit#gid=2128359606")
+#'        , "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1607116093#gid=1607116093")
 #'        
 #' fb <- gsheet2tbl(url_fb) 
 #' 
 #' url_ds <- paste0("https://docs.google.com/spreadsheets/d/"
-#'        , "1kIoI__uHQpZ8qXMPFoZpimBhywU8J0Rw49KgjJcovMY/edit#gid=1559599083")
+#'        , "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1278145622#gid=1278145622")
 #'        
 #' ds <- gsheet2tbl(url_ds) 
 #' 
 #' fb <- ds %>% tarpuy_design()
 #' 
 #' url_trt <- paste0("https://docs.google.com/spreadsheets/d/"
-#'        , "1fBSnEq6CmYKK9Pdxlz0egEEflezJRnlAOylQwbythBE/edit#gid=179601173")
+#'        , "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1665653985#gid=1665653985")
 #'        
 #' traits <- gsheet2tbl(url_trt) 
 #' 
@@ -117,25 +117,27 @@ tarpuy_traits <- function(fieldbook = NULL
   
 # -------------------------------------------------------------------------
 
-  traitstb <- {
-    if(tibble::is_tibble(traits)) {
-      traits %>% 
-        dplyr::mutate(across(everything(), as.character)) %>% 
-        dplyr::rename_with(~ gsub("\\{|\\}", "", .)) %>% 
-        tidyr::drop_na(c("abbreviation")) %>% 
-        tibble::rownames_to_column() %>% 
-        tidyr::pivot_longer(!"rowname") %>% 
-        dplyr::group_split(.data$rowname, .keep = FALSE)  %>% 
-        purrr::map(~.x %>% deframe) 
-      } else if (purrr::is_list(traits)) { traits } 
-    } %>% 
+  traitstb <- traits %>%
     dplyr::bind_rows() %>% 
+    tibble::rowid_to_column() %>% 
+    tibble::rownames_to_column() %>% 
+    dplyr::mutate(across(everything(), ~ as.character(.))) %>% 
+    dplyr::rename_with(~ gsub("\\{|\\}", "", .)) %>% 
+    tidyr::drop_na(c("trait")) %>% 
+    tidyr::pivot_longer(!"rowname") %>% 
+    dplyr::group_split(.data$rowname, .keep = FALSE)  %>% 
+    purrr::map(~.x %>% deframe) %>% 
+    dplyr::bind_rows() %>% 
+    dplyr::mutate(across(.data$rowid, ~ as.numeric(.))) %>% 
+    dplyr::arrange(.data$rowid) %>% 
     tibble::add_column(!!!cols[!names(cols) %in% names(.)]) %>% 
     dplyr::rename("defaultValue" = "default") %>% 
-    dplyr::filter(!grepl("X", .data$abbreviation))
+    dplyr::filter(!grepl("X", .data$trait)) %>% 
+    dplyr::mutate(across("trait", ~ iconv(., to="ASCII//TRANSLIT"))) %>% 
+    dplyr::mutate(across("trait", ~gsub("[[:space:]]", ".", .))) 
   
   traitsnames <- traitstb %>% 
-    dplyr::select(any_of(c("abbreviation", "when", "samples"))) %>% 
+    dplyr::select(any_of(c("trait", "when", "samples"))) %>% 
     purrr::discard(~all(is.na(.))) %>% 
     names()
   
@@ -168,14 +170,19 @@ tarpuy_traits <- function(fieldbook = NULL
     )) %>% 
     dplyr::rowwise() %>% 
     dplyr::mutate(categories = case_when(
-      .data$format %in% "categorical" ~ .data$categories %>% 
-        gsub("[[:blank:]]", "", .) %>% 
+      .data$format %in% c("scategorical", "mcategorical") ~ .data$categories %>% 
+        # gsub("[[:blank:]]", "", .) %>% 
         strsplit(",|;") %>% 
         unlist() %>% 
-        purrr::map_chr(\(x) paste0('{"label":"', x, '","value":"', x, '"}')) %>% 
-        paste0(collapse = ", ") %>% 
+        purrr::map_chr(\(x) paste0('{"label":"', trimws(x) ,'","value":"', trimws(x),'"}')) %>% 
+        paste0(collapse = ",") %>% 
         paste0("[", ., "]")
       , TRUE ~ as.character("[]")
+    )) %>% 
+    dplyr::mutate(format = case_when(
+      .data$format %in% c("scategorical") ~ "categorical"
+      , .data$format %in% c("mcategorical") ~ "multicat"
+      , TRUE ~ .data$format
     )) %>% 
     dplyr::select(all_of(c("trait"
                   , "format"
@@ -188,14 +195,14 @@ tarpuy_traits <- function(fieldbook = NULL
                   , "realPosition"
                   )))
   
-  # fbapp %>% write_delim(file = "traitsx.trt", delim = ",", quote = "all", na = '""')
+  # fbapp %>% readr::write_delim(file = "traitsx.trt", delim = ",", quote = "all", na = '""')
   
 # -------------------------------------------------------------------------
   
   traitsnames <- fbapp %>% 
     dplyr::select(.data$trait) %>% 
     dplyr::mutate("blank" := NA) %>% 
-    tidyr::pivot_wider(names_from = .data$trait, values_from = .data$blank)
+    tidyr::pivot_wider(names_from = "trait", values_from = "blank")
 
   fbtraits <- fb %>% 
     merge(.

@@ -158,8 +158,8 @@ seed <- if(is.null(arguments$seed) || is.na(arguments$seed) || arguments$seed ==
   
 fbname <- if(is.null(arguments$fbname) || is.na(arguments$fbname) || arguments$fbname == "") { fbname
 } else {arguments$fbname} %>% 
-  stringi::stri_trans_general("Latin-ASCII") %>%
-  stringr::str_to_upper() %>% 
+  iconv(., to="ASCII//TRANSLIT") %>%
+  toupper() %>% 
   gsub("[[:space:]]", "-", .)
 
 # -------------------------------------------------------------------------
