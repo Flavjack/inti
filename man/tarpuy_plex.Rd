@@ -32,7 +32,8 @@ tarpuy_plex(
   zigzag = FALSE,
   nrows = NA,
   serie = 100,
-  seed = 0
+  seed = 0,
+  qrcode = "{fbname}{plots}{factors}"
 )
 }
 \arguments{
@@ -91,6 +92,8 @@ tarpuy_plex(
 \item{serie}{Number of digits in the plots.}
 
 \item{seed}{Seed for the randomization.}
+
+\item{qrcode}{[string: "\{fbname\}\{plots\}\{factors\}"] String to concatenate the qr code.}
 }
 \value{
 data frame or list of arguments:

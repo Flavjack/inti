@@ -14,6 +14,7 @@
 #' @param seed Replicability of draw results (default = 0) always random. See
 #'   details.
 #' @param fbname Barcode prefix for data collection.
+#' @param qrcode [string: "\{fbname\}\{plots\}\{factors\}"] String to concatenate the qr code.
 #'
 #' @details The function allows to include the arguments in the sheet that have
 #'   the information of the design. You should include 2 columns in the sheet:
@@ -34,7 +35,7 @@
 #' library(gsheet)
 #' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "1_BVzChX_-lzXhB7HAm6FeSrwq9iKfZ39_Sl8NFC6k7U/edit#gid=1868565342")
+#'               , "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1479851579#gid=1479851579")
 #' # browseURL(url)
 #' 
 #' fb <- gsheet2tbl(url) 
@@ -55,6 +56,7 @@ tarpuy_design <- function(data
                           , serie = 100
                           , seed = NULL
                           , fbname = NA
+                          , qrcode = "{fbname}{plots}{factors}"
                           ) {
 
 plots <- Row.names <- factors <- where <- NULL
@@ -162,6 +164,9 @@ fbname <- if(is.null(arguments$fbname) || is.na(arguments$fbname) || arguments$f
   toupper() %>% 
   gsub("[[:space:]]", "-", .)
 
+qrcode <- if(is.null(arguments$fbname) || is.na(arguments$fbname) || arguments$fbname == "") { qrcode
+} else {arguments$qrcode} 
+
 # -------------------------------------------------------------------------
 
 factor_names <- dt_factors %>%
@@ -190,6 +195,7 @@ design <- if(nfactors == 1 & rep == 1) {
                 , serie = serie
                 , seed = seed
                 , fbname = fbname
+                , qrcode = qrcode
                 ) %>% purrr::pluck(1)
   } else {
     
@@ -203,6 +209,7 @@ design <- if(nfactors == 1 & rep == 1) {
       , serie = serie
       , seed = seed
       , fbname = fbname
+      , qrcode = qrcode
       )  %>% purrr::pluck(1)
   
 }

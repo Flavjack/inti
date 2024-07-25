@@ -13,7 +13,8 @@ design_repblock(
   nrows = NA,
   serie = 100,
   seed = NULL,
-  fbname = "inkaverse"
+  fbname = "inkaverse",
+  qrcode = "{fbname}{plots}{factors}"
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ design_repblock(
 \item{seed}{Replicability from randomization [numeric: NULL].}
 
 \item{fbname}{Bar code prefix for data collection [string: "inkaverse"].}
+
+\item{qrcode}{[string: "\{fbname\}\{plots\}\{factors\}"] String to concatenate the qr code.}
 }
 \value{
 A list with the field-book design and parameters
@@ -59,6 +62,7 @@ fb <-design_repblock(nfactors = 2
                      , zigzag = T
                      , seed = 0
                      , nrows = 20
+                     , qrcode = "{fbname}{plots}{factors}"
                      )
                      
 dsg <- fb$fieldbook

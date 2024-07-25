@@ -9,6 +9,7 @@
 #' @param nrows Experimental design dimension by rows [numeric: value]
 #' @param seed Replicability from randomization [numeric: NULL].
 #' @param fbname Bar code prefix for data collection [string: "inkaverse"].
+#' @param qrcode [string: "\{fbname\}\{plots\}\{factors\}"] String to concatenate the qr code.
 #'
 #' @return A list with the field-book design and parameters
 #' 
@@ -38,12 +39,13 @@
 #' }
 
 design_noreps <- function(factors
-                            , type = "sorted"
-                            , zigzag = FALSE
-                            , nrows = NA
-                            , serie = 100
-                            , seed = NULL
-                            , fbname = "inkaverse"
+                          , type = "sorted"
+                          , zigzag = FALSE
+                          , nrows = NA
+                          , serie = 100
+                          , seed = NULL
+                          , fbname = "inkaverse"
+                          , qrcode = "{fbname}{plots}{factors}"
                             ) {
   
   # factors <- factores
@@ -68,6 +70,17 @@ design_noreps <- function(factors
   ncols <- dfactors %>% 
     unlist() %>% 
     length()/nrows; ncols <- ceiling(ncols)
+  
+  # qr-code name
+  
+  qrcolumns <- qrcode %>% 
+    gsub("factors", paste0(name.factors, collapse = "\\}\\{"), .) %>% 
+    strsplit(., split = "\\}\\{") %>% 
+    unlist() %>% 
+    gsub("\\{|\\}", "", .) %>% 
+    trimws()
+  
+  # design
   
   fb <- dfactors %>% 
     expand.grid() %>% 
@@ -95,8 +108,8 @@ design_noreps <- function(factors
     dplyr::select(.data$plots, .data$ntreat, {{name.factors}}, .data$sort, everything()) %>% 
     dplyr::mutate(across(.data$cols, as.numeric)) %>% 
     dplyr::mutate(fbname = fbname) %>% 
-    tidyr::unite("barcode", .data$fbname, .data$plots, {{name.factors}}, .data$rows, .data$cols
-                 , sep = "_", remove = F) %>% 
+    tidyr::unite("qrcode", any_of({{qrcolumns}}), sep = "_", remove = F) %>% 
+    dplyr::select(.data$qrcode, dplyr::everything()) %>% 
     dplyr::select(!c(.data$icols, .data$fbname)) 
   
   result <- list(

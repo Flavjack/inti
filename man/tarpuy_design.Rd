@@ -13,7 +13,8 @@ tarpuy_design(
   nrows = NA,
   serie = 100,
   seed = NULL,
-  fbname = NA
+  fbname = NA,
+  qrcode = "{fbname}{plots}{factors}"
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ details.}
 details.}
 
 \item{fbname}{Barcode prefix for data collection.}
+
+\item{qrcode}{[string: "\{fbname\}\{plots\}\{factors\}"] String to concatenate the qr code.}
 }
 \value{
 A list with the fieldbook design
@@ -60,7 +63,7 @@ library(inti)
 library(gsheet)
 
 url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1_BVzChX_-lzXhB7HAm6FeSrwq9iKfZ39_Sl8NFC6k7U/edit#gid=1868565342")
+              , "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1479851579#gid=1479851579")
 # browseURL(url)
 
 fb <- gsheet2tbl(url) 

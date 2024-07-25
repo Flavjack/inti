@@ -18,7 +18,8 @@
 - Tarpuy
   - Change name of the trait tab from `abbreviation` to `trait`
   - Update traits tab for include two formats: `date` and `mcategorical`
-  - Fix sort of the traits in fielbook app
+  - Fix sort of the traits in field book app
+  - New option for generate the qr-code for each plot
   
 # inti 0.6.5
 

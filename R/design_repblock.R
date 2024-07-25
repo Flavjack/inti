@@ -11,6 +11,7 @@
 #' @param nrows Experimental design dimension by rows [numeric: value]
 #' @param seed Replicability from randomization [numeric: NULL].
 #' @param fbname Bar code prefix for data collection [string: "inkaverse"].
+#' @param qrcode [string: "\{fbname\}\{plots\}\{factors\}"] String to concatenate the qr code.
 #'
 #' @return A list with the field-book design and parameters
 #' 
@@ -34,6 +35,7 @@
 #'                      , zigzag = T
 #'                      , seed = 0
 #'                      , nrows = 20
+#'                      , qrcode = "{fbname}{plots}{factors}"
 #'                      )
 #'                      
 #' dsg <- fb$fieldbook
@@ -54,9 +56,12 @@ design_repblock <- function(nfactors = 1
                             , serie = 100
                             , seed = NULL
                             , fbname = "inkaverse"
+                            , qrcode = "{fbname}{plots}{factors}"
                             ) {
   
-  # factors <- factores; nrows = 6
+  # nfactors = 2; factors = factores; type = "crd"; rep = 3
+  # zigzag = FALSE; nrows = NA; serie = 100; seed = NULL
+  # fbname = "inkaverse"; qrcode = "{fbname}{plot}{treat}"
   
   set.seed(seed)
   
@@ -65,7 +70,7 @@ design_repblock <- function(nfactors = 1
     purrr::map(base::unique) %>% 
     purrr::map(stats::na.omit) %>% 
     purrr::map(~gsub("[[:space:]]", ".", .)) %>% 
-    purrr::set_names(gsub("[[:space:]]", "." , names(.))) %>% 
+    purrr::set_names(gsub("[[:space:]]", "_" , names(.))) %>% 
     .[1:nfactors]
   
   nrowsfb <- dfactors %>% lengths() %>% prod()*rep
@@ -78,6 +83,16 @@ design_repblock <- function(nfactors = 1
   
   ncols <- nrowsfb/nrows; ncols <- ceiling(ncols)
   
+  # qr-code name
+  
+  qrcolumns <- qrcode %>% 
+    gsub("factors", paste0(name.factors, collapse = "\\}\\{"), .) %>% 
+    strsplit(., split = "\\}\\{") %>% 
+    unlist() %>% 
+    gsub("\\{|\\}", "", .) %>% 
+    trimws()
+  
+  # design
   
   if(type == "lsd") {
     
@@ -128,8 +143,8 @@ design_repblock <- function(nfactors = 1
     dplyr::select(.data$plots, .data$ntreat, {{name.factors}}, .data$sort, everything()) %>% 
     dplyr::mutate(across(.data$cols, as.numeric)) %>% 
     dplyr::mutate(fbname = fbname) %>% 
-    tidyr::unite("barcode", .data$fbname, .data$plots, {{name.factors}}, .data$rows, .data$cols
-                 , sep = "_", remove = F) %>% 
+    tidyr::unite("qrcode", any_of({{qrcolumns}}), sep = "_", remove = F) %>% 
+    dplyr::select(.data$qrcode, dplyr::everything()) %>% 
     dplyr::select(!c(.data$icols, .data$fbname)) 
   
   result <- list(

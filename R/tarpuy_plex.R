@@ -30,6 +30,7 @@
 #' @param nrows Experimental design dimension by rows [numeric: value]
 #' @param serie Number of digits in the plots.
 #' @param seed Seed for the randomization.
+#' @param qrcode [string: "\{fbname\}\{plots\}\{factors\}"] String to concatenate the qr code.
 #'
 #' @details
 #'
@@ -76,6 +77,7 @@ tarpuy_plex <- function(data = NULL
                         , nrows = NA
                         , serie = 100
                         , seed = 0
+                        , qrcode = "{fbname}{plots}{factors}"
                          ) {
   
   
@@ -277,6 +279,7 @@ dsg_info <-  c(nfactors = nfactor
               , serie = serie
               , seed = seedset
               , fbname = barcode
+              , qrcode = qrcode
               ) %>%
   enframe() %>%
   rename('{arguments}' = .data$name, '{values}' = .data$value)
