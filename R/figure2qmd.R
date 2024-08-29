@@ -42,9 +42,9 @@ figure2qmd <- function(text
       tidyr::pivot_longer(!.data$num) %>% 
       dplyr::mutate(opt = dplyr::case_when(
         .data$name %in% "label" ~ paste0("#| label: ", "fig-",.data$value)
-        , .data$name %in% "caption" ~ paste0("#| fig-cap: '", .data$value, "'")
+        , .data$name %in% "caption" ~ paste0('#| fig-cap: "', .data$value, '"')
         , .data$name %in% "opts" ~ .data$value %>% gsub(",", "\n#|", .) %>% paste("#|", .)
-        , .data$name %in% "img" ~ paste0("\nknitr::include_graphics('", file.path(path, .data$value) %>% gsub("\\\\", "\\/", .),"')")
+        , .data$name %in% "img" ~ paste0('\nknitr::include_graphics("', file.path(path, .data$value) %>% gsub("\\\\", "\\/", .),'")')
       )) %>% 
       tidyr::drop_na(.data$opt) %>% 
       dplyr::select(.data$opt) %>% 

@@ -26,7 +26,7 @@ table2qmd <- function(text, type = "asis") {
       tidyr::pivot_longer(!.data$num) %>% 
       dplyr::mutate(opt = dplyr::case_when(
         .data$name %in% "id" ~ paste0("#| label: ", .data$value)
-        , .data$name %in% "title" ~ paste0("#| tbl-cap: '", .data$value, "'")
+        , .data$name %in% "title" ~ paste0('#| tbl-cap: "', .data$value, '"')
       )) %>% 
       dplyr::select(.data$opt) %>% 
       purrr::as_vector() %>% 

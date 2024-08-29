@@ -119,6 +119,9 @@ gdoc2qmd <- function(file
       grepl("#tbl", .data$value) ~ .data$name
     )) %>% 
     tidyr::fill(., .data$group, .direction = "up") %>% 
+    dplyr::mutate(group = case_when(
+      group %in% NA ~ 1
+    )) %>% 
     split(.$group) %>% 
     purrr::map_dfr(~ slice(.data = ., c(n(),  1:(n()-1)))) %>% 
     split(.$group) %>% 
