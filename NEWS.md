@@ -1,4 +1,4 @@
-# inti2improve
+# inti4improve
 
   - Improve PCA supplementary variables
   - Select the dimension in PCA
