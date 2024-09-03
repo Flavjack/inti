@@ -11,7 +11,7 @@ vignette: >
 
 *Inkaverse* maintains several web apps that make it easier to work with Google APIs from R:
 
--   [Yupana](https://flavjack.shinyapps.io/yupanapro/) wraps the [Sheets API](https://developers.google.com/sheets/api/)
+-   [Yupana](https://flavjack.shinyapps.io/yupana/) wraps the [Sheets API](https://developers.google.com/sheets/api/)
 
 -   [Tarpuy](https://flavjack.shinyapps.io/tarpuy/) wraps the [Sheets API](https://developers.google.com/sheets/api/)
 
