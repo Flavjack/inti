@@ -108,6 +108,7 @@ reference:
   - H2cal
   - metamorphosis
   - outliers_remove
+  - remove_outliers
   - mean_comparison
   - starts_with("design")
 - title: Datasets
