@@ -120,7 +120,8 @@ gdoc2qmd <- function(file
     )) %>% 
     tidyr::fill(., .data$group, .direction = "up") %>% 
     dplyr::mutate(group = case_when(
-      group %in% NA ~ 1
+      is.na(.data$group) ~ 1
+      , .default = .data$group 
     )) %>% 
     split(.$group) %>% 
     purrr::map_dfr(~ slice(.data = ., c(n(),  1:(n()-1)))) %>% 
@@ -171,13 +172,13 @@ gdoc2qmd <- function(file
         
       }
     } %>% 
-    tibble::add_row(value = "\\newpage", .before = which(grepl("statements and declarations$", .$value, ignore.case = TRUE))) %>% 
-    tibble::add_row(value = "\\newpage", .before = which(grepl("# abstract$", .$value, ignore.case = TRUE))) %>% 
-    tibble::add_row(value = "\\newpage", .before = which(grepl("# introduction$", .$value, ignore.case = TRUE))) %>% 
-    tibble::add_row(value = "\\newpage", .before = which(grepl("# materials and methods$", .$value, ignore.case = TRUE))) %>%
-    tibble::add_row(value = "\\newpage", .before = which(grepl("# results$", .$value, ignore.case = TRUE)))  %>% 
-    tibble::add_row(value = "\\newpage", .before = which(grepl("# discussion$", .$value, ignore.case = TRUE))) %>% 
-    tibble::add_row(value = "\\newpage", .before = which(grepl("# references$", .$value, ignore.case = TRUE))) %>% 
+    tibble::add_row(value = "\\newpage", .before = which(grepl("statements and declarations", .$value, ignore.case = TRUE))) %>%
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# abstract", .$value, ignore.case = TRUE))) %>%
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# introduction", .$value, ignore.case = TRUE))) %>%
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# materials and methods", .$value, ignore.case = TRUE))) %>%
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# results", .$value, ignore.case = TRUE)))  %>%
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# discussion", .$value, ignore.case = TRUE))) %>%
+    tibble::add_row(value = "\\newpage", .before = which(grepl("# references", .$value, ignore.case = TRUE))) %>%
     {
       if (any(grepl(pattern = '# abstract', x = .$value, ignore.case = TRUE))) {
         tibble::add_row(.data = ., value = paste(tt, "\n\n"),

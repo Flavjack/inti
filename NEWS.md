@@ -6,6 +6,11 @@
   - Include lattice
   - Include LCD
   
+# inti 0.6.7
+
+ - Rticles
+  - Fix table conversion when only is present one table
+  
 # inti 0.6.6
 
 - Package
