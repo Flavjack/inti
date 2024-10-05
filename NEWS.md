@@ -10,6 +10,8 @@
 
  - Rticles
   - Fix table conversion when only is present one table
+ - Yupana
+  - Avoid different bar widths
   
 # inti 0.6.6
 

@@ -239,7 +239,7 @@ if(type == "barra") {
            ) +
     
     geom_col(
-      position = position_dodge2()
+      position = position_dodge2(preserve = "single")
       , colour = "black"
       , size = 0.4
       , na.rm = T
