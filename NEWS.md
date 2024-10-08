@@ -5,6 +5,7 @@
   - Sub module for PCA with variable contribution and dimension correlation
   - Include lattice
   - Include LCD
+  - Dashboard for Tarpuy experiment progress
   
 # inti 0.6.7
 
@@ -12,6 +13,8 @@
   - Fix table conversion when only is present one table
  - Yupana
   - Avoid different bar widths
+ - Tarpuy
+  - Update budget template
   
 # inti 0.6.6
 
