@@ -6,6 +6,8 @@
   - Include lattice
   - Include LCD
   - Dashboard for Tarpuy experiment progress
+  - Repare agricolae table summary anova
+  - Export info sort
   
 # inti 0.6.7
 
@@ -13,6 +15,7 @@
   - Fix table conversion when only is present one table
  - Yupana
   - Avoid different bar widths
+  - New project template info
  - Tarpuy
   - Update budget template
   

@@ -375,37 +375,38 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
                                                               , "altitude"
                                                               , "georeferencing"
                                                               , "fieldbook"
+                                                              , "repository"
+                                                              , "project"
+                                                              , "manuscript"
                                                               , "album"
-                                                              , "github"
-                                                              , "gdocs"
                                                               )
                                                 , selected = c("manager"
                                                                , "location"
                                                                , "dates"
                                                                , "about"
                                                                , "environment"
-                                                               , "gdocs"
+                                                               , "project"
                                                                )
                              ),
 
                              textInput(inputId = "plex_logbook"
                                        , label = "Logbook (optional)"
                                        , width = "100%"
-                                       , value = NA
+                                       , value = "logbook"
                                        , placeholder = "sheet name"
                              ),
 
                              textInput(inputId = "plex_timetable"
                                        , label = "Timetable (optional)"
                                        , width = "100%"
-                                       , value = NA
+                                       , value = "schedule"
                                        , placeholder = "sheet name"
                              ),
 
                              textInput(inputId = "plex_budget"
                                        , label = "Budget (optional)"
                                        , width = "100%"
-                                       , value = NA
+                                       , value = "budget"
                                        , placeholder = "sheet name"
                              )
 
@@ -521,22 +522,22 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
                                               )
 
                              ),
-
-                             conditionalPanel(condition =  ' input["plex_fields"].includes("album") ',
-
-                                              textInput(inputId = "plex_album"
-                                                        , label = "Album"
+                             
+                             conditionalPanel(condition =  ' input["plex_fields"].includes("project") ',
+                                              
+                                              textInput(inputId = "plex_project"
+                                                        , label = "Project"
                                                         , width = "100%"
                                                         , placeholder = "url or link"
                                                         , value = NA
                                               )
-
+                                              
                              ),
 
-                             conditionalPanel(condition =  ' input["plex_fields"].includes("github") ',
+                             conditionalPanel(condition =  ' input["plex_fields"].includes("repository") ',
 
-                                              textInput(inputId = "plex_github"
-                                                        , label = "Github"
+                                              textInput(inputId = "plex_repository"
+                                                        , label = "Repository"
                                                         , width = "100%"
                                                         , placeholder = "url or link"
                                                         , value = NA
@@ -544,31 +545,44 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
 
                              ),
                              
-                             conditionalPanel(condition =  ' input["plex_fields"].includes("gdocs") ',
+                             conditionalPanel(condition =  ' input["plex_fields"].includes("manuscript") ',
                                               
-                                              textInput(inputId = "plex_gdocs"
-                                                        , label = "Google Docs"
+                                              textInput(inputId = "plex_manuscript"
+                                                        , label = "Manuscript"
+                                                        , width = "100%"
+                                                        , placeholder = "url or link"
+                                                        , value = NA
+                                              )
+                                              
+                             ),
+                             
+                             conditionalPanel(condition =  ' input["plex_fields"].includes("album") ',
+                                              
+                                              textInput(inputId = "plex_album"
+                                                        , label = "Album"
                                                         , width = "100%"
                                                         , placeholder = "url or link"
                                                         , value = NA
                                               )
                                               
                              )
+                             
+                             
                       ),
 
                       column(width = 5,
 
                              h5(icon("flask"), "Experimental plan"),
 
-                             textAreaInput(inputId = "plex_idea"
-                                           , label = "Idea"
-                                           , placeholder = "How the idea was born."
+                             textAreaInput(inputId = "plex_title"
+                                           , label = "Title"
+                                           , placeholder = "Project title"
                                            , width = "100%"
                              ),
-
-                             textAreaInput(inputId = "plex_goal"
-                                           , label = "Goal"
-                                           , placeholder = "The main goal of the project."
+                             
+                             textAreaInput(inputId = "plex_objectives"
+                                           , label = "Objectives"
+                                           , placeholder = "Objectives of the project."
                                            , width = "100%"
                              ),
 
@@ -584,10 +598,10 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
                                            , width = "100%"
 
                              ),
-
-                             textAreaInput(inputId = "plex_objectives"
-                                           , label = "Objectives"
-                                           , placeholder = "Objectives of the project."
+                             
+                             textAreaInput(inputId = "plex_references"
+                                           , label = "References"
+                                           , placeholder = "References for the project."
                                            , width = "100%"
                              ),
 

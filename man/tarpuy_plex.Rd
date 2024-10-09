@@ -6,11 +6,11 @@
 \usage{
 tarpuy_plex(
   data = NULL,
-  idea = NULL,
-  goal = NULL,
+  title = NULL,
+  objectives = NULL,
   hypothesis = NULL,
   rationale = NULL,
-  objectives = NULL,
+  references = NULL,
   plan = NULL,
   institutions = NULL,
   researchers = NULL,
@@ -23,8 +23,9 @@ tarpuy_plex(
   end = NA,
   about = NULL,
   fieldbook = NULL,
-  gdocs = NULL,
-  github = NULL,
+  project = NULL,
+  repository = NULL,
+  manuscript = NULL,
   album = NULL,
   nfactor = 2,
   design = "rcbd",
@@ -39,15 +40,15 @@ tarpuy_plex(
 \arguments{
 \item{data}{Data with the fieldbook information.}
 
-\item{idea}{How the idea was born.}
+\item{title}{Project title.}
 
-\item{goal}{The main goal of the project.}
+\item{objectives}{The objectives of the project.}
 
 \item{hypothesis}{What are the expected results.}
 
 \item{rationale}{Based in which evidence is planned the experiment.}
 
-\item{objectives}{The objectives of the project.}
+\item{references}{References.}
 
 \item{plan}{General description of the project (M & M).}
 
@@ -73,9 +74,11 @@ tarpuy_plex(
 
 \item{fieldbook}{Name or ID for the fieldbook/project.}
 
-\item{gdocs}{link for Google Docs}
+\item{project}{link for project.}
 
-\item{github}{link with the github repository.}
+\item{repository}{link to the repository.}
+
+\item{manuscript}{link for manuscript.}
 
 \item{album}{link with the photos of the project.}
 

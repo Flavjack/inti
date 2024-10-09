@@ -3,11 +3,11 @@
 #' Information for build a plan for an experiment (PLEX)
 #'
 #' @param data Data with the fieldbook information.
-#' @param idea How the idea was born.
-#' @param goal The main goal of the project.
+#' @param title Project title.
+#' @param objectives The objectives of the project.
 #' @param hypothesis What are the expected results.
 #' @param rationale Based in which evidence is planned the experiment.
-#' @param objectives The objectives of the project.
+#' @param references References.
 #' @param plan General description of the project (M & M).
 #' @param institutions Institutions involved in the project.
 #' @param researchers Persons involved in the project.
@@ -19,10 +19,11 @@
 #' @param start The date of the start of the experiments.
 #' @param end The date of the end of the experiments.
 #' @param album link with the photos of the project.
-#' @param github link with the github repository.
+#' @param repository link to the repository.
 #' @param about Short description of the project.
 #' @param fieldbook Name or ID for the fieldbook/project.
-#' @param gdocs link for Google Docs
+#' @param project link for project.
+#' @param manuscript link for manuscript.
 #' @param nfactor Number of factors for the design.
 #' @param design Type of design.
 #' @param rep Number of replication.
@@ -50,11 +51,11 @@
 #' 
 
 tarpuy_plex <- function(data = NULL
-                        , idea = NULL
-                        , goal = NULL
+                        , title = NULL
+                        , objectives = NULL
                         , hypothesis = NULL
                         , rationale = NULL
-                        , objectives = NULL
+                        , references = NULL
                         , plan = NULL
                         , institutions = NULL
                         , researchers = NULL
@@ -67,8 +68,9 @@ tarpuy_plex <- function(data = NULL
                         , end = NA
                         , about = NULL
                         , fieldbook = NULL
-                        , gdocs = NULL
-                        , github = NULL
+                        , project = NULL
+                        , repository = NULL
+                        , manuscript = NULL
                         , album = NULL
                         , nfactor = 2
                         , design = "rcbd"
@@ -127,11 +129,11 @@ tarpuy_plex <- function(data = NULL
 
 if ( is.null(data) ) {
 
-  plex <-  c(IDEA = idea
-             , GOAL = goal
+  plex <-  c(TITLE = title
+             , OBJECTIVES = objectives
              , HYPOTHESIS = hypothesis
              , RATIONALE = rationale
-             , OBJECTIVES = objectives
+             , REFERENCES = references
              , PLAN = plan
              , INSTITUTIONS = institutions
              , RESEARCHERS = researchers
@@ -144,8 +146,9 @@ if ( is.null(data) ) {
              , "END EXPERIMENT" = as.character.Date(end)
              , ABOUT = info
              , "FIELDBOOK NAME" = fbname
-             , GDOCS = gdocs
-             , GITHUB = github
+             , PROJECT = project
+             , GITHUB = repository
+             , MANUSCRIPT = manuscript
              , ALBUM = album
              ) %>%
     enframe() %>%

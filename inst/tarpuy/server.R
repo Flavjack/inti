@@ -220,11 +220,11 @@ shinyServer(function(input, output, session) {
   plex <- reactive({
     
     plex <- tarpuy_plex(data = NULL
-                         , idea = input$plex_idea
-                         , goal = input$plex_goal
+                         , title = input$plex_title
+                         , objectives = input$plex_objectives
                          , hypothesis = input$plex_hypothesis
                          , rationale = input$plex_rationale
-                         , objectives = input$plex_objectives
+                         , references = input$plex_references
                          , plan = input$plex_plan
                          , institutions = input$plex_institutions
                          , researchers = input$plex_researchers
@@ -238,8 +238,9 @@ shinyServer(function(input, output, session) {
                          , about = input$plex_about
                          , fieldbook = input$plex_fieldbook
                          , album = input$plex_album
-                         , github = input$plex_github
-                         , gdocs = input$plex_gdocs
+                         , project = input$plex_project
+                         , repository = input$plex_repository
+                         , manuscript = input$plex_manuscript
                          , nfactor = input$plex_nfactors
                          , design = input$plex_design
                          , rep = input$plex_rep
