@@ -28,7 +28,7 @@ cran <- c(
   , "tidyverse" # Data manipulation
   )
 
-# git <- c("crsh/citr") # Use zotero for docs citations
+git <- c("crsh/citr") # Use zotero for docs citations
 
 suppressPackageStartupMessages({
   
