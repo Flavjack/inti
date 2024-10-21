@@ -2,7 +2,7 @@
 # R packages dependencies and configuration -------------------------------
 # -------------------------------------------------------------------------
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date   .: 2024-06-01
+#> date   .: 2024-10-21
 # -------------------------------------------------------------------------
 
 #> source("https://inkaverse.com/setup.r")
@@ -14,18 +14,21 @@
 cran <- c(
   "devtools" # Developer tools
   , "inti" # Tools and Statistical Procedures in Plant Science
-  , "knitr" # Write docs using R 
-  , "tidyverse" # Data manipulation
+  , "FactoMineR" # Multivariate data analysis
+  , "psych" # Correlation plot
+  , "lme4"
+  , "emmeans"
+  , "multcomp"
+  , "huito" # label design
+  , "grid" # Import images as R object
   , "gsheet" # Read open google sheets docs
   , "googlesheets4" # Read/write google sheets docs
   , "googledrive" # Download/Upload files from googledrive
-  , "FactoMineR" # Multivariate data analysis
-  , "psych" # Correlation plot
-  , "huito" # label design
-  , "grid" # Import images as R object
-)
+  , "knitr" # Write docs using R 
+  , "tidyverse" # Data manipulation
+  )
 
-git <- c("crsh/citr") # Use zotero for docs citations
+# git <- c("crsh/citr") # Use zotero for docs citations
 
 suppressPackageStartupMessages({
   
