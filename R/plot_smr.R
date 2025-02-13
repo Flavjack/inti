@@ -346,7 +346,11 @@ graph <- plot +
         limits = ylimits[1:2] 
         , breaks = seq(ylimits[1], ylimits[2], by = abs(ylimits[3]))
         , expand = c(0,0)
-      )
+      ) else {
+        
+        scale_y_continuous(expand = expansion(mult = 0.3))
+        
+      }
   }
 
 layers <- 'graph +

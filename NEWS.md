@@ -16,6 +16,7 @@
  - Yupana
   - Avoid different bar widths
   - New project template info
+  - Increase y limits for better error visualization
  - Tarpuy
   - Update budget template
   
