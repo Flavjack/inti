@@ -76,8 +76,8 @@ fb <- gsheet2tbl(url)
 smr <- yupana_analysis(data = fb
                        , last_factor = "bloque"
                        , response = "spad_83"
-                       , model_factors = "block + geno*treat"
-                       , comparison = c("geno", "treat")
+                       , model_factors = "block + geno*riego"
+                       , comparison = c("geno", "riego")
                        )
                        
 gtab <- yupana_export(smr, type = "line", ylimits = c(0, 100, 2))

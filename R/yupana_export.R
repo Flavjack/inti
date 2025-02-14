@@ -46,8 +46,8 @@
 #' smr <- yupana_analysis(data = fb
 #'                        , last_factor = "bloque"
 #'                        , response = "spad_83"
-#'                        , model_factors = "block + geno*treat"
-#'                        , comparison = c("geno", "treat")
+#'                        , model_factors = "block + geno*riego"
+#'                        , comparison = c("geno", "riego")
 #'                        )
 #'                        
 #' gtab <- yupana_export(smr, type = "line", ylimits = c(0, 100, 2))
@@ -172,15 +172,15 @@ dimension = "20*10*100"
   
   ylim <- ifelse(!is.na(ylimits)
                  , paste(ylimits, collapse = "*")
-                 , NA) %>% pluck(1)
+                 , NA) %>% purrr::pluck(1)
   
   gtext <- ifelse(!is.na(gtext)
                   , paste(gtext, collapse = ",")
-                  , NA) %>% pluck(1)
+                  , NA) %>% purrr::pluck(1)
   
   xtext <- ifelse(!is.na(xtext)
                   , paste(xtext, collapse = ",")
-                  , NA) %>% pluck(1)
+                  , NA) %>% purrr::pluck(1)
   
   graph_opts <- c(type = type
                  , x = x
@@ -209,21 +209,7 @@ dimension = "20*10*100"
     
     aov_table <- data$anova %>% 
       anova() %>% 
-      rownames_to_column("Factor") %>% 
-      mutate(Sig = case_when(
-        `Pr(>F)` <= 0.001  ~ "***"
-        , `Pr(>F)` <= 0.01  ~ "**"
-        , `Pr(>F)` <= 0.05  ~ "*"
-        , `Pr(>F)` > 0.05 ~ "ns"
-      )) %>% 
-      mutate(across(everything(), as.character)) %>%
-      tibble() %>% 
-      tibble::add_row(Factor = "---") %>% 
-      tibble::add_row(Factor = "Significance"
-                      , `Sum Sq` = "0.001 ***"
-                      , `Mean Sq` = "0.01 **"
-                      , `F value` = "0.05 *"
-                      )
+      inti:::anova_table()
     
     stat_smr <- data$stats %>% 
       rownames_to_column() %>% 
@@ -249,34 +235,67 @@ dimension = "20*10*100"
 # -------------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-    graph_table <- data$meancomp %>% 
-      merge(.
-            , opts_table
-            , by = 0
-            , all = TRUE
-            )  %>%
-      tibble::add_column("[plot]" = "||", .before = "colors") %>% 
-      mutate(across(.data$Row.names, as.numeric)) %>%
-      arrange(.data$Row.names) %>%
-      select(!.data$Row.names) %>%
-      tibble::add_column("[stats]" = "||") %>%
+    graph_table <-  aov_table %>% 
+      tibble::add_column("[stats]" = "||") %>% 
       merge(.
             , stat_smr
             , by = 0
             , all = TRUE
-            ) %>%
+      ) %>%
+      tibble::add_column("[means]" = "||") %>% 
       mutate(across(.data$Row.names, as.numeric)) %>%
       arrange(.data$Row.names) %>%
       select(!.data$Row.names) %>%
-      tibble::add_column("[aov]" = "||") %>%
       merge(.
-            , aov_table
+            , data$meancomp 
             , by = 0
             , all = TRUE
-      ) %>%
+      ) %>% 
       mutate(across(.data$Row.names, as.numeric)) %>%
       arrange(.data$Row.names) %>%
-      select(!.data$Row.names) 
+      select(!.data$Row.names) %>% 
+      tibble::add_column("[plot]" = "||") %>% 
+      merge(.
+            , opts_table
+            , by = 0
+            , all = TRUE
+      ) %>% 
+      mutate(across(.data$Row.names, as.numeric)) %>%
+      arrange(.data$Row.names) %>%
+      select(!.data$Row.names) %>%
+      tibble::add_column("[aov]" = "||", .before = "Factor") %>% 
+      tidyr::fill(c(.data$`[stats]`, .data$`[means]`)
+                  , .direction = "down") %>% 
+      tibble::add_column("[inti]" = "||", .before = "[aov]")
+      
+      # graph_table <- data$meancomp %>% 
+      # merge(.
+      #       , opts_table
+      #       , by = 0
+      #       , all = TRUE
+      #       )  %>%
+      # tibble::add_column("[plot]" = "||", .before = "colors") %>% 
+      # mutate(across(.data$Row.names, as.numeric)) %>%
+      # arrange(.data$Row.names) %>%
+      # select(!.data$Row.names) %>%
+      # tibble::add_column("[stats]" = "||") %>%
+      # merge(.
+      #       , stat_smr
+      #       , by = 0
+      #       , all = TRUE
+      #       ) %>%
+      # mutate(across(.data$Row.names, as.numeric)) %>%
+      # arrange(.data$Row.names) %>%
+      # select(!.data$Row.names) %>%
+      # tibble::add_column("[aov]" = "||") %>%
+      # merge(.
+      #       , aov_table
+      #       , by = 0
+      #       , all = TRUE
+      # ) %>%
+      # mutate(across(.data$Row.names, as.numeric)) %>%
+      # arrange(.data$Row.names) %>%
+      # select(!.data$Row.names) 
     
 
 # -------------------------------------------------------------------------

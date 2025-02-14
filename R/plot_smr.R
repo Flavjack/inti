@@ -41,7 +41,7 @@
 #'
 #' library(inti)
 #' 
-#' fb <- potato#' 
+#' fb <- potato
 #' 
 #' yrs <- yupana_analysis(data = fb
 #'                        , response = "hi"
@@ -50,13 +50,15 @@
 #'                        )
 #' 
 #' yrs$meancomp %>% 
-#'   plot_smr(type = "line"
+#'   plot_smr(type = "bar"
 #'            , x = "geno"
 #'            , y = "hi"
 #'            , xlab = ""
 #'            , group = "treat"
 #'            , glab = "Tratamientos"
-#'            , ylimits = c(0, 1, 0.2)
+#'            , error = "ste"
+#'            , sig = "sig"
+#'            #, ylimits = c(0, 1, 0.2)
 #'            , color = c("red", "black")
 #'            , gtext = c("Irrigado", "Sequia")
 #'            )
@@ -348,9 +350,23 @@ graph <- plot +
         , expand = c(0,0)
       ) else {
         
-        scale_y_continuous(expand = expansion(mult = 0.3))
+        if (min(plotdt[[y]]) <= 0 & max(plotdt[[y]]) >= 0) {
+          
+          scale_y_continuous(expand = expansion(mult = c(0, 0.3)))
+          
+        } else if (min(plotdt[[y]]) >= 0 & max(plotdt[[y]]) <= 0)  {
+          
+          scale_y_continuous(expand = expansion(mult = c(0.3, 0)))
+          
+        } else {
+          
+          scale_y_continuous(expand = expansion(mult = 0.3))
+          
+        }
         
       }
+    
+    
   }
 
 layers <- 'graph +

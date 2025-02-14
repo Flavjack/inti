@@ -18,7 +18,7 @@
 #' library(gsheet)
 #' 
 #' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=338518609")
+#'               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit?gid=2137596914#gid=2137596914")
 #' # browseURL(url)
 #' 
 #' fb <- gsheet2tbl(url)
@@ -96,19 +96,19 @@ if(!is.data.frame(data)) {
 
   # data <- fb
   
-  smr <- data %>% 
-    select(1:.data$`[plot]`) %>% 
-    select(!.data$`[plot]`) %>% 
+  aov <- data %>%
+    select(.data$`[aov]`:.data$`[stats]`) %>% 
+    select(!c(.data$`[aov]`, .data$`[stats]`)) %>% 
     filter(if_any(everything(), ~ !is.na(.)))
   
-  aov <- data %>%
-    select(.data$`[aov]`:length(.)) %>% 
-    select(!c(.data$`[aov]`)) %>% 
+  smr <- data %>% 
+    select(.data$`[means]`:.data$`[plot]`) %>% 
+    select(!c(.data$`[plot]`, .data$`[means]`)) %>% 
     filter(if_any(everything(), ~ !is.na(.)))
   
   stats <- data %>%
-    select(.data$`[stats]`:.data$`[aov]`) %>% 
-    select(!c(.data$`[stats]`, .data$`[aov]`)) %>% 
+    select(.data$`[stats]`:.data$`[means]`) %>% 
+    select(!c(.data$`[stats]`, .data$`[means]`)) %>% 
     filter(if_any(everything(), ~ !is.na(.)))
   
   stats_args <- stats %>% 
@@ -116,8 +116,8 @@ if(!is.data.frame(data)) {
     as.list()
 
   plot <- data %>%
-    select(.data$`[plot]`:.data$`[stats]`) %>% 
-    select(!c(.data$`[plot]`, .data$`[stats]`)) %>% 
+    select(.data$`[plot]`:length(.)) %>% 
+    select(!c(.data$`[plot]`)) %>% 
     select(!colors) %>% 
     filter(if_any(everything(), ~ !is.na(.)))
   

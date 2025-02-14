@@ -6,8 +6,7 @@
   - Include lattice
   - Include LCD
   - Dashboard for Tarpuy experiment progress
-  - Repare agricolae table summary anova
-  - Export info sort
+
   
 # inti 0.6.7
 
@@ -17,8 +16,11 @@
   - Avoid different bar widths
   - New project template info
   - Increase y limits for better error visualization
- - Tarpuy
+  - Re arrange statistic information 
+  - Repare agricolae table summary anova
+- Tarpuy
   - Update budget template
+  - Update experimental plan information
   
 # inti 0.6.6
 

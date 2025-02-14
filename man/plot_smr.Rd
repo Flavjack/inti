@@ -81,7 +81,7 @@ You could add additional layer to the plot using "+" with ggplot2 options
 
 library(inti)
 
-fb <- potato#' 
+fb <- potato
 
 yrs <- yupana_analysis(data = fb
                        , response = "hi"
@@ -90,13 +90,15 @@ yrs <- yupana_analysis(data = fb
                        )
 
 yrs$meancomp \%>\% 
-  plot_smr(type = "line"
+  plot_smr(type = "bar"
            , x = "geno"
            , y = "hi"
            , xlab = ""
            , group = "treat"
            , glab = "Tratamientos"
-           , ylimits = c(0, 1, 0.2)
+           , error = "ste"
+           , sig = "sig"
+           #, ylimits = c(0, 1, 0.2)
            , color = c("red", "black")
            , gtext = c("Irrigado", "Sequia")
            )

@@ -32,3 +32,22 @@ tarpuy_full <- function() {
   
 }
 
+anova_table <- function(model) {
+  
+  model %>%
+    rownames_to_column("Factor") %>% 
+    mutate(Sig = case_when(
+      `Pr(>F)` <= 0.001  ~ "***"
+      , `Pr(>F)` <= 0.01  ~ "**"
+      , `Pr(>F)` <= 0.05  ~ "*"
+      , `Pr(>F)` > 0.05 ~ "ns"
+    )) %>% 
+    mutate(across(everything(), as.factor)) %>%
+    tibble() %>% 
+    tibble::add_row(Factor = "---") %>% 
+    tibble::add_row(Factor = "Significance:"
+                    , `Sum Sq` = "0.001 ***"
+                    , `Mean Sq` = "0.01 **"
+                    , `F value` = "0.05 *"
+    )
+}
