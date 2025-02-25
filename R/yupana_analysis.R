@@ -132,7 +132,8 @@ if(FALSE) {
                         )
   
   comptab <- mc$comparison %>% 
-    mutate(across(where(is.numeric), ~round(., digits = digits)))
+    mutate(across(where(is.numeric), ~round(., digits = digits))) %>% 
+    dplyr::select(!c(.data$se))
   
   info <- comptab %>% 
     select({{response}}:ncol(.)) %>%

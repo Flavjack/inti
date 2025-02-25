@@ -44,7 +44,7 @@
 #' fb <- potato
 #' 
 #' yrs <- yupana_analysis(data = fb
-#'                        , response = "hi"
+#'                        , response = "lfa"
 #'                        , model_factors = "geno*treat"
 #'                        , comparison = c("geno", "treat")
 #'                        )
@@ -52,7 +52,7 @@
 #' yrs$meancomp %>% 
 #'   plot_smr(type = "bar"
 #'            , x = "geno"
-#'            , y = "hi"
+#'            , y = "lfa"
 #'            , xlab = ""
 #'            , group = "treat"
 #'            , glab = "Tratamientos"
@@ -343,31 +343,55 @@ if (type == "linea") {
 graph <- plot + 
   { if(!is.null(xtext)) scale_x_discrete(labels = xtext) } +
   {
-    if(!is.null(ylimits))
-      scale_y_continuous(
-        limits = ylimits[1:2] 
-        , breaks = seq(ylimits[1], ylimits[2], by = abs(ylimits[3]))
-        , expand = c(0,0)
-      ) else {
+    
+    if (!is.null(type)) {
+      
+      if (type == "linea") {
         
-        if (min(plotdt[[y]]) <= 0 & max(plotdt[[y]]) >= 0) {
+        if (!is.null(ylimits)) {
+
+          scale_y_continuous(
+            limits = ylimits[1:2], 
+            breaks = seq(ylimits[1], ylimits[2], by = abs(ylimits[3])),
+            expand = c(0, 0))
           
-          scale_y_continuous(expand = expansion(mult = c(0, 0.3)))
+        } else { 
           
-        } else if (min(plotdt[[y]]) >= 0 & max(plotdt[[y]]) <= 0)  {
+          scale_y_continuous(expand = expansion(mult = c(0.3, 0.3)))
           
-          scale_y_continuous(expand = expansion(mult = c(0.3, 0)))
-          
+          }
+        
+      } else if (type == "barra") {
+        
+        if (!is.null(ylimits)) {
+          # Configurar el eje Y para gráficos de barra cuando hay límites definidos
+          scale_y_continuous(
+            limits = ylimits[1:2], 
+            breaks = seq(ylimits[1], ylimits[2], by = abs(ylimits[3])),
+            expand = c(0, 0)
+          )
         } else {
+          # Definir expansión para gráficos de barra cuando 'ylimits' es NULL
+          ymin <- min(plotdt[[y]], na.rm = TRUE)
+          ymax <- max(plotdt[[y]], na.rm = TRUE)
           
-          scale_y_continuous(expand = expansion(mult = 0.3))
-          
+          if (ymin < 0 & ymax > 0) {
+            # Si hay valores positivos y negativos, expandir 0.3 a ambos lados
+            scale_y_continuous(expand = expansion(mult = c(0.3, 0.3)))
+            
+          } else if (ymin >= 0) {
+            # Si solo hay valores positivos, expandir solo en la parte superior
+            scale_y_continuous(expand = expansion(mult = c(0, 0.3)))
+            
+          } else {
+            # Si solo hay valores negativos, expandir solo en la parte inferior
+            scale_y_continuous(expand = expansion(mult = c(0.3, 0)))
+          }
         }
-        
       }
-    
-    
   }
+}   
+    
 
 layers <- 'graph +
   theme_minimal() +

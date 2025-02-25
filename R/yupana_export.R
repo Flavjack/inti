@@ -209,7 +209,7 @@ dimension = "20*10*100"
     
     aov_table <- data$anova %>% 
       anova() %>% 
-      inti:::anova_table()
+      anova_table()
     
     stat_smr <- data$stats %>% 
       rownames_to_column() %>% 
@@ -268,36 +268,6 @@ dimension = "20*10*100"
                   , .direction = "down") %>% 
       tibble::add_column("[inti]" = "||", .before = "[aov]")
       
-      # graph_table <- data$meancomp %>% 
-      # merge(.
-      #       , opts_table
-      #       , by = 0
-      #       , all = TRUE
-      #       )  %>%
-      # tibble::add_column("[plot]" = "||", .before = "colors") %>% 
-      # mutate(across(.data$Row.names, as.numeric)) %>%
-      # arrange(.data$Row.names) %>%
-      # select(!.data$Row.names) %>%
-      # tibble::add_column("[stats]" = "||") %>%
-      # merge(.
-      #       , stat_smr
-      #       , by = 0
-      #       , all = TRUE
-      #       ) %>%
-      # mutate(across(.data$Row.names, as.numeric)) %>%
-      # arrange(.data$Row.names) %>%
-      # select(!.data$Row.names) %>%
-      # tibble::add_column("[aov]" = "||") %>%
-      # merge(.
-      #       , aov_table
-      #       , by = 0
-      #       , all = TRUE
-      # ) %>%
-      # mutate(across(.data$Row.names, as.numeric)) %>%
-      # arrange(.data$Row.names) %>%
-      # select(!.data$Row.names) 
-    
-
 # -------------------------------------------------------------------------
 #> yupana_import
 # -------------------------------------------------------------------------

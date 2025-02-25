@@ -1,7 +1,7 @@
 url: https://inkaverse.com/
 
-# development:
-#   mode: auto
+development:
+  mode: auto
 
 authors:
   Flavio Lozano-Isla:
