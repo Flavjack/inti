@@ -81,8 +81,8 @@ navbar:
       - text: -------
       - text: "Broad-sense heritability in plant breeding"
         href: articles/heritability.html
-      # - text: "Stagewise mixed-model analysis"
-      #   href: articles/extra/stagewise.html
+      - text: "Heritability: stagewise mixed-model analysis"
+        href: articles/extra/stagewise.html
 
 reference:
 - title: Yupana
