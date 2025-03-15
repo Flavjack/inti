@@ -1,11 +1,8 @@
 url: https://inkaverse.com/
 
-development:
-  mode: auto
-
 authors:
   Flavio Lozano-Isla:
-    href: https://lozanoisla.com/
+    href: https://www.linkedin.com/in/flozanoisla/
   QuipoLab:
     href: https://www.quipolab.com/
     html: "<img src='https://inkaverse.com/img/quipolab.png' align='middle' width=70>"
@@ -21,11 +18,16 @@ authors:
 template:
   bootstrap: 5
   bootswatch: sandstone
+  math-rendering: mathjax
+  light-switch: true
   params:
     ganalytics: G-804H2EJ8RN
   opengraph:
     image:
       src: man/figures/logo.png
+
+development:
+  mode: auto
 
 home:
   title: Inkaverse
