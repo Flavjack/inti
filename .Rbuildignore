@@ -22,3 +22,5 @@ setup.R
 setup.r
 ^vignettes/extra/
 ^CRAN-SUBMISSION$
+^vignettes/.quarto$
+^vignettes/*_files$

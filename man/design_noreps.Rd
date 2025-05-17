@@ -30,7 +30,7 @@ design_noreps(
 
 \item{fbname}{Bar code prefix for data collection [string: "inkaverse"].}
 
-\item{qrcode}{[string: "\{fbname\}\{plots\}\{factors\}"] String to concatenate the qr code.}
+\item{qrcode}{Concatenate the QR code [string: \{fbname\}\{plots\}\{factors\}]}
 }
 \value{
 A list with the field-book design and parameters

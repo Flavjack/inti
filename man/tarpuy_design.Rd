@@ -39,7 +39,7 @@ details.}
 
 \item{fbname}{Barcode prefix for data collection.}
 
-\item{qrcode}{[string: "\{fbname\}\{plots\}\{factors\}"] String to concatenate the qr code.}
+\item{qrcode}{[string: \{fbname\}\{plots\}\{factors\}] String to concatenate the QR code.}
 }
 \value{
 A list with the fieldbook design

@@ -96,7 +96,7 @@ tarpuy_plex(
 
 \item{seed}{Seed for the randomization.}
 
-\item{qrcode}{[string: "\{fbname\}\{plots\}\{factors\}"] String to concatenate the qr code.}
+\item{qrcode}{Concatenate the QR code [string: \{fbname\}\{plots\}\{factors\}]}
 }
 \value{
 data frame or list of arguments:

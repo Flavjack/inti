@@ -11,7 +11,7 @@
 #' @param nrows Experimental design dimension by rows [numeric: value]
 #' @param seed Replicability from randomization [numeric: NULL].
 #' @param fbname Bar code prefix for data collection [string: "inkaverse"].
-#' @param qrcode [string: "\{fbname\}\{plots\}\{factors\}"] String to concatenate the qr code.
+#' @param qrcode Concatenate the QR code [string: \{fbname\}\{plots\}\{factors\}]
 #'
 #' @return A list with the field-book design and parameters
 #' 

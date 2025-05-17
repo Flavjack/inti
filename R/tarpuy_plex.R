@@ -31,8 +31,7 @@
 #' @param nrows Experimental design dimension by rows [numeric: value]
 #' @param serie Number of digits in the plots.
 #' @param seed Seed for the randomization.
-#' @param qrcode [string: "\{fbname\}\{plots\}\{factors\}"] String to concatenate the qr code.
-#'
+#' @param qrcode Concatenate the QR code [string: \{fbname\}\{plots\}\{factors\}]
 #' @details
 #'
 #' Provide the information available.

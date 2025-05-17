@@ -1,0 +1,117 @@
+---
+title: Yupana
+description: > 
+  Yupana: experimental design analysis.
+author: "Flavio Lozano-Isla"
+vignette: >
+  %\VignetteIndexEntry{yupana}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
+---
+
+```{r setup, include=FALSE}
+source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
+```
+
+Yupana es una heramienta interactiva que permite el análisis y gráfica de datos basados en diseños experimentales (Table \@ref(tab:modules)). 
+
+Yupana permite:
+
+- Análisis de datos con distintos modelos estadisticos
+- Diagnostico de los modelos
+- Análisis de comparación de medias de los tratamientos
+- Información resumen de la comparación de los tratamientos
+- Gráfica de los resultados
+- Análisis multivariados
+
+```{=html}
+<div id=footer style="width:100%; margin:auto;">
+
+<div style="display:inline-block; width:49%">
+<p style="text-align:center">
+<a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9sTx5Dbff9O0g6KCU4pwCQ">
+<img src="https://flavjack.github.io/inti/img/youtube.png" style="height:65px" title="demo"></a>
+<span style="display:block;"><small>demo</small></span>
+</p></div>
+
+<div style="display:inline-block; width:49%">
+<p style="text-align:center">
+<a target="_blank" href="https://flavjack.shinyapps.io/yupana/"><img src="https://flavjack.github.io/inti/img/yupana.png" style="height:80px" title="yupana"></a>
+<span style="display:block;"><small>Yupana</small></span>
+</p></div>
+
+</div>
+```
+
+# Base de datos
+
+Los datos deben estar organizado en formato `tidy-data`. 
+
+Tener en cuenta algunas consideraciones:
+
+- No usar caracteres extraños en la cabeceras, e.i.: %, #, &, $, °, !, ^, etc
+- Los datos deben iniciar en la primera fila y columna, e.i. A1
+- Evitar usar espacio entre los nombres de las variables, en reemplazo pueden usar "_" o "."
+
+> Las columnas que esten entre corchetes "[]" serán excluidas del análisis
+
+# Módulos
+
+```{r modules}
+url <- "https://docs.google.com/spreadsheets/d/1nLP-dH9-dsVMXgsU7Z02EbgWvMIBKG5IYVRHAJCN-Z0/edit#gid=0"
+url %>% 
+  gsheet2tbl() %>% 
+  include_table(caption = "Módulos de la aplicación Yupana")
+```
+
+# Graphics
+
+Los parámetros de los gráficos generados en la app pueden ser guardadas en hojas de cálculo de google y luego pueden ser cargadas (Table \@ref(tab:param)).  
+
+## Opciones de gráfico
+
+```{r param}
+url <- "https://docs.google.com/spreadsheets/d/1nLP-dH9-dsVMXgsU7Z02EbgWvMIBKG5IYVRHAJCN-Z0/edit#gid=1216293392"
+url %>% 
+  gsheet2tbl() %>% 
+  include_table(    
+    caption = "Lista de argumentos, descripción y opciones para la generación de gráficos en la aplicación Yupana"
+    , notes = "Opciones basadas en la función: `plot_smr()`"
+    , label = "Nota:"
+    )
+```
+
+### Argumentos y valores
+
+```{r tparam, fig.cap= "Parámetros en `{arguments}` y `{values}` para la generación de gráficos en la aplicación Yupana."}
+
+knitr::include_graphics("files/graph-table.png")
+```
+
+```{r plot, fig.cap= "Figura basada en los `{arguments}` y `{values}` de la tabla anterior."}
+
+knitr::include_graphics("files/graph-figure.png")
+```
+
+La apliación por defecto genera un gama de colores `{colors}` en una escala de grises. Los colores pueden ser modificados de forma manual por sus nombres en ingles o usando los valores `HEX`. En este caso se cambió la escala de grises por los colores verde (green) y rojo (red) (Figure \@ref(fig:tparam), \@ref(fig:plot)).
+
+## Incluir nuevas capas `opt`
+
+Yupana a partir de la versión 0.2.0 permite la inclusión de capas adicionales a los gráficos. Puedes incluir dicha información en `opt` de los `{arguments}` (Figure \@ref(fig:opt), \@ref(fig:topt)).
+
+Puedes incluir diversas capas descritas para el paquete `ggplot2`.
+
+```{r opt, fig.cap= "Gráfico con la inclusión de la capa `facet_grid()`"}
+
+knitr::include_graphics("files/graph-figure.png")
+```
+
+```{r topt, fig.cap= "Inclusión de `facet_grid(tratamiento ~ .)` en `opt` de los `{arguments}` en Yupana."}
+
+knitr::include_graphics("files/graph-table-grid.png")
+```
+
