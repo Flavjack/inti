@@ -145,9 +145,9 @@ hr$outliers$fixed %>% kable(caption = "Outliers fixed model")
 hr$outliers$random %>% kable(caption = "Outliers random model")
 ```
 
-# Comparison: H2cal and asreml
+<!-- # Comparison: H2cal and asreml -->
 
-> <https://inkaverse.com/articles/extra/stagewise.html>
+<!-- > <https://inkaverse.com/articles/extra/stagewise.html> -->
 
 ::: {#refs}
 :::

@@ -319,14 +319,18 @@ if (type == "linea") {
       if (!is.null(sig))  
         
         geom_text(
-          aes(label = .data[[sig]]
-              , y = if(!is.null(error)) .data[[y]] + .data[[error]] else .data[[y]])
+          aes(
+            label = .data[[sig]],
+            y = if (!is.null(error)) .data[[y]] + .data[[error]] else .data[[y]]
+          )
+          , position = "jitter"
           , colour = "black"
-          , vjust = -0.5
+          , vjust = 0.5  
           , hjust = 0.5
-          , angle = 0
-          , size = 3
-          ) 
+          , na.rm = T
+          , size = sigsize
+          )
+        
     } +
     
     scale_color_manual(

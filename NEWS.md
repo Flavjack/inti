@@ -7,6 +7,13 @@
   - Include LCD
   - Dashboard for Tarpuy experiment progress
 
+# inti 0.6.8 (In progress)
+
+  - Avoid label overlapping in the significance
+  - Update pkgdown web page
+
+
+
   
 # inti 0.6.7
 

@@ -5,7 +5,7 @@ account: flavjack
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 5717114
-bundleId: 8224622
+bundleId: 9860223
 url: https://flavjack.shinyapps.io/yupana-test/
 asMultiple: FALSE
 asStatic: FALSE
