@@ -1,6 +1,5 @@
 url: https://inkaverse.com/
 
-<<<<<<< HEAD
 template:
   bootstrap: 5
   bootswatch: sandstone
@@ -17,8 +16,6 @@ destination: docs
 development:
   mode: auto
 
-=======
->>>>>>> 4c3e5fc29f302176c998684c9d7b23fbe27b790d
 authors:
   Flavio Lozano-Isla:
     href: https://www.linkedin.com/in/flozanoisla/
@@ -34,23 +31,6 @@ authors:
   sidebar:
     roles: [aut, ctb, cph]
 
-<<<<<<< HEAD
-=======
-template:
-  bootstrap: 5
-  bootswatch: sandstone
-  math-rendering: mathjax
-  light-switch: true
-  params:
-    ganalytics: G-804H2EJ8RN
-  opengraph:
-    image:
-      src: man/figures/logo.png
-
-development:
-  mode: auto
-
->>>>>>> 4c3e5fc29f302176c998684c9d7b23fbe27b790d
 home:
   title: Inkaverse
   description: Tools and Statistical Procedures in Plant Science
