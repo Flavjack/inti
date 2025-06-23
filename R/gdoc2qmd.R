@@ -6,6 +6,7 @@
 #' @param export Path to export the files [path: NA (file directory)]
 #' @param format Output format [string: "qmd" "rmd"]
 #' @param type output file type [strig: "asis" "list", "listfull", "full"]
+#' @param fill_table extract table in listfull [strig: "up", "down"]
 #'
 #' @return path
 #' 
@@ -22,6 +23,7 @@ gdoc2qmd <- function(file
                      , export = NA
                      , format = "qmd"
                      , type = "asis"
+                     , fill_table = "down"
                      ){
   
   # file <- choose.files() ; format = "qmd"; export = NA; type <- "listfull"
@@ -118,14 +120,14 @@ gdoc2qmd <- function(file
     dplyr::mutate(group = case_when(
       grepl("#tbl", .data$value) ~ .data$name
     )) %>% 
-    tidyr::fill(., .data$group, .direction = "up") %>% 
-    dplyr::mutate(group = case_when(
-      is.na(.data$group) ~ 1
-      , .default = .data$group 
-    )) %>% 
+    tidyr::fill(., .data$group, .direction = fill_table) %>% 
+    # dplyr::mutate(group = case_when(
+    #   is.na(.data$group) ~ 1
+    #   , .default = .data$group 
+    # )) %>% 
     split(.$group) %>% 
-    purrr::map_dfr(~ slice(.data = ., c(n(),  1:(n()-1)))) %>% 
-    split(.$group) %>% 
+    # purrr::map_dfr(~ slice(.data = ., c(n(),  1:(n()-1)))) %>% 
+    # split(.$group) %>% 
     purrr::map_dfr(~ bind_rows(tibble(name = NA, value = NA), .x)) %>% 
     dplyr::mutate(.data = ., across(.data$value, ~ ifelse(is.na(.), "\\newpage", .)))
 

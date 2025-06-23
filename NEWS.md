@@ -11,8 +11,7 @@
 
   - Avoid label overlapping in the significance
   - Update pkgdown web page
-
-
+  - Fix table export in `gdocs2qmd()`
 
   
 # inti 0.6.7
