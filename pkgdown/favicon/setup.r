@@ -2,84 +2,85 @@
 # R packages dependencies and configuration -------------------------------
 # -------------------------------------------------------------------------
 #> author .: Flavio Lozano-Isla (linkedin.com/in/flozanoisla/)
-#> date   .: 2025-05-16
+#> date   .: 2025-07-23
 # -------------------------------------------------------------------------
 
 #> source("https://inkaverse.com/setup.r")
 
 # -------------------------------------------------------------------------
-# Packages ----------------------------------------------------------------
+# 📦 Package loading and installation -------------------------------------
 # -------------------------------------------------------------------------
 
-cran <- c(
-  "devtools" # Developer tools
-  , "inti" # Tools and Statistical Procedures in Plant Science
-  , "FactoMineR" # Multivariate data analysis
-  , "psych" # Correlation plot
-  , "lme4"
-  , "car"
-  , "emmeans"
-  , "multcomp"
-  , "huito" # label design
-  , "grid" # Import images as R object
-  , "googlesheets4" # Read/write google sheets docs
-  , "googledrive" # Download/Upload files from googledrive
-  , "knitr" # Write docs using R 
-  , "tidyverse" # Data manipulation
-  )
+cran_packages <- c(
+  "devtools", "inti", "FactoMineR", "psych", "lme4", "car", "emmeans",
+  "multcomp", "huito", "grid", "googlesheets4", "googledrive",
+  "knitr", "tidyverse", "RhpcBLASctl", "sessioninfo", "cli"
+)
 
-# git <- c("crsh/citr") # Use zotero for docs citations
-
-suppressPackageStartupMessages({
-  
-  for (pkg in cran) { 
-    if( !require(pkg, character.only = TRUE) ) {
+load_or_install <- function(pkgs) {
+  for (pkg in pkgs) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
       install.packages(pkg)
-      library(pkg, character.only = TRUE)
-    } 
+    }
+    suppressPackageStartupMessages(library(pkg, character.only = TRUE))
   }
-  
-  # for (pkg in git) { 
-  #   if( !require(sub(".*/", "", pkg), character.only = T) ) {
-  #     devtools::install_github(pkg, upgrade = T)
-  #     library(sub(".*/", "", pkg), character.only = T)
-  #   } 
-  # }
-  
-})
+}
 
-remove(cran
-       # , git
-       , pkg)
+load_or_install(cran_packages)
+
+# Optional GitHub packages
+# git_packages <- c("crsh/citr")
+# for (repo in git_packages) {
+#   pkg <- sub(".*/", "", repo)
+#   if (!requireNamespace(pkg, quietly = TRUE)) {
+#     devtools::install_github(repo, upgrade = TRUE)
+#   }
+#   suppressPackageStartupMessages(library(pkg, character.only = TRUE))
+# }
 
 # -------------------------------------------------------------------------
-# Knitr options -----------------------------------------------------------
+# ⚙️ System and computation configuration ----------------------------------
 # -------------------------------------------------------------------------
 
 knitr::opts_chunk$set(
-  fig.align = "center" # Center images in the export file
-  , out.width = "98%" # Figure width in html
-  # , echo = FALSE # Avoid print code in the export file
-  , message = FALSE # Avoid print messages in the export file
-  , warning = FALSE # Avoid print warnings in the export file
-  , collapse = TRUE # Collapse text output into source blocks
+  fig.align = "center",
+  out.width = "98%",
+  message = FALSE,
+  warning = FALSE,
+  collapse = TRUE
 )
 
-# -------------------------------------------------------------------------
-# Compile options ---------------------------------------------------------
-# -------------------------------------------------------------------------
-
 options(
-  OutDec= "." # Use "." instead of "," in the decimal values
-  , scipen = 99 # Avoid use "6e-04"
-  , knitr.kable.NA = "" # NA values will appear as empty cell
-  , knitr.table.format = "pipe" # Format for export tables
-  , citr.use_betterbiblatex = FALSE # For zotero addin 
-) 
+  OutDec = ".", scipen = 99,
+  knitr.kable.NA = "",
+  knitr.table.format = "pipe",
+  citr.use_betterbiblatex = FALSE
+)
+
+total_cores <- parallel::detectCores(logical = TRUE)
+usable_cores <- max(1, floor(total_cores * 0.8))
+RhpcBLASctl::blas_set_num_threads(usable_cores)
+
+cli::cli_alert_info("📁 Project directory: {getwd()}")
+cli::cli_alert_info("🧠 Total CPU cores detected: {total_cores}")
+cli::cli_alert_info("🚀 BLAS threads configured to: {RhpcBLASctl::blas_get_num_threads()}")
 
 # -------------------------------------------------------------------------
-# Authorize googledrive & googlesheets ------------------------------------
+# 🔐 Google authentication ------------------------------------------------
 # -------------------------------------------------------------------------
 
-googlesheets4::gs4_auth(TRUE)
-googledrive::drive_auth(TRUE)
+googlesheets4::gs4_auth(cache = ".secrets", use_oob = TRUE)
+googledrive::drive_auth(cache = ".secrets", use_oob = TRUE)
+
+# -------------------------------------------------------------------------
+# 📋 Environment info -----------------------------------------------------
+# -------------------------------------------------------------------------
+
+sessioninfo::session_info()
+
+# -------------------------------------------------------------------------
+# 🧹 Clean up -------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+rm(cran_packages, load_or_install, total_cores, usable_cores)
+# rm(git_packages)  # if defined

@@ -114,35 +114,70 @@ gdoc2qmd <- function(file
       }  else {.}
     }
   
-  tab <- txt %>% 
-    dplyr::filter(grepl("^\\|", .data$value) | grepl("#tbl", .data$value)) %>% 
-    dplyr::ungroup() %>% 
-    dplyr::mutate(group = case_when(
-      grepl("#tbl", .data$value) ~ .data$name
-    )) %>% 
-    tidyr::fill(., .data$group, .direction = fill_table) %>% 
-    # dplyr::mutate(group = case_when(
-    #   is.na(.data$group) ~ 1
-    #   , .default = .data$group 
-    # )) %>% 
-    split(.$group) %>% 
-    # purrr::map_dfr(~ slice(.data = ., c(n(),  1:(n()-1)))) %>% 
-    # split(.$group) %>% 
-    purrr::map_dfr(~ bind_rows(tibble(name = NA, value = NA), .x)) %>% 
-    dplyr::mutate(.data = ., across(.data$value, ~ ifelse(is.na(.), "\\newpage", .)))
+  # tab <- txt %>% 
+  #   dplyr::filter(grepl("^\\|", .data$value) | grepl("#tbl", .data$value)) %>% 
+  #   dplyr::ungroup() %>% 
+  #   dplyr::mutate(group = case_when(
+  #     grepl("#tbl", .data$value) ~ .data$name
+  #   )) %>% 
+  #   tidyr::fill(., .data$group, .direction = fill_table) %>% 
+  #   # dplyr::mutate(group = case_when(
+  #   #   is.na(.data$group) ~ 1
+  #   #   , .default = .data$group 
+  #   # )) %>% 
+  #   split(.$group) %>% 
+  #   # purrr::map_dfr(~ slice(.data = ., c(n(),  1:(n()-1)))) %>% 
+  #   # split(.$group) %>% 
+  #   purrr::map_dfr(~ bind_rows(tibble(name = NA, value = NA), .x)) %>% 
+  #   dplyr::mutate(.data = ., across(.data$value, ~ ifelse(is.na(.), "\\newpage", .)))
+  # 
+  # tabx <- tab %>% 
+  #   dplyr::rowwise() %>% 
+  #   dplyr::mutate(across(.data$value, ~gsub("\\{#tbl:(.*)\\}", paste0("{#tbl:", .data$name ,"}"), .)))
+  # 
+  # tablist <- tab %>% 
+  #   dplyr::filter(!grepl("\\|", .data$value)) %>% 
+  #   dplyr::mutate(value = case_when(
+  #     dplyr::row_number() == 1 ~ .data$value
+  #     , grepl("#tbl", .data$value) ~ .data$value
+  #     , TRUE  ~ "\n\n"
+  #   )) 
 
-  tabx <- tab %>% 
-    dplyr::rowwise() %>% 
-    dplyr::mutate(across(.data$value, ~gsub("\\{#tbl:(.*)\\}", paste0("{#tbl:", .data$name ,"}"), .)))
+  if (any(grepl("^\\|", txt$value) | grepl("#tbl", txt$value))) {
+    
+    tab <- txt %>% 
+      dplyr::filter(grepl("^\\|", value) | grepl("#tbl", value)) %>% 
+      dplyr::ungroup() %>% 
+      dplyr::mutate(group = case_when(
+        grepl("#tbl", value) ~ name
+      )) %>% 
+      tidyr::fill(group, .direction = fill_table) %>% 
+      split(.$group) %>% 
+      purrr::map_dfr(~ bind_rows(tibble(name = NA, value = NA), .x)) %>% 
+      dplyr::mutate(across(value, ~ ifelse(is.na(.), "\\newpage", .)))
+    
+    tabx <- tab %>% 
+      dplyr::rowwise() %>% 
+      dplyr::mutate(value = gsub("\\{#tbl:(.*)\\}", paste0("{#tbl:", name ,"}"), value))
+    
+    tablist <- tab %>% 
+      dplyr::filter(!grepl("\\|", value)) %>% 
+      dplyr::mutate(value = case_when(
+        dplyr::row_number() == 1 ~ value,
+        grepl("#tbl", value) ~ value,
+        TRUE ~ "\n\n"
+      ))
+    
+  } else {
+    
+    tab <- tibble()
+    
+    tabx <- tibble()
+    
+    tablist <- tibble()
+    
+  }
   
-  tablist <- tab %>% 
-    dplyr::filter(!grepl("\\|", .data$value)) %>% 
-    dplyr::mutate(value = case_when(
-      dplyr::row_number() == 1 ~ .data$value
-      , grepl("#tbl", .data$value) ~ .data$value
-      , TRUE  ~ "\n\n"
-    )) 
-
 # -------------------------------------------------------------------------
 
   manuscript <- if(type == "full") {

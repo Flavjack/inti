@@ -32,22 +32,50 @@ tarpuy_full <- function() {
   
 }
 
-anova_table <- function(model) {
+anova_table <- function(model, digits = 4) {
   
-  model %>%
-    rownames_to_column("Factor") %>% 
-    mutate(Sig = case_when(
-      `Pr(>F)` <= 0.001  ~ "***"
-      , `Pr(>F)` <= 0.01  ~ "**"
-      , `Pr(>F)` <= 0.05  ~ "*"
-      , `Pr(>F)` > 0.05 ~ "ns"
-    )) %>% 
-    mutate(across(everything(), as.factor)) %>%
-    tibble() %>% 
-    tibble::add_row(Factor = "---") %>% 
-    tibble::add_row(Factor = "Significance:"
-                    , `Sum Sq` = "0.001 ***"
-                    , `Mean Sq` = "0.01 **"
-                    , `F value` = "0.05 *"
+  df <- as.data.frame(model) %>%
+    tibble::rownames_to_column("Factor")
+  
+  # Detectar nombre de la columna de p-valor
+  p_col <- dplyr::case_when(
+    "Pr(>F)" %in% names(df)      ~ "Pr(>F)",
+    "Pr(>Chisq)" %in% names(df)  ~ "Pr(>Chisq)",
+    TRUE ~ NA_character_
+  )
+  
+  if (is.na(p_col)) stop("No p-value column found: expected 'Pr(>F)' or 'Pr(>Chisq)'.")
+  
+  # Formato de p-valores: notación científica si son muy pequeños
+  df[[p_col]] <- ifelse(
+    df[[p_col]] < 0.0001,
+    formatC(df[[p_col]], format = "e", digits = digits),
+    formatC(df[[p_col]], format = "f", digits = digits)
+  )
+  
+  # Añadir columna de significancia
+  df <- df %>%
+    dplyr::mutate(
+      Sig = dplyr::case_when(
+        as.numeric(.data[[p_col]]) <= 0.001 ~ "***",
+        as.numeric(.data[[p_col]]) <= 0.01  ~ "**",
+        as.numeric(.data[[p_col]]) <= 0.05  ~ "*",
+        TRUE ~ "ns"
+      )
     )
+  
+  # Convertir columnas a texto
+  df <- df %>% dplyr::mutate(across(everything(), as.character))
+  
+  # Agregar leyenda
+  df <- df %>%
+    tibble::add_row(Factor = "---") %>%
+    tibble::add_row(
+      Factor = "Significance:",
+      !!names(df)[2] := "0.001 ***",
+      !!names(df)[3] := "0.01 **",
+      !!p_col := "0.05 *"
+    )
+  
+  return(df)
 }
