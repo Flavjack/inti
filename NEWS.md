@@ -6,13 +6,18 @@
   - Include lattice
   - Include LCD
   - Dashboard for Tarpuy experiment progress
+  
+# inti 0.6.9 (In progress)
 
-# inti 0.6.8 (In progress)
+
+# inti 0.6.8
 
   - Avoid label overlapping in the significance
   - Update pkgdown web page
   - Fix table export in `gdocs2qmd()`
-
+  - Update ANOVA table for kable()
+  - Exclude rmarkdown template ==> update to scihub research repository
+    - Include Addins: `SciHub`
   
 # inti 0.6.7
 

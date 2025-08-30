@@ -1,14 +1,14 @@
 Package: inti
 Type: Package
-Version: 0.6.7
+Version: 0.6.8
 Title: Tools and Statistical Procedures in Plant Science
 Description: The 'inti' package is part of the 'inkaverse' project for developing 
     different procedures and tools used in plant science and experimental designs. 
     The mean aim of the package is to support researchers during the planning of
     experiments and data collection (tarpuy()), data analysis and graphics (yupana())
-    , and technical writing. 
+    , and scientific writing. 
     Learn more about the 'inkaverse' project at <https://inkaverse.com/>.
-Date: 2025-06-16
+Date: 2025-08-30
 Authors@R: c(
     person("Flavio", "Lozano-Isla", email = "flozanoisla@gmail.com", role = c("aut", "cre")
           , comment = c(ORCID = "0000-0002-0714-669X")),

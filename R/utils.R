@@ -79,3 +79,31 @@ anova_table <- function(model, digits = 4) {
   
   return(df)
 }
+
+scihub <- function() {
+  # Define the source directory inside the package
+  src_dir <- system.file("extdata/_extensions/scihub", package = "inti")
+  
+  if (src_dir == "") {
+    stop("The 'scihub' folder was not found")
+  }
+  
+  # Ask user for confirmation
+  message("Files from 'scihub' will be copied to the current working directory:\n", 
+          getwd(), "\n")
+  
+  confirm <- utils::askYesNo("Do you want to continue?")
+  
+  if (isTRUE(confirm)) {
+    # List files to copy
+    files <- list.files(src_dir, full.names = TRUE)
+    
+    # Copy files to the working directory
+    file.copy(files, to = getwd(), overwrite = FALSE, recursive = TRUE)
+    
+    message("Files were successfully copied.")
+  } else {
+    message("Operation cancelled by the user.")
+  }
+}
+

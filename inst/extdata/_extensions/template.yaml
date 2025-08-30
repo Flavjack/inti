@@ -1,0 +1,4 @@
+name: SciHub
+description: >
+   SciHub: scientific pipeline repository
+create_dir: TRUE

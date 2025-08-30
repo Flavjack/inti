@@ -1,0 +1,105 @@
+---
+format:
+  html:
+    toc: true
+    toc-location: left
+    number-sections: true
+    self-contained: true
+  docx:
+    toc: false
+    toc-title: Indice
+    section-numbers: true
+    reference-doc: "files/template.docx"
+    output-file: "manuscript"
+editor_options: 
+  chunk_output_type: console
+execute:
+  echo: false
+  warning: false
+crossref:
+  fig-title: Figure
+  fig-prefix: Figure
+  tbl-title: Table
+  tbl-prefix: Table
+# params:
+#   template: ""
+#   author: ""
+#   advisor: ""
+#   coadvisor: ""
+#   location: ""
+#   date: ""
+#   institution: ""
+#   faculty: ""
+#   program: ""
+#   type: ""
+#   title: ""
+---
+
+```{r}
+#| label: setup
+
+source("http://inkaverse.com/docs.r")
+doc <- inti::gdoc2qmd(file = "article.zip"
+                      # , type = "listfull"
+                      )
+params <- doc$params
+```
+
+```{r}
+#| eval: true
+#| results: 'asis'
+
+if(length(params) > 0) {
+ cover <- list.files(path = "files/"
+                    , pattern = paste0("cover-", params$template)
+                    , full.names = T) %>% 
+  knitr::knit_child(quiet = TRUE) %>% 
+  cat(sep = '\n')
+ }
+```
+
+```{r}
+#| results: 'asis'
+
+doc$path %>% 
+  knitr::knit_child(quiet = TRUE) %>% 
+  cat(sep = '\n')
+```
+
+```{r}
+#| label: Image pdf to jpeg
+#| eval: false
+
+library(tidyverse)
+library(magick)
+
+pdf4pub <- list.files("files/", pattern = "Fig.*pdf", full.names = T) 
+
+path <- "DisEd/"
+
+imgs <- 1:length(pdf4pub) %>% map(\(x) {
+  
+  filename <- pdf4pub[x] %>% 
+    basename() %>% 
+    gsub(".pdf", "\\1.jpeg", .) 
+  
+  pdf4pub[x] %>% 
+    image_read_pdf() %>% 
+    image_write(format = "jpeg", file.path(path, filename))
+  
+})
+```
+
+```{r}
+#| label: zip file
+#| eval: false
+
+tozip <- "manuscript" 
+
+# unlink(paste0(tozip, ".zip"), recursive = T)
+
+utils::zip(zipfile = paste0(tozip, ".zip")
+                             , files = tozip
+                             , flags = "-r9Xj"
+                             )
+```

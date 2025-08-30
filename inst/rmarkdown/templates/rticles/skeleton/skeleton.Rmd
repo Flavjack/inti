@@ -1,7 +1,0 @@
-# Rticles: scientific documents with quarto
-
-1) Install the Articul8 complement in Google Docs.
-2) Write your document in Google docs and cite with Zotero.
-3) Export the document as "Markdown (zipped)" in the created folder as "manuscript.zip".
-4) Open the quarto document (i.e manuscript.qmd).
-5) Render and fun :)
