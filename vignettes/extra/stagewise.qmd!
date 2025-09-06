@@ -1,22 +1,23 @@
 ---
 title: "Stagewise mixed-model analysis"
-description: 'Comparison: asreml and H2cal'
-output: rmarkdown::html_vignette
+description: > 
+  Comparison: asreml and H2cal.
+author: "Flavio Lozano-Isla"
+vignette: >
+  %\VignetteIndexEntry{yupana coding}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
 bibliography: [../files/pkgs.bib, ../files/book.bib]
 link-citations: true
-colorlinks: yes
-csl: https://www.zotero.org/styles/crop-science
-vignette: >
-  %\VignetteIndexEntry{Stagewise mixed-model analysis}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
+colorlinks: true
 ---
 
 ```{r setup, include=FALSE}
 source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
-knitr::opts_chunk$set(echo = TRUE)
 ```
 
 Best Linear Unbiased Predictors (BLUP) is used in plant breeding experiments for the selection of the best lines in multi-environmental trials (MET).
@@ -39,11 +40,11 @@ fb <- inti::met
 ## asreml
 
 ```{r, results='hide', cache=TRUE}
-library(asreml)
 library(data.table)
 library(plyr)
 library(stringr)
-asreml.options(maxit=100) # Set asreml iteration
+# library(asreml)
+# asreml.options(maxit=100) # Set asreml iteration
 
 ############################
 ##### Stage I LSMEANS #####

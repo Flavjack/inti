@@ -9,6 +9,8 @@
   
 # inti 0.6.9 (In progress)
 
+- Improve templates for `scihub()`
+
 
 # inti 0.6.8
 

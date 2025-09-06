@@ -1,3 +1,6 @@
+project:
+  render: ['*.qmd']
+  
 url: https://inkaverse.com/
 
 template:

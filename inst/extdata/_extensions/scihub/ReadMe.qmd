@@ -12,9 +12,13 @@ Author List
 
 > Google Sheets link
 
+## Presentation
+
+> Google Slides link
+
 ---
 
-# SciHub: research pipeline repository
+⇒ SciHub: research pipeline repository
 
 project-root/
   ├── analysis.qmd          # Script with data analysis (R/Python)
@@ -35,3 +39,59 @@ project-root/
                                 # Database link (Google Sheets)
 
 ---
+
+⇒ Manuscript structure
+
+> Title Page / Cover page
+
+**Title**
+- List of Authors
+- Affiliations 
+- Corresponding author
+- Authors
+
+| Author | ORCID | email |
+|--------|-------|-------|
+|        |       |       |
+|        |       |       |
+|        |       |       |
+
+# STATEMENTS AND DECLARATIONS
+
+## Acknowledgments
+## Funding
+## Conflict of interest
+## Data availability
+## Author contributions
+  - CRediT
+
+> Article
+
+**Title**
+
+(00) Abstract
+- Keywords (alphabetical order)
+
+(01) Introduction
+- Topic paragraphs
+- State of the art and research gaps
+- Objectives or hypothesis
+
+(02) Material & Methods
+
+(03) Result
+- Title by research stages or objectives
+  - Motivation sentence (method justification: what/why/how)
+  - Result description
+  
+(04) Discussion
+- Research summary
+- Title based on the objectives (*)
+- Description of the main results
+- Comparison with other works
+- Limitations and importance
+- Perspectives and future steps (*)
+
+(05) Conclusion
+
+(06) References
