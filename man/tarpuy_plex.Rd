@@ -88,21 +88,21 @@ tarpuy_plex(
 
 \item{rep}{Number of replication.}
 
-\item{zigzag}{Experiment layout in zigzag [logic: F]}
+\item{zigzag}{Experiment layout in zigzag \verb{[logic: FALSE]}}
 
-\item{nrows}{Experimental design dimension by rows [numeric: value]}
+\item{nrows}{Experimental design dimension by rows \verb{[numeric: value]}}
 
 \item{serie}{Number of digits in the plots.}
 
 \item{seed}{Seed for the randomization.}
 
-\item{qrcode}{Concatenate the QR code [string: \{fbname\}\{plots\}\{factors\}]}
+\item{qrcode}{Concatenate the QR code \verb{[character: \{fbname\}\{plots\}\{factors\}]}}
 }
 \value{
 data frame or list of arguments:
 
-  \enumerate{ \item info \item variables \item design \item logbook \item
-  timetable \item budget }
+\enumerate{ \item info \item variables \item design \item logbook \item
+timetable \item budget }
 }
 \description{
 Information for build a plan for an experiment (PLEX)

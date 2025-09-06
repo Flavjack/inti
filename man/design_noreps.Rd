@@ -16,21 +16,21 @@ design_noreps(
 )
 }
 \arguments{
-\item{factors}{Lists with names and factor vector [list].}
+\item{factors}{Lists with names and factor vector \verb{[list]}.}
 
-\item{type}{Randomization in the list [string: sorted, unsorted]}
+\item{type}{Randomization in the list \verb{[character: "sorted", "unsorted"]}}
 
-\item{zigzag}{Experiment layout in zigzag [logic: FALSE].}
+\item{zigzag}{Experiment layout in zigzag \verb{[logic: FALSE]}.}
 
-\item{nrows}{Experimental design dimension by rows [numeric: value]}
+\item{nrows}{Experimental design dimension by rows \verb{[numeric: value]}}
 
-\item{serie}{Number to start the plot id [numeric: 1000].}
+\item{serie}{Number to start the plot id \verb{[numeric: 1000]}.}
 
-\item{seed}{Replicability from randomization [numeric: NULL].}
+\item{seed}{Replicability from randomization \verb{[numeric: NULL]}.}
 
-\item{fbname}{Bar code prefix for data collection [string: "inkaverse"].}
+\item{fbname}{Bar code prefix for data collection \verb{[character: "inkaverse"]}.}
 
-\item{qrcode}{Concatenate the QR code [string: \{fbname\}\{plots\}\{factors\}]}
+\item{qrcode}{Concatenate the QR code \verb{[character: "\{fbname\}\{plots\}\{factors\}"]}}
 }
 \value{
 A list with the field-book design and parameters

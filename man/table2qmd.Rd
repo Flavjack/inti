@@ -9,7 +9,7 @@ table2qmd(text, type = "asis")
 \arguments{
 \item{text}{Markdown text with table information (string)}
 
-\item{type}{output file type [strig: "asis" "list", "listfull", "full"]}
+\item{type}{output file type \verb{[chracter: "asis" "list", "listfull", "full"]}.}
 }
 \value{
 string mutated

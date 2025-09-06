@@ -24,22 +24,22 @@ examples.}
 \item{nfactors}{Number of factor in the experiment(default = 1). See
 details.}
 
-\item{type}{Type of experimental arrange  (default = "crd"). See details.}
+\item{type}{Type of experimental arrange \verb{[default = "crd"]}. See details.}
 
 \item{rep}{Number of replications in the experiment (default = 3).}
 
-\item{zigzag}{Experiment layout in zigzag [logic: FALSE].}
+\item{zigzag}{Experiment layout in zigzag \verb{[logic: FALSE]}.}
 
-\item{nrows}{Experimental design dimension by rows [numeric: value]}
+\item{nrows}{Experimental design dimension by rows \verb{[numeric: value]}.}
 
-\item{serie}{Number to start the plot id [numeric: 100].}
+\item{serie}{Number to start the plot id \verb{[numeric: 100]}.}
 
-\item{seed}{Replicability of draw results (default = 0) always random. See
+\item{seed}{Replicability of draw results \verb{[default = 0]} always random. See
 details.}
 
 \item{fbname}{Barcode prefix for data collection.}
 
-\item{qrcode}{[string: \{fbname\}\{plots\}\{factors\}] String to concatenate the QR code.}
+\item{qrcode}{String to concatenate the QR code \verb{[character: \{fbname\}\{plots\}\{factors\}]}.}
 }
 \value{
 A list with the fieldbook design
@@ -49,11 +49,11 @@ Function to deploy experimental designs
 }
 \details{
 The function allows to include the arguments in the sheet that have
-  the information of the design. You should include 2 columns in the sheet:
-  \code{{arguments}} and \code{{values}}. See examples. The information will
-  be extracted automatically and deploy the design. \code{nfactors} = 1:
-  crd, rcbd, lsd, lattice. \code{nfactors} = 2 (factorial): split-crd,
-  split-rcbd split-lsd \code{nfactors} >= 2 (factorial): crd, rcbd, lsd.
+the information of the design. You should include 2 columns in the sheet:
+\code{{arguments}} and \code{{values}}. See examples. The information will
+be extracted automatically and deploy the design. \code{nfactors} = 1:
+crd, rcbd, lsd, lattice. \code{nfactors} = 2 (factorial): split-crd,
+split-rcbd split-lsd \code{nfactors} >= 2 (factorial): crd, rcbd, lsd.
 }
 \examples{
 

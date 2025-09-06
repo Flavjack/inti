@@ -3,7 +3,7 @@
 #' Use Articul8 Add-ons from Google docs to build Rticles
 #'
 #' @param text Markdown text with table information (string)
-#' @param type output file type [strig: "asis" "list", "listfull", "full"]
+#' @param type output file type `[chracter: "asis" "list", "listfull", "full"]`.
 #'
 #' @return string mutated
 #' 

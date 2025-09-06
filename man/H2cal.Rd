@@ -68,18 +68,15 @@ Heritability in plant breeding on a genotype difference basis
 \details{
 The function allows to made the calculation for individual or
 multi-environmental trials (MET) using fixed and random model.
-
-1. The variance components based in the random model and the population
+\enumerate{
+\item The variance components based in the random model and the population
 summary information based in the fixed model (BLUEs).
-
-2. Heritability under three approaches: Standard (ANOVA), Cullis (BLUPs) and
+\item Heritability under three approaches: Standard (ANOVA), Cullis (BLUPs) and
 Piepho (BLUEs).
-
-3. Best Linear Unbiased Estimators (BLUEs), fixed effect.
-
-4. Best Linear Unbiased Predictors (BLUPs), random effect.
-
-5. Table with the outliers removed for each model.
+\item Best Linear Unbiased Estimators (BLUEs), fixed effect.
+\item Best Linear Unbiased Predictors (BLUPs), random effect.
+\item Table with the outliers removed for each model.
+}
 
 For individual experiments is necessary provide the \code{trait},
 \code{gen.name}, \code{rep.n}.

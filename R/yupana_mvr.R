@@ -3,8 +3,8 @@
 #' Multivariate analysis for PCA and HCPC
 #'
 #' @param data Field book data.
-#' @param last_factor The last factor in your fieldbook  [string: NULL].
-#' @param variables Variables to be use in the analysis  [string: NULL].
+#' @param last_factor The last factor in your fieldbook  `[string: NULL]`.
+#' @param variables Variables to be use in the analysis  `[string: NULL]`.
 #' @param summary_by Variables for group the analysis.
 #' @param groups Groups for color in PCA.
 #'

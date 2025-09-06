@@ -13,11 +13,6 @@ knitr:
     comment: '#>'
 ---
 
-```{r}
-#| include: false
-library(knitr)
-```
-
 The package `inti` has been developed to provide tools used in plant science and experimental designs. The package also include shiny apps for design experiments, interactive analysis and technical writing.
 
 The `inti` package is inspired by the Inca mythology where the sun (`inti`) is considered the most significant deity. The web applications are based on this worldview.

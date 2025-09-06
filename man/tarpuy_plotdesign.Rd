@@ -35,7 +35,7 @@ Plot fieldbook sketch designs based in experimental design
 }
 \details{
 The function allows to plot the experimental design according the
-  field experiment design.
+field experiment design.
 }
 \examples{
 

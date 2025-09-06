@@ -15,13 +15,13 @@ yupana_mvr(
 \arguments{
 \item{data}{Field book data.}
 
-\item{last_factor}{The last factor in your fieldbook  [string: NULL].}
+\item{last_factor}{The last factor in your fieldbook  \verb{[string: NULL]}.}
 
 \item{summary_by}{Variables for group the analysis.}
 
 \item{groups}{Groups for color in PCA.}
 
-\item{variables}{Variables to be use in the analysis  [string: NULL].}
+\item{variables}{Variables to be use in the analysis  \verb{[string: NULL]}.}
 }
 \value{
 result and plots

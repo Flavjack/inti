@@ -28,10 +28,9 @@ Transform entire fieldbook according to data a dictionary
 }
 \details{
 The function require at least three columns.
-
-  1. Original names (\code{from}).
-
-  2. New names (\code{to}).
-
-  3. Variable type (\code{index}).
+\enumerate{
+\item Original names (\code{from}).
+\item New names (\code{to}).
+\item Variable type (\code{index}).
+}
 }

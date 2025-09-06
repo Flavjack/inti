@@ -1,23 +1,11 @@
-project:
-  render: ['*.qmd']
-  
 url: https://inkaverse.com/
 
-template:
-  bootstrap: 5
-  bootswatch: sandstone
-  math-rendering: mathjax
-  light-switch: true
-  params:
-    ganalytics: G-804H2EJ8RN
-  opengraph:
-    image:
-      src: man/figures/logo.png
-
-destination: docs
-
-development:
-  mode: auto
+home:
+  title: Inkaverse
+  description: Tools and Statistical Procedures in Plant Science
+  links:
+  - text: Support the project
+    href: https://github.com/sponsors/flavjack
 
 authors:
   Flavio Lozano-Isla:
@@ -34,12 +22,21 @@ authors:
   sidebar:
     roles: [aut, ctb, cph]
 
-home:
-  title: Inkaverse
-  description: Tools and Statistical Procedures in Plant Science
-  links:
-  - text: Support the project
-    href: https://github.com/sponsors/flavjack
+template:
+  bootstrap: 5
+  bootswatch: sandstone
+  math-rendering: mathjax
+  light-switch: true
+  params:
+    ganalytics: G-804H2EJ8RN
+  opengraph:
+    image:
+      src: man/figures/logo.png
+
+development:
+  mode: auto
+
+destination: docs
 
 navbar:
   bg: dark

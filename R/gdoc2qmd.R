@@ -2,11 +2,11 @@
 #'
 #' Use Articul8 Add-ons from Google docs to build Rticles
 #'
-#' @param file Zip file path from Articul8 exported in md format [path]
-#' @param export Path to export the files [path: NA (file directory)]
-#' @param format Output format [string: "qmd" "rmd"]
-#' @param type output file type [strig: "asis" "list", "listfull", "full"]
-#' @param fill_table extract table in listfull [strig: "up", "down"]
+#' @param file Zip file path from Articul8 exported in md format `[path]`
+#' @param export Path to export the files `[path: NA (file directory)]`
+#' @param format Output format `[character: "qmd", "rmd"]`
+#' @param type output file type `[character: "asis" "list", "listfull", "full"]`
+#' @param fill_table extract table in listfull `[character: "up", "down"]`
 #'
 #' @return path
 #' 

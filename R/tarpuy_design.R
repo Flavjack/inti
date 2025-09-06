@@ -6,15 +6,15 @@
 #'   examples.
 #' @param nfactors Number of factor in the experiment(default = 1). See
 #'   details.
-#' @param type Type of experimental arrange  (default = "crd"). See details.
+#' @param type Type of experimental arrange `[default = "crd"]`. See details.
 #' @param rep  Number of replications in the experiment (default = 3).
-#' @param zigzag Experiment layout in zigzag [logic: FALSE].
-#' @param nrows Experimental design dimension by rows [numeric: value]
-#' @param serie Number to start the plot id [numeric: 100].
-#' @param seed Replicability of draw results (default = 0) always random. See
+#' @param zigzag Experiment layout in zigzag `[logic: FALSE]`.
+#' @param nrows Experimental design dimension by rows `[numeric: value]`.
+#' @param serie Number to start the plot id `[numeric: 100]`.
+#' @param seed Replicability of draw results `[default = 0]` always random. See
 #'   details.
 #' @param fbname Barcode prefix for data collection.
-#' @param qrcode [string: \{fbname\}\{plots\}\{factors\}] String to concatenate the QR code.
+#' @param qrcode String to concatenate the QR code `[character: {fbname}{plots}{factors}]`.
 #'
 #' @details The function allows to include the arguments in the sheet that have
 #'   the information of the design. You should include 2 columns in the sheet:

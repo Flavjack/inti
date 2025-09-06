@@ -2,9 +2,9 @@
 #'
 #' Function to export field book and traits for be used in field book app.
 #'
-#' @param fieldbook Experiment field book [dataframe].
-#' @param last_factor Last factor in the field book [string: colnames]
-#' @param traits Traits information [dataframe or list].
+#' @param fieldbook Experiment field book `[dataframe]`.
+#' @param last_factor Last factor in the field book `[character: colname]`
+#' @param traits Traits information `[dataframe or list]`.
 #'
 #' @details For the traits parameters you can used shown in the Field Book app
 #'

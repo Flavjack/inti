@@ -93,7 +93,7 @@ details.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>Type of experimental arrange  (default = "crd"). See details.</p></dd>
+<dd><p>Type of experimental arrange <code>[default = "crd"]</code>. See details.</p></dd>
 
 
 <dt id="arg-rep">rep<a class="anchor" aria-label="anchor" href="#arg-rep"></a></dt>
@@ -101,19 +101,19 @@ details.</p></dd>
 
 
 <dt id="arg-zigzag">zigzag<a class="anchor" aria-label="anchor" href="#arg-zigzag"></a></dt>
-<dd><p>Experiment layout in zigzag [logic: FALSE].</p></dd>
+<dd><p>Experiment layout in zigzag <code>[logic: FALSE]</code>.</p></dd>
 
 
 <dt id="arg-nrows">nrows<a class="anchor" aria-label="anchor" href="#arg-nrows"></a></dt>
-<dd><p>Experimental design dimension by rows [numeric: value]</p></dd>
+<dd><p>Experimental design dimension by rows <code>[numeric: value]</code>.</p></dd>
 
 
 <dt id="arg-serie">serie<a class="anchor" aria-label="anchor" href="#arg-serie"></a></dt>
-<dd><p>Number to start the plot id [numeric: 100].</p></dd>
+<dd><p>Number to start the plot id <code>[numeric: 100]</code>.</p></dd>
 
 
 <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
-<dd><p>Replicability of draw results (default = 0) always random. See
+<dd><p>Replicability of draw results <code>[default = 0]</code> always random. See
 details.</p></dd>
 
 
@@ -122,7 +122,7 @@ details.</p></dd>
 
 
 <dt id="arg-qrcode">qrcode<a class="anchor" aria-label="anchor" href="#arg-qrcode"></a></dt>
-<dd><p>[string: {fbname}{plots}{factors}] String to concatenate the QR code.</p></dd>
+<dd><p>String to concatenate the QR code <code>[character: {fbname}{plots}{factors}]</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -132,11 +132,11 @@ details.</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The function allows to include the arguments in the sheet that have
-  the information of the design. You should include 2 columns in the sheet:
-  <code>{arguments}</code> and <code>{values}</code>. See examples. The information will
-  be extracted automatically and deploy the design. <code>nfactors</code> = 1:
-  crd, rcbd, lsd, lattice. <code>nfactors</code> = 2 (factorial): split-crd,
-  split-rcbd split-lsd <code>nfactors</code> &gt;= 2 (factorial): crd, rcbd, lsd.</p>
+the information of the design. You should include 2 columns in the sheet:
+<code>{arguments}</code> and <code>{values}</code>. See examples. The information will
+be extracted automatically and deploy the design. <code>nfactors</code> = 1:
+crd, rcbd, lsd, lattice. <code>nfactors</code> = 2 (factorial): split-crd,
+split-rcbd split-lsd <code>nfactors</code> &gt;= 2 (factorial): crd, rcbd, lsd.</p>
     </div>
 
     <div class="section level2">

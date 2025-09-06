@@ -17,7 +17,7 @@ remove_outliers(data, formula, drop_na = FALSE, plot_diag = FALSE)
 }
 \value{
 list. 1. Table with date without outliers. 2. The outliers in the
-  dataset.
+dataset.
 }
 \description{
 Use the method M4 in Bernal Vasquez (2016). Bonferroni Holm test to judge

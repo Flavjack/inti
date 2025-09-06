@@ -18,25 +18,25 @@ design_repblock(
 )
 }
 \arguments{
-\item{nfactors}{Number of factor in the experiment [numeric: 1].}
+\item{nfactors}{Number of factor in the experiment \verb{[numeric: 1]}.}
 
-\item{factors}{Lists with names and factor vector [list].}
+\item{factors}{Lists with names and factor vector \verb{[list]}.}
 
-\item{type}{Type of experimental arrange [string: "crd" "rcbd" "lsd"]}
+\item{type}{Type of experimental arrange \verb{[character: "crd" "rcbd" "lsd"]}}
 
-\item{rep}{Number of replications in the experiment [numeric: 3].}
+\item{rep}{Number of replications in the experiment \verb{[numeric: 3]}.}
 
-\item{zigzag}{Experiment layout in zigzag [logic: F].}
+\item{zigzag}{Experiment layout in zigzag \verb{[logic: FALSE]}.}
 
-\item{nrows}{Experimental design dimension by rows [numeric: value]}
+\item{nrows}{Experimental design dimension by rows \verb{[numeric: value]}}
 
-\item{serie}{Number to start the plot id [numeric: 100].}
+\item{serie}{Number to start the plot id \verb{[numeric: 100]}.}
 
-\item{seed}{Replicability from randomization [numeric: NULL].}
+\item{seed}{Replicability from randomization \verb{[numeric: NULL]}.}
 
-\item{fbname}{Bar code prefix for data collection [string: "inkaverse"].}
+\item{fbname}{Bar code prefix for data collection \verb{[character: "inkaverse"]}.}
 
-\item{qrcode}{Concatenate the QR code [string: \{fbname\}\{plots\}\{factors\}]}
+\item{qrcode}{Concatenate the QR code \verb{[character: "\{fbname\}\{plots\}\{factors\}"]}}
 }
 \value{
 A list with the field-book design and parameters

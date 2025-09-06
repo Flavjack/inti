@@ -46,7 +46,7 @@ Function for arrange journal club schedule
 }
 \details{
 The function could consider n levels for \code{gr_lvl}. In the case of more
-levels using "both" or "all" will be the combination. The suggested levels 
-for \code{st_lvl} are: active or spectator. Only the "active" members will 
+levels using "both" or "all" will be the combination. The suggested levels
+for \code{st_lvl} are: active or spectator. Only the "active" members will
 enter in the schedule.
 }

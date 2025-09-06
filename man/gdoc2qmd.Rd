@@ -7,15 +7,15 @@
 gdoc2qmd(file, export = NA, format = "qmd", type = "asis", fill_table = "down")
 }
 \arguments{
-\item{file}{Zip file path from Articul8 exported in md format [path]}
+\item{file}{Zip file path from Articul8 exported in md format \verb{[path]}}
 
-\item{export}{Path to export the files [path: NA (file directory)]}
+\item{export}{Path to export the files \verb{[path: NA (file directory)]}}
 
-\item{format}{Output format [string: "qmd" "rmd"]}
+\item{format}{Output format \verb{[character: "qmd", "rmd"]}}
 
-\item{type}{output file type [strig: "asis" "list", "listfull", "full"]}
+\item{type}{output file type \verb{[character: "asis" "list", "listfull", "full"]}}
 
-\item{fill_table}{extract table in listfull [strig: "up", "down"]}
+\item{fill_table}{extract table in listfull \verb{[character: "up", "down"]}}
 }
 \value{
 path

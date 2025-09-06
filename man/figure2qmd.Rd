@@ -7,11 +7,11 @@
 figure2qmd(text, path = ".", opts = NA)
 }
 \arguments{
-\item{text}{Markdown text with figure information [string]}
+\item{text}{Markdown text with figure information \verb{[string]}}
 
-\item{path}{Image path for figures [path: "." (base directory)]}
+\item{path}{Image path for figures \verb{[path: "." (base directory)]}}
 
-\item{opts}{chunk options in brackets [string: NA]}
+\item{opts}{chunk options in brackets \verb{[string: NA]}}
 }
 \value{
 string mutated
@@ -20,5 +20,5 @@ string mutated
 Use Articul8 Add-ons from Google docs to build Rticles
 }
 \details{
-Quarto option can be included in the title using "\{\{\}\}" separated by commas
+Quarto option can be included in the title using \code{{{}}} separated by commas
 }

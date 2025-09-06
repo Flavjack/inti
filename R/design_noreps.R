@@ -2,14 +2,14 @@
 #'
 #' Function to deploy field-book experiment without replications
 #'
-#' @param factors Lists with names and factor vector [list].
-#' @param type Randomization in the list [string: sorted, unsorted]
-#' @param zigzag Experiment layout in zigzag [logic: FALSE].
-#' @param serie Number to start the plot id [numeric: 1000].
-#' @param nrows Experimental design dimension by rows [numeric: value]
-#' @param seed Replicability from randomization [numeric: NULL].
-#' @param fbname Bar code prefix for data collection [string: "inkaverse"].
-#' @param qrcode Concatenate the QR code [string: \{fbname\}\{plots\}\{factors\}]
+#' @param factors Lists with names and factor vector `[list]`.
+#' @param type Randomization in the list `[character: "sorted", "unsorted"]`
+#' @param zigzag Experiment layout in zigzag `[logic: FALSE]`.
+#' @param serie Number to start the plot id `[numeric: 1000]`.
+#' @param nrows Experimental design dimension by rows `[numeric: value]`
+#' @param seed Replicability from randomization `[numeric: NULL]`.
+#' @param fbname Bar code prefix for data collection `[character: "inkaverse"]`.
+#' @param qrcode Concatenate the QR code `[character: "{fbname}{plots}{factors}"]`
 #'
 #' @return A list with the field-book design and parameters
 #' 

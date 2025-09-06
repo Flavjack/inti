@@ -7,11 +7,11 @@
 tarpuy_traits(fieldbook = NULL, last_factor = NULL, traits = NULL)
 }
 \arguments{
-\item{fieldbook}{Experiment field book [dataframe].}
+\item{fieldbook}{Experiment field book \verb{[dataframe]}.}
 
-\item{last_factor}{Last factor in the field book [string: colnames]}
+\item{last_factor}{Last factor in the field book \verb{[character: colname]}}
 
-\item{traits}{Traits information [dataframe or list].}
+\item{traits}{Traits information \verb{[dataframe or list]}.}
 }
 \value{
 list

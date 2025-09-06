@@ -2,13 +2,13 @@
 #'
 #' Use Articul8 Add-ons from Google docs to build Rticles
 #'
-#' @param text Markdown text with figure information [string]
-#' @param path Image path for figures [path: "." (base directory)]
-#' @param opts chunk options in brackets [string: NA]
+#' @param text Markdown text with figure information `[string]`
+#' @param path Image path for figures `[path: "." (base directory)]`
+#' @param opts chunk options in brackets `[string: NA]`
 #' 
 #' @details
 #' 
-#' Quarto option can be included in the title using "\{\{\}\}" separated by commas
+#' Quarto option can be included in the title using `{{}}` separated by commas
 #'
 #' @return string mutated
 #' 

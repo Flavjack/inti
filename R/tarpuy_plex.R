@@ -27,11 +27,11 @@
 #' @param nfactor Number of factors for the design.
 #' @param design Type of design.
 #' @param rep Number of replication.
-#' @param zigzag Experiment layout in zigzag [logic: F]
-#' @param nrows Experimental design dimension by rows [numeric: value]
+#' @param zigzag Experiment layout in zigzag `[logic: FALSE]`
+#' @param nrows Experimental design dimension by rows `[numeric: value]`
 #' @param serie Number of digits in the plots.
 #' @param seed Seed for the randomization.
-#' @param qrcode Concatenate the QR code [string: \{fbname\}\{plots\}\{factors\}]
+#' @param qrcode Concatenate the QR code `[character: {fbname}{plots}{factors}]`
 #' @details
 #'
 #' Provide the information available.

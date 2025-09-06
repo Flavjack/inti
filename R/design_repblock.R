@@ -2,16 +2,16 @@
 #'
 #' Function to deploy field-book experiment for CRD and RCBD
 #'
-#' @param nfactors Number of factor in the experiment [numeric: 1].
-#' @param factors Lists with names and factor vector [list].
-#' @param type Type of experimental arrange [string: "crd" "rcbd" "lsd"]
-#' @param rep  Number of replications in the experiment [numeric: 3].
-#' @param zigzag Experiment layout in zigzag [logic: F].
-#' @param serie Number to start the plot id [numeric: 100].
-#' @param nrows Experimental design dimension by rows [numeric: value]
-#' @param seed Replicability from randomization [numeric: NULL].
-#' @param fbname Bar code prefix for data collection [string: "inkaverse"].
-#' @param qrcode Concatenate the QR code [string: \{fbname\}\{plots\}\{factors\}]
+#' @param nfactors Number of factor in the experiment `[numeric: 1]`.
+#' @param factors Lists with names and factor vector `[list]`.
+#' @param type Type of experimental arrange `[character: "crd" "rcbd" "lsd"]`
+#' @param rep  Number of replications in the experiment `[numeric: 3]`.
+#' @param zigzag Experiment layout in zigzag `[logic: FALSE]`.
+#' @param serie Number to start the plot id `[numeric: 100]`.
+#' @param nrows Experimental design dimension by rows `[numeric: value]`
+#' @param seed Replicability from randomization `[numeric: NULL]`.
+#' @param fbname Bar code prefix for data collection `[character: "inkaverse"]`.
+#' @param qrcode Concatenate the QR code `[character: "{fbname}{plots}{factors}"]`
 #'
 #' @return A list with the field-book design and parameters
 #' 
