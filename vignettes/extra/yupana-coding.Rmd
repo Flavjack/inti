@@ -3,24 +3,20 @@ title: "Yupana: coding workflow"
 description: > 
   Reproduce results from Yupana coding.
 author: "Flavio Lozano-Isla"
+output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{yupana coding}
-  %\VignetteEngine{quarto::html}
+  %\VignetteIndexEntry{Yupana: coding workflow}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: '#>'
 ---
 
-```{r setup, include=FALSE}
+```{r}
 source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
-knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Packages
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 library(inti)
 library(gsheet)
 library(FactoMineR)
@@ -78,7 +74,9 @@ hi <- fb %>%
 
 ## Plot in grids
 
-```{r, fig.cap= "Water use effiency in 15 potato genotypes A) Box plot B) Scatter plot."}
+```{r}
+#| fig-cap: "Water use effiency in 15 potato genotypes A) Box plot B) Scatter plot."
+
 grid <- plot_grid(wue, hi
                   , nrow = 2
                   , labels = "AUTO")
@@ -125,7 +123,6 @@ lfa <- model$meancomp %>%
 model$anova %>% anova()
 
 model$meancomp %>% web_table()
-
 ```
 
 ## Tuber water use efficiency
@@ -158,7 +155,9 @@ model$meancomp %>% web_table()
 
 ## Plot in grids
 
-```{r gridplot, fig.cap= "Water use effiency in 15 potato genotypes A) Bar plot B) Line plot."}
+```{r}
+#| fig-cap: "Water use effiency in 15 potato genotypes A) Bar plot B) Line plot."
+
 grid <- plot_grid(lfa, twue
                   , nrow = 2
                   , labels = "AUTO")
@@ -176,7 +175,9 @@ knitr::include_graphics("files/fig-02.png")
 
 # Multivariate analysis
 
-```{r mv, fig.cap= "Multivariate Analysis: Principal component analysis and hierarchical clustering analysis."}
+```{r}
+#| fig-cap: "Multivariate Analysis: Principal component analysis and hierarchical clustering analysis."
+
 #> Principal component Analysis
 
 mv <- fb %>% 

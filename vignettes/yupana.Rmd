@@ -1,19 +1,18 @@
 ---
-title: Yupana
+title: "Yupana"
 description: > 
   Yupana: experimental design analysis.
 author: "Flavio Lozano-Isla"
+output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{yupana}
-  %\VignetteEngine{quarto::html}
+  %\VignetteIndexEntry{Yupana}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: '#>'
 ---
 
-```{r setup, include=FALSE}
+```{r}
+#| include: false
+
 source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
 ```
 
@@ -61,7 +60,7 @@ Tener en cuenta algunas consideraciones:
 
 # Módulos
 
-```{r modules}
+```{r}
 url <- "https://docs.google.com/spreadsheets/d/1nLP-dH9-dsVMXgsU7Z02EbgWvMIBKG5IYVRHAJCN-Z0/edit#gid=0"
 url %>% 
   gsheet2tbl() %>% 
@@ -74,7 +73,7 @@ Los parámetros de los gráficos generados en la app pueden ser guardadas en hoj
 
 ## Opciones de gráfico
 
-```{r param}
+```{r}
 url <- "https://docs.google.com/spreadsheets/d/1nLP-dH9-dsVMXgsU7Z02EbgWvMIBKG5IYVRHAJCN-Z0/edit#gid=1216293392"
 url %>% 
   gsheet2tbl() %>% 
@@ -87,12 +86,14 @@ url %>%
 
 ### Argumentos y valores
 
-```{r tparam, fig.cap= "Parámetros en `{arguments}` y `{values}` para la generación de gráficos en la aplicación Yupana."}
+```{r}
+#| fig-cap: "Parámetros en `{arguments}` y `{values}` para la generación de gráficos en la aplicación Yupana."
 
 knitr::include_graphics("files/graph-table.png")
 ```
 
-```{r plot, fig.cap= "Figura basada en los `{arguments}` y `{values}` de la tabla anterior."}
+```{r}
+#| fig-cap: "Figura basada en los `{arguments}` y `{values}` de la tabla anterior."
 
 knitr::include_graphics("files/graph-figure.png")
 ```
@@ -105,13 +106,14 @@ Yupana a partir de la versión 0.2.0 permite la inclusión de capas adicionales 
 
 Puedes incluir diversas capas descritas para el paquete `ggplot2`.
 
-```{r opt, fig.cap= "Gráfico con la inclusión de la capa `facet_grid()`"}
+```{r}
+#| fig-cap: "Gráfico con la inclusión de la capa `facet_grid()`"
 
 knitr::include_graphics("files/graph-figure.png")
 ```
 
-```{r topt, fig.cap= "Inclusión de `facet_grid(tratamiento ~ .)` en `opt` de los `{arguments}` en Yupana."}
+```{r}
+#| fig-cap: "Inclusión de `facet_grid(tratamiento ~ .)` en `opt` de los `{arguments}` en Yupana."
 
 knitr::include_graphics("files/graph-table-grid.png")
 ```
-

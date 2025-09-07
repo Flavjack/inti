@@ -1,16 +1,13 @@
 ---
-title: Broad-sense heritability in plant breeding
+title: "Broad-sense heritability in plant breeding"
 description: > 
   How to calculate the heritability in plant breeding.
 author: "Maria Belen Kistner & Flavio Lozano-Isla"
+output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{heritability}
-  %\VignetteEngine{quarto::html}
+  %\VignetteIndexEntry{Broad-sense heritability in plant breeding}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: '#>'
 editor_options: 
   chunk_output_type: console
 bibliography: [files/pkgs.bib, files/book.bib]
@@ -21,9 +18,10 @@ nocite: |
   [@schmidt2019Estimating; @schmidt2019Heritability; @bernal-vasquez2016Outliera;  @buntaran2020Cross; @bolker2021Mean]
 ---
 
-```{r setup, include=FALSE}
+```{r setup}
+#| include: false
+
 source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
-knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Broad-sense heritability ($H^2$)
@@ -74,7 +72,7 @@ $$\sigma_p^2=\sigma_g^2+\frac{\sigma_{g\cdot e}^2}{n_e}+\frac{\sigma_{g\cdot y}^
 
 # Differentes heritability calculations
 
-```{r, echo=FALSE}
+```{r}
 tibble(
   Standart = "$H^2=\\frac{\\sigma_g^2}{\\sigma_p^2}=\\frac{\\Delta G}{S}$",
   Cullis = "$H_{Cullis}^2=1-\\frac{\\overline{V}_{\\Delta..}^{^{BLUP}}}{2\\cdot\\sigma_g^2}$",
@@ -91,13 +89,13 @@ For remove the outliers the function implemented is the Method 4 used for @berna
 
 ## Load packages
 
-```{r pkgs, echo=TRUE}
+```{r}
 library(inti)
 ```
 
 ## H2cal function
 
-```{r fig.width= 7, fig.height=5}
+```{r}
  dt <- inti::potato
  hr <- H2cal(data = dt
             , trait = "stemdw"
@@ -152,6 +150,6 @@ hr$outliers$random %>% kable(caption = "Outliers random model")
 ::: {#refs}
 :::
 
-```{r references, echo=FALSE}
+```{r}
 if(!file.exists("files/pkgs.bib")){write_bib(c(.packages()),'files/pkgs.bib')}
 ```
