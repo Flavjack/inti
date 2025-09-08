@@ -11,7 +11,10 @@ vignette: >
 ---
 
 ```{r}
+#| include: false
+
 source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Packages

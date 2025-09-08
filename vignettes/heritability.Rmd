@@ -22,6 +22,7 @@ nocite: |
 #| include: false
 
 source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Broad-sense heritability ($H^2$)
@@ -73,6 +74,8 @@ $$\sigma_p^2=\sigma_g^2+\frac{\sigma_{g\cdot e}^2}{n_e}+\frac{\sigma_{g\cdot y}^
 # Differentes heritability calculations
 
 ```{r}
+#| echo: false
+
 tibble(
   Standart = "$H^2=\\frac{\\sigma_g^2}{\\sigma_p^2}=\\frac{\\Delta G}{S}$",
   Cullis = "$H_{Cullis}^2=1-\\frac{\\overline{V}_{\\Delta..}^{^{BLUP}}}{2\\cdot\\sigma_g^2}$",
@@ -96,17 +99,17 @@ library(inti)
 ## H2cal function
 
 ```{r}
- dt <- inti::potato
- hr <- H2cal(data = dt
-            , trait = "stemdw"
-            , gen.name = "geno"
-            , rep.n = 5
-            , fixed.model = "0 + (1|bloque) + geno"
-            , random.model = "1 + (1|bloque) + (1|geno)"
-            , emmeans = TRUE
-            , plot_diag = TRUE
-            , outliers.rm = TRUE
-            )
+dt <- inti::potato
+hr <- H2cal(data = dt
+          , trait = "stemdw"
+          , gen.name = "geno"
+          , rep.n = 5
+          , fixed.model = "0 + (1|bloque) + geno"
+          , random.model = "1 + (1|bloque) + (1|geno)"
+          , emmeans = TRUE
+          , plot_diag = FALSE
+          , outliers.rm = TRUE
+          )
 ```
 
 ## Model information

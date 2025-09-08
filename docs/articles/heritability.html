@@ -232,16 +232,31 @@ using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 <div class="section level3">
 <h3 id="load-packages">Load packages<a class="anchor" aria-label="anchor" href="#load-packages"></a>
 </h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://inkaverse.com/">inti</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="h2cal-function">H2cal function<a class="anchor" aria-label="anchor" href="#h2cal-function"></a>
 </h3>
-<p><img src="heritability_files/figure-html/unnamed-chunk-3-1.png" width="98%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu">inti</span><span class="fu">::</span><span class="va"><a href="../reference/potato.html">potato</a></span></span>
+<span><span class="va">hr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/H2cal.html">H2cal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dt</span></span>
+<span>          , trait <span class="op">=</span> <span class="st">"stemdw"</span></span>
+<span>          , gen.name <span class="op">=</span> <span class="st">"geno"</span></span>
+<span>          , rep.n <span class="op">=</span> <span class="fl">5</span></span>
+<span>          , fixed.model <span class="op">=</span> <span class="st">"0 + (1|bloque) + geno"</span></span>
+<span>          , random.model <span class="op">=</span> <span class="st">"1 + (1|bloque) + (1|geno)"</span></span>
+<span>          , emmeans <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>          , plot_diag <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>          , outliers.rm <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>          <span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="model-information">Model information<a class="anchor" aria-label="anchor" href="#model-information"></a>
 </h3>
-<pre><code><span><span class="co">## Linear mixed model fit by REML ['lmerMod']</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hr</span><span class="op">$</span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">## Linear mixed model fit by REML ['lmerMod']</span></span>
 <span><span class="co">## Formula: stemdw ~ 1 + (1 | bloque) + (1 | geno)</span></span>
 <span><span class="co">##    Data: dt.rm</span></span>
 <span><span class="co">## Weights: weights</span></span>
@@ -261,11 +276,13 @@ using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## Fixed effects:</span></span>
 <span><span class="co">##             Estimate Std. Error t value</span></span>
-<span><span class="co">## (Intercept)    12.51       1.19   10.51</span></span></code></pre>
+<span><span class="co">## (Intercept)    12.51       1.19   10.51</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="variance-components">Variance components<a class="anchor" aria-label="anchor" href="#variance-components"></a>
 </h3>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hr</span><span class="op">$</span><span class="va">tabsmr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Variance component table"</span><span class="op">)</span></span></code></pre></div>
 <table style="width:100%;" class="table">
 <caption>Variance component table</caption>
 <colgroup>
@@ -327,6 +344,8 @@ using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 <div class="section level3">
 <h3 id="best-linear-unbiased-estimators-blues">Best Linear Unbiased Estimators (BLUEs)<a class="anchor" aria-label="anchor" href="#best-linear-unbiased-estimators-blues"></a>
 </h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hr</span><span class="op">$</span><span class="va">blues</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"BLUEs"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>BLUEs</caption>
 <thead><tr class="header">
@@ -464,6 +483,8 @@ using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 <div class="section level3">
 <h3 id="best-linear-unbiased-predictors-blups">Best Linear Unbiased Predictors (BLUPs)<a class="anchor" aria-label="anchor" href="#best-linear-unbiased-predictors-blups"></a>
 </h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hr</span><span class="op">$</span><span class="va">blups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"BLUPs"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>BLUPs</caption>
 <thead><tr class="header">
@@ -537,6 +558,8 @@ using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 <div class="section level3">
 <h3 id="outliers">Outliers<a class="anchor" aria-label="anchor" href="#outliers"></a>
 </h3>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hr</span><span class="op">$</span><span class="va">outliers</span><span class="op">$</span><span class="va">fixed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Outliers fixed model"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Outliers fixed model</caption>
 <colgroup>
@@ -579,6 +602,8 @@ using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 <td align="left">OUTLIER</td>
 </tr></tbody>
 </table>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hr</span><span class="op">$</span><span class="va">outliers</span><span class="op">$</span><span class="va">random</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Outliers random model"</span><span class="op">)</span></span></code></pre></div>
 <table style="width:100%;" class="table">
 <caption>Outliers random model</caption>
 <colgroup>
@@ -677,6 +702,8 @@ Plant <span>Breeding Reviews</span>. <span>John Wiley &amp; Sons,
 Ltd</span>. p. 87–117
 </div>
 </div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="st">"files/pkgs.bib"</span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu">write_bib</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/zpackages.html" class="external-link">.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,<span class="st">'files/pkgs.bib'</span><span class="op">)</span><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
