@@ -44,11 +44,11 @@ project-root/
 
 > Title Page / Cover page
 
-**Title**
-- List of Authors
-- Affiliations 
-- Corresponding author
-- Authors
+**TITLE**
+List of Authors
+Affiliations 
+Corresponding author
+Authors information
 
 | Author | ORCID | email |
 |--------|-------|-------|
@@ -56,42 +56,46 @@ project-root/
 |        |       |       |
 |        |       |       |
 
-# STATEMENTS AND DECLARATIONS
+STATEMENTS AND DECLARATIONS
 
-## Acknowledgments
-## Funding
-## Conflict of interest
-## Data availability
-## Author contributions
-  - CRediT
+Acknowledgments
+Funding
+Conflict of interest
+Data availability
+Author contributions
+- CRediT
 
 > Article
 
-**Title**
+**TITLE**
 
-(00) Abstract
-- Keywords (alphabetical order)
+ABSTRACT
 
-(01) Introduction
+Keywords: (alphabetical order)
+
+INTRODUCTION
+
 - Topic paragraphs
 - State of the art and research gaps
 - Objectives or hypothesis
 
-(02) Material & Methods
+MATERIALS AND METHODS
 
-(03) Result
+RESULTS
+
 - Title by research stages or objectives
   - Motivation sentence (method justification: what/why/how)
   - Result description
-  
-(04) Discussion
+
+DISCUSSION
+
 - Research summary
 - Title based on the objectives (*)
-- Description of the main results
-- Comparison with other works
-- Limitations and importance
+- Description of the main results with cross references
+- Comparison with other research
+- Limitations and relevance
 - Perspectives and future steps (*)
 
-(05) Conclusion
+CONCLUSION
 
-(06) References
+REFERENCES

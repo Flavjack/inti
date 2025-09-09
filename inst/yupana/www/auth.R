@@ -1,7 +1,7 @@
 suppressPackageStartupMessages({
-library(googleAuthR)
-library(gargle)
-library(httr)
+  library(googleAuthR)
+  library(gargle)
+  library(httr)
 })
 
 # check loaded package

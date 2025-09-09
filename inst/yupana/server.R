@@ -46,15 +46,15 @@ observe({
 
 })
   
-# auth --------------------------------------------------------------------
+  # auth --------------------------------------------------------------------
   
   source("www/auth.R")
-  if(file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
+  if (file.exists("www/analytics.r")) {source("www/analytics.r", local = T)}
   
   gar_shiny_auth(session)
-
-# longin vs local ---------------------------------------------------------
-
+  
+  # longin vs local ---------------------------------------------------------
+  
   access_token <- moduleServer(id = "js_token"
                                , module = googleAuth_js)
   
