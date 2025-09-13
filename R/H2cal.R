@@ -39,17 +39,17 @@
 #'
 #' 5. Table with the outliers removed for each model.
 #'
-#' For individual experiments is necessary provide the \code{trait},
-#' \code{gen.name}, \code{rep.n}.
+#' For individual experiments is necessary provide the `{trait}`,
+#' `{gen.name}`,  `{rep.n}`.
 #'
-#' For MET experiments you should \code{env.n} and \code{env.name} and/or
-#' \code{year.n} and \code{year.name} according your experiment.
+#' For MET experiments you should `{env.n}` and `{env.name}` and/or
+#' `{year.n}` and `{year.name}` according your experiment.
 #'
 #' The BLUEs calculation based in the pairwise comparison could be time
 #' consuming with the increase of the number of the genotypes. You can specify
-#' \code{emmeans = FALSE} and the calculate of the BLUEs will be faster.
+#' `{emmeans = FALSE}` and the calculate of the BLUEs will be faster.
 #'
-#' If \code{emmeans = FALSE} you should change 1 by 0 in the fixed model for
+#' If `{emmeans = FALSE}` you should change 1 by 0 in the fixed model for
 #' exclude the intersect in the analysis and get all the genotypes BLUEs.
 #'
 #' For more information review the references.
@@ -108,8 +108,8 @@
 #'             , trait = "stemdw"
 #'             , gen.name = "geno"
 #'             , rep.n = 5
-#'             , fixed.model = "0 + (1|bloque) + geno"
-#'             , random.model = "1 + (1|bloque) + (1|geno)"
+#'             , fixed.model = ~ 0 + (1|bloque) + geno
+#'             , random.model = ~ 1 + (1|bloque) + (1|geno)
 #'             , emmeans = TRUE
 #'             , plot_diag = FALSE
 #'             , outliers.rm = TRUE
@@ -144,18 +144,20 @@ H2cal <- function(data
   
   if (FALSE) {
     
-    data = dt
+    data = potato
     trait = "stemdw"
     gen.name = "geno"
     rep.n = 5
-    fixed.model = "0 + (1|bloque) + geno"
-    random.model = "1 + (1|bloque) + (1|geno)"
+    fixed.model = ~ 0 + (1|bloque) + geno
+    random.model = ~ 1 + (1|bloque) + (1|geno)
     emmeans = TRUE
     plot_diag = TRUE
-    outliers.rm = F
+    outliers.rm = TRUE
     
     weights = NULL
     summary = TRUE
+    env.name = NULL
+    year.name = NULL
     
   }
   
@@ -164,25 +166,29 @@ H2cal <- function(data
   grp <- emmean <- SE <- Var <- where <- NULL 
   V.g <- V.gxl <- env <- V.gxy <- year <- NULL
   V.gxlxy <- V.e <- V.p <- vdBLUEs <- vdBLUPs <- NULL
+
+
+# model -------------------------------------------------------------------
+
+random.model <- as.formula(paste(trait, deparse1(random.model)))
+fixed.model <- as.formula(paste(trait, deparse1(fixed.model)))
   
 # outliers remove ---------------------------------------------------------
 
   if ( outliers.rm == TRUE ) {
 
-    out.rm <- data %>% outliers_remove(data = .
-                                     , trait = trait
-                                     , model = random.model
-                                     , drop_na = FALSE
-                                     )
-    
-    dt.rm <- out.rm %>% purrr::pluck(1) 
-
-    out.fm <- data %>% outliers_remove(data = .
-                                       , trait = trait
-                                       , model = fixed.model
+    out.rm <- data %>% remove_outliers(data = .
+                                       , formula = random.model
                                        , drop_na = FALSE
                                        )
-    dt.fm <- out.fm %>% purrr::pluck(1) 
+    
+    dt.rm <- out.rm$data$clean
+
+    out.fm <- data %>% remove_outliers(data = .
+                                       , formula = fixed.model
+                                       , drop_na = FALSE
+                                       )
+    dt.fm <- out.fm$data$clean
 
     outliers <- list(fixed = out.fm$outliers, random = out.rm$outliers)
 
@@ -199,12 +205,10 @@ H2cal <- function(data
 # fit models --------------------------------------------------------------
   
   #> fixed genotype effect
-  f.md <- as.formula(paste(trait, paste(fixed.model, collapse = " + "), sep = " ~ "))
-  g.fix <- eval(bquote(lme4::lmer(.(f.md), weights = weights, data = dt.fm)))
+  g.fix <- lme4::lmer(formula = fixed.model, weights = weights, data = dt.fm)
   
   #> random genotype effect
-  r.md <- as.formula(paste(trait, paste(random.model, collapse = " + "), sep = " ~ "))
-  g.ran <- eval(bquote(lme4::lmer(.(r.md), weights = weights, data = dt.rm)))
+  g.ran <- lme4::lmer(formula = random.model, weights = weights, data = dt.rm)
 
 # Print model summary -----------------------------------------------------
   

@@ -10,6 +10,7 @@
 # inti 0.6.9 (In progress)
 
 - Improve templates for `scihub()`
+- `H2cal()` was updated to include factors as formula
 
 
 # inti 0.6.8
