@@ -67,15 +67,20 @@ doc$path %>%
 ```
 
 ```{r}
-#| label: Image pdf to jpeg
+knitr::knit_exit()
+```
+
+```{r}
+#| label: pdf to jpeg
 #| eval: false
 
 library(tidyverse)
 library(magick)
 
-pdf4pub <- list.files("files/", pattern = "Fig.*pdf", full.names = T) 
+pdf4pub <- list.files(".", full.names = T, recursive = T
+                      , pattern = "img.+.pdf") 
 
-path <- "DisEd/"
+path <- dirname(pdf4pub)
 
 imgs <- 1:length(pdf4pub) %>% map(\(x) {
   
@@ -85,9 +90,37 @@ imgs <- 1:length(pdf4pub) %>% map(\(x) {
   
   pdf4pub[x] %>% 
     image_read_pdf() %>% 
+    # image_transparent("red") %>% 
     image_write(format = "jpeg", file.path(path, filename))
   
 })
+```
+
+```{r}
+#| label: Images to grids
+#| eval: false
+
+library(tidyverse)
+library(magick)
+library(cowplot)
+
+pdf4pub <- list.files(".", full.names = T, recursive = T
+                      , pattern = "FigureX") %>% 
+  image_read(., density = 600)
+  
+grid <- list(
+  pdf4pub[1] %>% image_crop(image = ., "0x0+0+1500")
+  , pdf4pub[2]
+  ) %>%  
+  map( ~ image_ggplot(.)) %>% 
+  plot_grid(plotlist = ., labels = "auto", ncol = 2)
+
+plot <- grid %>% 
+  ggsave(plot = ., "manuscript/Figure-X.jpg"
+         , units = "cm"
+         , width = 20
+         , height = 10
+         )
 ```
 
 ```{r}

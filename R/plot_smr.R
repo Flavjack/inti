@@ -44,15 +44,15 @@
 #' fb <- potato
 #' 
 #' yrs <- yupana_analysis(data = fb
-#'                        , response = "lfa"
+#'                        , response = "hi"
 #'                        , model_factors = "geno*treat"
 #'                        , comparison = c("geno", "treat")
 #'                        )
 #' 
 #' yrs$meancomp %>% 
-#'   plot_smr(type = "bar"
+#'   plot_smr(type = "line"
 #'            , x = "geno"
-#'            , y = "lfa"
+#'            , y = "hi"
 #'            , xlab = ""
 #'            , group = "treat"
 #'            , glab = "Tratamientos"
@@ -319,17 +319,17 @@ if (type == "linea") {
       if (!is.null(sig))  
         
         geom_text(
-          aes(
-            label = .data[[sig]],
-            y = if (!is.null(error)) .data[[y]] + .data[[error]] else .data[[y]]
-          )
-          , position = "jitter"
+          aes(label = .data[[sig]]
+              , y = if(!is.null(error)) .data[[y]] + .data[[error]] else .data[[y]])
           , colour = "black"
-          , vjust = 0.5  
-          , hjust = 0.5
+          , vjust = -0.3
+          , hjust = 0.3
+          , angle = 0
           , na.rm = T
           , size = sigsize
-          )
+          # , position = position_jitter(width = 0.03, height = 0.03)
+        ) 
+        
         
     } +
     

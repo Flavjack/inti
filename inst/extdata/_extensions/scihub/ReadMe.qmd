@@ -75,9 +75,10 @@ Keywords: (alphabetical order)
 
 INTRODUCTION
 
-- Topic paragraphs
-- State of the art and research gaps
+- Topic paragraphs (funnel approach)
+- State of the art
 - Objectives or hypothesis
+- Research/knowledge gaps
 
 MATERIALS AND METHODS
 

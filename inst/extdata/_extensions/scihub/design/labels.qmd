@@ -95,7 +95,7 @@ label %>% label_print()
 
 label %>% 
   label_print(mode = "c"
-              , filename = "labels"
+              , filename = "design/labels"
               , paper = c(21.0, 29.7)
               )
 ```

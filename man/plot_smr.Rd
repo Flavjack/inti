@@ -84,15 +84,15 @@ library(inti)
 fb <- potato
 
 yrs <- yupana_analysis(data = fb
-                       , response = "lfa"
+                       , response = "hi"
                        , model_factors = "geno*treat"
                        , comparison = c("geno", "treat")
                        )
 
 yrs$meancomp \%>\% 
-  plot_smr(type = "bar"
+  plot_smr(type = "line"
            , x = "geno"
-           , y = "lfa"
+           , y = "hi"
            , xlab = ""
            , group = "treat"
            , glab = "Tratamientos"
