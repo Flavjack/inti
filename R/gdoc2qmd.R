@@ -121,8 +121,11 @@ gdoc2qmd <- function(file
       dplyr::ungroup() %>% 
       dplyr::mutate(group = case_when(
         grepl("#tbl", .data$value) ~ .data$name
+        , grepl("Author|author", .data$value) ~ 0
       )) %>% 
-      tidyr::fill(.data$group, .direction = fill_table) %>% 
+      tidyr::fill(.data$group
+                  , .direction = "down"
+                  ) %>% 
       split(.$group) %>% 
       purrr::map_dfr(~ bind_rows(tibble(name = NA, value = NA), .x)) %>% 
       dplyr::mutate(across(.data$value, ~ ifelse(is.na(.), "\\newpage", .)))
