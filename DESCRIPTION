@@ -1,6 +1,6 @@
 Package: inti
 Title: Tools and Statistical Procedures in Plant Science
-Version: 0.6.8
+Version: 0.6.9
 Description: The 'inti' package is part of the 'inkaverse' project for developing 
     different procedures and tools used in plant science and experimental designs. 
     The mean aim of the package is to support researchers during the planning of

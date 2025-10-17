@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -184,15 +184,15 @@ function. Its contain all the parameter for the plot.</p>
 <span class="r-in"><span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="va">potato</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">yrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="yupana_analysis.html">yupana_analysis</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">fb</span></span></span>
-<span class="r-in"><span>                       , response <span class="op">=</span> <span class="st">"lfa"</span></span></span>
+<span class="r-in"><span>                       , response <span class="op">=</span> <span class="st">"hi"</span></span></span>
 <span class="r-in"><span>                       , model_factors <span class="op">=</span> <span class="st">"geno*treat"</span></span></span>
 <span class="r-in"><span>                       , comparison <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geno"</span>, <span class="st">"treat"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>                       <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">yrs</span><span class="op">$</span><span class="va">meancomp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu">plot_smr</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"bar"</span></span></span>
+<span class="r-in"><span>  <span class="fu">plot_smr</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"line"</span></span></span>
 <span class="r-in"><span>           , x <span class="op">=</span> <span class="st">"geno"</span></span></span>
-<span class="r-in"><span>           , y <span class="op">=</span> <span class="st">"lfa"</span></span></span>
+<span class="r-in"><span>           , y <span class="op">=</span> <span class="st">"hi"</span></span></span>
 <span class="r-in"><span>           , xlab <span class="op">=</span> <span class="st">""</span></span></span>
 <span class="r-in"><span>           , group <span class="op">=</span> <span class="st">"treat"</span></span></span>
 <span class="r-in"><span>           , glab <span class="op">=</span> <span class="st">"Tratamientos"</span></span></span>

@@ -43,7 +43,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -244,8 +244,8 @@ using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 <span>          , trait <span class="op">=</span> <span class="st">"stemdw"</span></span>
 <span>          , gen.name <span class="op">=</span> <span class="st">"geno"</span></span>
 <span>          , rep.n <span class="op">=</span> <span class="fl">5</span></span>
-<span>          , fixed.model <span class="op">=</span> <span class="st">"0 + (1|bloque) + geno"</span></span>
-<span>          , random.model <span class="op">=</span> <span class="st">"1 + (1|bloque) + (1|geno)"</span></span>
+<span>          , fixed.model <span class="op">=</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">bloque</span><span class="op">)</span> <span class="op">+</span> <span class="va">geno</span></span>
+<span>          , random.model <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">bloque</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">geno</span><span class="op">)</span></span>
 <span>          , emmeans <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>          , plot_diag <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>          , outliers.rm <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -564,31 +564,32 @@ using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 <caption>Outliers fixed model</caption>
 <colgroup>
 <col width="3%">
+<col width="7%">
 <col width="8%">
 <col width="6%">
 <col width="8%">
 <col width="11%">
 <col width="11%">
 <col width="15%">
-<col width="7%">
 <col width="6%">
 <col width="7%">
 <col width="11%">
 </colgroup>
 <thead><tr class="header">
 <th align="left"></th>
+<th align="left">index</th>
 <th align="left">bloque</th>
 <th align="left">geno</th>
 <th align="right">stemdw</th>
 <th align="right">resi</th>
 <th align="right">res_MAD</th>
 <th align="right">rawp.BHStud</th>
-<th align="left">index</th>
 <th align="right">adjp</th>
 <th align="right">bholm</th>
 <th align="left">out_flag</th>
 </tr></thead>
 <tbody><tr class="odd">
+<td align="left">68</td>
 <td align="left">68</td>
 <td align="left">IV</td>
 <td align="left">G05</td>
@@ -596,7 +597,6 @@ using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 <td align="right">60.36709</td>
 <td align="right">18.84505</td>
 <td align="right">0</td>
-<td align="left">68</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="left">OUTLIER</td>
@@ -604,30 +604,30 @@ using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 </table>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hr</span><span class="op">$</span><span class="va">outliers</span><span class="op">$</span><span class="va">random</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">kable</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Outliers random model"</span><span class="op">)</span></span></code></pre></div>
-<table style="width:100%;" class="table">
+<table class="table">
 <caption>Outliers random model</caption>
 <colgroup>
 <col width="4%">
+<col width="6%">
 <col width="7%">
 <col width="5%">
 <col width="7%">
 <col width="9%">
 <col width="10%">
 <col width="13%">
-<col width="6%">
 <col width="14%">
 <col width="10%">
 <col width="9%">
 </colgroup>
 <thead><tr class="header">
 <th align="left"></th>
+<th align="left">index</th>
 <th align="left">bloque</th>
 <th align="left">geno</th>
 <th align="right">stemdw</th>
 <th align="right">resi</th>
 <th align="right">res_MAD</th>
 <th align="right">rawp.BHStud</th>
-<th align="left">index</th>
 <th align="right">adjp</th>
 <th align="right">bholm</th>
 <th align="left">out_flag</th>
@@ -635,18 +635,19 @@ using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 <tbody>
 <tr class="odd">
 <td align="left">68</td>
+<td align="left">68</td>
 <td align="left">IV</td>
 <td align="left">G05</td>
 <td align="right">80.65</td>
 <td align="right">61.39925</td>
 <td align="right">18.886677</td>
 <td align="right">0.0000000</td>
-<td align="left">68</td>
 <td align="right">0.0000000000</td>
 <td align="right">0.0000000</td>
 <td align="left">OUTLIER</td>
 </tr>
 <tr class="even">
+<td align="left">100</td>
 <td align="left">100</td>
 <td align="left">IV</td>
 <td align="left">G06</td>
@@ -654,7 +655,6 @@ using re-scaled MAD for standardizing residuals (BH-MADR).</p>
 <td align="right">12.02340</td>
 <td align="right">3.698449</td>
 <td align="right">0.0002169</td>
-<td align="left">100</td>
 <td align="right">0.0002169207</td>
 <td align="right">0.0323212</td>
 <td align="left">OUTLIER</td>

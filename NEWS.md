@@ -1,4 +1,4 @@
-# inti4improve
+# inti4improve (In progress)
 
   - Improve PCA supplementary variables
   - Select the dimension in PCA
@@ -7,11 +7,11 @@
   - Include LCD
   - Dashboard for Tarpuy experiment progress
   
-# inti 0.6.9 (In progress)
+# inti 0.6.9 
 
 - Improve templates for `scihub()`
 - `H2cal()` was updated to include factors as formula
-
+- Fix error in gdocs2qmd
 
 # inti 0.6.8
 

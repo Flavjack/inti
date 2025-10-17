@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.9</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -169,14 +169,14 @@ Piepho (BLUEs).</p></li>
 <li><p>Best Linear Unbiased Estimators (BLUEs), fixed effect.</p></li>
 <li><p>Best Linear Unbiased Predictors (BLUPs), random effect.</p></li>
 <li><p>Table with the outliers removed for each model.</p></li>
-</ol><p>For individual experiments is necessary provide the <code>trait</code>,
-<code>gen.name</code>, <code>rep.n</code>.</p>
-<p>For MET experiments you should <code>env.n</code> and <code>env.name</code> and/or
-<code>year.n</code> and <code>year.name</code> according your experiment.</p>
+</ol><p>For individual experiments is necessary provide the <code>{trait}</code>,
+<code>{gen.name}</code>,  <code>{rep.n}</code>.</p>
+<p>For MET experiments you should <code>{env.n}</code> and <code>{env.name}</code> and/or
+<code>{year.n}</code> and <code>{year.name}</code> according your experiment.</p>
 <p>The BLUEs calculation based in the pairwise comparison could be time
 consuming with the increase of the number of the genotypes. You can specify
-<code>emmeans = FALSE</code> and the calculate of the BLUEs will be faster.</p>
-<p>If <code>emmeans = FALSE</code> you should change 1 by 0 in the fixed model for
+<code>{emmeans = FALSE}</code> and the calculate of the BLUEs will be faster.</p>
+<p>If <code>{emmeans = FALSE}</code> you should change 1 by 0 in the fixed model for
 exclude the intersect in the analysis and get all the genotypes BLUEs.</p>
 <p>For more information review the references.</p>
     </div>
@@ -216,8 +216,8 @@ Ltd.</p>
 <span class="r-in"><span>            , trait <span class="op">=</span> <span class="st">"stemdw"</span></span></span>
 <span class="r-in"><span>            , gen.name <span class="op">=</span> <span class="st">"geno"</span></span></span>
 <span class="r-in"><span>            , rep.n <span class="op">=</span> <span class="fl">5</span></span></span>
-<span class="r-in"><span>            , fixed.model <span class="op">=</span> <span class="st">"0 + (1|bloque) + geno"</span></span></span>
-<span class="r-in"><span>            , random.model <span class="op">=</span> <span class="st">"1 + (1|bloque) + (1|geno)"</span></span></span>
+<span class="r-in"><span>            , fixed.model <span class="op">=</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">bloque</span><span class="op">)</span> <span class="op">+</span> <span class="va">geno</span></span></span>
+<span class="r-in"><span>            , random.model <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">bloque</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">geno</span><span class="op">)</span></span></span>
 <span class="r-in"><span>            , emmeans <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span>            , plot_diag <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>            , outliers.rm <span class="op">=</span> <span class="cn">TRUE</span></span></span>
@@ -268,13 +268,13 @@ Ltd.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> G15    11.5 </span>
 <span class="r-in"><span> <span class="va">hr</span><span class="op">$</span><span class="va">outliers</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $fixed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    bloque geno stemdw     resi  res_MAD rawp.BHStud index adjp bholm out_flag</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68     IV  G05  80.65 60.36709 18.84505           0    68    0     0  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    index bloque geno stemdw     resi  res_MAD rawp.BHStud adjp bholm out_flag</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68    68     IV  G05  80.65 60.36709 18.84505           0    0     0  OUTLIER</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $random</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     bloque geno stemdw     resi   res_MAD  rawp.BHStud index         adjp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68      IV  G05  80.65 61.39925 18.886676 0.0000000000    68 0.0000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 100     IV  G06  33.52 12.02340  3.698449 0.0002169207   100 0.0002169207</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     index bloque geno stemdw     resi   res_MAD  rawp.BHStud         adjp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68     68     IV  G05  80.65 61.39925 18.886676 0.0000000000 0.0000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 100   100     IV  G06  33.52 12.02340  3.698449 0.0002169207 0.0002169207</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          bholm out_flag</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 68  0.00000000  OUTLIER</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 100 0.03232119  OUTLIER</span>

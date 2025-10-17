@@ -1,4 +1,4 @@
-pandoc: '3.4'
+pandoc: 3.6.3
 pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
@@ -9,7 +9,7 @@ articles:
   tarpuy: tarpuy.html
   extra/yupana-coding: extra/yupana-coding.html
   yupana: yupana.html
-last_built: 2025-09-09T20:25Z
+last_built: 2025-10-17T03:48Z
 urls:
   reference: https://inkaverse.com/reference
   article: https://inkaverse.com/articles
