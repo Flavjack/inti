@@ -90,7 +90,7 @@ yrs <- yupana_analysis(data = fb
                        )
 
 yrs$meancomp \%>\% 
-  plot_smr(type = "line"
+  plot_smr(type = "bar"
            , x = "geno"
            , y = "hi"
            , xlab = ""
@@ -99,8 +99,18 @@ yrs$meancomp \%>\%
            , error = "ste"
            , sig = "sig"
            #, ylimits = c(0, 1, 0.2)
-           , color = c("red", "black")
+           , color = T #c("red", "black")
            , gtext = c("Irrigado", "Sequia")
+           )
+           
+yrs$meancomp \%>\% 
+  plot_smr(type = "bar"
+           , x = "treat"
+           , y = "hi"
+           , group = "geno"
+           , glab = "Genotipo"
+           , error = "ste"
+           , sig = "sig"
            )
            
 }

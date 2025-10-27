@@ -33,7 +33,8 @@ Imports:
     purrr, 
     stringr, 
     googlesheets4,
-    DT
+    DT,
+    cli
 Suggests:
     gsheet,
     cowplot,

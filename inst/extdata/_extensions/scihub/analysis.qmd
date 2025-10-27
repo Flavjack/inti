@@ -10,7 +10,7 @@ format:
     number-sections: true
     self-contained: true
     code-fold: true
-    output-file: "ESM_1"
+    output-file: "ESM"
 editor_options: 
   chunk_output_type: console
 execute: 
@@ -37,20 +37,6 @@ fb <- gs %>%
   range_read(ss = .,sheet = "fb")
 ```
 
-# References
-
-Broman, K. W., & Woo, K. H. (2017). Data organization in spreadsheets. The American Statistician, 72(1), 2–10. https://doi.org/10.1080/00031305.2017.1375989
-
-Zuur, A. F., Ieno, E. N., & Elphick, C. S. (2009). A protocol for data exploration to avoid common statistical problems. Methods in Ecology and Evolution, 1(1), 3–14. https://doi.org/10.1111/j.2041-210x.2009.00001.x
-
-Francoishusson. (2017, July 13). PCA course using FactoMineR | R-bloggers. R-bloggers. https://www.r-bloggers.com/2017/07/pca-course-using-factominer/
-
-Kozak, M., & Piepho, H. (2017). What’s normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions. Journal of Agronomy and Crop Science, 204(1), 86–98. https://doi.org/10.1111/jac.12220
-
-Tanaka, E., & Hui, F. K. C. (2019). Symbolic formulae for linear mixed models. In Communications in computer and information science (pp. 3–21). https://doi.org/10.1007/978-981-15-1960-4_1
-
-Schielzeth, H., Dingemanse, N. J., Nakagawa, S., Westneat, D. F., Allegue, H., Teplitsky, C., Réale, D., Dochtermann, N. A., Garamszegi, L. Z., & Araya‐Ajoy, Y. G. (2020). Robustness of linear mixed‐effects models to violations of distributional assumptions. Methods in Ecology and Evolution, 11(9), 1141–1152. https://doi.org/10.1111/2041-210x.13434
-
 # Research Objective
 
 1. 
@@ -67,3 +53,81 @@ Schielzeth, H., Dingemanse, N. J., Nakagawa, S., Westneat, D. F., Allegue, H., T
 ```{r}
 
 ```
+
+# PCA
+
+```{r}
+dtx <- fb
+
+# str(dtx)
+  
+mv <- PCA(X = dtx, scale.unit = T, graph = F)
+
+fviz_pca_var(mv, col.var = "cos2",
+             gradient.cols = c("#7570b3",  "#d95f02", "#e7298a", "#1b9e77", "#66a61e"), 
+             repel = TRUE
+             )
+
+var <- plot.PCA(mv, choix = c("var"), cex=0.7, )
+
+ind <- plot.PCA(mv, choix = c("ind")
+                , cex = 0.5
+                , label = "ind"
+                , invisible = "quali"
+                )
+
+plot <- list(var, ind) %>% 
+  plot_grid(plotlist = ., ncol = 2, labels = "auto") %>% 
+  ggsave(plot = ., "manuscript/PCA.jpg", units = "cm"
+                , width = 30, height = 15)
+
+plot %>% include_graphics()
+
+pcainfo <- factoextra::get_pca(mv)
+
+sink("files/pca.txt")
+cat("\nPrincipal Component Analysis Results\n")
+summary(mv, nbelements = Inf, nb.dec = 2)
+cat("\nCorrelations between variables and dimensions\n")
+mv$cor
+cat("\nContributions of the variables\n")
+mv$contrib
+sink()
+
+cls <- HCPC(mv, graph = F
+            , nb.clust = -1
+            , metric = "euclidean"
+            , method = "ward"
+            )
+
+sink("files/hcpc.txt")
+cat("\nHierarchical Clustering on Principal Components\n")
+cls$call$t$tree
+cls$desc.ind
+cls$desc.var
+sink()
+
+map <- \() {plot(cls, choice = "map", draw.tree = FALSE)}
+cir <- fviz_dend(cls, type = "circular", cex = 0.5)
+
+plot <- list(map, cir) %>% 
+  plot_grid(plotlist = ., ncol = 2, labels = "auto") %>% 
+  ggsave(plot = ., "manuscript/HCPC.jpg", units = "cm"
+                , width = 30, height = 15)
+
+plot %>% include_graphics()
+```
+
+# References
+
+Broman, K. W., & Woo, K. H. (2017). Data organization in spreadsheets. The American Statistician, 72(1), 2–10. https://doi.org/10.1080/00031305.2017.1375989
+
+Zuur, A. F., Ieno, E. N., & Elphick, C. S. (2009). A protocol for data exploration to avoid common statistical problems. Methods in Ecology and Evolution, 1(1), 3–14. https://doi.org/10.1111/j.2041-210x.2009.00001.x
+
+Francoishusson. (2017, July 13). PCA course using FactoMineR | R-bloggers. R-bloggers. https://www.r-bloggers.com/2017/07/pca-course-using-factominer/
+
+Kozak, M., & Piepho, H. (2017). What’s normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions. Journal of Agronomy and Crop Science, 204(1), 86–98. https://doi.org/10.1111/jac.12220
+
+Tanaka, E., & Hui, F. K. C. (2019). Symbolic formulae for linear mixed models. In Communications in computer and information science (pp. 3–21). https://doi.org/10.1007/978-981-15-1960-4_1
+
+Schielzeth, H., Dingemanse, N. J., Nakagawa, S., Westneat, D. F., Allegue, H., Teplitsky, C., Réale, D., Dochtermann, N. A., Garamszegi, L. Z., & Araya‐Ajoy, Y. G. (2020). Robustness of linear mixed‐effects models to violations of distributional assumptions. Methods in Ecology and Evolution, 11(9), 1141–1152. https://doi.org/10.1111/2041-210x.13434

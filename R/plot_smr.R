@@ -50,7 +50,7 @@
 #'                        )
 #' 
 #' yrs$meancomp %>% 
-#'   plot_smr(type = "line"
+#'   plot_smr(type = "bar"
 #'            , x = "geno"
 #'            , y = "hi"
 #'            , xlab = ""
@@ -59,8 +59,18 @@
 #'            , error = "ste"
 #'            , sig = "sig"
 #'            #, ylimits = c(0, 1, 0.2)
-#'            , color = c("red", "black")
+#'            , color = T #c("red", "black")
 #'            , gtext = c("Irrigado", "Sequia")
+#'            )
+#'            
+#' yrs$meancomp %>% 
+#'   plot_smr(type = "bar"
+#'            , x = "treat"
+#'            , y = "hi"
+#'            , group = "geno"
+#'            , glab = "Genotipo"
+#'            , error = "ste"
+#'            , sig = "sig"
 #'            )
 #'            
 #' }
@@ -169,26 +179,12 @@ xrotation <- if(any(is.null(xrotation)) || any(is.na(xrotation)) || any(xrotatio
 
 # graph-color -------------------------------------------------------------
 
-if (isTRUE(color)) {
-  
-  color <- colorRampPalette(
-    c("#86CD80"   # green
-      , "#F4CB8C" # orange
-      , "#F3BB00" # yellow
-      , "#0198CD" # blue
-      , "#FE6673" # red
-    ))(length(data[[group]] %>% unique()))
-  
+color <- if (isTRUE(color)) {
+  paleta()[as.numeric(as.factor(unique(data[[group]])))]
 } else if (isFALSE(color)) {
-  
-  color <- gray.colors(n =  data[[group]] %>% unique() %>% length()
-                       , start = 0.8
-                       , end = 0.3) 
-  
+  grDevices::gray.colors(n = nlevels(as.factor(data[[group]])), start = 0.8, end = 0.3)
 } else {
-  
-  color <- color
-  
+  color
 }
 
 # sci-labels --------------------------------------------------------------
@@ -243,7 +239,7 @@ if(type == "barra") {
     geom_col(
       position = position_dodge2(preserve = "single")
       , colour = "black"
-      , size = 0.4
+      , linewidth = 0.4
       , na.rm = T
     ) +
     labs(
@@ -300,7 +296,7 @@ if (type == "linea") {
     geom_line( aes( group =  .data[[group]]
                     , color = .data[[group]]
                     , linetype = .data[[group]]
-    ) ,  size = 1 ) +
+    ) ,  linewidth = 1 ) +
     labs(x = lab_x
          , y = lab_y
          , shape = lab_group

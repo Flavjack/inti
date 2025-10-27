@@ -82,7 +82,7 @@ fb \%>\%
   plot_raw(type = "box"
            , x = "geno"
            , y = "twue"
-           , group = NULL
+           #, group = "treat"
            , ylab = NULL
            , xlab = NULL
            , glab = ""
@@ -90,10 +90,9 @@ fb \%>\%
            
 fb \%>\%
   plot_raw(type = "sca"
-           , x = "geno"
+           , x = "hi"
            , y = "twue"
-           , group = "treat"
-           , color = c("red", "blue")
+           , group = "geno"
            ) 
            
 }

@@ -45,7 +45,7 @@
 #'   plot_raw(type = "box"
 #'            , x = "geno"
 #'            , y = "twue"
-#'            , group = NULL
+#'            #, group = "treat"
 #'            , ylab = NULL
 #'            , xlab = NULL
 #'            , glab = ""
@@ -53,10 +53,9 @@
 #'            
 #' fb %>%
 #'   plot_raw(type = "sca"
-#'            , x = "geno"
+#'            , x = "hi"
 #'            , y = "twue"
-#'            , group = "treat"
-#'            , color = c("red", "blue")
+#'            , group = "geno"
 #'            ) 
 #'            
 #' }
@@ -167,40 +166,25 @@ if(!c(y %in% colnames(data))) stop("colum no exist")
 
 # graph-color -------------------------------------------------------------
 
-if(type == "boxplot") {
-  
-  ncolors <- length(data[[group]] %>% unique())
-  
-} else if (type == "scatterplot") {
-  
-  if(is.null(group)) { ncolors <- 1 } 
-  else { ncolors <- length(data[[group]] %>% unique()) }
-  
-}
-
-# -------------------------------------------------------------------------
-
-  if (isTRUE(color)) {
+ncolors <-  if(type == "boxplot") {
     
-    color <- colorRampPalette(
-      c("#86CD80"   # green
-        , "#F4CB8C" # orange
-        , "#F3BB00" # yellow
-        , "#0198CD" # blue
-        , "#FE6673" # red
-      ))(ncolors)
+    length(unique(data[[group]]))
+    
+  } else if (type == "scatterplot") {
+    
+    if(is.null(group)) { 1 } else {length(unique(data[[group]])) }
+    
+  }
+  
+color <- if (isTRUE(color)) {
+    
+   paleta()[1:ncolors]
     
   } else if (isFALSE(color)) {
     
-    color <- gray.colors(n = ncolors
-                         , start = 0.8
-                         , end = 0.3) 
+    gray.colors(n = ncolors, start = 0.8, end = 0.3)
     
-  } else {
-    
-    color <- color
-    
-  }
+  } else { color }
 
 # sci-labels --------------------------------------------------------------
 

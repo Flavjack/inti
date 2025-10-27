@@ -80,6 +80,17 @@ anova_table <- function(model, digits = 4) {
   return(df)
 }
 
+yesno <- function(msg, .envir = parent.frame()) {
+  si <- c("Yes", "Definitely", "For sure", "Yup", "Yeah", 
+          "Of course", "Absolutely")
+  no <- c("No way", "Not yet", "I forget", "No", "Nope", 
+          "Uhhhh... Maybe?")
+  cli::cli_inform(msg, .envir = .envir)
+  qs <- c(sample(si, 1), sample(no, 2))
+  rand <- sample(length(qs))
+  return(utils::menu(qs[rand]) == which(rand == 1))
+}
+
 scihub <- function() {
   # Define the source directory inside the package
   src_dir <- system.file("extdata/_extensions/scihub", package = "inti")
@@ -92,7 +103,7 @@ scihub <- function() {
   message("Files from 'scihub' will be copied to the current working directory:\n", 
           getwd(), "\n")
   
-  confirm <- utils::askYesNo("Do you want to continue?")
+  confirm <- yesno("Do you want to continue?")
   
   if (isTRUE(confirm)) {
     # List files to copy
@@ -106,4 +117,22 @@ scihub <- function() {
     message("Operation cancelled by the user.")
   }
 }
+
+paleta <- function() {
+  
+  # paleta <- function() {
+  #   list(RColorBrewer::brewer.pal(8, "Set2"), 
+  #        RColorBrewer::brewer.pal(8, "Pastel1")) |>
+  #     unlist()
+  #   }
+  
+  c("#66C2A5", "#FC8D62", "#8DA0CB", "#E78AC3"
+    , "#A6D854", "#FFD92F", "#E5C494", "#B3B3B3"
+    , "#FBB4AE", "#B3CDE3", "#CCEBC5", "#DECBE4"
+    , "#FED9A6", "#FFFFCC", "#E5D8BD", "#FDDAEC")
+
+}
+  
+  
+  
 

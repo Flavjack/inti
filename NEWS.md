@@ -6,6 +6,11 @@
   - Include lattice
   - Include LCD
   - Dashboard for Tarpuy experiment progress
+
+# inti 0.7.0
+
+- Improve templates for `scihub()` for works from bash
+- Update color pallet to Brewer
   
 # inti 0.6.9 
 
