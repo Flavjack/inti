@@ -42,7 +42,7 @@ design_noreps <- function(factors
                           , type = "sorted"
                           , zigzag = FALSE
                           , nrows = NA
-                          , serie = 100
+                          , serie = 1000
                           , seed = NULL
                           , fbname = "inkaverse"
                           , qrcode = "{fbname}{plots}{factors}"

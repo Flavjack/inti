@@ -667,7 +667,7 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
                                       
                                       numericInput(inputId = "plex_serie"
                                                    , label = "Plots serie"
-                                                   , value = 100
+                                                   , value = 1000
                                                    , min = 100
                                                    )
                                       

@@ -76,7 +76,7 @@ tarpuy_plex <- function(data = NULL
                         , rep = 3
                         , zigzag = FALSE
                         , nrows = NA
-                        , serie = 100
+                        , serie = 1000
                         , seed = 0
                         , qrcode = "{fbname}{plots}{factors}"
                          ) {

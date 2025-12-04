@@ -40,7 +40,7 @@ fb <- gs %>%
 # Research Objective
 
 1. 
-1.
+2.
 
 ## RO 1
 
@@ -57,6 +57,8 @@ fb <- gs %>%
 # PCA
 
 ```{r}
+#| eval: false
+
 dtx <- fb
 
 # str(dtx)
@@ -131,3 +133,5 @@ Kozak, M., & Piepho, H. (2017). What’s normal anyway? Residual plots are more 
 Tanaka, E., & Hui, F. K. C. (2019). Symbolic formulae for linear mixed models. In Communications in computer and information science (pp. 3–21). https://doi.org/10.1007/978-981-15-1960-4_1
 
 Schielzeth, H., Dingemanse, N. J., Nakagawa, S., Westneat, D. F., Allegue, H., Teplitsky, C., Réale, D., Dochtermann, N. A., Garamszegi, L. Z., & Araya‐Ajoy, Y. G. (2020). Robustness of linear mixed‐effects models to violations of distributional assumptions. Methods in Ecology and Evolution, 11(9), 1141–1152. https://doi.org/10.1111/2041-210x.13434
+
+Jambor, H. K. (2025). A checklist for designing and improving the visualization of scientific data. Nature Cell Biology, 27(6), 879–883. https://doi.org/10.1038/s41556-025-01684-z

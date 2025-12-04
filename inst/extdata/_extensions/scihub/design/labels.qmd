@@ -88,14 +88,14 @@ label <- fb %>%
     # , opts = 'image_convert(type = "Grayscale")'
     ) 
 
-label %>% label_print()
+label %>% label_print(mode = "preview")
 ```
 
 ```{r}
 #| eval: false
 
 label %>% 
-  label_print(mode = "c"
+  label_print(mode = "complete"
               , filename = "design/labels"
               , paper = c(100, 100)
               , units = "cm"
