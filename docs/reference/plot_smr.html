@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.91</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -190,7 +190,7 @@ function. Its contain all the parameter for the plot.</p>
 <span class="r-in"><span>                       <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">yrs</span><span class="op">$</span><span class="va">meancomp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu">plot_smr</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"line"</span></span></span>
+<span class="r-in"><span>  <span class="fu">plot_smr</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"bar"</span></span></span>
 <span class="r-in"><span>           , x <span class="op">=</span> <span class="st">"geno"</span></span></span>
 <span class="r-in"><span>           , y <span class="op">=</span> <span class="st">"hi"</span></span></span>
 <span class="r-in"><span>           , xlab <span class="op">=</span> <span class="st">""</span></span></span>
@@ -199,8 +199,18 @@ function. Its contain all the parameter for the plot.</p>
 <span class="r-in"><span>           , error <span class="op">=</span> <span class="st">"ste"</span></span></span>
 <span class="r-in"><span>           , sig <span class="op">=</span> <span class="st">"sig"</span></span></span>
 <span class="r-in"><span>           <span class="co">#, ylimits = c(0, 1, 0.2)</span></span></span>
-<span class="r-in"><span>           , color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"black"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>           , color <span class="op">=</span> <span class="cn">T</span> <span class="co">#c("red", "black")</span></span></span>
 <span class="r-in"><span>           , gtext <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Irrigado"</span>, <span class="st">"Sequia"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>           <span class="op">)</span></span></span>
+<span class="r-in"><span>           </span></span>
+<span class="r-in"><span><span class="va">yrs</span><span class="op">$</span><span class="va">meancomp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>  <span class="fu">plot_smr</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"bar"</span></span></span>
+<span class="r-in"><span>           , x <span class="op">=</span> <span class="st">"treat"</span></span></span>
+<span class="r-in"><span>           , y <span class="op">=</span> <span class="st">"hi"</span></span></span>
+<span class="r-in"><span>           , group <span class="op">=</span> <span class="st">"geno"</span></span></span>
+<span class="r-in"><span>           , glab <span class="op">=</span> <span class="st">"Genotipo"</span></span></span>
+<span class="r-in"><span>           , error <span class="op">=</span> <span class="st">"ste"</span></span></span>
+<span class="r-in"><span>           , sig <span class="op">=</span> <span class="st">"sig"</span></span></span>
 <span class="r-in"><span>           <span class="op">)</span></span></span>
 <span class="r-in"><span>           </span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
@@ -216,7 +226,7 @@ function. Its contain all the parameter for the plot.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

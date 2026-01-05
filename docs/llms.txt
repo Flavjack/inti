@@ -1,0 +1,191 @@
+# inti
+
+The ‘inti’ package is part of the ‘inkaverse’ project for developing
+different procedures and tools used in plant science and experimental
+designs. The mean aim of the package is to support researchers during
+the planning of experiments and data collection ‘tarpuy()’, data
+analysis and graphics ‘yupana()’, and technical writing. Learn more
+about the ‘inkaverse’ project at <https://inkaverse.com/>.
+
+## Installation
+
+To install the stable version from
+[CRAN](https://cran.r-project.org/package=inti):
+
+``` r
+install.packages("inti")
+```
+
+To install the latest development version directly from
+[GitHub](https://github.com/flavjack/inti):
+
+``` r
+if (!require("remotes"))
+  install.packages("remotes")
+remotes::install_github("flavjack/inti")
+```
+
+If you need install an specific version:
+
+``` r
+if (!require("remotes"))
+  install.packages("remotes")
+remotes::install_version("inti", version = "0.4.4")
+```
+
+## Shiny apps
+
+If is the first time running any of the apps consider install the app
+dependencies:
+
+``` r
+inti::yupana(dependencies = TRUE)
+```
+
+After install the package and the app dependencies also you can access
+to the apps through the Addins list in Rstudio or running the following
+code:
+
+### Yupana
+
+``` r
+inti::yupana()
+```
+
+### Tarpuy
+
+``` r
+inti::tarpuy()
+```
+
+# Package index
+
+## Yupana
+
+Data analysis
+
+- [`yupana()`](https://inkaverse.com/reference/yupana.md) : Interactive
+  data analysis
+- [`yupana_analysis()`](https://inkaverse.com/reference/yupana_analysis.md)
+  : Fieldbook analysis report
+- [`yupana_export()`](https://inkaverse.com/reference/yupana_export.md)
+  : Graph options to export
+- [`yupana_import()`](https://inkaverse.com/reference/yupana_import.md)
+  : Import information from data summary
+- [`yupana_mvr()`](https://inkaverse.com/reference/yupana_mvr.md) :
+  Multivariate Analysis
+- [`yupana_reshape()`](https://inkaverse.com/reference/yupana_reshape.md)
+  : Fieldbook reshape
+- [`plot_diag()`](https://inkaverse.com/reference/plot_diag.md) :
+  Diagnostic plots
+- [`plot_diagnostic()`](https://inkaverse.com/reference/plot_diagnostic.md)
+  : Diagnostic plots
+- [`plot_raw()`](https://inkaverse.com/reference/plot_raw.md) : Plot raw
+  data
+- [`plot_smr()`](https://inkaverse.com/reference/plot_smr.md) : Plot
+  summary data
+
+## Tarpuy
+
+Experimental designs
+
+- [`tarpuy()`](https://inkaverse.com/reference/tarpuy.md) : Interactive
+  fieldbook designs
+- [`tarpuy_design()`](https://inkaverse.com/reference/tarpuy_design.md)
+  : Fieldbook experimental designs
+- [`tarpuy_plex()`](https://inkaverse.com/reference/tarpuy_plex.md) :
+  Fieldbook plan information
+- [`tarpuy_plotdesign()`](https://inkaverse.com/reference/tarpuy_plotdesign.md)
+  : Fieldbook plot experimental designs
+- [`tarpuy_traits()`](https://inkaverse.com/reference/tarpuy_traits.md)
+  : Field book traits
+
+## Rticles
+
+Write technical documents
+
+- [`figure2qmd()`](https://inkaverse.com/reference/figure2qmd.md) :
+  Figure to Quarto format
+- [`gdoc2qmd()`](https://inkaverse.com/reference/gdoc2qmd.md) : Google
+  docs to Rmarkdown
+- [`table2qmd()`](https://inkaverse.com/reference/table2qmd.md) : Table
+  to Quarto format
+- [`figure2rmd()`](https://inkaverse.com/reference/figure2rmd.md) :
+  Figure to Rmarkdown format
+- [`table2rmd()`](https://inkaverse.com/reference/table2rmd.md) : Table
+  to Rmarkdown format
+- [`include_pdf()`](https://inkaverse.com/reference/include_pdf.md) :
+  Include PDF in markdown documents
+- [`include_table()`](https://inkaverse.com/reference/include_table.md)
+  : Table with footnotes
+- [`footnotes()`](https://inkaverse.com/reference/footnotes.md) :
+  Footnotes in tables
+- [`web_table()`](https://inkaverse.com/reference/web_table.md) : HTML
+  tables for markdown documents
+
+## Plant breeding
+
+Algorithms and calculations
+
+- [`H2cal()`](https://inkaverse.com/reference/H2cal.md) : Broad-sense
+  heritability in plant breeding
+- [`metamorphosis()`](https://inkaverse.com/reference/metamorphosis.md)
+  : Transform fieldbooks based in a dictionary
+- [`outliers_remove()`](https://inkaverse.com/reference/outliers_remove.md)
+  : Remove outliers
+- [`remove_outliers()`](https://inkaverse.com/reference/remove_outliers.md)
+  : Remove outliers using mixed models
+- [`mean_comparison()`](https://inkaverse.com/reference/mean_comparison.md)
+  : Mean comparison test
+- [`design_noreps()`](https://inkaverse.com/reference/design_noreps.md)
+  : Experimental design without replications
+- [`design_repblock()`](https://inkaverse.com/reference/design_repblock.md)
+  : Experimental design in CRD and RCBD
+
+## Datasets
+
+- [`potato`](https://inkaverse.com/reference/potato.md) : Water use
+  efficiency in 15 potato genotypes
+- [`met`](https://inkaverse.com/reference/met.md) : Swedish cultivar
+  trial data
+
+## Miscellaneous
+
+- [`split_folder()`](https://inkaverse.com/reference/split_folder.md) :
+  Split folder
+- [`jc_tombola()`](https://inkaverse.com/reference/jc_tombola.md) :
+  Journal Club Tombola
+- [`colortext()`](https://inkaverse.com/reference/colortext.md) :
+  Colourise text for display in the terminal
+
+# Articles
+
+### All vignettes
+
+- [Apps](https://inkaverse.com/articles/apps.md):
+
+  inti: interactive apps.
+
+- [Broad-sense heritability in plant
+  breeding](https://inkaverse.com/articles/heritability.md):
+
+  How to calculate the heritability in plant breeding.
+
+- [Inkaverse Privacy Policy](https://inkaverse.com/articles/policy.md):
+
+- [Rticles](https://inkaverse.com/articles/rticles.md):
+
+  Rticles: scientific documents with R.
+
+- [Tarpuy](https://inkaverse.com/articles/tarpuy.md):
+
+  Tarpuy: field-book experimental plans.
+
+- [Yupana: coding
+  workflow](https://inkaverse.com/articles/extra/yupana-coding.md):
+
+  Reproduce results from Yupana coding.
+
+- [Yupana](https://inkaverse.com/articles/yupana.md):
+
+  Yupana: experimental design analysis.

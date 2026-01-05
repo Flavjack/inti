@@ -65,9 +65,9 @@ dtx <- fb
   
 mv <- PCA(X = dtx, scale.unit = T, graph = F)
 
-fviz_pca_var(mv, col.var = "cos2",
-             gradient.cols = c("#7570b3",  "#d95f02", "#e7298a", "#1b9e77", "#66a61e"), 
-             repel = TRUE
+fviz_pca_var(mv, col.var = "cos2"
+             , gradient.cols = inti:::paleta()
+             , repel = TRUE
              )
 
 var <- plot.PCA(mv, choix = c("var"), cex=0.7, )
