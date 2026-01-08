@@ -33,7 +33,7 @@ table2rmd <- function(text
                       gsub("\\{\\#tbl\\:|\\}", "",.) %>% gsub("\\.", "", .)
       ) %>% 
       dplyr::select(!c(.data$value)) %>% 
-      dplyr::mutate(id := "table") %>% 
+      dplyr::mutate(id = "table") %>% 
       dplyr::mutate(across(everything(), as.character)) %>% 
       tidyr::pivot_longer(!.data$id) %>% 
       dplyr::select(!.data$id) %>% 
