@@ -19,7 +19,6 @@ analytics.r
 ^pkgdown$
 ^\.github$
 ^CRAN-SUBMISSION$
-
 setup.R
 setup.r
 ^vignettes/extra/
