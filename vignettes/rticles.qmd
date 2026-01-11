@@ -19,9 +19,9 @@ source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/d
 
 El paquete `inti` permite usar un plantilla (template) para la generar documentos técnico/científicos (i.e. tesis y artículos) usando [`Quarto`](https://quarto.org/).
 
-```{=html}
-<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?si=Db7O5gwumpxCNc3T&amp;list=PLSQMdOu57lj9HTZNed2-q3WpQfIGraA1V" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
+<!-- ```{=html} -->
+<!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?si=Db7O5gwumpxCNc3T&amp;list=PLSQMdOu57lj9HTZNed2-q3WpQfIGraA1V" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
+<!-- ``` -->
 
 # Herramientas
 
@@ -98,25 +98,7 @@ Deben crearse una cuenta en los siguientes servicios:
   
   <div style="display:inline-block; width:24%"> 
   <p style="text-align:center; vertical-align:middle"> 
-  <a target="_blank" href="https://git-scm.com/downloads"><img src="files/git.png" style="height:50px" title="Git" alt="Git"></a> 
-  </p></div>
-  
-</div>
-```
-
-#### Complementos para zotero
-
-```{=html}
-<div id=footer style="width:100%; margin:auto;">
-  
-  <div style="display:inline-block; width:49%">
-  <p style="text-align:center; vertical-align:middle">
-  <a target="_blank" href="http://zotfile.com/"><img src="files/zotfile.png" style="height:50px" title="ZotFile" alt="ZotFile"></a> 
-  </p></div>
-  
-  <div style="display:inline-block; width:49%">
-  <p style="text-align:center; vertical-align:middle">
-  <a target="_blank" href="https://retorque.re/zotero-better-bibtex/"><img src="files/bibtex.png" style="height:50px" title="Better BibTeX" alt="BBTeX"></a> 
+  <a target="_blank" href="https://git-scm.com/downloads/"><img src="files/git.png" style="height:50px" title="Git" alt="Git"></a> 
   </p></div>
   
 </div>
@@ -124,7 +106,7 @@ Deben crearse una cuenta en los siguientes servicios:
 
 ## Extras
 
-Existen alguna herramientas básicas que NO deben faltar en tú computador:
+Alguna herramientas básicas que NO deben faltar en tú computador:
 
 - Chrome (buscador web)
 - Foxit Reader (lector de PDFs)

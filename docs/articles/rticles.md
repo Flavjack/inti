@@ -4,10 +4,6 @@ El paquete `inti` permite usar un plantilla (template) para la generar
 documentos técnico/científicos (i.e. tesis y artículos) usando
 [`Quarto`](https://quarto.org/).
 
-# Se produjo un error.
-
-No se puede ejecutar JavaScript.
-
 ## Herramientas
 
 Para el desarrollo de documentos técnico/científicos con R, deben
@@ -82,18 +78,11 @@ Deben crearse una cuenta en los siguientes servicios:
 
 [![Rstudio](files/rstudio.svg "Rstudio")](https://posit.co/download/rstudio-desktop/)
 
-[![Git](files/git.png "Git")](https://git-scm.com/downloads)
-
-##### Complementos para zotero
-
-[![ZotFile](files/zotfile.png "ZotFile")](http://zotfile.com/)
-
-[![BBTeX](files/bibtex.png "Better BibTeX")](https://retorque.re/zotero-better-bibtex/)
+[![Git](files/git.png "Git")](https://git-scm.com/downloads/)
 
 ### Extras
 
-Existen alguna herramientas básicas que NO deben faltar en tú
-computador:
+Alguna herramientas básicas que NO deben faltar en tú computador:
 
 - Chrome (buscador web)
 - Foxit Reader (lector de PDFs)
