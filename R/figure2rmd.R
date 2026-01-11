@@ -36,7 +36,7 @@ figure2rmd <- function(text
                       gsub("\\{\\#fig\\:|\\}", "",.) %>% gsub("\\.", "", .)
       ) %>% 
       dplyr::select(!c(.data$value, .data$info)) %>% 
-      dplyr::mutate(id := "figure") %>% 
+      dplyr::mutate(id = "figure") %>% 
       dplyr::mutate(across(everything(), as.character)) %>% 
       tidyr::pivot_longer(!.data$id) %>% 
       dplyr::select(!.data$id) %>% 
