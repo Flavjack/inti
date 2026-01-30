@@ -18,14 +18,15 @@ Author List
 
 ---
 
-⇒ SciHub: research pipeline repository
+⇒ *SciHub*: research pipeline repository
 
 project-root/
-  ├── analysis.qmd          # Script with data analysis (R/Python)
+  ├── analysis.qmd          # Script with data analysis
   ├── article.qmd           # Script for formatting the article
+  ├── article.zip           # Zipped file in Markdown from Articul8
   ├── design/               # Experimental design and setup
-  │   ├── design.qmd            # Document with experimental setup and planning
-  │   └── labels.pdf            # Labels for experimental units or field trials
+  │   ├── design                # Information of experimental setup and planning
+  │   └── labels.pdf            # Labels script from experiments
   ├── files/                # Supporting files for the project
   │   ├── images/               # Raw and processed images
   │   ├── zotero/               # Zotero library (.rds)
@@ -37,66 +38,11 @@ project-root/
   └── README.qmd            # Article title with authors:
                                 # Manuscript link (Google Docs)
                                 # Database link (Google Sheets)
+                                # Presentation link (Google Slides)
 
 ---
 
-⇒ Manuscript structure
+⇒ *Manuscript template*
 
-> Title Page / Cover page
+> https://docs.google.com/document/d/1B5wtKmWap6MHYjVJqlYy7HMXHWQDoprlz-om2nn777s/edit?usp=sharing
 
-**TITLE**
-List of Authors
-Affiliations 
-Corresponding author
-Authors information
-
-| Author | ORCID | email |
-|--------|-------|-------|
-|        |       |       |
-|        |       |       |
-|        |       |       |
-
-STATEMENTS AND DECLARATIONS
-
-Acknowledgments
-Funding
-Conflict of interest
-Data availability
-Author contributions
-- CRediT
-
-> Article
-
-**TITLE**
-
-ABSTRACT
-
-Keywords: (alphabetical order)
-
-INTRODUCTION
-
-- Topic paragraphs (funnel approach)
-- State of the art
-- Objectives or hypothesis
-- Research/knowledge gaps
-
-MATERIALS AND METHODS
-
-RESULTS
-
-- Title by research stages or objectives
-  - Motivation sentence (method justification: what/why/how)
-  - Result description
-
-DISCUSSION
-
-- Research summary
-- Title based on the objectives (*)
-- Description of the main results with cross references
-- Comparison with other research
-- Limitations and relevance
-- Perspectives and future steps (*)
-
-CONCLUSION
-
-REFERENCES

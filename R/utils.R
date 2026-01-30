@@ -83,7 +83,7 @@ anova_table <- function(model, digits = 4) {
 yesno <- function(msg, .envir = parent.frame()) {
   si <- c("Yes", "Definitely", "For sure", "Yup", "Yeah", 
           "Of course", "Absolutely")
-  no <- c("No way", "Not yet", "I forget", "No", "Nope", 
+  no <- c("No way", "Not yet", "Nop", "No", "Nope", 
           "Uhhhh... Maybe?")
   cli::cli_inform(msg, .envir = .envir)
   qs <- c(sample(si, 1), sample(no, 2))
@@ -95,10 +95,6 @@ scihub <- function() {
   # Define the source directory inside the package
   src_dir <- system.file("extdata/_extensions/scihub", package = "inti")
   
-  if (src_dir == "") {
-    stop("The 'scihub' folder was not found")
-  }
-  
   # Ask user for confirmation
   message("Files from 'scihub' will be copied to the current working directory:\n", 
           getwd(), "\n")
@@ -106,17 +102,33 @@ scihub <- function() {
   confirm <- yesno("Do you want to continue?")
   
   if (isTRUE(confirm)) {
-    # List files to copy
     files <- list.files(src_dir, full.names = TRUE)
     
-    # Copy files to the working directory
-    file.copy(files, to = getwd(), overwrite = FALSE, recursive = TRUE)
+    # Crear directorio temporal
+    tmp_dir <- tempfile("scihub_")
+    dir.create(tmp_dir)
+    
+    # Copiar archivos al directorio temporal
+    file.copy(files, to = tmp_dir, recursive = TRUE)
+    
+    # Cambiar extensiones específicas
+    old_files <- list.files(tmp_dir, full.names = TRUE)
+    
+    new_files <- sub("\\.zp$", ".zip", old_files)
+    new_files <- sub("\\.proj$", ".Rproj", new_files)
+    
+    file.rename(old_files, new_files)
+    
+    # Copiar al directorio de trabajo final
+    file.copy(new_files, to = getwd(), overwrite = FALSE, recursive = TRUE)
     
     message("Files were successfully copied.")
   } else {
     message("Operation cancelled by the user.")
   }
+  
 }
+
 
 paleta <- function() {
   

@@ -6,8 +6,16 @@
   - Include lattice
   - Include LCD
   - Dashboard for Tarpuy experiment progress
+  - Include experimental matrix in Tarpuy
+  - Include CreDiT
 
-# inti 0.7.0
+# inti 0.6.92
+
+- Improve `scihub()` project
+  - Include link for manuscript template
+  - Update ReadMe.qmd
+
+# inti 0.6.91
 
 - Improve templates for `scihub()` for works from bash
 - Update color pallet to Brewer
