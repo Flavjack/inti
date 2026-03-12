@@ -72,10 +72,6 @@ slogan <- "pkgdown/favicon/img/logo_inkaverse.jpg" %>%
   image_crop(geometry = "500x190") %>%
   image_write("pkgdown/favicon/img/inkaverse_slogan.png")
 
-
-
-
-
 # -------------------------------------------------------------------------
 # inti --------------------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -277,3 +273,61 @@ sticker <- logo %>%
   image_crop(geometry = "560x600-40") %>% 
   image_transparent('pink') %>% 
   image_write("pkgdown/favicon/img/quipolab.png")
+
+
+# -------------------------------------------------------------------------
+# inti e-signature --------------------------------------------------------
+# -------------------------------------------------------------------------
+
+library(huito)
+
+font <- c("Permanent Marker")
+
+huito_fonts(font)
+
+label <- label_layout(size = c(5.08, 5.08)
+                      , border_color = NA
+                      , border_width = 0
+                      , background = "#ffe701"
+) %>% 
+  include_image(value = "pkgdown/favicon/img/logo_inti.jpg" 
+                , size = c(3.97, 3.97)
+                , position = c(2.54, 2.35)
+  ) %>%
+  include_shape(size = 5.08
+                , border_width = 3
+                , border_color = "#505456"
+                , position = c(2.54, 2.54)
+                , panel_color = "pink"
+  ) %>%
+  include_text(value = "inkaverse.com"
+               , size = 6
+               , position = c(3.6, 0.75)
+               , angle = 30
+               , color = "white"
+               , font = font
+  ) 
+
+label %>% label_print()
+
+logo <- label %>% 
+  label_print(filename = tempfile()
+              , margin = 0
+              , paper = c(5.5, 5.5)
+              , mode = "complete")
+
+sticker <- logo %>%
+  image_read_pdf()  %>% 
+  image_crop(geometry = "600x600+40") %>% 
+  image_crop(geometry = "560x600-40") %>% 
+  image_transparent('pink') %>% 
+  image_resize("x80") %>%
+  image_write("pkgdown/favicon/img/inti-esignature.png")
+
+# -------------------------------------------------------------------------
+# -------------------------------------------------------------------------
+# -------------------------------------------------------------------------
+
+
+
+

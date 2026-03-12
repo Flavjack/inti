@@ -97,6 +97,22 @@ imgs <- 1:length(pdf4pub) %>% map(\(x) {
 ```
 
 ```{r}
+#| label: Images to PDF
+#| eval: false
+
+library(tidyverse)
+library(magick)
+library(qpdf)
+
+img2pdf <- list.files(".", full.names = T
+                      , recursive = T
+                      , pattern = "images") %>% 
+  image_read() %>% 
+  image_write(format = "pdf"
+              , file.path(getwd(), "figures.pdf"))
+```
+
+```{r}
 #| label: Images to grids
 #| eval: false
 
