@@ -20,12 +20,12 @@ Source:
 [`inst/CITATION`](https://github.com/flavjack/inti/blob/HEAD/inst/CITATION)
 
 Lozano-Isla F (????). *inti: Tools and Statistical Procedures in Plant
-Science*. R package version 0.6.91,
+Science*. R package version 0.6.92,
 <https://CRAN.R-project.org/package=inti>.
 
     @Manual{,
       title = {{inti}: Tools and Statistical Procedures in Plant Science},
       author = {Flavio Lozano-Isla},
-      note = {R package version 0.6.91},
+      note = {R package version 0.6.92},
       url = {https://CRAN.R-project.org/package=inti},
     }

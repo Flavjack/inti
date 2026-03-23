@@ -23,6 +23,8 @@ cran_packages <- c(
   , "sessioninfo"
 )
 
+# pak::pkg_install()
+
 load_or_install <- function(pkgs) {
   for (pkg in pkgs) {
     if (!requireNamespace(pkg, quietly = TRUE)) {

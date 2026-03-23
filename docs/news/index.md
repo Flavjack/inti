@@ -1,6 +1,14 @@
 # Changelog
 
-## inti 0.7.0
+## inti 0.6.92
+
+- Improve `scihub()` project
+  - Include link for manuscript template
+  - Update ReadMe.qmd
+
+## inti 0.6.91
+
+CRAN release: 2026-01-11
 
 - Improve templates for `scihub()` for works from bash
 - Update color pallet to Brewer
