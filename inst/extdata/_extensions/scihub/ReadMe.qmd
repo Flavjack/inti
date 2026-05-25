@@ -6,11 +6,11 @@ Author List
 
 ## Manuscript
 
-> Google Docs link
+> https://docs.google.com/document/d/1B5wtKmWap6MHYjVJqlYy7HMXHWQDoprlz-om2nn777s/edit?usp=sharing
 
 ## Database
 
-> Google Sheets link
+> https://docs.google.com/spreadsheets/d/1u6xgTT8jDFkHSMkK1iRrNVR-1iOINQidbEiaDCu2Nqw/edit?usp=sharing
 
 ## Presentation
 
@@ -41,8 +41,3 @@ project-root/
                                 # Presentation link (Google Slides)
 
 ---
-
-⇒ *Manuscript template*
-
-> https://docs.google.com/document/d/1B5wtKmWap6MHYjVJqlYy7HMXHWQDoprlz-om2nn777s/edit?usp=sharing
-
