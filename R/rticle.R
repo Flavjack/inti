@@ -25,7 +25,7 @@ rticle <- function(file = "draft.md",
                    export = NULL,
                    type = c("asis", "list")) {
   
-  # file = "draft.md" ; export = NULL ; type = "list"
+  # file = "draft.md" ; export = NULL ; type = "asis"
   
   type <- match.arg(type)
   
@@ -35,19 +35,20 @@ rticle <- function(file = "draft.md",
   
   dir.create(export, recursive = T, showWarnings = F)
   
-
+  
   fmt <- tryCatch(
     knitr::pandoc_to(),
     error = function(e)
       NULL
   )
   
-  section_break <- switch(
-    fmt,
+  section_break <- if (identical(fmt, "html")) {
     
-    html = c("<div style='margin-top: 3em;'></div>"),
+    "<div style='margin-top: 3em;'></div>"
     
-    docx = c(
+  } else if (identical(fmt, "docx")) {
+    
+    c(
       "```{=openxml}",
       "<w:p>",
       "  <w:pPr>",
@@ -55,10 +56,13 @@ rticle <- function(file = "draft.md",
       "  </w:pPr>",
       "</w:p>",
       "```"
-    ),
+    )
     
-    c("\\pagebreak")
-  )
+  } else {
+    
+    "\\pagebreak"
+    
+  }
   
   gdoc <- file %>%
     readLines(warn = F) %>%
@@ -89,7 +93,17 @@ rticle <- function(file = "draft.md",
       ),
       sub("^#+\\s*", "", .data$value),
       .data$value
-    ))
+    )) %>% {
+      purrr::reduce(rev(which(
+        grepl(
+          "^#*\\s*\\*{0,2}(abstract|introduction|declarations|statments)\\*{0,2}\\s*$",
+          .$value,
+          ignore.case = TRUE
+        )
+      )),
+      .init = .,
+      ~ tibble::add_row(.x, value = section_break, .before = .y))
+    }
   
   tabs <- gdoc %>%
     mutate(
@@ -134,6 +148,7 @@ rticle <- function(file = "draft.md",
     add_row(name = max(.$name, na.rm = TRUE) + 1, value = section_break)
   
   manuscript <- if (type == "asis") {
+    
     gdoc
     
   } else if (type == "list") {
@@ -141,17 +156,7 @@ rticle <- function(file = "draft.md",
       bind_rows() %>%
       slice(1:(nrow(.) - length(section_break)))
     
-  } %>% {
-    purrr::reduce(rev(which(
-      grepl(
-        "^#*\\s*\\*{0,2}(abstract|introduction|declarations|statments)\\*{0,2}\\s*$",
-        .$value,
-        ignore.case = TRUE
-      )
-    )),
-    .init = .,
-    ~ tibble::add_row(.x, value = section_break, .before = .y))
-  }
+  } 
   
   qmd <- manuscript %>%
     tibble::deframe() %>%
