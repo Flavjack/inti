@@ -48,6 +48,7 @@ zip files
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 
 split_folder("pictures/QUINOA 2018-2019 SC SEEDS EDWIN - CAMACANI/"

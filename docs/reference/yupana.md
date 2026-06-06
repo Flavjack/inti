@@ -25,6 +25,7 @@ Yupana: data analysis and graphics for experimental designs.
 ## Examples
 
 ``` r
+
 if(interactive()){
 
  inti::yupana()

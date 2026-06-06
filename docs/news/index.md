@@ -1,6 +1,14 @@
 # Changelog
 
+## inti 0.7.0
+
+- Include new function
+  [`rticle()`](https://inkaverse.com/reference/rticle.md) to render
+  native .md to article
+
 ## inti 0.6.92
+
+CRAN release: 2026-03-23
 
 - Improve `scihub()` project
   - Include link for manuscript template

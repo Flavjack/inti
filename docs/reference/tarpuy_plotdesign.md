@@ -54,6 +54,7 @@ experiment design.
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 
 library(inti)

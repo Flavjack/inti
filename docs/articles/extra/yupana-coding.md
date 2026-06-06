@@ -3,6 +3,7 @@
 ## Packages
 
 ``` r
+
 library(inti)
 library(gsheet)
 library(FactoMineR)
@@ -13,6 +14,7 @@ library(png)
 ## Import data
 
 ``` r
+
 url <- paste0("https://docs.google.com/spreadsheets/d/"
               , "15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit#gid=172957346") 
 
@@ -32,6 +34,7 @@ fb <- url %>%
 ### Box plot
 
 ``` r
+
 wue <- fb %>% 
   plot_raw(type = "boxplot"
            , x = "geno"
@@ -47,6 +50,7 @@ wue <- fb %>%
 ### Scatter plot
 
 ``` r
+
 hi <- fb %>% 
   plot_raw(type = "scatterplot"
            , x = "hi"
@@ -61,6 +65,7 @@ hi <- fb %>%
 ### Plot in grids
 
 ``` r
+
 grid <- plot_grid(wue, hi
                   , nrow = 2
                   , labels = "AUTO")
@@ -87,6 +92,7 @@ Water use effiency in 15 potato genotypes A) Box plot B) Scatter plot.
 ### Leaf area
 
 ``` r
+
 
 #> Plot summary data
 
@@ -127,6 +133,7 @@ model$meancomp %>% web_table()
 ### Tuber water use efficiency
 
 ``` r
+
 model <- fb %>% 
   yupana_analysis(response = "twue"
                   , model_factors = "block + geno*riego"
@@ -166,6 +173,7 @@ model$meancomp %>% web_table()
 ### Plot in grids
 
 ``` r
+
 grid <- plot_grid(lfa, twue
                   , nrow = 2
                   , labels = "AUTO")
@@ -189,6 +197,7 @@ Water use effiency in 15 potato genotypes A) Bar plot B) Line plot.
 ## Multivariate analysis
 
 ``` r
+
 #> Principal component Analysis
 
 mv <- fb %>% 

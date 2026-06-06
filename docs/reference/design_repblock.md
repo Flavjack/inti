@@ -68,6 +68,7 @@ A list with the field-book design and parameters
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 
 library(inti)

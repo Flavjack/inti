@@ -38,6 +38,7 @@ Table with caption and footnotes
 ## Examples
 
 ``` r
+
 library(inti)
 
 table <- data.frame(

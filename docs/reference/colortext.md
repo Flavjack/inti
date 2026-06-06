@@ -36,6 +36,7 @@ testthat package
 ## Examples
 
 ``` r
+
 print(colortext("Red", "red"))
 #> [1] "\033[0;31mRed\033[0m"
 cat(colortext("Red", "red"), "\n")

@@ -80,6 +80,7 @@ split-lsd `nfactors` \>= 2 (factorial): crd, rcbd, lsd.
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 
 library(inti)

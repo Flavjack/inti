@@ -43,7 +43,7 @@ Tener en cuenta algunas consideraciones:
 | Graphics | Incluye dos sub módulos (1) Plots, gráfico de las variables exportadas en la hoja de cálculo. (2) Gsheet, para visualizar la hoja con la tabla del gráfico y modificar los parámetros |
 | Multivariate | Incluye tres sub módulos (1) PCA, selección de la variables para resumen de los datos y análisis de componentes principales. (2) HCPC, Análisis de cluster de los individuos. (3) CORR, correlación de las variables numéricas de la base de datos |
 
-Módulos de la aplicación Yupana
+Módulos de la aplicación Yupana {.table}
 
 ## Graphics
 
@@ -73,7 +73,7 @@ en hojas de cálculo de google y luego pueden ser cargadas (Table
 | opt | Agregar capas adicionales. e.g. coord_flip(), theme_minimal() | `texto manual` |
 
 Lista de argumentos, descripción y opciones para la generación de
-gráficos en la aplicación Yupana
+gráficos en la aplicación Yupana {.table}
 
 Nota: Opciones basadas en la función:
 [`plot_smr()`](https://inkaverse.com/reference/plot_smr.md)

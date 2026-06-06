@@ -48,6 +48,7 @@ correlation).
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 
 library(inti)

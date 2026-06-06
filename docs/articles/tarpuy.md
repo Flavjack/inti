@@ -27,4 +27,4 @@ Tarpuy
 | FieldBook | Permite crear libros de campo de forma independiente o de acuerdo a los datos del módulo del plan experimental. Permite la selección del número de factores, repeticiones y otros parámetros que serán usados para la generación del libro de campo. Si la hoja de lista de variables (var) contiene información, esta será incluida en las variables a evaluar en el libro de campo |
 | Sketch | Módulo para generar los croquis o sketchs del diseño experimental seleccionado de acuerdo a la información contenida en el libro de campo (fb) |
 
-Módulos de la aplicación Tarpuy
+Módulos de la aplicación Tarpuy {.table .caption-top}

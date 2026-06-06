@@ -86,7 +86,7 @@ n_r}\\
 |:---|:---|:---|
 | \\H^2=\frac{\sigma_g^2}{\sigma_p^2}=\frac{\Delta G}{S}\\ | \\H\_{Cullis}^2=1-\frac{\overline{V}\_{\Delta..}^{^{BLUP}}}{2\cdot\sigma_g^2}\\ | \\H\_{Piepho}^2=\frac{\sigma_g^2}{\sigma_g^2+\frac{\overline{V}\_{\Delta..}^{BLUE}}{2}}\\ |
 
-Differentes heritability calculation
+Differentes heritability calculation {.table}
 
 ## Heritability function in the package
 
@@ -105,12 +105,14 @@ Bonferroni-Holm using re-scaled MAD for standardizing residuals
 ### Load packages
 
 ``` r
+
 library(inti)
 ```
 
 ### H2cal function
 
 ``` r
+
 dt <- inti::potato
 hr <- H2cal(data = dt
           , trait = "stemdw"
@@ -127,6 +129,7 @@ hr <- H2cal(data = dt
 ### Model information
 
 ``` r
+
 hr$model %>% summary()
 ## Linear mixed model fit by REML ['lmerMod']
 ## Formula: stemdw ~ 1 + (1 | bloque) + (1 | geno)
@@ -154,6 +157,7 @@ hr$model %>% summary()
 ### Variance components
 
 ``` r
+
 hr$tabsmr %>% kable(caption = "Variance component table")
 ```
 
@@ -161,11 +165,12 @@ hr$tabsmr %>% kable(caption = "Variance component table")
 |:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | stemdw | 5 | 15 | 1 | 1 | 12.59867 | 4.749994 | 2.818 | 22.302 | 19.96002 | 9.410932 | 21.84221 | 0.913828 | 0.913828 | 0.9502395 | 0.9533473 |
 
-Variance component table
+Variance component table {.table style="width:100%;"}
 
 ### Best Linear Unbiased Estimators (BLUEs)
 
 ``` r
+
 hr$blues %>% kable(caption = "BLUEs")
 ```
 
@@ -187,11 +192,12 @@ hr$blues %>% kable(caption = "BLUEs")
 | G14  | 16.29700 | 1.030325 | 119.7830 | 14.2569903 | 18.33701 |
 | G15  | 11.46900 | 1.030325 | 119.7830 |  9.4289903 | 13.50901 |
 
-BLUEs
+BLUEs {.table}
 
 ### Best Linear Unbiased Predictors (BLUPs)
 
 ``` r
+
 hr$blups %>% kable(caption = "BLUPs")
 ```
 
@@ -213,11 +219,12 @@ hr$blups %>% kable(caption = "BLUPs")
 | G14  | 16.126578 |
 | G15  | 11.515963 |
 
-BLUPs
+BLUPs {.table}
 
 ### Outliers
 
 ``` r
+
 hr$outliers$fixed %>% kable(caption = "Outliers fixed model")
 ```
 
@@ -225,9 +232,10 @@ hr$outliers$fixed %>% kable(caption = "Outliers fixed model")
 |:----|:------|:-------|:-----|-------:|---------:|---------:|------------:|-----:|------:|:---------|
 | 68  | 68    | IV     | G05  |  80.65 | 60.36709 | 18.84505 |           0 |    0 |     0 | OUTLIER  |
 
-Outliers fixed model
+Outliers fixed model {.table}
 
 ``` r
+
 hr$outliers$random %>% kable(caption = "Outliers random model")
 ```
 
@@ -236,7 +244,7 @@ hr$outliers$random %>% kable(caption = "Outliers random model")
 | 68 | 68 | IV | G05 | 80.65 | 61.39925 | 18.886677 | 0.0000000 | 0.0000000000 | 0.0000000 | OUTLIER |
 | 100 | 100 | IV | G06 | 33.52 | 12.02340 | 3.698449 | 0.0002169 | 0.0002169207 | 0.0323212 | OUTLIER |
 
-Outliers random model
+Outliers random model {.table}
 
 Bernal-Vasquez, A.-M., H.-F. Utz, and H.-P. Piepho. 2016. Outlier
 detection methods for generalized lattices: A case study on the
@@ -273,5 +281,6 @@ Designs for Plant Breeding](https://doi.org/10.1002/9781119521358.ch3).
 Plant Breeding Reviews. John Wiley & Sons, Ltd. p. 87–117
 
 ``` r
+
 if(!file.exists("files/pkgs.bib")){write_bib(c(.packages()),'files/pkgs.bib')}
 ```

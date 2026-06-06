@@ -63,6 +63,7 @@ table in markdown format for html documents
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 
 library(inti)

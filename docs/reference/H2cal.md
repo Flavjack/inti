@@ -165,6 +165,7 @@ Flavio Lozano Isla
 ## Examples
 
 ``` r
+
 library(inti)
 
 dt <- potato

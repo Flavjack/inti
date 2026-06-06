@@ -45,6 +45,7 @@ REML.” Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016.
 ## Examples
 
 ``` r
+
 library(inti)
 
 rmout <- potato %>%

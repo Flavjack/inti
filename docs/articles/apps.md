@@ -27,7 +27,7 @@ demo
 [![](https://lozanoisla.com/img/tools.png "options")](https://inkaverse.com/articles/tarpuy.html)
 options
 
-[![](https://flavjack.github.io/inti/img/tarpuy.png "tarpuy")](https://flavjack.shinyapps.io/tarpuy/)
+[![](https://flavjack.github.io/inti/img/tarpuy.png "tarpuy")](https://inkaverse.shinyapps.io/tarpuy/)
 Tarpuy
 
 ## Yupana
@@ -40,7 +40,7 @@ demo
 [![](https://lozanoisla.com/img/tools.png "options")](https://inkaverse.com/articles/yupana.html)
 options
 
-[![](https://flavjack.github.io/inti/img/yupana.png "yupana")](https://flavjack.shinyapps.io/yupana/)
+[![](https://flavjack.github.io/inti/img/yupana.png "yupana")](https://inkaverse.shinyapps.io/yupana/)
 Yupana
 
 ## Huito
@@ -71,7 +71,7 @@ GerminaR
 Demo
 
 [![GerminaQuant for
-R](https://germinar.inkaverse.com/img/GerminaQuant.png "GerminaQuant")](https://flavjack.shinyapps.io/germinaquant/)
+R](https://germinar.inkaverse.com/img/GerminaQuant.png "GerminaQuant")](https://inkaverse.shinyapps.io/germinaquant/)
 GerminaQuant
 
 [![GerminaR](https://pkgdown.r-lib.org/reference/figures/logo.png "GerminaR")](https://germinar.inkaverse.com/)

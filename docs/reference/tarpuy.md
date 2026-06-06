@@ -25,6 +25,7 @@ Tarpuy allow to create experimental designs under an interactive app.
 ## Examples
 
 ``` r
+
 if(interactive()){
 
  inti::tarpuy()

@@ -44,6 +44,8 @@ Experimental designs
 
 Write technical documents
 
+- [`rticle()`](https://inkaverse.com/reference/rticle.md) : Convert a
+  Markdown manuscript into a Quarto document
 - [`figure2qmd()`](https://inkaverse.com/reference/figure2qmd.md) :
   Figure to Quarto format
 - [`gdoc2qmd()`](https://inkaverse.com/reference/gdoc2qmd.md) : Google
