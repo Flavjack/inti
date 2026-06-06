@@ -25,7 +25,7 @@ rticle <- function(file = "draft.md",
                    export = NULL,
                    type = c("asis", "list")) {
   
-  # file = "draft.md" ; export = NULL ; type = "asis"
+  # file = "inst/extdata/_extensions/scihub/draft.md" ; export = NULL ; type = "asis"
   
   type <- match.arg(type)
   
@@ -46,7 +46,7 @@ rticle <- function(file = "draft.md",
     
     "<div style='margin-top: 3em;'></div>"
     
-  } else if (identical(fmt, "docx")) {
+  } else {
     
     c(
       "```{=openxml}",
@@ -58,11 +58,7 @@ rticle <- function(file = "draft.md",
       "```"
     )
     
-  } else {
-    
-    "\\pagebreak"
-    
-  }
+  } 
   
   gdoc <- file %>%
     readLines(warn = F) %>%
@@ -144,7 +140,9 @@ rticle <- function(file = "draft.md",
     ungroup()
   
   txt <- gdoc %>%
-    dplyr::filter(!.data$name %in% tabs$name, !.data$name %in% figs$name) %>%
+    dplyr::filter(!.data$name %in% na.omit(tabs$name)
+                  , !.data$name %in% na.omit(figs$name)
+                  ) %>%
     add_row(name = max(.$name, na.rm = TRUE) + 1, value = section_break)
   
   manuscript <- if (type == "asis") {
@@ -152,11 +150,12 @@ rticle <- function(file = "draft.md",
     gdoc
     
   } else if (type == "list") {
-    list <- list(txt, figs, tabs) %>%
+    
+    docx <- list(txt, figs, tabs) %>%
       bind_rows() %>%
       slice(1:(nrow(.) - length(section_break)))
     
-  } 
+  }
   
   qmd <- manuscript %>%
     tibble::deframe() %>%
