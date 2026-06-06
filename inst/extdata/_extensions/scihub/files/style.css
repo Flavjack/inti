@@ -1,0 +1,241 @@
+/* ==========================================================
+   Academic Journal Style
+   Clean, Professional, Publication-Oriented
+   ========================================================== */
+
+/* ---------- Global ---------- */
+
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #222222;
+  background-color: #ffffff;
+  text-align: justify;
+}
+
+/* ---------- Layout ---------- */
+
+.quarto-container,
+.content,
+.page-columns,
+.page-column-body,
+main.content {
+  max-width: 1400px !important;
+  width: 95% !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---------- Title ---------- */
+
+h1.title {
+  font-size: 2em;
+  font-weight: 700;
+  text-align: center;
+  color: #000;
+  margin-top: 0.5em;
+  margin-bottom: 1.2em;
+  border: none;
+}
+
+/* ---------- Main Sections ---------- */
+
+h1 {
+  font-size: 1.45em;
+  font-weight: 700;
+  color: #000;
+  margin-top: 2em;
+  margin-bottom: 0.8em;
+  border: none;
+}
+
+/* ---------- Subsections ---------- */
+
+h2 {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: #000;
+  margin-top: 1.5em;
+  margin-bottom: 0.6em;
+  border: none;
+}
+
+/* ---------- Sub-subsections ---------- */
+
+h3 {
+  font-size: 1.10em;
+  font-weight: 700;
+  color: #000;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+}
+
+h4,
+h5,
+h6 {
+  font-size: 1em;
+  font-weight: 700;
+  color: #000;
+}
+
+/* ---------- Paragraphs ---------- */
+
+p {
+  margin-top: 0;
+  margin-bottom: 0.8em;
+  text-align: justify;
+}
+
+/* ---------- Lists ---------- */
+
+ul,
+ol {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  padding-left: 2em;
+}
+
+li {
+  margin-bottom: 0.25em;
+}
+
+/* ---------- Tables ---------- */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+  margin-bottom: 1.5em;
+  font-size: 0.95em;
+}
+
+th {
+  background-color: #f5f5f5;
+  color: #000;
+  border: 1px solid #bdbdbd;
+  padding: 8px;
+  font-weight: 700;
+  text-align: center;
+}
+
+td {
+  border: 1px solid #d0d0d0;
+  padding: 8px;
+  vertical-align: top;
+}
+
+caption {
+  caption-side: bottom;
+  text-align: left;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 0.5em;
+}
+
+/* ---------- Figures ---------- */
+
+figure {
+  margin: 1.5em auto;
+  text-align: center;
+}
+
+figcaption {
+  font-size: 0.9em;
+  font-style: italic;
+  color: #333;
+  margin-top: 0.5em;
+}
+
+/* ---------- Images ---------- */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em auto;
+}
+
+/* ---------- Blockquotes ---------- */
+
+blockquote {
+  border-left: 3px solid #999;
+  padding-left: 1em;
+  margin-left: 1em;
+  color: #444;
+  font-style: italic;
+}
+
+/* ---------- Code ---------- */
+
+code {
+  font-size: 0.9em;
+}
+
+pre {
+  border: 1px solid #d0d0d0;
+  padding: 1em;
+  overflow-x: auto;
+  background-color: #fafafa;
+}
+
+/* ---------- Hyperlinks ---------- */
+
+a {
+  color: #0563C1;
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #954F72;
+}
+
+a:hover {
+  color: #0B5ED7;
+}
+
+a:active {
+  color: #0B5ED7;
+}
+
+/* ---------- References ---------- */
+
+.references {
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+/* ---------- TOC ---------- */
+
+#TOC {
+  font-size: 0.95em;
+}
+
+#TOC ul {
+  padding-left: 1.2em;
+}
+
+/* ---------- Print ---------- */
+
+@media print {
+
+  body {
+    font-size: 11pt;
+  }
+
+  h1,
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+
+  table,
+  figure {
+    page-break-inside: avoid;
+  }
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
+}

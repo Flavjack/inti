@@ -1,10 +1,12 @@
 ---
 format:
   html:
+    css: "files/style.css"
     toc: true
     toc-location: left
     number-sections: true
     self-contained: true
+    output-file: "manuscript"
   docx:
     toc: false
     toc-title: Indice
@@ -39,29 +41,14 @@ crossref:
 #| label: setup
 
 source("http://inkaverse.com/docs.r")
-doc <- inti::gdoc2qmd(file = "article.zip"
-                      # , type = "listfull"
-                      )
-params <- doc$params
 ```
 
 ```{r}
 #| eval: true
 #| results: 'asis'
 
-if(length(params) > 0) {
- cover <- list.files(path = "files/"
-                    , pattern = paste0("cover-", params$template)
-                    , full.names = T) %>% 
-  knitr::knit_child(quiet = TRUE) %>% 
-  cat(sep = '\n')
- }
-```
-
-```{r}
-#| results: 'asis'
-
-doc$path %>% 
+"draft.md" %>% 
+  rticle(type = "asis") %>% 
   knitr::knit_child(quiet = TRUE) %>% 
   cat(sep = '\n')
 ```

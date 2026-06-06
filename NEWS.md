@@ -8,6 +8,10 @@
   - Dashboard for Tarpuy experiment progress
   - Include experimental matrix in Tarpuy
   - Include CreDiT
+  
+# inti 0.7.0
+
+- Include new function `rticle()` to render native .md to article
 
 # inti 0.6.92
 
