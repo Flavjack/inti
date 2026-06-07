@@ -13,8 +13,8 @@
 #' @param serie Number to start the plot id `[numeric: 100]`.
 #' @param seed Replicability of draw results `[default = 0]` always random. See
 #'   details.
-#' @param fbname Barcode prefix for data collection.
-#' @param qrcode String to concatenate the QR code `[character: {fbname}{plots}{factors}]`.
+#' @param project Barcode prefix for data collection.
+#' @param qrcode String to concatenate the QR code `[character: {project}{plots}{factors}]`.
 #'
 #' @details The function allows to include the arguments in the sheet that have
 #'   the information of the design. You should include 2 columns in the sheet:
@@ -55,8 +55,8 @@ tarpuy_design <- function(data
                           , nrows = NA
                           , serie = 100
                           , seed = NULL
-                          , fbname = NA
-                          , qrcode = "{fbname}{plots}{factors}"
+                          , project = NA
+                          , qrcode = "{project}{plots}"
                           ) {
 
 plots <- Row.names <- factors <- where <- NULL
@@ -111,7 +111,7 @@ opt <- list(nfactors = nfactors
             , rep = rep
             , serie = serie
             , seed = seed
-            , fbname = fbname
+            , project = project
             ) %>% 
   tibble::enframe(name = "{arguments}", value = "{values}") %>% 
   merge(.
@@ -158,13 +158,13 @@ serie <- if(is.null(arguments$serie) || is.na(arguments$serie) || arguments$seri
 seed <- if(is.null(arguments$seed) || is.na(arguments$seed) || arguments$seed == "" || arguments$seed == "0") { NULL
 } else {arguments$seed %>% as.numeric()} 
   
-fbname <- if(is.null(arguments$fbname) || is.na(arguments$fbname) || arguments$fbname == "") { fbname
-} else {arguments$fbname} %>% 
+project <- if(is.null(arguments$project) || is.na(arguments$project) || arguments$project == "") { project
+} else {arguments$project} %>% 
   iconv(., to="ASCII//TRANSLIT") %>%
   toupper() %>% 
   gsub("[[:space:]]", "-", .)
 
-qrcode <- if(is.null(arguments$fbname) || is.na(arguments$fbname) || arguments$fbname == "") { qrcode
+qrcode <- if(is.null(arguments$project) || is.na(arguments$project) || arguments$project == "") { qrcode
 } else {arguments$qrcode} 
 
 # -------------------------------------------------------------------------
@@ -194,7 +194,7 @@ design <- if(nfactors == 1 & rep == 1) {
                 , nrows = nrows
                 , serie = serie
                 , seed = seed
-                , fbname = fbname
+                , project = project
                 , qrcode = qrcode
                 ) %>% purrr::pluck(1)
   } else {
@@ -208,7 +208,7 @@ design <- if(nfactors == 1 & rep == 1) {
       , nrows = nrows
       , serie = serie
       , seed = seed
-      , fbname = fbname
+      , project = project
       , qrcode = qrcode
       )  %>% purrr::pluck(1)
   

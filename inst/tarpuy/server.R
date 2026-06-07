@@ -221,9 +221,8 @@ shinyServer(function(input, output, session) {
     
     plex <- tarpuy_plex(data = NULL
                          , title = input$plex_title
-                         , objectives = input$plex_objectives
-                         , hypothesis = input$plex_hypothesis
-                         , rationale = input$plex_rationale
+                         , short_title = input$plex_short_title
+                         , objective = input$plex_objective
                          , references = input$plex_references
                          , plan = input$plex_plan
                          , institutions = input$plex_institutions
@@ -235,8 +234,6 @@ shinyServer(function(input, output, session) {
                          , environment = input$plex_environment
                          , start = input$plex_dates[1]
                          , end = input$plex_dates[2]
-                         , about = input$plex_about
-                         , fieldbook = input$plex_fieldbook
                          , album = input$plex_album
                          , project = input$plex_project
                          , repository = input$plex_repository
@@ -258,7 +255,7 @@ output$plex_sheets2create <- renderUI({
   sheets <- c(input$gsheet_info, input$gsheet_design, input$gsheet_varlist)
   
   checkboxGroupInput(inputId = "plex_sheet2create"
-                     , label = h5(icon("cloud-arrow-up"), "Experimental plan")
+                     , label = h5(icon("lightbulb"), "Experimental Project")
                      , choices = sheets
                      , selected = sheets
   )
@@ -266,7 +263,6 @@ output$plex_sheets2create <- renderUI({
   
 })  
   
-
 # -------------------------------------------------------------------------
   
 observeEvent(input$plex_generate, {
@@ -305,50 +301,158 @@ observeEvent(input$plex_generate, {
       plex()$design %>% sheet_write(ss = gs(), sheet = input$gsheet_design)
 
     } else { print ("sheet already exist: design") }
-
-# logbook -----------------------------------------------------------------
-
-    if ( !input$plex_logbook %in% sheet_names(gs()) & input$plex_logbook != "" ) {
-
-      sheet_add(ss = gs(), sheet = input$plex_logbook)
-
-      plex()$logbook %>% sheet_write(ss = gs(), sheet = input$plex_logbook)
-      
-      print ("sheet created: logbook")
-    } 
-
-# timetable ---------------------------------------------------------------
-
-    if ( !input$plex_timetable %in% sheet_names(gs()) & input$plex_timetable != ""  ) {
-
-      sheet_add(ss = gs(), sheet = input$plex_timetable)
-
-      plex()$timetable %>% sheet_write(ss = gs(), sheet = input$plex_timetable)
-      
-      print ("sheet created: timetible")
-    } 
-
-# budget ------------------------------------------------------------------
-
-    if ( !input$plex_budget %in% sheet_names(gs()) & input$plex_budget != ""  ) {
-
-      sheet_add(ss = gs(), sheet = input$plex_budget)
-
-      plex()$budget %>% sheet_write(ss = gs(), sheet = input$plex_budget)
-      
-      print ("sheet created: budget")
-    } 
-    
+  
 
 # -------------------------------------------------------------------------
+  
+  if ( "tarpuy" %in% sheet_names(gs()) ) { 
     
-    if ( "tarpuy" %in% sheet_names(gs()) ) { 
-      
-      gs() %>% sheet_delete(sheet = "tarpuy")
-      
-    }
+    gs() %>% sheet_delete(sheet = "tarpuy")
     
-  })
+  }
+
+# logbook -----------------------------------------------------------------
+    
+  sheet_name <- "logbook"
+  
+  if (sheet_name %in% input$plex_sheets &&
+      !(sheet_name %in% sheet_names(gs()))) {
+    
+    sheet_add(
+      ss = gs(),
+      sheet = sheet_name
+    )
+    
+    plex()$logbook %>%
+      sheet_write(
+        ss = gs(),
+        sheet = sheet_name
+      )
+    
+    paste("sheet created:", sheet_name) %>%
+      print()
+    
+  } else {
+    
+    paste("sheet already exist:", sheet_name) %>%
+      print()
+    
+  }
+    
+# timetable ---------------------------------------------------------------
+    
+  sheet_name <- "timetable"
+  
+  if (sheet_name %in% input$plex_sheets &&
+      !(sheet_name %in% sheet_names(gs()))) {
+    
+    sheet_add(
+      ss = gs(),
+      sheet = sheet_name
+    )
+    
+    plex()$timetable %>%
+      sheet_write(
+        ss = gs(),
+        sheet = sheet_name
+      )
+    
+    paste("sheet created:", sheet_name) %>%
+      print()
+    
+  } else {
+    
+    paste("sheet already exist:", sheet_name) %>%
+      print()
+    
+  }
+    
+# budget ------------------------------------------------------------------
+    
+  sheet_name <- "budget"
+  
+  if (sheet_name %in% input$plex_sheets &&
+      !(sheet_name %in% sheet_names(gs()))) {
+    
+    sheet_add(
+      ss = gs(),
+      sheet = sheet_name
+    )
+    
+    plex()$budget %>%
+      sheet_write(
+        ss = gs(),
+        sheet = sheet_name
+      )
+    
+    paste("sheet created:", sheet_name) %>%
+      print()
+    
+  } else {
+    
+    paste("sheet already exist:", sheet_name) %>%
+      print()
+    
+  }
+    
+# matrix ------------------------------------------------------------------
+    
+  sheet_name <- "matrix"
+  
+  if (sheet_name %in% input$plex_sheets &&
+      !(sheet_name %in% sheet_names(gs()))) {
+    
+    sheet_add(
+      ss = gs(),
+      sheet = sheet_name
+    )
+    
+    plex()$matrix %>%
+      sheet_write(
+        ss = gs(),
+        sheet = sheet_name
+      )
+    
+    paste("sheet created:", sheet_name) %>%
+      print()
+    
+  } else {
+    
+    paste("sheet already exist:", sheet_name) %>%
+      print()
+    
+  }
+    
+# credit ------------------------------------------------------------------
+    
+  sheet_name <- "credit"
+  
+  if (sheet_name %in% input$plex_sheets &&
+      !(sheet_name %in% sheet_names(gs()))) {
+    
+    sheet_add(
+      ss = gs(),
+      sheet = sheet_name
+    )
+    
+    plex()$credit %>%
+      sheet_write(
+        ss = gs(),
+        sheet = sheet_name
+      )
+    
+    paste("sheet created:", sheet_name) %>%
+      print()
+    
+  } else {
+    
+    paste("sheet already exist:", sheet_name) %>%
+      print()
+    
+  }
+  
+})
+  
 
 # tarpuy design -----------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -446,7 +550,7 @@ observeEvent(input$export_design, {
         , zigzag = as.logical(input$design_zigzag)
         , nrows = input$design_rep
         , seed = input$design_seed
-        , fbname = input$design_qr
+        , project = input$project
       ) 
   
   sheet_export <- input$fb2export %>% gsub("[[:space:]]", "_", .)
@@ -484,7 +588,6 @@ observeEvent(input$export_design, {
 
 # tarpuy sketch -----------------------------------------------------------
 # -------------------------------------------------------------------------
-
 
 # preview sketch ----------------------------------------------------------
 

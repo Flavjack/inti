@@ -22,10 +22,10 @@
 #' @export
 
 rticle <- function(file = "draft.md",
-                   export = NULL,
+                   export = "files",
                    type = c("asis", "list")) {
   
-  # file = "inst/extdata/_extensions/scihub/draft.md" ; export = NULL ; type = "asis"
+  # file = "draft.md" ; export = NULL ; type = "list"
   
   type <- match.arg(type)
   
@@ -83,7 +83,7 @@ rticle <- function(file = "draft.md",
     )) %>%
     dplyr::mutate(value = dplyr::if_else(
       grepl(
-        "^#+\\s*\\*{0,2}(abstract|resumen|keywords|declararions)\\*{0,2}\\s*:?[[:space:]]*$",
+        "^#+\\s*\\*{0,2}(abstract|resumen|keywords|declararions|statements)\\*{0,2}\\s*:?[[:space:]]*$",
         .data$value,
         ignore.case = TRUE
       ),
@@ -113,6 +113,7 @@ rticle <- function(file = "draft.md",
       end_table = match(FALSE, .data$is_table_line)
     ) %>%
     filter(row_number() < .data$end_table | is.na(.data$end_table)) %>%
+    # filter(trimws(.data$value) != "") %>% 
     group_modify( ~ {
       .x %>%
         # add_row(value = "") %>%
@@ -122,27 +123,46 @@ rticle <- function(file = "draft.md",
   
   figs <- gdoc %>%
     mutate(
-      fig_start = grepl("^\\|\\s*!\\[\\]\\[image[0-9]+\\]\\s*\\|$", .data$value),
+      fig_start = grepl(
+        "!\\[\\]\\[image[0-9]+\\]",
+        .data$value
+      ),
+      
       fig_id = cumsum(.data$fig_start)
+      
     ) %>%
     filter(.data$fig_id > 0) %>%
     group_by(.data$fig_id) %>%
     mutate(
-      is_fig_line = grepl("^\\s*\\|", .data$value),
-      end_fig = match(FALSE, .data$is_fig_line)
+      has_caption = cumsum(
+        grepl(
+          "^\\|\\s*Figure\\s+[0-9]+\\s*:|^Figure\\s+[0-9]+\\s*:",
+          .data$value,
+          ignore.case = TRUE
+        )
+      ) > 0,
+      
+      end_fig = match(
+        TRUE,
+        .data$has_caption &
+          !grepl("^\\s*\\||^\\s*$", .data$value)
+      ) ) %>%
+    
+    filter(
+      row_number() < .data$end_fig |
+        is.na(.data$end_fig)
     ) %>%
-    filter(row_number() < .data$end_fig | is.na(.data$end_fig)) %>%
-    group_modify( ~ {
+    filter(trimws(.data$value) != "") %>% 
+    group_modify(~{
       .x %>%
-        # add_row(value = "") %>%
         dplyr::add_row(value = section_break)
     }) %>%
     ungroup()
   
   txt <- gdoc %>%
-    dplyr::filter(!.data$name %in% na.omit(tabs$name)
-                  , !.data$name %in% na.omit(figs$name)
-                  ) %>%
+    dplyr::filter(!.data$name %in% stats::na.omit(tabs$name)
+                  , !.data$name %in% stats::na.omit(figs$name)
+    ) %>%
     add_row(name = max(.$name, na.rm = TRUE) + 1, value = section_break)
   
   manuscript <- if (type == "asis") {

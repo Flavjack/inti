@@ -11,7 +11,7 @@ format:
     toc: false
     toc-title: Indice
     section-numbers: true
-    reference-doc: "files/template.docx"
+    reference-doc: "files/style.docx"
     output-file: "manuscript"
 editor_options: 
   chunk_output_type: console
@@ -23,18 +23,6 @@ crossref:
   fig-prefix: Figure
   tbl-title: Table
   tbl-prefix: Table
-# params:
-#   template: ""
-#   author: ""
-#   advisor: ""
-#   coadvisor: ""
-#   location: ""
-#   date: ""
-#   institution: ""
-#   faculty: ""
-#   program: ""
-#   type: ""
-#   title: ""
 ---
 
 ```{r}
@@ -48,7 +36,7 @@ source("http://inkaverse.com/docs.r")
 #| results: 'asis'
 
 "draft.md" %>% 
-  rticle(type = "asis") %>% 
+  rticle(type = "asis") %>% # ["asis" or "list"]
   knitr::knit_child(quiet = TRUE) %>% 
   cat(sep = '\n')
 ```

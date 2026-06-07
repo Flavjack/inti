@@ -161,8 +161,6 @@ Algorithms and calculations
 
 - [`split_folder()`](https://inkaverse.com/reference/split_folder.md) :
   Split folder
-- [`jc_tombola()`](https://inkaverse.com/reference/jc_tombola.md) :
-  Journal Club Tombola
 - [`colortext()`](https://inkaverse.com/reference/colortext.md) :
   Colourise text for display in the terminal
 

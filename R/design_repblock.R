@@ -10,8 +10,8 @@
 #' @param serie Number to start the plot id `[numeric: 100]`.
 #' @param nrows Experimental design dimension by rows `[numeric: value]`
 #' @param seed Replicability from randomization `[numeric: NULL]`.
-#' @param fbname Bar code prefix for data collection `[character: "inkaverse"]`.
-#' @param qrcode Concatenate the QR code `[character: "{fbname}{plots}{factors}"]`
+#' @param project Bar code prefix for data collection `[character: "inkaverse"]`.
+#' @param qrcode Concatenate the QR code `[character: "{project}{plots}{factors}"]`
 #'
 #' @return A list with the field-book design and parameters
 #' 
@@ -35,7 +35,7 @@
 #'                      , zigzag = T
 #'                      , seed = 0
 #'                      , nrows = 20
-#'                      , qrcode = "{fbname}{plots}{factors}"
+#'                      , qrcode = "{project}{plots}{factors}"
 #'                      )
 #'                      
 #' dsg <- fb$fieldbook
@@ -55,13 +55,13 @@ design_repblock <- function(nfactors = 1
                             , nrows = NA
                             , serie = 1000
                             , seed = NULL
-                            , fbname = "inkaverse"
-                            , qrcode = "{fbname}{plots}{factors}"
+                            , project = "inkaverse"
+                            , qrcode = "{project}{plots}{factors}"
                             ) {
   
   # nfactors = 2; factors = factores; type = "crd"; rep = 3
   # zigzag = FALSE; nrows = NA; serie = 100; seed = NULL
-  # fbname = "inkaverse"; qrcode = "{fbname}{plot}{treat}"
+  # project = "inkaverse"; qrcode = "{project}{plot}{treat}"
   
   set.seed(seed)
   
@@ -142,10 +142,10 @@ design_repblock <- function(nfactors = 1
     } %>% 
     dplyr::select(.data$plots, .data$ntreat, {{name.factors}}, .data$sort, everything()) %>% 
     dplyr::mutate(across(.data$cols, as.numeric)) %>% 
-    dplyr::mutate(fbname = fbname) %>% 
+    dplyr::mutate(project = project) %>% 
     tidyr::unite("qrcode", any_of({{qrcolumns}}), sep = "_", remove = F) %>% 
     dplyr::select(.data$qrcode, dplyr::everything()) %>% 
-    dplyr::select(!c(.data$icols, .data$fbname)) 
+    dplyr::select(!c(.data$icols, .data$project)) 
   
   result <- list(
     fieldbook = fb

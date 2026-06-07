@@ -4,7 +4,7 @@
 \alias{rticle}
 \title{Convert a Markdown manuscript into a Quarto document}
 \usage{
-rticle(file = "draft.md", export = NULL, type = c("asis", "list"))
+rticle(file = "draft.md", export = "files", type = c("asis", "list"))
 }
 \arguments{
 \item{file}{Character string indicating the path to the Markdown file.

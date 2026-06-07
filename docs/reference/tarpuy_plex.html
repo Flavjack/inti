@@ -67,9 +67,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tarpuy_plex</span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  objectives <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  hypothesis <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  rationale <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  short_title <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  objective <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  references <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  plan <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  institutions <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -81,20 +80,17 @@
 <span>  environment <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  start <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  end <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  about <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  fieldbook <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  project <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  repository <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  manuscript <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  album <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  nfactor <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  design <span class="op">=</span> <span class="st">"rcbd"</span>,</span>
-<span>  rep <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  rep <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  zigzag <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  nrows <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  serie <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  seed <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  qrcode <span class="op">=</span> <span class="st">"{fbname}{plots}{factors}"</span></span>
+<span>  seed <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -110,16 +106,12 @@
 <dd><p>Project title.</p></dd>
 
 
-<dt id="arg-objectives">objectives<a class="anchor" aria-label="anchor" href="#arg-objectives"></a></dt>
+<dt id="arg-short-title">short_title<a class="anchor" aria-label="anchor" href="#arg-short-title"></a></dt>
+<dd><p>Short description of the project.</p></dd>
+
+
+<dt id="arg-objective">objective<a class="anchor" aria-label="anchor" href="#arg-objective"></a></dt>
 <dd><p>The objectives of the project.</p></dd>
-
-
-<dt id="arg-hypothesis">hypothesis<a class="anchor" aria-label="anchor" href="#arg-hypothesis"></a></dt>
-<dd><p>What are the expected results.</p></dd>
-
-
-<dt id="arg-rationale">rationale<a class="anchor" aria-label="anchor" href="#arg-rationale"></a></dt>
-<dd><p>Based in which evidence is planned the experiment.</p></dd>
 
 
 <dt id="arg-references">references<a class="anchor" aria-label="anchor" href="#arg-references"></a></dt>
@@ -166,16 +158,8 @@
 <dd><p>The date of the end of the experiments.</p></dd>
 
 
-<dt id="arg-about">about<a class="anchor" aria-label="anchor" href="#arg-about"></a></dt>
-<dd><p>Short description of the project.</p></dd>
-
-
-<dt id="arg-fieldbook">fieldbook<a class="anchor" aria-label="anchor" href="#arg-fieldbook"></a></dt>
-<dd><p>Name or ID for the fieldbook/project.</p></dd>
-
-
 <dt id="arg-project">project<a class="anchor" aria-label="anchor" href="#arg-project"></a></dt>
-<dd><p>link for project.</p></dd>
+<dd><p>Name or ID for the fieldbook/project.</p></dd>
 
 
 <dt id="arg-repository">repository<a class="anchor" aria-label="anchor" href="#arg-repository"></a></dt>
@@ -216,10 +200,6 @@
 
 <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
 <dd><p>Seed for the randomization.</p></dd>
-
-
-<dt id="arg-qrcode">qrcode<a class="anchor" aria-label="anchor" href="#arg-qrcode"></a></dt>
-<dd><p>Concatenate the QR code <code>[character: {fbname}{plots}{factors}]</code></p></dd>
 
 </dl></div>
     <div class="section level2">

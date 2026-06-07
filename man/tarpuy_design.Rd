@@ -13,8 +13,8 @@ tarpuy_design(
   nrows = NA,
   serie = 100,
   seed = NULL,
-  fbname = NA,
-  qrcode = "{fbname}{plots}{factors}"
+  project = NA,
+  qrcode = "{project}{plots}"
 )
 }
 \arguments{
@@ -37,9 +37,9 @@ details.}
 \item{seed}{Replicability of draw results \verb{[default = 0]} always random. See
 details.}
 
-\item{fbname}{Barcode prefix for data collection.}
+\item{project}{Barcode prefix for data collection.}
 
-\item{qrcode}{String to concatenate the QR code \verb{[character: \{fbname\}\{plots\}\{factors\}]}.}
+\item{qrcode}{String to concatenate the QR code \verb{[character: \{project\}\{plots\}\{factors\}]}.}
 }
 \value{
 A list with the fieldbook design

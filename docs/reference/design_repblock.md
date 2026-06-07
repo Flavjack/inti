@@ -14,8 +14,8 @@ design_repblock(
   nrows = NA,
   serie = 1000,
   seed = NULL,
-  fbname = "inkaverse",
-  qrcode = "{fbname}{plots}{factors}"
+  project = "inkaverse",
+  qrcode = "{project}{plots}{factors}"
 )
 ```
 
@@ -53,13 +53,13 @@ design_repblock(
 
   Replicability from randomization `[numeric: NULL]`.
 
-- fbname:
+- project:
 
   Bar code prefix for data collection `[character: "inkaverse"]`.
 
 - qrcode:
 
-  Concatenate the QR code `[character: "{fbname}{plots}{factors}"]`
+  Concatenate the QR code `[character: "{project}{plots}{factors}"]`
 
 ## Value
 
@@ -85,7 +85,7 @@ fb <-design_repblock(nfactors = 2
                      , zigzag = T
                      , seed = 0
                      , nrows = 20
-                     , qrcode = "{fbname}{plots}{factors}"
+                     , qrcode = "{project}{plots}{factors}"
                      )
                      
 dsg <- fb$fieldbook

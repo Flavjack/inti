@@ -8,9 +8,8 @@ Information for build a plan for an experiment (PLEX)
 tarpuy_plex(
   data = NULL,
   title = NULL,
-  objectives = NULL,
-  hypothesis = NULL,
-  rationale = NULL,
+  short_title = NULL,
+  objective = NULL,
   references = NULL,
   plan = NULL,
   institutions = NULL,
@@ -22,20 +21,17 @@ tarpuy_plex(
   environment = NULL,
   start = NA,
   end = NA,
-  about = NULL,
-  fieldbook = NULL,
   project = NULL,
   repository = NULL,
   manuscript = NULL,
   album = NULL,
   nfactor = 2,
   design = "rcbd",
-  rep = 3,
+  rep = 4,
   zigzag = FALSE,
   nrows = NA,
   serie = 1000,
-  seed = 0,
-  qrcode = "{fbname}{plots}{factors}"
+  seed = 0
 )
 ```
 
@@ -49,17 +45,13 @@ tarpuy_plex(
 
   Project title.
 
-- objectives:
+- short_title:
+
+  Short description of the project.
+
+- objective:
 
   The objectives of the project.
-
-- hypothesis:
-
-  What are the expected results.
-
-- rationale:
-
-  Based in which evidence is planned the experiment.
 
 - references:
 
@@ -105,17 +97,9 @@ tarpuy_plex(
 
   The date of the end of the experiments.
 
-- about:
-
-  Short description of the project.
-
-- fieldbook:
-
-  Name or ID for the fieldbook/project.
-
 - project:
 
-  link for project.
+  Name or ID for the fieldbook/project.
 
 - repository:
 
@@ -156,10 +140,6 @@ tarpuy_plex(
 - seed:
 
   Seed for the randomization.
-
-- qrcode:
-
-  Concatenate the QR code `[character: {fbname}{plots}{factors}]`
 
 ## Value
 

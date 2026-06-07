@@ -14,8 +14,8 @@ tarpuy_design(
   nrows = NA,
   serie = 100,
   seed = NULL,
-  fbname = NA,
-  qrcode = "{fbname}{plots}{factors}"
+  project = NA,
+  qrcode = "{project}{plots}"
 )
 ```
 
@@ -55,14 +55,14 @@ tarpuy_design(
   Replicability of draw results `[default = 0]` always random. See
   details.
 
-- fbname:
+- project:
 
   Barcode prefix for data collection.
 
 - qrcode:
 
   String to concatenate the QR code
-  `[character: {fbname}{plots}{factors}]`.
+  `[character: {project}{plots}{factors}]`.
 
 ## Value
 

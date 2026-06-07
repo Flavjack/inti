@@ -4,9 +4,7 @@
 #'
 #' @param data Data with the fieldbook information.
 #' @param title Project title.
-#' @param objectives The objectives of the project.
-#' @param hypothesis What are the expected results.
-#' @param rationale Based in which evidence is planned the experiment.
+#' @param objective The objectives of the project.
 #' @param references References.
 #' @param plan General description of the project (M & M).
 #' @param institutions Institutions involved in the project.
@@ -20,9 +18,8 @@
 #' @param end The date of the end of the experiments.
 #' @param album link with the photos of the project.
 #' @param repository link to the repository.
-#' @param about Short description of the project.
-#' @param fieldbook Name or ID for the fieldbook/project.
-#' @param project link for project.
+#' @param short_title Short description of the project.
+#' @param project Name or ID for the fieldbook/project.
 #' @param manuscript link for manuscript.
 #' @param nfactor Number of factors for the design.
 #' @param design Type of design.
@@ -31,7 +28,6 @@
 #' @param nrows Experimental design dimension by rows `[numeric: value]`
 #' @param serie Number of digits in the plots.
 #' @param seed Seed for the randomization.
-#' @param qrcode Concatenate the QR code `[character: {fbname}{plots}{factors}]`
 #' @details
 #'
 #' Provide the information available.
@@ -51,9 +47,8 @@
 
 tarpuy_plex <- function(data = NULL
                         , title = NULL
-                        , objectives = NULL
-                        , hypothesis = NULL
-                        , rationale = NULL
+                        , short_title = NULL
+                        , objective = NULL
                         , references = NULL
                         , plan = NULL
                         , institutions = NULL
@@ -65,20 +60,17 @@ tarpuy_plex <- function(data = NULL
                         , environment = NULL
                         , start = NA
                         , end = NA
-                        , about = NULL
-                        , fieldbook = NULL
                         , project = NULL
                         , repository = NULL
                         , manuscript = NULL
                         , album = NULL
                         , nfactor = 2
                         , design = "rcbd"
-                        , rep = 3
+                        , rep = 4
                         , zigzag = FALSE
                         , nrows = NA
                         , serie = 1000
                         , seed = 0
-                        , qrcode = "{fbname}{plots}{factors}"
                          ) {
   
   
@@ -93,11 +85,11 @@ tarpuy_plex <- function(data = NULL
   end <- if(is.null(end) || is.na(end) ) {
     format(Sys.time(), '%Y-%m-%d') %>% 
       as.Date() + 90 } else { end %>% as.Date(format = "%Y-%m-%d") } 
-
+  
 # fieldbook name ----------------------------------------------------------
   
   loc <- if(is.null(location) || is.na(location) || location == "") { "INKAVERSE" 
-    } else {location} %>% 
+  } else {location} %>% 
     iconv(., to="ASCII//TRANSLIT") %>%
     toupper() %>% 
     strsplit(., "[[:punct:]]") %>% 
@@ -106,8 +98,8 @@ tarpuy_plex <- function(data = NULL
     gsub(" ", "-", .) %>% 
     pluck(1)
   
-  info <- if(is.null(about) || is.na(about) || about == "") { "TARPUY" 
-    } else {about} %>% 
+  info <- if(is.null(short_title) || is.na(short_title) || short_title == "") { "TARPUY" 
+  } else {short_title} %>% 
     iconv(., to="ASCII//TRANSLIT") %>%
     toupper() %>% 
     strsplit(., "[[:punct:]]") %>% 
@@ -116,35 +108,30 @@ tarpuy_plex <- function(data = NULL
     gsub(" ", "-", .) %>% 
     pluck(1)
   
-  fbname <- if(is.null(fieldbook) || is.na(fieldbook) || fieldbook == "") {
+  project <- if(is.null(project) || is.na(project) || project == "") {
     
     paste(loc, start, info, sep = "_")
     
-    } else { fieldbook } 
-    
-  barcode <-  paste(loc, start, sep = "_")
+  } else { project } 
     
 # plex -----------------------------------------------------------------------
 
 if ( is.null(data) ) {
 
   plex <-  c(TITLE = title
-             , OBJECTIVES = objectives
-             , HYPOTHESIS = hypothesis
-             , RATIONALE = rationale
+             , OBJECTIVE = objective
+             , `SHORT TITLE` = short_title
+             , MANAGER = manager
              , REFERENCES = references
              , PLAN = plan
              , INSTITUTIONS = institutions
              , RESEARCHERS = researchers
-             , MANAGER = manager
              , LOCATION = location
              , ALTITUDE = altitude
              , GEOREFERENCING = georeferencing
              , ENVIRONMENT = environment
              , "START EXPERIMENT" = as.character.Date(start)
              , "END EXPERIMENT" = as.character.Date(end)
-             , ABOUT = info
-             , "FIELDBOOK NAME" = fbname
              , PROJECT = project
              , GITHUB = repository
              , MANUSCRIPT = manuscript
@@ -280,8 +267,8 @@ dsg_info <-  c(nfactors = nfactor
               , nrows = nrowsx
               , serie = serie
               , seed = seedset
-              , fbname = barcode
-              , qrcode = qrcode
+              , project = project
+              , qrcode = "{project}{plots}"
               ) %>%
   enframe() %>%
   rename('{arguments}' = .data$name, '{values}' = .data$value)
@@ -386,6 +373,44 @@ budget <- tibble(
 )
 
 
+# matrix ------------------------------------------------------------------
+
+matrix <- tibble(
+  Information = c(
+    "Material & Methods",
+    paste("OE", 1:5),
+    "Supplementaty Material"
+  ),
+  Variables = "",
+  Presentation = "",
+  `Statistical Analyses` = "",
+  Results = "",
+  Discussion = "",
+  Limitations = ""
+)
+
+# CreDiT ------------------------------------------------------------------
+
+credit <- tibble::tibble(
+  Author = paste("Author", 1:6),
+  ORCID = "",
+  email = "",
+  Conceptualization = "",
+  `Data curation` = "",
+  `Formal analysis` = "",
+  `Funding acquisition` = "",
+  Investigation = "",
+  Methodology = "",
+  `Project administration` = "",
+  Resources = "",
+  Software = "",
+  Supervision = "",
+  Validation = "",
+  Visualization = "",
+  `Writing: original draft` = "",
+  `Writing: review & editing` = ""
+)
+
 # result ------------------------------------------------------------------
 
 list(plex = plex
@@ -394,6 +419,8 @@ list(plex = plex
      , logbook = logbook
      , timetable = timetable
      , budget = budget
+     , credit = credit
+     , matrix = matrix
      )
 
 }

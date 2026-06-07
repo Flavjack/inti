@@ -364,17 +364,15 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
                       column(width = 2,
 
                              checkboxGroupInput(inputId = "plex_fields"
-                                                , label = h5(icon("file-signature"), "Fieldbook fields")
+                                                , label = h5(icon("file-signature"), "Field Book")
                                                 , choices = c("manager"
                                                               , "location"
                                                               , "dates"
-                                                              , "about"
                                                               , "environment"
                                                               , "institutions"
                                                               , "researchers"
                                                               , "altitude"
                                                               , "georeferencing"
-                                                              , "fieldbook"
                                                               , "repository"
                                                               , "project"
                                                               , "manuscript"
@@ -383,38 +381,32 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
                                                 , selected = c("manager"
                                                                , "location"
                                                                , "dates"
-                                                               , "about"
                                                                , "environment"
-                                                               , "project"
+                                                               , "repository"
+                                                               , "manuscript"
                                                                )
                              ),
-
-                             textInput(inputId = "plex_logbook"
-                                       , label = "Logbook (optional)"
-                                       , width = "100%"
-                                       , value = "logbook"
-                                       , placeholder = "sheet name"
-                             ),
-
-                             textInput(inputId = "plex_timetable"
-                                       , label = "Timetable (optional)"
-                                       , width = "100%"
-                                       , value = "schedule"
-                                       , placeholder = "sheet name"
-                             ),
-
-                             textInput(inputId = "plex_budget"
-                                       , label = "Budget (optional)"
-                                       , width = "100%"
-                                       , value = "budget"
-                                       , placeholder = "sheet name"
-                             )
+                             
+                             checkboxGroupInput(inputId = "plex_sheets"
+                                                , label = h5(icon("file-circle-plus"), "Extra Sheets")
+                                                , choices = c("logbook"
+                                                              , "timetable"
+                                                              , "budget"
+                                                              , "matrix"
+                                                              , "credit"
+                                                              )
+                                                , selected = c("logbook"
+                                                               , "matrix"
+                                                               , "budget"
+                                                               , "credit"
+                                                               )
+                                                ),
 
                              ),
 
                       column(width = 3,
 
-                             h5(icon("feather-alt"), "Information"),
+                             h5(icon("feather-alt"), "General Information"),
 
                              # conditional panel "%in%" --> .includes("values")
 
@@ -445,17 +437,6 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
                                                              , width = "100%"
                                                              , end = NA
                                                              )
-                             ),
-
-                             conditionalPanel(condition =  ' input["plex_fields"].includes("about") ',
-
-                                              textInput(inputId = "plex_about"
-                                                        , label = "About"
-                                                        , width = "100%"
-                                                        , placeholder = "Short project description"
-                                                        , value = NA
-                                              )
-
                              ),
 
                              conditionalPanel(condition =  ' input["plex_fields"].includes("environment") ',
@@ -512,23 +493,13 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
                                               )
 
                              ),
-
-                             conditionalPanel(condition =  ' input["plex_fields"].includes("fieldbook") ',
-
-                                              textInput(inputId = "plex_fieldbook"
-                                                        , label = "Fieldbook name"
-                                                        , value = NA
-                                                        , width = "100%"
-                                              )
-
-                             ),
                              
                              conditionalPanel(condition =  ' input["plex_fields"].includes("project") ',
                                               
                                               textInput(inputId = "plex_project"
                                                         , label = "Project"
                                                         , width = "100%"
-                                                        , placeholder = "url or link"
+                                                        , placeholder = "Name or ID for the fieldbook/project"
                                                         , value = NA
                                               )
                                               
@@ -572,7 +543,7 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
 
                       column(width = 5,
 
-                             h5(icon("flask"), "Experimental plan"),
+                             h5(icon("flask"), "Experimental Plan (PLEX)"),
 
                              textAreaInput(inputId = "plex_title"
                                            , label = "Title"
@@ -580,23 +551,17 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
                                            , width = "100%"
                              ),
                              
-                             textAreaInput(inputId = "plex_objectives"
-                                           , label = "Objectives"
+                             textInput(inputId = "plex_short_title"
+                                       , label = "Short title (max. 4 words)"
+                                       , placeholder = "Short title"
+                                       , width = "100%"
+                                       , value = NA
+                                       ),
+                             
+                             textAreaInput(inputId = "plex_objective"
+                                           , label = "Objective"
                                            , placeholder = "Objectives of the project."
                                            , width = "100%"
-                             ),
-
-                             textAreaInput(inputId = "plex_hypothesis"
-                                           , label = "Hypothesis"
-                                           , placeholder = "What are the expected results."
-                                           , width = "100%"
-                             ),
-
-                             textAreaInput(inputId = "plex_rationale"
-                                           , label = "Rationale"
-                                           , placeholder = "Based in which evidence is planned the experiment."
-                                           , width = "100%"
-
                              ),
                              
                              textAreaInput(inputId = "plex_references"
@@ -615,7 +580,7 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
 
                       column(width = 2,
 
-                             h5(icon("pencil-ruler"), "Experimental design"),
+                             h5(icon("pencil-ruler"), "Experimental Design"),
                              
                              fluidRow(
                                
@@ -635,7 +600,7 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
                                       
                                       numericInput(inputId = "plex_rep"
                                                    , label = "Replications"
-                                                   , value = 3
+                                                   , value = 4
                                                    , min = 1
                                                    )
                                       )
@@ -720,7 +685,7 @@ navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/
 
                       column(2,
 
-                             h5(icon("pencil-ruler"), "Experimental design"),
+                             h5(icon("pencil-ruler"), "Experimental Design"),
                              
                              fluidRow(
                                
@@ -846,7 +811,7 @@ tabPanel("Sketch", icon = icon("pen-ruler"),
 
            column(2,
 
-                  div(h5(icon("drafting-compass"), "Skecth design")),
+                  div(h5(icon("drafting-compass"), "Skecth Design")),
 
                   radioButtons(inputId = "sketch_preview_opt"
                                , label = "Modules"

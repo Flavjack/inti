@@ -6,12 +6,13 @@
   - Include lattice
   - Include LCD
   - Dashboard for Tarpuy experiment progress
-  - Include experimental matrix in Tarpuy
-  - Include CreDiT
-  
+
 # inti 0.7.0
 
-- Include new function `rticle()` to render native .md to article
+- Include new function `rticle()` to render native .md from google docs to article
+- Update Tarpuy
+  - Include matrix for experiments
+  - CRediT – Contributor Role Taxonomy
 
 # inti 0.6.92
 

@@ -11,8 +11,8 @@ design_noreps(
   nrows = NA,
   serie = 1000,
   seed = NULL,
-  fbname = "inkaverse",
-  qrcode = "{fbname}{plots}{factors}"
+  project = "inkaverse",
+  qrcode = "{project}{plots}{factors}"
 )
 }
 \arguments{
@@ -28,9 +28,9 @@ design_noreps(
 
 \item{seed}{Replicability from randomization \verb{[numeric: NULL]}.}
 
-\item{fbname}{Bar code prefix for data collection \verb{[character: "inkaverse"]}.}
+\item{project}{Bar code prefix for data collection \verb{[character: "inkaverse"]}.}
 
-\item{qrcode}{Concatenate the QR code \verb{[character: "\{fbname\}\{plots\}\{factors\}"]}}
+\item{qrcode}{Concatenate the QR code \verb{[character: "\{project\}\{plots\}\{factors\}"]}}
 }
 \value{
 A list with the field-book design and parameters

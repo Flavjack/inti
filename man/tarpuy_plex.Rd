@@ -7,9 +7,8 @@
 tarpuy_plex(
   data = NULL,
   title = NULL,
-  objectives = NULL,
-  hypothesis = NULL,
-  rationale = NULL,
+  short_title = NULL,
+  objective = NULL,
   references = NULL,
   plan = NULL,
   institutions = NULL,
@@ -21,20 +20,17 @@ tarpuy_plex(
   environment = NULL,
   start = NA,
   end = NA,
-  about = NULL,
-  fieldbook = NULL,
   project = NULL,
   repository = NULL,
   manuscript = NULL,
   album = NULL,
   nfactor = 2,
   design = "rcbd",
-  rep = 3,
+  rep = 4,
   zigzag = FALSE,
   nrows = NA,
   serie = 1000,
-  seed = 0,
-  qrcode = "{fbname}{plots}{factors}"
+  seed = 0
 )
 }
 \arguments{
@@ -42,11 +38,9 @@ tarpuy_plex(
 
 \item{title}{Project title.}
 
-\item{objectives}{The objectives of the project.}
+\item{short_title}{Short description of the project.}
 
-\item{hypothesis}{What are the expected results.}
-
-\item{rationale}{Based in which evidence is planned the experiment.}
+\item{objective}{The objectives of the project.}
 
 \item{references}{References.}
 
@@ -70,11 +64,7 @@ tarpuy_plex(
 
 \item{end}{The date of the end of the experiments.}
 
-\item{about}{Short description of the project.}
-
-\item{fieldbook}{Name or ID for the fieldbook/project.}
-
-\item{project}{link for project.}
+\item{project}{Name or ID for the fieldbook/project.}
 
 \item{repository}{link to the repository.}
 
@@ -95,8 +85,6 @@ tarpuy_plex(
 \item{serie}{Number of digits in the plots.}
 
 \item{seed}{Seed for the randomization.}
-
-\item{qrcode}{Concatenate the QR code \verb{[character: \{fbname\}\{plots\}\{factors\}]}}
 }
 \value{
 data frame or list of arguments:

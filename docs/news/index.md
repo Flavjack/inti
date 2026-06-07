@@ -4,7 +4,10 @@
 
 - Include new function
   [`rticle()`](https://inkaverse.com/reference/rticle.md) to render
-  native .md to article
+  native .md from google docs to article
+- Update Tarpuy
+  - Include matrix for experiments
+  - CRediT – Contributor Role Taxonomy
 
 ## inti 0.6.92
 
@@ -186,7 +189,7 @@ CRAN release: 2022-08-09
   - `gdocs2rmd()` ==\> `gdocs2qmd()`
 - Fix [`plot_raw()`](https://inkaverse.com/reference/plot_raw.md):
   “length(x) = 2 \> 1’ in coercion to ’logical(1)”
-- Update [`jc_tombola()`](https://inkaverse.com/reference/jc_tombola.md)
+- Update `jc_tombola()`
 - `outliers_remove(drop.na = FALSE)` avoid drop NA values by default
 - [`H2cal()`](https://inkaverse.com/reference/H2cal.md) outliers are
   changed to NA in the data.frame
@@ -311,7 +314,7 @@ CRAN release: 2021-11-07
 CRAN release: 2021-10-01
 
 - *Package*
-  - [`jc_tombola()`](https://inkaverse.com/reference/jc_tombola.md)
+  - `jc_tombola()`
     - Update function and selection paper by meeting
   - [`yupana_analysis()`](https://inkaverse.com/reference/yupana_analysis.md)
     - Include last_factor selection
