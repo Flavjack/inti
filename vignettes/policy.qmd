@@ -14,9 +14,9 @@ knitr:
 
 *Inkaverse* maintains several web apps that make it easier to work with Google APIs from R:
 
--   [Yupana](https://flavjack.shinyapps.io/yupana/) wraps the [Sheets API](https://developers.google.com/sheets/api/)
+-   [Yupana](https://inkaverse.shinyapps.io/yupana/) wraps the [Sheets API](https://developers.google.com/sheets/api/)
 
--   [Tarpuy](https://flavjack.shinyapps.io/tarpuy/) wraps the [Sheets API](https://developers.google.com/sheets/api/)
+-   [Tarpuy](https://inkaverse.shinyapps.io/tarpuy/) wraps the [Sheets API](https://developers.google.com/sheets/api/)
 
 The apps are governed by common policies recorded here. These apps use internal resources owned by the "inkaverse" project on Google Cloud Platform. That is the name you will see in a consent screen. Exception: gmailr does NOT use any resources owned by inkaverse Package, due to [special requirements](https://developers.google.com/terms/api-services-user-data-policy#additional-requirements-for-specific-api-scopes) around Gmail and its scopes.
 

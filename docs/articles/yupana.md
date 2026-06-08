@@ -15,7 +15,7 @@ Yupana permite:
 [![](https://flavjack.github.io/inti/img/youtube.png "demo")](https://www.youtube.com/playlist?list=PLSQMdOu57lj9sTx5Dbff9O0g6KCU4pwCQ)
 demo
 
-[![](https://flavjack.github.io/inti/img/yupana.png "yupana")](https://flavjack.shinyapps.io/yupana/)
+[![](https://flavjack.github.io/inti/img/yupana.png "yupana")](https://inkaverse.shinyapps.io/yupana/)
 Yupana
 
 ## Base de datos
