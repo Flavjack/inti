@@ -1,11 +1,12 @@
 name: tarpuy
 title: tarpuy
-username:
-account: flavjack
+username: inkaverse
+account: inkaverse
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2570255
-bundleId: 10884010
-url: https://flavjack.shinyapps.io/tarpuy/
+bundleId: 12101058
+url: https://inkaverse.shinyapps.io/tarpuy/
+version: 1
 asMultiple: FALSE
 asStatic: FALSE

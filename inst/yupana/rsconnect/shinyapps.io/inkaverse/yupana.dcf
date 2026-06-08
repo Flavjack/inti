@@ -1,11 +1,12 @@
 name: yupana
 title: yupana
-username:
-account: flavjack
+username: inkaverse
+account: inkaverse
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 357871
-bundleId: 10883985
-url: https://flavjack.shinyapps.io/yupana/
+bundleId: 12101010
+url: https://inkaverse.shinyapps.io/yupana/
+version: 1
 asMultiple: FALSE
 asStatic: FALSE
