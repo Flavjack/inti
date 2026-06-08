@@ -16,8 +16,8 @@ Authors@R: c(
     person("Inkaverse", role = c("cph"))
     )
 License: GPL-3 | file LICENSE
-URL: https://inkaverse.com/, https://github.com/flavjack/inti
-BugReports: https://github.com/flavjack/inti/issues/
+URL: https://inkaverse.com/, https://github.com/flavjack/inti, https://github.com/Flavjack/inti
+BugReports: https://github.com/Flavjack/inti/issues
 Depends:
     shiny,
     ggplot2,
