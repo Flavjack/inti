@@ -24,7 +24,6 @@
 rticle <- function(file = "draft.md",
                    export = "files",
                    type = c("asis", "list")) {
-  
   # file = "draft.md" ; export = NULL ; type = "list"
   
   type <- match.arg(type)
@@ -43,22 +42,44 @@ rticle <- function(file = "draft.md",
   )
   
   section_break <- if (identical(fmt, "html")) {
-    
     "<div style='margin-top: 3em;'></div>"
     
   } else {
-    
-    c(
-      "```{=openxml}",
+    c("```{=openxml}",
       "<w:p>",
       "  <w:pPr>",
       "    <w:sectPr/>",
       "  </w:pPr>",
       "</w:p>",
-      "```"
-    )
-    
-  } 
+      "```")
+  }
+  
+  header_clean <- c(
+    "abstract",
+    "resumen",
+    "keywords",
+    "declaration[s]?",
+    "statement[s]?",
+    "statment[s]?",
+    "declaration[s]?\\s+statement[s]?",
+    "statement[s]?\\s+and\\s+declaration[s]?",
+    "declaration[s]?\\s+and\\s+statement[s]?"
+  ) %>%
+    paste(collapse = "|") %>%
+    paste0("^#*\\s*\\*{0,2}(", . , ")\\*{0,2}\\s*:?[[:space:]]*$")
+  
+  header_break <- c(
+    "abstract",
+    "introduction",
+    "declaration[s]?",
+    "statement[s]?",
+    "statment[s]?",
+    "declaration[s]?\\s+statement[s]?",
+    "statement[s]?\\s+and\\s+declaration[s]?",
+    "declaration[s]?\\s+and\\s+statement[s]?"
+  ) %>%
+    paste(., collapse = "|") %>%
+    paste0("^#*\\s*\\*{0,2}(", . , ")\\*{0,2}\\s*:?[[:space:]]*$")
   
   gdoc <- file %>%
     readLines(warn = F) %>%
@@ -81,96 +102,107 @@ rticle <- function(file = "draft.md",
       stringr::str_remove(.data$value, "^#\\s*"),
       .data$value
     )) %>%
-    dplyr::mutate(value = dplyr::if_else(
-      grepl(
-        "^#+\\s*\\*{0,2}(abstract|resumen|keywords|declararions|statements)\\*{0,2}\\s*:?[[:space:]]*$",
-        .data$value,
-        ignore.case = TRUE
-      ),
-      sub("^#+\\s*", "", .data$value),
+    dplyr::mutate(value = if_else(
+      grepl(header_clean, .data$value, ignore.case = TRUE),
+      gsub("^#+\\s*", "", .data$value),
       .data$value
     )) %>% {
       purrr::reduce(rev(which(
-        grepl(
-          "^#*\\s*\\*{0,2}(abstract|introduction|declarations|statments)\\*{0,2}\\s*$",
-          .$value,
-          ignore.case = TRUE
-        )
+        grepl(header_break, .$value, ignore.case = TRUE)
       )),
       .init = .,
       ~ tibble::add_row(.x, value = section_break, .before = .y))
     }
   
-  tabs <- gdoc %>%
-    mutate(
-      table_start = grepl("^\\|\\s*Table\\s+[0-9]+\\s*:", .data$value),
-      table_id = cumsum(.data$table_start)
-    ) %>%
-    filter(.data$table_id > 0) %>%
-    group_by(.data$table_id) %>%
-    mutate(
-      is_table_line = grepl("^\\s*\\||^\\s*$", .data$value),
-      end_table = match(FALSE, .data$is_table_line)
-    ) %>%
-    filter(row_number() < .data$end_table | is.na(.data$end_table)) %>%
-    # filter(trimws(.data$value) != "") %>% 
-    group_modify( ~ {
-      .x %>%
-        # add_row(value = "") %>%
-        dplyr::add_row(value = section_break)
-    }) %>%
-    ungroup()
-  
+
   figs <- gdoc %>%
     mutate(
-      fig_start = grepl(
-        "!\\[\\]\\[image[0-9]+\\]",
-        .data$value
-      ),
+      fig_start = grepl("!\\[[^]]*\\]\\[image[0-9]+\\]", .data$value),
       
       fig_id = cumsum(.data$fig_start)
       
     ) %>%
+    
     filter(.data$fig_id > 0) %>%
+    
     group_by(.data$fig_id) %>%
-    mutate(
-      has_caption = cumsum(
-        grepl(
-          "^\\|\\s*Figure\\s+[0-9]+\\s*:|^Figure\\s+[0-9]+\\s*:",
-          .data$value,
-          ignore.case = TRUE
-        )
-      ) > 0,
+    
+    mutate(caption_row = match(
+      TRUE,
+      grepl("Figure\\s+[0-9]+\\s*:", .data$value, ignore.case = TRUE)
+    )) %>%
+    
+    filter(row_number() <= .data$caption_row |
+             is.na(.data$caption_row)) %>%
+    
+    filter(trimws(.data$value) != "") %>%
+    
+    group_modify( ~ {
+      .x %>%
+        dplyr::add_row(value = section_break)
       
-      end_fig = match(
-        TRUE,
-        .data$has_caption &
-          !grepl("^\\s*\\||^\\s*$", .data$value)
-      ) ) %>%
+    }) %>%
+    
+    ungroup()
+  
+  tabs <- gdoc %>%
+    mutate(
+      table_start = grepl(
+        "Table\\s+[0-9]+\\s*:",
+        .data$value,
+        ignore.case = TRUE
+      ),
+      
+      table_id = cumsum(.data$table_start)
+      
+    ) %>%
+    
+    filter(.data$table_id > 0) %>%
+    
+    group_by(.data$table_id) %>%
+    
+    mutate(
+      first_non_table = match(
+        FALSE,
+        (
+          grepl("^\\s*\\|", .data$value) &
+            !grepl("!\\[.*\\]\\(.*\\)", .data$value)
+        ) |
+          grepl("^\\s*$", .data$value) |
+          grepl(
+            "Table\\s+[0-9]+\\s*:",
+            .data$value,
+            ignore.case = TRUE
+          )
+      )
+    ) %>%
     
     filter(
-      row_number() < .data$end_fig |
-        is.na(.data$end_fig)
+      row_number() < .data$first_non_table |
+        is.na(.data$first_non_table)
     ) %>%
-    filter(trimws(.data$value) != "") %>% 
+    
     group_modify(~{
       .x %>%
         dplyr::add_row(value = section_break)
     }) %>%
-    ungroup()
+    
+    ungroup() %>% 
+    dplyr::filter(!.data$name %in% stats::na.omit(figs$name))
+  
   
   txt <- gdoc %>%
-    dplyr::filter(!.data$name %in% stats::na.omit(tabs$name)
-                  , !.data$name %in% stats::na.omit(figs$name)
+    dplyr::filter(
+      !.data$name %in% stats::na.omit(tabs$name)
+      ,
+      !.data$name %in% stats::na.omit(figs$name)
     ) %>%
     add_row(name = max(.$name, na.rm = TRUE) + 1, value = section_break)
   
   manuscript <- if (type == "asis") {
-    
     gdoc
     
   } else if (type == "list") {
-    
     docx <- list(txt, figs, tabs) %>%
       bind_rows() %>%
       slice(1:(nrow(.) - length(section_break)))
