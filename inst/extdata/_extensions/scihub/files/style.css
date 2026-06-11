@@ -125,9 +125,12 @@ td {
   vertical-align: top;
 }
 
-caption {
+caption,
+.table-caption,
+.quarto-float-caption {
   caption-side: bottom;
-  text-align: left;
+  text-align: justify !important;
+  text-justify: inter-word;
   font-size: 0.9em;
   font-style: italic;
   margin-top: 0.5em;
@@ -141,10 +144,14 @@ figure {
 }
 
 figcaption {
+  display: block;
+  width: 100%;
   font-size: 0.9em;
   font-style: italic;
   color: #333;
   margin-top: 0.5em;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 /* ---------- Images ---------- */
