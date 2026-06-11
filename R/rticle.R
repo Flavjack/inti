@@ -24,6 +24,8 @@
 rticle <- function(file = "draft.md",
                    export = "files",
                    type = c("asis", "list")) {
+  
+  # library(tidyverse)
   # file = "draft.md" ; export = NULL ; type = "list"
   
   type <- match.arg(type)
@@ -34,7 +36,9 @@ rticle <- function(file = "draft.md",
   
   dir.create(export, recursive = T, showWarnings = F)
   
-  
+
+# page break --------------------------------------------------------------
+
   fmt <- tryCatch(
     knitr::pandoc_to(),
     error = function(e)
@@ -42,16 +46,27 @@ rticle <- function(file = "draft.md",
   )
   
   section_break <- if (identical(fmt, "html")) {
-    "<div style='margin-top: 3em;'></div>"
+    
+    c(
+      "",
+      "<div style='margin-top: 3em;'></div>",
+      ""
+    )
     
   } else {
-    c("```{=openxml}",
+    
+    c(
+      "",
+      "```{=openxml}",
       "<w:p>",
       "  <w:pPr>",
       "    <w:sectPr/>",
       "  </w:pPr>",
       "</w:p>",
-      "```")
+      "```",
+      ""
+    )
+    
   }
   
   header_clean <- c(
@@ -81,6 +96,124 @@ rticle <- function(file = "draft.md",
     paste(., collapse = "|") %>%
     paste0("^#*\\s*\\*{0,2}(", . , ")\\*{0,2}\\s*:?[[:space:]]*$")
   
+  # cross references --------------------------------------------------------
+  
+  crossrefs <- function(x) {
+    
+    # ---------------------------
+    # 1. Títulos de tablas
+    # ---------------------------
+    x <- gsub(
+      "^\\[Table\\]\\(#tab_([^\\)]+)\\):\\s*(.+)$",
+      ": \\2 {#tbl-\\1}",
+      x,
+      perl = TRUE
+    )
+    
+    # ---------------------------
+    # 2. Títulos de figuras
+    # ---------------------------
+    x <- gsub(
+      "^\\[Figure\\]\\(#fig_([^\\)]+)\\):\\s*(.+)$",
+      "![\\2]() {#fig-\\1}",
+      x,
+      perl = TRUE
+    )
+    
+    # ---------------------------
+    # 3. Referencias a tablas
+    # ---------------------------
+    x <- gsub(
+      "\\[Table\\]\\(#tab_([^\\)]+)\\)",
+      "@tbl-\\1",
+      x,
+      perl = TRUE
+    )
+    
+    # ---------------------------
+    # 4. Referencias a figuras
+    # ---------------------------
+    x <- gsub(
+      "\\[Figure\\]\\(#fig_([^\\)]+)\\)",
+      "@fig-\\1",
+      x,
+      perl = TRUE
+    )
+    
+    x
+  }
+  
+# Fix figure --------------------------------------------------------------
+  
+  fix_figures <- function(gdoc){
+    
+    image_pattern <- "^\\s*!\\[\\]\\[(image[0-9]+)\\]\\s*$"
+    
+    caption_pattern <- "^!\\[(.*)\\]\\(\\)\\s*\\{#(fig-[^}]+)\\}$"
+    
+    img_rows <- which(
+      grepl(
+        image_pattern,
+        gdoc$value,
+        perl = TRUE
+      )
+    )
+    
+    for(i in rev(img_rows)){
+      
+      j <- i + 1
+      
+      while(
+        j <= nrow(gdoc) &&
+        trimws(gdoc$value[j]) == ""
+      ){
+        j <- j + 1
+      }
+      
+      if(j > nrow(gdoc))
+        next
+      
+      if(!grepl(
+        caption_pattern,
+        gdoc$value[j],
+        perl = TRUE
+      ))
+        next
+      
+      img_ref <- sub(
+        image_pattern,
+        "\\1",
+        gdoc$value[i],
+        perl = TRUE
+      )
+      
+      cap <- stringr::str_match(
+        gdoc$value[j],
+        caption_pattern
+      )
+      
+      caption <- cap[,2]
+      fig_id  <- cap[,3]
+      
+      gdoc$value[i] <- paste0(
+        "![",
+        caption,
+        "][",
+        img_ref,
+        "]{#",
+        fig_id,
+        "}"
+      )
+      
+      gdoc <- gdoc[-j, ]
+    }
+    
+    gdoc
+  }
+  
+  
+# Google Docs -------------------------------------------------------------
+
   gdoc <- file %>%
     readLines(warn = F) %>%
     tibble::enframe() %>%
@@ -112,12 +245,24 @@ rticle <- function(file = "draft.md",
       )),
       .init = .,
       ~ tibble::add_row(.x, value = section_break, .before = .y))
-    }
-  
+    } %>% 
+    mutate(across(.data$value, ~ crossrefs(.))) %>% 
+    fix_figures()
+    
 
+# Figures -----------------------------------------------------------------
+  
+  figure_pattern <- "^\\s*!\\[.*\\]\\[image[0-9]+\\]\\{#fig-[^}]+\\}\\s*$"
+  
   figs <- gdoc %>%
+    
     mutate(
-      fig_start = grepl("!\\[[^]]*\\]\\[image[0-9]+\\]", .data$value),
+      
+      fig_start = grepl(
+        figure_pattern,
+        .data$value,
+        perl = TRUE
+      ),
       
       fig_id = cumsum(.data$fig_start)
       
@@ -127,30 +272,62 @@ rticle <- function(file = "draft.md",
     
     group_by(.data$fig_id) %>%
     
-    mutate(caption_row = match(
-      TRUE,
-      grepl("Figure\\s+[0-9]+\\s*:", .data$value, ignore.case = TRUE)
-    )) %>%
-    
-    filter(row_number() <= .data$caption_row |
-             is.na(.data$caption_row)) %>%
-    
-    filter(trimws(.data$value) != "") %>%
-    
-    group_modify( ~ {
-      .x %>%
-        dplyr::add_row(value = section_break)
+    mutate(
       
+      first_non_fig = match(
+        FALSE,
+        
+        .data$fig_start |
+          trimws(.data$value) == ""
+        
+      )
+      
+    ) %>%
+    
+    filter(
+      row_number() < .data$first_non_fig |
+        is.na(.data$first_non_fig)
+    ) %>%
+    
+    group_modify(~{
+      .x %>%
+        add_row(
+          value = section_break
+        )
     }) %>%
     
     ungroup()
+
+# Tables ------------------------------------------------------------------
+  
+  table_pattern <- paste0(
+    "^\\s*(",
+    
+    # Formato clásico
+    "Table\\s*[0-9]+\\s*[:.]",
+    
+    "|",
+    
+    # Cross-reference pandoc
+    "\\[Table\\]\\(#tab[_-][^)]+\\)\\s*:",
+    
+    "|",
+    
+    # Caption Quarto
+    ":\\s*.*\\{#tbl-[^}]+\\}\\s*$",
+    
+    ")"
+  )
   
   tabs <- gdoc %>%
+    
     mutate(
+      
       table_start = grepl(
-        "Table\\s+[0-9]+\\s*:",
+        table_pattern,
         .data$value,
-        ignore.case = TRUE
+        ignore.case = TRUE,
+        perl = TRUE
       ),
       
       table_id = cumsum(.data$table_start)
@@ -162,35 +339,53 @@ rticle <- function(file = "draft.md",
     group_by(.data$table_id) %>%
     
     mutate(
+      
       first_non_table = match(
         FALSE,
-        (
-          grepl("^\\s*\\|", .data$value) &
-            !grepl("!\\[.*\\]\\(.*\\)", .data$value)
-        ) |
-          grepl("^\\s*$", .data$value) |
+        
+        .data$table_start |
+          
+          # filas markdown de la tabla
           grepl(
-            "Table\\s+[0-9]+\\s*:",
-            .data$value,
-            ignore.case = TRUE
-          )
+            "^\\s*\\|",
+            .data$value
+          ) |
+          
+          # líneas vacías
+          trimws(.data$value) == ""
+        
       )
+      
     ) %>%
     
     filter(
+      
       row_number() < .data$first_non_table |
+        
         is.na(.data$first_non_table)
+      
     ) %>%
     
     group_modify(~{
+      
       .x %>%
-        dplyr::add_row(value = section_break)
+        
+        add_row(
+          value = section_break
+        )
+      
     }) %>%
     
-    ungroup() %>% 
-    dplyr::filter(!.data$name %in% stats::na.omit(figs$name))
+    ungroup() %>%
+    
+    filter(
+      !.data$name %in%
+        stats::na.omit(figs$name)
+    )
   
-  
+
+# Text --------------------------------------------------------------------
+
   txt <- gdoc %>%
     dplyr::filter(
       !.data$name %in% stats::na.omit(tabs$name)
@@ -199,6 +394,9 @@ rticle <- function(file = "draft.md",
     ) %>%
     add_row(name = max(.$name, na.rm = TRUE) + 1, value = section_break)
   
+
+# manuscript --------------------------------------------------------------
+
   manuscript <- if (type == "asis") {
     gdoc
     
@@ -208,7 +406,9 @@ rticle <- function(file = "draft.md",
       slice(1:(nrow(.) - length(section_break)))
     
   }
-  
+
+# export ------------------------------------------------------------------
+
   qmd <- manuscript %>%
     tibble::deframe() %>%
     writeLines(con = file.path(export, gsub(
@@ -217,6 +417,9 @@ rticle <- function(file = "draft.md",
       x = file
     )))
   
+
+# result ------------------------------------------------------------------
+
   list.files(path = export
              ,
              pattern = ".qmd"
