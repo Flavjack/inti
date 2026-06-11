@@ -209,10 +209,28 @@ rticle <- function(file = "draft.md",
         "}"
       )
       
+      # eliminar la línea de caption original
       gdoc <- gdoc[-j, ]
+      
+      # agregar una línea vacía antes de la figura
+      # solo si la línea anterior no está vacía
+      if(
+        i > 1 &&
+        trimws(gdoc$value[i - 1]) != ""
+      ){
+        
+        gdoc <- tibble::add_row(
+          gdoc,
+          value = "",
+          .before = i
+        )
+        
+      }
+      
     }
     
     gdoc
+    
   }
   
   
