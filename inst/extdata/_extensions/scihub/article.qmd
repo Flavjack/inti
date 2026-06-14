@@ -42,6 +42,33 @@ source("http://inkaverse.com/docs.r")
 knitr::knit_exit()
 ```
 
+```{bash}
+#| label: git check
+#| eval: false
+
+SIZE_MB=100
+EXCLUDE_DIRS=(".git" "xclude")
+
+find . \
+  \( -name "${EXCLUDE_DIRS[0]}" -o -name "${EXCLUDE_DIRS[1]}" \) \
+  -prune -o \
+  -type f -size +${SIZE_MB}M -exec ls -lh {} \; | sort -hr -k5
+  
+git reset --soft HEAD~0
+git status
+```
+
+```{bash}
+#| label: git > github
+#| eval: false
+
+git pull
+
+git add .
+git commit -m "update"
+git push
+```
+
 ```{r}
 #| label: pdf to jpeg
 #| eval: false
