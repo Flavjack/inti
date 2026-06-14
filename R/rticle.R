@@ -57,13 +57,7 @@ rticle <- function(file = "draft.md",
     
     c(
       "",
-      "```{=openxml}",
-      "<w:p>",
-      "  <w:pPr>",
-      "    <w:sectPr/>",
-      "  </w:pPr>",
-      "</w:p>",
-      "```",
+      "\\newpage",
       ""
     )
     

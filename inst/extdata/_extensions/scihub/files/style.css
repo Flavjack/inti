@@ -190,19 +190,22 @@ pre {
 
 a {
   color: #0563C1;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:visited {
   color: #954F72;
+  text-decoration: none;
 }
 
 a:hover {
   color: #0B5ED7;
+  text-decoration: none;
 }
 
 a:active {
   color: #0B5ED7;
+  text-decoration: none;
 }
 
 /* ---------- References ---------- */
@@ -245,4 +248,24 @@ a:active {
     color: black;
     text-decoration: none;
   }
+}
+
+/* ---------- Back Button ---------- */
+
+#back-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 8px 12px;
+  background: white;
+  border: 1px solid #999;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  z-index: 9999;
+  display: none;
+}
+
+#back-button:hover {
+  background: #f5f5f5;
 }

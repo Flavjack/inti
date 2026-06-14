@@ -6,13 +6,11 @@ format:
     toc-location: left
     number-sections: true
     self-contained: true
-    output-file: "manuscript"
   docx:
     toc: false
     toc-title: Indice
     section-numbers: true
     reference-doc: "files/style.docx"
-    output-file: "manuscript"
 editor_options: 
   chunk_output_type: console
 execute:
@@ -32,10 +30,9 @@ source("http://inkaverse.com/docs.r")
 ```
 
 ```{r}
-#| eval: true
 #| results: 'asis'
 
-"draft.md" %>% 
+"render2rticle.md" %>% 
   rticle(type = "asis") %>% # ["asis" or "list"]
   knitr::knit_child(quiet = TRUE) %>% 
   cat(sep = '\n')
