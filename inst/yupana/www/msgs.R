@@ -4,49 +4,23 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2021-04-29
+#> date .: 2026-06-14
 # -------------------------------------------------------------------------
 
-suppressPackageStartupMessages({library(inti)})
+cli_div(theme = list(
+  h1 = list(color = "red", "font-weight" = "bold")
+))
 
-# -------------------------------------------------------------------------
-# message -----------------------------------------------------------------
-# -------------------------------------------------------------------------
+cli_h1("ReadMe")
+cli_rule()
 
-head <- colortext(
-  "
-# -------------------------------------------------------------------------
-# ReadMe ------------------------------------------------------------------
-# -------------------------------------------------------------------------
-  "
-  , "brown"
-)
+cli_alert_info("More info:")
+cli_alert("{.blue https://inkaverse.com/}")
 
-end <- colortext(
-  "
-# -------------------------------------------------------------------------
-# Yupana ------------------------------------------------------------------
-# -------------------------------------------------------------------------
-  "
-  , "brown"
-)
+cli_alert_info("Citation:")
+cli_alert("{.green https://inkaverse.com/authors.html#citation}")
 
+cli_h1("Yupana")
+cli_rule()
 
-message(
-  head
-  , "\n"
-  , colortext("- ")
-  , colortext("More info: ")
-  , colortext("\n\n")
-  , colortext("> https://inkaverse.com/", "blue")
-  , "\n\n"
-  , colortext("- ")
-  , colortext("Citation: ")
-  , colortext("\n\n")
-  , colortext("> https://inkaverse.com/authors.html#citation", "green")
-  , "\n"
-  , end
-)
-
-remove(head, end)
 

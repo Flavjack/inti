@@ -7,6 +7,17 @@
   - Include LCD
   - Dashboard for Tarpuy experiment progress
 
+# inti 0.7.1
+
+- Exclude functions from rticle using articul8
+- Improve function `rticle()` to render native .md from google docs
+  - Include cross references: Tables & Figures
+- Udpate `scihub()` function
+  - analysis.qmd template
+  - article.qmd template
+- Use cli package for apps message
+
+
 # inti 0.7.0
 
 - Include new function `rticle()` to render native .md from google docs to article

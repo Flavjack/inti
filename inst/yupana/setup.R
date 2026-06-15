@@ -19,6 +19,7 @@ cran <- c(
   , "tidyverse"
   , "FactoMineR"
   , "ggpmisc"
+  , "cli"
   )
 
 git <- c("Flavjack/inti")

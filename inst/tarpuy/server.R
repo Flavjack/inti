@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2024-02-05
+#> date .: 2026-06-14
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
