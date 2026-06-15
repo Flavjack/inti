@@ -10,7 +10,6 @@ format:
     number-sections: true
     self-contained: true
     code-fold: true
-    output-file: "ESM"
 editor_options: 
   chunk_output_type: console
 execute: 
@@ -22,7 +21,7 @@ execute:
 # Project Setup
 
 ```{r}
-#| label:  setup
+#| label: setup
 
 source('https://inkaverse.com/setup.r')
 ```
@@ -39,7 +38,7 @@ fb <- gs %>%
 
 # Research Objectives
 
-> Matrix URL
+> https://docs.google.com/spreadsheets/d/1u6xgTT8jDFkHSMkK1iRrNVR-1iOINQidbEiaDCu2Nqw/edit?gid=504037395#gid=504037395
 
 ## RO 1
 
@@ -53,47 +52,43 @@ fb <- gs %>%
 
 ```
 
-# PCA
+# Multivariate
 
 ```{r}
 #| eval: false
 
-dtx <- fb
+library(FactoMineR)
+library(factoextra)
 
+dtx <- fb %>% 
+  dplyr::select(!c("var1", "var2")) 
 # str(dtx)
   
-mv <- PCA(X = dtx, scale.unit = T, graph = F)
+mv <- PCA(X = dtx, scale.unit = T, graph = F, quali.sup = C(1, 2))
 
-fviz_pca_var(mv, col.var = "cos2"
-             , gradient.cols = inti:::paleta()
-             , repel = TRUE
-             )
+var <- mv %>% 
+  plot.PCA(choix = c("var"), cex=0.7)
 
-var <- plot.PCA(mv, choix = c("var"), cex=0.7, )
+cos <- mv %>% 
+  fviz_pca_var(col.var = "cos2"
+               , gradient.cols = inti:::paleta()
+               , repel = TRUE
+               , labelsize = 2)
 
-ind <- plot.PCA(mv, choix = c("ind")
-                , cex = 0.5
-                , label = "ind"
-                , invisible = "quali"
-                )
+ind <- mv %>% 
+  plot.PCA(choix = c("ind")
+           , cex = 0.7
+           , label = "ind"
+           , invisible = "quali"
+           , habillage="none"
+           , col.hab = inti:::paleta()
+           )
 
-plot <- list(var, ind) %>% 
-  plot_grid(plotlist = ., ncol = 2, labels = "auto") %>% 
-  ggsave(plot = ., "manuscript/PCA.jpg", units = "cm"
-                , width = 30, height = 15)
+pcainfo <- factoextra::get_pca(mv); pcainfo
 
-plot %>% include_graphics()
-
-pcainfo <- factoextra::get_pca(mv)
-
-sink("files/pca.txt")
-cat("\nPrincipal Component Analysis Results\n")
-summary(mv, nbelements = Inf, nb.dec = 2)
-cat("\nCorrelations between variables and dimensions\n")
-mv$cor
-cat("\nContributions of the variables\n")
-mv$contrib
-sink()
+pcainfo$cor %>% kable(caption = "Variable correlations")
+pcainfo$contrib %>% kable(caption = "Variable Contribution")
+pcainfo$cos2 %>% kable(caption = "Variable Cos2")
 
 cls <- HCPC(mv, graph = F
             , nb.clust = -1
@@ -101,20 +96,17 @@ cls <- HCPC(mv, graph = F
             , method = "ward"
             )
 
-sink("files/hcpc.txt")
-cat("\nHierarchical Clustering on Principal Components\n")
-cls$call$t$tree
-cls$desc.ind
-cls$desc.var
-sink()
+map <- \() {plot.HCPC(cls, choice = "map", draw.tree = FALSE)}
 
-map <- \() {plot(cls, choice = "map", draw.tree = FALSE)}
-cir <- fviz_dend(cls, type = "circular", cex = 0.5)
+cls$data.clust # Cluster membership of each individual
+cls$desc.var$quanti # Quantitative variables characterizing each cluster
+cls$desc.var$category # Categorical variables significantly by cluster 
+table(cls$data.clust$clust) # Number of individuals assigned to each cluster
 
-plot <- list(map, cir) %>% 
+plot <- list(var, cos, ind, map) %>% 
   plot_grid(plotlist = ., ncol = 2, labels = "auto") %>% 
-  ggsave(plot = ., "manuscript/HCPC.jpg", units = "cm"
-                , width = 30, height = 15)
+  ggsave(plot = ., "manuscript/multivariate.jpg", units = "cm"
+                , width = 30, height = 30)
 
 plot %>% include_graphics()
 ```
