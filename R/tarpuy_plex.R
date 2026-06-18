@@ -28,6 +28,10 @@
 #' @param nrows Experimental design dimension by rows `[numeric: value]`
 #' @param serie Number of digits in the plots.
 #' @param seed Seed for the randomization.
+#' @param qrcode QR code template used to concatenate fieldbook identifiers.
+#' @param aug_blocks Number of blocks for augmented design.
+#' @param aug_block_size Number of plots per block for augmented design.
+#' @param aug_random Logical. Randomize entries allocation in augmented design.
 #' @details
 #'
 #' Provide the information available.
