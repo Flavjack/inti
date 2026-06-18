@@ -28,14 +28,14 @@
 #'                  , time = c(30, 60, 90)
 #'                  )
 #' 
-#' fb <-design_repblock(nfactors = 2
+#' fb <-design_repblock(nfactors = 3
 #'                      , factors = factores
 #'                      , type = "rcbd"
 #'                      , rep = 5
 #'                      , zigzag = T
 #'                      , seed = 0
 #'                      , nrows = 20
-#'                      , qrcode = "{project}{plots}{factors}"
+#'                      , qrcode = "{project}{plots}"
 #'                      )
 #'                      
 #' dsg <- fb$fieldbook
@@ -56,7 +56,7 @@ design_repblock <- function(nfactors = 1
                             , serie = 1000
                             , seed = NULL
                             , project = "inkaverse"
-                            , qrcode = "{project}{plots}{factors}"
+                            , qrcode = "{project}{plots}"
                             ) {
   
   # nfactors = 2; factors = factores; type = "crd"; rep = 3
@@ -142,7 +142,8 @@ design_repblock <- function(nfactors = 1
     } %>% 
     dplyr::select(.data$plots, .data$ntreat, {{name.factors}}, .data$sort, everything()) %>% 
     dplyr::mutate(across(.data$cols, as.numeric)) %>% 
-    dplyr::mutate(project = project) %>% 
+    dplyr::mutate(project = project) %>%
+    dplyr::mutate(design = type) %>% 
     tidyr::unite("qrcode", any_of({{qrcolumns}}), sep = "_", remove = F) %>% 
     dplyr::select(.data$qrcode, dplyr::everything()) %>% 
     dplyr::select(!c(.data$icols, .data$project)) 

@@ -56,165 +56,241 @@ tarpuy_design <- function(data
                           , serie = 100
                           , seed = NULL
                           , project = NA
-                          , qrcode = "{project}{plots}"
-                          ) {
-
-plots <- Row.names <- factors <- where <- NULL
-
-# data <- fb
+                          , qrcode = "{project}{plots}") {
+  plots <- Row.names <- factors <- where <- NULL
   
-# design type -------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-type <- match.arg(type, c(
-  "sorted", "unsorted"
-  , "crd", "rcbd", "lsd", "lattice"
-  , "split-crd", "split-rcbd"
-  ))
-
-
-# factors -----------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-# data <- fb
-
-dt_factors <- data %>%
-  dplyr::select(where(~!all(is.na(.)))) %>% 
-  dplyr::select(!starts_with("[") | !ends_with("]")) %>%
-  dplyr::select(!starts_with("{") | !ends_with("}"))
-
-# -------------------------------------------------------------------------
-
-if(length(dt_factors) == 0 | length(dt_factors) < nfactors) {
+  is_blank <- function(x) {
+    is.null(x) || length(x) == 0 || is.na(x) || x == ""
+  }
   
-  print("Factors without levels")
+  # data <- fb
   
-  return(fieldbook <- NULL)
+  # design type -------------------------------------------------------------
+  # -------------------------------------------------------------------------
   
-}
-
-# desatendido -------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-arg_opt <- data %>% 
-  dplyr::select(starts_with("{") | ends_with("}")) %>% 
-  names() 
-
-data <- if(length(arg_opt) == 2) {data} else if (length(arg_opt) < 2) {
-
-ndata <- data %>% 
-  dplyr::select(!starts_with("{") | !ends_with("}")) %>% 
-  dplyr::select(1:{{nfactors}})  
-
-opt <- list(nfactors = nfactors
-            , type = type
-            , rep = rep
-            , serie = serie
-            , seed = seed
-            , project = project
-            ) %>% 
-  tibble::enframe(name = "{arguments}", value = "{values}") %>% 
-  merge(.
-        , ndata
-        , by = 0
-        , all = TRUE
-        ) %>% 
-  dplyr::select(!.data$Row.names)
+  type <- match.arg(
+    type,
+    c(
+      "sorted", "unsorted"
+      ,
+      "crd", "rcbd", "lsd", "lattice"
+      ,
+      "split-crd", "split-rcbd"
+      , "augmented", "strip-plot"
+    )
+  )
   
-}
-
-# data arguments ----------------------------------------------------------
-# -------------------------------------------------------------------------
-
-arguments <- data %>%
-  dplyr::select(where(~!all(is.na(.)))) %>% 
-  dplyr::select(starts_with("{") | ends_with("}")) %>%
-  dplyr::rename_with(~ gsub("\\{|\\}", "", .)) %>%
-  tidyr::drop_na() %>% 
-  tibble::deframe() %>% 
-  as.list()
-
-# -------------------------------------------------------------------------
-
-nfactors <- if(is.null(arguments$nfactors) || is.na(arguments$nfactors) || arguments$nfactors == "") { nfactors
-} else {arguments$nfactors} %>% 
-  as.numeric()
-
-type <- if(is.null(arguments$type) || is.na(arguments$type) || arguments$type == "") { type
-} else {arguments$type}
-
-rep <- if(is.null(arguments$rep) || is.na(arguments$rep) || arguments$rep == "") { rep
-} else {arguments$rep} %>% as.numeric()
-
-zigzag <- if(is.null(arguments$zigzag) || is.na(arguments$zigzag) || arguments$zigzag == "") { zigzag
-} else {arguments$zigzag} %>% as.logical()
-
-nrows <- if(is.null(arguments$nrows) || is.na(arguments$nrows) || arguments$nrows == "") { rep
-} else {arguments$nrows} %>% as.numeric()
-
-serie <- if(is.null(arguments$serie) || is.na(arguments$serie) || arguments$serie == "") { serie
-} else {arguments$serie} %>% as.numeric()
-
-seed <- if(is.null(arguments$seed) || is.na(arguments$seed) || arguments$seed == "" || arguments$seed == "0") { NULL
-} else {arguments$seed %>% as.numeric()} 
   
-project <- if(is.null(arguments$project) || is.na(arguments$project) || arguments$project == "") { project
-} else {arguments$project} %>% 
-  iconv(., to="ASCII//TRANSLIT") %>%
-  toupper() %>% 
-  gsub("[[:space:]]", "-", .)
-
-qrcode <- if(is.null(arguments$project) || is.na(arguments$project) || arguments$project == "") { qrcode
-} else {arguments$qrcode} 
-
-# -------------------------------------------------------------------------
-
-factor_names <- dt_factors %>%
-  names() %>% 
-  .[1:arguments$nfactors] %>% 
-  stats::na.omit()
-
-if(length(factor_names) != nfactors) {
+  # factors -----------------------------------------------------------------
+  # -------------------------------------------------------------------------
   
-  print("Number of factor are different with the column factors")
+  # data <- fb
   
-  return(fieldbook <- NULL)
+  dt_factors <- data %>%
+    dplyr::select(where( ~ !all(is.na(.)))) %>%
+    dplyr::select(!starts_with("[") | !ends_with("]")) %>%
+    dplyr::select(!starts_with("{") | !ends_with("}"))
   
-}
-
-factor_levels <- dt_factors %>%
-  dplyr::select({{factor_names}}) %>% 
-  as.list() 
-
-design <- if(nfactors == 1 & rep == 1) {
+  # -------------------------------------------------------------------------
   
-  design_noreps(factors = factor_levels
-                , type = type 
-                , zigzag = zigzag
-                , nrows = nrows
-                , serie = serie
-                , seed = seed
-                , project = project
-                , qrcode = qrcode
-                ) %>% purrr::pluck(1)
-  } else {
+  if (length(dt_factors) == 0 | length(dt_factors) < nfactors) {
+    print("Factors without levels")
     
-    design_repblock(
+    return(fieldbook <- NULL)
+    
+  }
+  
+  # desatendido -------------------------------------------------------------
+  # -------------------------------------------------------------------------
+  
+  arg_opt <- data %>%
+    dplyr::select(starts_with("{") | ends_with("}")) %>%
+    names()
+  
+  data <- if (length(arg_opt) == 2) {
+    data
+  } else if (length(arg_opt) < 2) {
+    ndata <- data %>%
+      dplyr::select(!starts_with("{") | !ends_with("}")) %>%
+      dplyr::select(1:{{nfactors}})
+    
+    opt <- list(
       nfactors = nfactors
-      , factors = factor_levels
       , type = type
       , rep = rep
-      , zigzag = zigzag
-      , nrows = nrows
       , serie = serie
       , seed = seed
       , project = project
-      , qrcode = qrcode
-      )  %>% purrr::pluck(1)
+    ) %>%
+      tibble::enframe(name = "{arguments}", value = "{values}") %>%
+      merge(.
+            , ndata
+            , by = 0
+            , all = TRUE) %>%
+      dplyr::select(!.data$Row.names)
+    
+  }
   
+  # data arguments ----------------------------------------------------------
+  # -------------------------------------------------------------------------
+  
+  arguments <- data %>%
+    dplyr::select(where( ~ !all(is.na(.)))) %>%
+    dplyr::select(starts_with("{") | ends_with("}")) %>%
+    dplyr::rename_with( ~ gsub("\\{|\\}", "", .)) %>%
+    tidyr::drop_na() %>%
+    tibble::deframe() %>%
+    as.list()
+  
+  # -------------------------------------------------------------------------
+  
+  nfactors <- if(is_blank(arguments$nfactors)) nfactors else as.numeric(arguments$nfactors)
+  
+  type <- if(is_blank(arguments$type)) type else arguments$type
+  
+  rep <- if(is_blank(arguments$rep)) rep else as.numeric(arguments$rep)
+  
+  zigzag <- if(is_blank(arguments$zigzag)) zigzag else as.logical(arguments$zigzag)
+  
+  nrows <- if(is_blank(arguments$nrows)) rep else as.numeric(arguments$nrows)
+  
+  serie <- if(is_blank(arguments$serie)) serie else as.numeric(arguments$serie)
+  
+  seed <- if(is_blank(arguments$seed) || arguments$seed == "0") NULL else as.numeric(arguments$seed)
+  
+  
+  project <- if (is.null(arguments$project) ||
+                 is.na(arguments$project) || arguments$project == "") {
+    project
+  } else {
+    arguments$project
+  } %>%
+    iconv(., to = "ASCII//TRANSLIT") %>%
+    toupper() %>%
+    gsub("[[:space:]]", "-", .)
+  
+  qrcode <- if (is.null(arguments$project) ||
+                is.na(arguments$project) || arguments$project == "") {
+    qrcode
+  } else {
+    arguments$qrcode
+  }
+  
+  #qrcode <- if(is_blank(arguments$qrcode)) qrcode else arguments$qrcode
+  
+  blocks <- if(is_blank(arguments$blocks)) NULL else as.numeric(arguments$blocks)
+  
+  block_size <- if(is_blank(arguments$block_size)) NULL else as.numeric(arguments$block_size)
+  
+  random <- if(is_blank(arguments$random)) TRUE else as.logical(arguments$random)
+  
+  
+  # design
+  # -------------------------------------------------------------------------
+  
+  
+  if(type == "augmented") {
+    
+    if(!all(c("checks", "entries") %in% names(dt_factors))) {
+      print("Columns 'checks' and 'entries' are required")
+      return(NULL)
+    }
+    
+    if(qrcode == "{project}{plots}") {
+      qrcode <- "{project}{plots}{entry}"
+    }
+    
+    checks <- dt_factors$checks %>%
+      stats::na.omit() %>%
+      unique() %>%
+      as.character()
+    
+    entries <- dt_factors$entries %>%
+      stats::na.omit() %>%
+      unique() %>%
+      as.character()
+    
+  } else {
+    
+    factor_names <- dt_factors %>%
+      names() %>%
+      .[1:nfactors] %>%
+      stats::na.omit()
+    
+    if(length(factor_names) != nfactors) {
+      print("Number of factors does not match columns")
+      return(NULL)
+    }
+    
+    factor_levels <- dt_factors %>%
+      dplyr::select({{factor_names}}) %>%
+      as.list()
+  }
+  
+  # -------------------------------------------------------------------------
+  # DESIGN DISPATCH
+  # -------------------------------------------------------------------------
+  
+  design <- if(type == "split-rcbd") {
+    
+    design_split(
+      nfactors = nfactors,
+      factors = factor_levels,
+      type = type,
+      rep = rep,
+      zigzag = zigzag,
+      nrows = nrows,
+      serie = serie,
+      seed = seed,
+      project = project,
+      qrcode = qrcode
+    ) %>%
+      purrr::pluck("fieldbook")
+    
+  } else if(type == "augmented") {
+    
+    design_augmented(
+      checks = checks,
+      entries = entries,
+      blocks = blocks,
+      block_size = block_size,
+      random = random,
+      zigzag = zigzag,
+      serie = serie,
+      seed = seed,
+      project = project,
+      qrcode = qrcode
+    ) %>%
+      purrr::pluck("fieldbook")
+    
+  } else if(nfactors == 1 & rep == 1) {
+    
+    design_noreps(
+      factors = factor_levels,
+      type = type,
+      zigzag = zigzag,
+      nrows = nrows,
+      serie = serie,
+      seed = seed,
+      project = project,
+      qrcode = qrcode
+    ) %>%
+      purrr::pluck(1)
+    
+  } else {
+    
+    design_repblock(
+      nfactors = nfactors,
+      factors = factor_levels,
+      type = type,
+      rep = rep,
+      zigzag = zigzag,
+      nrows = nrows,
+      serie = serie,
+      seed = seed,
+      project = project,
+      qrcode = qrcode
+    ) %>%
+      purrr::pluck(1)
+  }
 }
-  
-return(design)
-  
-}
-

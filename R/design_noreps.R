@@ -45,7 +45,7 @@ design_noreps <- function(factors
                           , serie = 1000
                           , seed = NULL
                           , project = "inkaverse"
-                          , qrcode = "{project}{plots}{factors}"
+                          , qrcode = "{project}{plots}"
                             ) {
   
   # factors <- factores
@@ -107,10 +107,11 @@ design_noreps <- function(factors
     } %>% 
     dplyr::select(.data$plots, .data$ntreat, {{name.factors}}, .data$sort, everything()) %>% 
     dplyr::mutate(across(.data$cols, as.numeric)) %>% 
-    dplyr::mutate(project = project) %>% 
+    dplyr::mutate(project = project) %>%
+    dplyr::mutate(design = type) %>% 
     tidyr::unite("qrcode", any_of({{qrcolumns}}), sep = "_", remove = F) %>% 
     dplyr::select(.data$qrcode, dplyr::everything()) %>% 
-    dplyr::select(!c(.data$icols, .data$project)) 
+    dplyr::select(!c(.data$icols, .data$project))
   
   result <- list(
     fieldbook = fb

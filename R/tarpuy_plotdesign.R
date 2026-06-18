@@ -1,134 +1,136 @@
 #' Fieldbook plot experimental designs
 #'
-#' Plot fieldbook sketch designs based in experimental design
+#' Plot fieldbook sketches according to the experimental design type.
 #'
-#' @param data Experimental design data frame with the factors and level. See
-#'   examples.
-#' @param factor Vector with the name of the columns with the factors.
-#' @param fill  Value for fill the experimental units (default = "plots").
-#' @param xlab Title for x axis.
-#' @param ylab Title for y axis.
-#' @param glab Title for group axis.
+#' This function works as a dispatcher. It detects the design type from the
+#' fieldbook and sends the data to the corresponding plotting function.
 #'
-#' @details The function allows to plot the experimental design according the
-#'   field experiment design.
+#' @param data Fieldbook data frame or design object containing a fieldbook.
+#' @param factor Character. Column used to color experimental units.
+#' @param fill Character vector. Column or columns used as labels inside
+#'   experimental units.
+#' @param xlab Character. Optional x axis title.
+#' @param ylab Character. Optional y axis title.
+#' @param glab Character. Optional legend title.
 #'
-#' @return plot
+#' @return A `ggplot` object.
 #'
-#' @import dplyr
-#' @importFrom purrr pluck as_vector
-#' @importFrom stringr str_detect
-#' @importFrom tibble tibble
-#' @importFrom utils tail
-#' @importFrom purrr discard
-#' 
 #' @export
-#'
-#' @examples
-#' 
-#' \dontrun{
-#'
-#' library(inti)
-#' library(gsheet)
-#' 
-#' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "1_BVzChX_-lzXhB7HAm6FeSrwq9iKfZ39_Sl8NFC6k7U/edit#gid=1834109539")
-#' # browseURL(url)
-#' 
-#' fb <- gsheet2tbl(url) 
-#' 
-#' dsg <- fb %>% tarpuy_design() 
-#' 
-#' dsg
-#' 
-#' dsg %>% str()
-#' 
-#' dsg %>% 
-#'   tarpuy_plotdesign()
-#' 
-#' }
 
-tarpuy_plotdesign <- function(data
-                        , factor = NA
-                        , fill = "plots"
-                        , xlab = NULL
-                        , ylab = NULL
-                        , glab = NULL
-                        ) {
-
-# -------------------------------------------------------------------------
-
-  # data <- fb dsg <- sketch
-  # factor <- "rows"
-  # data <- fb
-  # xlab <- ylab <- glab <- NULL
-  # factor <- "geno"
-
-# -------------------------------------------------------------------------
+tarpuy_plotdesign <- function(data,
+                              factor = NA,
+                              fill = "plots",
+                              xlab = NULL,
+                              ylab = NULL,
+                              glab = NULL) {
   
-  if( is.data.frame(data) ) {
+  # -------------------------------------------------------------------------
+  # Get fieldbook ------------------------------------------------------------
+  # -------------------------------------------------------------------------
+  
+  if(is.data.frame(data)) {
     
-    design <- data %>% list() %>%  purrr::pluck(1)
+    fieldbook <- data
     
-    param <- NULL
+  } else if(is.list(data) && "fieldbook" %in% names(data)) {
     
-    factor <- if(is.na(factor) | is.null(factor)) { names(design)[3] } else {factor}
+    fieldbook <- data$fieldbook
     
-    lengthfactor <- nlevels(as.factor(design[[factor]])) 
+  } else if(is.list(data) && length(data) >= 1 && is.data.frame(data[[1]])) {
     
-    nrow <- design$rows %>% unique() %>% length()
+    fieldbook <- data[[1]]
     
-    ncol <- design$cols %>% unique() %>% length()
+  } else {
     
-  } else if ( length(data) > 1 ) {
-    
-    design <- data %>% purrr::pluck(1)
-    
-    param <- data %>% purrr::pluck(2)
-    
-    factor <- if(is.na(factor) | is.null(factor)) { param$factornames[1] }
-    
-    lengthfactor <- length(param$factors[[factor]])
-    
-    nrow <-  param$dim[1]
-    
-    ncol <-  param$dim[2]
+    stop("'data' must be a fieldbook data frame or a design object with fieldbook.")
     
   }
-
-# plot --------------------------------------------------------------------
-
- color_grps <- colorRampPalette(
-      c("#86CD80"   # green
-        , "#F4CB8C" # orange
-        , "#F3BB00" # yellow
-        , "#0198CD" # blue
-        , "#FE6673" # red
-      ))(lengthfactor)
-
-# -------------------------------------------------------------------------
-
-  if (is.null(xlab)) { xlab <-  "columns" }
-  if (is.null(ylab)) { ylab <-  "row" }
-  if (is.null(glab)) { glab <- factor }
-
-# -------------------------------------------------------------------------
-
-legend <- if(nlevels(as.factor(design[[factor]])) > 20) "none" else "top"
- 
-plot <- design %>%
-  arrange(.data$rows, .data$cols) %>%
-  ggplot(aes(x = .data$cols, y = .data$rows, fill = as.factor(.data[[factor]]))) +
-  geom_tile(color = "black", linewidth = 0.5) +
-  geom_text(aes(label = .data[[fill]])) +
-  scale_y_continuous(expand = c(0, 0), trans = 'reverse', breaks = 1:nrow) +
-  scale_x_continuous(expand = c(0, 0), breaks = 1:ncol) +
-  scale_fill_manual(values = color_grps) +
-  labs(x = xlab, y = ylab, fill = glab) +
-  theme_bw() +
-  theme(legend.position = legend) 
-
-return(plot)
-
+  
+  # -------------------------------------------------------------------------
+  # Checks ------------------------------------------------------------------
+  # -------------------------------------------------------------------------
+  
+  if(!"design" %in% names(fieldbook)) {
+    stop("Column 'design' is required to choose the plot method.")
+  }
+  
+  design_type <- unique(fieldbook$design)
+  design_type <- design_type[!is.na(design_type)]
+  
+  if(length(design_type) == 0) {
+    stop("Column 'design' has no valid design value.")
+  }
+  
+  if(length(design_type) > 1) {
+    warning(
+      "More than one design value found. Using the first one: ",
+      design_type[1]
+    )
+  }
+  
+  design_type <- tolower(trimws(as.character(design_type[1])))
+  
+  # -------------------------------------------------------------------------
+  # Standard designs ---------------------------------------------------------
+  # -------------------------------------------------------------------------
+  
+  if(design_type %in% c("crd", "rcbd", "sorted", "unsorted", "lsd")) {
+    
+    return(
+      plot_standard_design(
+        data = fieldbook,
+        factor = factor,
+        fill = fill,
+        xlab = xlab,
+        ylab = ylab,
+        glab = glab
+      )
+    )
+    
+  }
+  
+  # -------------------------------------------------------------------------
+  # Augmented design ---------------------------------------------------------
+  # -------------------------------------------------------------------------
+  
+  if(design_type == "augmented") {
+    
+    return(
+      plot_augmented_design(
+        data = fieldbook,
+        factor = factor,
+        fill = fill,
+        xlab = xlab,
+        ylab = ylab,
+        glab = glab
+      )
+    )
+    
+  }
+  
+  # -------------------------------------------------------------------------
+  # Split-plot RCBD ----------------------------------------------------------
+  # -------------------------------------------------------------------------
+  
+  if(design_type == "split-rcbd") {
+    
+    return(
+      plot_split_rcbd_design(
+        data = fieldbook,
+        factor = factor,
+        fill = fill,
+        xlab = xlab,
+        ylab = ylab,
+        glab = glab
+      )
+    )
+    
+  }
+  
+  # -------------------------------------------------------------------------
+  # Unsupported design -------------------------------------------------------
+  # -------------------------------------------------------------------------
+  
+  stop("Plot method not implemented for design: ", design_type)
+  
 }
-

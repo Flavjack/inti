@@ -71,6 +71,10 @@ tarpuy_plex <- function(data = NULL
                         , nrows = NA
                         , serie = 1000
                         , seed = 0
+                        , qrcode = "{project}{plots}"
+                        , aug_blocks = NA
+                        , aug_block_size = NA
+                        , aug_random = TRUE
                          ) {
   
   
@@ -254,26 +258,131 @@ var_list <- list(
 
 # design ------------------------------------------------------------------
 
-factors <- c(paste0("factor", 1:nfactor))
+  seedset <- if (seed == 0) sample(1:9999, 1) else seed
+  nrowsx  <- if (is.na(nrows)) rep else nrows
   
-seedset <- if(seed == 0) sample(1:9999, 1) else seed
-
-nrowsx <- if(is.na(nrows)) {nrowsx <- rep} else {nrowsx <- nrows}
+  # QR por tipo de diseño
+  qrcode_design <- if(tolower(design) == "augmented") {
+    "{project}{plots}{entry}"
+  } else {
+    qrcode
+  }
   
-dsg_info <-  c(nfactors = nfactor
-              , type = design
-              , rep = rep
-              , zigzag = zigzag
-              , nrows = nrowsx
-              , serie = serie
-              , seed = seedset
-              , project = project
-              , qrcode = "{project}{plots}"
-              ) %>%
-  enframe() %>%
-  rename('{arguments}' = .data$name, '{values}' = .data$value)
-
-  dsg_info[,factors] <- NA
+  # design builders
+  # -------------------------------------------------------------------------
+  
+  build_split_rcbd <- function() {
+    
+    dsg <- tibble::tibble(
+      "{arguments}" = c(
+        "nfactors",
+        "type",
+        "rep",
+        "zigzag",
+        "nrows",
+        "serie",
+        "seed",
+        "project",
+        "qrcode"
+      ),
+      
+      "{values}" = c(
+        2,
+        "split-rcbd",
+        rep,
+        zigzag,
+        NA,
+        serie,
+        seedset,
+        project,
+        "{project}{plots}"
+      )
+    )
+    
+    dsg$whole_plot <- NA_character_
+    dsg$sub_plot   <- NA_character_
+    
+    dsg
+  }
+  
+  
+  build_augmented <- function() {
+    
+    dsg <- tibble::tibble(
+      "{arguments}" = c(
+        "type",
+        "block_size",
+        "random",
+        "zigzag",
+        "serie",
+        "seed",
+        "project",
+        "qrcode"
+      ),
+      
+      "{values}" = c(
+        "augmented",
+        aug_block_size,
+        aug_random,
+        zigzag,
+        serie,
+        seedset,
+        project,
+        qrcode_design
+      )
+    )
+    
+    dsg$checks  <- NA_character_
+    dsg$entries <- NA_character_
+    
+    dsg
+  }
+  # -------------------------------------------------------------------------
+  
+  build_factorial <- function() {
+    
+    factors <- paste0("factor", 1:nfactor)
+    
+    dsg <- c(
+      nfactors = nfactor,
+      type     = design,
+      rep      = rep,
+      zigzag   = zigzag,
+      nrows    = nrowsx,
+      serie    = serie,
+      seed     = seedset,
+      project  = project,
+      qrcode   = qrcode_design
+    ) %>%
+      tibble::enframe() %>%
+      dplyr::rename(
+        "{arguments}" = .data$name,
+        "{values}"    = .data$value
+      )
+    
+    for (f in factors) {
+      dsg[[f]] <- NA_character_
+    }
+    
+    dsg
+  }
+  
+  # dispatcher
+  # -------------------------------------------------------------------------
+  
+  if(design == "augmented") {
+    
+    dsg_info <- build_augmented()
+    
+  } else if(design == "split-rcbd") {
+    
+    dsg_info <- build_split_rcbd()
+    
+  } else {
+    
+    dsg_info <- build_factorial()
+    
+  }
 
 # timetable ---------------------------------------------------------------
 
