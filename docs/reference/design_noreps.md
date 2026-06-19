@@ -13,7 +13,7 @@ design_noreps(
   serie = 1000,
   seed = NULL,
   project = "inkaverse",
-  qrcode = "{project}{plots}{factors}"
+  qrcode = "{project}{plots}"
 )
 ```
 

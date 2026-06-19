@@ -3,8 +3,6 @@
   - Improve PCA supplementary variables
   - Select the dimension in PCA
   - Sub module for PCA with variable contribution and dimension correlation
-  - Include lattice
-  - Include LCD
   - Dashboard for Tarpuy experiment progress
 
 # inti 0.7.1
@@ -16,7 +14,11 @@
   - analysis.qmd template
   - article.qmd template
 - Use cli package for apps message
-
+- Update Tarpuy and include new functions
+  - design_augented
+  - design_split
+  - design_split_rcbd
+  - plot_**_design
 
 # inti 0.7.0
 

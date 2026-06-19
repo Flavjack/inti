@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,11 +33,9 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/tarpuy.html">Tarpuy: field-book experimental plans</a></li>
     <li><a class="dropdown-item" href="../articles/yupana.html">Yupana: experimental design analysis</a></li>
-    <li><a class="dropdown-item" href="../articles/extra/yupana-coding.html">Yupana: coding workflow</a></li>
     <li><a class="dropdown-item" href="../articles/rticles.html">Rticles: scientific documents with R</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/heritability.html">Broad-sense heritability in plant breeding</a></li>
-    <li><a class="dropdown-item" href="../articles/extra/stagewise.html">Heritability: stagewise mixed-model analysis</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../articles/policy.html"><span class="fa fa-shield-alt fa-lg"></span> Privacy Policy</a></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-file-code fa-lg"></span> Functions</a></li>
@@ -110,6 +108,13 @@
 
         <dt>
 
+          <code><a href="plot_augmented_design.html">plot_augmented_design()</a></code>
+
+        </dt>
+        <dd>Plot augmented fieldbook design</dd>
+
+        <dt>
+
           <code><a href="plot_diag.html">plot_diag()</a></code>
 
         </dt>
@@ -135,6 +140,20 @@
 
         </dt>
         <dd>Plot summary data</dd>
+
+        <dt>
+
+          <code><a href="plot_split_rcbd_design.html">plot_split_rcbd_design()</a></code>
+
+        </dt>
+        <dd>Plot split-plot RCBD fieldbook design</dd>
+
+        <dt>
+
+          <code><a href="plot_standard_design.html">plot_standard_design()</a></code>
+
+        </dt>
+        <dd>Plot standard fieldbook experimental designs</dd>
       </dl></div><div class="section level2">
       <h2 id="tarpuy">Tarpuy<a class="anchor" aria-label="anchor" href="#tarpuy"></a></h2>
 
@@ -195,41 +214,6 @@
 
         </dt>
         <dd>Convert a Markdown manuscript into a Quarto document</dd>
-
-        <dt>
-
-          <code><a href="figure2qmd.html">figure2qmd()</a></code>
-
-        </dt>
-        <dd>Figure to Quarto format</dd>
-
-        <dt>
-
-          <code><a href="gdoc2qmd.html">gdoc2qmd()</a></code>
-
-        </dt>
-        <dd>Google docs to Rmarkdown</dd>
-
-        <dt>
-
-          <code><a href="table2qmd.html">table2qmd()</a></code>
-
-        </dt>
-        <dd>Table to Quarto format</dd>
-
-        <dt>
-
-          <code><a href="figure2rmd.html">figure2rmd()</a></code>
-
-        </dt>
-        <dd>Figure to Rmarkdown format</dd>
-
-        <dt>
-
-          <code><a href="table2rmd.html">table2rmd()</a></code>
-
-        </dt>
-        <dd>Table to Rmarkdown format</dd>
 
         <dt>
 
@@ -305,6 +289,13 @@
 
         <dt>
 
+          <code><a href="design_augmented.html">design_augmented()</a></code>
+
+        </dt>
+        <dd>Experimental design: Augmented</dd>
+
+        <dt>
+
           <code><a href="design_noreps.html">design_noreps()</a></code>
 
         </dt>
@@ -316,6 +307,20 @@
 
         </dt>
         <dd>Experimental design in CRD and RCBD</dd>
+
+        <dt>
+
+          <code><a href="design_split.html">design_split()</a></code>
+
+        </dt>
+        <dd>Split-plot experimental designs</dd>
+
+        <dt>
+
+          <code><a href="design_split_rcbd.html">design_split_rcbd()</a></code>
+
+        </dt>
+        <dd>Split-plot RCBD experimental design</dd>
       </dl></div><div class="section level2">
       <h2 id="datasets">Datasets<a class="anchor" aria-label="anchor" href="#datasets"></a></h2>
 
@@ -355,13 +360,6 @@
 
         </dt>
         <dd>Split folder</dd>
-
-        <dt>
-
-          <code><a href="colortext.html">colortext()</a></code>
-
-        </dt>
-        <dd>Colourise text for display in the terminal</dd>
       </dl></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

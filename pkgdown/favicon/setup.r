@@ -2,7 +2,7 @@
 # 📄 R packages dependencies and configuration ----------------------------
 # -------------------------------------------------------------------------
 #> Author .: Flavio Lozano-Isla (linkedin.com/in/flozanoisla/)
-#> Date   .: 2025-07-23
+#> Date   .: 2026-06-18
 # -------------------------------------------------------------------------
 
 # Optional: external setup script
@@ -65,7 +65,7 @@ RhpcBLASctl::blas_set_num_threads(usable_cores)
 # -------------------------------------------------------------------------
 
 googlesheets4::gs4_auth(TRUE)
-googledrive::drive_auth(TRUE)
+# googledrive::drive_auth(TRUE)
 
 # -------------------------------------------------------------------------
 # 📋 Environment info -----------------------------------------------------
