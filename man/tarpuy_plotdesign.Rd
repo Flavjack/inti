@@ -14,50 +14,26 @@ tarpuy_plotdesign(
 )
 }
 \arguments{
-\item{data}{Experimental design data frame with the factors and level. See
-examples.}
+\item{data}{Fieldbook data frame or design object containing a fieldbook.}
 
-\item{factor}{Vector with the name of the columns with the factors.}
+\item{factor}{Character. Column used to color experimental units.}
 
-\item{fill}{Value for fill the experimental units (default = "plots").}
+\item{fill}{Character vector. Column or columns used as labels inside
+experimental units.}
 
-\item{xlab}{Title for x axis.}
+\item{xlab}{Character. Optional x axis title.}
 
-\item{ylab}{Title for y axis.}
+\item{ylab}{Character. Optional y axis title.}
 
-\item{glab}{Title for group axis.}
+\item{glab}{Character. Optional legend title.}
 }
 \value{
-plot
+A \code{ggplot} object.
 }
 \description{
-Plot fieldbook sketch designs based in experimental design
+Plot fieldbook sketches according to the experimental design type.
 }
 \details{
-The function allows to plot the experimental design according the
-field experiment design.
-}
-\examples{
-
-\dontrun{
-
-library(inti)
-library(gsheet)
-
-url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1_BVzChX_-lzXhB7HAm6FeSrwq9iKfZ39_Sl8NFC6k7U/edit#gid=1834109539")
-# browseURL(url)
-
-fb <- gsheet2tbl(url) 
-
-dsg <- fb \%>\% tarpuy_design() 
-
-dsg
-
-dsg \%>\% str()
-
-dsg \%>\% 
-  tarpuy_plotdesign()
-
-}
+This function works as a dispatcher. It detects the design type from the
+fieldbook and sends the data to the corresponding plotting function.
 }

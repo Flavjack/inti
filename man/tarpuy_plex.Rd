@@ -30,7 +30,11 @@ tarpuy_plex(
   zigzag = FALSE,
   nrows = NA,
   serie = 1000,
-  seed = 0
+  seed = 0,
+  qrcode = "{project}{plots}",
+  aug_blocks = NA,
+  aug_block_size = NA,
+  aug_random = TRUE
 )
 }
 \arguments{

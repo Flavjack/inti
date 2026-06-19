@@ -14,7 +14,7 @@ design_repblock(
   serie = 1000,
   seed = NULL,
   project = "inkaverse",
-  qrcode = "{project}{plots}{factors}"
+  qrcode = "{project}{plots}"
 )
 }
 \arguments{
@@ -55,14 +55,14 @@ factores <- list("geno" = c("A", "B", "C", "D", "D", 1, NA, NA, NULL, "NA")
                  , time = c(30, 60, 90)
                  )
 
-fb <-design_repblock(nfactors = 2
+fb <-design_repblock(nfactors = 3
                      , factors = factores
                      , type = "rcbd"
                      , rep = 5
                      , zigzag = T
                      , seed = 0
                      , nrows = 20
-                     , qrcode = "{project}{plots}{factors}"
+                     , qrcode = "{project}{plots}"
                      )
                      
 dsg <- fb$fieldbook

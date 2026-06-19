@@ -85,7 +85,7 @@ label <- fb %>%
     value = "https://huito.inkaverse.com/img/scale.pdf"
     , size = c(5, 1)
     , position = c(2.6, 0.9)
-    # , opts = 'image_convert(type = "Grayscale")'
+    , opts = 'image_convert(type = "Grayscale")'
     ) 
 
 label %>% label_print(mode = "preview")
@@ -97,7 +97,7 @@ label %>% label_print(mode = "preview")
 label %>% 
   label_print(mode = "complete"
               , filename = "design/labels"
-              , paper = c(100, 100)
+              # , paper = c(100, 100)
               , units = "cm"
               )
 ```
