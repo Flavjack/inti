@@ -10,6 +10,8 @@ Description: The 'inti' package is part of the 'inkaverse' project for developin
 Authors@R: c(
     person("Flavio", "Lozano-Isla", email = "flozanoisla@gmail.com", role = c("aut", "cre")
           , comment = c(ORCID = "0000-0002-0714-669X")),
+    person("Yoel", "Diaz-Saucedo", email = "7576425921@untrm.edu.pe", role = c("aut")
+          , comment = c(ORCID = "0009-0003-9765-136X")),
     person("María Belén", "Kistner", email = "kistner@agro.uba.ar", role = c("ctb")
           , comment = c(ORCID = "0000-0002-0947-6414")),
     person("QuipoLab", role = c("ctb")),

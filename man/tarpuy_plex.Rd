@@ -89,6 +89,14 @@ tarpuy_plex(
 \item{serie}{Number of digits in the plots.}
 
 \item{seed}{Seed for the randomization.}
+
+\item{qrcode}{QR code template used to concatenate fieldbook identifiers.}
+
+\item{aug_blocks}{Number of blocks for augmented design.}
+
+\item{aug_block_size}{Number of plots per block for augmented design.}
+
+\item{aug_random}{Logical. Randomize entries allocation in augmented design.}
 }
 \value{
 data frame or list of arguments:

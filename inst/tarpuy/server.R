@@ -188,6 +188,32 @@ shinyServer(function(input, output, session) {
   })
   
   # -----------------------------------------------------------------------
+  # Open Google Sheet
+  # -----------------------------------------------------------------------
+  
+  output$open_url <- renderUI({
+    
+    link <- if(is.null(input$fieldbook_url) || input$fieldbook_url == "") {
+      
+      "https://docs.google.com/spreadsheets/u/0/"
+      
+    } else {
+      
+      input$fieldbook_url
+      
+    }
+    
+    actionButton(
+      inputId = "open_sheet",
+      label = "Open",
+      class = "btn btn-success",
+      width = "80%",
+      onclick = sprintf("window.open('%s', '_blank')", link)
+    )
+    
+  })
+  
+  # -----------------------------------------------------------------------
   # PLEX module ------------------------------------------------------------
   # -----------------------------------------------------------------------
   

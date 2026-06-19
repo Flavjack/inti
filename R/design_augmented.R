@@ -324,17 +324,19 @@ design_augmented <- function(
   
   fieldbook <- fb %>%
     dplyr::select(
-      qrcode,
-      plots,
-      ntreat,
-      entry,
-      type,
-      checks,
-      block,
-      sort,
-      rows,
-      cols,
-      design
+      dplyr::all_of(c(
+        "qrcode",
+        "plots",
+        "ntreat",
+        "entry",
+        "type",
+        "checks",
+        "block",
+        "sort",
+        "rows",
+        "cols",
+        "design"
+      ))
     )
   
   parameters <- list(

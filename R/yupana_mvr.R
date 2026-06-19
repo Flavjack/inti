@@ -7,6 +7,8 @@
 #' @param variables Variables to be use in the analysis  `[string: NULL]`.
 #' @param summary_by Variables for group the analysis.
 #' @param groups Groups for color in PCA.
+#' @importFrom utils tail
+#' @importFrom purrr discard
 #'
 #' @details
 #'
