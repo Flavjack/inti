@@ -33,7 +33,7 @@ tarpuy_plex(
   seed = 0,
   qrcode = "{project}{plots}",
   aug_blocks = NA,
-  aug_block_size = NA,
+  aug_eu_block = NA,
   aug_random = TRUE
 )
 }
@@ -94,7 +94,7 @@ tarpuy_plex(
 
 \item{aug_blocks}{Number of blocks for augmented design.}
 
-\item{aug_block_size}{Number of plots per block for augmented design.}
+\item{aug_eu_block}{Number of plots per block for augmented design.}
 
 \item{aug_random}{Logical. Randomize entries allocation in augmented design.}
 }

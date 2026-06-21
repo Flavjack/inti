@@ -255,9 +255,9 @@ plot_standard_design <- function(data,
   )
   
   line_height <- dplyr::case_when(
-    length(fill) == 1 ~ 0.95,
-    length(fill) == 2 ~ 0.85,
-    TRUE ~ 0.78
+    length(fill) == 1 ~ 1.05,
+    length(fill) == 2 ~ 1.00,
+    TRUE ~ 0.95
   )
   
   # -------------------------------------------------------------------------

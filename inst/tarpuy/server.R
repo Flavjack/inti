@@ -310,8 +310,8 @@ shinyServer(function(input, output, session) {
         tagList(
           
           numericInput(
-            inputId = "plex_block_size",
-            label = "Experimental units/block",
+            inputId = "plex_eu_block",
+            label = "Experimental units by block",
             value = NA,
             min = 1
           ),
@@ -396,7 +396,7 @@ shinyServer(function(input, output, session) {
             rep = NA,
             nrows = NA,
             aug_blocks = NA,
-            aug_block_size = input$plex_block_size,
+            aug_eu_block = input$plex_eu_block,
             aug_random = as.logical(input$plex_random)
           )
         )

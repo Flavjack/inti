@@ -152,7 +152,7 @@ tarpuy_design <- function(data
   
   zigzag <- if(is_blank(arguments$zigzag)) zigzag else as.logical(arguments$zigzag)
   
-  nrows <- if(is_blank(arguments$nrows)) rep else as.numeric(arguments$nrows)
+  nrows <- if(is_blank(arguments$nrows)) nrows else as.numeric(arguments$nrows)
   
   serie <- if(is_blank(arguments$serie)) serie else as.numeric(arguments$serie)
   
@@ -169,18 +169,13 @@ tarpuy_design <- function(data
     toupper() %>%
     gsub("[[:space:]]", "-", .)
   
-  qrcode <- if (is.null(arguments$project) ||
-                is.na(arguments$project) || arguments$project == "") {
-    qrcode
-  } else {
-    arguments$qrcode
-  }
+  qrcode <- if(is_blank(arguments$qrcode)) qrcode else arguments$qrcode
   
   #qrcode <- if(is_blank(arguments$qrcode)) qrcode else arguments$qrcode
   
   blocks <- if(is_blank(arguments$blocks)) NULL else as.numeric(arguments$blocks)
   
-  block_size <- if(is_blank(arguments$block_size)) NULL else as.numeric(arguments$block_size)
+  eu_block <- if(is_blank(arguments$eu_block)) NULL else as.numeric(arguments$eu_block)
   
   random <- if(is_blank(arguments$random)) TRUE else as.logical(arguments$random)
   
@@ -253,7 +248,7 @@ tarpuy_design <- function(data
       checks = checks,
       entries = entries,
       blocks = blocks,
-      block_size = block_size,
+      eu_block = eu_block,
       random = random,
       zigzag = zigzag,
       serie = serie,

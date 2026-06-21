@@ -142,13 +142,13 @@ plot_augmented_design <- function(data,
   text_size <- dplyr::case_when(
     length(fill) == 1 ~ 3.2,
     length(fill) == 2 ~ 2.8,
-    TRUE ~ 2.4
+    TRUE ~ 2.3
   )
   
   line_height <- dplyr::case_when(
-    length(fill) == 1 ~ 0.95,
-    length(fill) == 2 ~ 0.85,
-    TRUE ~ 0.78
+    length(fill) == 1 ~ 1.05,
+    length(fill) == 2 ~ 1.00,
+    TRUE ~ 0.95
   )
   
   # -------------------------------------------------------------------------

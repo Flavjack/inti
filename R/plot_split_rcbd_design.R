@@ -141,9 +141,9 @@ plot_split_rcbd_design <- function(data,
   )
   
   line_height <- dplyr::case_when(
-    length(fill) == 1 ~ 0.95,
-    length(fill) == 2 ~ 0.90,
-    TRUE ~ 0.85
+    length(fill) == 1 ~ 1.05,
+    length(fill) == 2 ~ 1.00,
+    TRUE ~ 0.95
   )
   
   # -------------------------------------------------------------------------

@@ -8,7 +8,7 @@ design_augmented(
   checks,
   entries,
   blocks = NULL,
-  block_size = NULL,
+  eu_block = NULL,
   random = TRUE,
   zigzag = FALSE,
   dim = NA,
@@ -23,15 +23,16 @@ design_augmented(
 
 \item{entries}{Vector of new entries.}
 
-\item{blocks}{Number of blocks.}
+\item{blocks}{Optional number of blocks. If \code{NULL}, it is calculated from
+\code{entries}, \code{checks} and \code{eu_block}.}
 
-\item{block_size}{Number of plots per block.}
+\item{eu_block}{Number of experimental units per block.}
 
 \item{random}{Randomize entries allocation.}
 
 \item{zigzag}{Zigzag field layout.}
 
-\item{dim}{Optional layout dimensions c(nrows,ncols).}
+\item{dim}{Optional layout dimensions c(nrows, ncols).}
 
 \item{serie}{Plot series number.}
 

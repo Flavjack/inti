@@ -30,7 +30,7 @@
 #' @param seed Seed for the randomization.
 #' @param qrcode QR code template used to concatenate fieldbook identifiers.
 #' @param aug_blocks Number of blocks for augmented design.
-#' @param aug_block_size Number of plots per block for augmented design.
+#' @param aug_eu_block Number of plots per block for augmented design.
 #' @param aug_random Logical. Randomize entries allocation in augmented design.
 #' @details
 #'
@@ -77,7 +77,7 @@ tarpuy_plex <- function(data = NULL
                         , seed = 0
                         , qrcode = "{project}{plots}"
                         , aug_blocks = NA
-                        , aug_block_size = NA
+                        , aug_eu_block = NA
                         , aug_random = TRUE
                          ) {
   
@@ -315,7 +315,7 @@ var_list <- list(
     dsg <- tibble::tibble(
       "{arguments}" = c(
         "type",
-        "block_size",
+        "eu_block",
         "random",
         "zigzag",
         "serie",
@@ -326,7 +326,7 @@ var_list <- list(
       
       "{values}" = c(
         "augmented",
-        aug_block_size,
+        aug_eu_block,
         aug_random,
         zigzag,
         serie,
