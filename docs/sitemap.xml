@@ -13,8 +13,11 @@
 <url><loc>https://inkaverse.com/LICENSE-text.html</loc></url>
 <url><loc>https://inkaverse.com/news/index.html</loc></url>
 <url><loc>https://inkaverse.com/reference/colortext.html</loc></url>
+<url><loc>https://inkaverse.com/reference/design_augmented.html</loc></url>
 <url><loc>https://inkaverse.com/reference/design_noreps.html</loc></url>
 <url><loc>https://inkaverse.com/reference/design_repblock.html</loc></url>
+<url><loc>https://inkaverse.com/reference/design_split.html</loc></url>
+<url><loc>https://inkaverse.com/reference/design_split_rcbd.html</loc></url>
 <url><loc>https://inkaverse.com/reference/figure2qmd.html</loc></url>
 <url><loc>https://inkaverse.com/reference/figure2rmd.html</loc></url>
 <url><loc>https://inkaverse.com/reference/footnotes.html</loc></url>
@@ -28,10 +31,13 @@
 <url><loc>https://inkaverse.com/reference/met.html</loc></url>
 <url><loc>https://inkaverse.com/reference/metamorphosis.html</loc></url>
 <url><loc>https://inkaverse.com/reference/outliers_remove.html</loc></url>
+<url><loc>https://inkaverse.com/reference/plot_augmented_design.html</loc></url>
 <url><loc>https://inkaverse.com/reference/plot_diag.html</loc></url>
 <url><loc>https://inkaverse.com/reference/plot_diagnostic.html</loc></url>
 <url><loc>https://inkaverse.com/reference/plot_raw.html</loc></url>
 <url><loc>https://inkaverse.com/reference/plot_smr.html</loc></url>
+<url><loc>https://inkaverse.com/reference/plot_split_rcbd_design.html</loc></url>
+<url><loc>https://inkaverse.com/reference/plot_standard_design.html</loc></url>
 <url><loc>https://inkaverse.com/reference/potato.html</loc></url>
 <url><loc>https://inkaverse.com/reference/reexports.html</loc></url>
 <url><loc>https://inkaverse.com/reference/remove_outliers.html</loc></url>

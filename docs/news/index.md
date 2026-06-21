@@ -1,6 +1,25 @@
 # Changelog
 
+## inti 0.7.1
+
+- Exclude functions from rticle using articul8
+- Improve function
+  [`rticle()`](https://inkaverse.com/reference/rticle.md) to render
+  native .md from google docs
+  - Include cross references: Tables & Figures
+- Udpate `scihub()` function
+  - analysis.qmd template
+  - article.qmd template
+- Use cli package for apps message
+- Update Tarpuy and include new functions
+  - design_augented
+  - design_split
+  - design_split_rcbd
+  - plot\_\*\*\_design
+
 ## inti 0.7.0
+
+CRAN release: 2026-06-08
 
 - Include new function
   [`rticle()`](https://inkaverse.com/reference/rticle.md) to render
@@ -182,10 +201,8 @@ Load and Save in a specific sheet
 CRAN release: 2022-08-09
 
 - Update functions bookdown to quarto:
-  - [`figure2rmd()`](https://inkaverse.com/reference/figure2rmd.md) ==\>
-    [`figure2qmd()`](https://inkaverse.com/reference/figure2qmd.md)
-  - [`table2rmd()`](https://inkaverse.com/reference/table2rmd.md) ==\>
-    [`table2qmd()`](https://inkaverse.com/reference/table2qmd.md)
+  - `figure2rmd()` ==\> `figure2qmd()`
+  - `table2rmd()` ==\> `table2qmd()`
   - `gdocs2rmd()` ==\> `gdocs2qmd()`
 - Fix [`plot_raw()`](https://inkaverse.com/reference/plot_raw.md):
   “length(x) = 2 \> 1’ in coercion to ’logical(1)”
@@ -277,12 +294,10 @@ CRAN release: 2021-12-10
 - *Package*
   - [`H2cal()`](https://inkaverse.com/reference/H2cal.md): BLUEs from
     H2cal may be wrong if other fixed effects in the model
-    ([\#10](https://github.com/flavjack/inti/issues/10)).
+    ([\#10](https://github.com/Flavjack/inti/issues/10)).
     - Thanks Jim Holland ([@ncsumaize](https://github.com/ncsumaize))
       for the suggestion to improve the function.
-  - New functions: `gdoc2rmd()`,
-    [`table2rmd()`](https://inkaverse.com/reference/table2rmd.md),
-    [`figure2rmd()`](https://inkaverse.com/reference/figure2rmd.md)
+  - New functions: `gdoc2rmd()`, `table2rmd()`, `figure2rmd()`
     - Use Articul8 Add-ons from Google docs to build Rticles
   - Update pkgdown
 

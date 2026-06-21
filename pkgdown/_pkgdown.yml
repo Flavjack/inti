@@ -78,15 +78,11 @@ navbar:
         href: articles/tarpuy.html
       - text: "Yupana: experimental design analysis"
         href: articles/yupana.html
-      - text: "Yupana: coding workflow"
-        href: articles/extra/yupana-coding.html
       - text: "Rticles: scientific documents with R"
         href: articles/rticles.html
       - text: -------
       - text: "Broad-sense heritability in plant breeding"
         href: articles/heritability.html
-      - text: "Heritability: stagewise mixed-model analysis"
-        href: articles/extra/stagewise.html
 
 reference:
 - title: Yupana
@@ -103,6 +99,7 @@ reference:
 - contents:
   - rticle
   - starts_with("include")
+  - footnotes
   - web_table
 - title: Plant breeding
   desc: Algorithms and calculations

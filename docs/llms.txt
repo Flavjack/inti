@@ -82,6 +82,8 @@ Data analysis
   Multivariate Analysis
 - [`yupana_reshape()`](https://inkaverse.com/reference/yupana_reshape.md)
   : Fieldbook reshape
+- [`plot_augmented_design()`](https://inkaverse.com/reference/plot_augmented_design.md)
+  : Plot augmented fieldbook design
 - [`plot_diag()`](https://inkaverse.com/reference/plot_diag.md) :
   Diagnostic plots
 - [`plot_diagnostic()`](https://inkaverse.com/reference/plot_diagnostic.md)
@@ -90,6 +92,10 @@ Data analysis
   data
 - [`plot_smr()`](https://inkaverse.com/reference/plot_smr.md) : Plot
   summary data
+- [`plot_split_rcbd_design()`](https://inkaverse.com/reference/plot_split_rcbd_design.md)
+  : Plot split-plot RCBD fieldbook design
+- [`plot_standard_design()`](https://inkaverse.com/reference/plot_standard_design.md)
+  : Plot standard fieldbook experimental designs
 
 ## Tarpuy
 
@@ -112,16 +118,6 @@ Write technical documents
 
 - [`rticle()`](https://inkaverse.com/reference/rticle.md) : Convert a
   Markdown manuscript into a Quarto document
-- [`figure2qmd()`](https://inkaverse.com/reference/figure2qmd.md) :
-  Figure to Quarto format
-- [`gdoc2qmd()`](https://inkaverse.com/reference/gdoc2qmd.md) : Google
-  docs to Rmarkdown
-- [`table2qmd()`](https://inkaverse.com/reference/table2qmd.md) : Table
-  to Quarto format
-- [`figure2rmd()`](https://inkaverse.com/reference/figure2rmd.md) :
-  Figure to Rmarkdown format
-- [`table2rmd()`](https://inkaverse.com/reference/table2rmd.md) : Table
-  to Rmarkdown format
 - [`include_pdf()`](https://inkaverse.com/reference/include_pdf.md) :
   Include PDF in markdown documents
 - [`include_table()`](https://inkaverse.com/reference/include_table.md)
@@ -145,10 +141,16 @@ Algorithms and calculations
   : Remove outliers using mixed models
 - [`mean_comparison()`](https://inkaverse.com/reference/mean_comparison.md)
   : Mean comparison test
+- [`design_augmented()`](https://inkaverse.com/reference/design_augmented.md)
+  : Experimental design: Augmented
 - [`design_noreps()`](https://inkaverse.com/reference/design_noreps.md)
   : Experimental design without replications
 - [`design_repblock()`](https://inkaverse.com/reference/design_repblock.md)
   : Experimental design in CRD and RCBD
+- [`design_split()`](https://inkaverse.com/reference/design_split.md) :
+  Split-plot experimental designs
+- [`design_split_rcbd()`](https://inkaverse.com/reference/design_split_rcbd.md)
+  : Split-plot RCBD experimental design
 
 ## Datasets
 
@@ -161,8 +163,6 @@ Algorithms and calculations
 
 - [`split_folder()`](https://inkaverse.com/reference/split_folder.md) :
   Split folder
-- [`colortext()`](https://inkaverse.com/reference/colortext.md) :
-  Colourise text for display in the terminal
 
 # Articles
 
@@ -186,11 +186,6 @@ Algorithms and calculations
 - [Tarpuy](https://inkaverse.com/articles/tarpuy.md):
 
   Tarpuy: field-book experimental plans.
-
-- [Yupana: coding
-  workflow](https://inkaverse.com/articles/extra/yupana-coding.md):
-
-  Reproduce results from Yupana coding.
 
 - [Yupana](https://inkaverse.com/articles/yupana.md):
 

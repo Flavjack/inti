@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,11 +33,9 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/tarpuy.html">Tarpuy: field-book experimental plans</a></li>
     <li><a class="dropdown-item" href="../articles/yupana.html">Yupana: experimental design analysis</a></li>
-    <li><a class="dropdown-item" href="../articles/extra/yupana-coding.html">Yupana: coding workflow</a></li>
     <li><a class="dropdown-item" href="../articles/rticles.html">Rticles: scientific documents with R</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/heritability.html">Broad-sense heritability in plant breeding</a></li>
-    <li><a class="dropdown-item" href="../articles/extra/stagewise.html">Heritability: stagewise mixed-model analysis</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../articles/policy.html"><span class="fa fa-shield-alt fa-lg"></span> Privacy Policy</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-file-code fa-lg"></span> Functions</a></li>
@@ -54,11 +52,29 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/flavjack/inti/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/Flavjack/inti/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.7.0" id="inti-070">inti 0.7.0<a class="anchor" aria-label="anchor" href="#inti-070"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.7.1" id="inti-071">inti 0.7.1<a class="anchor" aria-label="anchor" href="#inti-071"></a></h2>
+<ul><li>Exclude functions from rticle using articul8</li>
+<li>Improve function <code><a href="../reference/rticle.html">rticle()</a></code> to render native .md from google docs
+<ul><li>Include cross references: Tables &amp; Figures</li>
+</ul></li>
+<li>Udpate <code>scihub()</code> function
+<ul><li>analysis.qmd template</li>
+<li>article.qmd template</li>
+</ul></li>
+<li>Use cli package for apps message</li>
+<li>Update Tarpuy and include new functions
+<ul><li>design_augented</li>
+<li>design_split</li>
+<li>design_split_rcbd</li>
+<li>plot_**_design</li>
+</ul></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.0" id="inti-070">inti 0.7.0<a class="anchor" aria-label="anchor" href="#inti-070"></a></h2><p class="text-muted">CRAN release: 2026-06-08</p>
 <ul><li>Include new function <code><a href="../reference/rticle.html">rticle()</a></code> to render native .md from google docs to article</li>
 <li>Update Tarpuy
 <ul><li>Include matrix for experiments</li>
@@ -230,10 +246,10 @@
 <h2 class="pkg-version" data-toc-text="0.5.7" id="inti-057">inti 0.5.7<a class="anchor" aria-label="anchor" href="#inti-057"></a></h2><p class="text-muted">CRAN release: 2022-08-09</p>
 <ul><li>Update functions bookdown to quarto:
 <ul><li>
-<code><a href="../reference/figure2rmd.html">figure2rmd()</a></code> ==&gt; <code><a href="../reference/figure2qmd.html">figure2qmd()</a></code>
+<code>figure2rmd()</code> ==&gt; <code>figure2qmd()</code>
 </li>
 <li>
-<code><a href="../reference/table2rmd.html">table2rmd()</a></code> ==&gt; <code><a href="../reference/table2qmd.html">table2qmd()</a></code>
+<code>table2rmd()</code> ==&gt; <code>table2qmd()</code>
 </li>
 <li>
 <code>gdocs2rmd()</code> ==&gt; <code>gdocs2qmd()</code>
@@ -314,10 +330,10 @@
 <ul><li>
 <em>Package</em>
 <ul><li>
-<code><a href="../reference/H2cal.html">H2cal()</a></code>: BLUEs from H2cal may be wrong if other fixed effects in the model (<a href="https://github.com/flavjack/inti/issues/10" class="external-link">#10</a>).
+<code><a href="../reference/H2cal.html">H2cal()</a></code>: BLUEs from H2cal may be wrong if other fixed effects in the model (<a href="https://github.com/Flavjack/inti/issues/10" class="external-link">#10</a>).
 <ul><li>Thanks Jim Holland (<a href="https://github.com/ncsumaize" class="external-link">@ncsumaize</a>) for the suggestion to improve the function.</li>
 </ul></li>
-<li>New functions: <code>gdoc2rmd()</code>, <code><a href="../reference/table2rmd.html">table2rmd()</a></code>, <code><a href="../reference/figure2rmd.html">figure2rmd()</a></code>
+<li>New functions: <code>gdoc2rmd()</code>, <code>table2rmd()</code>, <code>figure2rmd()</code>
 <ul><li>Use Articul8 Add-ons from Google docs to build Rticles</li>
 </ul></li>
 <li>Update pkgdown</li>

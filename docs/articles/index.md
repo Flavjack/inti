@@ -21,11 +21,6 @@
 
   Tarpuy: field-book experimental plans.
 
-- [Yupana: coding
-  workflow](https://inkaverse.com/articles/extra/yupana-coding.md):
-
-  Reproduce results from Yupana coding.
-
 - [Yupana](https://inkaverse.com/articles/yupana.md):
 
   Yupana: experimental design analysis.

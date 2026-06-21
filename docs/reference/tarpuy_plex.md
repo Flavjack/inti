@@ -31,7 +31,11 @@ tarpuy_plex(
   zigzag = FALSE,
   nrows = NA,
   serie = 1000,
-  seed = 0
+  seed = 0,
+  qrcode = "{project}{plots}",
+  aug_blocks = NA,
+  aug_block_size = NA,
+  aug_random = TRUE
 )
 ```
 
@@ -140,6 +144,22 @@ tarpuy_plex(
 - seed:
 
   Seed for the randomization.
+
+- qrcode:
+
+  QR code template used to concatenate fieldbook identifiers.
+
+- aug_blocks:
+
+  Number of blocks for augmented design.
+
+- aug_block_size:
+
+  Number of plots per block for augmented design.
+
+- aug_random:
+
+  Logical. Randomize entries allocation in augmented design.
 
 ## Value
 
