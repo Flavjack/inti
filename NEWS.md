@@ -1,3 +1,5 @@
+# inti 0.7.2
+
 # inti4improve (In progress)
 
   - Improve PCA supplementary variables
