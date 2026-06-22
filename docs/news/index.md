@@ -1,6 +1,16 @@
 # Changelog
 
+## inti (development version)
+
+- Improve PCA supplementary variables
+- Select the dimension in PCA
+- Sub module for PCA with variable contribution and dimension
+  correlation
+- Dashboard for Tarpuy experiment progress
+
 ## inti 0.7.1
+
+CRAN release: 2026-06-22
 
 - Exclude functions from rticle using articul8
 - Improve function
