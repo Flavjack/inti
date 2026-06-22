@@ -5,7 +5,7 @@ account: inkaverse
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 357871
-bundleId: 12101010
+bundleId: 12162762
 url: https://inkaverse.shinyapps.io/yupana/
 version: 1
 asMultiple: FALSE

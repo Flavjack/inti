@@ -5,7 +5,7 @@ account: inkaverse
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2570255
-bundleId: 12101058
+bundleId: 12162730
 url: https://inkaverse.shinyapps.io/tarpuy/
 version: 1
 asMultiple: FALSE
