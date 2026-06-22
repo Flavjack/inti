@@ -7,38 +7,53 @@ citHeader(
   )
 )
 
-year <- format(Sys.Date(), "%Y")
-note <- sprintf("R package version %s", meta$Version)
-url <- "https://CRAN.R-project.org/package=inti"
-
 authors <- eval(parse(text = meta$`Authors@R`))
 
+year <- if (!is.null(meta$Date)) {
+  sub("-.*", "", meta$Date)
+} else {
+  format(Sys.Date(), "%Y")
+}
+
+note <- sprintf("R package version %s", meta$Version)
+
+url <- "https://CRAN.R-project.org/package=inti"
+
 bibentry(
+  key = "inti",
   bibtype = "Manual",
-  title = "{inti}: Tools and Statistical Procedures in Plant Science",
+  title = "inti: Tools and Statistical Procedures in Plant Science",
   author = authors,
   year = year,
   note = note,
   url = url
 )
 
-authors_text <- paste(
-  vapply(
-    authors,
-    function(x) {
-      paste0(x$family, ", ", substr(x$given, 1, 1), ".")
-    },
-    character(1)
-  ),
-  collapse = ", "
+authors_vec <- vapply(
+  authors,
+  function(x) {
+    paste0(x$family, ", ", substr(x$given, 1, 1), ".")
+  },
+  character(1)
 )
+
+authors_text <- if (length(authors_vec) == 1) {
+  authors_vec
+} else if (length(authors_vec) == 2) {
+  paste(authors_vec, collapse = " & ")
+} else {
+  paste0(
+    paste(authors_vec[-length(authors_vec)], collapse = ", "),
+    ", & ",
+    authors_vec[length(authors_vec)]
+  )
+}
 
 textVersion <- paste0(
   authors_text,
   " (", year, "). ",
   "inti: Tools and Statistical Procedures in Plant Science. ",
   note,
-  ". ",
+  ". Retrieved from ",
   url
 )
-  
