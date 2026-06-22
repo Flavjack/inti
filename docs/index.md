@@ -62,18 +62,6 @@ statistical analysis, and result visualization.
 
 ### Installing Application Dependencies
 
-The first time you run any of the applications, install the required
-dependencies:
-
-``` r
-
-inti::yupana(dependencies = TRUE)
-```
-
-This step only needs to be performed once.
-
-### Launching the Applications
-
 The applications can be accessed directly from the **RStudio Addins**
 menu or launched from the R console.
 
@@ -82,7 +70,7 @@ visualization of experimental data.
 
 ``` r
 
-inti::yupana()
+inti:::yupana_full()
 ```
 
 **Tarpuy** is an interactive platform for experimental planning,
@@ -90,5 +78,5 @@ field-book generation, treatment organization, and data management.
 
 ``` r
 
-inti::tarpuy()
+inti:::tarpuy_full()
 ```

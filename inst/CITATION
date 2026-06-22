@@ -1,28 +1,44 @@
 citHeader(
-    "If you are using inti in your work,\n"
-    , "we encourage to cite the package\n"
-    , "\n"
-    , "To cite inti in publications, please use:"
-    )
+  paste(
+    "If you are using inti in your work,",
+    "we encourage you to cite the package.",
+    "\n\n",
+    "To cite inti in publications, please use:"
+  )
+)
 
-year <- sub("-.*", "", meta$Date)
+year <- format(Sys.Date(), "%Y")
 note <- sprintf("R package version %s", meta$Version)
 url <- "https://CRAN.R-project.org/package=inti"
 
-bibentry(
-    bibtype = "Manual"
-    , title = "{inti}: Tools and Statistical Procedures in Plant Science"
-    , author = c(person("Flavio", "Lozano-Isla"))
-    , year = year
-    , note = note
-    , url = url
-    )
+authors <- eval(parse(text = meta$`Authors@R`))
 
-textVersion = paste0(
-    "Flavio Lozano-Isla
-    , (", year, ")."
-    , " inti: Tools and Statistical Procedures in Plant Science. "
-    , note, "."
-    , " url"
-    )
+bibentry(
+  bibtype = "Manual",
+  title = "{inti}: Tools and Statistical Procedures in Plant Science",
+  author = authors,
+  year = year,
+  note = note,
+  url = url
+)
+
+authors_text <- paste(
+  vapply(
+    authors,
+    function(x) {
+      paste0(x$family, ", ", substr(x$given, 1, 1), ".")
+    },
+    character(1)
+  ),
+  collapse = ", "
+)
+
+textVersion <- paste0(
+  authors_text,
+  " (", year, "). ",
+  "inti: Tools and Statistical Procedures in Plant Science. ",
+  note,
+  ". ",
+  url
+)
   

@@ -74,18 +74,6 @@ The **inti** package includes two Shiny applications that provide graphical inte
 
 ### Installing Application Dependencies
 
-The first time you run any of the applications, install the required dependencies:
-
-```{r}
-#| eval: false
-
-inti::yupana(dependencies = TRUE)
-```
-
-This step only needs to be performed once.
-
-### Launching the Applications
-
 The applications can be accessed directly from the **RStudio Addins** menu or launched from the R console.
 
 **Yupana** is an interactive environment for statistical analysis and visualization of experimental data.
@@ -93,7 +81,7 @@ The applications can be accessed directly from the **RStudio Addins** menu or la
 ```{r}
 #| eval: false
 
-inti::yupana()
+inti:::yupana_full()
 ```
 
 **Tarpuy** is an interactive platform for experimental planning, field-book generation, treatment organization, and data management.
@@ -101,5 +89,5 @@ inti::yupana()
 ```{r}
 #| eval: false
 
-inti::tarpuy()
+inti:::tarpuy_full()
 ```
