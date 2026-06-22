@@ -28,3 +28,4 @@ setup.r
 ^vignettes/articles$
 ^\.positai$
 ^\.claude$
+^README\.qmd$

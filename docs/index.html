@@ -81,46 +81,57 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="inti-">inti <a class="anchor" aria-label="anchor" href="#inti-"></a>
+<img src="logo.png" class="logo" alt=""><h1 id="inti">inti<a class="anchor" aria-label="anchor" href="#inti"></a>
 </h1>
 </div>
-<!-- badges: start -->
-
-<p>The ‘inti’ package is part of the ‘inkaverse’ project for developing different procedures and tools used in plant science and experimental designs. The mean aim of the package is to support researchers during the planning of experiments and data collection ‘tarpuy()’, data analysis and graphics ‘yupana()’, and technical writing. Learn more about the ‘inkaverse’ project at <a href="https://inkaverse.com/" class="uri">https://inkaverse.com/</a>.</p>
+<p><a href="https://cran.r-project.org/package=inti" class="external-link"><img src="https://img.shields.io/cran/v/inti.png" alt="CRAN"></a> <a href="https://zenodo.org/badge/latestdoi/82401374" class="external-link"><img src="https://zenodo.org/badge/82401374.svg" alt="DOI"></a> <a href="https://github.com/Flavjack/inti/actions" class="external-link"><img src="https://github.com/Flavjack/inti/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a> <a href="https://r-pkg.org/pkg/inti" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/inti?color=brightgreen.png" alt="Downloads"></a></p>
+<p>The <strong>inti</strong> package is part of the <strong>inkaverse</strong> project, which develops tools and workflows for plant science, experimental design, data analysis, and scientific writing. The package supports researchers during experiment planning and field data collection through <strong>Tarpuy</strong>, statistical analysis and visualization through <strong>Yupana</strong>, and the preparation of scientific outputs.</p>
+<p>More information about the project is available at <a href="https://inkaverse.com/" class="uri">https://inkaverse.com/</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>To install the stable version from <a href="https://cran.r-project.org/package=inti" class="external-link">CRAN</a>:</p>
+<p>The stable version of <strong>inti</strong> can be installed from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"inti"</span><span class="op">)</span></span></code></pre></div>
-<p>To install the latest development version directly from <a href="https://github.com/flavjack/inti" class="external-link">GitHub</a>:</p>
+<p>To install the latest development version directly from GitHub, it is recommended to use <strong>pak</strong>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org" class="external-link">"remotes"</a></span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"flavjack/inti"</span><span class="op">)</span></span></code></pre></div>
-<p>If you need install an specific version:</p>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"pak"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"flavjack/inti"</span><span class="op">)</span></span></code></pre></div>
+<p>To install a specific version from CRAN (e.g., version 0.4.4):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org" class="external-link">"remotes"</a></span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_version</span><span class="op">(</span><span class="st">"inti"</span>, version <span class="op">=</span> <span class="st">"0.4.4"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"pak"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"inti@0.4.4"</span><span class="op">)</span></span></code></pre></div>
+<p>After installation, load the package:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://inkaverse.com/">inti</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="shiny-apps">Shiny apps<a class="anchor" aria-label="anchor" href="#shiny-apps"></a>
+<h2 id="shiny-applications">Shiny Applications<a class="anchor" aria-label="anchor" href="#shiny-applications"></a>
 </h2>
-<p>If is the first time running any of the apps consider install the app dependencies:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">inti</span><span class="fu">::</span><span class="fu"><a href="reference/yupana.html">yupana</a></span><span class="op">(</span>dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>After install the package and the app dependencies also you can access to the apps through the Addins list in Rstudio or running the following code:</p>
+<p>The <strong>inti</strong> package includes two Shiny applications that provide graphical interfaces for experimental design, data management, statistical analysis, and result visualization.</p>
 <div class="section level3">
-<h3 id="yupana">Yupana<a class="anchor" aria-label="anchor" href="#yupana"></a>
+<h3 id="installing-application-dependencies">Installing Application Dependencies<a class="anchor" aria-label="anchor" href="#installing-application-dependencies"></a>
 </h3>
+<p>The first time you run any of the applications, install the required dependencies:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">inti</span><span class="fu">::</span><span class="fu"><a href="reference/yupana.html">yupana</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">inti</span><span class="fu">::</span><span class="fu"><a href="reference/yupana.html">yupana</a></span><span class="op">(</span>dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>This step only needs to be performed once.</p>
 </div>
 <div class="section level3">
-<h3 id="tarpuy">Tarpuy<a class="anchor" aria-label="anchor" href="#tarpuy"></a>
+<h3 id="launching-the-applications">Launching the Applications<a class="anchor" aria-label="anchor" href="#launching-the-applications"></a>
 </h3>
+<p>The applications can be accessed directly from the <strong>RStudio Addins</strong> menu or launched from the R console.</p>
+<p><strong>Yupana</strong> is an interactive environment for statistical analysis and visualization of experimental data.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">inti</span><span class="fu">::</span><span class="fu"><a href="reference/yupana.html">yupana</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><strong>Tarpuy</strong> is an interactive platform for experimental planning, field-book generation, treatment organization, and data management.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">inti</span><span class="fu">::</span><span class="fu"><a href="reference/tarpuy.html">tarpuy</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>

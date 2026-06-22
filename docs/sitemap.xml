@@ -1,7 +1,6 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://inkaverse.com/404.html</loc></url>
 <url><loc>https://inkaverse.com/articles/apps.html</loc></url>
-<url><loc>https://inkaverse.com/articles/extra/yupana-coding.html</loc></url>
 <url><loc>https://inkaverse.com/articles/heritability.html</loc></url>
 <url><loc>https://inkaverse.com/articles/index.html</loc></url>
 <url><loc>https://inkaverse.com/articles/policy.html</loc></url>
@@ -12,21 +11,16 @@
 <url><loc>https://inkaverse.com/index.html</loc></url>
 <url><loc>https://inkaverse.com/LICENSE-text.html</loc></url>
 <url><loc>https://inkaverse.com/news/index.html</loc></url>
-<url><loc>https://inkaverse.com/reference/colortext.html</loc></url>
 <url><loc>https://inkaverse.com/reference/design_augmented.html</loc></url>
 <url><loc>https://inkaverse.com/reference/design_noreps.html</loc></url>
 <url><loc>https://inkaverse.com/reference/design_repblock.html</loc></url>
 <url><loc>https://inkaverse.com/reference/design_split.html</loc></url>
 <url><loc>https://inkaverse.com/reference/design_split_rcbd.html</loc></url>
-<url><loc>https://inkaverse.com/reference/figure2qmd.html</loc></url>
-<url><loc>https://inkaverse.com/reference/figure2rmd.html</loc></url>
 <url><loc>https://inkaverse.com/reference/footnotes.html</loc></url>
-<url><loc>https://inkaverse.com/reference/gdoc2qmd.html</loc></url>
 <url><loc>https://inkaverse.com/reference/H2cal.html</loc></url>
 <url><loc>https://inkaverse.com/reference/include_pdf.html</loc></url>
 <url><loc>https://inkaverse.com/reference/include_table.html</loc></url>
 <url><loc>https://inkaverse.com/reference/index.html</loc></url>
-<url><loc>https://inkaverse.com/reference/jc_tombola.html</loc></url>
 <url><loc>https://inkaverse.com/reference/mean_comparison.html</loc></url>
 <url><loc>https://inkaverse.com/reference/met.html</loc></url>
 <url><loc>https://inkaverse.com/reference/metamorphosis.html</loc></url>
@@ -43,8 +37,6 @@
 <url><loc>https://inkaverse.com/reference/remove_outliers.html</loc></url>
 <url><loc>https://inkaverse.com/reference/rticle.html</loc></url>
 <url><loc>https://inkaverse.com/reference/split_folder.html</loc></url>
-<url><loc>https://inkaverse.com/reference/table2qmd.html</loc></url>
-<url><loc>https://inkaverse.com/reference/table2rmd.html</loc></url>
 <url><loc>https://inkaverse.com/reference/tarpuy.html</loc></url>
 <url><loc>https://inkaverse.com/reference/tarpuy_design.html</loc></url>
 <url><loc>https://inkaverse.com/reference/tarpuy_plex.html</loc></url>

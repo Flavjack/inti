@@ -93,7 +93,7 @@ Deben crearse una cuenta en los siguientes servicios:
   
   <div style="display:inline-block; width:24%"> 
   <p style="text-align:center; vertical-align:middle">
-  <a target="_blank" href="https://posit.co/download/rstudio-desktop"><img src="files/rstudio.svg" style="height:50px" title="Rstudio" alt="Rstudio"></a> 
+  <a target="_blank" href="https://docs.posit.co/ide/user/#rstudio-ide-oss-downloads"><img src="files/rstudio.svg" style="height:50px" title="Rstudio" alt="Rstudio"></a> 
   </p></div>
   
   <div style="display:inline-block; width:24%"> 

@@ -76,7 +76,7 @@ Deben crearse una cuenta en los siguientes servicios:
 
 [![R cran](files/r-cran.svg "R cran")](https://cran.r-project.org/)
 
-[![Rstudio](files/rstudio.svg "Rstudio")](https://posit.co/download/rstudio-desktop)
+[![Rstudio](files/rstudio.svg "Rstudio")](https://docs.posit.co/ide/user/#rstudio-ide-oss-downloads)
 
 [![Git](files/git.png "Git")](https://git-scm.com/downloads/)
 
