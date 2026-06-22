@@ -1,6 +1,4 @@
-# inti 0.7.2
-
-# inti4improve (In progress)
+# inti (development version)
 
   - Improve PCA supplementary variables
   - Select the dimension in PCA
