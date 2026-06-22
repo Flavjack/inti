@@ -66,7 +66,7 @@
 <span>  <span class="va">checks</span>,</span>
 <span>  <span class="va">entries</span>,</span>
 <span>  blocks <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  block_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  eu_block <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  random <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  zigzag <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  dim <span class="op">=</span> <span class="cn">NA</span>,</span>
@@ -90,11 +90,12 @@
 
 
 <dt id="arg-blocks">blocks<a class="anchor" aria-label="anchor" href="#arg-blocks"></a></dt>
-<dd><p>Number of blocks.</p></dd>
+<dd><p>Optional number of blocks. If <code>NULL</code>, it is calculated from
+<code>entries</code>, <code>checks</code> and <code>eu_block</code>.</p></dd>
 
 
-<dt id="arg-block-size">block_size<a class="anchor" aria-label="anchor" href="#arg-block-size"></a></dt>
-<dd><p>Number of plots per block.</p></dd>
+<dt id="arg-eu-block">eu_block<a class="anchor" aria-label="anchor" href="#arg-eu-block"></a></dt>
+<dd><p>Number of experimental units per block.</p></dd>
 
 
 <dt id="arg-random">random<a class="anchor" aria-label="anchor" href="#arg-random"></a></dt>
@@ -106,7 +107,7 @@
 
 
 <dt id="arg-dim">dim<a class="anchor" aria-label="anchor" href="#arg-dim"></a></dt>
-<dd><p>Optional layout dimensions c(nrows,ncols).</p></dd>
+<dd><p>Optional layout dimensions c(nrows, ncols).</p></dd>
 
 
 <dt id="arg-serie">serie<a class="anchor" aria-label="anchor" href="#arg-serie"></a></dt>

@@ -526,6 +526,12 @@ navbarPage(
         padding: 12px;
         margin-bottom: 10px;
         box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      
+        min-height: 100px;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
 
       .tarpuy-card-title {
@@ -554,13 +560,19 @@ navbarPage(
       
       column(
         width = 8,
-        h3(
-          style = "margin-top:0px; margin-bottom:4px;",
-          icon("seedling"),
-          "PLEX – Experimental Plan"
-        ),
-        tags$small(
-          "Configure your experimental plan and generate all required sheets."
+        
+        div(
+          class = "tarpuy-card",
+          
+          div(
+            style = "font-size:22px; font-weight:600; line-height:1.15;margin-bottom:10px;",
+            icon("seedling"),
+            " Experimental Plan - PLEX"
+          ),
+          
+          tags$small(
+            "Configure your experimental plan and generate all required sheets."
+          )
         )
       ),
       
@@ -777,7 +789,7 @@ navbarPage(
         
         div(
           class = "tarpuy-card",
-          div(class = "tarpuy-section-title", icon("chevron-down"), " Advanced Information (optional)"),
+          div(class = "tarpuy-section-title", icon("circle-plus"), " Advanced Information (optional)"),
           
           div(
             style = "
@@ -860,9 +872,9 @@ navbarPage(
         div(
           class = "tarpuy-card",
           div(
-            style = "font-size:22px; font-weight:600; line-height:1.15;",
+            style = "font-size:22px; font-weight:600; line-height:1.15;margin-bottom:10px;",
             icon("book"),
-            " FIELDBOOK GENERATOR"
+            " Fieldbook Generator"
           ),
           tags$small("Generate and validate fieldbooks from the design sheet")
         ),

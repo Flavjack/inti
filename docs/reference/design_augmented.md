@@ -9,7 +9,7 @@ design_augmented(
   checks,
   entries,
   blocks = NULL,
-  block_size = NULL,
+  eu_block = NULL,
   random = TRUE,
   zigzag = FALSE,
   dim = NA,
@@ -32,11 +32,12 @@ design_augmented(
 
 - blocks:
 
-  Number of blocks.
+  Optional number of blocks. If `NULL`, it is calculated from `entries`,
+  `checks` and `eu_block`.
 
-- block_size:
+- eu_block:
 
-  Number of plots per block.
+  Number of experimental units per block.
 
 - random:
 
@@ -48,7 +49,7 @@ design_augmented(
 
 - dim:
 
-  Optional layout dimensions c(nrows,ncols).
+  Optional layout dimensions c(nrows, ncols).
 
 - serie:
 

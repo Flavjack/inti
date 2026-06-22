@@ -34,7 +34,7 @@ tarpuy_plex(
   seed = 0,
   qrcode = "{project}{plots}",
   aug_blocks = NA,
-  aug_block_size = NA,
+  aug_eu_block = NA,
   aug_random = TRUE
 )
 ```
@@ -153,7 +153,7 @@ tarpuy_plex(
 
   Number of blocks for augmented design.
 
-- aug_block_size:
+- aug_eu_block:
 
   Number of plots per block for augmented design.
 
