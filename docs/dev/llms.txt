@@ -1,0 +1,222 @@
+# inti
+
+[![CRAN](https://img.shields.io/cran/v/inti.png)](https://cran.r-project.org/package=inti)
+[![DOI](https://zenodo.org/badge/82401374.svg)](https://zenodo.org/badge/latestdoi/82401374)
+[![R-CMD-check](https://github.com/Flavjack/inti/workflows/R-CMD-check/badge.svg)](https://github.com/Flavjack/inti/actions)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/inti?color=brightgreen.png)](https://r-pkg.org/pkg/inti)
+
+The **inti** package is part of the **inkaverse** project, which
+develops tools and workflows for plant science, experimental design,
+data analysis, and scientific writing. The package supports researchers
+during experiment planning and field data collection through **Tarpuy**,
+statistical analysis and visualization through **Yupana**, and the
+preparation of scientific outputs.
+
+More information about the project is available at
+<https://inkaverse.com/>.
+
+## Installation
+
+The stable version of **inti** can be installed from CRAN:
+
+``` r
+
+install.packages("inti")
+```
+
+To install the latest development version directly from GitHub, it is
+recommended to use **pak**:
+
+``` r
+
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak")
+}
+
+pak::pkg_install("flavjack/inti")
+```
+
+To install a specific version from CRAN (e.g., version 0.4.4):
+
+``` r
+
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak")
+}
+
+pak::pkg_install("inti@0.4.4")
+```
+
+After installation, load the package:
+
+``` r
+
+library(inti)
+```
+
+## Shiny Applications
+
+The **inti** package includes two Shiny applications that provide
+graphical interfaces for experimental design, data management,
+statistical analysis, and result visualization.
+
+### Installing Application Dependencies
+
+The first time you run any of the applications, install the required
+dependencies:
+
+``` r
+
+inti::yupana(dependencies = TRUE)
+```
+
+This step only needs to be performed once.
+
+### Launching the Applications
+
+The applications can be accessed directly from the **RStudio Addins**
+menu or launched from the R console.
+
+**Yupana** is an interactive environment for statistical analysis and
+visualization of experimental data.
+
+``` r
+
+inti::yupana()
+```
+
+**Tarpuy** is an interactive platform for experimental planning,
+field-book generation, treatment organization, and data management.
+
+``` r
+
+inti::tarpuy()
+```
+
+# Package index
+
+## Yupana
+
+Data analysis
+
+- [`yupana()`](https://inkaverse.com/dev/reference/yupana.md) :
+  Interactive data analysis
+- [`yupana_analysis()`](https://inkaverse.com/dev/reference/yupana_analysis.md)
+  : Fieldbook analysis report
+- [`yupana_export()`](https://inkaverse.com/dev/reference/yupana_export.md)
+  : Graph options to export
+- [`yupana_import()`](https://inkaverse.com/dev/reference/yupana_import.md)
+  : Import information from data summary
+- [`yupana_mvr()`](https://inkaverse.com/dev/reference/yupana_mvr.md) :
+  Multivariate Analysis
+- [`yupana_reshape()`](https://inkaverse.com/dev/reference/yupana_reshape.md)
+  : Fieldbook reshape
+- [`plot_augmented_design()`](https://inkaverse.com/dev/reference/plot_augmented_design.md)
+  : Plot augmented fieldbook design
+- [`plot_diag()`](https://inkaverse.com/dev/reference/plot_diag.md) :
+  Diagnostic plots
+- [`plot_diagnostic()`](https://inkaverse.com/dev/reference/plot_diagnostic.md)
+  : Diagnostic plots
+- [`plot_raw()`](https://inkaverse.com/dev/reference/plot_raw.md) : Plot
+  raw data
+- [`plot_smr()`](https://inkaverse.com/dev/reference/plot_smr.md) : Plot
+  summary data
+- [`plot_split_rcbd_design()`](https://inkaverse.com/dev/reference/plot_split_rcbd_design.md)
+  : Plot split-plot RCBD fieldbook design
+- [`plot_standard_design()`](https://inkaverse.com/dev/reference/plot_standard_design.md)
+  : Plot standard fieldbook experimental designs
+
+## Tarpuy
+
+Experimental designs
+
+- [`tarpuy()`](https://inkaverse.com/dev/reference/tarpuy.md) :
+  Interactive fieldbook designs
+- [`tarpuy_design()`](https://inkaverse.com/dev/reference/tarpuy_design.md)
+  : Fieldbook experimental designs
+- [`tarpuy_plex()`](https://inkaverse.com/dev/reference/tarpuy_plex.md)
+  : Fieldbook plan information
+- [`tarpuy_plotdesign()`](https://inkaverse.com/dev/reference/tarpuy_plotdesign.md)
+  : Fieldbook plot experimental designs
+- [`tarpuy_traits()`](https://inkaverse.com/dev/reference/tarpuy_traits.md)
+  : Field book traits
+
+## Rticles
+
+Write technical documents
+
+- [`rticle()`](https://inkaverse.com/dev/reference/rticle.md) : Convert
+  a Markdown manuscript into a Quarto document
+- [`include_pdf()`](https://inkaverse.com/dev/reference/include_pdf.md)
+  : Include PDF in markdown documents
+- [`include_table()`](https://inkaverse.com/dev/reference/include_table.md)
+  : Table with footnotes
+- [`footnotes()`](https://inkaverse.com/dev/reference/footnotes.md) :
+  Footnotes in tables
+- [`web_table()`](https://inkaverse.com/dev/reference/web_table.md) :
+  HTML tables for markdown documents
+
+## Plant breeding
+
+Algorithms and calculations
+
+- [`H2cal()`](https://inkaverse.com/dev/reference/H2cal.md) :
+  Broad-sense heritability in plant breeding
+- [`metamorphosis()`](https://inkaverse.com/dev/reference/metamorphosis.md)
+  : Transform fieldbooks based in a dictionary
+- [`outliers_remove()`](https://inkaverse.com/dev/reference/outliers_remove.md)
+  : Remove outliers
+- [`remove_outliers()`](https://inkaverse.com/dev/reference/remove_outliers.md)
+  : Remove outliers using mixed models
+- [`mean_comparison()`](https://inkaverse.com/dev/reference/mean_comparison.md)
+  : Mean comparison test
+- [`design_augmented()`](https://inkaverse.com/dev/reference/design_augmented.md)
+  : Experimental design: Augmented
+- [`design_noreps()`](https://inkaverse.com/dev/reference/design_noreps.md)
+  : Experimental design without replications
+- [`design_repblock()`](https://inkaverse.com/dev/reference/design_repblock.md)
+  : Experimental design in CRD and RCBD
+- [`design_split()`](https://inkaverse.com/dev/reference/design_split.md)
+  : Split-plot experimental designs
+- [`design_split_rcbd()`](https://inkaverse.com/dev/reference/design_split_rcbd.md)
+  : Split-plot RCBD experimental design
+
+## Datasets
+
+- [`potato`](https://inkaverse.com/dev/reference/potato.md) : Water use
+  efficiency in 15 potato genotypes
+- [`met`](https://inkaverse.com/dev/reference/met.md) : Swedish cultivar
+  trial data
+
+## Miscellaneous
+
+- [`split_folder()`](https://inkaverse.com/dev/reference/split_folder.md)
+  : Split folder
+
+# Articles
+
+### All vignettes
+
+- [Apps](https://inkaverse.com/dev/articles/apps.md):
+
+  inti: interactive apps.
+
+- [Broad-sense heritability in plant
+  breeding](https://inkaverse.com/dev/articles/heritability.md):
+
+  How to calculate the heritability in plant breeding.
+
+- [Inkaverse Privacy
+  Policy](https://inkaverse.com/dev/articles/policy.md):
+
+- [Rticles](https://inkaverse.com/dev/articles/rticles.md):
+
+  Rticles: scientific documents with R.
+
+- [Tarpuy](https://inkaverse.com/dev/articles/tarpuy.md):
+
+  Tarpuy: field-book experimental plans.
+
+- [Yupana](https://inkaverse.com/dev/articles/yupana.md):
+
+  Yupana: experimental design analysis.
