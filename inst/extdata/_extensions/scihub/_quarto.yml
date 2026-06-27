@@ -10,7 +10,7 @@ website:
     left:
       - href: ReadMe.qmd
         text: Home
-      - href: design/labels.qmd
+      - href: labels.qmd
         text: Labeling
       - href: files/phenomics.qmd
         text: Phenomics

@@ -1,7 +1,6 @@
 Version: 1.0
-ProjectId: dbc12b71-8c7a-4ee7-ae13-c80980449358
 
-RestoreWorkspace: No
+RestoreWorkspace: Default
 SaveWorkspace: No
 AlwaysSaveHistory: No
 
@@ -12,8 +11,3 @@ Encoding: UTF-8
 
 RnwWeave: knitr
 LaTeX: pdfLaTeX
-
-BuildType: Package
-PackageUseDevtools: Yes
-PackageInstallArgs: --no-multiarch --with-keep.source
-PackageRoxygenize: rd,collate,namespace
