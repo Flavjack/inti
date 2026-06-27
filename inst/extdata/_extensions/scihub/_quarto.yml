@@ -1,0 +1,33 @@
+project:
+  type: website
+  output-dir: docs
+  resources: 
+    - "library"
+
+website:
+  title: "Inkaverse"
+  navbar:
+    left:
+      - href: ReadMe.qmd
+        text: Home
+      - href: design/labels.qmd
+        text: Labeling
+      - href: files/phenomics.qmd
+        text: Phenomics
+      - href: analysis.qmd
+        text: Data Analysis
+      - href: article.qmd
+        text: Articles & Tools
+    right:
+      - icon: github
+        href: https://github.com/Flavjack/inti
+
+format:
+  html:
+    theme: cosmo
+    css: files/style.css
+    toc: true
+
+execute:
+  echo: true
+  eval: false

@@ -72,14 +72,14 @@ label <- fb %>%
                , size = 16
                , color = "blue"
                , font = font[1]
-               , prefix = "Factor1: "
+               , prefix = "Factor: "
                ) %>% 
   include_text(value = "factor2"
                , position = c(2.6, 1.8)
                , size = 15
                , color = "red"
                , font = font[1]
-               , prefix = "Factor2: "
+               , prefix = "Factor: "
                ) %>% 
   include_image(
     value = "https://huito.inkaverse.com/img/scale.pdf"
@@ -96,7 +96,7 @@ label %>% label_print(mode = "preview")
 
 label %>% 
   label_print(mode = "complete"
-              , filename = "design/labels"
+              , filename = "files/labels"
               # , paper = c(100, 100)
               , units = "cm"
               )
