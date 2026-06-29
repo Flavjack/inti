@@ -1,4 +1,5 @@
 ---
+title: "Article format"
 format:
   html:
     css: "files/style.css"
@@ -14,7 +15,7 @@ format:
 editor_options: 
   chunk_output_type: console
 execute:
-  echo: false
+  echo: true
   warning: false
 crossref:
   fig-title: Figure
@@ -42,8 +43,9 @@ source("http://inkaverse.com/docs.r")
 knitr::knit_exit()
 ```
 
+# GitHub: check files
+
 ```{bash}
-#| label: git check
 #| eval: false
 
 SIZE_MB=100
@@ -58,8 +60,9 @@ git reset --soft HEAD~0
 git status
 ```
 
+# GitHub: update repository
+
 ```{bash}
-#| label: git > github
 #| eval: false
 
 git pull
@@ -69,8 +72,9 @@ git commit -m "update"
 git push
 ```
 
+# PDF to images (.jpg)
+
 ```{r}
-#| label: pdf to jpeg
 #| eval: false
 
 library(tidyverse)
@@ -85,18 +89,19 @@ imgs <- 1:length(pdf4pub) %>% map(\(x) {
   
   filename <- pdf4pub[x] %>% 
     basename() %>% 
-    gsub(".pdf", "\\1.jpeg", .) 
+    gsub(".pdf", "\\1.jpg", .) 
   
   pdf4pub[x] %>% 
     image_read_pdf() %>% 
     # image_transparent("red") %>% 
-    image_write(format = "jpeg", file.path(path, filename))
+    image_write(format = "jpg", file.path(path, filename))
   
 })
 ```
 
+# Images to PDF
+
 ```{r}
-#| label: Images to PDF
 #| eval: false
 
 library(tidyverse)
@@ -111,8 +116,9 @@ img2pdf <- list.files(".", full.names = T
               , file.path(getwd(), "figures.pdf"))
 ```
 
+# Images to grid
+
 ```{r}
-#| label: Images to grids
 #| eval: false
 
 library(tidyverse)
@@ -138,8 +144,9 @@ plot <- grid %>%
          )
 ```
 
+# Zip files
+
 ```{r}
-#| label: zip file
 #| eval: false
 
 tozip <- "manuscript" 

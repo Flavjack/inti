@@ -1,6 +1,23 @@
 ---
 title: "SciHub"
+format:
+  html:
+    toc: true
+    toc-expand: true
+    toc-depth: 4
+    toc-location: left
+    number-sections: true
+    self-contained: true
+    code-fold: false
+editor_options: 
+  chunk_output_type: console
+execute: 
+  warning: false
+  message: false
+  echo: true
 ---
+
+# Information
 
 **Manuscript Title**
 
@@ -8,22 +25,23 @@ Author List
 
 ---
 
-## Manuscript
+# Manuscript
 
 > https://docs.google.com/document/d/1B5wtKmWap6MHYjVJqlYy7HMXHWQDoprlz-om2nn777s/edit?usp=sharing
 
-## Database
+# Database
 
 > https://docs.google.com/spreadsheets/d/1u6xgTT8jDFkHSMkK1iRrNVR-1iOINQidbEiaDCu2Nqw/edit?usp=sharing
 
-## Presentation
+# Presentation
 
 > Google Slides link
 
 ---
 
-⇒ *SciHub*: research pipeline repository
+# *SciHub*: research pipeline repository
 
+```{}
 project-root/
   ├── analysis.qmd          # Script with data analysis
   ├── article.qmd           # Script for formatting the article
@@ -43,5 +61,5 @@ project-root/
                                 # Manuscript link (Google Docs)
                                 # Database link (Google Sheets)
                                 # Presentation link (Google Slides)
+```
 
----

@@ -1,6 +1,5 @@
 ---
-title: ""
-author: ""
+title: "Manuscript Analysis"
 format:
   html:
     toc: true
@@ -9,7 +8,7 @@ format:
     toc-location: left
     number-sections: true
     self-contained: true
-    code-fold: true
+    code-fold: false
 editor_options: 
   chunk_output_type: console
 execute: 

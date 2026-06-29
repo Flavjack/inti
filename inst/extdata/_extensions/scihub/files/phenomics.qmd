@@ -1,24 +1,37 @@
 ---
 title: "Phenomics Project"
+format:
+  html:
+    toc: true
+    toc-expand: true
+    toc-depth: 4
+    toc-location: left
+    number-sections: true
+    self-contained: true
+    code-fold: false
+editor_options: 
+  chunk_output_type: console
+execute: 
+  warning: false
+  message: false
+  echo: true
 ---
-
-Website for phenotyping.
 
 Tools required for image analysis
 
-## Resources
+# Resources
 
-Git: <a href="https://git-scm.com/" target="_blank">Version control system</a>
+1. Git: <a href="https://git-scm.com/" target="_blank">Version control system</a>
 
-Anaconda: <a href="https://www.anaconda.com/download" target="_blank">Anaconda</a>
+1. Anaconda: <a href="https://www.anaconda.com/download" target="_blank">Anaconda</a>
 
-Label Studio: <a href="https://labelstud.io/" target="_blank">Label Studio</a>
+1. Label Studio: <a href="https://labelstud.io/" target="_blank">Label Studio</a>
 
-Labels design: <a href="https://huito.inkaverse.com/" target="_blank">Huito package</a>
+1. Labels design: <a href="https://huito.inkaverse.com/" target="_blank">Huito package</a>
 
-Phenoboard: <a href="https://huito.inkaverse.com/img/phenoboard.pdf" target="_blank">Phenotyping board</a>
+1. Phenoboard: <a href="https://huito.inkaverse.com/img/phenoboard.pdf" target="_blank">Phenotyping board</a>
 
-scale: <a href="https://huito.inkaverse.com/img/scale.pdf" target="_blank">Phenotyping board</a>
+1. Scale: <a href="https://huito.inkaverse.com/img/scale.pdf" target="_blank">Phenotyping board</a>
 
 
 # Repository for Image Analysis Annotation
@@ -36,11 +49,11 @@ This instructions are designed for the management, organization, and utilization
      quarto render website
      ```
      
-5. The `library` folder will be hosted on the website, and each image will be assigned a unique URL.
+1. The `library` folder will be hosted on the website, and each image will be assigned a unique URL.
 
-6. Image URLs can be extracted using the code provided in `Image URL for Label Studio`.
+1. Image URLs can be extracted using the code provided in `Image URL for Label Studio`.
 
-7. The generated links should be employed as references for annotations in *Label Studio*.
+1. The generated links should be employed as references for annotations in *Label Studio*.
 
 # Change or fix image path
 

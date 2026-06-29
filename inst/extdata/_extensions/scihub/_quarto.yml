@@ -8,7 +8,7 @@ website:
   title: "Inkaverse"
   navbar:
     left:
-      - href: ReadMe.qmd
+      - href: index.qmd
         text: Home
       - href: labels.qmd
         text: Labeling
