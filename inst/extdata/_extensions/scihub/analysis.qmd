@@ -60,10 +60,14 @@ library(FactoMineR)
 library(factoextra)
 
 dtx <- fb %>% 
-  dplyr::select(!c("var1", "var2")) 
+  dplyr::select(!c("var1", "var2")) %>% 
+  as.data.frame()
 # str(dtx)
   
-mv <- PCA(X = dtx, scale.unit = T, graph = F, quali.sup = C(1, 2))
+mv <- dtx %>% 
+  PCA(scale.unit = T
+      , graph = F
+      , quali.sup = c(1, 2))
 
 var <- mv %>% 
   plot.PCA(choix = c("var"), cex=0.7)
@@ -79,8 +83,8 @@ ind <- mv %>%
            , cex = 0.7
            , label = "ind"
            , invisible = "quali"
-           , habillage="none"
            , col.hab = inti:::paleta()
+           , habillage = "none"
            )
 
 pcainfo <- factoextra::get_pca(mv); pcainfo
@@ -89,11 +93,7 @@ pcainfo$cor %>% kable(caption = "Variable correlations")
 pcainfo$contrib %>% kable(caption = "Variable Contribution")
 pcainfo$cos2 %>% kable(caption = "Variable Cos2")
 
-cls <- HCPC(mv, graph = F
-            , nb.clust = -1
-            , metric = "euclidean"
-            , method = "ward"
-            )
+cls <- mv %>% HCPC(nb.clust = -1, graph = FALSE)
 
 map <- \() {plot.HCPC(cls, choice = "map", draw.tree = FALSE)}
 

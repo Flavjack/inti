@@ -3,7 +3,6 @@
   - Improve PCA supplementary variables
   - Select the dimension in PCA
   - Sub module for PCA with variable contribution and dimension correlation
-  - Dashboard for Tarpuy experiment progress
   
   - Update `scihub()` to include pages
   - Update qrcode in designs
