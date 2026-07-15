@@ -3,6 +3,9 @@ project:
   output-dir: docs
   resources: 
     - "library"
+  render:
+    - "*.qmd"
+    - "!article.qmd"
 
 website:
   title: "Inkaverse"
@@ -16,8 +19,6 @@ website:
         text: Phenomics
       - href: analysis.qmd
         text: Data Analysis
-      - href: article.qmd
-        text: Articles & Tools
     right:
       - icon: github
         href: https://github.com/Flavjack/inti

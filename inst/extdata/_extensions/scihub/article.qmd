@@ -1,5 +1,4 @@
 ---
-title: "Article format"
 format:
   html:
     css: "files/style.css"
@@ -15,7 +14,7 @@ format:
 editor_options: 
   chunk_output_type: console
 execute:
-  echo: true
+  echo: false
   warning: false
 crossref:
   fig-title: Figure

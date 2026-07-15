@@ -529,7 +529,7 @@ rticle <- function(file = "draft.md",
   
   list.files(path = export
              ,
-             pattern = ".qmd"
+             pattern = gsub(".md", ".qmd", file)
              ,
              full.names = T)
   
