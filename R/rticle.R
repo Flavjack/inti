@@ -92,56 +92,145 @@ rticle <- function(file = "draft.md",
   
   # cross references --------------------------------------------------------
   
-  crossrefs <- function(x) {
+  crossrefs <- function(x){
     
-    # ------------------------------------------------
-    # CAPTIONS DE TABLAS
-    # ------------------------------------------------
-    x <- gsub(
-      "^\\[(?:\\*{0,2})?Table(?:\\*{0,2})?\\]\\(#tab[_-]([^\\)]+)\\):\\s*(.+)$",
-      ": \\2 {#tbl-\\1}",
-      x,
-      ignore.case = TRUE,
-      perl = TRUE
-    )
+    ##------------------------------------------------------------
+    ## CAPTIONS DE TABLAS
+    ##------------------------------------------------------------
     
-    # ------------------------------------------------
-    # CAPTIONS DE FIGURAS
-    # ------------------------------------------------
-    x <- gsub(
-      "^\\[(?:\\*{0,2})?Figure(?:\\*{0,2})?\\]\\(#fig[_-]([^\\)]+)\\):\\s*(.+)$",
-      "![\\2]() {#fig-\\1}",
-      x,
-      ignore.case = TRUE,
-      perl = TRUE
-    )
+    if (grepl("^\\[[^]]+\\]\\(#tab[_-]", x, perl = TRUE)) {
+      
+      id <- sub(
+        "^.*#tab[_-]([^\\)]+).*$",
+        "\\1",
+        x,
+        perl = TRUE
+      )
+      
+      id <- chartr("_", "-", id)
+      
+      caption <- sub(
+        "^.*\\):\\s*",
+        "",
+        x,
+        perl = TRUE
+      )
+      
+      ## eliminar prefijo "Table 1", "Tabla 2", "Tab. 3", etc.
+      caption <- sub(
+        "^\\s*(Table|Tabla|Tab\\.?)\\s*[0-9]+\\s*[:.)-]?\\s*",
+        "",
+        caption,
+        ignore.case = TRUE,
+        perl = TRUE
+      )
+      
+      ## eliminar numeración inicial restante (1:, 2., 3), etc.)
+      caption <- sub(
+        "^\\s*[0-9]+\\s*[:.)-]?\\s*",
+        "",
+        caption,
+        perl = TRUE
+      )
+      
+      return(
+        paste0(
+          ": ",
+          trimws(caption),
+          " {#tbl-",
+          id,
+          "}"
+        )
+      )
+      
+    }
     
-    # ------------------------------------------------
-    # REFERENCIAS A TABLAS
-    # ------------------------------------------------
+    ##------------------------------------------------------------
+    ## CAPTIONS DE FIGURAS
+    ##------------------------------------------------------------
+    
+    if (grepl("^\\[[^]]+\\]\\(#fig[_-]", x, perl = TRUE)) {
+      
+      id <- sub(
+        "^.*#fig[_-]([^\\)]+).*$",
+        "\\1",
+        x,
+        perl = TRUE
+      )
+      
+      id <- chartr("_", "-", id)
+      
+      caption <- sub(
+        "^.*\\):\\s*",
+        "",
+        x,
+        perl = TRUE
+      )
+      
+      ## eliminar Figure 1, Figura 2, Fig. 3
+      
+      caption <- sub(
+        "^\\s*(Figure|Figura|Fig\\.?)\\s*[0-9]+\\s*[:.)-]?\\s*",
+        "",
+        caption,
+        ignore.case = TRUE,
+        perl = TRUE
+      )
+      
+      ## eliminar numeración inicial
+      
+      caption <- sub(
+        "^\\s*[0-9]+\\s*[:.)-]?\\s*",
+        "",
+        caption,
+        perl = TRUE
+      )
+      
+      return(
+        paste0(
+          "![",
+          trimws(caption),
+          "](){#fig-",
+          id,
+          "}"
+        )
+      )
+      
+    }
+    
+    ##------------------------------------------------------------
+    ## REFERENCIAS A TABLAS
+    ##------------------------------------------------------------
+    
     x <- gsub(
-      "\\[(?:\\*{0,2})?Table(?:\\*{0,2})?\\]\\(#tab[_-]([^\\)]+)\\)",
+      "\\[[^]]+\\]\\(#tab[_-]([^\\)]+)\\)",
       "@tbl-\\1",
       x,
-      ignore.case = TRUE,
       perl = TRUE
     )
     
-    # ------------------------------------------------
-    # REFERENCIAS A FIGURAS
-    # ------------------------------------------------
+    ##------------------------------------------------------------
+    ## REFEREN------------
+    ## REFERENCIAS A FIGURAS
+    ##------------------------------------------------------------
+    
     x <- gsub(
-      "\\[(?:\\*{0,2})?Figure(?:\\*{0,2})?\\]\\(#fig[_-]([^\\)]+)\\)",
+      "\\[[^]]+\\]\\(#fig[_-]([^\\)]+)\\)",
       "@fig-\\1",
       x,
-      ignore.case = TRUE,
       perl = TRUE
     )
     
+    ## normalizar IDs
+    
+    x <- gsub("@fig_", "@fig-", x, fixed = TRUE)
+    x <- gsub("@tbl_", "@tbl-", x, fixed = TRUE)
+    
     x
+    
   }
   
-# Fix figure --------------------------------------------------------------
+  # Fix figure --------------------------------------------------------------
   
   fix_figures <- function(gdoc){
     
@@ -228,8 +317,8 @@ rticle <- function(file = "draft.md",
   }
   
   
-# Google Docs -------------------------------------------------------------
-
+  # Google Docs -------------------------------------------------------------
+  
   gdoc <- file %>%
     readLines(warn = F) %>%
     tibble::enframe() %>%
@@ -262,11 +351,13 @@ rticle <- function(file = "draft.md",
       .init = .,
       ~ tibble::add_row(.x, value = section_break, .before = .y))
     } %>% 
-    mutate(across(.data$value, ~ crossrefs(.))) %>% 
+    mutate(
+      value = purrr::map_chr(.data$value, crossrefs)
+    ) %>%
     fix_figures()
-    
-
-# Figures -----------------------------------------------------------------
+  
+  
+  # Figures -----------------------------------------------------------------
   
   figure_pattern <- "^\\s*!\\[.*\\]\\[image[0-9]+\\]\\{#fig-[^}]+\\}\\s*$"
   
@@ -313,8 +404,8 @@ rticle <- function(file = "draft.md",
     }) %>%
     
     ungroup()
-
-# Tables ------------------------------------------------------------------
+  
+  # Tables ------------------------------------------------------------------
   
   table_pattern <- paste0(
     "^\\s*(",
@@ -399,9 +490,9 @@ rticle <- function(file = "draft.md",
         stats::na.omit(figs$name)
     )
   
-
-# Text --------------------------------------------------------------------
-
+  
+  # Text --------------------------------------------------------------------
+  
   txt <- gdoc %>%
     dplyr::filter(
       !.data$name %in% stats::na.omit(tabs$name)
@@ -410,9 +501,9 @@ rticle <- function(file = "draft.md",
     ) %>%
     add_row(name = max(.$name, na.rm = TRUE) + 1, value = section_break)
   
-
-# manuscript --------------------------------------------------------------
-
+  
+  # manuscript --------------------------------------------------------------
+  
   manuscript <- if (type == "asis") {
     gdoc
     
@@ -422,9 +513,9 @@ rticle <- function(file = "draft.md",
       slice(1:(nrow(.) - length(section_break)))
     
   }
-
-# export ------------------------------------------------------------------
-
+  
+  # export ------------------------------------------------------------------
+  
   qmd <- manuscript %>%
     tibble::deframe() %>%
     writeLines(con = file.path(export, gsub(
@@ -433,9 +524,9 @@ rticle <- function(file = "draft.md",
       x = file
     )))
   
-
-# result ------------------------------------------------------------------
-
+  
+  # result ------------------------------------------------------------------
+  
   list.files(path = export
              ,
              pattern = ".qmd"
