@@ -3,10 +3,12 @@
   - Improve PCA supplementary variables
   - Select the dimension in PCA
   - Sub module for PCA with variable contribution and dimension correlation
+
   
   - Update `scihub()` to include pages
   - `rticle()` improve crossrefs
   - Update qrcode in designs
+  - Fix legend in PCA
 
 # inti 0.7.1
 

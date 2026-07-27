@@ -117,23 +117,17 @@ yupana_mvr <- function(data
         , graph = FALSE
         )
   
-  plot_pca_var <- FactoMineR::plot.PCA(x = pca_info
-                           , choix = "var"
-                           , autoLab = "auto"
-                           , shadowtext = T
-                           , graph.type = "ggplot"
-                           ) 
+  plot_pca_var <- FactoMineR::plot.PCA(x = pca_info, choix = "var") + 
+    theme_classic()
   
-  legend <- if(nlevels(fb[[par$groups]]) > 20) "none" else "bottom"
+  legend <- if(nlevels(fb[[par$groups]]) > 20) "none" else "right"
   
   plot_pca_ind <- FactoMineR::plot.PCA(x = pca_info
                    , choice = "ind"
                    , habillage = par$groups_n
                    , invisible = "quali"
-                   , autoLab = "auto"
-                   , shadowtext = T
-                   , graph.type = "ggplot"
                    ) +
+    theme_classic() +
     theme(legend.position = legend) 
   
 # hcpc --------------------------------------------------------------------
