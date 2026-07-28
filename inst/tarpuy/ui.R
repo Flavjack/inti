@@ -72,6 +72,41 @@ navbarPage(
   .datepicker-dropdown {
     z-index: 99999 !important;
   }
+
+  #plex_factor_selector,
+  #plex_design_selector,
+  #plex_design_parameters,
+  #plex_factor_selector .form-group,
+  #plex_design_selector .form-group,
+  #plex_design_parameters .form-group {
+    width: 100%;
+  }
+
+  .sketch-sidebar .form-group,
+  .sketch-sidebar .selectize-control,
+  .sketch-sidebar .shiny-input-container {
+    width: 100% !important;
+  }
+
+  .sketch-sidebar .btn {
+    width: 100%;
+  }
+
+  .sketch-options-title {
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .sketch-preview-image {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .sketch-preview-image img {
+    max-width: 100%;
+    height: auto;
+  }
+
   
 ")),
     
@@ -660,7 +695,7 @@ navbarPage(
         )
       ),
       
-
+      
       column(
         width = 7,
         
@@ -844,7 +879,8 @@ navbarPage(
           selectizeInput(
             inputId = "plex_zigzag",
             label = "Zigzag",
-            choices = c("FALSE", "TRUE")
+            choices = c("FALSE", "TRUE"),
+            width = "100%"
           ),
           
           fluidRow(column(
@@ -857,7 +893,7 @@ navbarPage(
       )
     )
   ),
-    
+  
   # Module Fieldbook ----------------------------------------------------------
   
   tabPanel(
@@ -959,7 +995,7 @@ navbarPage(
       )
     )
   ),
-    
+  
   # module sketch -----------------------------------------------------------
   # -------------------------------------------------------------------------
   
@@ -970,37 +1006,45 @@ navbarPage(
     fluidRow(
       
       column(
-        2,
+        3,
         
         div(
-          h5(
+          class = "tarpuy-card sketch-sidebar",
+          
+          div(
+            class = "tarpuy-card-title",
             icon("drafting-compass"),
-            "Sketch Design"
+            " Sketch Design"
+          ),
+          
+          radioButtons(
+            inputId = "sketch_preview_opt",
+            label = "Preview",
+            choices = c("Gsheet", "Sketch"),
+            inline = TRUE,
+            selected = "Sketch"
+          ),
+          
+          uiOutput("sketch_sheets"),
+          
+          uiOutput("sketch_options"),
+          
+          uiOutput("sketch_text_options"),
+          
+          actionButton(
+            inputId = "update_sketch",
+            label = "Refresh",
+            icon = icon("rotate"),
+            class = "btn btn-success",
+            width = "100%"
           )
-        ),
-        
-        radioButtons(
-          inputId = "sketch_preview_opt",
-          label = "Preview",
-          choices = c("Gsheet", "Sketch"),
-          inline = TRUE,
-          selected = "Sketch"
-        ),
-        
-        uiOutput("sketch_sheets"),
-        
-        uiOutput("sketch_options"),
-        
-        actionButton(
-          inputId = "update_sketch",
-          label = "Refresh",
-          class = "btn btn-success"
+          
         )
         
       ),
       
       column(
-        10,
+        9,
         uiOutput("sketch_modules"),
         br(),
         br()
@@ -1009,72 +1053,72 @@ navbarPage(
     )
     
   ),
+  
+  # connect -----------------------------------------------------------------
+  # -------------------------------------------------------------------------
+  
+  tabPanel(
+    "Mobile",
+    icon = icon("plug-circle-check"),
     
-    # connect -----------------------------------------------------------------
-    # -------------------------------------------------------------------------
+    # div(h5(icon("plug-circle-check"), "Mobile")),
     
-    tabPanel(
-      "Mobile",
-      icon = icon("plug-circle-check"),
-      
-      # div(h5(icon("plug-circle-check"), "Mobile")),
-      
-      fluidRow(
-        column(
-          2,
+    fluidRow(
+      column(
+        2,
+        
+        h5(
+          icon("mobile-screen-button"),
+          HTML(
+            '<a target="_blank" href="https://play.google.com/store/apps/details?id=com.fieldbook.tracker&hl=en_US">Field-Book (PhenoApp)</a>'
+          )
+        ),
+        
+        br(),
+        
+        radioButtons(
+          inputId = "connection_sheet_preview"
+          ,
+          label = h5(icon("magnifying-glass"), "Preview")
+          ,
+          choices = c("Traits"
+                      , "Field-Book")
+          ,
+          inline = TRUE
+          ,
+          selected = "Traits"
+        ),
+        
+        fluidRow(h5(icon("wheat-awn"), "Traits"), uiOutput("connection_sheet_traits"), ),
+        
+        fluidRow(
+          h5(icon("book"), "Field-Book"),
           
-          h5(
-            icon("mobile-screen-button"),
-            HTML(
-              '<a target="_blank" href="https://play.google.com/store/apps/details?id=com.fieldbook.tracker&hl=en_US">Field-Book (PhenoApp)</a>'
-            )
-          ),
+          uiOutput("connection_sheet_fieldbook"),
           
-          br(),
-          
-          radioButtons(
-            inputId = "connection_sheet_preview"
-            ,
-            label = h5(icon("magnifying-glass"), "Preview")
-            ,
-            choices = c("Traits"
-                        , "Field-Book")
-            ,
-            inline = TRUE
-            ,
-            selected = "Traits"
-          ),
-          
-          fluidRow(h5(icon("wheat-awn"), "Traits"), uiOutput("connection_sheet_traits"), ),
-          
-          fluidRow(
-            h5(icon("book"), "Field-Book"),
-            
-            uiOutput("connection_sheet_fieldbook"),
-            
-            uiOutput("connection_fieldbook_lastfactor"),
-            
-          ),
-          
-          br(),
-          
-          fluidRow(
-            h5(icon("cloud-arrow-down"), "Download Files"),
-            
-            column(6, uiOutput("connection_traits_download"), ),
-            
-            column(6, uiOutput("connection_fieldbook_download"), ),
-            
-          ),
-          
+          uiOutput("connection_fieldbook_lastfactor"),
           
         ),
         
-        column(10, uiOutput("connection_sheet_preview"), br(), br())
+        br(),
         
-      )
+        fluidRow(
+          h5(icon("cloud-arrow-down"), "Download Files"),
+          
+          column(6, uiOutput("connection_traits_download"), ),
+          
+          column(6, uiOutput("connection_fieldbook_download"), ),
+          
+        ),
+        
+        
+      ),
       
-    ),
+      column(10, uiOutput("connection_sheet_preview"), br(), br())
+      
+    )
+    
+  ),
   
   
   bslib::nav_spacer(), 
@@ -1089,8 +1133,8 @@ navbarPage(
             href = "https://inkaverse.com/news/", 
             target = "_blank" ) ),
   
-    
-    # Tarpuy end code ---------------------------------------------------------
-    # -------------------------------------------------------------------------
-    
-  )
+  
+  # Tarpuy end code ---------------------------------------------------------
+  # -------------------------------------------------------------------------
+  
+)

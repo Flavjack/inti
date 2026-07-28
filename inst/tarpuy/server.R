@@ -40,6 +40,17 @@ if(file.exists("www/cloud.json")) {
 
 shinyServer(function(input, output, session) {
   
+  
+  normalize_design_type_app <- function(x) {
+    
+    normalizer <- getFromNamespace(
+      "normalize_tarpuy_design_type",
+      "inti"
+    )
+    
+    normalizer(x)
+    
+  }
   # -----------------------------------------------------------------------
   # Close local session automatically
   # -----------------------------------------------------------------------
@@ -223,17 +234,14 @@ shinyServer(function(input, output, session) {
   
   output$plex_factor_selector <- renderUI({
     
-    fluidRow(
-      column(
-        width = 7,
-        numericInput(
-          inputId = "plex_nfactors",
-          label = "Factors number",
-          value = 1,
-          max = 5,
-          min = 1
-        )
-      )
+    numericInput(
+      inputId = "plex_nfactors",
+      label = "Factors number",
+      value = 1,
+      min = 1,
+      max = 5,
+      step = 1,
+      width = "100%"
     )
     
   })
@@ -259,7 +267,7 @@ shinyServer(function(input, output, session) {
         "CRD" = "crd",
         "RCBD" = "rcbd",
         "Augmented" = "augmented",
-        "Split-RCBD" = "split-rcbd"
+        "Splitplot-RCBD" = "split-rcbd"
         # "Strip-plot" = "strip-plot"
       )
       
@@ -277,7 +285,8 @@ shinyServer(function(input, output, session) {
       label = "Design type",
       choices = design_choices,
       selected = design_choices[[1]],
-      multiple = FALSE
+      multiple = FALSE,
+      width = "100%"
     )
     
   })
@@ -292,19 +301,21 @@ shinyServer(function(input, output, session) {
     
     tagList(
       
-      # Standard and split-RCBD designs use replications.
+      # Standard and Splitplot-RCBD designs use replications.
       if(input$plex_design != "augmented") {
         
         numericInput(
           inputId = "plex_rep",
           label = "Replications",
           value = 3,
-          min = 1
+          min = 1,
+          step = 1,
+          width = "100%"
         )
         
       },
       
-      # Augmented design uses experimental units per block.
+      # Augmented design uses optional experimental units per block.
       if(input$plex_design == "augmented") {
         
         tagList(
@@ -313,14 +324,17 @@ shinyServer(function(input, output, session) {
             inputId = "plex_eu_block",
             label = "Experimental units by block",
             value = NA,
-            min = 1
+            min = 1,
+            step = 1,
+            width = "100%"
           ),
           
           selectInput(
             inputId = "plex_random",
             label = "Randomization",
             choices = c("TRUE", "FALSE"),
-            selected = "TRUE"
+            selected = "TRUE",
+            width = "100%"
           )
           
         )
@@ -454,7 +468,7 @@ shinyServer(function(input, output, session) {
     validate(
       need(input$fieldbook_url, "LogIn and create or insert a url")
     )
-  
+    
     # ---------------------------------------------------------------------
     # Info sheet 
     # ---------------------------------------------------------------------
@@ -630,6 +644,25 @@ shinyServer(function(input, output, session) {
   }
   
   
+  design_display_name <- function(x) {
+    
+    design_type <- normalize_design_type_app(x)
+    
+    switch(
+      design_type,
+      "crd" = "CRD",
+      "rcbd" = "RCBD",
+      "sorted" = "Sorted",
+      "unsorted" = "Unsorted",
+      "lsd" = "LSD",
+      "augmented" = "Augmented",
+      "split-rcbd" = "Splitplot-RCBD",
+      as.character(x)
+    )
+    
+  }
+  
+  
   load_fieldbook_sheet <- function(sheet_name) {
     
     fb_existing <- gs() %>%
@@ -691,7 +724,7 @@ shinyServer(function(input, output, session) {
         fieldbook_detected_sheet(NULL)
         
       }
-        
+      
       
     },
     ignoreInit = FALSE
@@ -1022,7 +1055,11 @@ shinyServer(function(input, output, session) {
       return(tags$p("Generate the fieldbook to view layout summary."))
     }
     
-    design_name <- if("design" %in% names(fb)) unique(fb$design)[1] else NA
+    design_name <- if("design" %in% names(fb)) {
+      design_display_name(unique(fb$design)[1])
+    } else {
+      NA_character_
+    }
     nplots <- if("plots" %in% names(fb)) length(unique(fb$plots)) else nrow(fb)
     nblocks <- if("block" %in% names(fb)) length(unique(fb$block)) else NA
     ncols <- if("cols" %in% names(fb)) length(unique(fb$cols)) else NA
@@ -1158,7 +1195,9 @@ shinyServer(function(input, output, session) {
     fb <- fb_sketch()
     
     design_type <- if("design" %in% names(fb)) {
-      tolower(trimws(as.character(unique(fb$design)[1])))
+      normalize_design_type_app(
+        unique(fb$design)[1]
+      )
     } else {
       NA_character_
     }
@@ -1204,7 +1243,7 @@ shinyServer(function(input, output, session) {
       
     } else if(design_type == "split-rcbd") {
       
-      # In split-plot RCBD, factor names are usually between ntreat and wp_sp.
+      # In Splitplot-RCBD, factor names are usually between ntreat and wp_sp.
       # Example: plots, ntreat, Soil, Fertilizer, wp_sp, block...
       
       factor_candidates <- choices[
@@ -1280,6 +1319,144 @@ shinyServer(function(input, output, session) {
   })
   
   # -------------------------------------------------------------------------
+  # Sketch text options
+  # -------------------------------------------------------------------------
+  
+  output$sketch_text_options <- renderUI({
+    
+    validate(
+      need(fb_sketch(), "Insert your fieldbook")
+    )
+    
+    tagList(
+      
+      tags$hr(),
+      
+      tags$div(
+        class = "sketch-options-title",
+        icon("font"),
+        " Text options"
+      ),
+      
+      checkboxInput(
+        inputId = "sketch_auto_font",
+        label = "Automatic font size",
+        value = TRUE,
+        width = "100%"
+      ),
+      
+      conditionalPanel(
+        condition = "!input.sketch_auto_font",
+        
+        selectizeInput(
+          inputId = "sketch_font_size",
+          label = "Font size (pt)",
+          choices = c(
+            6, 7, 8, 9, 10, 11, 12, 14, 16,
+            18, 20, 22, 24, 26, 28, 36, 48, 72
+          ),
+          selected = 8,
+          multiple = FALSE,
+          options = list(
+            create = TRUE,
+            persist = FALSE,
+            maxItems = 1
+          ),
+          width = "100%"
+        )
+      ),
+      
+      checkboxInput(
+        inputId = "sketch_wrap_labels",
+        label = "Wrap long labels",
+        value = TRUE,
+        width = "100%"
+      ),
+      
+      conditionalPanel(
+        condition = "input.sketch_wrap_labels",
+        
+        numericInput(
+          inputId = "sketch_wrap_width",
+          label = "Characters per line",
+          value = 14,
+          min = 4,
+          max = 60,
+          step = 1,
+          width = "100%"
+        )
+      ),
+      
+      helpText(
+        "Font sizes use typographic points. ",
+        "Select a common size or type a custom value."
+      )
+      
+    )
+    
+  })
+  
+  
+  sketch_text_size <- reactive({
+    
+    if(
+      is.null(input$sketch_auto_font) ||
+      isTRUE(input$sketch_auto_font)
+    ) {
+      return(NULL)
+    }
+    
+    value <- suppressWarnings(
+      as.numeric(input$sketch_font_size)
+    )
+    
+    validate(
+      need(
+        length(value) == 1L &&
+          !is.na(value) &&
+          is.finite(value) &&
+          value >= 4 &&
+          value <= 72,
+        "Font size must be a number between 4 and 72 pt."
+      )
+    )
+    
+    value
+    
+  })
+  
+  
+  sketch_wrap_width <- reactive({
+    
+    if(
+      is.null(input$sketch_wrap_labels) ||
+      !isTRUE(input$sketch_wrap_labels)
+    ) {
+      return(NULL)
+    }
+    
+    value <- suppressWarnings(
+      as.numeric(input$sketch_wrap_width)
+    )
+    
+    validate(
+      need(
+        length(value) == 1L &&
+          !is.na(value) &&
+          is.finite(value) &&
+          value >= 4 &&
+          value <= 60 &&
+          value == floor(value),
+        "Characters per line must be an integer between 4 and 60."
+      )
+    )
+    
+    as.integer(value)
+    
+  })
+  
+  
+  # -------------------------------------------------------------------------
   # Build sketch plot 
   # -------------------------------------------------------------------------
   
@@ -1323,7 +1500,11 @@ shinyServer(function(input, output, session) {
     tarpuy_plotdesign(
       data = fb,
       factor = input$sketch_factor,
-      fill = input$sketch_fill
+      fill = input$sketch_fill,
+      text_size = sketch_text_size(),
+      wrap_width = sketch_wrap_width(),
+      font_family = "Open Sans",
+      font_face = "plain"
     )
     
   })
@@ -1335,13 +1516,34 @@ shinyServer(function(input, output, session) {
   
   output$plot_sketch <- renderImage({
     
-    dpi <- input$sketch_dpi
-    width_cm <- input$sketch_width
-    height_cm <- input$sketch_height
+    req(
+      input$sketch_dpi,
+      input$sketch_width,
+      input$sketch_height
+    )
+    
+    dpi <- as.numeric(input$sketch_dpi)
+    width_cm <- as.numeric(input$sketch_width)
+    height_cm <- as.numeric(input$sketch_height)
+    
+    validate(
+      need(
+        is.finite(dpi) && dpi >= 72 && dpi <= 600,
+        "Resolution must be between 72 and 600 dpi."
+      ),
+      need(
+        is.finite(width_cm) && width_cm >= 5 && width_cm <= 200,
+        "Width must be between 5 and 200 cm."
+      ),
+      need(
+        is.finite(height_cm) && height_cm >= 5 && height_cm <= 200,
+        "Height must be between 5 and 200 cm."
+      )
+    )
     
     outfile <- tempfile(fileext = ".png")
     
-    png(
+    grDevices::png(
       filename = outfile,
       width = width_cm,
       height = height_cm,
@@ -1349,11 +1551,24 @@ shinyServer(function(input, output, session) {
       res = dpi
     )
     
+    device_open <- TRUE
+    
+    on.exit({
+      if(device_open) {
+        grDevices::dev.off()
+      }
+    }, add = TRUE)
+    
     print(plot_sketch())
     
-    dev.off()
+    grDevices::dev.off()
+    device_open <- FALSE
     
-    list(src = outfile)
+    list(
+      src = outfile,
+      contentType = "image/png",
+      alt = "Experimental design sketch"
+    )
     
   }, deleteFile = TRUE)
   
@@ -1380,8 +1595,10 @@ shinyServer(function(input, output, session) {
               inputId = "sketch_width",
               label = "Width (cm)",
               value = 20,
-              step = 5,
-              min = 5
+              step = 1,
+              min = 5,
+              max = 200,
+              width = "100%"
             )
           ),
           
@@ -1391,8 +1608,10 @@ shinyServer(function(input, output, session) {
               inputId = "sketch_height",
               label = "Height (cm)",
               value = 10,
-              step = 5,
-              min = 5
+              step = 1,
+              min = 5,
+              max = 200,
+              width = "100%"
             )
           ),
           
@@ -1400,16 +1619,19 @@ shinyServer(function(input, output, session) {
             width = 4,
             numericInput(
               inputId = "sketch_dpi",
-              label = "Resolution",
+              label = "Resolution (dpi)",
               value = 100,
               step = 50,
-              min = 100
+              min = 72,
+              max = 600,
+              width = "100%"
             )
           )
           
         ),
         
         div(
+          class = "sketch-preview-image",
           imageOutput("plot_sketch"),
           align = "center"
         )
@@ -1717,5 +1939,8 @@ shinyServer(function(input, output, session) {
   # -------------------------------------------------------------------------
   
 })
+
+
+
 
 

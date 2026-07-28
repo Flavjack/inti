@@ -10,31 +10,48 @@ plot_standard_design(
   fill = "plots",
   xlab = NULL,
   ylab = NULL,
-  glab = NULL
+  glab = NULL,
+  text_size = NULL,
+  wrap_width = NULL,
+  font_family = "Open Sans",
+  font_face = "plain"
 )
 }
 \arguments{
 \item{data}{A fieldbook data frame. It must contain at least \code{rows} and
 \code{cols}. For RCBD/DBCA designs, it should also contain \code{block}.}
 
-\item{factor}{Character. Name of the column used to color the experimental
-units. For example: \code{"geno"}, \code{"acc"}, \code{"nacl"}, \code{"block"} or \code{"ntreat"}.
-If \code{NA}, the function uses \code{"block"} when available; otherwise, it uses
-the third column of \code{data}.}
+\item{factor}{Character scalar. Name of the column used to color the
+experimental units. If missing, \code{"block"} is used when available;
+otherwise, the third column of \code{data} is used.}
 
-\item{fill}{Character vector. Name of one or more columns used as labels
-inside each experimental unit. For example: \code{"plots"},
-\code{c("plots", "ntreat")} or \code{c("plots", "acc", "nacl")}. When \code{ntreat}
-is used, it is shown as \code{T1}, \code{T2}, etc.}
+\item{fill}{Character vector. Names of one or more columns used as labels
+inside each experimental unit. When \code{ntreat} is used, it is displayed as
+\code{T1}, \code{T2}, etc.}
 
-\item{xlab}{Character. Title for the x axis. If \code{NULL}, \code{"columns"} is used.}
+\item{xlab}{Character scalar. Title for the x axis. If \code{NULL},
+\code{"columns"} is used.}
 
-\item{ylab}{Character. Title for the y axis. If \code{NULL}, \code{"row"} is used for
-non-RCBD designs. For RCBD/DBCA designs, the y axis is shown as
-\code{"blocks"}.}
+\item{ylab}{Character scalar. Title for the y axis. If \code{NULL}, \code{"row"} is
+used for non-RCBD designs. For RCBD/DBCA designs, \code{"blocks"} is used.}
 
-\item{glab}{Character. Title for the legend. If \code{NULL}, the value of
-\code{factor} is used.}
+\item{glab}{Character scalar. Legend title. If \code{NULL}, \code{factor} is used.}
+
+\item{text_size}{Optional positive numeric scalar. Text size passed to
+\code{ggplot2::geom_text()}. If \code{NULL} or \code{NA}, it is calculated automatically
+from the number of columns selected in \code{fill}.}
+
+\item{wrap_width}{Optional positive integer. Maximum approximate number of
+characters per line in plot labels. If \code{NULL} or \code{NA}, labels are not
+wrapped. Underscores are shown as spaces only in the plotted label; the
+original fieldbook values are not modified.}
+
+\item{font_family}{Character scalar. Font family used by the sketch.
+Defaults to \code{"Open Sans"}. If the font cannot be found through
+\code{systemfonts}, \code{"sans"} is used as a fallback.}
+
+\item{font_face}{Character scalar. Font face used in labels, axes and
+legends. Defaults to \code{"plain"} (Open Sans Regular).}
 }
 \value{
 A \code{ggplot} object.
@@ -49,108 +66,26 @@ designs, sorted designs and unsorted designs.
 The function does not calculate the experimental design. It only plots an
 existing fieldbook. Therefore, if the fieldbook was generated with
 \code{zigzag = TRUE}, the zigzag layout is respected because the function uses
-the existing \code{rows}, \code{cols} and \code{block} columns.
+the existing layout columns.
 
-For non-blocked standard designs, such as CRD/DCA, sorted and unsorted
-designs, the sketch is plotted using:
+Non-blocked standard designs are plotted using \code{cols} on the x axis and
+\code{rows} on the y axis. RCBD/DBCA designs retain their existing Tarpuy
+representation: \code{cols} on the x axis and \code{block} on the y axis.
 
-\itemize{
-\item \code{cols} as the x axis.
-\item \code{rows} as the y axis.
-}
-
-For RCBD/DBCA designs, the sketch is plotted using:
-
-\itemize{
-\item \code{cols} as the x axis.
-\item \code{block} as the y axis.
-}
-
-In this way, each row represents one block, which makes the DBCA sketch
-easier to interpret in field layout previews.
-
-The argument \code{factor} controls the fill color, while \code{fill} controls the
-text printed inside each plot. For example, \code{factor = "nacl"} and
-\code{fill = c("plots", "acc", "nacl")} colors plots by NaCl level and writes
-plot ID, accession and NaCl level inside each experimental unit.
+Label formatting affects only the sketch. It does not change \code{entry},
+\code{ntreat}, QR codes or any other fieldbook value.
 }
 \examples{
 \dontrun{
 
-library(dplyr)
-library(ggplot2)
-
-# Example 1: sorted design without replications
-factores <- list(
-  geno = paste0("G", 1:12)
-)
-
-fb <- design_noreps(
-  factors = factores,
-  type = "sorted",
-  zigzag = FALSE,
-  nrows = 3,
-  serie = 1000,
-  seed = 123,
-  project = "TEST",
-  qrcode = "{project}{plots}"
-)
-
-dsg <- fb$fieldbook
-
 plot_standard_design(
-  data = dsg,
+  data = fieldbook,
   factor = "geno",
-  fill = c("plots", "ntreat")
-)
-
-# Example 2: DCA / CRD
-factores_dca <- list(
-  geno = paste0("G", 1:6)
-)
-
-fb_dca <- design_repblock(
-  nfactors = 1,
-  factors = factores_dca,
-  type = "crd",
-  rep = 4,
-  zigzag = TRUE,
-  nrows = 4,
-  serie = 1000,
-  seed = 123,
-  project = "DCA",
-  qrcode = "{project}{plots}"
-)
-
-plot_standard_design(
-  data = fb_dca$fieldbook,
-  factor = "geno",
-  fill = c("plots", "ntreat")
-)
-
-# Example 3: DBCA / RCBD
-factores_dbca <- list(
-  acc = paste0("acc", 1:6),
-  nacl = c(0, 100, 200, 300)
-)
-
-fb_dbca <- design_repblock(
-  nfactors = 2,
-  factors = factores_dbca,
-  type = "rcbd",
-  rep = 4,
-  zigzag = TRUE,
-  serie = 1000,
-  seed = 123,
-  project = "DBCA",
-  qrcode = "{project}{plots}"
-)
-
-plot_standard_design(
-  data = fb_dbca$fieldbook,
-  factor = "nacl",
-  fill = c("plots", "acc", "nacl"),
-  glab = "NaCl"
+  fill = c("plots", "entry"),
+  text_size = 2.5,
+  wrap_width = 14,
+  font_family = "Open Sans",
+  font_face = "plain"
 )
 
 }

@@ -37,14 +37,31 @@ design_split_rcbd <- function(nfactors = 2,
                               project = "inkaverse",
                               qrcode = "{project}{plots}{factors}") {
   
-  # -------------------------------------------------------------------------
-  # Initial settings 
-  # -------------------------------------------------------------------------
+  type <- normalize_tarpuy_design_type(
+    type
+  )
   
-  set.seed(seed)
+  if(!identical(type, "split-rcbd")) {
+    stop(
+      "Unsupported Splitplot-RCBD identifier: ",
+      type
+    )
+  }
+  
+  # Initial settings -------------------------------------------------------
+  
+  if(
+    !is.null(seed) &&
+    length(seed) == 1L &&
+    !is.na(seed)
+  ) {
+    set.seed(seed)
+  }
   
   if(nfactors != 2) {
-    stop("split-rcbd requires exactly 2 factors.")
+    stop(
+      "Splitplot-RCBD requires exactly 2 factors."
+    )
   }
   
   # -------------------------------------------------------------------------
@@ -52,12 +69,37 @@ design_split_rcbd <- function(nfactors = 2,
   # -------------------------------------------------------------------------
   
   dfactors <- factors %>%
-    purrr::map(~ gsub("NA|NULL", NA, .)) %>%
-    purrr::map(base::unique) %>%
-    purrr::map(stats::na.omit) %>%
-    purrr::map(~ gsub("[[:space:]]", ".", .)) %>%
-    purrr::set_names(gsub("[[:space:]]", "_" , names(.))) %>%
-    .[1:nfactors]
+    purrr::map(function(x) {
+      
+      x <- as.character(x)
+      
+      # Remove spaces only at the beginning and end.
+      x <- trimws(x)
+      
+      # Convert empty or reserved values to NA.
+      x[x %in% c("", "NA", "NULL")] <- NA_character_
+      
+      # Remove missing values.
+      x <- x[!is.na(x)]
+      
+      # Preserve spaces, but collapse repeated spaces into one.
+      x <- gsub(
+        "[[:space:]]+",
+        " ",
+        x
+      )
+      
+      unique(x)
+      
+    }) %>%
+    purrr::set_names(
+      gsub(
+        "[[:space:]]+",
+        "_",
+        trimws(names(.))
+      )
+    ) %>%
+    .[seq_len(nfactors)]
   
   name.factors <- names(dfactors)
   

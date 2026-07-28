@@ -36,7 +36,9 @@ Imports:
     stringr, 
     googlesheets4,
     DT,
-    cli
+    cli,
+    systemfonts,
+    shinydashboard
 Suggests:
     gsheet,
     cowplot,

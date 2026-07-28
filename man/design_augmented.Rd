@@ -15,7 +15,8 @@ design_augmented(
   serie = 1000,
   seed = NULL,
   project = "inkaverse",
-  qrcode = "{project}{plots}{entry}"
+  qrcode = "{project}{plots}{entry}",
+  separate_checks = TRUE
 )
 }
 \arguments{
@@ -28,7 +29,7 @@ design_augmented(
 
 \item{eu_block}{Number of experimental units per block.}
 
-\item{random}{Randomize entries allocation.}
+\item{random}{Randomize entries allocation and positions inside each block.}
 
 \item{zigzag}{Zigzag field layout.}
 
@@ -36,11 +37,14 @@ design_augmented(
 
 \item{serie}{Plot series number.}
 
-\item{seed}{Random seed.}
+\item{seed}{Random seed. \code{0} or \code{NULL} means no fixed seed.}
 
 \item{project}{Barcode prefix.}
 
-\item{qrcode}{QR code template.}
+\item{qrcode}{QR code column template.}
+
+\item{separate_checks}{Logical. When possible, prevent adjacent checks
+inside each block using constrained randomization.}
 }
 \value{
 List with fieldbook and parameters.

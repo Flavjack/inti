@@ -4,25 +4,43 @@
 #' `design_augmented()`.
 #'
 #' @param data Fieldbook data frame from an augmented design.
-#' @param factor Character. Column used to color experimental units. Default is
-#'   `"type"` when available.
+#' @param factor Character scalar. Column used to color experimental units.
+#'   If missing, `"type"` is used.
 #' @param fill Character vector. Column or columns used as labels inside each
 #'   experimental unit. Default is `"plots"`.
-#' @param xlab Character. Optional x axis title.
-#' @param ylab Character. Optional y axis title.
-#' @param glab Character. Optional legend title.
+#' @param xlab Character scalar. Optional x axis title.
+#' @param ylab Character scalar. Optional y axis title.
+#' @param glab Character scalar. Optional legend title.
+#' @param text_size Optional positive numeric scalar indicating the plot-label
+#'   font size in typographic points (`pt`). If `NULL` or `NA`, the function
+#'   calculates an automatic size: 10 pt for one label column, 8 pt for two
+#'   columns and 7 pt for three or more columns.
+#' @param wrap_width Optional positive integer indicating the approximate
+#'   maximum number of characters per line. If `NULL` or `NA`, labels are not
+#'   wrapped. Underscores are displayed as spaces only in the sketch.
+#' @param font_family Font family used in the sketch. Defaults to
+#'   `"Open Sans"`. If it or the optional `systemfonts` package is unavailable,
+#'   the function silently uses `"sans"`.
+#' @param font_face Font face used in the sketch. Defaults to `"plain"`,
+#'   equivalent to regular/normal text.
 #'
 #' @details
-#' This function is intended for augmented designs with checks and entries.
-#' It uses:
+#' This function is intended for augmented designs with checks, entries and
+#' optional empty experimental units. It uses:
 #'
 #' \itemize{
 #'   \item `cols` as the x axis.
-#'   \item `block` as the y axis when available.
+#'   \item `block` as the y axis.
 #'   \item `type` to distinguish checks, tests and empty plots.
 #' }
 #'
-#' Empty plots are shown in grey when `type` is `NA`.
+#' Empty plots are shown in grey when `type` is `NA` or empty.
+#'
+#' Label wrapping changes only the displayed text. It does not modify
+#' `entry`, `plots`, `ntreat`, QR codes or any other fieldbook value.
+#'
+#' `text_size` is expressed in points, like common word processors. Internally
+#' it is converted to the size unit expected by `ggplot2::geom_text()`.
 #'
 #' @return A `ggplot` object.
 #'
@@ -30,13 +48,238 @@
 #' @import ggplot2
 #'
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#'
+#' plot_augmented_design(
+#'   data = fieldbook,
+#'   factor = "type",
+#'   fill = c("plots", "entry"),
+#'   text_size = 9,
+#'   wrap_width = 14,
+#'   font_family = "Open Sans",
+#'   font_face = "plain"
+#' )
+#'
+#' }
 
-plot_augmented_design <- function(data,
-                                  factor = NA,
-                                  fill = "plots",
-                                  xlab = NULL,
-                                  ylab = NULL,
-                                  glab = NULL) {
+plot_augmented_design <- function(
+    data,
+    factor = NA,
+    fill = "plots",
+    xlab = NULL,
+    ylab = NULL,
+    glab = NULL,
+    text_size = NULL,
+    wrap_width = NULL,
+    font_family = "Open Sans",
+    font_face = "plain"
+) {
+  
+  # -------------------------------------------------------------------------
+  # Helpers -----------------------------------------------------------------
+  # -------------------------------------------------------------------------
+  
+  is_missing_scalar <- function(x) {
+    
+    is.null(x) ||
+      length(x) == 0L ||
+      (
+        length(x) == 1L &&
+          (
+            is.na(x) ||
+              (
+                is.character(x) &&
+                  trimws(x) == ""
+              )
+          )
+      )
+  }
+  
+  resolve_font_family <- function(font_family) {
+    
+    if(
+      is.null(font_family) ||
+      length(font_family) != 1L ||
+      is.na(font_family) ||
+      trimws(as.character(font_family)) == ""
+    ) {
+      return("sans")
+    }
+    
+    font_family <- trimws(
+      as.character(font_family)
+    )
+    
+    if(tolower(font_family) == "sans") {
+      return("sans")
+    }
+    
+    if(!requireNamespace("systemfonts", quietly = TRUE)) {
+      return("sans")
+    }
+    
+    fonts <- tryCatch(
+      systemfonts::system_fonts(),
+      error = function(e) NULL
+    )
+    
+    if(
+      is.null(fonts) ||
+      !"family" %in% names(fonts)
+    ) {
+      return("sans")
+    }
+    
+    available <- any(
+      tolower(trimws(fonts$family)) ==
+        tolower(font_family),
+      na.rm = TRUE
+    )
+    
+    if(available) {
+      font_family
+    } else {
+      "sans"
+    }
+  }
+  
+  split_long_word <- function(word, width) {
+    
+    if(
+      word == "" ||
+      nchar(word, type = "width") <= width
+    ) {
+      return(word)
+    }
+    
+    starts <- seq.int(
+      from = 1L,
+      to = nchar(word),
+      by = width
+    )
+    
+    substring(
+      word,
+      first = starts,
+      last = pmin(
+        starts + width - 1L,
+        nchar(word)
+      )
+    )
+  }
+  
+  wrap_one_label <- function(value, width) {
+    
+    if(
+      is.na(value) ||
+      value == ""
+    ) {
+      return("")
+    }
+    
+    # Only the plotted label changes; the fieldbook remains untouched.
+    value <- gsub(
+      "_",
+      " ",
+      value,
+      fixed = TRUE
+    )
+    
+    words <- strsplit(
+      trimws(value),
+      "[[:space:]]+"
+    )[[1L]]
+    
+    # Explicitly split identifiers that contain no natural wrapping point.
+    words <- unlist(
+      lapply(
+        words,
+        split_long_word,
+        width = width
+      ),
+      use.names = FALSE
+    )
+    
+    paste(
+      strwrap(
+        paste(words, collapse = " "),
+        width = width,
+        simplify = TRUE
+      ),
+      collapse = "\n"
+    )
+  }
+  
+  wrap_plot_label <- function(x, width = NULL) {
+    
+    x <- as.character(x)
+    x[is.na(x)] <- ""
+    
+    if(is.null(width)) {
+      return(x)
+    }
+    
+    vapply(
+      x,
+      wrap_one_label,
+      width = width,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE
+    )
+  }
+  
+  make_label <- function(
+    data,
+    fill,
+    wrap_width = NULL
+  ) {
+    
+    labels <- lapply(
+      fill,
+      function(column) {
+        
+        values <- as.character(
+          data[[column]]
+        )
+        
+        values[is.na(values)] <- ""
+        
+        if(column == "ntreat") {
+          values <- ifelse(
+            values == "",
+            "",
+            paste0("T", values)
+          )
+        }
+        
+        wrap_plot_label(
+          values,
+          width = wrap_width
+        )
+      }
+    )
+    
+    output <- do.call(
+      paste,
+      c(labels, sep = "\n")
+    )
+    
+    output <- gsub(
+      "^\n+|\n+$",
+      "",
+      output
+    )
+    
+    output <- gsub(
+      "\n{3,}",
+      "\n\n",
+      output
+    )
+    
+    output
+  }
   
   # -------------------------------------------------------------------------
   # Checks ------------------------------------------------------------------
@@ -46,62 +289,179 @@ plot_augmented_design <- function(data,
     stop("'data' must be a data frame.")
   }
   
-  required_cols <- c("plots", "entry", "type", "block", "rows", "cols")
+  if(nrow(data) == 0L) {
+    stop("'data' must contain at least one experimental unit.")
+  }
   
-  missing_cols <- setdiff(required_cols, names(data))
+  required_cols <- c(
+    "plots",
+    "entry",
+    "type",
+    "block",
+    "rows",
+    "cols"
+  )
   
-  if(length(missing_cols) > 0) {
+  missing_cols <- setdiff(
+    required_cols,
+    names(data)
+  )
+  
+  if(length(missing_cols) > 0L) {
     stop(
       "Missing required columns for augmented plot: ",
-      paste(missing_cols, collapse = ", ")
+      paste(missing_cols, collapse = ", "),
+      "."
     )
   }
   
-  if(is.na(factor) || is.null(factor) || factor == "") {
-    factor <- if("type" %in% names(data)) {
-      "type"
-    } else {
-      "checks"
-    }
+  if(
+    anyNA(data$block) ||
+    anyNA(data$cols)
+  ) {
+    stop(
+      "Columns 'block' and 'cols' must not contain missing values."
+    )
   }
+  
+  if(
+    !is.numeric(data$block) ||
+    !is.numeric(data$cols) ||
+    any(!is.finite(data$block)) ||
+    any(!is.finite(data$cols))
+  ) {
+    stop(
+      "Columns 'block' and 'cols' must contain finite numeric values."
+    )
+  }
+  
+  if(is_missing_scalar(factor)) {
+    factor <- "type"
+  }
+  
+  if(
+    length(factor) != 1L ||
+    !is.character(factor)
+  ) {
+    stop(
+      "'factor' must be the name of one column."
+    )
+  }
+  
+  factor <- trimws(factor)
   
   if(!factor %in% names(data)) {
     stop(
-      "Column selected in 'factor' was not found in data. Available columns: ",
-      paste(names(data), collapse = ", ")
+      "Column selected in 'factor' was not found in data. ",
+      "Available columns: ",
+      paste(names(data), collapse = ", "),
+      "."
     )
   }
   
-  if(is.null(fill) || length(fill) == 0 || any(is.na(fill)) || fill[1] == "") {
+  if(
+    is.null(fill) ||
+    length(fill) == 0L ||
+    all(is.na(fill)) ||
+    all(trimws(as.character(fill)) == "")
+  ) {
     fill <- "plots"
   }
   
-  if(!all(fill %in% names(data))) {
+  fill <- trimws(
+    as.character(fill)
+  )
+  
+  fill <- fill[
+    !is.na(fill) &
+      fill != ""
+  ]
+  
+  fill <- unique(fill)
+  
+  missing_fill <- setdiff(
+    fill,
+    names(data)
+  )
+  
+  if(length(missing_fill) > 0L) {
     stop(
-      "Column selected in 'fill' was not found in data. Available columns: ",
-      paste(names(data), collapse = ", ")
+      "Columns selected in 'fill' were not found: ",
+      paste(missing_fill, collapse = ", "),
+      ". Available columns: ",
+      paste(names(data), collapse = ", "),
+      "."
     )
   }
   
-  # -------------------------------------------------------------------------
-  # Helper: labels -----------------------------------------------------------
-  # -------------------------------------------------------------------------
-  
-  make_label <- function(data, fill) {
+  if(!is_missing_scalar(text_size)) {
     
-    labels <- lapply(fill, function(x) {
-      
-      if(x == "ntreat") {
-        ifelse(is.na(data[[x]]), "", paste0("T", data[[x]]))
-      } else {
-        ifelse(is.na(data[[x]]), "", as.character(data[[x]]))
-      }
-      
-    })
+    if(
+      length(text_size) != 1L ||
+      !is.numeric(text_size) ||
+      !is.finite(text_size) ||
+      text_size <= 0
+    ) {
+      stop(
+        "'text_size' must be a positive numeric value in points, ",
+        "NA, or NULL."
+      )
+    }
     
-    do.call(paste, c(labels, sep = "\n"))
+    text_size <- as.numeric(
+      text_size
+    )
     
+  } else {
+    
+    text_size <- NULL
   }
+  
+  if(!is_missing_scalar(wrap_width)) {
+    
+    if(
+      length(wrap_width) != 1L ||
+      !is.numeric(wrap_width) ||
+      !is.finite(wrap_width) ||
+      wrap_width < 1 ||
+      wrap_width != floor(wrap_width)
+    ) {
+      stop(
+        "'wrap_width' must be a positive integer, NA, or NULL."
+      )
+    }
+    
+    wrap_width <- as.integer(
+      wrap_width
+    )
+    
+  } else {
+    
+    wrap_width <- NULL
+  }
+  
+  allowed_faces <- c(
+    "plain",
+    "bold",
+    "italic",
+    "bold.italic"
+  )
+  
+  if(
+    length(font_face) != 1L ||
+    is.na(font_face) ||
+    !font_face %in% allowed_faces
+  ) {
+    stop(
+      "'font_face' must be one of: ",
+      paste(allowed_faces, collapse = ", "),
+      "."
+    )
+  }
+  
+  font_family <- resolve_font_family(
+    font_family
+  )
   
   # -------------------------------------------------------------------------
   # Data preparation ---------------------------------------------------------
@@ -111,16 +471,26 @@ plot_augmented_design <- function(data,
     dplyr::mutate(
       .plot_type = dplyr::case_when(
         is.na(.data$type) ~ "empty",
-        .data$type == "" ~ "empty",
-        TRUE ~ as.character(.data$type)
+        trimws(as.character(.data$type)) == "" ~ "empty",
+        TRUE ~ tolower(
+          trimws(
+            as.character(.data$type)
+          )
+        )
       ),
       .plot_factor = dplyr::case_when(
         is.na(.data[[factor]]) ~ "empty",
-        as.character(.data[[factor]]) == "" ~ "empty",
+        trimws(as.character(.data[[factor]])) == "" ~ "empty",
         TRUE ~ as.character(.data[[factor]])
       ),
-      .plot_factor = as.factor(.data$.plot_factor),
-      .plot_label = make_label(data = ., fill = fill)
+      .plot_factor = as.factor(
+        .data$.plot_factor
+      ),
+      .plot_label = make_label(
+        data = .,
+        fill = fill,
+        wrap_width = wrap_width
+      )
     )
   
   # -------------------------------------------------------------------------
@@ -139,15 +509,22 @@ plot_augmented_design <- function(data,
     glab <- factor
   }
   
-  text_size <- dplyr::case_when(
-    length(fill) == 1 ~ 3.2,
-    length(fill) == 2 ~ 2.8,
-    TRUE ~ 2.3
-  )
+  # Automatic sizes are expressed in typographic points.
+  if(is.null(text_size)) {
+    
+    text_size <- dplyr::case_when(
+      length(fill) == 1L ~ 10,
+      length(fill) == 2L ~ 8,
+      TRUE ~ 7
+    )
+  }
+  
+  # ggplot2::geom_text() uses millimetres internally.
+  geom_text_size <- text_size / ggplot2::.pt
   
   line_height <- dplyr::case_when(
-    length(fill) == 1 ~ 1.05,
-    length(fill) == 2 ~ 1.00,
+    length(fill) == 1L ~ 1.05,
+    length(fill) == 2L ~ 1.00,
     TRUE ~ 0.95
   )
   
@@ -155,35 +532,58 @@ plot_augmented_design <- function(data,
   # Colors ------------------------------------------------------------------
   # -------------------------------------------------------------------------
   
+  factor_levels <- levels(
+    data_plot$.plot_factor
+  )
+  
   if(factor == "type") {
     
-    color_values <- c(
+    base_colors <- c(
       check = "#4E79A7",
       test = "#59A14F",
       empty = "#D9D9D9"
     )
     
-    factor_levels <- unique(as.character(data_plot$.plot_factor))
+    known_levels <- intersect(
+      factor_levels,
+      names(base_colors)
+    )
     
-    color_values <- color_values[names(color_values) %in% factor_levels]
+    color_values <- base_colors[
+      known_levels
+    ]
     
-    extra_levels <- setdiff(factor_levels, names(color_values))
+    extra_levels <- setdiff(
+      factor_levels,
+      names(base_colors)
+    )
     
-    if(length(extra_levels) > 0) {
+    if(length(extra_levels) > 0L) {
       
       extra_cols <- grDevices::colorRampPalette(
-        c("#86CD80", "#F4CB8C", "#F3BB00", "#0198CD", "#FE6673")
+        c(
+          "#86CD80",
+          "#F4CB8C",
+          "#F3BB00",
+          "#0198CD",
+          "#FE6673"
+        )
       )(length(extra_levels))
       
       names(extra_cols) <- extra_levels
       
-      color_values <- c(color_values, extra_cols)
-      
+      color_values <- c(
+        color_values,
+        extra_cols
+      )
     }
     
   } else {
     
-    factor_levels <- levels(data_plot$.plot_factor)
+    n_factor_levels <- max(
+      length(factor_levels),
+      1L
+    )
     
     color_values <- grDevices::colorRampPalette(
       c(
@@ -193,10 +593,9 @@ plot_augmented_design <- function(data,
         "#0198CD",
         "#FE6673"
       )
-    )(length(factor_levels))
+    )(n_factor_levels)
     
     names(color_values) <- factor_levels
-    
   }
   
   # -------------------------------------------------------------------------
@@ -204,12 +603,26 @@ plot_augmented_design <- function(data,
   # -------------------------------------------------------------------------
   
   block_boxes <- data_plot %>%
-    dplyr::group_by(.data$block) %>%
+    dplyr::group_by(
+      .data$block
+    ) %>%
     dplyr::summarise(
-      xmin = min(.data$cols, na.rm = TRUE) - 0.5,
-      xmax = max(.data$cols, na.rm = TRUE) + 0.5,
-      ymin = min(.data$block, na.rm = TRUE) - 0.5,
-      ymax = max(.data$block, na.rm = TRUE) + 0.5,
+      xmin = min(
+        .data$cols,
+        na.rm = TRUE
+      ) - 0.5,
+      xmax = max(
+        .data$cols,
+        na.rm = TRUE
+      ) + 0.5,
+      ymin = min(
+        .data$block,
+        na.rm = TRUE
+      ) - 0.5,
+      ymax = max(
+        .data$block,
+        na.rm = TRUE
+      ) + 0.5,
       .groups = "drop"
     )
   
@@ -218,7 +631,10 @@ plot_augmented_design <- function(data,
   # -------------------------------------------------------------------------
   
   plot <- data_plot %>%
-    dplyr::arrange(.data$block, .data$cols) %>%
+    dplyr::arrange(
+      .data$block,
+      .data$cols
+    ) %>%
     ggplot2::ggplot(
       ggplot2::aes(
         x = .data$cols,
@@ -244,38 +660,75 @@ plot_augmented_design <- function(data,
       linewidth = 0.55
     ) +
     ggplot2::geom_text(
-      ggplot2::aes(label = .data$.plot_label),
-      size = text_size,
+      ggplot2::aes(
+        label = .data$.plot_label
+      ),
+      size = geom_text_size,
+      family = font_family,
+      fontface = font_face,
       lineheight = line_height,
-      fontface = "plain",
-      color = "black"
+      color = "black",
+      na.rm = TRUE
     ) +
     ggplot2::scale_y_continuous(
       expand = c(0, 0),
       trans = "reverse",
-      breaks = sort(unique(data_plot$block))
+      breaks = sort(
+        unique(data_plot$block)
+      )
     ) +
     ggplot2::scale_x_continuous(
       expand = c(0, 0),
-      breaks = sort(unique(data_plot$cols))
+      breaks = sort(
+        unique(data_plot$cols)
+      )
     ) +
-    ggplot2::scale_fill_manual(values = color_values) +
+    ggplot2::scale_fill_manual(
+      values = color_values,
+      drop = FALSE,
+      na.value = "#D9D9D9"
+    ) +
     ggplot2::labs(
       x = xlab,
       y = ylab,
       fill = glab
     ) +
-    ggplot2::theme_minimal(base_size = 12) +
+    ggplot2::theme_minimal(
+      base_size = 12,
+      base_family = font_family
+    ) +
     ggplot2::theme(
       legend.position = "top",
-      legend.title = ggplot2::element_text(face = "bold"),
-      legend.text = ggplot2::element_text(size = 9),
+      legend.title = ggplot2::element_text(
+        family = font_family,
+        face = font_face
+      ),
+      legend.text = ggplot2::element_text(
+        family = font_family,
+        face = font_face,
+        size = 9
+      ),
       panel.grid = ggplot2::element_blank(),
-      axis.title = ggplot2::element_text(face = "bold"),
-      axis.text = ggplot2::element_text(color = "grey25"),
-      plot.margin = ggplot2::margin(6, 6, 6, 6)
+      axis.title = ggplot2::element_text(
+        family = font_family,
+        face = font_face
+      ),
+      axis.text = ggplot2::element_text(
+        family = font_family,
+        face = font_face,
+        color = "grey25"
+      ),
+      strip.text = ggplot2::element_text(
+        family = font_family,
+        face = font_face
+      ),
+      plot.margin = ggplot2::margin(
+        6,
+        6,
+        6,
+        6
+      )
     )
   
   return(plot)
-  
 }

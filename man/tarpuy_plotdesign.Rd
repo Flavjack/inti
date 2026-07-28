@@ -10,22 +10,41 @@ tarpuy_plotdesign(
   fill = "plots",
   xlab = NULL,
   ylab = NULL,
-  glab = NULL
+  glab = NULL,
+  text_size = NULL,
+  wrap_width = NULL,
+  font_family = "Open Sans",
+  font_face = "plain"
 )
 }
 \arguments{
 \item{data}{Fieldbook data frame or design object containing a fieldbook.}
 
-\item{factor}{Character. Column used to color experimental units.}
+\item{factor}{Character scalar. Column used to color experimental units.}
 
 \item{fill}{Character vector. Column or columns used as labels inside
 experimental units.}
 
-\item{xlab}{Character. Optional x axis title.}
+\item{xlab}{Character scalar. Optional x axis title.}
 
-\item{ylab}{Character. Optional y axis title.}
+\item{ylab}{Character scalar. Optional y axis title.}
 
-\item{glab}{Character. Optional legend title.}
+\item{glab}{Character scalar. Optional legend title.}
+
+\item{text_size}{Optional positive numeric scalar indicating the plot-label
+font size in typographic points (\code{pt}). If \code{NULL} or \code{NA}, the selected
+plotting function calculates an automatic size.}
+
+\item{wrap_width}{Optional positive integer indicating the approximate
+maximum number of characters per line. If \code{NULL} or \code{NA}, labels are not
+wrapped.}
+
+\item{font_family}{Font family used in the sketch. Defaults to
+\code{"Open Sans"}. Each plotting function silently falls back to \code{"sans"}
+when the requested font is unavailable.}
+
+\item{font_face}{Font face used in the sketch. Defaults to \code{"plain"},
+equivalent to regular/normal text.}
 }
 \value{
 A \code{ggplot} object.
@@ -36,4 +55,31 @@ Plot fieldbook sketches according to the experimental design type.
 \details{
 This function works as a dispatcher. It detects the design type from the
 fieldbook and sends the data to the corresponding plotting function.
+
+The text and font arguments are forwarded to:
+
+\itemize{
+\item \code{plot_standard_design()}
+\item \code{plot_augmented_design()}
+\item \code{plot_split_rcbd_design()}
+}
+
+The visible name \code{Splitplot-RCBD} and accepted spelling variants are
+normalized to the stable internal identifier \code{"split-rcbd"} before the
+plotting method is selected. The fieldbook itself is not modified.
+}
+\examples{
+\dontrun{
+
+tarpuy_plotdesign(
+  data = fieldbook,
+  factor = "entry",
+  fill = c("plots", "entry"),
+  text_size = 9,
+  wrap_width = 14,
+  font_family = "Open Sans",
+  font_face = "plain"
+)
+
+}
 }

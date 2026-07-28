@@ -67,16 +67,23 @@ tarpuy_design <- function(data
   
   # design type -------------------------------------------------------------
   # -------------------------------------------------------------------------
+  type <- normalize_tarpuy_design_type(
+    type
+  )
   
   type <- match.arg(
     type,
     c(
-      "sorted", "unsorted"
-      ,
-      "crd", "rcbd", "lsd", "lattice"
-      ,
-      "split-crd", "split-rcbd"
-      , "augmented", "strip-plot"
+      "sorted",
+      "unsorted",
+      "crd",
+      "rcbd",
+      "lsd",
+      "lattice",
+      "split-crd",
+      "split-rcbd",
+      "augmented",
+      "strip-plot"
     )
   )
   

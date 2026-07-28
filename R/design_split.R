@@ -17,16 +17,22 @@
 #'
 #' @export
 
-design_split <- function(nfactors = 2,
-                         factors,
-                         type = "split-rcbd",
-                         rep = 3,
-                         zigzag = FALSE,
-                         nrows = NA,
-                         serie = 1000,
-                         seed = NULL,
-                         project = "inkaverse",
-                         qrcode = "{project}{plots}{factors}") {
+design_split <- function(
+    nfactors = 2,
+    factors,
+    type = "split-rcbd",
+    rep = 3,
+    zigzag = FALSE,
+    nrows = NA,
+    serie = 1000,
+    seed = NULL,
+    project = "inkaverse",
+    qrcode = "{project}{plots}{factors}"
+) {
+  
+  type <- normalize_tarpuy_design_type(
+    type
+  )
   
   if(type == "split-rcbd") {
     
@@ -44,17 +50,7 @@ design_split <- function(nfactors = 2,
         qrcode = qrcode
       )
     )
-    
   }
   
-  # if(type == "split-crd") {
-  #   
-  #   return(
-  #     design_split_crd(...)
-  #   )
-  #   
-  # }
-  
   stop("Split design type not implemented.")
-  
 }

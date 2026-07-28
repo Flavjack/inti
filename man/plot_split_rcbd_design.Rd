@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_split_rcbd_design.R
 \name{plot_split_rcbd_design}
 \alias{plot_split_rcbd_design}
-\title{Plot split-plot RCBD fieldbook design}
+\title{Plot Splitplot-RCBD fieldbook design}
 \usage{
 plot_split_rcbd_design(
   data,
@@ -10,26 +10,82 @@ plot_split_rcbd_design(
   fill = "plots",
   xlab = NULL,
   ylab = NULL,
-  glab = NULL
+  glab = NULL,
+  text_size = NULL,
+  wrap_width = NULL,
+  font_family = "Open Sans",
+  font_face = "plain"
 )
 }
 \arguments{
 \item{data}{Fieldbook data frame from \code{design_split_rcbd()}.}
 
-\item{factor}{Character. Column used to color experimental units.}
+\item{factor}{Character scalar. Column used to color experimental units.
+If missing, \code{"wp_sp"} is used when available; otherwise, \code{"ntreat"} is
+used.}
 
 \item{fill}{Character vector. Column or columns used as labels inside each
-experimental unit.}
+experimental unit. Default is \code{"plots"}.}
 
-\item{xlab}{Character. Optional x axis title.}
+\item{xlab}{Character scalar. Optional x axis title.}
 
-\item{ylab}{Character. Optional y axis title.}
+\item{ylab}{Character scalar. Optional y axis title.}
 
-\item{glab}{Character. Optional legend title.}
+\item{glab}{Character scalar. Optional legend title.}
+
+\item{text_size}{Optional positive numeric scalar indicating the plot-label
+font size in typographic points (\code{pt}). If \code{NULL} or \code{NA}, the function
+calculates an automatic size: 10 pt for one label column, 8 pt for two
+columns and 7 pt for three or more columns.}
+
+\item{wrap_width}{Optional positive integer indicating the approximate
+maximum number of characters per line. If \code{NULL} or \code{NA}, labels are not
+wrapped. Underscores are displayed as spaces only in the sketch.}
+
+\item{font_family}{Font family used in the sketch. Defaults to
+\code{"Open Sans"}. If it or the optional \code{systemfonts} package is unavailable,
+the function silently uses \code{"sans"}.}
+
+\item{font_face}{Font face used in the sketch. Defaults to \code{"plain"},
+equivalent to regular/normal text.}
 }
 \value{
 A \code{ggplot} object.
 }
 \description{
-Plot fieldbook sketches for split-plot designs under RCBD structure.
+Plot fieldbook sketches for Splitplot-RCBD experimental designs generated
+by \code{design_split_rcbd()}.
+}
+\details{
+Each block is displayed in a separate panel. Within each block:
+
+\itemize{
+\item \code{cols} identifies the whole-plot position on the x axis.
+\item The ranked \code{rows} values identify subplot positions on the y axis.
+\item A black external border identifies each whole plot.
+}
+
+Label wrapping changes only the displayed text. It does not modify
+\code{plots}, \code{ntreat}, treatment factors, QR codes or any other fieldbook value.
+
+\code{text_size} is expressed in points, like common word processors. Internally
+it is converted to the size unit expected by \code{ggplot2::geom_text()}.
+
+The visible design name is Splitplot-RCBD, while the stable internal
+identifier remains \code{"split-rcbd"}.
+}
+\examples{
+\dontrun{
+
+plot_split_rcbd_design(
+  data = fieldbook,
+  factor = "wp_sp",
+  fill = c("plots", "ntreat"),
+  text_size = 9,
+  wrap_width = 14,
+  font_family = "Open Sans",
+  font_face = "plain"
+)
+
+}
 }

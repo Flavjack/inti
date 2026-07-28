@@ -1,5 +1,51 @@
 utils::globalVariables(c(".", ":=", "%>%"))
 
+normalize_tarpuy_design_type <- function(x) {
+  
+  if(
+    is.null(x) ||
+    length(x) == 0L ||
+    all(is.na(x))
+  ) {
+    return(NA_character_)
+  }
+  
+  x <- tolower(
+    trimws(
+      as.character(x[1L])
+    )
+  )
+  
+  aliases <- c(
+    # Standard designs
+    "dca" = "crd",
+    "dbca" = "rcbd",
+    
+    # Canonical Splitplot-RCBD identifier
+    "split-rcbd" = "split-rcbd",
+    
+    # Accepted aliases
+    "split_rcbd" = "split-rcbd",
+    "split rcbd" = "split-rcbd",
+    "splitplot-rcbd" = "split-rcbd",
+    "splitplot_rcbd" = "split-rcbd",
+    "splitplot rcbd" = "split-rcbd",
+    "split-plot-rcbd" = "split-rcbd",
+    "split-plot rcbd" = "split-rcbd",
+    "split-plot_rcbd" = "split-rcbd"
+  )
+  
+  if(x %in% names(aliases)) {
+    return(
+      unname(
+        aliases[[x]]
+      )
+    )
+  }
+  
+  x
+}
+
 #' @importFrom dplyr %>%
 #' @export
 dplyr::`%>%`

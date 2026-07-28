@@ -84,6 +84,10 @@ tarpuy_plex <- function(data = NULL
   
   PLEX <- INFORMATION <- DAI <- NULL
   
+  design <- normalize_tarpuy_design_type(
+    design
+  )
+  
 # arguments ---------------------------------------------------------------
   
   start <- if(is.null(start) || is.na(start)) { 
