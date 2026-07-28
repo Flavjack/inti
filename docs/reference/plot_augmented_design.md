@@ -12,7 +12,11 @@ plot_augmented_design(
   fill = "plots",
   xlab = NULL,
   ylab = NULL,
-  glab = NULL
+  glab = NULL,
+  text_size = NULL,
+  wrap_width = NULL,
+  font_family = "Open Sans",
+  font_face = "plain"
 )
 ```
 
@@ -24,8 +28,8 @@ plot_augmented_design(
 
 - factor:
 
-  Character. Column used to color experimental units. Default is
-  `"type"` when available.
+  Character scalar. Column used to color experimental units. If missing,
+  `"type"` is used.
 
 - fill:
 
@@ -34,15 +38,39 @@ plot_augmented_design(
 
 - xlab:
 
-  Character. Optional x axis title.
+  Character scalar. Optional x axis title.
 
 - ylab:
 
-  Character. Optional y axis title.
+  Character scalar. Optional y axis title.
 
 - glab:
 
-  Character. Optional legend title.
+  Character scalar. Optional legend title.
+
+- text_size:
+
+  Optional positive numeric scalar indicating the plot-label font size
+  in typographic points (`pt`). If `NULL` or `NA`, the function
+  calculates an automatic size: 10 pt for one label column, 8 pt for two
+  columns and 7 pt for three or more columns.
+
+- wrap_width:
+
+  Optional positive integer indicating the approximate maximum number of
+  characters per line. If `NULL` or `NA`, labels are not wrapped.
+  Underscores are displayed as spaces only in the sketch.
+
+- font_family:
+
+  Font family used in the sketch. Defaults to `"Open Sans"`. If it or
+  the optional `systemfonts` package is unavailable, the function
+  silently uses `"sans"`.
+
+- font_face:
+
+  Font face used in the sketch. Defaults to `"plain"`, equivalent to
+  regular/normal text.
 
 ## Value
 
@@ -50,13 +78,38 @@ A `ggplot` object.
 
 ## Details
 
-This function is intended for augmented designs with checks and entries.
-It uses:
+This function is intended for augmented designs with checks, entries and
+optional empty experimental units. It uses:
 
 - `cols` as the x axis.
 
-- `block` as the y axis when available.
+- `block` as the y axis.
 
 - `type` to distinguish checks, tests and empty plots.
 
-Empty plots are shown in grey when `type` is `NA`.
+Empty plots are shown in grey when `type` is `NA` or empty.
+
+Label wrapping changes only the displayed text. It does not modify
+`entry`, `plots`, `ntreat`, QR codes or any other fieldbook value.
+
+`text_size` is expressed in points, like common word processors.
+Internally it is converted to the size unit expected by
+[`ggplot2::geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html).
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+
+plot_augmented_design(
+  data = fieldbook,
+  factor = "type",
+  fill = c("plots", "entry"),
+  text_size = 9,
+  wrap_width = 14,
+  font_family = "Open Sans",
+  font_face = "plain"
+)
+
+} # }
+```

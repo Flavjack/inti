@@ -25,7 +25,7 @@ designs, sorted designs and unsorted designs."><meta property="og:image" content
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,11 @@ designs, sorted designs and unsorted designs.</p>
 <span>  fill <span class="op">=</span> <span class="st">"plots"</span>,</span>
 <span>  xlab <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ylab <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  glab <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  glab <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  text_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  wrap_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  font_family <span class="op">=</span> <span class="st">"Open Sans"</span>,</span>
+<span>  font_face <span class="op">=</span> <span class="st">"plain"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -91,32 +95,53 @@ designs, sorted designs and unsorted designs.</p>
 
 
 <dt id="arg-factor">factor<a class="anchor" aria-label="anchor" href="#arg-factor"></a></dt>
-<dd><p>Character. Name of the column used to color the experimental
-units. For example: <code>"geno"</code>, <code>"acc"</code>, <code>"nacl"</code>, <code>"block"</code> or <code>"ntreat"</code>.
-If <code>NA</code>, the function uses <code>"block"</code> when available; otherwise, it uses
-the third column of <code>data</code>.</p></dd>
+<dd><p>Character scalar. Name of the column used to color the
+experimental units. If missing, <code>"block"</code> is used when available;
+otherwise, the third column of <code>data</code> is used.</p></dd>
 
 
 <dt id="arg-fill">fill<a class="anchor" aria-label="anchor" href="#arg-fill"></a></dt>
-<dd><p>Character vector. Name of one or more columns used as labels
-inside each experimental unit. For example: <code>"plots"</code>,
-<code>c("plots", "ntreat")</code> or <code>c("plots", "acc", "nacl")</code>. When <code>ntreat</code>
-is used, it is shown as <code>T1</code>, <code>T2</code>, etc.</p></dd>
+<dd><p>Character vector. Names of one or more columns used as labels
+inside each experimental unit. When <code>ntreat</code> is used, it is displayed as
+<code>T1</code>, <code>T2</code>, etc.</p></dd>
 
 
 <dt id="arg-xlab">xlab<a class="anchor" aria-label="anchor" href="#arg-xlab"></a></dt>
-<dd><p>Character. Title for the x axis. If <code>NULL</code>, <code>"columns"</code> is used.</p></dd>
+<dd><p>Character scalar. Title for the x axis. If <code>NULL</code>,
+<code>"columns"</code> is used.</p></dd>
 
 
 <dt id="arg-ylab">ylab<a class="anchor" aria-label="anchor" href="#arg-ylab"></a></dt>
-<dd><p>Character. Title for the y axis. If <code>NULL</code>, <code>"row"</code> is used for
-non-RCBD designs. For RCBD/DBCA designs, the y axis is shown as
-<code>"blocks"</code>.</p></dd>
+<dd><p>Character scalar. Title for the y axis. If <code>NULL</code>, <code>"row"</code> is
+used for non-RCBD designs. For RCBD/DBCA designs, <code>"blocks"</code> is used.</p></dd>
 
 
 <dt id="arg-glab">glab<a class="anchor" aria-label="anchor" href="#arg-glab"></a></dt>
-<dd><p>Character. Title for the legend. If <code>NULL</code>, the value of
-<code>factor</code> is used.</p></dd>
+<dd><p>Character scalar. Legend title. If <code>NULL</code>, <code>factor</code> is used.</p></dd>
+
+
+<dt id="arg-text-size">text_size<a class="anchor" aria-label="anchor" href="#arg-text-size"></a></dt>
+<dd><p>Optional positive numeric scalar. Text size passed to
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">ggplot2::geom_text()</a></code>. If <code>NULL</code> or <code>NA</code>, it is calculated automatically
+from the number of columns selected in <code>fill</code>.</p></dd>
+
+
+<dt id="arg-wrap-width">wrap_width<a class="anchor" aria-label="anchor" href="#arg-wrap-width"></a></dt>
+<dd><p>Optional positive integer. Maximum approximate number of
+characters per line in plot labels. If <code>NULL</code> or <code>NA</code>, labels are not
+wrapped. Underscores are shown as spaces only in the plotted label; the
+original fieldbook values are not modified.</p></dd>
+
+
+<dt id="arg-font-family">font_family<a class="anchor" aria-label="anchor" href="#arg-font-family"></a></dt>
+<dd><p>Character scalar. Font family used by the sketch.
+Defaults to <code>"Open Sans"</code>. If the font cannot be found through
+<code>systemfonts</code>, <code>"sans"</code> is used as a fallback.</p></dd>
+
+
+<dt id="arg-font-face">font_face<a class="anchor" aria-label="anchor" href="#arg-font-face"></a></dt>
+<dd><p>Character scalar. Font face used in labels, axes and
+legends. Defaults to <code>"plain"</code> (Open Sans Regular).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -128,100 +153,26 @@ non-RCBD designs. For RCBD/DBCA designs, the y axis is shown as
     <p>The function does not calculate the experimental design. It only plots an
 existing fieldbook. Therefore, if the fieldbook was generated with
 <code>zigzag = TRUE</code>, the zigzag layout is respected because the function uses
-the existing <code>rows</code>, <code>cols</code> and <code>block</code> columns.</p>
-<p>For non-blocked standard designs, such as CRD/DCA, sorted and unsorted
-designs, the sketch is plotted using:</p>
-<ul><li><p><code>cols</code> as the x axis.</p></li>
-<li><p><code>rows</code> as the y axis.</p></li>
-</ul><p>For RCBD/DBCA designs, the sketch is plotted using:</p>
-<ul><li><p><code>cols</code> as the x axis.</p></li>
-<li><p><code>block</code> as the y axis.</p></li>
-</ul><p>In this way, each row represents one block, which makes the DBCA sketch
-easier to interpret in field layout previews.</p>
-<p>The argument <code>factor</code> controls the fill color, while <code>fill</code> controls the
-text printed inside each plot. For example, <code>factor = "nacl"</code> and
-<code>fill = c("plots", "acc", "nacl")</code> colors plots by NaCl level and writes
-plot ID, accession and NaCl level inside each experimental unit.</p>
+the existing layout columns.</p>
+<p>Non-blocked standard designs are plotted using <code>cols</code> on the x axis and
+<code>rows</code> on the y axis. RCBD/DBCA designs retain their existing Tarpuy
+representation: <code>cols</code> on the x axis and <code>block</code> on the y axis.</p>
+<p>Label formatting affects only the sketch. It does not change <code>entry</code>,
+<code>ntreat</code>, QR codes or any other fieldbook value.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Example 1: sorted design without replications</span></span></span>
-<span class="r-in"><span><span class="va">factores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  geno <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"G"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="fu"><a href="design_noreps.html">design_noreps</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  factors <span class="op">=</span> <span class="va">factores</span>,</span></span>
-<span class="r-in"><span>  type <span class="op">=</span> <span class="st">"sorted"</span>,</span></span>
-<span class="r-in"><span>  zigzag <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>  nrows <span class="op">=</span> <span class="fl">3</span>,</span></span>
-<span class="r-in"><span>  serie <span class="op">=</span> <span class="fl">1000</span>,</span></span>
-<span class="r-in"><span>  seed <span class="op">=</span> <span class="fl">123</span>,</span></span>
-<span class="r-in"><span>  project <span class="op">=</span> <span class="st">"TEST"</span>,</span></span>
-<span class="r-in"><span>  qrcode <span class="op">=</span> <span class="st">"{project}{plots}"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dsg</span> <span class="op">&lt;-</span> <span class="va">fb</span><span class="op">$</span><span class="va">fieldbook</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">plot_standard_design</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  data <span class="op">=</span> <span class="va">dsg</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">fieldbook</span>,</span></span>
 <span class="r-in"><span>  factor <span class="op">=</span> <span class="st">"geno"</span>,</span></span>
-<span class="r-in"><span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"ntreat"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Example 2: DCA / CRD</span></span></span>
-<span class="r-in"><span><span class="va">factores_dca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  geno <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"G"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fb_dca</span> <span class="op">&lt;-</span> <span class="fu"><a href="design_repblock.html">design_repblock</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  nfactors <span class="op">=</span> <span class="fl">1</span>,</span></span>
-<span class="r-in"><span>  factors <span class="op">=</span> <span class="va">factores_dca</span>,</span></span>
-<span class="r-in"><span>  type <span class="op">=</span> <span class="st">"crd"</span>,</span></span>
-<span class="r-in"><span>  rep <span class="op">=</span> <span class="fl">4</span>,</span></span>
-<span class="r-in"><span>  zigzag <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>  nrows <span class="op">=</span> <span class="fl">4</span>,</span></span>
-<span class="r-in"><span>  serie <span class="op">=</span> <span class="fl">1000</span>,</span></span>
-<span class="r-in"><span>  seed <span class="op">=</span> <span class="fl">123</span>,</span></span>
-<span class="r-in"><span>  project <span class="op">=</span> <span class="st">"DCA"</span>,</span></span>
-<span class="r-in"><span>  qrcode <span class="op">=</span> <span class="st">"{project}{plots}"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">plot_standard_design</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  data <span class="op">=</span> <span class="va">fb_dca</span><span class="op">$</span><span class="va">fieldbook</span>,</span></span>
-<span class="r-in"><span>  factor <span class="op">=</span> <span class="st">"geno"</span>,</span></span>
-<span class="r-in"><span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"ntreat"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Example 3: DBCA / RCBD</span></span></span>
-<span class="r-in"><span><span class="va">factores_dbca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  acc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"acc"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  nacl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span>, <span class="fl">200</span>, <span class="fl">300</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fb_dbca</span> <span class="op">&lt;-</span> <span class="fu"><a href="design_repblock.html">design_repblock</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  nfactors <span class="op">=</span> <span class="fl">2</span>,</span></span>
-<span class="r-in"><span>  factors <span class="op">=</span> <span class="va">factores_dbca</span>,</span></span>
-<span class="r-in"><span>  type <span class="op">=</span> <span class="st">"rcbd"</span>,</span></span>
-<span class="r-in"><span>  rep <span class="op">=</span> <span class="fl">4</span>,</span></span>
-<span class="r-in"><span>  zigzag <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>  serie <span class="op">=</span> <span class="fl">1000</span>,</span></span>
-<span class="r-in"><span>  seed <span class="op">=</span> <span class="fl">123</span>,</span></span>
-<span class="r-in"><span>  project <span class="op">=</span> <span class="st">"DBCA"</span>,</span></span>
-<span class="r-in"><span>  qrcode <span class="op">=</span> <span class="st">"{project}{plots}"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">plot_standard_design</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  data <span class="op">=</span> <span class="va">fb_dbca</span><span class="op">$</span><span class="va">fieldbook</span>,</span></span>
-<span class="r-in"><span>  factor <span class="op">=</span> <span class="st">"nacl"</span>,</span></span>
-<span class="r-in"><span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"acc"</span>, <span class="st">"nacl"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  glab <span class="op">=</span> <span class="st">"NaCl"</span></span></span>
+<span class="r-in"><span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"entry"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  text_size <span class="op">=</span> <span class="fl">2.5</span>,</span></span>
+<span class="r-in"><span>  wrap_width <span class="op">=</span> <span class="fl">14</span>,</span></span>
+<span class="r-in"><span>  font_family <span class="op">=</span> <span class="st">"Open Sans"</span>,</span></span>
+<span class="r-in"><span>  font_face <span class="op">=</span> <span class="st">"plain"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
@@ -236,7 +187,7 @@ plot ID, accession and NaCl level inside each experimental unit.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

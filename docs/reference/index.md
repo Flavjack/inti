@@ -27,7 +27,7 @@ Data analysis
 - [`plot_smr()`](https://inkaverse.com/reference/plot_smr.md) : Plot
   summary data
 - [`plot_split_rcbd_design()`](https://inkaverse.com/reference/plot_split_rcbd_design.md)
-  : Plot split-plot RCBD fieldbook design
+  : Plot Splitplot-RCBD fieldbook design
 - [`plot_standard_design()`](https://inkaverse.com/reference/plot_standard_design.md)
   : Plot standard fieldbook experimental designs
 

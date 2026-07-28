@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,11 @@
 <span>  fill <span class="op">=</span> <span class="st">"plots"</span>,</span>
 <span>  xlab <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ylab <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  glab <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  glab <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  text_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  wrap_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  font_family <span class="op">=</span> <span class="st">"Open Sans"</span>,</span>
+<span>  font_face <span class="op">=</span> <span class="st">"plain"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -81,7 +85,7 @@
 
 
 <dt id="arg-factor">factor<a class="anchor" aria-label="anchor" href="#arg-factor"></a></dt>
-<dd><p>Character. Column used to color experimental units.</p></dd>
+<dd><p>Character scalar. Column used to color experimental units.</p></dd>
 
 
 <dt id="arg-fill">fill<a class="anchor" aria-label="anchor" href="#arg-fill"></a></dt>
@@ -90,15 +94,38 @@ experimental units.</p></dd>
 
 
 <dt id="arg-xlab">xlab<a class="anchor" aria-label="anchor" href="#arg-xlab"></a></dt>
-<dd><p>Character. Optional x axis title.</p></dd>
+<dd><p>Character scalar. Optional x axis title.</p></dd>
 
 
 <dt id="arg-ylab">ylab<a class="anchor" aria-label="anchor" href="#arg-ylab"></a></dt>
-<dd><p>Character. Optional y axis title.</p></dd>
+<dd><p>Character scalar. Optional y axis title.</p></dd>
 
 
 <dt id="arg-glab">glab<a class="anchor" aria-label="anchor" href="#arg-glab"></a></dt>
-<dd><p>Character. Optional legend title.</p></dd>
+<dd><p>Character scalar. Optional legend title.</p></dd>
+
+
+<dt id="arg-text-size">text_size<a class="anchor" aria-label="anchor" href="#arg-text-size"></a></dt>
+<dd><p>Optional positive numeric scalar indicating the plot-label
+font size in typographic points (<code>pt</code>). If <code>NULL</code> or <code>NA</code>, the selected
+plotting function calculates an automatic size.</p></dd>
+
+
+<dt id="arg-wrap-width">wrap_width<a class="anchor" aria-label="anchor" href="#arg-wrap-width"></a></dt>
+<dd><p>Optional positive integer indicating the approximate
+maximum number of characters per line. If <code>NULL</code> or <code>NA</code>, labels are not
+wrapped.</p></dd>
+
+
+<dt id="arg-font-family">font_family<a class="anchor" aria-label="anchor" href="#arg-font-family"></a></dt>
+<dd><p>Font family used in the sketch. Defaults to
+<code>"Open Sans"</code>. Each plotting function silently falls back to <code>"sans"</code>
+when the requested font is unavailable.</p></dd>
+
+
+<dt id="arg-font-face">font_face<a class="anchor" aria-label="anchor" href="#arg-font-face"></a></dt>
+<dd><p>Font face used in the sketch. Defaults to <code>"plain"</code>,
+equivalent to regular/normal text.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -109,8 +136,32 @@ experimental units.</p></dd>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function works as a dispatcher. It detects the design type from the
 fieldbook and sends the data to the corresponding plotting function.</p>
+<p>The text and font arguments are forwarded to:</p>
+<ul><li><p><code><a href="plot_standard_design.html">plot_standard_design()</a></code></p></li>
+<li><p><code><a href="plot_augmented_design.html">plot_augmented_design()</a></code></p></li>
+<li><p><code><a href="plot_split_rcbd_design.html">plot_split_rcbd_design()</a></code></p></li>
+</ul><p>The visible name <code>Splitplot-RCBD</code> and accepted spelling variants are
+normalized to the stable internal identifier <code>"split-rcbd"</code> before the
+plotting method is selected. The fieldbook itself is not modified.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">tarpuy_plotdesign</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">fieldbook</span>,</span></span>
+<span class="r-in"><span>  factor <span class="op">=</span> <span class="st">"entry"</span>,</span></span>
+<span class="r-in"><span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"entry"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  text_size <span class="op">=</span> <span class="fl">9</span>,</span></span>
+<span class="r-in"><span>  wrap_width <span class="op">=</span> <span class="fl">14</span>,</span></span>
+<span class="r-in"><span>  font_family <span class="op">=</span> <span class="st">"Open Sans"</span>,</span></span>
+<span class="r-in"><span>  font_face <span class="op">=</span> <span class="st">"plain"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -120,7 +171,7 @@ fieldbook and sends the data to the corresponding plotting function.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>
