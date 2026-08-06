@@ -18,31 +18,40 @@ design_repblock(
 )
 }
 \arguments{
-\item{nfactors}{Number of factor in the experiment \verb{[numeric: 1]}.}
+\item{nfactors}{Number of factors in the experiment \verb{[numeric: 1]}.}
 
-\item{factors}{Lists with names and factor vector \verb{[list]}.}
+\item{factors}{Named list with the levels of each factor \verb{[list]}.}
 
-\item{type}{Type of experimental arrange \verb{[character: "crd" "rcbd" "lsd"]}}
+\item{type}{Type of experimental arrangement \verb{[character: "crd", "rcbd"]}.
+The aliases \code{"dca"} and \code{"dbca"} are also accepted. The former \code{"lsd"}
+branch is intentionally disabled because it did not generate a valid Latin
+square design.}
 
-\item{rep}{Number of replications in the experiment \verb{[numeric: 3]}.}
+\item{rep}{Number of replications or blocks in the experiment
+\verb{[numeric: 3]}.}
 
-\item{zigzag}{Experiment layout in zigzag \verb{[logic: FALSE]}.}
+\item{zigzag}{Arrange the physical layout in zigzag order \verb{[logical: FALSE]}.}
 
-\item{nrows}{Experimental design dimension by rows \verb{[numeric: value]}}
+\item{nrows}{Number of rows in the physical field layout. When missing, the
+number of replications or blocks is used.}
 
-\item{serie}{Number to start the plot id \verb{[numeric: 100]}.}
+\item{serie}{Base number used to generate plot identifiers \verb{[numeric: 1000]}.}
 
-\item{seed}{Replicability from randomization \verb{[numeric: NULL]}.}
+\item{seed}{Seed used for reproducible randomization \verb{[numeric: NULL]}.}
 
-\item{project}{Bar code prefix for data collection \verb{[character: "inkaverse"]}.}
+\item{project}{Barcode prefix for data collection
+\verb{[character: "inkaverse"]}.}
 
-\item{qrcode}{Concatenate the QR code \verb{[character: "\{project\}\{plots\}\{factors\}"]}}
+\item{qrcode}{Template used to concatenate QR-code fields
+\verb{[character: "\{project\}\{plots\}"]}. The placeholder \code{{factors}} expands to
+all factor columns.}
 }
 \value{
-A list with the field-book design and parameters
+A list with the field-book design and parameters.
 }
 \description{
-Function to deploy field-book experiment for CRD and RCBD
+Function to deploy field-book experiments for completely randomized designs
+(CRD/DCA) and randomized complete block designs (RCBD/DBCA).
 }
 \examples{
 
@@ -50,25 +59,27 @@ Function to deploy field-book experiment for CRD and RCBD
 
 library(inti)
 
-factores <- list("geno" = c("A", "B", "C", "D", "D", 1, NA, NA, NULL, "NA")
-                 , "salt stress" = c(0, 50, 200, 200, "T0", NA, NULL, "NULL")
-                 , time = c(30, 60, 90)
-                 )
+factores <- list(
+  "geno" = c("A", "B", "C", "D", "D", 1, NA, NULL, "NA"),
+  "salt stress" = c(0, 50, 200, 200, "T0", NA, NULL, "NULL"),
+  "time" = c(30, 60, 90)
+)
 
-fb <-design_repblock(nfactors = 3
-                     , factors = factores
-                     , type = "rcbd"
-                     , rep = 5
-                     , zigzag = T
-                     , seed = 0
-                     , nrows = 20
-                     , qrcode = "{project}{plots}"
-                     )
-                     
+fb <- design_repblock(
+  nfactors = 3,
+  factors = factores,
+  type = "rcbd",
+  rep = 5,
+  zigzag = TRUE,
+  seed = 123,
+  nrows = 5,
+  qrcode = "{project}{plots}"
+)
+
 dsg <- fb$fieldbook
 
-fb \%>\%   
-  tarpuy_plotdesign(fill = "plots") 
+fb \%>\%
+  tarpuy_plotdesign(fill = "plots")
 
 fb$parameters
 

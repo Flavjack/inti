@@ -1,257 +1,427 @@
 #' Fieldbook experimental designs
 #'
-#' Function to deploy experimental designs
+#' Function to deploy the experimental designs currently supported by TARPUY.
 #'
-#' @param data Experimental design data frame with the factors and level. See
-#'   examples.
-#' @param nfactors Number of factor in the experiment(default = 1). See
-#'   details.
-#' @param type Type of experimental arrange `[default = "crd"]`. See details.
-#' @param rep  Number of replications in the experiment (default = 3).
-#' @param zigzag Experiment layout in zigzag `[logic: FALSE]`.
-#' @param nrows Experimental design dimension by rows `[numeric: value]`.
-#' @param serie Number to start the plot id `[numeric: 100]`.
-#' @param seed Replicability of draw results `[default = 0]` always random. See
-#'   details.
+#' @param data Experimental design data frame containing factor names and
+#'   levels. A design sheet may also include the columns \code{{arguments}} and
+#'   \code{{values}} to override the function arguments.
+#' @param nfactors Number of factors in the experiment `[default = 1]`.
+#' @param type Type of experimental arrangement `[default = "crd"]`.
+#'   Supported designs are `"crd"`, `"rcbd"`, `"augmented"`, and
+#'   `"split-rcbd"`. The aliases `"dca"` and `"dbca"` are accepted.
+#' @param rep Number of replications or blocks in the experiment
+#'   `[default = 2]`.
+#' @param zigzag Arrange the physical layout in zigzag order
+#'   `[logical: FALSE]`.
+#' @param nrows Number of rows in the physical field layout. When missing, the
+#'   corresponding design function calculates the layout.
+#' @param serie Base number used to generate plot identifiers
+#'   `[numeric: 100]`.
+#' @param seed Seed used for reproducible randomization. `0`, `NA`, and `NULL`
+#'   preserve the historical TARPUY behavior of using a random seed.
 #' @param project Barcode prefix for data collection.
-#' @param qrcode String to concatenate the QR code `[character: {project}{plots}{factors}]`.
+#' @param qrcode Template used to concatenate QR-code fields
+#'   `[character: "{project}{plots}"]`.
 #'
-#' @details The function allows to include the arguments in the sheet that have
-#'   the information of the design. You should include 2 columns in the sheet:
-#'   \code{{arguments}} and \code{{values}}. See examples. The information will
-#'   be extracted automatically and deploy the design. \code{nfactors} = 1:
-#'   crd, rcbd, lsd, lattice. \code{nfactors} = 2 (factorial): split-crd,
-#'   split-rcbd split-lsd \code{nfactors} >= 2 (factorial): crd, rcbd, lsd.
+#' @details The design sheet can include two optional columns named
+#'   \code{{arguments}} and \code{{values}}. Values supplied in those columns
+#'   override the corresponding function arguments. Factor columns are the
+#'   remaining columns whose names are not enclosed in braces (`{}`) or square
+#'   brackets (`[]`).
 #'
-#' @return A list with the fieldbook design
-#' 
+#'   TARPUY currently dispatches only designs with an implemented and validated
+#'   generator: CRD/DCA, RCBD/DBCA, augmented, and split-plot RCBD. Other design
+#'   identifiers are rejected explicitly instead of being routed to incomplete
+#'   generators.
+#'
+#' @return A data frame containing the generated fieldbook.
+#'
 #' @export
-#' 
+#'
 #' @examples
-#' 
+#'
 #' \dontrun{
 #'
 #' library(inti)
 #' library(gsheet)
-#' 
-#' url <- paste0("https://docs.google.com/spreadsheets/d/"
-#'               , "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1479851579#gid=1479851579")
-#' # browseURL(url)
-#' 
-#' fb <- gsheet2tbl(url) 
-#' 
-#' dsg <- fb %>% tarpuy_design() 
-#' 
-#' dsg %>% 
-#'   tarpuy_plotdesign()
-#' 
+#'
+#' url <- paste0(
+#'   "https://docs.google.com/spreadsheets/d/",
+#'   "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit"
+#' )
+#'
+#' fb <- gsheet2tbl(url)
+#'
+#' dsg <- fb %>% tarpuy_design()
+#'
+#' dsg %>% tarpuy_plotdesign()
+#'
 #' }
 
-tarpuy_design <- function(data
-                          , nfactors = 1
-                          , type = "crd"
-                          , rep = 2
-                          , zigzag = FALSE
-                          , nrows = NA
-                          , serie = 100
-                          , seed = NULL
-                          , project = NA
-                          , qrcode = "{project}{plots}") {
-  plots <- Row.names <- factors <- where <- NULL
+tarpuy_design <- function(data,
+                          nfactors = 1,
+                          type = "crd",
+                          rep = 2,
+                          zigzag = FALSE,
+                          nrows = NA,
+                          serie = 100,
+                          seed = NULL,
+                          project = NA,
+                          qrcode = "{project}{plots}") {
   
-  is_blank <- function(x) {
-    is.null(x) || length(x) == 0 || is.na(x) || x == ""
+  # -------------------------------------------------------------------------
+  # Internal helpers
+  # -------------------------------------------------------------------------
+  
+  is_blank_scalar <- function(x) {
+    is.null(x) ||
+      length(x) == 0L ||
+      (length(x) == 1L && is.na(x)) ||
+      (length(x) == 1L && is.character(x) && !nzchar(trimws(x)))
   }
   
-  # data <- fb
+  has_real_value <- function(x) {
+    if(is.list(x)) {
+      x <- unlist(x, recursive = TRUE, use.names = FALSE)
+    }
+    
+    if(length(x) == 0L) {
+      return(FALSE)
+    }
+    
+    x_chr <- trimws(as.character(x))
+    any(!is.na(x) & nzchar(x_chr))
+  }
   
-  # design type -------------------------------------------------------------
-  # -------------------------------------------------------------------------
-  type <- normalize_tarpuy_design_type(
-    type
-  )
+  as_positive_integer <- function(x, name) {
+    value <- suppressWarnings(as.numeric(as.character(x)))
+    
+    if(length(value) != 1L ||
+       is.na(value) ||
+       !is.finite(value) ||
+       value < 1 ||
+       value != floor(value) ||
+       value > .Machine$integer.max) {
+      stop("'", name, "' must be a positive integer.", call. = FALSE)
+    }
+    
+    as.integer(value)
+  }
   
-  type <- match.arg(
-    type,
-    c(
-      "sorted",
-      "unsorted",
-      "crd",
-      "rcbd",
-      "lsd",
-      "lattice",
-      "split-crd",
-      "split-rcbd",
-      "augmented",
-      "strip-plot"
+  as_optional_positive_integer <- function(x, name, default = NULL) {
+    if(is_blank_scalar(x)) {
+      return(default)
+    }
+    
+    as_positive_integer(x, name)
+  }
+  
+  as_logical_flag <- function(x, name, default) {
+    if(is_blank_scalar(x)) {
+      return(default)
+    }
+    
+    if(length(x) != 1L) {
+      stop("'", name, "' must contain one logical value.", call. = FALSE)
+    }
+    
+    if(is.logical(x) && !is.na(x)) {
+      return(x)
+    }
+    
+    value <- tolower(trimws(as.character(x)))
+    
+    true_values <- c("true", "t", "yes", "y", "1")
+    false_values <- c("false", "f", "no", "n", "0")
+    
+    if(value %in% true_values) {
+      return(TRUE)
+    }
+    
+    if(value %in% false_values) {
+      return(FALSE)
+    }
+    
+    stop(
+      "'", name, "' must be TRUE or FALSE.",
+      call. = FALSE
     )
-  )
-  
-  
-  # factors -----------------------------------------------------------------
-  # -------------------------------------------------------------------------
-  
-  # data <- fb
-  
-  dt_factors <- data %>%
-    dplyr::select(where( ~ !all(is.na(.)))) %>%
-    dplyr::select(!starts_with("[") | !ends_with("]")) %>%
-    dplyr::select(!starts_with("{") | !ends_with("}"))
-  
-  # -------------------------------------------------------------------------
-  
-  if (length(dt_factors) == 0 | length(dt_factors) < nfactors) {
-    print("Factors without levels")
-    
-    return(fieldbook <- NULL)
-    
   }
   
-  # desatendido -------------------------------------------------------------
-  # -------------------------------------------------------------------------
-  
-  arg_opt <- data %>%
-    dplyr::select(starts_with("{") | ends_with("}")) %>%
-    names()
-  
-  data <- if (length(arg_opt) == 2) {
-    data
-  } else if (length(arg_opt) < 2) {
-    ndata <- data %>%
-      dplyr::select(!starts_with("{") | !ends_with("}")) %>%
-      dplyr::select(1:{{nfactors}})
-    
-    opt <- list(
-      nfactors = nfactors
-      , type = type
-      , rep = rep
-      , serie = serie
-      , seed = seed
-      , project = project
-    ) %>%
-      tibble::enframe(name = "{arguments}", value = "{values}") %>%
-      merge(.
-            , ndata
-            , by = 0
-            , all = TRUE) %>%
-      dplyr::select(!.data$Row.names)
-    
-  }
-  
-  # data arguments ----------------------------------------------------------
-  # -------------------------------------------------------------------------
-  
-  arguments <- data %>%
-    dplyr::select(where( ~ !all(is.na(.)))) %>%
-    dplyr::select(starts_with("{") | ends_with("}")) %>%
-    dplyr::rename_with( ~ gsub("\\{|\\}", "", .)) %>%
-    tidyr::drop_na() %>%
-    tibble::deframe() %>%
-    as.list()
-  
-  # -------------------------------------------------------------------------
-  
-  nfactors <- if(is_blank(arguments$nfactors)) nfactors else as.numeric(arguments$nfactors)
-  
-  type <- if(is_blank(arguments$type)) type else arguments$type
-  
-  rep <- if(is_blank(arguments$rep)) rep else as.numeric(arguments$rep)
-  
-  zigzag <- if(is_blank(arguments$zigzag)) zigzag else as.logical(arguments$zigzag)
-  
-  nrows <- if(is_blank(arguments$nrows)) nrows else as.numeric(arguments$nrows)
-  
-  serie <- if(is_blank(arguments$serie)) serie else as.numeric(arguments$serie)
-  
-  seed <- if(is_blank(arguments$seed) || arguments$seed == "0") NULL else as.numeric(arguments$seed)
-  
-  
-  project <- if (is.null(arguments$project) ||
-                 is.na(arguments$project) || arguments$project == "") {
-    project
-  } else {
-    arguments$project
-  } %>%
-    iconv(., to = "ASCII//TRANSLIT") %>%
-    toupper() %>%
-    gsub("[[:space:]]", "-", .)
-  
-  qrcode <- if(is_blank(arguments$qrcode)) qrcode else arguments$qrcode
-  
-  #qrcode <- if(is_blank(arguments$qrcode)) qrcode else arguments$qrcode
-  
-  blocks <- if(is_blank(arguments$blocks)) NULL else as.numeric(arguments$blocks)
-  
-  eu_block <- if(is_blank(arguments$eu_block)) NULL else as.numeric(arguments$eu_block)
-  
-  random <- if(is_blank(arguments$random)) TRUE else as.logical(arguments$random)
-  
-  
-  # design
-  # -------------------------------------------------------------------------
-  
-  
-  if(type == "augmented") {
-    
-    if(!all(c("checks", "entries") %in% names(dt_factors))) {
-      print("Columns 'checks' and 'entries' are required")
+  as_seed <- function(x) {
+    if(is_blank_scalar(x)) {
       return(NULL)
     }
     
-    if(qrcode == "{project}{plots}") {
+    value <- suppressWarnings(as.numeric(as.character(x)))
+    
+    if(length(value) != 1L ||
+       is.na(value) ||
+       !is.finite(value) ||
+       value < 0 ||
+       value != floor(value) ||
+       value > .Machine$integer.max) {
+      stop(
+        "'seed' must be a non-negative integer, 0, NA, or NULL.",
+        call. = FALSE
+      )
+    }
+    
+    # Historical TARPUY behavior: seed = 0 means a new randomization.
+    if(value == 0) {
+      return(NULL)
+    }
+    
+    as.integer(value)
+  }
+  
+  normalize_project <- function(x) {
+    if(is_blank_scalar(x)) {
+      return("")
+    }
+    
+    if(length(x) != 1L) {
+      stop("'project' must contain one value.", call. = FALSE)
+    }
+    
+    value <- trimws(as.character(x))
+    value_ascii <- suppressWarnings(iconv(value, to = "ASCII//TRANSLIT"))
+    
+    if(!is.na(value_ascii)) {
+      value <- value_ascii
+    }
+    
+    value <- toupper(value)
+    gsub("[[:space:]]+", "-", value)
+  }
+  
+  normalize_qrcode <- function(x, default) {
+    if(is_blank_scalar(x)) {
+      x <- default
+    }
+    
+    if(length(x) != 1L || is.na(x) || !nzchar(trimws(as.character(x)))) {
+      stop("'qrcode' must be a non-empty character template.", call. = FALSE)
+    }
+    
+    trimws(as.character(x))
+  }
+  
+  is_wrapped_name <- function(x, opening, closing) {
+    startsWith(x, opening) & endsWith(x, closing)
+  }
+  
+  read_argument_table <- function(x) {
+    required <- c("{arguments}", "{values}")
+    present <- required %in% names(x)
+    
+    if(any(present) && !all(present)) {
+      stop(
+        "The design sheet must contain both '{arguments}' and '{values}', ",
+        "or neither of them.",
+        call. = FALSE
+      )
+    }
+    
+    if(!all(present)) {
+      return(list())
+    }
+    
+    argument_names <- trimws(as.character(x[["{arguments}"]]))
+    argument_values <- x[["{values}"]]
+    
+    keep <- !is.na(argument_names) & nzchar(argument_names)
+    argument_names <- argument_names[keep]
+    argument_values <- argument_values[keep]
+    
+    if(length(argument_names) == 0L) {
+      return(list())
+    }
+    
+    argument_names <- gsub("^\\{|\\}$", "", argument_names)
+    argument_names <- tolower(trimws(argument_names))
+    
+    if(any(!nzchar(argument_names))) {
+      stop(
+        "The '{arguments}' column contains an empty argument name.",
+        call. = FALSE
+      )
+    }
+    
+    duplicated_arguments <- unique(argument_names[duplicated(argument_names)])
+    
+    if(length(duplicated_arguments) > 0L) {
+      stop(
+        "Duplicated design arguments: ",
+        paste(duplicated_arguments, collapse = ", "),
+        ".",
+        call. = FALSE
+      )
+    }
+    
+    stats::setNames(as.list(argument_values), argument_names)
+  }
+  
+  argument_or_default <- function(arguments, name, default) {
+    if(!name %in% names(arguments) || is_blank_scalar(arguments[[name]])) {
+      return(default)
+    }
+    
+    arguments[[name]]
+  }
+  
+  extract_augmented_column <- function(x, requested_name) {
+    normalized_names <- tolower(trimws(names(x)))
+    matches <- which(normalized_names == requested_name)
+    
+    if(length(matches) == 0L) {
+      stop(
+        "Columns 'checks' and 'entries' are required for an augmented design.",
+        call. = FALSE
+      )
+    }
+    
+    if(length(matches) > 1L) {
+      stop(
+        "The augmented design contains duplicated '", requested_name,
+        "' columns.",
+        call. = FALSE
+      )
+    }
+    
+    x[[matches]]
+  }
+  
+  # -------------------------------------------------------------------------
+  # Input and design-sheet validation
+  # -------------------------------------------------------------------------
+  
+  if(missing(data) || is.null(data) || !is.data.frame(data)) {
+    stop("'data' must be a data frame containing the design sheet.", call. = FALSE)
+  }
+  
+  if(ncol(data) == 0L) {
+    stop("'data' does not contain any columns.", call. = FALSE)
+  }
+  
+  arguments <- read_argument_table(data)
+  
+  nfactors <- as_positive_integer(
+    argument_or_default(arguments, "nfactors", nfactors),
+    "nfactors"
+  )
+  
+  type <- argument_or_default(arguments, "type", type)
+  type <- normalize_tarpuy_design_type(type)
+  
+  if(is_blank_scalar(type)) {
+    stop("'type' must identify an experimental design.", call. = FALSE)
+  }
+  
+  type <- tolower(trimws(as.character(type[1L])))
+  
+  supported_designs <- c("crd", "rcbd", "augmented", "split-rcbd")
+  
+  if(!type %in% supported_designs) {
+    stop(
+      "Design '", type,
+      "' is not implemented in TARPUY. Available designs: ",
+      paste(supported_designs, collapse = ", "),
+      ".",
+      call. = FALSE
+    )
+  }
+  
+  rep <- as_positive_integer(
+    argument_or_default(arguments, "rep", rep),
+    "rep"
+  )
+  
+  zigzag <- as_logical_flag(
+    argument_or_default(arguments, "zigzag", zigzag),
+    "zigzag",
+    default = FALSE
+  )
+  
+  nrows <- as_optional_positive_integer(
+    argument_or_default(arguments, "nrows", nrows),
+    "nrows",
+    default = NA_integer_
+  )
+  
+  serie <- as_positive_integer(
+    argument_or_default(arguments, "serie", serie),
+    "serie"
+  )
+  
+  seed <- as_seed(argument_or_default(arguments, "seed", seed))
+  
+  project <- normalize_project(
+    argument_or_default(arguments, "project", project)
+  )
+  
+  qrcode <- normalize_qrcode(
+    argument_or_default(arguments, "qrcode", qrcode),
+    default = qrcode
+  )
+  
+  blocks <- as_optional_positive_integer(
+    argument_or_default(arguments, "blocks", NULL),
+    "blocks",
+    default = NULL
+  )
+  
+  eu_block <- as_optional_positive_integer(
+    argument_or_default(arguments, "eu_block", NULL),
+    "eu_block",
+    default = NULL
+  )
+  
+  random <- as_logical_flag(
+    argument_or_default(arguments, "random", TRUE),
+    "random",
+    default = TRUE
+  )
+  
+  separate_checks <- as_logical_flag(
+    argument_or_default(arguments, "separate_checks", TRUE),
+    "separate_checks",
+    default = TRUE
+  )
+  
+  # Factor columns are all non-metadata columns with at least one value.
+  column_names <- names(data)
+  metadata_columns <-
+    is_wrapped_name(column_names, "{", "}") |
+    is_wrapped_name(column_names, "[", "]")
+  
+  factor_data <- data[, !metadata_columns, drop = FALSE]
+  
+  if(ncol(factor_data) > 0L) {
+    populated <- vapply(factor_data, has_real_value, logical(1))
+    factor_data <- factor_data[, populated, drop = FALSE]
+  }
+  
+  # -------------------------------------------------------------------------
+  # Closed design dispatcher
+  # -------------------------------------------------------------------------
+  
+  design_registry <- list(
+    crd = design_repblock,
+    rcbd = design_repblock,
+    augmented = design_augmented,
+    `split-rcbd` = design_split_rcbd
+  )
+  
+  if(type == "augmented") {
+    checks <- extract_augmented_column(factor_data, "checks")
+    entries <- extract_augmented_column(factor_data, "entries")
+    
+    if(identical(qrcode, "{project}{plots}")) {
       qrcode <- "{project}{plots}{entry}"
     }
     
-    checks <- dt_factors$checks %>%
-      stats::na.omit() %>%
-      unique() %>%
-      as.character()
-    
-    entries <- dt_factors$entries %>%
-      stats::na.omit() %>%
-      unique() %>%
-      as.character()
-    
-  } else {
-    
-    factor_names <- dt_factors %>%
-      names() %>%
-      .[1:nfactors] %>%
-      stats::na.omit()
-    
-    if(length(factor_names) != nfactors) {
-      print("Number of factors does not match columns")
-      return(NULL)
-    }
-    
-    factor_levels <- dt_factors %>%
-      dplyr::select({{factor_names}}) %>%
-      as.list()
-  }
-  
-  # -------------------------------------------------------------------------
-  # DESIGN DISPATCH
-  # -------------------------------------------------------------------------
-  
-  design <- if(type == "split-rcbd") {
-    
-    design_split(
-      nfactors = nfactors,
-      factors = factor_levels,
-      type = type,
-      rep = rep,
-      zigzag = zigzag,
-      nrows = nrows,
-      serie = serie,
-      seed = seed,
-      project = project,
-      qrcode = qrcode
-    ) %>%
-      purrr::pluck("fieldbook")
-    
-  } else if(type == "augmented") {
-    
-    design_augmented(
+    result <- design_registry[[type]](
       checks = checks,
       entries = entries,
       blocks = blocks,
@@ -261,38 +431,73 @@ tarpuy_design <- function(data
       serie = serie,
       seed = seed,
       project = project,
-      qrcode = qrcode
-    ) %>%
-      purrr::pluck("fieldbook")
-    
-  } else if(nfactors == 1 & rep == 1) {
-    
-    design_noreps(
-      factors = factor_levels,
-      type = type,
-      zigzag = zigzag,
-      nrows = nrows,
-      serie = serie,
-      seed = seed,
-      project = project,
-      qrcode = qrcode
-    ) %>%
-      purrr::pluck(1)
+      qrcode = qrcode,
+      separate_checks = separate_checks
+    )
     
   } else {
+    if(ncol(factor_data) < nfactors) {
+      stop(
+        "The design requires ", nfactors,
+        " factor column(s), but only ", ncol(factor_data),
+        " populated factor column(s) were found.",
+        call. = FALSE
+      )
+    }
     
-    design_repblock(
-      nfactors = nfactors,
-      factors = factor_levels,
-      type = type,
-      rep = rep,
-      zigzag = zigzag,
-      nrows = nrows,
-      serie = serie,
-      seed = seed,
-      project = project,
-      qrcode = qrcode
-    ) %>%
-      purrr::pluck(1)
+    factor_names <- names(factor_data)[seq_len(nfactors)]
+    
+    if(any(is.na(factor_names)) || any(!nzchar(trimws(factor_names)))) {
+      stop("Every factor column must have a non-empty name.", call. = FALSE)
+    }
+    
+    factor_levels <- as.list(factor_data[, factor_names, drop = FALSE])
+    
+    if(type == "split-rcbd") {
+      if(nfactors != 2L) {
+        stop(
+          "A split-plot RCBD requires exactly two factors: whole plot and subplot.",
+          call. = FALSE
+        )
+      }
+      
+      result <- design_registry[[type]](
+        nfactors = nfactors,
+        factors = factor_levels,
+        type = type,
+        rep = rep,
+        zigzag = zigzag,
+        nrows = nrows,
+        serie = serie,
+        seed = seed,
+        project = project,
+        qrcode = qrcode
+      )
+      
+    } else {
+      # design_repblock() supports rep = 1, so the defective design_noreps()
+      # branch is no longer required.
+      result <- design_registry[[type]](
+        nfactors = nfactors,
+        factors = factor_levels,
+        type = type,
+        rep = rep,
+        zigzag = zigzag,
+        nrows = nrows,
+        serie = serie,
+        seed = seed,
+        project = project,
+        qrcode = qrcode
+      )
+    }
   }
+  
+  if(!is.list(result) || is.null(result$fieldbook)) {
+    stop(
+      "The selected design generator did not return a valid fieldbook.",
+      call. = FALSE
+    )
+  }
+  
+  result$fieldbook
 }

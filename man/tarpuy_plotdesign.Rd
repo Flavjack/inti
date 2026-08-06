@@ -18,33 +18,39 @@ tarpuy_plotdesign(
 )
 }
 \arguments{
-\item{data}{Fieldbook data frame or design object containing a fieldbook.}
+\item{data}{Fieldbook data frame or a design object containing a fieldbook.}
 
-\item{factor}{Character scalar. Column used to color experimental units.}
+\item{factor}{Character scalar. Column used to color experimental units.
+When omitted, \code{NA}, an empty string or \code{"auto"}, TARPUY selects a design-
+appropriate default: the first experimental factor for CRD, RCBD and
+Splitplot-RCBD, and \code{type} for augmented designs.}
 
-\item{fill}{Character vector. Column or columns used as labels inside
-experimental units.}
+\item{fill}{Character vector. Column or columns used as labels inside the
+experimental units. Defaults to \code{"plots"}.}
 
-\item{xlab}{Character scalar. Optional x axis title.}
+\item{xlab}{Character scalar. Optional x-axis title. When \code{NULL}, each
+plotter determines the title from the design geometry.}
 
-\item{ylab}{Character scalar. Optional y axis title.}
+\item{ylab}{Character scalar. Optional y-axis title. When \code{NULL}, each
+plotter determines whether the physical \code{rows} represent rows, blocks or
+subplot positions.}
 
 \item{glab}{Character scalar. Optional legend title.}
 
 \item{text_size}{Optional positive numeric scalar indicating the plot-label
-font size in typographic points (\code{pt}). If \code{NULL} or \code{NA}, the selected
-plotting function calculates an automatic size.}
+font size in typographic points (\code{pt}). When \code{NULL} or \code{NA}, each plotter
+calculates a suitable size automatically.}
 
-\item{wrap_width}{Optional positive integer indicating the approximate
-maximum number of characters per line. If \code{NULL} or \code{NA}, labels are not
-wrapped.}
+\item{wrap_width}{Optional positive integer retained for backward
+compatibility. When \code{NULL} or \code{NA}, label wrapping is calculated
+automatically by the selected plotter. This argument does not need to be
+exposed as a control in the TARPUY interface.}
 
-\item{font_family}{Font family used in the sketch. Defaults to
-\code{"Open Sans"}. Each plotting function silently falls back to \code{"sans"}
-when the requested font is unavailable.}
+\item{font_family}{Character scalar retained for programmatic use. Defaults
+to \code{"Open Sans"}; the plotters fall back to \code{"sans"} when necessary.}
 
-\item{font_face}{Font face used in the sketch. Defaults to \code{"plain"},
-equivalent to regular/normal text.}
+\item{font_face}{Character scalar retained for programmatic use. One of
+\code{"plain"}, \code{"bold"}, \code{"italic"} or \code{"bold.italic"}.}
 }
 \value{
 A \code{ggplot} object.
@@ -53,32 +59,35 @@ A \code{ggplot} object.
 Plot fieldbook sketches according to the experimental design type.
 }
 \details{
-This function works as a dispatcher. It detects the design type from the
-fieldbook and sends the data to the corresponding plotting function.
+This function is the common plotting interface used by TARPUY. It reads the
+design stored in the fieldbook, chooses the corresponding plotter and sends
+the same plotting arguments to all supported design types.
 
-The text and font arguments are forwarded to:
+Supported designs and plotters are:
 
 \itemize{
-\item \code{plot_standard_design()}
-\item \code{plot_augmented_design()}
-\item \code{plot_split_rcbd_design()}
+\item CRD and RCBD: \code{plot_standard_design()}.
+\item Augmented: \code{plot_augmented_design()}.
+\item Splitplot-RCBD: \code{plot_split_rcbd_design()}.
 }
 
-The visible name \code{Splitplot-RCBD} and accepted spelling variants are
-normalized to the stable internal identifier \code{"split-rcbd"} before the
-plotting method is selected. The fieldbook itself is not modified.
+The function never recalculates or rearranges the design. All plotters use
+\code{cols} as the x coordinate and \code{rows} as the y coordinate. Columns such as
+\code{block} are used only for labels, grouping or faceting.
+
+\code{wrap_width}, \code{font_family} and \code{font_face} remain available to avoid
+breaking existing programmatic calls, but the TARPUY frontend should expose
+only the general \code{text_size} control. Automatic label wrapping is used when
+\code{wrap_width = NULL}.
 }
 \examples{
 \dontrun{
 
 tarpuy_plotdesign(
   data = fieldbook,
-  factor = "entry",
-  fill = c("plots", "entry"),
-  text_size = 9,
-  wrap_width = 14,
-  font_family = "Open Sans",
-  font_face = "plain"
+  factor = "auto",
+  fill = c("plots", "ntreat"),
+  text_size = 9
 )
 
 }

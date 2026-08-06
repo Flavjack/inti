@@ -22,33 +22,41 @@ design_augmented(
 \arguments{
 \item{checks}{Vector of check treatments.}
 
-\item{entries}{Vector of new entries.}
+\item{entries}{Vector of new or test entries.}
 
 \item{blocks}{Optional number of blocks. If \code{NULL}, it is calculated from
 \code{entries}, \code{checks} and \code{eu_block}.}
 
-\item{eu_block}{Number of experimental units per block.}
+\item{eu_block}{Number of experimental units per block. It must be greater
+than the number of checks.}
 
-\item{random}{Randomize entries allocation and positions inside each block.}
+\item{random}{Logical. Randomize test-entry allocation and positions inside
+each block.}
 
-\item{zigzag}{Zigzag field layout.}
+\item{zigzag}{Logical. Arrange the physical field layout in zigzag order.}
 
-\item{dim}{Optional layout dimensions c(nrows, ncols).}
+\item{dim}{Optional physical layout dimensions \code{c(nrows, ncols)}. The
+product must equal the total number of experimental units.}
 
-\item{serie}{Plot series number.}
+\item{serie}{Base number used to generate plot identifiers.}
 
-\item{seed}{Random seed. \code{0} or \code{NULL} means no fixed seed.}
+\item{seed}{Random seed. \code{0}, \code{NA} or \code{NULL} means that no fixed seed is set
+inside this function. TARPUY stores an effective seed in the design sheet
+before calling the design generator.}
 
 \item{project}{Barcode prefix.}
 
-\item{qrcode}{QR code column template.}
+\item{qrcode}{QR-code column template. The default is
+\code{"{project}{plots}{entry}"}.}
 
-\item{separate_checks}{Logical. When possible, prevent adjacent checks
-inside each block using constrained randomization.}
+\item{separate_checks}{Logical. When enough positions are available, place
+checks in non-adjacent positions inside each block. With
+\code{random = FALSE}, this placement is deterministic.}
 }
 \value{
-List with fieldbook and parameters.
+A list with \code{fieldbook} and \code{parameters}.
 }
 \description{
-Fieldbook generator for Augmented Designs.
+Fieldbook generator for augmented experimental designs. Every check occurs
+once in each block and every test entry occurs once in the complete design.
 }

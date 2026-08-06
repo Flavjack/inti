@@ -4,7 +4,7 @@
 #> open https://flavjack.github.io/inti/
 #> open https://flavjack.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
-#> date .: 2026-06-14
+#> date .: 2026-08-05
 # -------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------
@@ -13,8 +13,25 @@
 
 #> devtools::install_github("flavjack/inti")
 
-suppressPackageStartupMessages({source("pkgs.R")})
+suppressPackageStartupMessages({
+  source("pkgs.R")
+})
 source("www/msgs.R")
+
+helper_candidates <- c(
+  file.path(getwd(), "helpers.R"),
+  system.file("tarpuy", "helpers.R", package = "inti")
+)
+
+helper_path <- helper_candidates[
+  nzchar(helper_candidates) & file.exists(helper_candidates)
+][1L]
+
+if(is.na(helper_path) || !nzchar(helper_path)) {
+  stop("TARPUY could not find inst/tarpuy/helpers.R.", call. = FALSE)
+}
+
+source(helper_path, local = TRUE)
 
 options("googleAuthR.scopes.selected" = c("https://www.googleapis.com/auth/spreadsheets"
                                           , "https://www.googleapis.com/auth/userinfo.email"
@@ -39,112 +56,19 @@ navbarPage(
   position = "fixed-top",
   
   header = tags$head(
-    
-    tags$style(HTML("
-  p { text-align: justify; }
-  body { padding-top: 50px; }
-
-  html {
-    overflow-y: scroll;
-    scrollbar-gutter: stable;
-  }
-
-  html.gsheet-scroll-lock {
-    overflow-y: clip !important;
-  }
-
-  .gsheet-preview-wrapper {
-    height: 600px;
-    width: 100%;
-    overflow: hidden;
-    overscroll-behavior: contain;
-  }
-
-  .gsheet-preview-frame {
-    height: 100%;
-    width: 100%;
-    border: 0;
-    border-radius: 8px;
-    display: block;
-  }
-  
-  .datepicker,
-  .datepicker-dropdown {
-    z-index: 99999 !important;
-  }
-
-  #plex_factor_selector,
-  #plex_design_selector,
-  #plex_design_parameters,
-  #plex_factor_selector .form-group,
-  #plex_design_selector .form-group,
-  #plex_design_parameters .form-group {
-    width: 100%;
-  }
-
-  .sketch-sidebar .form-group,
-  .sketch-sidebar .selectize-control,
-  .sketch-sidebar .shiny-input-container {
-    width: 100% !important;
-  }
-
-  .sketch-sidebar .btn {
-    width: 100%;
-  }
-
-  .sketch-options-title {
-    font-weight: 700;
-    margin-bottom: 10px;
-  }
-
-  .sketch-preview-image {
-    width: 100%;
-    overflow-x: auto;
-  }
-
-  .sketch-preview-image img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  
-")),
-    
-    tags$script(HTML("
-  (function() {
-
-    let locked = false;
-    let lockTimer = null;
-    let unlockTimer = null;
-
-    function lockPageScroll() {
-      clearTimeout(unlockTimer);
-
-      lockTimer = setTimeout(function() {
-        if (locked) return;
-
-        locked = true;
-        document.documentElement.classList.add('gsheet-scroll-lock');
-      }, 120);
-    }
-
-    function unlockPageScroll() {
-      clearTimeout(lockTimer);
-
-      unlockTimer = setTimeout(function() {
-        if (!locked) return;
-
-        locked = false;
-        document.documentElement.classList.remove('gsheet-scroll-lock');
-      }, 250);
-    }
-
-    $(document).on('mouseenter', '.gsheet-preview-wrapper', lockPageScroll);
-    $(document).on('mouseleave', '.gsheet-preview-wrapper', unlockPageScroll);
-
-  })();
-"))
-    
+    tags$meta(
+      name = "viewport",
+      content = "width=device-width, initial-scale=1, viewport-fit=cover"
+    ),
+    tags$link(
+      rel = "stylesheet",
+      type = "text/css",
+      href = "tarpuy.css"
+    ),
+    tags$script(
+      src = "tarpuy.js",
+      defer = NA
+    )
   ),
   
   # -------------------------------------------------------------------------
@@ -550,48 +474,8 @@ navbarPage(
     "Plex",
     icon = icon("seedling"),
     
-    tags$head(
-      tags$style(
-        HTML(
-          "
-      .tarpuy-card {
-        background: #ffffff;
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 12px;
-        margin-bottom: 10px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-      
-        min-height: 100px;
-        
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .tarpuy-card-title {
-        font-weight: 700;
-        font-size: 18px;
-        margin-bottom: 8px;
-      }
-
-      .tarpuy-section-title {
-        font-weight: 700;
-        color: #000000;
-        margin-bottom: 8px;
-      }
-
-      .tarpuy-generate {
-        font-weight: 700;
-        min-width: 150px;
-      }
-      "
-        )
-      )
-    ),
-    
     fluidRow(
-      style = "margin-bottom:8px;",
+      class = "tarpuy-responsive-row",
       
       column(
         width = 8,
@@ -624,22 +508,18 @@ navbarPage(
           ),
           
           div(
-            style = "
-          display:flex;
-          align-items:center;
-          justify-content:space-between;
-          gap:16px;
-        ",
+            class = "tarpuy-toolbar",
             
             div(
-              style = "flex:1;",
+              class = "tarpuy-toolbar__group",
               uiOutput("plex_sheets2create")
             ),
             
             actionButton(
               inputId = "plex_generate",
               label = "GENERATE",
-              class = "btn btn-success tarpuy-generate"
+              class = "btn btn-success tarpuy-generate",
+              `data-tarpuy-loading-target` = "#plex_sheets2create"
             )
           )
         )
@@ -677,8 +557,14 @@ navbarPage(
               "location",
               "dates",
               "environment",
+              "institutions",
+              "researchers",
+              "altitude",
+              "georeferencing",
               "repository",
-              "manuscript"
+              "project",
+              "manuscript",
+              "album"
             )
           )
         ),
@@ -690,7 +576,7 @@ navbarPage(
             inputId = "plex_sheets",
             label = NULL,
             choices = c("logbook", "timetable", "budget", "matrix", "credit"),
-            selected = c("logbook", "matrix", "budget", "credit")
+            selected = c("logbook", "matrix", "credit")
           )
         )
       ),
@@ -705,12 +591,7 @@ navbarPage(
           div(class = "tarpuy-section-title", icon("feather-alt"), " General Information"),
           
           div(
-            style = "
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 14px;
-      align-items: end;
-    ",
+            class = "tarpuy-grid tarpuy-grid-auto",
             
             conditionalPanel(
               condition = ' input["plex_fields"].includes("manager") ',
@@ -782,13 +663,7 @@ navbarPage(
           ),
           
           div(
-            style = "
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 14px;
-      align-items: start;
-      margin-top: 14px;
-    ",
+            class = "tarpuy-grid tarpuy-grid-2",
             
             textAreaInput(
               inputId = "plex_title",
@@ -827,9 +702,7 @@ navbarPage(
           div(class = "tarpuy-section-title", icon("circle-plus"), " Advanced Information (optional)"),
           
           div(
-            style = "
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 14px; align-items: end; ",
+            class = "tarpuy-grid tarpuy-grid-auto",
             
             conditionalPanel(
               condition = ' input["plex_fields"].includes("institutions") ',
@@ -883,12 +756,26 @@ navbarPage(
             width = "100%"
           ),
           
-          fluidRow(column(
-            6,
-            numericInput("plex_serie", "Plots serie", value = 1000, min = 100)
-          ), column(
-            6, numericInput("plex_seed", "Seed", value = 0, min = 0)
-          ))
+          fluidRow(
+            column(
+              6,
+              numericInput(
+                "plex_serie",
+                "Plots serie",
+                value = 1000,
+                min = 100
+              )
+            ),
+            column(
+              6,
+              numericInput(
+                "plex_seed",
+                "Seed",
+                value = 0,
+                min = 0
+              )
+            )
+          ),
         )
       )
     )
@@ -900,23 +787,27 @@ navbarPage(
     "Fieldbook",
     icon = icon("book"),
     
-    fluidRow(
+    div(
+      class = "tarpuy-fieldbook-layout",
       
-      column(
-        3,
+      div(
+        class = "tarpuy-fieldbook-sidebar-group",
         
         div(
-          class = "tarpuy-card",
+          class = "tarpuy-card fieldbook-intro-card",
           div(
-            style = "font-size:22px; font-weight:600; line-height:1.15;margin-bottom:10px;",
+            class = "tarpuy-card-title fieldbook-generator-title",
             icon("book"),
             " Fieldbook Generator"
           ),
-          tags$small("Generate and validate fieldbooks from the design sheet")
+          tags$small(
+            class = "fieldbook-generator-help",
+            "Generate and validate fieldbooks from the design sheet"
+          )
         ),
         
         div(
-          class = "tarpuy-card",
+          class = "tarpuy-card fieldbook-export-card",
           div(class = "tarpuy-card-title", icon("gear"), " Export Options"),
           
           textInput("fb2export", "Sheet export", placeholder = "sheet name", value = "fb"),
@@ -931,65 +822,54 @@ navbarPage(
           actionButton(
             "export_design",
             "GENERATE",
-            class = "btn btn-success tarpuy-generate"
+            class = "btn btn-success tarpuy-generate",
+            `data-tarpuy-loading-target` = "#fieldbook_preview"
           )
         ),
         
         div(
-          class = "tarpuy-card",
+          class = "tarpuy-card fieldbook-status-card",
           div(class = "tarpuy-card-title", icon("circle-check"), " Status"),
           uiOutput("fieldbook_status")
         ),
         
         div(
-          class = "tarpuy-card",
+          class = "tarpuy-card tarpuy-card--top fieldbook-summary-card",
           div(class = "tarpuy-card-title", icon("chart-simple"), " Layout Summary"),
           uiOutput("fieldbook_summary")
         )
       ),
       
-      column(
-        9,
+      div(
+        class = "tarpuy-card tarpuy-card--top fieldbook-design-preview-card",
+        div(class = "tarpuy-card-title", icon("table"), " Design Preview"),
+        uiOutput("gsheet_preview_design")
+      ),
+      
+      div(
+        class = "tarpuy-card fieldbook-preview-card",
         
         div(
-          class = "tarpuy-card",
-          div(class = "tarpuy-card-title", icon("table"), " Design Preview"),
-          uiOutput("gsheet_preview_design")
-        )
-      )
-    ),
-    
-    # Fieldbook Preview
-    fluidRow(
-      column(
-        12,
-        
-        div(
-          class = "tarpuy-card",
+          class = "tarpuy-toolbar fieldbook-preview-toolbar",
           
           div(
-            style = "
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          margin-bottom:10px;
-        ",
-            
-            div(
-              class = "tarpuy-card-title",
-              style = "margin-bottom:0px;",
-              icon("table-list"),
-              " Fieldbook Preview"
-            ),
-            
-            actionButton(
-              inputId = "refresh_fieldbook_preview",
-              label = "Refresh",
-              icon = icon("rotate"),
-              class = "btn btn-default btn-sm"
-            )
+            class = "tarpuy-card-title",
+            style = "margin-bottom:0px;",
+            icon("table-list"),
+            " Fieldbook Preview"
           ),
           
+          actionButton(
+            inputId = "refresh_fieldbook_preview",
+            label = "Refresh",
+            icon = icon("rotate"),
+            class = "btn btn-default btn-sm",
+            `data-tarpuy-loading-target` = "#fieldbook_preview"
+          )
+        ),
+        
+        tags$div(
+          class = "tarpuy-table-scroll",
           DT::DTOutput("fieldbook_preview")
         )
       )
@@ -1004,6 +884,7 @@ navbarPage(
     icon = icon("pen-ruler"),
     
     fluidRow(
+      class = "tarpuy-responsive-row tarpuy-sketch-layout",
       
       column(
         3,
@@ -1036,7 +917,8 @@ navbarPage(
             label = "Refresh",
             icon = icon("rotate"),
             class = "btn btn-success",
-            width = "100%"
+            width = "100%",
+            `data-tarpuy-loading-target` = "#plot_sketch"
           )
           
         )
@@ -1064,6 +946,7 @@ navbarPage(
     # div(h5(icon("plug-circle-check"), "Mobile")),
     
     fluidRow(
+      class = "tarpuy-responsive-row tarpuy-mobile-layout",
       column(
         2,
         
@@ -1114,7 +997,7 @@ navbarPage(
         
       ),
       
-      column(10, uiOutput("connection_sheet_preview"), br(), br())
+      column(10, uiOutput("connection_sheet_preview_ui"), br(), br())
       
     )
     

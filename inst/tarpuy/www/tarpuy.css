@@ -1,0 +1,1270 @@
+/* -------------------------------------------------------------------------
+ * TARPUY application styles
+ * -------------------------------------------------------------------------
+ * Scope: inst/tarpuy only.
+ * This stylesheet centralizes the styles currently embedded in ui.R and
+ * provides responsive behavior for desktop, laptop, and tablet browsers.
+ * ---------------------------------------------------------------------- */
+
+/* -------------------------------------------------------------------------
+ * Design tokens
+ * ---------------------------------------------------------------------- */
+
+:root {
+  --tarpuy-bg: var(--bs-body-bg, #f7f7f7);
+  --tarpuy-surface: var(--bs-body-bg, #ffffff);
+  --tarpuy-surface-muted: var(--bs-tertiary-bg, #f8f9fa);
+  --tarpuy-text: var(--bs-body-color, #212529);
+  --tarpuy-text-muted: var(--bs-secondary-color, #6c757d);
+  --tarpuy-border: var(--bs-border-color, #dee2e6);
+  --tarpuy-border-strong: #cbd2d9;
+  --tarpuy-primary: var(--bs-primary, #325d88);
+  --tarpuy-success: var(--bs-success, #198754);
+  --tarpuy-warning: var(--bs-warning, #ffc107);
+  --tarpuy-danger: var(--bs-danger, #dc3545);
+  --tarpuy-info: var(--bs-info, #0dcaf0);
+  --tarpuy-radius-sm: 0.5rem;
+  --tarpuy-radius: 0.75rem;
+  --tarpuy-radius-lg: 1rem;
+  --tarpuy-shadow-sm: 0 2px 8px rgba(31, 41, 55, 0.06);
+  --tarpuy-shadow-md: 0 10px 30px rgba(31, 41, 55, 0.12);
+  --tarpuy-focus: 0 0 0 0.22rem rgba(50, 93, 136, 0.24);
+  --tarpuy-touch-target: 44px;
+  --tarpuy-content-gap: 0.875rem;
+}
+
+/* -------------------------------------------------------------------------
+ * Base application behavior
+ * ---------------------------------------------------------------------- */
+
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
+html.gsheet-scroll-lock {
+  overflow-y: clip !important;
+}
+
+body {
+  padding-top: 50px;
+  background: var(--tarpuy-bg);
+  color: var(--tarpuy-text);
+}
+
+p {
+  text-align: justify;
+}
+
+img,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+/* Keep keyboard navigation visible. */
+:where(
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  .btn,
+  .selectize-input,
+  [tabindex]
+):focus-visible {
+  outline: 2px solid var(--tarpuy-primary);
+  outline-offset: 2px;
+  box-shadow: var(--tarpuy-focus);
+}
+
+/* Avoid accidental horizontal scrolling of the whole page. Components that
+ * require it receive their own localized scroll container below. */
+.container-fluid,
+.tab-content,
+.tab-pane {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* The Bootstrap date picker can otherwise appear behind cards and modals. */
+.datepicker,
+.datepicker-dropdown {
+  z-index: 99999 !important;
+}
+
+/* -------------------------------------------------------------------------
+ * Reusable TARPUY cards and sections
+ * ---------------------------------------------------------------------- */
+
+.tarpuy-card {
+  min-width: 0;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.875rem;
+  margin-bottom: 0.75rem;
+  background: var(--tarpuy-surface);
+  border: 1px solid var(--tarpuy-border);
+  border-radius: var(--tarpuy-radius);
+  box-shadow: var(--tarpuy-shadow-sm);
+}
+
+.tarpuy-card--top {
+  justify-content: flex-start;
+}
+
+.tarpuy-card--compact {
+  min-height: 0;
+  padding: 0.75rem;
+}
+
+.tarpuy-card-title,
+.tarpuy-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--tarpuy-text);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.tarpuy-card-title {
+  margin-bottom: 0.625rem;
+  font-size: 1.08rem;
+}
+
+.tarpuy-section-title {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.tarpuy-card-subtitle,
+.tarpuy-help-text {
+  color: var(--tarpuy-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.tarpuy-divider {
+  width: 100%;
+  margin: 0.75rem 0;
+  border: 0;
+  border-top: 1px solid var(--tarpuy-border);
+  opacity: 1;
+}
+
+/* -------------------------------------------------------------------------
+ * Reusable layouts
+ * ---------------------------------------------------------------------- */
+
+.tarpuy-grid {
+  display: grid;
+  min-width: 0;
+  gap: var(--tarpuy-content-gap);
+}
+
+.tarpuy-grid-auto {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+}
+
+.tarpuy-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tarpuy-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.tarpuy-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  min-width: 0;
+  gap: 0.625rem;
+}
+
+.tarpuy-toolbar__group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  min-width: 0;
+  gap: 0.5rem;
+}
+
+.tarpuy-stack {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 0.625rem;
+}
+
+.tarpuy-scroll-x,
+.tarpuy-table-scroll,
+.tarpuy-preview-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* -------------------------------------------------------------------------
+ * Inputs and actions
+ * ---------------------------------------------------------------------- */
+
+#plex_factor_selector,
+#plex_design_selector,
+#plex_design_parameters,
+#plex_factor_selector .form-group,
+#plex_design_selector .form-group,
+#plex_design_parameters .form-group,
+.sketch-sidebar .form-group,
+.sketch-sidebar .selectize-control,
+.sketch-sidebar .shiny-input-container {
+  width: 100% !important;
+  min-width: 0;
+}
+
+.form-group,
+.shiny-input-container {
+  max-width: 100%;
+}
+
+.form-control,
+.selectize-input,
+.selectize-dropdown,
+.input-group {
+  max-width: 100%;
+}
+
+textarea.form-control {
+  min-height: 5.5rem;
+  resize: vertical;
+}
+
+.tarpuy-generate {
+  min-width: 150px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.tarpuy-btn-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tarpuy-btn-row .btn {
+  flex: 0 0 auto;
+}
+
+.tarpuy-btn-row--stretch .btn {
+  flex: 1 1 10rem;
+}
+
+/* -------------------------------------------------------------------------
+ * Google Sheets preview
+ * ---------------------------------------------------------------------- */
+
+.gsheet-preview-wrapper {
+  width: 100%;
+  height: clamp(420px, 64vh, 680px);
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: var(--tarpuy-surface-muted);
+  border: 1px solid var(--tarpuy-border);
+  border-radius: var(--tarpuy-radius-sm);
+}
+
+.gsheet-preview-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: inherit;
+}
+
+/* Fieldbook keeps all controls in one compact left-hand group and the
+ * complete Google Sheets preview on the right. The first grid row is sized
+ * from the viewport so the sheet tabs remain visible without making the
+ * preview taller than the screen. The fieldbook table spans the full width
+ * below both columns. */
+.tarpuy-fieldbook-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 3fr) minmax(0, 9fr);
+  grid-template-rows: clamp(620px, calc(100vh - 185px), 760px) auto;
+  grid-template-rows: clamp(620px, calc(100dvh - 185px), 760px) auto;
+  grid-template-areas:
+    "sidebar design"
+    "preview preview";
+  align-items: stretch;
+  gap: var(--tarpuy-content-gap);
+  width: 100%;
+  min-width: 0;
+}
+
+.tarpuy-fieldbook-sidebar-group {
+  grid-area: sidebar;
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  gap: 0.5rem;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.tarpuy-fieldbook-sidebar-group > .tarpuy-card {
+  min-height: 0;
+  margin-bottom: 0;
+  padding: 0.65rem 0.75rem;
+}
+
+.tarpuy-fieldbook-sidebar-group .tarpuy-card-title {
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+}
+
+.fieldbook-generator-title {
+  font-size: 1.12rem !important;
+  line-height: 1.15;
+}
+
+.fieldbook-generator-help {
+  display: block;
+  color: var(--tarpuy-text-muted);
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+.fieldbook-export-card .form-group {
+  margin-bottom: 0.5rem;
+}
+
+.fieldbook-export-card .radio-inline {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.fieldbook-export-card .tarpuy-generate {
+  min-height: 38px;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+.fieldbook-summary-card {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.fieldbook-summary-card > .shiny-html-output {
+  min-height: 0;
+}
+
+.fieldbook-design-preview-card {
+  grid-area: design;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+.fieldbook-design-preview-card > .shiny-html-output {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.fieldbook-preview-card {
+  grid-area: preview;
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 0.75rem;
+}
+
+.gsheet-preview-wrapper.gsheet-preview-wrapper--fieldbook {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.fieldbook-status-available {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.fieldbook-status-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.35rem;
+  width: 100%;
+}
+
+.fieldbook-status-metric {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  min-width: 0;
+  padding: 0.35rem 0.3rem;
+  gap: 0.28rem;
+  text-align: center;
+  background: var(--tarpuy-surface-muted);
+  border: 1px solid var(--tarpuy-border);
+  border-radius: var(--tarpuy-radius-sm);
+}
+
+.fieldbook-status-label,
+.fieldbook-status-value {
+  display: inline;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fieldbook-status-label {
+  color: var(--tarpuy-text-muted);
+  font-size: 0.78rem;
+}
+
+.fieldbook-status-value {
+  color: var(--tarpuy-text);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.fieldbook-summary-card .tarpuy-summary-scroll {
+  min-height: 76px;
+}
+
+.fieldbook-summary-card .tarpuy-summary-table th,
+.fieldbook-summary-card .tarpuy-summary-table td {
+  min-width: 100px;
+  padding: 0.45rem 0.55rem;
+}
+
+/* -------------------------------------------------------------------------
+ * Dynamic Layout Summary
+ * ---------------------------------------------------------------------- */
+
+.tarpuy-summary-scroll {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 88px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+  border: 1px solid var(--tarpuy-border);
+  border-radius: var(--tarpuy-radius-sm);
+  background: var(--tarpuy-surface);
+}
+
+.tarpuy-summary-table {
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  white-space: nowrap;
+  color: var(--tarpuy-text);
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.tarpuy-summary-table th,
+.tarpuy-summary-table td {
+  min-width: 105px;
+  padding: 0.65rem 0.75rem;
+  text-align: center;
+  vertical-align: middle;
+  border-right: 1px solid var(--tarpuy-border);
+  border-bottom: 1px solid var(--tarpuy-border);
+}
+
+.tarpuy-summary-table th {
+  background: var(--tarpuy-surface-muted);
+  color: var(--tarpuy-text);
+  font-weight: 700;
+}
+
+.tarpuy-summary-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.tarpuy-summary-table th:last-child,
+.tarpuy-summary-table td:last-child {
+  border-right: 0;
+}
+
+/* Keep Design visible while the user scrolls through wide summaries. */
+.tarpuy-summary-table th:first-child,
+.tarpuy-summary-table td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  min-width: 120px;
+  text-align: left;
+  box-shadow: 1px 0 0 var(--tarpuy-border);
+}
+
+.tarpuy-summary-table th:first-child {
+  z-index: 3;
+  background: var(--tarpuy-surface-muted);
+}
+
+.tarpuy-summary-table td:first-child {
+  background: var(--tarpuy-surface);
+  font-weight: 600;
+}
+
+.tarpuy-summary-table thead {
+  display: table-header-group;
+}
+
+.tarpuy-summary-table tbody {
+  display: table-row-group;
+}
+
+.tarpuy-summary-table tbody td {
+  color: var(--tarpuy-text);
+  background: var(--tarpuy-surface);
+  font-weight: 600;
+}
+
+/* A subtle cue that the summary can be moved horizontally. */
+.tarpuy-summary-scroll::after {
+  position: sticky;
+  right: 0;
+  display: block;
+  width: 18px;
+  height: 0;
+  margin-left: auto;
+  content: "";
+  pointer-events: none;
+  box-shadow: -10px 0 14px -12px rgba(31, 41, 55, 0.65);
+}
+
+/* -------------------------------------------------------------------------
+ * Responsive tables and DataTables
+ * ---------------------------------------------------------------------- */
+
+.table-responsive,
+.dataTables_wrapper,
+.dataTables_scroll,
+.dataTables_scrollBody {
+  max-width: 100%;
+}
+
+.dataTables_wrapper {
+  min-width: 0;
+}
+
+.dataTables_wrapper .dataTables_scrollBody {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-inline: contain;
+}
+
+.dataTables_wrapper table.dataTable {
+  width: 100% !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_length {
+  margin-bottom: 0.625rem;
+}
+
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+  max-width: 100%;
+}
+
+
+/* Separate the Fieldbook Refresh action from the DataTables search controls.
+ * DataTables uses floated controls, so both margin and clearing are applied. */
+.fieldbook-preview-toolbar {
+  clear: both;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--tarpuy-border);
+}
+
+.fieldbook-preview-toolbar + .tarpuy-table-scroll {
+  clear: both;
+  padding-top: 0.2rem;
+}
+
+.fieldbook-preview-card .dataTables_wrapper {
+  clear: both;
+}
+
+.fieldbook-preview-card .dataTables_wrapper .dataTables_filter,
+.fieldbook-preview-card .dataTables_wrapper .dataTables_length {
+  margin-top: 0.15rem;
+}
+
+/* Keep qrcode and plots fixed while the remaining columns move inside the
+ * DataTables horizontal scroll area. CSS sticky positioning avoids the cloned
+ * tables created by FixedColumns, which previously caused overlap and blocked
+ * the horizontal scrollbar. */
+.fieldbook-preview-card .tarpuy-table-scroll {
+  overflow: visible;
+}
+
+.fieldbook-preview-card .dataTables_scroll {
+  width: 100%;
+  max-width: 100%;
+}
+
+.fieldbook-preview-card .dataTables_scrollHead {
+  overflow: hidden !important;
+}
+
+.fieldbook-preview-card .dataTables_scrollBody {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-inline: contain;
+}
+
+.fieldbook-preview-card .dataTables_scrollHeadInner,
+.fieldbook-preview-card .dataTables_scrollHeadInner table,
+.fieldbook-preview-card .dataTables_scrollBody table {
+  width: max-content !important;
+  min-width: 100% !important;
+  table-layout: auto !important;
+  margin: 0 !important;
+}
+
+.fieldbook-preview-card table.dataTable th,
+.fieldbook-preview-card table.dataTable td {
+  box-sizing: border-box;
+  min-width: 110px;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* qrcode */
+.fieldbook-preview-card table.dataTable th:first-child,
+.fieldbook-preview-card table.dataTable td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
+  background: var(--tarpuy-surface);
+}
+
+/* plots */
+.fieldbook-preview-card table.dataTable th:nth-child(2),
+.fieldbook-preview-card table.dataTable td:nth-child(2) {
+  position: sticky;
+  left: 300px;
+  z-index: 3;
+  width: 90px !important;
+  min-width: 90px !important;
+  max-width: 90px !important;
+  text-align: center;
+  background: var(--tarpuy-surface);
+  box-shadow: 8px 0 12px -12px rgba(31, 41, 55, 0.8);
+}
+
+.fieldbook-preview-card table.dataTable thead th:first-child,
+.fieldbook-preview-card table.dataTable thead th:nth-child(2) {
+  z-index: 5;
+  background: var(--tarpuy-surface-muted);
+}
+
+.fieldbook-preview-card table.dataTable.stripe tbody tr.odd > td:first-child,
+.fieldbook-preview-card table.dataTable.stripe tbody tr.odd > td:nth-child(2) {
+  background: var(--tarpuy-surface-muted);
+}
+
+.fieldbook-preview-card table.dataTable.stripe tbody tr.even > td:first-child,
+.fieldbook-preview-card table.dataTable.stripe tbody tr.even > td:nth-child(2) {
+  background: var(--tarpuy-surface);
+}
+
+/* -------------------------------------------------------------------------
+ * Alerts, warnings, and destructive confirmations
+ * ---------------------------------------------------------------------- */
+
+.tarpuy-alert {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.625rem;
+  padding: 0.75rem 0.875rem;
+  margin: 0.625rem 0;
+  border: 1px solid var(--tarpuy-border);
+  border-left-width: 4px;
+  border-radius: var(--tarpuy-radius-sm);
+  background: var(--tarpuy-surface-muted);
+}
+
+.tarpuy-alert__icon {
+  margin-top: 0.1rem;
+  line-height: 1;
+}
+
+.tarpuy-alert__title {
+  margin-bottom: 0.2rem;
+  font-weight: 700;
+}
+
+.tarpuy-alert__body {
+  min-width: 0;
+}
+
+.tarpuy-alert--info {
+  border-left-color: var(--tarpuy-info);
+}
+
+.tarpuy-alert--success {
+  border-left-color: var(--tarpuy-success);
+}
+
+.tarpuy-alert--warning {
+  border-left-color: var(--tarpuy-warning);
+  background: color-mix(in srgb, var(--tarpuy-warning) 10%, var(--tarpuy-surface));
+}
+
+.tarpuy-alert--danger {
+  border-left-color: var(--tarpuy-danger);
+  background: color-mix(in srgb, var(--tarpuy-danger) 8%, var(--tarpuy-surface));
+}
+
+.tarpuy-data-warning {
+  font-weight: 600;
+}
+
+.tarpuy-destructive-note {
+  padding: 0.625rem 0.75rem;
+  color: var(--tarpuy-danger);
+  background: color-mix(in srgb, var(--tarpuy-danger) 7%, var(--tarpuy-surface));
+  border: 1px solid color-mix(in srgb, var(--tarpuy-danger) 38%, var(--tarpuy-border));
+  border-radius: var(--tarpuy-radius-sm);
+}
+
+/* Fallback for browsers without color-mix(). */
+@supports not (background: color-mix(in srgb, white 50%, black)) {
+  .tarpuy-alert--warning {
+    background: #fff8e1;
+  }
+
+  .tarpuy-alert--danger,
+  .tarpuy-destructive-note {
+    background: #fff1f2;
+  }
+}
+
+/* -------------------------------------------------------------------------
+ * Shiny modals
+ * ---------------------------------------------------------------------- */
+
+.modal {
+  padding-right: 0 !important;
+}
+
+.modal-dialog {
+  width: min(94vw, 720px);
+  max-width: 720px;
+  margin: 1.75rem auto;
+}
+
+.modal-content {
+  overflow: hidden;
+  border: 1px solid var(--tarpuy-border);
+  border-radius: var(--tarpuy-radius-lg);
+  box-shadow: var(--tarpuy-shadow-md);
+}
+
+.modal-header,
+.modal-footer {
+  padding: 0.875rem 1rem;
+  background: var(--tarpuy-surface);
+  border-color: var(--tarpuy-border);
+}
+
+.modal-body {
+  max-height: min(68vh, 680px);
+  padding: 1rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.modal-footer::before,
+.modal-footer::after {
+  display: none;
+}
+
+.modal-footer .btn {
+  min-width: 8rem;
+}
+
+.tarpuy-modal-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.625rem;
+  margin: 0.75rem 0;
+}
+
+.tarpuy-modal-summary__item {
+  padding: 0.625rem;
+  text-align: center;
+  border: 1px solid var(--tarpuy-border);
+  border-radius: var(--tarpuy-radius-sm);
+  background: var(--tarpuy-surface-muted);
+}
+
+.tarpuy-modal-summary__value {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* -------------------------------------------------------------------------
+ * Sketch module
+ * ---------------------------------------------------------------------- */
+
+.sketch-sidebar {
+  justify-content: flex-start;
+}
+
+.sketch-sidebar .btn {
+  width: 100%;
+}
+
+.sketch-options-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.625rem;
+  font-weight: 700;
+}
+
+.sketch-preview-image,
+.sketch-canvas-scroll {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--tarpuy-border);
+  border-radius: var(--tarpuy-radius-sm);
+  background: var(--tarpuy-surface);
+}
+
+/* Preserve the generated image's real dimensions. The surrounding container,
+ * not the image, handles overflow on narrower screens. */
+.sketch-preview-image img,
+.sketch-canvas-scroll img,
+.sketch-preview-image .shiny-image-output img {
+  display: block;
+  width: auto;
+  max-width: none;
+  height: auto;
+  margin: 0 auto;
+}
+
+.sketch-preview-image .shiny-image-output {
+  min-width: max-content;
+}
+
+.sketch-downloads {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.sketch-downloads .btn {
+  width: 100%;
+  min-width: 0;
+}
+
+.sketch-size-controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.625rem;
+}
+
+/* -------------------------------------------------------------------------
+ * Status and loading states
+ * ---------------------------------------------------------------------- */
+
+.tarpuy-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.tarpuy-status--success {
+  color: var(--tarpuy-success);
+}
+
+.tarpuy-status--warning {
+  color: #856404;
+}
+
+.tarpuy-status--danger {
+  color: var(--tarpuy-danger);
+}
+
+.tarpuy-loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.72;
+}
+
+.tarpuy-loading::after {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 1.6rem;
+  height: 1.6rem;
+  content: "";
+  border: 0.2rem solid rgba(0, 0, 0, 0.14);
+  border-top-color: var(--tarpuy-primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: tarpuy-spin 0.8s linear infinite;
+}
+
+@keyframes tarpuy-spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* -------------------------------------------------------------------------
+ * Desktop and laptop
+ * ---------------------------------------------------------------------- */
+
+@media (min-width: 1200px) {
+  .sketch-sidebar {
+    position: sticky;
+    top: 66px;
+    max-height: calc(100vh - 82px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .tarpuy-summary-table th,
+  .tarpuy-summary-table td {
+    min-width: 112px;
+  }
+}
+
+/* -------------------------------------------------------------------------
+ * Laptop and tablet landscape
+ * ---------------------------------------------------------------------- */
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  .tarpuy-fieldbook-layout {
+    grid-template-columns: minmax(270px, 34%) minmax(0, 66%);
+    grid-template-rows: clamp(600px, calc(100vh - 170px), 700px) auto;
+    grid-template-rows: clamp(600px, calc(100dvh - 170px), 700px) auto;
+  }
+  :root {
+    --tarpuy-content-gap: 0.75rem;
+  }
+
+  body {
+    padding-top: 54px;
+  }
+
+  .tarpuy-card {
+    min-height: 0;
+    padding: 0.75rem;
+  }
+
+  .tarpuy-grid-3,
+  .sketch-size-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sketch-sidebar {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .gsheet-preview-wrapper {
+    height: clamp(420px, 58vh, 580px);
+  }
+
+  .tarpuy-summary-table th,
+  .tarpuy-summary-table td {
+    min-width: 110px;
+  }
+
+  .btn,
+  .form-control,
+  .selectize-input,
+  .input-group-btn > .btn {
+    min-height: var(--tarpuy-touch-target);
+  }
+
+  .radio-inline,
+  .checkbox-inline {
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+  }
+}
+
+/* -------------------------------------------------------------------------
+ * Tablet portrait and narrow browser windows
+ * ---------------------------------------------------------------------- */
+
+@media (max-width: 767.98px) {
+  .tarpuy-fieldbook-layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+      "sidebar"
+      "design"
+      "preview";
+  }
+
+  .tarpuy-fieldbook-sidebar-group {
+    display: grid;
+    grid-template-rows: auto;
+    height: auto;
+  }
+
+  .fieldbook-design-preview-card {
+    height: auto;
+    min-height: 0;
+  }
+
+  .gsheet-preview-wrapper.gsheet-preview-wrapper--fieldbook {
+    height: 420px;
+    min-height: 420px;
+  }
+
+  .fieldbook-status-metric {
+    gap: 0.2rem;
+    padding: 0.32rem 0.22rem;
+  }
+
+  .fieldbook-status-label {
+    font-size: 0.72rem;
+  }
+
+  .fieldbook-status-value {
+    font-size: 0.82rem;
+  }
+
+  .fieldbook-preview-toolbar {
+    align-items: stretch;
+  }
+
+  .fieldbook-preview-toolbar .btn {
+    width: 100%;
+  }
+  html {
+    scrollbar-gutter: auto;
+  }
+
+  body {
+    padding-top: 52px;
+  }
+
+  p {
+    text-align: left;
+  }
+
+  .container-fluid {
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+  }
+
+  .tarpuy-card {
+    min-height: 0;
+    padding: 0.75rem;
+    border-radius: 0.625rem;
+  }
+
+  .tarpuy-grid-2,
+  .tarpuy-grid-3,
+  .sketch-size-controls,
+  .sketch-downloads {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tarpuy-toolbar,
+  .tarpuy-toolbar__group,
+  .tarpuy-btn-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .tarpuy-toolbar .btn,
+  .tarpuy-toolbar__group .btn,
+  .tarpuy-btn-row .btn,
+  .tarpuy-generate {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .btn,
+  .form-control,
+  .selectize-input,
+  .input-group-btn > .btn {
+    min-height: var(--tarpuy-touch-target);
+  }
+
+  .selectize-input {
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+  }
+
+  .gsheet-preview-wrapper {
+    height: clamp(360px, 54vh, 500px);
+  }
+
+  .tarpuy-summary-table {
+    font-size: 0.86rem;
+  }
+
+  .tarpuy-summary-table th,
+  .tarpuy-summary-table td {
+    min-width: 108px;
+    padding: 0.6rem 0.65rem;
+  }
+
+  .dataTables_wrapper .dataTables_length,
+  .dataTables_wrapper .dataTables_filter,
+  .dataTables_wrapper .dataTables_info,
+  .dataTables_wrapper .dataTables_paginate {
+    float: none !important;
+    width: 100%;
+    text-align: left !important;
+  }
+
+  .dataTables_wrapper .dataTables_filter input {
+    width: calc(100% - 4.5rem);
+  }
+
+  .modal-dialog {
+    width: calc(100vw - 1rem);
+    margin: 0.5rem auto;
+  }
+
+  .modal-body {
+    max-height: calc(100vh - 150px);
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* -------------------------------------------------------------------------
+ * Touch devices
+ * ---------------------------------------------------------------------- */
+
+@media (hover: none) and (pointer: coarse) {
+  .btn,
+  .form-control,
+  .selectize-input,
+  .input-group-btn > .btn,
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-height: var(--tarpuy-touch-target);
+  }
+
+  .tarpuy-summary-scroll,
+  .tarpuy-table-scroll,
+  .tarpuy-preview-scroll,
+  .sketch-preview-image,
+  .sketch-canvas-scroll {
+    scrollbar-width: auto;
+  }
+}
+
+/* -------------------------------------------------------------------------
+ * Reduced motion and print
+ * ---------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  body {
+    padding-top: 0;
+    background: #ffffff;
+  }
+
+  .navbar,
+  .sketch-sidebar,
+  .btn,
+  .tarpuy-btn-row,
+  .tarpuy-toolbar {
+    display: none !important;
+  }
+
+  .tarpuy-card {
+    break-inside: avoid;
+    border: 1px solid #b9b9b9;
+    box-shadow: none;
+  }
+
+  .tarpuy-summary-scroll,
+  .tarpuy-table-scroll,
+  .tarpuy-preview-scroll,
+  .sketch-preview-image,
+  .sketch-canvas-scroll {
+    overflow: visible !important;
+  }
+
+  .tarpuy-summary-table {
+    width: 100%;
+    min-width: 0;
+    white-space: normal;
+  }
+}

@@ -18,39 +18,61 @@ design_split_rcbd(
 )
 }
 \arguments{
-\item{nfactors}{Number of factors in the experiment. For split-plot RCBD it
-must be 2.}
+\item{nfactors}{Number of factors in the experiment. Splitplot-RCBD requires
+exactly two factors.}
 
-\item{factors}{List with exactly two named factors. The first factor is the
+\item{factors}{Named list with the factor levels. The first factor is the
 whole-plot factor and the second factor is the subplot factor.}
 
-\item{type}{Design type. Default is \code{"split-rcbd"}.}
+\item{type}{Design type. The canonical value is \code{"split-rcbd"}; accepted
+aliases are normalized by \code{normalize_tarpuy_design_type()}.}
 
 \item{rep}{Number of replications or blocks.}
 
-\item{zigzag}{Field layout in vertical zigzag order. If \code{TRUE}, subplot row
-order is reversed in even whole-plot columns.}
+\item{zigzag}{Logical. If \code{TRUE}, plot numbering follows a continuous
+vertical serpentine path through the whole plots and blocks.}
 
-\item{nrows}{Experimental design dimension by rows. If \code{NA}, it is calculated
-automatically as \code{rep * number_of_subplot_levels}.}
+\item{nrows}{Number of rows in the complete physical layout. The valid
+Splitplot-RCBD geometry is \code{rep * number_of_subplot_levels}; when missing,
+it is calculated automatically.}
 
-\item{serie}{Number used as base for plot numbering.}
+\item{serie}{Base number used to generate plot identifiers. For example,
+\code{serie = 1000} generates plots 1001, 1002, ... in block 1 and 2001,
+2002, ... in block 2.}
 
-\item{seed}{Seed for reproducible randomization.}
+\item{seed}{Seed used for reproducible randomization. \code{NA} or \code{NULL} leaves
+the current random-number state unchanged.}
 
-\item{project}{Barcode or QR code prefix.}
+\item{project}{Barcode or QR-code prefix.}
 
-\item{qrcode}{String used to concatenate QR code fields.}
+\item{qrcode}{Template used to concatenate QR-code fields. The placeholder
+\code{{factors}} expands to both experimental factors.}
 }
 \value{
-A list with the fieldbook design and parameters.
+A list with \code{fieldbook} and \code{parameters}.
 }
 \description{
 Generate a split-plot design under a randomized complete block design (RCBD)
-structure for Tarpuy.
+structure for TARPUY.
 }
 \details{
-The first factor is interpreted as the whole-plot factor and the second factor
-as the subplot factor. Factor column names are preserved in the final
-fieldbook, while their experimental role is stored in \code{parameters}.
+The first factor is the whole-plot factor and the second factor is the
+subplot factor. Whole plots are randomized within each block and subplot
+levels are randomized independently within every whole plot.
+}
+\examples{
+\dontrun{
+
+factors <- list(
+  Soil = c("S1", "S2", "S3", "S4"),
+  Fertilizer = c("N1", "N2", "N3", "N4", "N5", "N6")
+)
+
+design_split_rcbd(
+  factors = factors,
+  rep = 3,
+  zigzag = TRUE,
+  seed = 123
+)$fieldbook
+}
 }

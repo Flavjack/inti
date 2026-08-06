@@ -1,30 +1,52 @@
 #' Split-plot RCBD experimental design
 #'
 #' Generate a split-plot design under a randomized complete block design (RCBD)
-#' structure for Tarpuy.
+#' structure for TARPUY.
 #'
-#' The first factor is interpreted as the whole-plot factor and the second factor
-#' as the subplot factor. Factor column names are preserved in the final
-#' fieldbook, while their experimental role is stored in `parameters`.
+#' The first factor is the whole-plot factor and the second factor is the
+#' subplot factor. Whole plots are randomized within each block and subplot
+#' levels are randomized independently within every whole plot.
 #'
-#' @param nfactors Number of factors in the experiment. For split-plot RCBD it
-#'   must be 2.
-#' @param factors List with exactly two named factors. The first factor is the
+#' @param nfactors Number of factors in the experiment. Splitplot-RCBD requires
+#'   exactly two factors.
+#' @param factors Named list with the factor levels. The first factor is the
 #'   whole-plot factor and the second factor is the subplot factor.
-#' @param type Design type. Default is `"split-rcbd"`.
+#' @param type Design type. The canonical value is `"split-rcbd"`; accepted
+#'   aliases are normalized by `normalize_tarpuy_design_type()`.
 #' @param rep Number of replications or blocks.
-#' @param zigzag Field layout in vertical zigzag order. If `TRUE`, subplot row
-#'   order is reversed in even whole-plot columns.
-#' @param nrows Experimental design dimension by rows. If `NA`, it is calculated
-#'   automatically as `rep * number_of_subplot_levels`.
-#' @param serie Number used as base for plot numbering.
-#' @param seed Seed for reproducible randomization.
-#' @param project Barcode or QR code prefix.
-#' @param qrcode String used to concatenate QR code fields.
+#' @param zigzag Logical. If `TRUE`, plot numbering follows a continuous
+#'   vertical serpentine path through the whole plots and blocks.
+#' @param nrows Number of rows in the complete physical layout. The valid
+#'   Splitplot-RCBD geometry is `rep * number_of_subplot_levels`; when missing,
+#'   it is calculated automatically.
+#' @param serie Base number used to generate plot identifiers. For example,
+#'   `serie = 1000` generates plots 1001, 1002, ... in block 1 and 2001,
+#'   2002, ... in block 2.
+#' @param seed Seed used for reproducible randomization. `NA` or `NULL` leaves
+#'   the current random-number state unchanged.
+#' @param project Barcode or QR-code prefix.
+#' @param qrcode Template used to concatenate QR-code fields. The placeholder
+#'   `{factors}` expands to both experimental factors.
 #'
-#' @return A list with the fieldbook design and parameters.
+#' @return A list with `fieldbook` and `parameters`.
 #'
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#'
+#' factors <- list(
+#'   Soil = c("S1", "S2", "S3", "S4"),
+#'   Fertilizer = c("N1", "N2", "N3", "N4", "N5", "N6")
+#' )
+#'
+#' design_split_rcbd(
+#'   factors = factors,
+#'   rep = 3,
+#'   zigzag = TRUE,
+#'   seed = 123
+#' )$fieldbook
+#' }
 
 design_split_rcbd <- function(nfactors = 2,
                               factors,
@@ -37,212 +59,574 @@ design_split_rcbd <- function(nfactors = 2,
                               project = "inkaverse",
                               qrcode = "{project}{plots}{factors}") {
   
-  type <- normalize_tarpuy_design_type(
-    type
+  # -------------------------------------------------------------------------
+  # Helpers
+  # -------------------------------------------------------------------------
+  
+  is_missing_scalar <- function(x) {
+    is.null(x) ||
+      length(x) == 0L ||
+      (length(x) == 1L && is.na(x)) ||
+      (length(x) == 1L && is.character(x) && !nzchar(trimws(x)))
+  }
+  
+  as_positive_integer <- function(x, name) {
+    value <- suppressWarnings(as.numeric(as.character(x)))
+    
+    if(length(value) != 1L ||
+       is.na(value) ||
+       !is.finite(value) ||
+       value < 1 ||
+       value != floor(value) ||
+       value > .Machine$integer.max) {
+      stop("'", name, "' must be a positive integer.", call. = FALSE)
+    }
+    
+    as.integer(value)
+  }
+  
+  clean_factor <- function(x) {
+    if(is.list(x)) {
+      x <- unlist(x, recursive = TRUE, use.names = FALSE)
+    }
+    
+    x <- trimws(as.character(x))
+    x[x %in% c("", "NA", "NULL")] <- NA_character_
+    x <- x[!is.na(x)]
+    
+    # Preserve the labels used by the experiment. Only repeated internal
+    # whitespace is normalized; treatment values are not converted to codes.
+    x <- gsub("[[:space:]]+", " ", x)
+    
+    unique(x)
+  }
+  
+  build_qrcode <- function(data, template, factor_names) {
+    if(length(template) != 1L ||
+       is.na(template) ||
+       !nzchar(trimws(as.character(template)))) {
+      stop(
+        "'qrcode' must be a non-empty character template.",
+        call. = FALSE
+      )
+    }
+    
+    template <- trimws(as.character(template))
+    
+    factor_template <- paste0(
+      "{",
+      factor_names,
+      "}",
+      collapse = ""
+    )
+    
+    template <- gsub(
+      "{factors}",
+      factor_template,
+      template,
+      fixed = TRUE
+    )
+    
+    tokens <- regmatches(
+      template,
+      gregexpr("\\{[^{}]+\\}", template)
+    )[[1L]]
+    
+    if(length(tokens) == 0L || identical(tokens, character(0))) {
+      stop(
+        "'qrcode' must contain at least one field inside braces, for ",
+        "example '{project}{plots}{factors}'.",
+        call. = FALSE
+      )
+    }
+    
+    qrcolumns <- gsub("^\\{|\\}$", "", tokens)
+    missing_columns <- setdiff(qrcolumns, names(data))
+    
+    if(length(missing_columns) > 0L) {
+      stop(
+        "Unknown QR-code columns: ",
+        paste(missing_columns, collapse = ", "),
+        ".",
+        call. = FALSE
+      )
+    }
+    
+    qr_data <- data[, qrcolumns, drop = FALSE]
+    qr_data[] <- lapply(qr_data, function(x) {
+      x <- as.character(x)
+      x[is.na(x)] <- ""
+      x <- trimws(x)
+      
+      # Clean only the QR representation. Factor labels in the fieldbook are
+      # preserved exactly as experimental information.
+      gsub("[[:space:]]+", "_", x)
+    })
+    
+    qrcode_values <- apply(
+      qr_data,
+      1L,
+      function(x) paste(x[nzchar(x)], collapse = "_")
+    )
+    
+    if(any(!nzchar(qrcode_values))) {
+      stop(
+        "The QR-code template generated one or more empty identifiers.",
+        call. = FALSE
+      )
+    }
+    
+    qrcode_values
+  }
+  
+  # -------------------------------------------------------------------------
+  # Argument validation
+  # -------------------------------------------------------------------------
+  
+  nfactors <- as_positive_integer(nfactors, "nfactors")
+  rep <- as_positive_integer(rep, "rep")
+  serie <- as_positive_integer(serie, "serie")
+  
+  if(nfactors != 2L) {
+    stop(
+      "Splitplot-RCBD requires exactly 2 factors.",
+      call. = FALSE
+    )
+  }
+  
+  if(length(zigzag) != 1L || is.na(zigzag) || !is.logical(zigzag)) {
+    stop("'zigzag' must be TRUE or FALSE.", call. = FALSE)
+  }
+  
+  if(!is.list(factors) || length(factors) < nfactors) {
+    stop(
+      "'factors' must be a named list containing the whole-plot and ",
+      "subplot factors.",
+      call. = FALSE
+    )
+  }
+  
+  factors <- factors[seq_len(nfactors)]
+  original_names <- names(factors)
+  
+  if(is.null(original_names) ||
+     length(original_names) != nfactors ||
+     any(is.na(original_names)) ||
+     any(!nzchar(trimws(original_names)))) {
+    stop(
+      "Both factors must have non-empty names.",
+      call. = FALSE
+    )
+  }
+  
+  factor_names <- gsub(
+    "[[:space:]]+",
+    "_",
+    trimws(original_names)
   )
+  
+  if(anyDuplicated(factor_names)) {
+    duplicated_names <- unique(
+      factor_names[duplicated(factor_names)]
+    )
+    
+    stop(
+      "Factor names are duplicated after replacing spaces with underscores: ",
+      paste(duplicated_names, collapse = ", "),
+      ".",
+      call. = FALSE
+    )
+  }
+  
+  reserved_columns <- c(
+    "qrcode",
+    "plots",
+    "ntreat",
+    "wp_sp",
+    "block",
+    "sort",
+    "rows",
+    "cols",
+    "design",
+    "project",
+    "whole_plot_order",
+    "sub_plot_order",
+    "rows_local",
+    "walk"
+  )
+  
+  conflicting_names <- intersect(factor_names, reserved_columns)
+  
+  if(length(conflicting_names) > 0L) {
+    stop(
+      "Factor names conflict with reserved fieldbook columns: ",
+      paste(conflicting_names, collapse = ", "),
+      ".",
+      call. = FALSE
+    )
+  }
+  
+  names(factors) <- factor_names
+  dfactors <- lapply(factors, clean_factor)
+  names(dfactors) <- factor_names
+  
+  empty_factors <- factor_names[lengths(dfactors) == 0L]
+  
+  if(length(empty_factors) > 0L) {
+    stop(
+      "Factors without valid levels: ",
+      paste(empty_factors, collapse = ", "),
+      ".",
+      call. = FALSE
+    )
+  }
+  
+  if(is_missing_scalar(type)) {
+    stop("'type' must be 'split-rcbd'.", call. = FALSE)
+  }
+  
+  if(length(type) != 1L) {
+    stop("'type' must contain one value.", call. = FALSE)
+  }
+  
+  type <- normalize_tarpuy_design_type(type)
   
   if(!identical(type, "split-rcbd")) {
     stop(
-      "Unsupported Splitplot-RCBD identifier: ",
-      type
+      "Unsupported Splitplot-RCBD identifier: '",
+      type,
+      "'.",
+      call. = FALSE
     )
   }
   
-  # Initial settings -------------------------------------------------------
-  
-  if(
-    !is.null(seed) &&
-    length(seed) == 1L &&
-    !is.na(seed)
-  ) {
+  if(!is_missing_scalar(seed)) {
+    seed_value <- suppressWarnings(as.numeric(as.character(seed)))
+    
+    if(length(seed_value) != 1L ||
+       is.na(seed_value) ||
+       !is.finite(seed_value) ||
+       seed_value < 0 ||
+       seed_value != floor(seed_value) ||
+       seed_value > .Machine$integer.max) {
+      stop(
+        "'seed' must be a non-negative integer, NA, or NULL.",
+        call. = FALSE
+      )
+    }
+    
+    seed <- as.integer(seed_value)
     set.seed(seed)
+  } else {
+    seed <- NULL
   }
   
-  if(nfactors != 2) {
-    stop(
-      "Splitplot-RCBD requires exactly 2 factors."
-    )
+  if(length(project) != 1L) {
+    stop("'project' must contain one value.", call. = FALSE)
+  }
+  
+  project <- as.character(project)
+  
+  if(is.na(project)) {
+    project <- ""
   }
   
   # -------------------------------------------------------------------------
-  # Factor cleaning
+  # Factor roles and dimensions
   # -------------------------------------------------------------------------
   
-  dfactors <- factors %>%
-    purrr::map(function(x) {
-      
-      x <- as.character(x)
-      
-      # Remove spaces only at the beginning and end.
-      x <- trimws(x)
-      
-      # Convert empty or reserved values to NA.
-      x[x %in% c("", "NA", "NULL")] <- NA_character_
-      
-      # Remove missing values.
-      x <- x[!is.na(x)]
-      
-      # Preserve spaces, but collapse repeated spaces into one.
-      x <- gsub(
-        "[[:space:]]+",
-        " ",
-        x
-      )
-      
-      unique(x)
-      
-    }) %>%
-    purrr::set_names(
-      gsub(
-        "[[:space:]]+",
-        "_",
-        trimws(names(.))
-      )
-    ) %>%
-    .[seq_len(nfactors)]
-  
-  name.factors <- names(dfactors)
-  
-  whole_plot <- name.factors[1]
-  sub_plot   <- name.factors[2]
+  whole_plot <- factor_names[1L]
+  sub_plot <- factor_names[2L]
   
   wp_levels <- dfactors[[whole_plot]]
   sp_levels <- dfactors[[sub_plot]]
   
   n_wp <- length(wp_levels)
   n_sp <- length(sp_levels)
+  units_per_block <- n_wp * n_sp
+  total_units <- rep * units_per_block
   
-  if(n_wp == 0) stop("Whole-plot factor has no valid levels.")
-  if(n_sp == 0) stop("Subplot factor has no valid levels.")
-  
-  # -------------------------------------------------------------------------
-  # Design dimensions
-  # -------------------------------------------------------------------------
-  
-  nrows <- if(anyNA(nrows)) n_sp * rep else nrows
-  ncols <- n_wp
-  
-  # -------------------------------------------------------------------------
-  # QR code fields
-  # -------------------------------------------------------------------------
-  
-  qrcolumns <- qrcode %>%
-    gsub("factors", paste0(name.factors, collapse = "\\}\\{"), .) %>%
-    strsplit(split = "\\}\\{") %>%
-    unlist() %>%
-    gsub("\\{|\\}", "", .) %>%
-    trimws()
-  
-  # -------------------------------------------------------------------------
-  # Treatment catalog
-  # -------------------------------------------------------------------------
-  
-  trt_catalog <- dfactors %>%
-    expand.grid() %>%
-    dplyr::mutate(ntreat = as.numeric(row.names(.))) %>%
-    dplyr::mutate(
-      wp_sp = paste(.data[[whole_plot]], .data[[sub_plot]], sep = "_")
+  if(!is.finite(units_per_block) ||
+     !is.finite(total_units) ||
+     total_units > .Machine$integer.max) {
+    stop(
+      "The requested Splitplot-RCBD contains too many experimental units.",
+      call. = FALSE
     )
+  }
   
-  key_map <- stats::setNames(
-    trt_catalog$ntreat,
-    paste(trt_catalog[[whole_plot]], trt_catalog[[sub_plot]], sep = "___")
+  units_per_block <- as.integer(units_per_block)
+  total_units <- as.integer(total_units)
+  
+  if(units_per_block > serie) {
+    stop(
+      "'serie' must be greater than or equal to the number of experimental ",
+      "units per block to avoid duplicated plot identifiers. Units per block: ",
+      units_per_block,
+      "; serie: ",
+      serie,
+      ".",
+      call. = FALSE
+    )
+  }
+  
+  expected_nrows <- as.integer(rep * n_sp)
+  
+  if(is_missing_scalar(nrows)) {
+    nrows <- expected_nrows
+  } else {
+    nrows <- as_positive_integer(nrows, "nrows")
+    
+    if(nrows != expected_nrows) {
+      stop(
+        "For Splitplot-RCBD, 'nrows' must equal replications multiplied by ",
+        "subplot levels so that every whole plot remains contiguous. Expected ",
+        "nrows: ",
+        expected_nrows,
+        ".",
+        call. = FALSE
+      )
+    }
+  }
+  
+  ncols <- as.integer(n_wp)
+  
+  # -------------------------------------------------------------------------
+  # Treatment catalogue
+  # -------------------------------------------------------------------------
+  
+  treatment_catalog <- do.call(
+    base::expand.grid,
+    c(
+      dfactors,
+      list(
+        KEEP.OUT.ATTRS = FALSE,
+        stringsAsFactors = FALSE
+      )
+    )
+  )
+  
+  names(treatment_catalog) <- factor_names
+  treatment_catalog$ntreat <- seq_len(nrow(treatment_catalog))
+  treatment_catalog$wp_sp <- paste(
+    treatment_catalog[[whole_plot]],
+    treatment_catalog[[sub_plot]],
+    sep = "_"
   )
   
   # -------------------------------------------------------------------------
-  # Split-plot RCBD randomization
+  # Hierarchical randomization
   # -------------------------------------------------------------------------
   
-  fb <- purrr::map_dfr(seq_len(rep), function(b) {
+  block_list <- lapply(seq_len(rep), function(block_id) {
+    randomized_wp <- sample(
+      wp_levels,
+      size = n_wp,
+      replace = FALSE
+    )
     
-    wp_rand <- sample(wp_levels, size = n_wp, replace = FALSE)
-    
-    purrr::map_dfr(seq_len(n_wp), function(wp_i) {
-      
-      sp_rand <- sample(sp_levels, size = n_sp, replace = FALSE)
-      
-      tibble::tibble(
-        block = b,
-        whole_plot_order = wp_i,
-        sub_plot_order = seq_len(n_sp),
-        !!whole_plot := wp_rand[wp_i],
-        !!sub_plot := sp_rand
+    whole_plot_list <- lapply(seq_len(n_wp), function(wp_position) {
+      randomized_sp <- sample(
+        sp_levels,
+        size = n_sp,
+        replace = FALSE
       )
       
+      out <- data.frame(
+        block = rep.int(block_id, n_sp),
+        whole_plot_order = rep.int(wp_position, n_sp),
+        sub_plot_order = seq_len(n_sp),
+        stringsAsFactors = FALSE,
+        check.names = FALSE
+      )
+      
+      out[[whole_plot]] <- rep.int(randomized_wp[wp_position], n_sp)
+      out[[sub_plot]] <- randomized_sp
+      out
     })
     
-  }) %>%
-    dplyr::mutate(
-      key = paste(.data[[whole_plot]], .data[[sub_plot]], sep = "___"),
-      ntreat = unname(key_map[.data$key]),
-      wp_sp = paste(.data[[whole_plot]], .data[[sub_plot]], sep = "_")
-    ) %>%
-    dplyr::select(!"key")
+    block_data <- do.call(rbind, whole_plot_list)
+    rownames(block_data) <- NULL
+    block_data
+  })
   
-  # -------------------------------------------------------------------------
-  # Field layout
-  # -------------------------------------------------------------------------
+  fb <- do.call(rbind, block_list)
+  rownames(fb) <- NULL
   
-  fb <- fb %>%
-    dplyr::mutate(
-      cols = .data$whole_plot_order,
-      
-      block_start_down = dplyr::case_when(
-        isTRUE(zigzag) & n_wp %% 2 == 1 & .data$block %% 2 == 0 ~ TRUE,
-        TRUE ~ FALSE
-      ),
-      
-      walk = dplyr::case_when(
-        !isTRUE(zigzag) ~ .data$sub_plot_order,
-        
-        !.data$block_start_down & .data$cols %% 2 == 1 ~ .data$sub_plot_order,
-        !.data$block_start_down & .data$cols %% 2 == 0 ~ (n_sp - .data$sub_plot_order) + 1,
-        
-        .data$block_start_down & .data$cols %% 2 == 1 ~ (n_sp - .data$sub_plot_order) + 1,
-        .data$block_start_down & .data$cols %% 2 == 0 ~ .data$sub_plot_order
-      ),
-      
-      rows_local = .data$sub_plot_order,
-      rows = ((.data$block - 1) * n_sp) + .data$rows_local
-    ) %>%
-    dplyr::arrange(.data$block, .data$cols, .data$walk) %>%
-    dplyr::group_by(.data$block) %>%
-    dplyr::mutate(
-      sort = dplyr::row_number(),
-      plots = serie * .data$block + .data$sort
-    ) %>%
-    dplyr::ungroup()
+  wp_index <- match(fb[[whole_plot]], wp_levels)
+  sp_index <- match(fb[[sub_plot]], sp_levels)
   
-  # -------------------------------------------------------------------------
-  # QR code and design label
-  # -------------------------------------------------------------------------
+  fb$ntreat <- wp_index + (sp_index - 1L) * n_wp
+  fb$wp_sp <- paste(
+    fb[[whole_plot]],
+    fb[[sub_plot]],
+    sep = "_"
+  )
   
-  fb <- fb %>%
-    dplyr::mutate(project = project) %>%
-    tidyr::unite("qrcode", any_of(qrcolumns), sep = "_", remove = FALSE) %>%
-    dplyr::mutate(design = type)
-  
-  # -------------------------------------------------------------------------
-  # Output fieldbook
-  # -------------------------------------------------------------------------
-  
-  fieldbook <- fb %>%
-    dplyr::select(
-      "qrcode",
-      "plots",
-      "ntreat",
-      all_of(name.factors),
-      "wp_sp",
-      "block",
-      "sort",
-      "rows",
-      "cols",
-      "design"
+  if(anyNA(fb$ntreat)) {
+    stop(
+      "Internal error: one or more Splitplot-RCBD treatments could not be ",
+      "matched to the treatment catalogue.",
+      call. = FALSE
     )
+  }
   
   # -------------------------------------------------------------------------
-  # Result 
+  # Physical layout and plot numbering
   # -------------------------------------------------------------------------
+  
+  fb$cols <- as.integer(fb$whole_plot_order)
+  
+  block_start_down <- isTRUE(zigzag) &
+    (n_wp %% 2L == 1L) &
+    (fb$block %% 2L == 0L)
+  
+  fb$walk <- if(!isTRUE(zigzag)) {
+    fb$sub_plot_order
+  } else {
+    reverse_in_column <- xor(
+      fb$cols %% 2L == 0L,
+      block_start_down
+    )
+    
+    ifelse(
+      reverse_in_column,
+      (n_sp - fb$sub_plot_order) + 1L,
+      fb$sub_plot_order
+    )
+  }
+  
+  fb$rows_local <- as.integer(fb$sub_plot_order)
+  fb$rows <- as.integer(
+    ((fb$block - 1L) * n_sp) + fb$rows_local
+  )
+  
+  fb <- fb[
+    order(fb$block, fb$cols, fb$walk),
+    ,
+    drop = FALSE
+  ]
+  
+  fb$sort <- ave(
+    seq_len(nrow(fb)),
+    fb$block,
+    FUN = seq_along
+  )
+  
+  fb$sort <- as.integer(fb$sort)
+  fb$plots <- as.numeric(serie) * fb$block + fb$sort
+  
+  # -------------------------------------------------------------------------
+  # QR code and output
+  # -------------------------------------------------------------------------
+  
+  fb$project <- project
+  fb$design <- type
+  fb$qrcode <- build_qrcode(
+    data = fb,
+    template = qrcode,
+    factor_names = factor_names
+  )
+  
+  if(anyDuplicated(fb$plots)) {
+    duplicate_plots <- unique(
+      fb$plots[duplicated(fb$plots)]
+    )
+    
+    stop(
+      "Duplicated plot identifiers were generated: ",
+      paste(utils::head(duplicate_plots, 10L), collapse = ", "),
+      ".",
+      call. = FALSE
+    )
+  }
+  
+  if(anyDuplicated(fb$qrcode)) {
+    duplicate_qr <- unique(
+      fb$qrcode[duplicated(fb$qrcode)]
+    )
+    
+    stop(
+      "Duplicated QR-code identifiers were generated: ",
+      paste(utils::head(duplicate_qr, 10L), collapse = ", "),
+      ". Modify the QR-code template so that every experimental unit is unique.",
+      call. = FALSE
+    )
+  }
+  
+  coordinates <- paste(fb$rows, fb$cols, sep = ":")
+  
+  if(anyDuplicated(coordinates)) {
+    stop(
+      "Internal error: duplicated row/column coordinates were generated.",
+      call. = FALSE
+    )
+  }
+  
+  expected_treatments <- seq_len(nrow(treatment_catalog))
+  
+  treatment_check <- split(fb$ntreat, fb$block)
+  valid_treatments <- all(vapply(
+    treatment_check,
+    function(x) identical(sort(as.integer(x)), expected_treatments),
+    logical(1)
+  ))
+  
+  if(!valid_treatments) {
+    stop(
+      "Internal error: each block must contain every whole-plot/subplot ",
+      "treatment combination exactly once.",
+      call. = FALSE
+    )
+  }
+  
+  whole_plot_check <- split(
+    fb[[whole_plot]],
+    interaction(fb$block, fb$whole_plot_order, drop = TRUE)
+  )
+  
+  if(any(vapply(whole_plot_check, function(x) length(unique(x)) != 1L, logical(1)))) {
+    stop(
+      "Internal error: a whole plot contains more than one whole-plot level.",
+      call. = FALSE
+    )
+  }
+  
+  subplot_check <- split(
+    fb[[sub_plot]],
+    interaction(fb$block, fb$whole_plot_order, drop = TRUE)
+  )
+  
+  valid_subplots <- all(vapply(
+    subplot_check,
+    function(x) identical(sort(unique(as.character(x))), sort(sp_levels)),
+    logical(1)
+  ))
+  
+  if(!valid_subplots) {
+    stop(
+      "Internal error: every whole plot must contain each subplot level ",
+      "exactly once.",
+      call. = FALSE
+    )
+  }
+  
+  output_columns <- c(
+    "qrcode",
+    "plots",
+    "ntreat",
+    factor_names,
+    "wp_sp",
+    "block",
+    "sort",
+    "rows",
+    "cols",
+    "design"
+  )
+  
+  fieldbook <- tibble::as_tibble(
+    fb[, output_columns, drop = FALSE]
+  )
   
   result <- list(
     fieldbook = fieldbook,
@@ -253,121 +637,24 @@ design_split_rcbd <- function(nfactors = 2,
       rep = rep,
       zigzag = zigzag,
       dim = c(nrows, ncols),
+      block_dim = c(n_sp, n_wp),
       seed = seed,
-      factornames = name.factors,
+      serie = serie,
+      project = project,
+      qrcode = qrcode,
+      factornames = factor_names,
       whole_plot = whole_plot,
-      sub_plot = sub_plot
+      sub_plot = sub_plot,
+      factor_roles = c(
+        whole_plot = whole_plot,
+        subplot = sub_plot
+      ),
+      whole_plots_per_block = n_wp,
+      subplots_per_whole_plot = n_sp,
+      units_per_block = units_per_block,
+      total_units = total_units
     )
   )
   
+  result
 }
-
-
-
-#' # Example
-#' factors <- list(
-#'   Soil = c("S1", "S2", "S3", "S4"),
-#'   Fertilizer = c("N1", "N2", "N3", "N4", "N5", "N6")
-#' )
-#'
-#' design_split_rcbd(
-#'   factors = factors,
-#'   rep = 3,
-#'   zigzag = TRUE,
-#'   seed = 123
-#' )$fieldbook
-#' 
-#' 
-
-
-
-# library(dplyr)
-# 
-# factors <- list(
-#   Soil = c("S1", "S2", "S3"),
-#   Fertilizer = c("N1", "N2", "N3", "N4", "N5")
-# )
-# 
-# sp <- design_split_rcbd(
-#   factors = factors,
-#   rep = 3,
-#   zigzag = TRUE,
-#   seed = 123
-# )
-# 
-# fb <- sp$fieldbook
-# 
-# head(fb)
-# 
-# 
-# 
-# 
-# plot_split_rcbd <- function(data,
-#                             factor,
-#                             fill = "plots",
-#                             xlab = "Whole plots",
-#                             ylab = "Subplots",
-#                             glab = NULL) {
-# 
-#   if(is.null(glab)) {
-#     glab <- factor
-#   }
-# 
-#   data_plot <- data %>%
-#     dplyr::group_by(.data$block) %>%
-#     dplyr::mutate(
-#       row_block = dplyr::dense_rank(.data$rows)
-#     ) %>%
-#     dplyr::ungroup()
-# 
-#   ggplot2::ggplot(
-#     data_plot,
-#     ggplot2::aes(
-#       x = .data$cols,
-#       y = .data$row_block,
-#       fill = as.factor(.data[[factor]])
-#     )
-#   ) +
-#     ggplot2::geom_tile(
-#       color = "black",
-#       linewidth = 0.5
-#     ) +
-#     ggplot2::geom_text(
-#       ggplot2::aes(label = .data[[fill]])
-#     ) +
-#     ggplot2::facet_wrap(
-#       ~ block,
-#       nrow = 1,
-#       labeller = ggplot2::label_both
-#     ) +
-#     ggplot2::scale_y_reverse(
-#       breaks = sort(unique(data_plot$row_block))
-#     ) +
-#     ggplot2::scale_x_continuous(
-#       breaks = sort(unique(data_plot$cols))
-#     ) +
-#     ggplot2::labs(
-#       x = xlab,
-#       y = ylab,
-#       fill = glab
-#     ) +
-#     ggplot2::theme_bw() +
-#     ggplot2::theme(
-#       legend.position = "top",
-#       strip.background = ggplot2::element_rect(fill = "grey90"),
-#       strip.text = ggplot2::element_text(face = "bold")
-#     )
-# }
-# 
-# 
-# library(ggplot2)
-# 
-# w <- plot_split_rcbd(
-#   data = fb,
-#   factor = "Soil",
-#   fill = "plots",
-#   glab = "Whole plot"
-# )
-# 
-# w
-# 

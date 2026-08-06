@@ -7,20 +7,33 @@
 tarpuy_traits(fieldbook = NULL, last_factor = NULL, traits = NULL)
 }
 \arguments{
-\item{fieldbook}{Experiment field book \verb{[dataframe]}.}
+\item{fieldbook}{Experimental field book \verb{[data.frame]}.}
 
-\item{last_factor}{Last factor in the field book \verb{[character: colname]}}
+\item{last_factor}{Optional name of the last structural column to include in
+the CSV exported to Field Book \verb{[character: colname]}.}
 
-\item{traits}{Traits information \verb{[dataframe or list]}.}
+\item{traits}{Traits information \verb{[data.frame or list]}.}
 }
 \value{
-list
+A list with three elements:
+\itemize{
+\item \code{fieldbook}: the field book including empty trait columns;
+\item \code{traits}: the trait definition table used to export the \code{.trt} file;
+\item \code{fb}: the base field book used to export the Field Book CSV.
+}
 }
 \description{
-Function to export field book and traits for be used in field book app.
+Function to export a field book and its trait definitions for use in the
+Field Book app.
 }
 \details{
-For the traits parameters you can used shown in the Field Book app
+The trait sheet can contain the columns \code{variable}, \code{{trait}}, \code{{when}},
+\code{{samples}}, \code{{format}}, \code{units}, \code{details}, and \code{categories}.
+
+Spaces inside \code{{trait}}, \code{{when}}, and the textual part of \code{{samples}} are
+removed. The components are joined with underscores. For example,
+\code{{trait} = "G"}, \code{{when} = "Dia 1"}, and \code{{samples} = "plant3"} generate
+\code{G_Dia1_plant1}, \code{G_Dia1_plant2}, and \code{G_Dia1_plant3}.
 }
 \examples{
 
@@ -29,71 +42,69 @@ library(inti)
 fieldbook <- inti::potato
 
 traits <- list(
-  list(variable = "altura de planta"
-       , trait = "altp"
-       , format = "numeric"
-       , when = "30, 40, 50"
-       , samples = 3
-       , units = "cm"
-       , details = NA
-       , minimum = 0
-       , maximum = 100
-       )
-  , list(variable = "severidad"
-         , trait = "svr"
-         , format = "scategorical"
-         , when = "30, 40, 50"
-         , samples = 1
-         , units = "scale"
-         , details = NA
-         , categories = "1, 3, 5, 7, 9"
+  list(
+    variable = "altura de planta",
+    trait = "altp",
+    format = "numeric",
+    when = "Dia 30, Dia 40, Dia 50",
+    samples = "plant3",
+    units = "cm",
+    details = NA,
+    minimum = 0,
+    maximum = 100
+  ),
+  list(
+    variable = "severidad",
+    trait = "svr",
+    format = "scategorical",
+    when = "30, 40, 50",
+    samples = 1,
+    units = "scale",
+    details = NA,
+    categories = "1, 3, 5, 7, 9"
+  ),
+  list(
+    variable = "foto",
+    trait = "foto",
+    format = "photo",
+    when = "hrv, pshrv",
+    samples = NA,
+    units = "image",
+    details = NA
+  ),
+  list(
+    variable = "germinacion",
+    trait = "G",
+    format = "boolean",
+    when = "0, 1, 2",
+    samples = 1,
+    units = "logical",
+    details = NA
   )
-  ,  list(variable = "foto"
-          , trait = "foto"
-          , format = "photo"
-          , when = "hrv, pshrv"
-          , samples = 1
-          , units = "image"
-          , details = NA
-  )
-  ,  list(variable = "germinacion"
-          , trait = "ger"
-          , format = "boolean"
-          , when = "30, 40, 50"
-          , samples = 1
-          , units = "logical"
-          , details = NA
-  )
-) 
+)
 
 fbapp <- tarpuy_traits(fieldbook, last_factor = "bloque", traits)
 
-\dontrun{ 
+\dontrun{
 
 library(inti)
 library(gsheet)
 
-url_fb <- paste0("https://docs.google.com/spreadsheets/d/"
-       , "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1607116093#gid=1607116093")
-       
-fb <- gsheet2tbl(url_fb) 
+url_ds <- paste0(
+  "https://docs.google.com/spreadsheets/d/",
+  "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1278145622"
+)
 
-url_ds <- paste0("https://docs.google.com/spreadsheets/d/"
-       , "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1278145622#gid=1278145622")
-       
-ds <- gsheet2tbl(url_ds) 
+ds <- gsheet2tbl(url_ds)
+fb <- ds |> tarpuy_design()
 
-fb <- ds \%>\% tarpuy_design()
+url_trt <- paste0(
+  "https://docs.google.com/spreadsheets/d/",
+  "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1665653985"
+)
 
-url_trt <- paste0("https://docs.google.com/spreadsheets/d/"
-       , "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1665653985#gid=1665653985")
-       
-traits <- gsheet2tbl(url_trt) 
-
+traits <- gsheet2tbl(url_trt)
 fbapp <- tarpuy_traits(fb, last_factor = "cols", traits)
-
-dsg <- fbapp[[1]]
-
 }
 
 }

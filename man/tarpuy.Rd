@@ -7,23 +7,24 @@
 tarpuy(dependencies = FALSE)
 }
 \arguments{
-\item{dependencies}{Install package dependencies for run the app}
+\item{dependencies}{Logical. If \code{TRUE}, install any missing TARPUY runtime
+dependencies using the local \code{inst/tarpuy/setup.R} script included with
+the installed \code{inti} package.}
 }
 \value{
-Shiny app
+A Shiny application launched with \code{\link[shiny:runApp]{shiny::runApp()}}.
 }
 \description{
 Invoke RStudio addin to create fieldbook designs
 }
 \details{
-Tarpuy allow to create experimental designs under an interactive app.
+TARPUY allows users to create experimental designs through an interactive
+Shiny application.
 }
 \examples{
 
-if(interactive()){
-
- inti::tarpuy()
-
+if (interactive()) {
+  inti::tarpuy()
 }
 
 }

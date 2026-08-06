@@ -88,11 +88,12 @@ tarpuy_plex(
 
 \item{serie}{Number of digits in the plots.}
 
-\item{seed}{Seed for the randomization.}
+\item{seed}{Seed for the randomization. A value of \code{0}, \code{NA}, or \code{NULL}
+generates and stores an effective seed in the design sheet.}
 
 \item{qrcode}{QR code template used to concatenate fieldbook identifiers.}
 
-\item{aug_blocks}{Number of blocks for augmented design.}
+\item{aug_blocks}{Optional number of blocks for augmented design.}
 
 \item{aug_eu_block}{Number of plots per block for augmented design.}
 
