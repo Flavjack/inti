@@ -813,3 +813,694 @@ default_sketch_color <- function(fieldbook) {
 
   candidates[[1L]]
 }
+
+
+
+# -------------------------------------------------------------------------
+# Sketch dimensions --------------------------------------------------------
+# -------------------------------------------------------------------------
+
+#' Describe the physical grid used by a TARPUY sketch.
+#'
+#' The returned geometry is used only to recommend export dimensions and to
+#' create a responsive preview. It never changes the experimental design.
+sketch_layout_geometry <- function(fieldbook) {
+  if(!is_valid_fieldbook_sheet(fieldbook)) {
+    return(list(
+      design = NA_character_,
+      blocks = 1L,
+      columns = 1L,
+      rows = 1L,
+      effective_columns = 1L,
+      effective_rows = 1L
+    ))
+  }
+
+  design_type <- .tarpuy_normalize_design_type(fieldbook$design)
+  count_unique <- function(x) {
+    values <- x[.tarpuy_nonempty_values(x)]
+    max(1L, as.integer(length(unique(values))))
+  }
+
+  if(
+    identical(design_type, "split-rcbd") &&
+    "block" %in% names(fieldbook)
+  ) {
+    blocks <- unique(as.character(fieldbook$block))
+    blocks <- blocks[!is.na(blocks) & nzchar(trimws(blocks))]
+
+    if(length(blocks) == 0L) {
+      blocks <- "1"
+    }
+
+    columns_by_block <- vapply(
+      blocks,
+      function(block_value) {
+        count_unique(fieldbook$cols[as.character(fieldbook$block) == block_value])
+      },
+      integer(1L),
+      USE.NAMES = FALSE
+    )
+
+    rows_by_block <- vapply(
+      blocks,
+      function(block_value) {
+        count_unique(fieldbook$rows[as.character(fieldbook$block) == block_value])
+      },
+      integer(1L),
+      USE.NAMES = FALSE
+    )
+
+    columns <- max(columns_by_block, na.rm = TRUE)
+    rows <- max(rows_by_block, na.rm = TRUE)
+    number_blocks <- max(1L, length(blocks))
+
+    return(list(
+      design = design_type,
+      blocks = as.integer(number_blocks),
+      columns = as.integer(columns),
+      rows = as.integer(rows),
+      effective_columns = as.integer(number_blocks * columns),
+      effective_rows = as.integer(rows)
+    ))
+  }
+
+  columns <- count_unique(fieldbook$cols)
+  rows <- count_unique(fieldbook$rows)
+  blocks <- if("block" %in% names(fieldbook)) {
+    count_unique(fieldbook$block)
+  } else {
+    1L
+  }
+
+  list(
+    design = design_type,
+    blocks = as.integer(blocks),
+    columns = as.integer(columns),
+    rows = as.integer(rows),
+    effective_columns = as.integer(columns),
+    effective_rows = as.integer(rows)
+  )
+}
+
+
+#' Recommend practical download dimensions for a TARPUY sketch.
+#'
+#' Dimensions are expressed in centimetres. They are intentionally moderate:
+#' the preview is generated independently, while users may still override the
+#' suggested values for a specific publication or printing requirement.
+recommended_sketch_dimensions <- function(fieldbook) {
+  geometry <- sketch_layout_geometry(fieldbook)
+
+  width_cm <- geometry$effective_columns * 2.0 + 5.0
+  height_cm <- geometry$effective_rows * 1.65 + 5.0
+
+  if(identical(geometry$design, "split-rcbd")) {
+    width_cm <- width_cm + geometry$blocks * 0.8
+    height_cm <- height_cm + 1.0
+  }
+
+  width_cm <- min(120, max(18, width_cm))
+  height_cm <- min(80, max(9, height_cm))
+
+  list(
+    width_cm = round(width_cm, 1),
+    height_cm = round(height_cm, 1),
+    geometry = geometry
+  )
+}
+
+
+#' Calculate pixel dimensions for the browser preview.
+#'
+#' Width and height follow the editable Sketch controls, so changing either
+#' value immediately changes the preview geometry. Preview DPI is intentionally
+#' fixed by the server and remains independent from the Resolution control used
+#' for downloaded PNG files.
+sketch_preview_dimensions <- function(
+    fieldbook,
+    width_cm = NULL,
+    height_cm = NULL,
+    dpi = 100L
+) {
+  recommended <- recommended_sketch_dimensions(fieldbook)
+
+  width_cm <- suppressWarnings(as.numeric(width_cm))
+  height_cm <- suppressWarnings(as.numeric(height_cm))
+  dpi <- suppressWarnings(as.numeric(dpi))
+
+  if(length(width_cm) == 0L || is.na(width_cm) || !is.finite(width_cm)) {
+    width_cm <- recommended$width_cm
+  }
+  if(length(height_cm) == 0L || is.na(height_cm) || !is.finite(height_cm)) {
+    height_cm <- recommended$height_cm
+  }
+  if(length(dpi) == 0L || is.na(dpi) || !is.finite(dpi) || dpi < 72) {
+    dpi <- 100
+  }
+
+  width_cm <- min(200, max(5, width_cm))
+  height_cm <- min(200, max(5, height_cm))
+  dpi <- as.integer(round(dpi))
+
+  list(
+    width_px = as.integer(round(width_cm / 2.54 * dpi)),
+    height_px = as.integer(round(height_cm / 2.54 * dpi)),
+    dpi = dpi,
+    width_cm = width_cm,
+    height_cm = height_cm,
+    geometry = recommended$geometry
+  )
+}
+
+
+# -------------------------------------------------------------------------
+# Trait identity and metadata ---------------------------------------------
+# -------------------------------------------------------------------------
+
+#' Return an empty TARPUY Trait metadata table.
+#'
+#' This table is stored in the internal `_tarpuy_traits_meta` worksheet. It is
+#' never appended to the fieldbook or exported to Field Book mobile files.
+tarpuy_empty_trait_metadata <- function() {
+  data.frame(
+    fieldbook_sheet = character(),
+    traits_sheet = character(),
+    trait_id = character(),
+    generated_column = character(),
+    generated_index = integer(),
+    status = character(),
+    updated_at = character(),
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+}
+
+
+.tarpuy_new_trait_id <- function(existing = character(0)) {
+  existing <- as.character(existing)
+  existing <- existing[!is.na(existing) & nzchar(trimws(existing))]
+
+  stamp <- gsub(
+    "[^0-9]",
+    "",
+    format(Sys.time(), "%Y%m%d%H%M%OS6")
+  )
+  process_id <- as.integer(Sys.getpid())
+  counter <- length(existing) + 1L
+
+  repeat {
+    candidate <- paste0(
+      "T",
+      stamp,
+      "_",
+      process_id,
+      "_",
+      sprintf("%06d", counter)
+    )
+
+    if(!candidate %in% existing) {
+      return(candidate)
+    }
+
+    counter <- counter + 1L
+  }
+}
+
+
+
+#' Ensure that active rows in a Traits worksheet have stable internal IDs.
+#'
+#' Existing IDs are retained. Duplicated IDs are repaired after the first
+#' occurrence, and active rows without an ID receive a new one. IDs already
+#' present on temporarily blank rows are retained so the same row can be
+#' restored without being treated as a completely new Trait.
+tarpuy_prepare_trait_ids <- function(data) {
+  if(!.tarpuy_is_data_frame(data)) {
+    stop("'data' must be a Traits data frame.", call. = FALSE)
+  }
+
+  out <- as.data.frame(
+    data,
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+
+  normalized_names <- .tarpuy_clean_column_names(names(out))
+  trait_position <- match("trait", normalized_names)
+
+  if(is.na(trait_position)) {
+    stop("The Traits sheet must contain column {trait}.", call. = FALSE)
+  }
+
+  id_position <- match("_trait_id", normalized_names)
+  changed <- FALSE
+
+  if(is.na(id_position)) {
+    out[["_trait_id"]] <- NA_character_
+    id_position <- ncol(out)
+    changed <- TRUE
+  } else if(!identical(names(out)[[id_position]], "_trait_id")) {
+    names(out)[[id_position]] <- "_trait_id"
+    changed <- TRUE
+  }
+
+  ids <- trimws(as.character(out[[id_position]]))
+  ids[is.na(ids) | !nzchar(ids)] <- NA_character_
+
+  trait_values <- trimws(as.character(out[[trait_position]]))
+  active <- !is.na(trait_values) &
+    nzchar(trait_values) &
+    toupper(trait_values) != "X"
+
+  seen <- character(0)
+
+  for(i in seq_len(nrow(out))) {
+    current <- ids[[i]]
+
+    if(!is.na(current) && current %in% seen) {
+      current <- NA_character_
+      ids[[i]] <- NA_character_
+      changed <- TRUE
+    }
+
+    if(is.na(current) && active[[i]]) {
+      current <- .tarpuy_new_trait_id(c(seen, ids))
+      ids[[i]] <- current
+      changed <- TRUE
+    }
+
+    if(!is.na(current)) {
+      seen <- c(seen, current)
+    }
+  }
+
+  out[[id_position]] <- ids
+
+  list(
+    data = out,
+    changed = changed,
+    column_index = as.integer(id_position)
+  )
+}
+
+
+#' Normalize a TARPUY Trait metadata table.
+tarpuy_normalize_trait_metadata <- function(metadata) {
+  template <- tarpuy_empty_trait_metadata()
+
+  if(is.null(metadata) || !.tarpuy_is_data_frame(metadata) || nrow(metadata) == 0L) {
+    return(template)
+  }
+
+  out <- as.data.frame(
+    metadata,
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+
+  for(column_name in names(template)) {
+    if(!column_name %in% names(out)) {
+      out[[column_name]] <- template[[column_name]]
+    }
+  }
+
+  out <- out[, names(template), drop = FALSE]
+
+  character_columns <- setdiff(names(template), "generated_index")
+  for(column_name in character_columns) {
+    out[[column_name]] <- trimws(as.character(out[[column_name]]))
+    out[[column_name]][is.na(out[[column_name]])] <- ""
+  }
+
+  out$generated_index <- suppressWarnings(as.integer(out$generated_index))
+  out$status[!out$status %in% c("active", "historical")] <- "historical"
+
+  valid <- nzchar(out$trait_id) &
+    nzchar(out$generated_column) &
+    !is.na(out$generated_index) &
+    out$generated_index >= 1L
+
+  out <- out[valid, , drop = FALSE]
+  rownames(out) <- NULL
+  out
+}
+
+
+.tarpuy_column_value_count <- function(data, column_name) {
+  if(
+    !.tarpuy_is_data_frame(data) ||
+    !column_name %in% names(data)
+  ) {
+    return(0L)
+  }
+
+  as.integer(sum(.tarpuy_nonempty_values(data[[column_name]])))
+}
+
+
+#' Compare active Trait metadata before and after editing the Traits sheet.
+#'
+#' The returned plan identifies renames by stable `trait_id` and
+#' `generated_index`, and identifies obsolete columns produced by deleted
+#' Traits or by reducing the number of generated samples/moments.
+tarpuy_trait_change_plan <- function(old_metadata, new_metadata, existing) {
+  old <- tarpuy_normalize_trait_metadata(old_metadata)
+  new <- tarpuy_normalize_trait_metadata(new_metadata)
+
+  old_active <- old[old$status == "active", , drop = FALSE]
+  new_active <- new[new$status == "active", , drop = FALSE]
+
+  empty_renames <- data.frame(
+    trait_id = character(),
+    generated_index = integer(),
+    old_column = character(),
+    new_column = character(),
+    value_count = integer(),
+    conflict = logical(),
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+
+  empty_obsolete <- data.frame(
+    trait_id = character(),
+    generated_index = integer(),
+    old_column = character(),
+    value_count = integer(),
+    reason = character(),
+    conflict = logical(),
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+
+  if(nrow(old_active) == 0L) {
+    return(list(
+      renames = empty_renames,
+      obsolete = empty_obsolete,
+      has_changes = FALSE,
+      metadata_initialized = FALSE
+    ))
+  }
+
+  rename_rows <- list()
+  obsolete_rows <- list()
+  rename_count <- 0L
+  obsolete_count <- 0L
+
+  trait_ids <- unique(c(old_active$trait_id, new_active$trait_id))
+
+  for(trait_id in trait_ids) {
+    old_rows <- old_active[
+      old_active$trait_id == trait_id,
+      ,
+      drop = FALSE
+    ]
+    new_rows <- new_active[
+      new_active$trait_id == trait_id,
+      ,
+      drop = FALSE
+    ]
+
+    old_rows <- old_rows[
+      order(old_rows$generated_index, method = "radix"),
+      ,
+      drop = FALSE
+    ]
+    new_rows <- new_rows[
+      order(new_rows$generated_index, method = "radix"),
+      ,
+      drop = FALSE
+    ]
+
+    if(nrow(old_rows) == 0L) {
+      next
+    }
+
+    if(nrow(new_rows) == 0L) {
+      for(i in seq_len(nrow(old_rows))) {
+        obsolete_count <- obsolete_count + 1L
+        old_column <- old_rows$generated_column[[i]]
+        obsolete_rows[[obsolete_count]] <- data.frame(
+          trait_id = trait_id,
+          generated_index = old_rows$generated_index[[i]],
+          old_column = old_column,
+          value_count = .tarpuy_column_value_count(existing, old_column),
+          reason = "deleted_trait",
+          conflict = old_column %in% new_active$generated_column,
+          stringsAsFactors = FALSE,
+          check.names = FALSE
+        )
+      }
+      next
+    }
+
+    # First preserve exact generated names, even if the user changed their
+    # order in {when} or {samples}. This prevents a harmless reorder from being
+    # interpreted as a chain of renames.
+    exact_names <- intersect(
+      old_rows$generated_column,
+      new_rows$generated_column
+    )
+
+    old_remaining <- old_rows[
+      !old_rows$generated_column %in% exact_names,
+      ,
+      drop = FALSE
+    ]
+    new_remaining <- new_rows[
+      !new_rows$generated_column %in% exact_names,
+      ,
+      drop = FALSE
+    ]
+
+    pair_count <- min(nrow(old_remaining), nrow(new_remaining))
+
+    if(pair_count > 0L) {
+      for(i in seq_len(pair_count)) {
+        old_column <- old_remaining$generated_column[[i]]
+        new_column <- new_remaining$generated_column[[i]]
+        rename_count <- rename_count + 1L
+        rename_rows[[rename_count]] <- data.frame(
+          trait_id = trait_id,
+          generated_index = old_remaining$generated_index[[i]],
+          old_column = old_column,
+          new_column = new_column,
+          value_count = .tarpuy_column_value_count(existing, old_column),
+          conflict = new_column %in% names(existing) &&
+            !identical(old_column, new_column),
+          stringsAsFactors = FALSE,
+          check.names = FALSE
+        )
+      }
+    }
+
+    if(nrow(old_remaining) > pair_count) {
+      extra_positions <- seq.int(pair_count + 1L, nrow(old_remaining))
+
+      for(i in extra_positions) {
+        obsolete_count <- obsolete_count + 1L
+        old_column <- old_remaining$generated_column[[i]]
+        obsolete_rows[[obsolete_count]] <- data.frame(
+          trait_id = trait_id,
+          generated_index = old_remaining$generated_index[[i]],
+          old_column = old_column,
+          value_count = .tarpuy_column_value_count(existing, old_column),
+          reason = "reduced_generation",
+          conflict = old_column %in% new_active$generated_column,
+          stringsAsFactors = FALSE,
+          check.names = FALSE
+        )
+      }
+    }
+  }
+
+  renames <- if(rename_count == 0L) {
+    empty_renames
+  } else {
+    do.call(rbind, rename_rows)
+  }
+
+  obsolete <- if(obsolete_count == 0L) {
+    empty_obsolete
+  } else {
+    do.call(rbind, obsolete_rows)
+  }
+
+  list(
+    renames = renames,
+    obsolete = obsolete,
+    has_changes = nrow(renames) > 0L || nrow(obsolete) > 0L,
+    metadata_initialized = TRUE
+  )
+}
+
+
+#' Reconcile a regenerated fieldbook using explicit Trait decisions.
+#'
+#' Manual columns are always retained. Selected rename operations move existing
+#' values to the new generated column name. Selected obsolete columns are
+#' deleted; unselected obsolete columns are retained as historical columns.
+tarpuy_reconcile_trait_columns <- function(
+    existing,
+    new,
+    rename_map = character(0),
+    delete_columns = character(0)
+) {
+  if(!.tarpuy_is_data_frame(existing) || !.tarpuy_is_data_frame(new)) {
+    stop("'existing' and 'new' must be data frames.", call. = FALSE)
+  }
+
+  if(!same_tarpuy_design(existing, new)) {
+    stop(
+      "The existing and regenerated fieldbooks do not have the same design structure.",
+      call. = FALSE
+    )
+  }
+
+  key <- .tarpuy_key_column(existing, new)
+  if(is.null(key)) {
+    stop(
+      "The fieldbooks require a unique, non-empty 'qrcode' or 'plots' column for synchronization.",
+      call. = FALSE
+    )
+  }
+
+  index <- match(as.character(new[[key]]), as.character(existing[[key]]))
+  if(anyNA(index)) {
+    stop(
+      "Some regenerated experimental units could not be matched to the existing fieldbook.",
+      call. = FALSE
+    )
+  }
+
+  # Preserve the source-column names before coercing the target values.
+  # `as.character()` / `unname()`-style coercion may remove vector names;
+  # losing them silently converts every selected rename into a no-op and causes
+  # TARPUY to retain the old columns while appending the newly generated ones.
+  rename_sources <- names(rename_map)
+  rename_targets <- as.character(unname(rename_map))
+
+  if(length(rename_targets) > 0L && is.null(rename_sources)) {
+    stop(
+      "'rename_map' must be a named character vector whose names are the existing columns.",
+      call. = FALSE
+    )
+  }
+
+  if(length(rename_sources) != length(rename_targets)) {
+    stop("Invalid Trait rename map.", call. = FALSE)
+  }
+
+  valid_rename <- !is.na(rename_sources) &
+    nzchar(trimws(rename_sources)) &
+    !is.na(rename_targets) &
+    nzchar(trimws(rename_targets))
+
+  rename_sources <- trimws(rename_sources[valid_rename])
+  rename_targets <- trimws(rename_targets[valid_rename])
+
+  if(anyDuplicated(rename_sources)) {
+    stop("Trait reconciliation contains duplicated source columns.", call. = FALSE)
+  }
+
+  if(anyDuplicated(rename_targets)) {
+    stop("Trait reconciliation contains duplicated target columns.", call. = FALSE)
+  }
+
+  rename_map <- stats::setNames(rename_targets, rename_sources)
+
+  delete_columns <- unique(.tarpuy_nonempty_character(delete_columns))
+
+  structural_columns <- detect_structural_columns(new)
+  existing_extra <- setdiff(names(existing), detect_structural_columns(existing))
+  new_extra <- setdiff(names(new), structural_columns)
+
+  output <- new[, structural_columns, drop = FALSE]
+
+  for(column_name in existing_extra) {
+    if(column_name %in% delete_columns) {
+      next
+    }
+
+    output_name <- if(column_name %in% names(rename_map)) {
+      unname(rename_map[[column_name]])
+    } else {
+      column_name
+    }
+
+    if(output_name %in% names(output)) {
+      stop(
+        "Trait reconciliation would create a duplicated column: ",
+        output_name,
+        ".",
+        call. = FALSE
+      )
+    }
+
+    output[[output_name]] <- existing[[column_name]][index]
+  }
+
+  for(column_name in new_extra) {
+    if(column_name %in% names(output)) {
+      next
+    }
+
+    if(column_name %in% names(existing)) {
+      output[[column_name]] <- existing[[column_name]][index]
+    } else {
+      output[[column_name]] <- new[[column_name]]
+    }
+  }
+
+  rownames(output) <- NULL
+  output
+}
+
+
+#' Build the metadata state after applying Trait reconciliation decisions.
+tarpuy_finalize_trait_metadata <- function(
+    old_metadata,
+    new_metadata,
+    renamed_sources = character(0),
+    deleted_columns = character(0)
+) {
+  old <- tarpuy_normalize_trait_metadata(old_metadata)
+  new <- tarpuy_normalize_trait_metadata(new_metadata)
+
+  renamed_sources <- unique(.tarpuy_nonempty_character(renamed_sources))
+  deleted_columns <- unique(.tarpuy_nonempty_character(deleted_columns))
+
+  new$status <- "active"
+  active_columns <- unique(new$generated_column)
+
+  retained_old <- old[
+    !old$generated_column %in% renamed_sources &
+      !old$generated_column %in% deleted_columns &
+      !old$generated_column %in% active_columns,
+    ,
+    drop = FALSE
+  ]
+
+  if(nrow(retained_old) > 0L) {
+    retained_old$status <- "historical"
+  }
+
+  out <- rbind(retained_old, new)
+
+  if(nrow(out) == 0L) {
+    return(tarpuy_empty_trait_metadata())
+  }
+
+  out$updated_at <- format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z")
+  duplicate_key <- paste(
+    out$fieldbook_sheet,
+    out$traits_sheet,
+    out$trait_id,
+    out$generated_column,
+    out$status,
+    sep = "\r"
+  )
+  out <- out[!duplicated(duplicate_key, fromLast = TRUE), , drop = FALSE]
+  rownames(out) <- NULL
+  out
+}

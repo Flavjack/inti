@@ -16,10 +16,12 @@
 #' @param fill Character vector. Names of one or more columns used as labels
 #'   inside each experimental unit. When `ntreat` is used, it is displayed as
 #'   `T1`, `T2`, etc.
-#' @param xlab Character scalar. Title for the x axis. If `NULL`, `"columns"`
+#' @param xlab Character scalar. Title for the x axis. If `NULL`, `"Columns"`
 #'   is used.
-#' @param ylab Character scalar. Title for the y axis. If `NULL`, `"rows"` is
-#'   used.
+#' @param ylab Character scalar. Title for the y axis. If `NULL`, `"Blocks"` is
+#'   shown for RCBD/DBCA only when each physical row corresponds to exactly one
+#'   block; otherwise `"Rows"` is used. The plotting coordinate always remains
+#'   the physical `rows` column.
 #' @param glab Character scalar. Legend title. If `NULL`, `factor` is used.
 #' @param text_size Optional positive numeric scalar indicating the plot-label
 #'   font size in typographic points (`pt`). If `NULL` or `NA`, a suitable
@@ -40,7 +42,9 @@
 #' All standard designs are plotted with `cols` on the x axis and `rows` on
 #' the y axis. A DBCA/RCBD is therefore displayed according to its actual
 #' physical coordinates rather than replacing the row coordinate with the
-#' block number. The block can still be selected as the color factor.
+#' block number. When rows and blocks have a strict one-to-one relationship,
+#' only the visible y-axis title changes to `"Blocks"`. The block can still be
+#' selected as the color factor.
 #'
 #' Automatic wrapping affects only the sketch. It does not change `entry`,
 #' `ntreat`, QR codes, factor levels or any other fieldbook value.
@@ -561,12 +565,49 @@ plot_standard_design <- function(
     names(color_grps) <- factor_levels
   }
   
+  # Geometry always uses cols on x and rows on y. For RCBD/DBCA, only the
+  # visible y-axis title changes to "Blocks" when every physical row maps to
+  # exactly one statistical block and every block maps to exactly one row.
+  design_values <- if("design" %in% names(data_plot)) {
+    values <- tolower(trimws(as.character(data_plot$design)))
+    values <- values[!is.na(values) & nzchar(values)]
+    unique(gsub("[[:space:]_]+", "-", values))
+  } else {
+    character(0)
+  }
+  
+  is_rcbd <- length(design_values) == 1L &&
+    design_values[[1L]] %in% c("rcbd", "dbca")
+  
+  one_row_per_block <- FALSE
+  
+  if(is_rcbd && "block" %in% names(data_plot)) {
+    block_values <- as.character(data_plot$block)
+    valid_blocks <- !is.na(block_values) & nzchar(trimws(block_values))
+    
+    if(all(valid_blocks)) {
+      row_block_map <- unique(
+        data.frame(
+          rows = data_plot$rows,
+          block = block_values,
+          stringsAsFactors = FALSE
+        )
+      )
+      
+      one_row_per_block <-
+        nrow(row_block_map) == length(unique(data_plot$rows)) &&
+        nrow(row_block_map) == length(unique(block_values)) &&
+        !anyDuplicated(row_block_map$rows) &&
+        !anyDuplicated(row_block_map$block)
+    }
+  }
+  
   if(is.null(xlab)) {
-    xlab <- "columns"
+    xlab <- "Columns"
   }
   
   if(is.null(ylab)) {
-    ylab <- "rows"
+    ylab <- if(one_row_per_block) "Blocks" else "Rows"
   }
   
   if(is.null(glab)) {

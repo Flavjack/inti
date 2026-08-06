@@ -15,11 +15,14 @@ the CSV exported to Field Book \verb{[character: colname]}.}
 \item{traits}{Traits information \verb{[data.frame or list]}.}
 }
 \value{
-A list with three elements:
+A list with four elements:
 \itemize{
 \item \code{fieldbook}: the field book including empty trait columns;
 \item \code{traits}: the trait definition table used to export the \code{.trt} file;
-\item \code{fb}: the base field book used to export the Field Book CSV.
+\item \code{fb}: the base field book used to export the Field Book CSV;
+\item \code{metadata}: internal mapping between a stable Trait ID and every generated
+fieldbook column. This element is used by TARPUY and is not exported to the
+fieldbook or to Field Book mobile files.
 }
 }
 \description{

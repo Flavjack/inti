@@ -885,20 +885,35 @@ textarea.form-control {
   background: var(--tarpuy-surface);
 }
 
-/* Preserve the generated image's real dimensions. The surrounding container,
- * not the image, handles overflow on narrower screens. */
+/* Width and Height control the natural browser-preview dimensions. The
+ * preview is rendered at a fixed internal DPI, so the Resolution input affects
+ * PNG downloads only. Wide designs remain inside this localized scroll area. */
+.sketch-preview-image--dimensioned {
+  overflow: auto;
+}
+
 .sketch-preview-image img,
 .sketch-canvas-scroll img,
 .sketch-preview-image .shiny-image-output img {
   display: block;
-  width: auto;
-  max-width: none;
   height: auto;
   margin: 0 auto;
+  object-fit: contain;
+}
+
+.sketch-canvas-scroll img {
+  max-width: none;
 }
 
 .sketch-preview-image .shiny-image-output {
-  min-width: max-content;
+  width: max-content;
+  min-width: 100%;
+  height: auto;
+}
+
+.sketch-preview-image--dimensioned .shiny-image-output img {
+  width: auto;
+  max-width: none;
 }
 
 .sketch-downloads {
@@ -917,6 +932,35 @@ textarea.form-control {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.625rem;
+}
+
+.sketch-size-control {
+  min-width: 0;
+}
+
+.sketch-size-control .form-group,
+.sketch-size-control .shiny-input-container {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.sketch-export-help {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  padding: 0.55rem 0.7rem;
+  margin: 0.6rem 0 0.75rem;
+  color: var(--tarpuy-text-muted);
+  font-size: 0.84rem;
+  line-height: 1.35;
+  background: var(--tarpuy-surface-muted);
+  border: 1px solid var(--tarpuy-border);
+  border-radius: var(--tarpuy-radius-sm);
+}
+
+
+.sketch-preview-image--dimensioned .shiny-image-output {
+  padding: 0.35rem;
 }
 
 /* -------------------------------------------------------------------------

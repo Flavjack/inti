@@ -138,6 +138,16 @@
 }
 
 
+.tarpuy_empty_trait_metadata_export <- function() {
+  tibble::tibble(
+    trait_id = character(),
+    generated_column = character(),
+    generated_index = integer(),
+    source_row = integer()
+  )
+}
+
+
 # Main function ------------------------------------------------------------
 
 #' Field book traits
@@ -159,10 +169,13 @@
 #' `{trait} = "G"`, `{when} = "Dia 1"`, and `{samples} = "plant3"` generate
 #' `G_Dia1_plant1`, `G_Dia1_plant2`, and `G_Dia1_plant3`.
 #'
-#' @return A list with three elements:
+#' @return A list with four elements:
 #' * `fieldbook`: the field book including empty trait columns;
 #' * `traits`: the trait definition table used to export the `.trt` file;
-#' * `fb`: the base field book used to export the Field Book CSV.
+#' * `fb`: the base field book used to export the Field Book CSV;
+#' * `metadata`: internal mapping between a stable Trait ID and every generated
+#'   fieldbook column. This element is used by TARPUY and is not exported to the
+#'   fieldbook or to Field Book mobile files.
 #'
 #' @export
 #'
@@ -270,7 +283,12 @@ tarpuy_traits <- function(fieldbook = NULL,
   }
   
   if (is.null(traits)) {
-    return(list(fieldbook = fb, traits = NA, fb = fb))
+    return(list(
+      fieldbook = fb,
+      traits = NA,
+      fb = fb,
+      metadata = .tarpuy_empty_trait_metadata_export()
+    ))
   }
   
   # Standardize the traits table ------------------------------------------
@@ -281,7 +299,8 @@ tarpuy_traits <- function(fieldbook = NULL,
     return(list(
       fieldbook = fb,
       traits = .tarpuy_empty_trait_export(),
-      fb = fb
+      fb = fb,
+      metadata = .tarpuy_empty_trait_metadata_export()
     ))
   }
   
@@ -315,6 +334,10 @@ tarpuy_traits <- function(fieldbook = NULL,
   for (column in missing_columns) {
     traitstb[[column]] <- NA_character_
   }
+
+  if(!"_trait_id" %in% names(traitstb)) {
+    traitstb[["_trait_id"]] <- NA_character_
+  }
   
   traitstb <- traitstb |>
     dplyr::mutate(dplyr::across(dplyr::everything(), as.character)) |>
@@ -335,9 +358,17 @@ tarpuy_traits <- function(fieldbook = NULL,
     return(list(
       fieldbook = fb,
       traits = .tarpuy_empty_trait_export(),
-      fb = fb
+      fb = fb,
+      metadata = .tarpuy_empty_trait_metadata_export()
     ))
   }
+
+  traitstb$`_trait_id` <- .tarpuy_empty_to_na(traitstb$`_trait_id`)
+  missing_trait_ids <- is.na(traitstb$`_trait_id`)
+  traitstb$`_trait_id`[missing_trait_ids] <- paste0(
+    "ROW",
+    traitstb$.source_row[missing_trait_ids]
+  )
   
   # Expand moments and samples row by row ---------------------------------
   
@@ -367,6 +398,8 @@ tarpuy_traits <- function(fieldbook = NULL,
     } else {
       paste0(sample_info$prefix, seq_len(sample_info$count))
     }
+
+    generated_index <- 0L
     
     for (moment in moments) {
       for (sample_label in sample_labels) {
@@ -375,14 +408,23 @@ tarpuy_traits <- function(fieldbook = NULL,
         generated_name <- paste(components, collapse = "_")
         
         expanded_index <- expanded_index + 1L
+        generated_index <- generated_index + 1L
         expanded_rows[[expanded_index]] <- traitstb[i, , drop = FALSE]
         expanded_rows[[expanded_index]]$trait <- generated_name
+        expanded_rows[[expanded_index]]$.generated_index <- generated_index
       }
     }
   }
   
   expanded <- dplyr::bind_rows(expanded_rows)
   generated_names <- expanded$trait
+
+  metadata <- tibble::tibble(
+    trait_id = as.character(expanded$`_trait_id`),
+    generated_column = as.character(generated_names),
+    generated_index = as.integer(expanded$.generated_index),
+    source_row = as.integer(expanded$.source_row)
+  )
   
   duplicated_traits <- unique(generated_names[duplicated(generated_names)])
   
@@ -461,6 +503,7 @@ tarpuy_traits <- function(fieldbook = NULL,
   list(
     fieldbook = fbtraits,
     traits = fbapp,
-    fb = fb
+    fb = fb,
+    metadata = metadata
   )
 }
