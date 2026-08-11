@@ -34,43 +34,51 @@ plot_augmented_design(
 - fill:
 
   Character vector. Column or columns used as labels inside each
-  experimental unit. Default is `"plots"`.
+  experimental unit. Default is `"plots"`. When `ntreat` is selected, it
+  is displayed as `T1`, `T2`, etc.
 
 - xlab:
 
-  Character scalar. Optional x axis title.
+  Character scalar. Optional x axis title. If `NULL`, `"Columns"` is
+  used.
 
 - ylab:
 
-  Character scalar. Optional y axis title.
+  Character scalar. Optional y axis title. If `NULL`, the title is
+  `"Blocks"` when every physical row corresponds to exactly one
+  statistical block; otherwise `"Rows"` is used.
 
 - glab:
 
-  Character scalar. Optional legend title.
+  Character scalar. Optional legend title. If `NULL`, the selected color
+  factor is used.
 
 - text_size:
 
   Optional positive numeric scalar indicating the plot-label font size
-  in typographic points (`pt`). If `NULL` or `NA`, the function
-  calculates an automatic size: 10 pt for one label column, 8 pt for two
-  columns and 7 pt for three or more columns.
+  in typographic points (`pt`). If `NULL` or `NA`, a suitable default is
+  selected according to the number of label columns. The value is
+  converted internally to the unit expected by
+  [`ggplot2::geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html).
 
 - wrap_width:
 
   Optional positive integer indicating the approximate maximum number of
-  characters per line. If `NULL` or `NA`, labels are not wrapped.
-  Underscores are displayed as spaces only in the sketch.
+  characters per line. If `NULL` or `NA`, the function calculates it
+  automatically from the field dimensions, font size and number of label
+  columns. Underscores are displayed as spaces only in the sketch; the
+  original fieldbook values are not modified.
 
 - font_family:
 
-  Font family used in the sketch. Defaults to `"Open Sans"`. If it or
-  the optional `systemfonts` package is unavailable, the function
-  silently uses `"sans"`.
+  Character scalar. Font family used in the sketch. Defaults to
+  `"Open Sans"`. If the font cannot be verified through the optional
+  `systemfonts` package, `"sans"` is used as a fallback.
 
 - font_face:
 
-  Font face used in the sketch. Defaults to `"plain"`, equivalent to
-  regular/normal text.
+  Character scalar. Font face used in labels, axes and legends. Defaults
+  to `"plain"`.
 
 ## Value
 
@@ -78,23 +86,21 @@ A `ggplot` object.
 
 ## Details
 
-This function is intended for augmented designs with checks, entries and
-optional empty experimental units. It uses:
+The function always uses the physical `rows` and `cols` coordinates
+stored in the fieldbook. Therefore, custom dimensions and zigzag layouts
+are preserved. The `block` column never replaces `rows` as a plotting
+coordinate. When each row represents exactly one block, only the visible
+y-axis title changes from `"Rows"` to `"Blocks"`. The statistical block
+remains available as a color factor and, when a block occupies a
+complete rectangular region, its external border is highlighted.
 
-- `cols` as the x axis.
+Empty experimental units are represented by the level `"empty"`. When
+`factor = "type"`, checks, test entries and empty plots receive stable
+colors. Other factor columns use the regular TARPUY color palette.
 
-- `block` as the y axis.
-
-- `type` to distinguish checks, tests and empty plots.
-
-Empty plots are shown in grey when `type` is `NA` or empty.
-
-Label wrapping changes only the displayed text. It does not modify
-`entry`, `plots`, `ntreat`, QR codes or any other fieldbook value.
-
-`text_size` is expressed in points, like common word processors.
-Internally it is converted to the size unit expected by
-[`ggplot2::geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html).
+Automatic wrapping and formatting affect only the displayed text. They
+do not modify `entry`, `plots`, `ntreat`, QR codes or any other
+fieldbook value.
 
 ## Examples
 
@@ -106,7 +112,6 @@ plot_augmented_design(
   factor = "type",
   fill = c("plots", "entry"),
   text_size = 9,
-  wrap_width = 14,
   font_family = "Open Sans",
   font_face = "plain"
 )

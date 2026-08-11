@@ -36,17 +36,6 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 pak::pkg_install("flavjack/inti")
 ```
 
-To install a specific version from CRAN (e.g., version 0.4.4):
-
-``` r
-
-if (!requireNamespace("pak", quietly = TRUE)) {
-  install.packages("pak")
-}
-
-pak::pkg_install("inti@0.4.4")
-```
-
 After installation, load the package:
 
 ``` r

@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.1.999</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.2.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,24 +81,30 @@
 
 
 <dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>Fieldbook data frame or design object containing a fieldbook.</p></dd>
+<dd><p>Fieldbook data frame or a design object containing a fieldbook.</p></dd>
 
 
 <dt id="arg-factor">factor<a class="anchor" aria-label="anchor" href="#arg-factor"></a></dt>
-<dd><p>Character scalar. Column used to color experimental units.</p></dd>
+<dd><p>Character scalar. Column used to color experimental units.
+When omitted, <code>NA</code>, an empty string or <code>"auto"</code>, TARPUY selects a design-
+appropriate default: the first experimental factor for CRD, RCBD and
+Splitplot-RCBD, and <code>type</code> for augmented designs.</p></dd>
 
 
 <dt id="arg-fill">fill<a class="anchor" aria-label="anchor" href="#arg-fill"></a></dt>
-<dd><p>Character vector. Column or columns used as labels inside
-experimental units.</p></dd>
+<dd><p>Character vector. Column or columns used as labels inside the
+experimental units. Defaults to <code>"plots"</code>.</p></dd>
 
 
 <dt id="arg-xlab">xlab<a class="anchor" aria-label="anchor" href="#arg-xlab"></a></dt>
-<dd><p>Character scalar. Optional x axis title.</p></dd>
+<dd><p>Character scalar. Optional x-axis title. When <code>NULL</code>, each
+plotter determines the title from the design geometry.</p></dd>
 
 
 <dt id="arg-ylab">ylab<a class="anchor" aria-label="anchor" href="#arg-ylab"></a></dt>
-<dd><p>Character scalar. Optional y axis title.</p></dd>
+<dd><p>Character scalar. Optional y-axis title. When <code>NULL</code>, each
+plotter determines whether the physical <code>rows</code> represent rows, blocks or
+subplot positions.</p></dd>
 
 
 <dt id="arg-glab">glab<a class="anchor" aria-label="anchor" href="#arg-glab"></a></dt>
@@ -107,25 +113,25 @@ experimental units.</p></dd>
 
 <dt id="arg-text-size">text_size<a class="anchor" aria-label="anchor" href="#arg-text-size"></a></dt>
 <dd><p>Optional positive numeric scalar indicating the plot-label
-font size in typographic points (<code>pt</code>). If <code>NULL</code> or <code>NA</code>, the selected
-plotting function calculates an automatic size.</p></dd>
+font size in typographic points (<code>pt</code>). When <code>NULL</code> or <code>NA</code>, each plotter
+calculates a suitable size automatically.</p></dd>
 
 
 <dt id="arg-wrap-width">wrap_width<a class="anchor" aria-label="anchor" href="#arg-wrap-width"></a></dt>
-<dd><p>Optional positive integer indicating the approximate
-maximum number of characters per line. If <code>NULL</code> or <code>NA</code>, labels are not
-wrapped.</p></dd>
+<dd><p>Optional positive integer retained for backward
+compatibility. When <code>NULL</code> or <code>NA</code>, label wrapping is calculated
+automatically by the selected plotter. This argument does not need to be
+exposed as a control in the TARPUY interface.</p></dd>
 
 
 <dt id="arg-font-family">font_family<a class="anchor" aria-label="anchor" href="#arg-font-family"></a></dt>
-<dd><p>Font family used in the sketch. Defaults to
-<code>"Open Sans"</code>. Each plotting function silently falls back to <code>"sans"</code>
-when the requested font is unavailable.</p></dd>
+<dd><p>Character scalar retained for programmatic use. Defaults
+to <code>"Open Sans"</code>; the plotters fall back to <code>"sans"</code> when necessary.</p></dd>
 
 
 <dt id="arg-font-face">font_face<a class="anchor" aria-label="anchor" href="#arg-font-face"></a></dt>
-<dd><p>Font face used in the sketch. Defaults to <code>"plain"</code>,
-equivalent to regular/normal text.</p></dd>
+<dd><p>Character scalar retained for programmatic use. One of
+<code>"plain"</code>, <code>"bold"</code>, <code>"italic"</code> or <code>"bold.italic"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -134,15 +140,20 @@ equivalent to regular/normal text.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function works as a dispatcher. It detects the design type from the
-fieldbook and sends the data to the corresponding plotting function.</p>
-<p>The text and font arguments are forwarded to:</p>
-<ul><li><p><code><a href="plot_standard_design.html">plot_standard_design()</a></code></p></li>
-<li><p><code><a href="plot_augmented_design.html">plot_augmented_design()</a></code></p></li>
-<li><p><code><a href="plot_split_rcbd_design.html">plot_split_rcbd_design()</a></code></p></li>
-</ul><p>The visible name <code>Splitplot-RCBD</code> and accepted spelling variants are
-normalized to the stable internal identifier <code>"split-rcbd"</code> before the
-plotting method is selected. The fieldbook itself is not modified.</p>
+    <p>This function is the common plotting interface used by TARPUY. It reads the
+design stored in the fieldbook, chooses the corresponding plotter and sends
+the same plotting arguments to all supported design types.</p>
+<p>Supported designs and plotters are:</p>
+<ul><li><p>CRD and RCBD: <code><a href="plot_standard_design.html">plot_standard_design()</a></code>.</p></li>
+<li><p>Augmented: <code><a href="plot_augmented_design.html">plot_augmented_design()</a></code>.</p></li>
+<li><p>Splitplot-RCBD: <code><a href="plot_split_rcbd_design.html">plot_split_rcbd_design()</a></code>.</p></li>
+</ul><p>The function never recalculates or rearranges the design. All plotters use
+<code>cols</code> as the x coordinate and <code>rows</code> as the y coordinate. Columns such as
+<code>block</code> are used only for labels, grouping or faceting.</p>
+<p><code>wrap_width</code>, <code>font_family</code> and <code>font_face</code> remain available to avoid
+breaking existing programmatic calls, but the TARPUY frontend should expose
+only the general <code>text_size</code> control. Automatic label wrapping is used when
+<code>wrap_width = NULL</code>.</p>
     </div>
 
     <div class="section level2">
@@ -151,12 +162,9 @@ plotting method is selected. The fieldbook itself is not modified.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">tarpuy_plotdesign</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">fieldbook</span>,</span></span>
-<span class="r-in"><span>  factor <span class="op">=</span> <span class="st">"entry"</span>,</span></span>
-<span class="r-in"><span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"entry"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  text_size <span class="op">=</span> <span class="fl">9</span>,</span></span>
-<span class="r-in"><span>  wrap_width <span class="op">=</span> <span class="fl">14</span>,</span></span>
-<span class="r-in"><span>  font_family <span class="op">=</span> <span class="st">"Open Sans"</span>,</span></span>
-<span class="r-in"><span>  font_face <span class="op">=</span> <span class="st">"plain"</span></span></span>
+<span class="r-in"><span>  factor <span class="op">=</span> <span class="st">"auto"</span>,</span></span>
+<span class="r-in"><span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"ntreat"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  text_size <span class="op">=</span> <span class="fl">9</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>

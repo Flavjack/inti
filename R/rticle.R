@@ -21,7 +21,7 @@
 #'
 #' @export
 
-rticle <- function(file = "draft.md",
+rticle <- function(file = "render2rticle.md",
                    export = "files",
                    type = c("asis", "list")) {
   
@@ -31,7 +31,7 @@ rticle <- function(file = "draft.md",
   type <- match.arg(type)
   
   if (is.null(export)) {
-    export <- sub("\\.md$", "", file)
+    export <- dirname(file)
   }
   
   dir.create(export, recursive = T, showWarnings = F)
@@ -516,21 +516,18 @@ rticle <- function(file = "draft.md",
   
   # export ------------------------------------------------------------------
   
-  qmd <- manuscript %>%
+  output_file <- file.path(
+    export,
+    sub("\\.md$", ".qmd", basename(file))
+  )
+  
+  manuscript %>%
     tibble::deframe() %>%
-    writeLines(con = file.path(export, gsub(
-      pattern = ".md",
-      replacement = ".qmd",
-      x = file
-    )))
+    writeLines(con = output_file)
   
-  
-  # result ------------------------------------------------------------------
-  
-  list.files(path = export
-             ,
-             pattern = gsub(".md", ".qmd", file)
-             ,
-             full.names = T)
+
+  # return ------------------------------------------------------------------
+
+  output_file
   
 }

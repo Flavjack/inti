@@ -10,7 +10,7 @@ HTML, Word, or PDF outputs.
 ## Usage
 
 ``` r
-rticle(file = "draft.md", export = "files", type = c("asis", "list"))
+rticle(file = "render2rticle.md", export = "files", type = c("asis", "list"))
 ```
 
 ## Arguments

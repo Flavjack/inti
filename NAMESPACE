@@ -38,76 +38,102 @@ export(yupana_reshape)
 import(dplyr)
 import(ggplot2)
 importFrom(DT,datatable)
-importFrom(agricolae,HSD.test)
-importFrom(agricolae,SNK.test)
-importFrom(agricolae,duncan.test)
-importFrom(dplyr,"%>%")
-importFrom(dplyr,across)
-importFrom(dplyr,all_of)
-importFrom(dplyr,filter)
-importFrom(dplyr,mutate)
-importFrom(dplyr,mutate_all)
-importFrom(dplyr,mutate_at)
-importFrom(dplyr,pull)
-importFrom(dplyr,rename)
-importFrom(dplyr,rename_at)
-importFrom(dplyr,select)
-importFrom(dplyr,starts_with)
-importFrom(dplyr,sym)
-importFrom(dplyr,vars)
+importFrom(agricolae,
+  HSD.test,
+  SNK.test,
+  duncan.test
+)
+importFrom(dplyr,
+  "%>%",
+  across,
+  all_of,
+  filter,
+  mutate,
+  mutate_all,
+  mutate_at,
+  pull,
+  rename,
+  rename_at,
+  select,
+  starts_with,
+  sym,
+  vars
+)
 importFrom(emmeans,emmeans)
-importFrom(ggplot2,aes)
-importFrom(ggplot2,geom_point)
-importFrom(ggplot2,ggplot)
-importFrom(ggplot2,theme_minimal)
-importFrom(grDevices,colorRampPalette)
-importFrom(grDevices,colors)
-importFrom(grDevices,gray.colors)
-importFrom(graphics,abline)
-importFrom(graphics,hist)
-importFrom(graphics,par)
-importFrom(lme4,VarCorr)
-importFrom(lme4,lmer)
-importFrom(lme4,ranef)
-importFrom(purrr,as_vector)
-importFrom(purrr,discard)
-importFrom(purrr,pluck)
-importFrom(shiny,dialogViewer)
-importFrom(shiny,runApp)
-importFrom(shiny,runGadget)
-importFrom(stats,anova)
-importFrom(stats,aov)
-importFrom(stats,as.formula)
-importFrom(stats,density)
-importFrom(stats,fitted)
-importFrom(stats,lm)
-importFrom(stats,median)
-importFrom(stats,p.adjust)
-importFrom(stats,pnorm)
-importFrom(stats,qqline)
-importFrom(stats,qqnorm)
-importFrom(stats,resid)
-importFrom(stats,residuals)
-importFrom(stats,sd)
-importFrom(stats,var)
-importFrom(stats,vcov)
-importFrom(stringr,str_count)
-importFrom(stringr,str_detect)
-importFrom(stringr,str_extract)
-importFrom(stringr,str_extract_all)
-importFrom(stringr,str_replace)
-importFrom(stringr,str_to_upper)
-importFrom(stringr,word)
-importFrom(tibble,as_tibble)
-importFrom(tibble,deframe)
-importFrom(tibble,enframe)
-importFrom(tibble,rownames_to_column)
-importFrom(tibble,tibble)
-importFrom(tibble,tribble)
-importFrom(tidyr,drop_na)
-importFrom(tidyr,pivot_longer)
-importFrom(tidyr,pivot_wider)
-importFrom(tidyr,separate)
-importFrom(utils,packageVersion)
-importFrom(utils,read.csv)
-importFrom(utils,tail)
+importFrom(ggplot2,
+  aes,
+  geom_point,
+  ggplot,
+  theme_minimal
+)
+importFrom(grDevices,
+  colorRampPalette,
+  colors,
+  gray.colors
+)
+importFrom(graphics,
+  abline,
+  hist,
+  par
+)
+importFrom(lme4,
+  VarCorr,
+  lmer,
+  ranef
+)
+importFrom(purrr,
+  as_vector,
+  discard,
+  pluck
+)
+importFrom(shiny,
+  dialogViewer,
+  runApp,
+  runGadget
+)
+importFrom(stats,
+  anova,
+  aov,
+  as.formula,
+  density,
+  fitted,
+  lm,
+  median,
+  p.adjust,
+  pnorm,
+  qqline,
+  qqnorm,
+  resid,
+  residuals,
+  sd,
+  var,
+  vcov
+)
+importFrom(stringr,
+  str_count,
+  str_detect,
+  str_extract,
+  str_extract_all,
+  str_replace,
+  str_to_upper,
+  word
+)
+importFrom(tibble,
+  as_tibble,
+  deframe,
+  enframe,
+  rownames_to_column,
+  tibble,
+  tribble
+)
+importFrom(tidyr,
+  drop_na,
+  pivot_longer,
+  pivot_wider,
+  separate
+)
+importFrom(utils,
+  packageVersion,
+  read.csv,
+  tail
+)

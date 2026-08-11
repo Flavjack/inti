@@ -1,6 +1,6 @@
 
 
-# inti
+# inti <img src="man/figures/logo.png" align="right" width="200" />
 
 [![CRAN](https://img.shields.io/cran/v/inti.png)](https://cran.r-project.org/package=inti)
 [![DOI](https://zenodo.org/badge/82401374.svg)](https://zenodo.org/badge/latestdoi/82401374)
@@ -34,16 +34,6 @@ if (!requireNamespace("pak", quietly = TRUE)) {
 }
 
 pak::pkg_install("flavjack/inti")
-```
-
-To install a specific version from CRAN (e.g., version 0.4.4):
-
-``` r
-if (!requireNamespace("pak", quietly = TRUE)) {
-  install.packages("pak")
-}
-
-pak::pkg_install("inti@0.4.4")
 ```
 
 After installation, load the package:
