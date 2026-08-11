@@ -2,12 +2,17 @@
 title: Inkaverse Privacy Policy
 vignette: >
   %\VignetteIndexEntry{policy}
-  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{quarto::html}
 knitr:
   opts_chunk: 
     collapse: true
     comment: '#>'
+    echo: false
+    warning: false
+    message: false
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Privacy policy for apps that access Google APIs

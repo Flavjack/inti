@@ -86,7 +86,7 @@ n_r}\\
 |:---|:---|:---|
 | \\H^2=\frac{\sigma_g^2}{\sigma_p^2}=\frac{\Delta G}{S}\\ | \\H\_{Cullis}^2=1-\frac{\overline{V}\_{\Delta..}^{^{BLUP}}}{2\cdot\sigma_g^2}\\ | \\H\_{Piepho}^2=\frac{\sigma_g^2}{\sigma_g^2+\frac{\overline{V}\_{\Delta..}^{BLUE}}{2}}\\ |
 
-Differentes heritability calculation {.table}
+Differentes heritability calculation {.table .caption-top}
 
 ## Heritability function in the package
 
@@ -131,27 +131,27 @@ hr <- H2cal(data = dt
 ``` r
 
 hr$model %>% summary()
-## Linear mixed model fit by REML ['lmerMod']
-## Formula: stemdw ~ 1 + (1 | bloque) + (1 | geno)
-##    Data: dt.rm
-## Weights: weights
-## 
-## REML criterion at convergence: 796.1
-## 
-## Scaled residuals: 
-##      Min       1Q   Median       3Q      Max 
-## -2.38440 -0.64247 -0.08589  0.57452  2.84508 
-## 
-## Random effects:
-##  Groups   Name        Variance Std.Dev.
-##  geno     (Intercept) 19.960   4.4677  
-##  bloque   (Intercept)  0.110   0.3316  
-##  Residual              9.411   3.0677  
-## Number of obs: 148, groups:  geno, 15; bloque, 5
-## 
-## Fixed effects:
-##             Estimate Std. Error t value
-## (Intercept)    12.51       1.19   10.51
+#> Linear mixed model fit by REML ['lmerMod']
+#> Formula: stemdw ~ 1 + (1 | bloque) + (1 | geno)
+#>    Data: dt.rm
+#> Weights: weights
+#> 
+#> REML criterion at convergence: 796.1
+#> 
+#> Scaled residuals: 
+#>      Min       1Q   Median       3Q      Max 
+#> -2.38440 -0.64247 -0.08589  0.57452  2.84508 
+#> 
+#> Random effects:
+#>  Groups   Name        Variance Std.Dev.
+#>  geno     (Intercept) 19.960   4.4677  
+#>  bloque   (Intercept)  0.110   0.3316  
+#>  Residual              9.411   3.0677  
+#> Number of obs: 148, groups:  geno, 15; bloque, 5
+#> 
+#> Fixed effects:
+#>             Estimate Std. Error t value
+#> (Intercept)    12.51       1.19   10.51
 ```
 
 ### Variance components
@@ -165,7 +165,7 @@ hr$tabsmr %>% kable(caption = "Variance component table")
 |:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | stemdw | 5 | 15 | 1 | 1 | 12.59867 | 4.749994 | 2.818 | 22.302 | 19.96002 | 9.410932 | 21.84221 | 0.913828 | 0.913828 | 0.9502395 | 0.9533473 |
 
-Variance component table {.table style="width:100%;"}
+Variance component table {.table .caption-top style="width:100%;"}
 
 ### Best Linear Unbiased Estimators (BLUEs)
 
@@ -192,7 +192,7 @@ hr$blues %>% kable(caption = "BLUEs")
 | G14  | 16.29700 | 1.030325 | 119.7830 | 14.2569903 | 18.33701 |
 | G15  | 11.46900 | 1.030325 | 119.7830 |  9.4289903 | 13.50901 |
 
-BLUEs {.table}
+BLUEs {.table .caption-top}
 
 ### Best Linear Unbiased Predictors (BLUPs)
 
@@ -219,7 +219,7 @@ hr$blups %>% kable(caption = "BLUPs")
 | G14  | 16.126578 |
 | G15  | 11.515963 |
 
-BLUPs {.table}
+BLUPs {.table .caption-top}
 
 ### Outliers
 
@@ -232,7 +232,7 @@ hr$outliers$fixed %>% kable(caption = "Outliers fixed model")
 |:----|:------|:-------|:-----|-------:|---------:|---------:|------------:|-----:|------:|:---------|
 | 68  | 68    | IV     | G05  |  80.65 | 60.36709 | 18.84505 |           0 |    0 |     0 | OUTLIER  |
 
-Outliers fixed model {.table}
+Outliers fixed model {.table .caption-top}
 
 ``` r
 
@@ -244,7 +244,7 @@ hr$outliers$random %>% kable(caption = "Outliers random model")
 | 68 | 68 | IV | G05 | 80.65 | 61.39925 | 18.886677 | 0.0000000 | 0.0000000000 | 0.0000000 | OUTLIER |
 | 100 | 100 | IV | G06 | 33.52 | 12.02340 | 3.698449 | 0.0002169 | 0.0002169207 | 0.0323212 | OUTLIER |
 
-Outliers random model {.table}
+Outliers random model {.table .caption-top}
 
 Bernal-Vasquez, A.-M., H.-F. Utz, and H.-P. Piepho. 2016. Outlier
 detection methods for generalized lattices: A case study on the
@@ -279,8 +279,3 @@ Trials. Crop Science 59(2): 525–536. doi:
 Zystro, J., M. Colley, and J. Dawson. 2018. [Alternative Experimental
 Designs for Plant Breeding](https://doi.org/10.1002/9781119521358.ch3).
 Plant Breeding Reviews. John Wiley & Sons, Ltd. p. 87–117
-
-``` r
-
-if(!file.exists("files/pkgs.bib")){write_bib(c(.packages()),'files/pkgs.bib')}
-```

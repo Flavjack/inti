@@ -1,13 +1,21 @@
 ---
-title: "Yupana"
+title: Yupana
 description: > 
   Yupana: experimental design analysis.
 author: "Flavio Lozano-Isla"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Yupana}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
+    echo: false
+    warning: false
+    message: false
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r}

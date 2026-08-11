@@ -5,12 +5,17 @@ description: >
 author: "Flavio Lozano-Isla"
 vignette: >
   %\VignetteIndexEntry{Apps}
-  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{quarto::html}
 knitr:
   opts_chunk: 
     collapse: true
     comment: '#>'
+    echo: false
+    warning: false
+    message: false
+editor_options: 
+  chunk_output_type: console
 ---
 
 The package `inti` has been developed to provide tools used in plant science and experimental designs. The package also include shiny apps for design experiments, interactive analysis and technical writing.
