@@ -1,7 +1,7 @@
 # Split-plot RCBD experimental design
 
 Generate a split-plot design under a randomized complete block design
-(RCBD) structure for Tarpuy.
+(RCBD) structure for TARPUY.
 
 ## Usage
 
@@ -24,16 +24,18 @@ design_split_rcbd(
 
 - nfactors:
 
-  Number of factors in the experiment. For split-plot RCBD it must be 2.
+  Number of factors in the experiment. Splitplot-RCBD requires exactly
+  two factors.
 
 - factors:
 
-  List with exactly two named factors. The first factor is the
-  whole-plot factor and the second factor is the subplot factor.
+  Named list with the factor levels. The first factor is the whole-plot
+  factor and the second factor is the subplot factor.
 
 - type:
 
-  Design type. Default is `"split-rcbd"`.
+  Design type. The canonical value is `"split-rcbd"`; accepted aliases
+  are normalized by `normalize_tarpuy_design_type()`.
 
 - rep:
 
@@ -41,37 +43,60 @@ design_split_rcbd(
 
 - zigzag:
 
-  Field layout in vertical zigzag order. If `TRUE`, subplot row order is
-  reversed in even whole-plot columns.
+  Logical. If `TRUE`, plot numbering follows a continuous vertical
+  serpentine path through the whole plots and blocks.
 
 - nrows:
 
-  Experimental design dimension by rows. If `NA`, it is calculated
-  automatically as `rep * number_of_subplot_levels`.
+  Number of rows in the complete physical layout. The valid
+  Splitplot-RCBD geometry is `rep * number_of_subplot_levels`; when
+  missing, it is calculated automatically.
 
 - serie:
 
-  Number used as base for plot numbering.
+  Base number used to generate plot identifiers. For example,
+  `serie = 1000` generates plots 1001, 1002, ... in block 1 and 2001,
+  2002, ... in block 2.
 
 - seed:
 
-  Seed for reproducible randomization.
+  Seed used for reproducible randomization. `NA` or `NULL` leaves the
+  current random-number state unchanged.
 
 - project:
 
-  Barcode or QR code prefix.
+  Barcode or QR-code prefix.
 
 - qrcode:
 
-  String used to concatenate QR code fields.
+  Template used to concatenate QR-code fields. The placeholder
+  `{factors}` expands to both experimental factors.
 
 ## Value
 
-A list with the fieldbook design and parameters.
+A list with `fieldbook` and `parameters`.
 
 ## Details
 
-The first factor is interpreted as the whole-plot factor and the second
-factor as the subplot factor. Factor column names are preserved in the
-final fieldbook, while their experimental role is stored in
-`parameters`.
+The first factor is the whole-plot factor and the second factor is the
+subplot factor. Whole plots are randomized within each block and subplot
+levels are randomized independently within every whole plot.
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+
+factors <- list(
+  Soil = c("S1", "S2", "S3", "S4"),
+  Fertilizer = c("N1", "N2", "N3", "N4", "N5", "N6")
+)
+
+design_split_rcbd(
+  factors = factors,
+  rep = 3,
+  zigzag = TRUE,
+  seed = 123
+)$fieldbook
+} # }
+```

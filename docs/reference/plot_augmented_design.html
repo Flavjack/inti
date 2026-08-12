@@ -21,7 +21,7 @@ design_augmented()."><meta property="og:image" content="https://inkaverse.com/re
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,43 +94,50 @@ If missing, <code>"type"</code> is used.</p></dd>
 
 <dt id="arg-fill">fill<a class="anchor" aria-label="anchor" href="#arg-fill"></a></dt>
 <dd><p>Character vector. Column or columns used as labels inside each
-experimental unit. Default is <code>"plots"</code>.</p></dd>
+experimental unit. Default is <code>"plots"</code>. When <code>ntreat</code> is selected, it is
+displayed as <code>T1</code>, <code>T2</code>, etc.</p></dd>
 
 
 <dt id="arg-xlab">xlab<a class="anchor" aria-label="anchor" href="#arg-xlab"></a></dt>
-<dd><p>Character scalar. Optional x axis title.</p></dd>
+<dd><p>Character scalar. Optional x axis title. If <code>NULL</code>, <code>"Columns"</code>
+is used.</p></dd>
 
 
 <dt id="arg-ylab">ylab<a class="anchor" aria-label="anchor" href="#arg-ylab"></a></dt>
-<dd><p>Character scalar. Optional y axis title.</p></dd>
+<dd><p>Character scalar. Optional y axis title. If <code>NULL</code>, the title is
+<code>"Blocks"</code> when every physical row corresponds to exactly one statistical
+block; otherwise <code>"Rows"</code> is used.</p></dd>
 
 
 <dt id="arg-glab">glab<a class="anchor" aria-label="anchor" href="#arg-glab"></a></dt>
-<dd><p>Character scalar. Optional legend title.</p></dd>
+<dd><p>Character scalar. Optional legend title. If <code>NULL</code>, the selected
+color factor is used.</p></dd>
 
 
 <dt id="arg-text-size">text_size<a class="anchor" aria-label="anchor" href="#arg-text-size"></a></dt>
 <dd><p>Optional positive numeric scalar indicating the plot-label
-font size in typographic points (<code>pt</code>). If <code>NULL</code> or <code>NA</code>, the function
-calculates an automatic size: 10 pt for one label column, 8 pt for two
-columns and 7 pt for three or more columns.</p></dd>
+font size in typographic points (<code>pt</code>). If <code>NULL</code> or <code>NA</code>, a suitable
+default is selected according to the number of label columns. The value is
+converted internally to the unit expected by <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">ggplot2::geom_text()</a></code>.</p></dd>
 
 
 <dt id="arg-wrap-width">wrap_width<a class="anchor" aria-label="anchor" href="#arg-wrap-width"></a></dt>
 <dd><p>Optional positive integer indicating the approximate
-maximum number of characters per line. If <code>NULL</code> or <code>NA</code>, labels are not
-wrapped. Underscores are displayed as spaces only in the sketch.</p></dd>
+maximum number of characters per line. If <code>NULL</code> or <code>NA</code>, the function
+calculates it automatically from the field dimensions, font size and
+number of label columns. Underscores are displayed as spaces only in the
+sketch; the original fieldbook values are not modified.</p></dd>
 
 
 <dt id="arg-font-family">font_family<a class="anchor" aria-label="anchor" href="#arg-font-family"></a></dt>
-<dd><p>Font family used in the sketch. Defaults to
-<code>"Open Sans"</code>. If it or the optional <code>systemfonts</code> package is unavailable,
-the function silently uses <code>"sans"</code>.</p></dd>
+<dd><p>Character scalar. Font family used in the sketch.
+Defaults to <code>"Open Sans"</code>. If the font cannot be verified through the
+optional <code>systemfonts</code> package, <code>"sans"</code> is used as a fallback.</p></dd>
 
 
 <dt id="arg-font-face">font_face<a class="anchor" aria-label="anchor" href="#arg-font-face"></a></dt>
-<dd><p>Font face used in the sketch. Defaults to <code>"plain"</code>,
-equivalent to regular/normal text.</p></dd>
+<dd><p>Character scalar. Font face used in labels, axes and
+legends. Defaults to <code>"plain"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -139,16 +146,18 @@ equivalent to regular/normal text.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function is intended for augmented designs with checks, entries and
-optional empty experimental units. It uses:</p>
-<ul><li><p><code>cols</code> as the x axis.</p></li>
-<li><p><code>block</code> as the y axis.</p></li>
-<li><p><code>type</code> to distinguish checks, tests and empty plots.</p></li>
-</ul><p>Empty plots are shown in grey when <code>type</code> is <code>NA</code> or empty.</p>
-<p>Label wrapping changes only the displayed text. It does not modify
-<code>entry</code>, <code>plots</code>, <code>ntreat</code>, QR codes or any other fieldbook value.</p>
-<p><code>text_size</code> is expressed in points, like common word processors. Internally
-it is converted to the size unit expected by <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">ggplot2::geom_text()</a></code>.</p>
+    <p>The function always uses the physical <code>rows</code> and <code>cols</code> coordinates stored in
+the fieldbook. Therefore, custom dimensions and zigzag layouts are preserved.
+The <code>block</code> column never replaces <code>rows</code> as a plotting coordinate. When each
+row represents exactly one block, only the visible y-axis title changes from
+<code>"Rows"</code> to <code>"Blocks"</code>. The statistical block remains available as a color
+factor and, when a block occupies a complete rectangular region, its external
+border is highlighted.</p>
+<p>Empty experimental units are represented by the level <code>"empty"</code>. When
+<code>factor = "type"</code>, checks, test entries and empty plots receive stable
+colors. Other factor columns use the regular TARPUY color palette.</p>
+<p>Automatic wrapping and formatting affect only the displayed text. They do
+not modify <code>entry</code>, <code>plots</code>, <code>ntreat</code>, QR codes or any other fieldbook value.</p>
     </div>
 
     <div class="section level2">
@@ -160,7 +169,6 @@ it is converted to the size unit expected by <code><a href="https://ggplot2.tidy
 <span class="r-in"><span>  factor <span class="op">=</span> <span class="st">"type"</span>,</span></span>
 <span class="r-in"><span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"entry"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  text_size <span class="op">=</span> <span class="fl">9</span>,</span></span>
-<span class="r-in"><span>  wrap_width <span class="op">=</span> <span class="fl">14</span>,</span></span>
 <span class="r-in"><span>  font_family <span class="op">=</span> <span class="st">"Open Sans"</span>,</span></span>
 <span class="r-in"><span>  font_face <span class="op">=</span> <span class="st">"plain"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>

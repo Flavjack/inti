@@ -5,7 +5,7 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Fieldbook experimental designs — tarpuy_design"><meta name="description" content="Function to deploy experimental designs"><meta property="og:description" content="Function to deploy experimental designs"><meta property="og:image" content="https://inkaverse.com/reference/figures/logo.png"><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-804H2EJ8RN"></script><script>
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Fieldbook experimental designs — tarpuy_design"><meta name="description" content="Function to deploy the experimental designs currently supported by TARPUY."><meta property="og:description" content="Function to deploy the experimental designs currently supported by TARPUY."><meta property="og:image" content="https://inkaverse.com/reference/figures/logo.png"><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-804H2EJ8RN"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,7 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>Function to deploy experimental designs</p>
+    <p>Function to deploy the experimental designs currently supported by TARPUY.</p>
     </div>
 
     <div class="section level2">
@@ -81,38 +81,44 @@
 
 
 <dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>Experimental design data frame with the factors and level. See
-examples.</p></dd>
+<dd><p>Experimental design data frame containing factor names and
+levels. A design sheet may also include the columns <code>{arguments}</code> and
+<code>{values}</code> to override the function arguments.</p></dd>
 
 
 <dt id="arg-nfactors">nfactors<a class="anchor" aria-label="anchor" href="#arg-nfactors"></a></dt>
-<dd><p>Number of factor in the experiment(default = 1). See
-details.</p></dd>
+<dd><p>Number of factors in the experiment <code>[default = 1]</code>.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>Type of experimental arrange <code>[default = "crd"]</code>. See details.</p></dd>
+<dd><p>Type of experimental arrangement <code>[default = "crd"]</code>.
+Supported designs are <code>"crd"</code>, <code>"rcbd"</code>, <code>"augmented"</code>, and
+<code>"split-rcbd"</code>. The aliases <code>"dca"</code> and <code>"dbca"</code> are accepted.</p></dd>
 
 
 <dt id="arg-rep">rep<a class="anchor" aria-label="anchor" href="#arg-rep"></a></dt>
-<dd><p>Number of replications in the experiment (default = 3).</p></dd>
+<dd><p>Number of replications or blocks in the experiment
+<code>[default = 2]</code>.</p></dd>
 
 
 <dt id="arg-zigzag">zigzag<a class="anchor" aria-label="anchor" href="#arg-zigzag"></a></dt>
-<dd><p>Experiment layout in zigzag <code>[logic: FALSE]</code>.</p></dd>
+<dd><p>Arrange the physical layout in zigzag order
+<code>[logical: FALSE]</code>.</p></dd>
 
 
 <dt id="arg-nrows">nrows<a class="anchor" aria-label="anchor" href="#arg-nrows"></a></dt>
-<dd><p>Experimental design dimension by rows <code>[numeric: value]</code>.</p></dd>
+<dd><p>Number of rows in the physical field layout. When missing, the
+corresponding design function calculates the layout.</p></dd>
 
 
 <dt id="arg-serie">serie<a class="anchor" aria-label="anchor" href="#arg-serie"></a></dt>
-<dd><p>Number to start the plot id <code>[numeric: 100]</code>.</p></dd>
+<dd><p>Base number used to generate plot identifiers
+<code>[numeric: 100]</code>.</p></dd>
 
 
 <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
-<dd><p>Replicability of draw results <code>[default = 0]</code> always random. See
-details.</p></dd>
+<dd><p>Seed used for reproducible randomization. <code>0</code>, <code>NA</code>, and <code>NULL</code>
+preserve the historical TARPUY behavior of using a random seed.</p></dd>
 
 
 <dt id="arg-project">project<a class="anchor" aria-label="anchor" href="#arg-project"></a></dt>
@@ -120,21 +126,25 @@ details.</p></dd>
 
 
 <dt id="arg-qrcode">qrcode<a class="anchor" aria-label="anchor" href="#arg-qrcode"></a></dt>
-<dd><p>String to concatenate the QR code <code>[character: {project}{plots}{factors}]</code>.</p></dd>
+<dd><p>Template used to concatenate QR-code fields
+<code>[character: "{project}{plots}"]</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list with the fieldbook design</p>
+    <p>A data frame containing the generated fieldbook.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The function allows to include the arguments in the sheet that have
-the information of the design. You should include 2 columns in the sheet:
-<code>{arguments}</code> and <code>{values}</code>. See examples. The information will
-be extracted automatically and deploy the design. <code>nfactors</code> = 1:
-crd, rcbd, lsd, lattice. <code>nfactors</code> = 2 (factorial): split-crd,
-split-rcbd split-lsd <code>nfactors</code> &gt;= 2 (factorial): crd, rcbd, lsd.</p>
+    <p>The design sheet can include two optional columns named
+<code>{arguments}</code> and <code>{values}</code>. Values supplied in those columns
+override the corresponding function arguments. Factor columns are the
+remaining columns whose names are not enclosed in braces (<code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{}</a></code>) or square
+brackets (<code>[]</code>).</p>
+<p>TARPUY currently dispatches only designs with an implemented and validated
+generator: CRD/DCA, RCBD/DBCA, augmented, and split-plot RCBD. Other design
+identifiers are rejected explicitly instead of being routed to incomplete
+generators.</p>
     </div>
 
     <div class="section level2">
@@ -145,16 +155,16 @@ split-rcbd split-lsd <code>nfactors</code> &gt;= 2 (factorial): crd, rcbd, lsd.<
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://inkaverse.com/">inti</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/maxconway/gsheet" class="external-link">gsheet</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"https://docs.google.com/spreadsheets/d/"</span></span></span>
-<span class="r-in"><span>              , <span class="st">"1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1479851579#gid=1479851579"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># browseURL(url)</span></span></span>
+<span class="r-in"><span><span class="va">url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"https://docs.google.com/spreadsheets/d/"</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html" class="external-link">gsheet2tbl</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span> </span></span>
+<span class="r-in"><span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/gsheet/man/gsheet2tbl.html" class="external-link">gsheet2tbl</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dsg</span> <span class="op">&lt;-</span> <span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">tarpuy_design</span><span class="op">(</span><span class="op">)</span> </span></span>
+<span class="r-in"><span><span class="va">dsg</span> <span class="op">&lt;-</span> <span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">tarpuy_design</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dsg</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="tarpuy_plotdesign.html">tarpuy_plotdesign</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dsg</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="tarpuy_plotdesign.html">tarpuy_plotdesign</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>

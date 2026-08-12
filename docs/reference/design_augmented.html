@@ -5,7 +5,9 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Experimental design: Augmented — design_augmented"><meta name="description" content="Fieldbook generator for Augmented Designs."><meta property="og:description" content="Fieldbook generator for Augmented Designs."><meta property="og:image" content="https://inkaverse.com/reference/figures/logo.png"><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-804H2EJ8RN"></script><script>
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Experimental design: Augmented — design_augmented"><meta name="description" content="Fieldbook generator for augmented experimental designs. Every check occurs
+once in each block and every test entry occurs once in the complete design."><meta property="og:description" content="Fieldbook generator for augmented experimental designs. Every check occurs
+once in each block and every test entry occurs once in the complete design."><meta property="og:image" content="https://inkaverse.com/reference/figures/logo.png"><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-804H2EJ8RN"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -19,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +59,8 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>Fieldbook generator for Augmented Designs.</p>
+    <p>Fieldbook generator for augmented experimental designs. Every check occurs
+once in each block and every test entry occurs once in the complete design.</p>
     </div>
 
     <div class="section level2">
@@ -87,7 +90,7 @@
 
 
 <dt id="arg-entries">entries<a class="anchor" aria-label="anchor" href="#arg-entries"></a></dt>
-<dd><p>Vector of new entries.</p></dd>
+<dd><p>Vector of new or test entries.</p></dd>
 
 
 <dt id="arg-blocks">blocks<a class="anchor" aria-label="anchor" href="#arg-blocks"></a></dt>
@@ -96,27 +99,32 @@
 
 
 <dt id="arg-eu-block">eu_block<a class="anchor" aria-label="anchor" href="#arg-eu-block"></a></dt>
-<dd><p>Number of experimental units per block.</p></dd>
+<dd><p>Number of experimental units per block. It must be greater
+than the number of checks.</p></dd>
 
 
 <dt id="arg-random">random<a class="anchor" aria-label="anchor" href="#arg-random"></a></dt>
-<dd><p>Randomize entries allocation and positions inside each block.</p></dd>
+<dd><p>Logical. Randomize test-entry allocation and positions inside
+each block.</p></dd>
 
 
 <dt id="arg-zigzag">zigzag<a class="anchor" aria-label="anchor" href="#arg-zigzag"></a></dt>
-<dd><p>Zigzag field layout.</p></dd>
+<dd><p>Logical. Arrange the physical field layout in zigzag order.</p></dd>
 
 
 <dt id="arg-dim">dim<a class="anchor" aria-label="anchor" href="#arg-dim"></a></dt>
-<dd><p>Optional layout dimensions c(nrows, ncols).</p></dd>
+<dd><p>Optional physical layout dimensions <code>c(nrows, ncols)</code>. The
+product must equal the total number of experimental units.</p></dd>
 
 
 <dt id="arg-serie">serie<a class="anchor" aria-label="anchor" href="#arg-serie"></a></dt>
-<dd><p>Plot series number.</p></dd>
+<dd><p>Base number used to generate plot identifiers.</p></dd>
 
 
 <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
-<dd><p>Random seed. <code>0</code> or <code>NULL</code> means no fixed seed.</p></dd>
+<dd><p>Random seed. <code>0</code>, <code>NA</code> or <code>NULL</code> means that no fixed seed is set
+inside this function. TARPUY stores an effective seed in the design sheet
+before calling the design generator.</p></dd>
 
 
 <dt id="arg-project">project<a class="anchor" aria-label="anchor" href="#arg-project"></a></dt>
@@ -124,17 +132,19 @@
 
 
 <dt id="arg-qrcode">qrcode<a class="anchor" aria-label="anchor" href="#arg-qrcode"></a></dt>
-<dd><p>QR code column template.</p></dd>
+<dd><p>QR-code column template. The default is
+<code>"{project}{plots}{entry}"</code>.</p></dd>
 
 
 <dt id="arg-separate-checks">separate_checks<a class="anchor" aria-label="anchor" href="#arg-separate-checks"></a></dt>
-<dd><p>Logical. When possible, prevent adjacent checks
-inside each block using constrained randomization.</p></dd>
+<dd><p>Logical. When enough positions are available, place
+checks in non-adjacent positions inside each block. With
+<code>random = FALSE</code>, this placement is deterministic.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>List with fieldbook and parameters.</p>
+    <p>A list with <code>fieldbook</code> and <code>parameters</code>.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -1,6 +1,7 @@
 # Fieldbook experimental designs
 
-Function to deploy experimental designs
+Function to deploy the experimental designs currently supported by
+TARPUY.
 
 ## Usage
 
@@ -23,37 +24,41 @@ tarpuy_design(
 
 - data:
 
-  Experimental design data frame with the factors and level. See
-  examples.
+  Experimental design data frame containing factor names and levels. A
+  design sheet may also include the columns `{arguments}` and `{values}`
+  to override the function arguments.
 
 - nfactors:
 
-  Number of factor in the experiment(default = 1). See details.
+  Number of factors in the experiment `[default = 1]`.
 
 - type:
 
-  Type of experimental arrange `[default = "crd"]`. See details.
+  Type of experimental arrangement `[default = "crd"]`. Supported
+  designs are `"crd"`, `"rcbd"`, `"augmented"`, and `"split-rcbd"`. The
+  aliases `"dca"` and `"dbca"` are accepted.
 
 - rep:
 
-  Number of replications in the experiment (default = 3).
+  Number of replications or blocks in the experiment `[default = 2]`.
 
 - zigzag:
 
-  Experiment layout in zigzag `[logic: FALSE]`.
+  Arrange the physical layout in zigzag order `[logical: FALSE]`.
 
 - nrows:
 
-  Experimental design dimension by rows `[numeric: value]`.
+  Number of rows in the physical field layout. When missing, the
+  corresponding design function calculates the layout.
 
 - serie:
 
-  Number to start the plot id `[numeric: 100]`.
+  Base number used to generate plot identifiers `[numeric: 100]`.
 
 - seed:
 
-  Replicability of draw results `[default = 0]` always random. See
-  details.
+  Seed used for reproducible randomization. `0`, `NA`, and `NULL`
+  preserve the historical TARPUY behavior of using a random seed.
 
 - project:
 
@@ -61,21 +66,25 @@ tarpuy_design(
 
 - qrcode:
 
-  String to concatenate the QR code
-  `[character: {project}{plots}{factors}]`.
+  Template used to concatenate QR-code fields
+  `[character: "{project}{plots}"]`.
 
 ## Value
 
-A list with the fieldbook design
+A data frame containing the generated fieldbook.
 
 ## Details
 
-The function allows to include the arguments in the sheet that have the
-information of the design. You should include 2 columns in the sheet:
-`{arguments}` and `{values}`. See examples. The information will be
-extracted automatically and deploy the design. `nfactors` = 1: crd,
-rcbd, lsd, lattice. `nfactors` = 2 (factorial): split-crd, split-rcbd
-split-lsd `nfactors` \>= 2 (factorial): crd, rcbd, lsd.
+The design sheet can include two optional columns named `{arguments}`
+and `{values}`. Values supplied in those columns override the
+corresponding function arguments. Factor columns are the remaining
+columns whose names are not enclosed in braces
+([`{}`](https://rdrr.io/r/base/Paren.html)) or square brackets (`[]`).
+
+TARPUY currently dispatches only designs with an implemented and
+validated generator: CRD/DCA, RCBD/DBCA, augmented, and split-plot RCBD.
+Other design identifiers are rejected explicitly instead of being routed
+to incomplete generators.
 
 ## Examples
 
@@ -86,16 +95,16 @@ if (FALSE) { # \dontrun{
 library(inti)
 library(gsheet)
 
-url <- paste0("https://docs.google.com/spreadsheets/d/"
-              , "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit?gid=1479851579#gid=1479851579")
-# browseURL(url)
+url <- paste0(
+  "https://docs.google.com/spreadsheets/d/",
+  "1510fOKj0g4CDEAFkrpFbr-zNMnle_Hou9O_wuf7Vdo4/edit"
+)
 
-fb <- gsheet2tbl(url) 
+fb <- gsheet2tbl(url)
 
-dsg <- fb %>% tarpuy_design() 
+dsg <- fb %>% tarpuy_design()
 
-dsg %>% 
-  tarpuy_plotdesign()
+dsg %>% tarpuy_plotdesign()
 
 } # }
 ```

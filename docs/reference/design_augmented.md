@@ -1,6 +1,8 @@
 # Experimental design: Augmented
 
-Fieldbook generator for Augmented Designs.
+Fieldbook generator for augmented experimental designs. Every check
+occurs once in each block and every test entry occurs once in the
+complete design.
 
 ## Usage
 
@@ -29,7 +31,7 @@ design_augmented(
 
 - entries:
 
-  Vector of new entries.
+  Vector of new or test entries.
 
 - blocks:
 
@@ -38,27 +40,32 @@ design_augmented(
 
 - eu_block:
 
-  Number of experimental units per block.
+  Number of experimental units per block. It must be greater than the
+  number of checks.
 
 - random:
 
-  Randomize entries allocation and positions inside each block.
+  Logical. Randomize test-entry allocation and positions inside each
+  block.
 
 - zigzag:
 
-  Zigzag field layout.
+  Logical. Arrange the physical field layout in zigzag order.
 
 - dim:
 
-  Optional layout dimensions c(nrows, ncols).
+  Optional physical layout dimensions `c(nrows, ncols)`. The product
+  must equal the total number of experimental units.
 
 - serie:
 
-  Plot series number.
+  Base number used to generate plot identifiers.
 
 - seed:
 
-  Random seed. `0` or `NULL` means no fixed seed.
+  Random seed. `0`, `NA` or `NULL` means that no fixed seed is set
+  inside this function. TARPUY stores an effective seed in the design
+  sheet before calling the design generator.
 
 - project:
 
@@ -66,13 +73,14 @@ design_augmented(
 
 - qrcode:
 
-  QR code column template.
+  QR-code column template. The default is `"{project}{plots}{entry}"`.
 
 - separate_checks:
 
-  Logical. When possible, prevent adjacent checks inside each block
-  using constrained randomization.
+  Logical. When enough positions are available, place checks in
+  non-adjacent positions inside each block. With `random = FALSE`, this
+  placement is deterministic.
 
 ## Value
 
-List with fieldbook and parameters.
+A list with `fieldbook` and `parameters`.

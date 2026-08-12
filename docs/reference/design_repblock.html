@@ -5,7 +5,9 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Experimental design in CRD and RCBD — design_repblock"><meta name="description" content="Function to deploy field-book experiment for CRD and RCBD"><meta property="og:description" content="Function to deploy field-book experiment for CRD and RCBD"><meta property="og:image" content="https://inkaverse.com/reference/figures/logo.png"><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-804H2EJ8RN"></script><script>
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Experimental design in CRD and RCBD — design_repblock"><meta name="description" content="Function to deploy field-book experiments for completely randomized designs
+(CRD/DCA) and randomized complete block designs (RCBD/DBCA)."><meta property="og:description" content="Function to deploy field-book experiments for completely randomized designs
+(CRD/DCA) and randomized complete block designs (RCBD/DBCA)."><meta property="og:image" content="https://inkaverse.com/reference/figures/logo.png"><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-804H2EJ8RN"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -19,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +59,8 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>Function to deploy field-book experiment for CRD and RCBD</p>
+    <p>Function to deploy field-book experiments for completely randomized designs
+(CRD/DCA) and randomized complete block designs (RCBD/DBCA).</p>
     </div>
 
     <div class="section level2">
@@ -81,48 +84,56 @@
 
 
 <dl><dt id="arg-nfactors">nfactors<a class="anchor" aria-label="anchor" href="#arg-nfactors"></a></dt>
-<dd><p>Number of factor in the experiment <code>[numeric: 1]</code>.</p></dd>
+<dd><p>Number of factors in the experiment <code>[numeric: 1]</code>.</p></dd>
 
 
 <dt id="arg-factors">factors<a class="anchor" aria-label="anchor" href="#arg-factors"></a></dt>
-<dd><p>Lists with names and factor vector <code>[list]</code>.</p></dd>
+<dd><p>Named list with the levels of each factor <code>[list]</code>.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>Type of experimental arrange <code>[character: "crd" "rcbd" "lsd"]</code></p></dd>
+<dd><p>Type of experimental arrangement <code>[character: "crd", "rcbd"]</code>.
+The aliases <code>"dca"</code> and <code>"dbca"</code> are also accepted. The former <code>"lsd"</code>
+branch is intentionally disabled because it did not generate a valid Latin
+square design.</p></dd>
 
 
 <dt id="arg-rep">rep<a class="anchor" aria-label="anchor" href="#arg-rep"></a></dt>
-<dd><p>Number of replications in the experiment <code>[numeric: 3]</code>.</p></dd>
+<dd><p>Number of replications or blocks in the experiment
+<code>[numeric: 3]</code>.</p></dd>
 
 
 <dt id="arg-zigzag">zigzag<a class="anchor" aria-label="anchor" href="#arg-zigzag"></a></dt>
-<dd><p>Experiment layout in zigzag <code>[logic: FALSE]</code>.</p></dd>
+<dd><p>Arrange the physical layout in zigzag order <code>[logical: FALSE]</code>.</p></dd>
 
 
 <dt id="arg-nrows">nrows<a class="anchor" aria-label="anchor" href="#arg-nrows"></a></dt>
-<dd><p>Experimental design dimension by rows <code>[numeric: value]</code></p></dd>
+<dd><p>Number of rows in the physical field layout. When missing, the
+number of replications or blocks is used.</p></dd>
 
 
 <dt id="arg-serie">serie<a class="anchor" aria-label="anchor" href="#arg-serie"></a></dt>
-<dd><p>Number to start the plot id <code>[numeric: 100]</code>.</p></dd>
+<dd><p>Base number used to generate plot identifiers <code>[numeric: 1000]</code>.</p></dd>
 
 
 <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
-<dd><p>Replicability from randomization <code>[numeric: NULL]</code>.</p></dd>
+<dd><p>Seed used for reproducible randomization <code>[numeric: NULL]</code>.</p></dd>
 
 
 <dt id="arg-project">project<a class="anchor" aria-label="anchor" href="#arg-project"></a></dt>
-<dd><p>Bar code prefix for data collection <code>[character: "inkaverse"]</code>.</p></dd>
+<dd><p>Barcode prefix for data collection
+<code>[character: "inkaverse"]</code>.</p></dd>
 
 
 <dt id="arg-qrcode">qrcode<a class="anchor" aria-label="anchor" href="#arg-qrcode"></a></dt>
-<dd><p>Concatenate the QR code <code>[character: "{project}{plots}{factors}"]</code></p></dd>
+<dd><p>Template used to concatenate QR-code fields
+<code>[character: "{project}{plots}"]</code>. The placeholder <code>{factors}</code> expands to
+all factor columns.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list with the field-book design and parameters</p>
+    <p>A list with the field-book design and parameters.</p>
     </div>
 
     <div class="section level2">
@@ -132,25 +143,27 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://inkaverse.com/">inti</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">factores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"geno"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"D"</span>, <span class="fl">1</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NULL</span>, <span class="st">"NA"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>                 , <span class="st">"salt stress"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span>, <span class="fl">200</span>, <span class="fl">200</span>, <span class="st">"T0"</span>, <span class="cn">NA</span>, <span class="cn">NULL</span>, <span class="st">"NULL"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>                 , time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">60</span>, <span class="fl">90</span><span class="op">)</span></span></span>
-<span class="r-in"><span>                 <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">factores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"geno"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"D"</span>, <span class="fl">1</span>, <span class="cn">NA</span>, <span class="cn">NULL</span>, <span class="st">"NA"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"salt stress"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span>, <span class="fl">200</span>, <span class="fl">200</span>, <span class="st">"T0"</span>, <span class="cn">NA</span>, <span class="cn">NULL</span>, <span class="st">"NULL"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"time"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">60</span>, <span class="fl">90</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fb</span> <span class="op">&lt;-</span><span class="fu">design_repblock</span><span class="op">(</span>nfactors <span class="op">=</span> <span class="fl">3</span></span></span>
-<span class="r-in"><span>                     , factors <span class="op">=</span> <span class="va">factores</span></span></span>
-<span class="r-in"><span>                     , type <span class="op">=</span> <span class="st">"rcbd"</span></span></span>
-<span class="r-in"><span>                     , rep <span class="op">=</span> <span class="fl">5</span></span></span>
-<span class="r-in"><span>                     , zigzag <span class="op">=</span> <span class="cn">T</span></span></span>
-<span class="r-in"><span>                     , seed <span class="op">=</span> <span class="fl">0</span></span></span>
-<span class="r-in"><span>                     , nrows <span class="op">=</span> <span class="fl">20</span></span></span>
-<span class="r-in"><span>                     , qrcode <span class="op">=</span> <span class="st">"{project}{plots}"</span></span></span>
-<span class="r-in"><span>                     <span class="op">)</span></span></span>
-<span class="r-in"><span>                     </span></span>
+<span class="r-in"><span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="fu">design_repblock</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  nfactors <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>  factors <span class="op">=</span> <span class="va">factores</span>,</span></span>
+<span class="r-in"><span>  type <span class="op">=</span> <span class="st">"rcbd"</span>,</span></span>
+<span class="r-in"><span>  rep <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  zigzag <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  seed <span class="op">=</span> <span class="fl">123</span>,</span></span>
+<span class="r-in"><span>  nrows <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  qrcode <span class="op">=</span> <span class="st">"{project}{plots}"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dsg</span> <span class="op">&lt;-</span> <span class="va">fb</span><span class="op">$</span><span class="va">fieldbook</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>   </span></span>
-<span class="r-in"><span>  <span class="fu"><a href="tarpuy_plotdesign.html">tarpuy_plotdesign</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"plots"</span><span class="op">)</span> </span></span>
+<span class="r-in"><span><span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="tarpuy_plotdesign.html">tarpuy_plotdesign</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"plots"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">fb</span><span class="op">$</span><span class="va">parameters</span></span></span>
 <span class="r-in"><span></span></span>

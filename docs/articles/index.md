@@ -19,7 +19,7 @@
 
 - [Tarpuy](https://inkaverse.com/articles/tarpuy.md):
 
-  Tarpuy: field-book experimental plans.
+  Tarpuy: field book experimental plans.
 
 - [Yupana](https://inkaverse.com/articles/yupana.md):
 

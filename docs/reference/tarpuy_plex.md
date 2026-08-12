@@ -143,7 +143,8 @@ tarpuy_plex(
 
 - seed:
 
-  Seed for the randomization.
+  Seed for the randomization. A value of `0`, `NA`, or `NULL` generates
+  and stores an effective seed in the design sheet.
 
 - qrcode:
 
@@ -151,7 +152,7 @@ tarpuy_plex(
 
 - aug_blocks:
 
-  Number of blocks for augmented design.
+  Optional number of blocks for augmented design.
 
 - aug_eu_block:
 

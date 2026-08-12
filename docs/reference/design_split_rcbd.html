@@ -6,8 +6,8 @@
     }
   };
 </script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Split-plot RCBD experimental design — design_split_rcbd"><meta name="description" content="Generate a split-plot design under a randomized complete block design (RCBD)
-structure for Tarpuy."><meta property="og:description" content="Generate a split-plot design under a randomized complete block design (RCBD)
-structure for Tarpuy."><meta property="og:image" content="https://inkaverse.com/reference/figures/logo.png"><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-804H2EJ8RN"></script><script>
+structure for TARPUY."><meta property="og:description" content="Generate a split-plot design under a randomized complete block design (RCBD)
+structure for TARPUY."><meta property="og:image" content="https://inkaverse.com/reference/figures/logo.png"><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-804H2EJ8RN"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -21,7 +21,7 @@ structure for Tarpuy."><meta property="og:image" content="https://inkaverse.com/
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@ structure for Tarpuy."><meta property="og:image" content="https://inkaverse.com/
 
     <div class="ref-description section level2">
     <p>Generate a split-plot design under a randomized complete block design (RCBD)
-structure for Tarpuy.</p>
+structure for TARPUY.</p>
     </div>
 
     <div class="section level2">
@@ -84,17 +84,18 @@ structure for Tarpuy.</p>
 
 
 <dl><dt id="arg-nfactors">nfactors<a class="anchor" aria-label="anchor" href="#arg-nfactors"></a></dt>
-<dd><p>Number of factors in the experiment. For split-plot RCBD it
-must be 2.</p></dd>
+<dd><p>Number of factors in the experiment. Splitplot-RCBD requires
+exactly two factors.</p></dd>
 
 
 <dt id="arg-factors">factors<a class="anchor" aria-label="anchor" href="#arg-factors"></a></dt>
-<dd><p>List with exactly two named factors. The first factor is the
+<dd><p>Named list with the factor levels. The first factor is the
 whole-plot factor and the second factor is the subplot factor.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>Design type. Default is <code>"split-rcbd"</code>.</p></dd>
+<dd><p>Design type. The canonical value is <code>"split-rcbd"</code>; accepted
+aliases are normalized by <code>normalize_tarpuy_design_type()</code>.</p></dd>
 
 
 <dt id="arg-rep">rep<a class="anchor" aria-label="anchor" href="#arg-rep"></a></dt>
@@ -102,42 +103,65 @@ whole-plot factor and the second factor is the subplot factor.</p></dd>
 
 
 <dt id="arg-zigzag">zigzag<a class="anchor" aria-label="anchor" href="#arg-zigzag"></a></dt>
-<dd><p>Field layout in vertical zigzag order. If <code>TRUE</code>, subplot row
-order is reversed in even whole-plot columns.</p></dd>
+<dd><p>Logical. If <code>TRUE</code>, plot numbering follows a continuous
+vertical serpentine path through the whole plots and blocks.</p></dd>
 
 
 <dt id="arg-nrows">nrows<a class="anchor" aria-label="anchor" href="#arg-nrows"></a></dt>
-<dd><p>Experimental design dimension by rows. If <code>NA</code>, it is calculated
-automatically as <code>rep * number_of_subplot_levels</code>.</p></dd>
+<dd><p>Number of rows in the complete physical layout. The valid
+Splitplot-RCBD geometry is <code>rep * number_of_subplot_levels</code>; when missing,
+it is calculated automatically.</p></dd>
 
 
 <dt id="arg-serie">serie<a class="anchor" aria-label="anchor" href="#arg-serie"></a></dt>
-<dd><p>Number used as base for plot numbering.</p></dd>
+<dd><p>Base number used to generate plot identifiers. For example,
+<code>serie = 1000</code> generates plots 1001, 1002, ... in block 1 and 2001,
+2002, ... in block 2.</p></dd>
 
 
 <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
-<dd><p>Seed for reproducible randomization.</p></dd>
+<dd><p>Seed used for reproducible randomization. <code>NA</code> or <code>NULL</code> leaves
+the current random-number state unchanged.</p></dd>
 
 
 <dt id="arg-project">project<a class="anchor" aria-label="anchor" href="#arg-project"></a></dt>
-<dd><p>Barcode or QR code prefix.</p></dd>
+<dd><p>Barcode or QR-code prefix.</p></dd>
 
 
 <dt id="arg-qrcode">qrcode<a class="anchor" aria-label="anchor" href="#arg-qrcode"></a></dt>
-<dd><p>String used to concatenate QR code fields.</p></dd>
+<dd><p>Template used to concatenate QR-code fields. The placeholder
+<code>{factors}</code> expands to both experimental factors.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list with the fieldbook design and parameters.</p>
+    <p>A list with <code>fieldbook</code> and <code>parameters</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The first factor is interpreted as the whole-plot factor and the second factor
-as the subplot factor. Factor column names are preserved in the final
-fieldbook, while their experimental role is stored in <code>parameters</code>.</p>
+    <p>The first factor is the whole-plot factor and the second factor is the
+subplot factor. Whole plots are randomized within each block and subplot
+levels are randomized independently within every whole plot.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">factors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  Soil <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S1"</span>, <span class="st">"S2"</span>, <span class="st">"S3"</span>, <span class="st">"S4"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  Fertilizer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N1"</span>, <span class="st">"N2"</span>, <span class="st">"N3"</span>, <span class="st">"N4"</span>, <span class="st">"N5"</span>, <span class="st">"N6"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">design_split_rcbd</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  factors <span class="op">=</span> <span class="va">factors</span>,</span></span>
+<span class="r-in"><span>  rep <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>  zigzag <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  seed <span class="op">=</span> <span class="fl">123</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">$</span><span class="va">fieldbook</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
