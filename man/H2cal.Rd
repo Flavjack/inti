@@ -52,7 +52,7 @@ H2cal(
 fitting process (default = NULL).}
 
 \item{plot_diag}{Show diagnostic plots for fixed and random effects (default
-= FALSE). Options: "base", "ggplot". .}
+= FALSE).}
 
 \item{outliers.rm}{Remove outliers (default = FALSE). See references.}
 

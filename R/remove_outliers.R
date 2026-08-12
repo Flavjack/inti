@@ -6,6 +6,7 @@
 #' @param formula mixed model formula.
 #' @param drop_na drop NA values from the data.frame
 #' @param plot_diag Diagnostic plot based in the raw and clean data
+#' @param title Plot title
 #'
 #' @description
 #'
@@ -33,8 +34,9 @@
 #' rmout <- potato %>%
 #'   remove_outliers(data = .
 #'   , formula = stemdw ~ 0 + (1|bloque) + treat*geno
-#'   , plot_diag = FALSE
+#'   , plot_diag = TRUE
 #'   , drop_na = FALSE
+#'   , title = "Plot Diagnostic"
 #'   )
 #'
 #' rmout
@@ -44,10 +46,12 @@ remove_outliers <- function(data
                             , formula
                             , drop_na = FALSE
                             , plot_diag = FALSE
+                            , title = "Diagnostic Plot"
                             ) {
   
   # data = potato; drop_na = F; plot_diag = T
   # formula = stemdw ~ 0  + (1|bloque) + treat*geno
+  # title = "Plot Diagnostic"
   
   out_flag <- bholm <- NULL
   
@@ -115,16 +119,35 @@ remove_outliers <- function(data
       tidyr::drop_na({{trait}}) %>%
       plot_diagnostic(formula) %>% 
       cowplot::plot_grid(nrow = 1, plotlist = .
-                         , labels = paste("Raw data:", {{trait}}))
+                         , labels = "Raw data")
     
     clean <- cleandt %>% 
       tidyr::drop_na({{trait}}) %>%
       plot_diagnostic(formula) %>% 
       cowplot::plot_grid(nrow = 1, plotlist = .
-                         , labels = paste("Clean data:", trait))
+                         , labels = "Clean data")
     
-    list(raw, clean) %>% 
+    p <- list(raw, clean) %>% 
       cowplot::plot_grid(nrow = 2, plotlist = .)
+    
+    
+    cowplot::ggdraw() +
+      cowplot::draw_label(
+        label = title,
+        x = 0.5,
+        y = 0.98,
+        hjust = 0.5,
+        vjust = 1,
+        fontface = "bold",
+        size = 12
+      ) +
+      cowplot::draw_plot(
+        p,
+        x = 0,
+        y = 0,
+        width = 1,
+        height = 0.94
+      )
     
     } else { NULL }
   

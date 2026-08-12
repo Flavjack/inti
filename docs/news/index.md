@@ -102,12 +102,10 @@ CRAN release: 2025-02-26
 CRAN release: 2024-09-03
 
 - Package
-  - New function related
-    [`outliers_remove()`](https://inkaverse.com/reference/outliers_remove.md)
-    =\> “`remove_outliers`” to work with formula
-  - New function related
-    [`plot_diag()`](https://inkaverse.com/reference/plot_diag.md) =\>
-    “`plot_diagnostic`” to work with formula
+  - New function related `outliers_remove()` =\> “`remove_outliers`” to
+    work with formula
+  - New function related `plot_diag()` =\> “`plot_diagnostic`” to work
+    with formula
 - Rticles
   - Fix Tables and Figures order in final document
 - Tarpuy
@@ -269,8 +267,8 @@ CRAN release: 2022-04-01
 
 CRAN release: 2022-02-22
 
-- [`outliers_remove()`](https://inkaverse.com/reference/outliers_remove.md):
-  change [`cbind()`](https://rdrr.io/r/base/cbind.html) by
+- `outliers_remove()`: change
+  [`cbind()`](https://rdrr.io/r/base/cbind.html) by
   [`cbind.data.frame()`](https://rdrr.io/r/base/cbind.html).
 - Fix apps auth.
 - Thanks to Uwe Ligges to allow consecutive CRAN updates.
@@ -284,9 +282,7 @@ CRAN release: 2022-02-18
 - Update vignettes using bookdown.
 - Fix table summary in
   [`H2cal()`](https://inkaverse.com/reference/H2cal.md).
-- Update diagnostic plot in
-  [`plot_diag()`](https://inkaverse.com/reference/plot_diag.md) to lm
-  and lmerMod.
+- Update diagnostic plot in `plot_diag()` to lm and lmerMod.
 - Update code for logIn modules in apps.
 - Update correlation graph in yupana.
 

@@ -15,7 +15,7 @@
 #' @param emmeans Use emmeans for calculate the BLUEs (default = FALSE).
 #' @param summary Print summary from random model (default = FALSE).
 #' @param plot_diag Show diagnostic plots for fixed and random effects (default
-#'   = FALSE). Options: "base", "ggplot". .
+#'   = FALSE).
 #' @param outliers.rm Remove outliers (default = FALSE). See references.
 #' @param weights an optional vector of ‘prior weights’ to be used in the
 #'   fitting process (default = NULL).
@@ -170,16 +170,21 @@ H2cal <- function(data
 
 # model -------------------------------------------------------------------
 
-random.model <- as.formula(paste(trait, deparse1(random.model)))
-fixed.model <- as.formula(paste(trait, deparse1(fixed.model)))
-  
+  random.model <- as.formula(paste(trait, deparse1(random.model)))
+  fixed.model <- as.formula(paste(trait, deparse1(fixed.model)))
+
 # outliers remove ---------------------------------------------------------
+
+  rm.title <- paste("Random model:", trait)
+  fm.title <- paste("Fixed model:", trait)
 
   if ( outliers.rm == TRUE ) {
 
     out.rm <- data %>% remove_outliers(data = .
                                        , formula = random.model
                                        , drop_na = FALSE
+                                       , plot_diag = T
+                                       , title = rm.title
                                        )
     
     dt.rm <- out.rm$data$clean
@@ -187,7 +192,10 @@ fixed.model <- as.formula(paste(trait, deparse1(fixed.model)))
     out.fm <- data %>% remove_outliers(data = .
                                        , formula = fixed.model
                                        , drop_na = FALSE
+                                       , plot_diag = T
+                                       , title = fm.title
                                        )
+
     dt.fm <- out.fm$data$clean
 
     outliers <- list(fixed = out.fm$outliers, random = out.rm$outliers)
@@ -220,10 +228,11 @@ fixed.model <- as.formula(paste(trait, deparse1(fixed.model)))
 
 # Plot models -------------------------------------------------------------
   
-  fm.title <- paste("Fixed model:", trait)
-  rm.title <- paste("Random model:", trait)
-  
-  if (plot_diag == TRUE || plot_diag == "base") {
+  if (plot_diag == TRUE) {
+    
+    out.rm$diagplot %>% print()
+    
+    out.fm$diagplot %>% print()
     
     diag.plot <- NULL
     
@@ -242,30 +251,7 @@ fixed.model <- as.formula(paste(trait, deparse1(fixed.model)))
     plot(resid(g.ran), main = rm.title)
     par(mfrow=c(1,1))
     
-  } else if (plot_diag == "ggplot") {
-    
-    diag.fix <- inti::plot_diag(g.fix, title = fm.title)
-    diag.ran <- inti::plot_diag(g.ran, title = rm.title)
-    
-    diag.plot <- list(fixed = diag.fix, random = diag.ran)
-      
-    grid::grid.newpage()
-    grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow = 2
-                                                                 , ncol = 4
-                                                                 )))
-    
-    vplayout <- function(x, y) 
-      grid::viewport(layout.pos.row = x, layout.pos.col = y)
-    print(diag.fix$histogram, vp = vplayout(1, 1))
-    print(diag.fix$qqplot, vp = vplayout(1, 2))
-    print(diag.fix$residual, vp = vplayout(1, 3))
-    print(diag.fix$homoscedasticity, vp = vplayout(1, 4))
-    print(diag.ran$histogram, vp = vplayout(2, 1))
-    print(diag.ran$qqplot, vp = vplayout(2, 2))
-    print(diag.ran$residual, vp = vplayout(2, 3))
-    print(diag.ran$homoscedasticity, vp = vplayout(2, 4))
-    
-    } else {diag.plot <- NULL}
+  } else {diag.plot <- NULL}
   
 # Model estimates --------------------------------------------------
   

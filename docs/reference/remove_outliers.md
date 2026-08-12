@@ -6,7 +6,13 @@ judge residuals standardized by the re scaled MAD (BH MADR).
 ## Usage
 
 ``` r
-remove_outliers(data, formula, drop_na = FALSE, plot_diag = FALSE)
+remove_outliers(
+  data,
+  formula,
+  drop_na = FALSE,
+  plot_diag = FALSE,
+  title = "Diagnostic Plot"
+)
 ```
 
 ## Arguments
@@ -26,6 +32,10 @@ remove_outliers(data, formula, drop_na = FALSE, plot_diag = FALSE)
 - plot_diag:
 
   Diagnostic plot based in the raw and clean data
+
+- title:
+
+  Plot title
 
 ## Value
 
@@ -51,9 +61,11 @@ library(inti)
 rmout <- potato %>%
   remove_outliers(data = .
   , formula = stemdw ~ 0 + (1|bloque) + treat*geno
-  , plot_diag = FALSE
+  , plot_diag = TRUE
   , drop_na = FALSE
+  , title = "Plot Diagnostic"
   )
+#> fixed-effect model matrix is rank deficient so dropping 1 column / coefficient
 #> fixed-effect model matrix is rank deficient so dropping 1 column / coefficient
 
 rmout
@@ -384,7 +396,7 @@ rmout
 #> 142 2.351195e-04 3.385720e-02  OUTLIER
 #> 
 #> $diagplot
-#> NULL
+
 #> 
 #> $model
 #> $model$raw

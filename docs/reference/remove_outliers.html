@@ -65,7 +65,13 @@ residuals standardized by the re scaled MAD (BH MADR).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">remove_outliers</span><span class="op">(</span><span class="va">data</span>, <span class="va">formula</span>, drop_na <span class="op">=</span> <span class="cn">FALSE</span>, plot_diag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">remove_outliers</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">formula</span>,</span>
+<span>  drop_na <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  plot_diag <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  title <span class="op">=</span> <span class="st">"Diagnostic Plot"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -86,6 +92,10 @@ residuals standardized by the re scaled MAD (BH MADR).</p>
 
 <dt id="arg-plot-diag">plot_diag<a class="anchor" aria-label="anchor" href="#arg-plot-diag"></a></dt>
 <dd><p>Diagnostic plot based in the raw and clean data</p></dd>
+
+
+<dt id="arg-title">title<a class="anchor" aria-label="anchor" href="#arg-title"></a></dt>
+<dd><p>Plot title</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -112,9 +122,11 @@ Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016.</p>
 <span class="r-in"><span><span class="va">rmout</span> <span class="op">&lt;-</span> <span class="va">potato</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">remove_outliers</span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span></span></span>
 <span class="r-in"><span>  , formula <span class="op">=</span> <span class="va">stemdw</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">bloque</span><span class="op">)</span> <span class="op">+</span> <span class="va">treat</span><span class="op">*</span><span class="va">geno</span></span></span>
-<span class="r-in"><span>  , plot_diag <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  , plot_diag <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span>  , drop_na <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  , title <span class="op">=</span> <span class="st">"Plot Diagnostic"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> fixed-effect model matrix is rank deficient so dropping 1 column / coefficient</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> fixed-effect model matrix is rank deficient so dropping 1 column / coefficient</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">rmout</span></span></span>
@@ -445,7 +457,7 @@ Theoretical and Applied Genetics, vol. 129, no. 4, Apr. 2016.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 142 2.351195e-04 3.385720e-02  OUTLIER</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $diagplot</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-plt img"><img src="remove_outliers-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $model$raw</span>

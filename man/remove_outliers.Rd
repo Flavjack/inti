@@ -4,7 +4,13 @@
 \alias{remove_outliers}
 \title{Remove outliers using mixed models}
 \usage{
-remove_outliers(data, formula, drop_na = FALSE, plot_diag = FALSE)
+remove_outliers(
+  data,
+  formula,
+  drop_na = FALSE,
+  plot_diag = FALSE,
+  title = "Diagnostic Plot"
+)
 }
 \arguments{
 \item{data}{Experimental design data frame with the factors and traits.}
@@ -14,6 +20,8 @@ remove_outliers(data, formula, drop_na = FALSE, plot_diag = FALSE)
 \item{drop_na}{drop NA values from the data.frame}
 
 \item{plot_diag}{Diagnostic plot based in the raw and clean data}
+
+\item{title}{Plot title}
 }
 \value{
 list. 1. Table with date without outliers. 2. The outliers in the
@@ -33,8 +41,9 @@ library(inti)
 rmout <- potato \%>\%
   remove_outliers(data = .
   , formula = stemdw ~ 0 + (1|bloque) + treat*geno
-  , plot_diag = FALSE
+  , plot_diag = TRUE
   , drop_na = FALSE
+  , title = "Plot Diagnostic"
   )
 
 rmout

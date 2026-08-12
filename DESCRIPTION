@@ -36,11 +36,11 @@ Imports:
     stringr, 
     googlesheets4,
     DT,
+    cowplot,
     cli,
     systemfonts
 Suggests:
     gsheet,
-    cowplot,
     huito,
     knitr,
     rmarkdown,

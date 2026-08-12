@@ -18,8 +18,6 @@ Data analysis
   : Fieldbook reshape
 - [`plot_augmented_design()`](https://inkaverse.com/reference/plot_augmented_design.md)
   : Plot augmented fieldbook design
-- [`plot_diag()`](https://inkaverse.com/reference/plot_diag.md) :
-  Diagnostic plots
 - [`plot_diagnostic()`](https://inkaverse.com/reference/plot_diagnostic.md)
   : Diagnostic plots
 - [`plot_raw()`](https://inkaverse.com/reference/plot_raw.md) : Plot raw
@@ -69,8 +67,6 @@ Algorithms and calculations
   heritability in plant breeding
 - [`metamorphosis()`](https://inkaverse.com/reference/metamorphosis.md)
   : Transform fieldbooks based in a dictionary
-- [`outliers_remove()`](https://inkaverse.com/reference/outliers_remove.md)
-  : Remove outliers
 - [`remove_outliers()`](https://inkaverse.com/reference/remove_outliers.md)
   : Remove outliers using mixed models
 - [`mean_comparison()`](https://inkaverse.com/reference/mean_comparison.md)
