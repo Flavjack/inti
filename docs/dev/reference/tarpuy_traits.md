@@ -99,7 +99,6 @@ traits <- list(
 )
 
 fbapp <- tarpuy_traits(fieldbook, last_factor = "bloque", traits)
-#> Error in dplyr::bind_rows(traits): Can't combine `..1$samples` <character> and `..2$samples` <double>.
 
 if (FALSE) { # \dontrun{
 

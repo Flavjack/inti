@@ -6,7 +6,7 @@ author: "Flavio Lozano-Isla"
 vignette: >
   %\VignetteIndexEntry{Yupana}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
 knitr:
   opts_chunk: 
     collapse: true

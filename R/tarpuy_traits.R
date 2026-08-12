@@ -1,155 +1,3 @@
-# Internal helpers ---------------------------------------------------------
-
-.tarpuy_empty_to_na <- function(x) {
-  x <- as.character(x)
-  x <- trimws(x)
-  x[is.na(x) | x == "" | toupper(x) %in% c("NA", "NULL")] <- NA_character_
-  x
-}
-
-
-.tarpuy_normalize_trait_token <- function(x) {
-  x <- .tarpuy_empty_to_na(x)
-  valid <- !is.na(x)
-  
-  if (!any(valid)) {
-    return(x)
-  }
-  
-  normalized <- iconv(x[valid], from = "", to = "ASCII//TRANSLIT")
-  failed <- is.na(normalized)
-  normalized[failed] <- x[valid][failed]
-  
-  normalized <- gsub("[[:space:]]+", "", normalized)
-  normalized <- gsub("[^[:alnum:]_]", "_", normalized)
-  normalized <- gsub("_+", "_", normalized)
-  normalized <- gsub("^_+|_+$", "", normalized)
-  normalized[normalized == ""] <- NA_character_
-  
-  x[valid] <- normalized
-  x
-}
-
-
-.tarpuy_parse_samples <- function(x, source_row = NA_integer_) {
-  token <- .tarpuy_normalize_trait_token(x)
-  
-  if (length(token) == 0L || is.na(token) || !nzchar(token)) {
-    return(list(prefix = "", count = NA_integer_))
-  }
-  
-  valid_pattern <- "^([[:alpha:]_][[:alnum:]_]*)?[0-9]+$"
-  
-  if (!grepl(valid_pattern, token)) {
-    row_text <- if (!is.na(source_row)) paste0(" en la fila ", source_row) else ""
-    stop(
-      "{samples}", row_text,
-      " debe ser un entero positivo o un identificador seguido de un ",
-      "entero positivo; por ejemplo: 4, q4 o plant10.",
-      call. = FALSE
-    )
-  }
-  
-  number_match <- regexpr("[0-9]+$", token)
-  number_text <- regmatches(token, number_match)
-  count <- suppressWarnings(as.integer(number_text))
-  
-  prefix <- if (number_match > 1L) {
-    substr(token, 1L, number_match - 1L)
-  } else {
-    ""
-  }
-  
-  if (is.na(count) || count < 1L) {
-    row_text <- if (!is.na(source_row)) paste0(" en la fila ", source_row) else ""
-    stop(
-      "{samples}", row_text,
-      " debe contener un entero mayor que cero.",
-      call. = FALSE
-    )
-  }
-  
-  list(prefix = prefix, count = count)
-}
-
-
-.tarpuy_split_when <- function(x) {
-  x <- .tarpuy_empty_to_na(x)
-  
-  if (length(x) == 0L || is.na(x)) {
-    return(NA_character_)
-  }
-  
-  moments <- strsplit(x, "\\s*[,;]\\s*", perl = TRUE)[[1L]]
-  moments <- .tarpuy_normalize_trait_token(moments)
-  moments <- moments[!is.na(moments) & nzchar(moments)]
-  
-  if (length(moments) == 0L) NA_character_ else moments
-}
-
-
-.tarpuy_categories_json <- function(categories, format) {
-  format <- tolower(trimws(as.character(format)))
-  
-  if (!format %in% c("scategorical", "mcategorical", "categorical", "multicat")) {
-    return("[]")
-  }
-  
-  categories <- .tarpuy_empty_to_na(categories)
-  
-  if (length(categories) == 0L || is.na(categories)) {
-    return("[]")
-  }
-  
-  values <- strsplit(categories, "\\s*[,;]\\s*", perl = TRUE)[[1L]]
-  values <- trimws(values)
-  values <- values[nzchar(values)]
-  
-  if (length(values) == 0L) {
-    return("[]")
-  }
-  
-  items <- vapply(
-    values,
-    function(value) {
-      quoted <- encodeString(value, quote = '"')
-      paste0('{"label":', quoted, ',"value":', quoted, "}")
-    },
-    character(1L),
-    USE.NAMES = FALSE
-  )
-  
-  paste0("[", paste(items, collapse = ","), "]")
-}
-
-
-.tarpuy_empty_trait_export <- function() {
-  tibble::tibble(
-    trait = character(),
-    format = character(),
-    defaultValue = character(),
-    minimum = character(),
-    maximum = character(),
-    details = character(),
-    categories = character(),
-    isVisible = character(),
-    realPosition = character()
-  )
-}
-
-
-.tarpuy_empty_trait_metadata_export <- function() {
-  tibble::tibble(
-    trait_id = character(),
-    generated_column = character(),
-    generated_index = integer(),
-    source_row = integer()
-  )
-}
-
-
-# Main function ------------------------------------------------------------
-
 #' Field book traits
 #'
 #' Function to export a field book and its trait definitions for use in the
@@ -256,6 +104,158 @@ tarpuy_traits <- function(fieldbook = NULL,
                           last_factor = NULL,
                           traits = NULL) {
   
+  # Internal helpers ---------------------------------------------------------
+  
+  .tarpuy_empty_to_na <- function(x) {
+    x <- as.character(x)
+    x <- trimws(x)
+    x[is.na(x) | x == "" | toupper(x) %in% c("NA", "NULL")] <- NA_character_
+    x
+  }
+  
+  
+  .tarpuy_normalize_trait_token <- function(x) {
+    x <- .tarpuy_empty_to_na(x)
+    valid <- !is.na(x)
+    
+    if (!any(valid)) {
+      return(x)
+    }
+    
+    normalized <- iconv(x[valid], from = "", to = "ASCII//TRANSLIT")
+    failed <- is.na(normalized)
+    normalized[failed] <- x[valid][failed]
+    
+    normalized <- gsub("[[:space:]]+", "", normalized)
+    normalized <- gsub("[^[:alnum:]_]", "_", normalized)
+    normalized <- gsub("_+", "_", normalized)
+    normalized <- gsub("^_+|_+$", "", normalized)
+    normalized[normalized == ""] <- NA_character_
+    
+    x[valid] <- normalized
+    x
+  }
+  
+  
+  .tarpuy_parse_samples <- function(x, source_row = NA_integer_) {
+    token <- .tarpuy_normalize_trait_token(x)
+    
+    if (length(token) == 0L || is.na(token) || !nzchar(token)) {
+      return(list(prefix = "", count = NA_integer_))
+    }
+    
+    valid_pattern <- "^([[:alpha:]_][[:alnum:]_]*)?[0-9]+$"
+    
+    if (!grepl(valid_pattern, token)) {
+      row_text <- if (!is.na(source_row)) paste0(" en la fila ", source_row) else ""
+      stop(
+        "{samples}", row_text,
+        " debe ser un entero positivo o un identificador seguido de un ",
+        "entero positivo; por ejemplo: 4, q4 o plant10.",
+        call. = FALSE
+      )
+    }
+    
+    number_match <- regexpr("[0-9]+$", token)
+    number_text <- regmatches(token, number_match)
+    count <- suppressWarnings(as.integer(number_text))
+    
+    prefix <- if (number_match > 1L) {
+      substr(token, 1L, number_match - 1L)
+    } else {
+      ""
+    }
+    
+    if (is.na(count) || count < 1L) {
+      row_text <- if (!is.na(source_row)) paste0(" en la fila ", source_row) else ""
+      stop(
+        "{samples}", row_text,
+        " debe contener un entero mayor que cero.",
+        call. = FALSE
+      )
+    }
+    
+    list(prefix = prefix, count = count)
+  }
+  
+  
+  .tarpuy_split_when <- function(x) {
+    x <- .tarpuy_empty_to_na(x)
+    
+    if (length(x) == 0L || is.na(x)) {
+      return(NA_character_)
+    }
+    
+    moments <- strsplit(x, "\\s*[,;]\\s*", perl = TRUE)[[1L]]
+    moments <- .tarpuy_normalize_trait_token(moments)
+    moments <- moments[!is.na(moments) & nzchar(moments)]
+    
+    if (length(moments) == 0L) NA_character_ else moments
+  }
+  
+  
+  .tarpuy_categories_json <- function(categories, format) {
+    format <- tolower(trimws(as.character(format)))
+    
+    if (!format %in% c("scategorical", "mcategorical", "categorical", "multicat")) {
+      return("[]")
+    }
+    
+    categories <- .tarpuy_empty_to_na(categories)
+    
+    if (length(categories) == 0L || is.na(categories)) {
+      return("[]")
+    }
+    
+    values <- strsplit(categories, "\\s*[,;]\\s*", perl = TRUE)[[1L]]
+    values <- trimws(values)
+    values <- values[nzchar(values)]
+    
+    if (length(values) == 0L) {
+      return("[]")
+    }
+    
+    items <- vapply(
+      values,
+      function(value) {
+        quoted <- encodeString(value, quote = '"')
+        paste0('{"label":', quoted, ',"value":', quoted, "}")
+      },
+      character(1L),
+      USE.NAMES = FALSE
+    )
+    
+    paste0("[", paste(items, collapse = ","), "]")
+  }
+  
+  
+  .tarpuy_empty_trait_export <- function() {
+    tibble::tibble(
+      trait = character(),
+      format = character(),
+      defaultValue = character(),
+      minimum = character(),
+      maximum = character(),
+      details = character(),
+      categories = character(),
+      isVisible = character(),
+      realPosition = character()
+    )
+  }
+  
+  
+  .tarpuy_empty_trait_metadata_export <- function() {
+    tibble::tibble(
+      trait_id = character(),
+      generated_column = character(),
+      generated_index = integer(),
+      source_row = integer()
+    )
+  }
+  
+  # Main function ------------------------------------------------------------
+  
+  
   # Conditions -------------------------------------------------------------
   
   if (is.null(fieldbook)) {
@@ -293,8 +293,25 @@ tarpuy_traits <- function(fieldbook = NULL,
   
   # Standardize the traits table ------------------------------------------
   
-  traitstb <- dplyr::bind_rows(traits)
+  trait_inputs <- if (is.data.frame(traits)) {
+    list(traits)
+  } else {
+    traits
+  }
   
+  trait_inputs <- lapply(trait_inputs, function(x) {
+    x <- tibble::as_tibble(x)
+    
+    dplyr::mutate(
+      x,
+      dplyr::across(dplyr::everything(), as.character)
+    )
+  })
+  
+  traitstb <- dplyr::bind_rows(trait_inputs)
+
+# -------------------------------------------------------------------------
+
   if (nrow(traitstb) == 0L) {
     return(list(
       fieldbook = fb,
@@ -431,7 +448,7 @@ tarpuy_traits <- function(fieldbook = NULL,
   if (length(duplicated_traits) > 0L) {
     stop(
       "No se puede generar el fieldbook. Existen nombres de variables ",
-      "duplicados después de normalizar los espacios: ",
+      "duplicados despues de normalizar los espacios: ",
       paste0("`", duplicated_traits, "`", collapse = ", "),
       ".",
       call. = FALSE

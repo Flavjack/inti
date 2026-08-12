@@ -507,7 +507,7 @@ design_split_rcbd <- function(nfactors = 2,
     drop = FALSE
   ]
   
-  fb$sort <- ave(
+  fb$sort <- stats::ave(
     seq_len(nrow(fb)),
     fb$block,
     FUN = seq_along
