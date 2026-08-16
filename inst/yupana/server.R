@@ -458,16 +458,14 @@ observe({
       inti::web_table(data = analysis()$meancomp
                       , digits = input$analysis_digits
                       , file_name = input$analysis_response
-                      , scrolly = "50vh"
-                      , columnwidth = "50px"
                       )
 
     })
 
   output$smrstats <- DT::renderDataTable(server = FALSE, {
 
-    mc <- analysis()$stats %>%
-      inti::web_table(buttons = "copy", scrolly = "10vh", columnwidth = NULL)
+    analysis()$stats %>%
+      inti::web_table(file_name = paste0(input$analysis_response, "_statistics"))
 
   })
 

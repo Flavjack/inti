@@ -81,7 +81,8 @@ web_table <- function(data
                 , initComplete = DT::JS(
                   "function(settings, json) {",
                   "$(this).addClass('compact');",
-                  "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
+                  "var container = $(this.api().table().container());",
+                  "container.find('thead th').css({'background-color': '#000', 'color': '#fff'});",
                   "}")
                 )
               , caption = caption)
