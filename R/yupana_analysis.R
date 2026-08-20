@@ -104,9 +104,11 @@ if(FALSE) {
     
   }
   
-  plotdiag <- plot_diag(model = model_aov
-                        , title = response
-                        )
+  plotdiag <- plot_diagnostic(
+    data = fb,
+    formula = model,
+    title = response
+  )
   
 
 # distribution plots ------------------------------------------------------

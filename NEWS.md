@@ -1,5 +1,27 @@
 # inti 0.7.3
 
+- Tarpuy
+  - Improve trait variable generation to support text and numeric prefixes in `{when}` and `{samples}`
+  - Omit empty trait components from fieldbook variable names instead of adding `NA`
+  - Preserve existing fieldbook data when traits are added or modified
+  - Preserve previous variables and manually added columns when updating traits
+  - Detect changes in the experimental design before replacing an existing fieldbook
+  - Add a warning before replacing a fieldbook with recorded data when factors, levels, blocks, replications, or treatments are modified
+  - Improve CRD, RCBD, augmented, and split-plot designs
+  - Validate plots, QR codes, seed, rows, columns, blocks, and replications to avoid duplicates or incorrect layouts
+  - Improve Layout Summary according to the experimental design
+  - Include plots, blocks, replications, checks, entries, rows, and columns in Layout Summary when applicable
+  - Fix Layout Summary value visibility and horizontal scrolling
+  - Improve Sketch representation of experimental designs
+  - Scale experimental-unit boxes according to the selected width and height
+  - Automatically adjust text inside experimental-unit boxes
+  - Add PNG, SVG, and PDF export options in Sketch
+  - Automatically select the `fb` sheet to generate the Sketch plot
+  - Add font-size control in the Sketch module
+  - Automatically select file columns in the Mobile module for export
+
+# inti 0.7.3
+
   - Improve PCA supplementary variables
   - Select the dimension in PCA
   - Sub module for PCA with variable contribution and dimension correlation
