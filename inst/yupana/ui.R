@@ -31,15 +31,247 @@ if (file.exists("www/cloud.json")) gar_set_client(web_json = "www/cloud.json", a
 # app ---------------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-navbarPage(title = HTML('<strong><a target="_blank" href="https://inkaverse.com/">YUPANA</a></strong>')
-           , windowTitle = "Yupana • app"
-           , selected = "Intro"
-           , theme =  bslib::bs_theme(version = 5, bootswatch = 'sandstone')
-           , tags$style(HTML("p{ text-align: justify; }"))
-           , position = "fixed-top"
-           , tags$style(HTML("body {padding-top: 50px;}"))
-           ,
-           
+navbarPage(
+  title = HTML(
+    '<strong><a target="_blank" href="https://inkaverse.com/">YUPANA</a></strong>'
+  )
+  , windowTitle = "Yupana • app"
+  , selected = "Intro"
+  , theme = bslib::bs_theme(
+    version = 5
+    , bootswatch = "sandstone"
+  )
+  , tags$style(
+    HTML("p{ text-align: justify; }")
+  )
+  , position = "fixed-top"
+  , tags$style(
+    HTML("body {padding-top: 50px;}")
+  )
+  
+  # -----------------------------------------------------------------------
+  # Yupana responsive layout ----------------------------------------------
+  # -----------------------------------------------------------------------
+  , tags$style(
+    HTML("
+
+    /* ---------------------------------------------------------------
+       Yupana responsive layout
+       --------------------------------------------------------------- */
+
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .row > *,
+    [class*='col-'] {
+      min-width: 0;
+    }
+
+    /* ---------------------------------------------------------------
+       Responsive figure viewer
+       --------------------------------------------------------------- */
+
+    .yupana-figure-scroll {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .yupana-figure-scroll .shiny-image-output {
+      display: block;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    .yupana-figure-scroll .shiny-image-output img {
+      display: block;
+      max-width: none !important;
+      height: auto !important;
+    }
+
+    /* ---------------------------------------------------------------
+       Tables
+       --------------------------------------------------------------- */
+
+    .yupana-table-scroll {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .yupana-table-scroll .dataTables_wrapper {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    .yupana-table-scroll table.dataTable {
+      white-space: nowrap;
+    }
+
+  ")
+  )
+  , tags$script(
+    HTML("
+
+    (function() {
+
+      let resizeTimer = null;
+
+      function resizeYupanaFigures() {
+
+        const figures =
+          document.querySelectorAll('.yupana-figure-scroll');
+
+        const viewportHeight =
+          window.innerHeight ||
+          document.documentElement.clientHeight;
+
+        figures.forEach(function(el) {
+
+          const rect = el.getBoundingClientRect();
+
+          /*
+           * Calculate the REAL available vertical space
+           * according to the current position of each figure.
+           */
+          const bottomMargin = 16;
+
+          let availableHeight =
+            viewportHeight -
+            rect.top -
+            bottomMargin;
+
+          /*
+           * Prevent unusably small viewers.
+           */
+          availableHeight =
+            Math.max(200, availableHeight);
+
+          /*
+           * Use max-height rather than height.
+           *
+           * Small image:
+           *   container collapses to image height.
+           *
+           * Large image:
+           *   container reaches available screen height
+           *   and activates its internal scrollbar.
+           */
+          el.style.maxHeight =
+            availableHeight + 'px';
+
+        });
+
+      }
+
+
+      function scheduleResize() {
+
+        clearTimeout(resizeTimer);
+
+        resizeTimer = setTimeout(
+          resizeYupanaFigures,
+          80
+        );
+
+      }
+
+
+      /*
+       * Initial application load
+       */
+      document.addEventListener(
+        'DOMContentLoaded',
+        scheduleResize
+      );
+
+
+      /*
+       * Browser resizing
+       */
+      window.addEventListener(
+        'resize',
+        scheduleResize
+      );
+
+
+      /*
+       * Shiny connection and output updates
+       */
+      $(document).on(
+        'shiny:connected shiny:value',
+        scheduleResize
+      );
+
+
+      /*
+       * Bootstrap tab changes
+       */
+      $(document).on(
+        'shown.bs.tab',
+        'a[data-bs-toggle=\"tab\"], a[data-toggle=\"tab\"]',
+        scheduleResize
+      );
+
+
+      /*
+       * Dynamic Shiny UI insertion.
+       * Needed because renderUI() creates figures after
+       * the initial document has already loaded.
+       */
+      const observer =
+        new MutationObserver(function(mutations) {
+
+          let shouldResize = false;
+
+          mutations.forEach(function(mutation) {
+
+            if (
+              mutation.addedNodes &&
+              mutation.addedNodes.length > 0
+            ) {
+              shouldResize = true;
+            }
+
+          });
+
+          if (shouldResize) {
+            scheduleResize();
+          }
+
+        });
+
+
+      observer.observe(
+        document.body,
+        {
+          childList: true,
+          subtree: true
+        }
+      );
+
+
+      /*
+       * First calculation
+       */
+      scheduleResize();
+
+    })();
+
+  ")
+  )
+  ,
+  
 # -------------------------------------------------------------------------
 # Yupana Info -------------------------------------------------------------
 # -------------------------------------------------------------------------

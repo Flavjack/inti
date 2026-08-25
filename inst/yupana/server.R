@@ -267,7 +267,7 @@ observe({
                , ylimits = input$raw_ylimits
                , xrotation = input$raw_xrotation
                , legend = input$raw_legend
-               , color = input$raw_color
+               , color = if (input$raw_color == "yes") TRUE else FALSE
                , opt = input$raw_opt
                , xtext = input$raw_xtext
                , gtext = input$raw_gtext
@@ -305,11 +305,28 @@ observe({
   
   output$plot_raw <- renderUI({
     
-    validate(need(plotraw(), "Choose your parameters"))
-
-    tagList( div(imageOutput("plotraw"), align = "center") ) 
+    validate(
+      need(
+        plotraw(),
+        "Choose your parameters"
+      )
+    )
     
-    })
+    tagList(
+      
+      div(
+        class = "yupana-figure-scroll",
+        
+        imageOutput(
+          "plotraw",
+          width = "100%",
+          height = "auto"
+        )
+      )
+      
+    )
+    
+  })
 
 # Yupana: Fieldbook -------------------------------------------------------
 # -------------------------------------------------------------------------
@@ -454,19 +471,29 @@ observe({
   # -------------------------------------------------------------------------
 
   output$meancomp <- DT::renderDataTable(server = FALSE, {
-
-      inti::web_table(data = analysis()$meancomp
-                      , digits = input$analysis_digits
-                      , file_name = input$analysis_response
-                      )
-
-    })
-
+    
+    inti::web_table(
+      data = analysis()$meancomp
+      , digits = input$analysis_digits
+      , file_name = input$analysis_response
+      , scrolly = "45vh"
+      , width = "100%"
+    )
+    
+  })
+  
   output$smrstats <- DT::renderDataTable(server = FALSE, {
-
+    
     analysis()$stats %>%
-      inti::web_table(file_name = paste0(input$analysis_response, "_statistics"))
-
+      inti::web_table(
+        file_name = paste0(
+          input$analysis_response,
+          "_statistics"
+        ),
+        scrolly = NULL,
+        width = "100%"
+      )
+    
   })
 
   # -------------------------------------------------------------------------
@@ -486,28 +513,50 @@ observe({
 
         fluidRow(
 
-          column(width = 5,
-
-                 HTML('<h4><strong>ANOVA</strong></h4>'),
-
-                 verbatimTextOutput("anova"),
-
-                 br(),
-
-                 HTML('<h4><strong>Statistics</strong></h4>'),
-
-                 DT::dataTableOutput("smrstats")
-
+          column(
+            width = 5,
+            
+            HTML('<h4><strong>ANOVA</strong></h4>'),
+            
+            verbatimTextOutput("anova"),
+            
+            br(),
+            
+            HTML('<h4><strong>Statistics</strong></h4>'),
+            
+            div(
+              style = paste0(
+                "width: 100%; ",
+                "max-width: 100%; ",
+                "overflow-x: auto;"
+              ),
+              
+              DT::dataTableOutput(
+                "smrstats",
+                width = "100%"
+              )
+            )
           ),
-
-          column(width = 7,
-
-                 HTML('<h4><strong>Mean Comparison</strong></h4>'),
-
-                 DT::dataTableOutput("meancomp")
-
-                 )
+          
+          column(
+            width = 7,
+            
+            HTML('<h4><strong>Mean Comparison</strong></h4>'),
+            
+            div(
+              style = paste0(
+                "width: 100%; ",
+                "max-width: 100%; ",
+                "overflow-x: auto;"
+              ),
+              
+              DT::dataTableOutput(
+                "meancomp",
+                width = "100%"
+              )
+            )
           )
+        )
       )
 
     } else if ( input$analysis_preview_opt == "Diagnostic" ) {
@@ -978,11 +1027,19 @@ output$plot_color <- renderUI({
                   style="height:580px; width:100%; scrolling=no")
 
     } else if (input$smr_preview_opt == "Plots" ) {
-
+      
       tagList(
-
-        div(imageOutput("plotsmr"), align = "center")
-
+        
+        div(
+          class = "yupana-figure-scroll",
+          
+          imageOutput(
+            "plotsmr",
+            width = "100%",
+            height = "auto"
+          )
+        )
+        
       )
     }
   })
@@ -1314,16 +1371,33 @@ output$plot_color <- renderUI({
 
         fluidRow(
 
-          box(width = 6,
-
-              div(imageOutput("pca_var"), align = "center"),
-
+          box(
+            width = 6,
+            
+            div(
+              class = "yupana-figure-scroll",
+              
+              imageOutput(
+                "pca_var",
+                width = "100%",
+                height = "auto"
+              )
+            )
+            
           ),
-
-          box(width = 6,
-
-              div(imageOutput("pca_ind"), align = "center")
-
+          
+          box(
+            width = 6,
+            
+            div(
+              class = "yupana-figure-scroll",
+              
+              imageOutput(
+                "pca_ind",
+                width = "100%",
+                height = "auto"
+              )
+            )
           )
 
         )
@@ -1336,16 +1410,33 @@ output$plot_color <- renderUI({
 
         fluidRow(
 
-          box(width = 6,
-
-              div(imageOutput("hcpc_tree", width = "100%"), align = "center"),
-
+          box(
+            width = 6,
+            
+            div(
+              class = "yupana-figure-scroll",
+              
+              imageOutput(
+                "hcpc_tree",
+                width = "100%",
+                height = "auto"
+              )
+            )
+            
           ),
-
-          box(width = 6,
-
-              div(imageOutput("hcpc_map", width = "100%"), align = "center")
-
+          
+          box(
+            width = 6,
+            
+            div(
+              class = "yupana-figure-scroll",
+              
+              imageOutput(
+                "hcpc_map",
+                width = "100%",
+                height = "auto"
+              )
+            )
           )
 
         )
@@ -1358,10 +1449,18 @@ output$plot_color <- renderUI({
 
         fluidRow(
 
-          box(width = 12,
-
-              div(imageOutput("correlation", width = "100%"), align = "center")
-
+          box(
+            width = 12,
+            
+            div(
+              class = "yupana-figure-scroll",
+              
+              imageOutput(
+                "correlation",
+                width = "100%",
+                height = "auto"
+              )
+            )
           )
 
         )

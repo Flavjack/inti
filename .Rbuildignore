@@ -19,8 +19,6 @@ analytics.r
 ^pkgdown$
 ^\.github$
 ^CRAN-SUBMISSION$
-setup.R
-setup.r
 ^vignettes/extra/
 ^vignettes/\.quarto$
 ^vignettes/articles/\.quarto$
