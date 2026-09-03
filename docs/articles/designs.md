@@ -25,12 +25,14 @@ Planning an experiment follows a reproducible routine:
 5.  **Export to Field Book app:** Generate field-ready sheets with trait
     parameters.
 
-\
-`# Install packages and dependencies`\
-\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`inti`](https://inkaverse.com/)`)`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`knitr`](https://yihui.org/knitr/)`)`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`dplyr`](https://dplyr.tidyverse.org)`)`
+``` r
+
+# Install packages and dependencies
+
+library(inti)
+library(knitr)
+library(dplyr)
+```
 
 ## Single-Factor Designs
 
@@ -42,25 +44,27 @@ The Completely Randomized Design is recommended when experimental units
 are homogeneous, such as germination chambers, lab assays, or controlled
 greenhouse benches.
 
-\
-`# 1. Define salinity levels (NaCl concentrations in mM)`\
-`factors_crd`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
-`  NaCl``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"0"``, ``"50"``, ``"100"``, ``"150"``, ``"200"``)`\
-`)`\
-\
-`# 2. Generate CRD layout (5 treatments x 4 replications = 20 petri dishes/units)`\
-`crd_exp`` ``<-`` `[`design_repblock`](https://inkaverse.com/reference/design_repblock.md)`(`\
-`  factors ``=`` ``factors_crd``,`\
-`  type ``=`` ``"crd"``,`\
-`  rep ``=`` ``4``,`\
-`  zigzag ``=`` ``TRUE``,`\
-`  seed ``=`` ``2026`\
-`)`\
-\
-`# Fieldbook preview`\
-`crd_exp``$``fieldbook`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
-`  `[`head`](https://rdrr.io/r/utils/head.html)`(``10``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
-`  ``knitr``::`[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"CRD Fieldbook preview"``)`
+``` r
+
+# 1. Define salinity levels (NaCl concentrations in mM)
+factors_crd <- list(
+  NaCl= c("0", "50", "100", "150", "200")
+)
+
+# 2. Generate CRD layout (5 treatments x 4 replications = 20 petri dishes/units)
+crd_exp <- design_repblock(
+  factors = factors_crd,
+  type = "crd",
+  rep = 4,
+  zigzag = TRUE,
+  seed = 2026
+)
+
+# Fieldbook preview
+crd_exp$fieldbook %>% 
+  head(10) %>% 
+  knitr::kable(caption = "CRD Fieldbook preview")
+```
 
 | qrcode         | plots | ntreat | NaCl | sort | rep | rows | cols | design |
 |:---------------|------:|-------:|:-----|-----:|----:|-----:|-----:|:-------|
@@ -77,15 +81,17 @@ greenhouse benches.
 
 CRD Fieldbook preview {.table .caption-top}
 
-\
-\
-`# Layout on germination chamber shelves`\
-\
-[`tarpuy_plotdesign`](https://inkaverse.com/reference/tarpuy_plotdesign.md)`(`\
-`  data ``=`` ``crd_exp``,`\
-`  factor ``=`` ``"NaCl"``,`\
-`  fill ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"plots"``, ``"NaCl"``)`\
-`)`
+``` r
+
+
+# Layout on germination chamber shelves
+
+tarpuy_plotdesign(
+  data = crd_exp,
+  factor = "NaCl",
+  fill = c("plots", "NaCl")
+)
+```
 
 ![](designs_files/figure-html/unnamed-chunk-2-1.png)
 
@@ -95,27 +101,29 @@ The Randomized Complete Block Design is recommended when an
 environmental gradient is present in the field, grouping experimental
 units into homogeneous blocks to control spatial variability.
 
-\
-`# 1. Define factors: Bean genotypes and fertilization doses`\
-`factors_rcbd`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
-`  Genotype ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Bean_01"``, ``"Bean_02"``, ``"Bean_03"``)``,`\
-`  Fertilization ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"0"``, ``"50"``, ``"100"``)`\
-`)`\
-\
-`# 2. Generate RCBD layout (3 genotypes x 3 doses = 9 treatments, 4 blocks = 36 )`\
-`rcbd_exp`` ``<-`` `[`design_repblock`](https://inkaverse.com/reference/design_repblock.md)`(`\
-`  nfactors ``=`` ``2``,`\
-`  factors ``=`` ``factors_rcbd``,`\
-`  type ``=`` ``"rcbd"``,`\
-`  rep ``=`` ``4``,`\
-`  zigzag ``=`` ``TRUE``,`\
-`  seed ``=`` ``2026`\
-`)`\
-\
-`# Fieldbook preview`\
-`rcbd_exp``$``fieldbook`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
-`  `[`head`](https://rdrr.io/r/utils/head.html)`(``10``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
-`  ``knitr``::`[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"RCBD Fieldbook preview"``)`
+``` r
+
+# 1. Define factors: Bean genotypes and fertilization doses
+factors_rcbd <- list(
+  Genotype = c("Bean_01", "Bean_02", "Bean_03"),
+  Fertilization = c("0", "50", "100")
+)
+
+# 2. Generate RCBD layout (3 genotypes x 3 doses = 9 treatments, 4 blocks = 36 )
+rcbd_exp <- design_repblock(
+  nfactors = 2,
+  factors = factors_rcbd,
+  type = "rcbd",
+  rep = 4,
+  zigzag = TRUE,
+  seed = 2026
+)
+
+# Fieldbook preview
+rcbd_exp$fieldbook %>% 
+  head(10) %>% 
+  knitr::kable(caption = "RCBD Fieldbook preview")
+```
 
 | qrcode         | plots | ntreat | Genotype | Fertilization | sort | block | rows | cols | design |
 |:---------------|------:|-------:|:---------|:--------------|-----:|------:|-----:|-----:|:-------|
@@ -132,14 +140,16 @@ units into homogeneous blocks to control spatial variability.
 
 RCBD Fieldbook preview {.table .caption-top}
 
-\
-\
-`# Field layout visualization`\
-[`tarpuy_plotdesign`](https://inkaverse.com/reference/tarpuy_plotdesign.md)`(`\
-`  data ``=`` ``rcbd_exp``,`\
-`  factor ``=`` ``"Genotype"``,`\
-`  fill ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"plots"``, ``"Fertilization"``)`\
-`)`
+``` r
+
+
+# Field layout visualization
+tarpuy_plotdesign(
+  data = rcbd_exp,
+  factor = "Genotype",
+  fill = c("plots", "Fertilization")
+)
+```
 
 ![](designs_files/figure-html/unnamed-chunk-3-1.png)
 
@@ -154,27 +164,29 @@ Recommended for multi-factor experiments under homogeneous conditions,
 such as temperature- and salinity-controlled germination assays in
 growth chambers.
 
-\
-`# 1. Define factors: Salinity levels and incubation temperatures`\
-`factors_crd_2f`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
-`  NaCl ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"0"``, ``"50"``, ``"100"``)``,`\
-`  Temp ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"20"``, ``"25"``)`\
-`)`\
-\
-`# 2. Generate factorial CRD layout`\
-`crd_exp_2f`` ``<-`` `[`design_repblock`](https://inkaverse.com/reference/design_repblock.md)`(`\
-`  nfactors ``=`` ``2``,`\
-`  factors ``=`` ``factors_crd_2f``,`\
-`  type ``=`` ``"crd"``,`\
-`  rep ``=`` ``4``,`\
-`  zigzag ``=`` ``TRUE``,`\
-`  seed ``=`` ``2026`\
-`)`\
-\
-`# Fieldbook preview`\
-`crd_exp_2f``$``fieldbook`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)\
-`  `[`head`](https://rdrr.io/r/utils/head.html)`(``10``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)\
-`  ``knitr``::`[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"Factorial CRD Fieldbook preview"``)`
+``` r
+
+# 1. Define factors: Salinity levels and incubation temperatures
+factors_crd_2f <- list(
+  NaCl = c("0", "50", "100"),
+  Temp = c("20", "25")
+)
+
+# 2. Generate factorial CRD layout
+crd_exp_2f <- design_repblock(
+  nfactors = 2,
+  factors = factors_crd_2f,
+  type = "crd",
+  rep = 4,
+  zigzag = TRUE,
+  seed = 2026
+)
+
+# Fieldbook preview
+crd_exp_2f$fieldbook %>%
+  head(10) %>%
+  knitr::kable(caption = "Factorial CRD Fieldbook preview")
+```
 
 | qrcode         | plots | ntreat | NaCl | Temp | sort | rep | rows | cols | design |
 |:---------------|------:|-------:|:-----|:-----|-----:|----:|-----:|-----:|:-------|
@@ -191,14 +203,16 @@ growth chambers.
 
 Factorial CRD Fieldbook preview {.table .caption-top}
 
-\
-\
-`# Spatial layout visualization`\
-[`tarpuy_plotdesign`](https://inkaverse.com/reference/tarpuy_plotdesign.md)`(`\
-`  data ``=`` ``crd_exp_2f``,`\
-`  factor ``=`` ``"NaCl"``,`\
-`  fill ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"plots"``, ``"Temp"``)`\
-`)`
+``` r
+
+
+# Spatial layout visualization
+tarpuy_plotdesign(
+  data = crd_exp_2f,
+  factor = "NaCl",
+  fill = c("plots", "Temp")
+)
+```
 
 ![](designs_files/figure-html/unnamed-chunk-4-1.png)
 
@@ -207,27 +221,29 @@ Factorial CRD Fieldbook preview {.table .caption-top}
 Recommended for multi-factor trials where field spatial variability or
 environmental gradients require blocking to control experimental error.
 
-\
-`# 1. Define factors: Bean genotypes and fertilization levels`\
-`factors_rcbd`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
-`  Genotype ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Bean_01"``, ``"Bean_02"``, ``"Bean_03"``)``,`\
-`  Fertilization ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"0"``, ``"50"``, ``"100"``)`\
-`)`\
-\
-`# 2. Generate factorial RCBD layout`\
-`rcbd_exp`` ``<-`` `[`design_repblock`](https://inkaverse.com/reference/design_repblock.md)`(`\
-`  nfactors ``=`` ``2``,`\
-`  factors ``=`` ``factors_rcbd``,`\
-`  type ``=`` ``"rcbd"``,`\
-`  rep ``=`` ``4``,`\
-`  zigzag ``=`` ``TRUE``,`\
-`  seed ``=`` ``2026`\
-`)`\
-\
-`# Fieldbook preview`\
-`rcbd_exp``$``fieldbook`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)\
-`  `[`head`](https://rdrr.io/r/utils/head.html)`(``10``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)\
-`  ``knitr``::`[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"Factorial RCBD Fieldbook preview"``)`
+``` r
+
+# 1. Define factors: Bean genotypes and fertilization levels
+factors_rcbd <- list(
+  Genotype = c("Bean_01", "Bean_02", "Bean_03"),
+  Fertilization = c("0", "50", "100")
+)
+
+# 2. Generate factorial RCBD layout
+rcbd_exp <- design_repblock(
+  nfactors = 2,
+  factors = factors_rcbd,
+  type = "rcbd",
+  rep = 4,
+  zigzag = TRUE,
+  seed = 2026
+)
+
+# Fieldbook preview
+rcbd_exp$fieldbook %>%
+  head(10) %>%
+  knitr::kable(caption = "Factorial RCBD Fieldbook preview")
+```
 
 | qrcode         | plots | ntreat | Genotype | Fertilization | sort | block | rows | cols | design |
 |:---------------|------:|-------:|:---------|:--------------|-----:|------:|-----:|-----:|:-------|
@@ -244,14 +260,16 @@ environmental gradients require blocking to control experimental error.
 
 Factorial RCBD Fieldbook preview {.table .caption-top}
 
-\
-\
-`# Spatial layout visualization`\
-[`tarpuy_plotdesign`](https://inkaverse.com/reference/tarpuy_plotdesign.md)`(`\
-`  data ``=`` ``rcbd_exp``,`\
-`  factor ``=`` ``"Genotype"``,`\
-`  fill ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"plots"``, ``"Fertilization"``)`\
-`)`
+``` r
+
+
+# Spatial layout visualization
+tarpuy_plotdesign(
+  data = rcbd_exp,
+  factor = "Genotype",
+  fill = c("plots", "Fertilization")
+)
+```
 
 ![](designs_files/figure-html/unnamed-chunk-5-1.png)
 
@@ -262,26 +280,28 @@ experimental units due to management constraints (such as irrigation)
 assigned to main plots, while a second factor (such as commercial quinoa
 varieties) is assigned to sub-plots within each main plot.
 
-\
-`# 1. Define factors: Irrigation regimes (main plots) and commercial quinoa varieties (sub-plots)`\
-`factors_split`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
-`  Irrigation ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Full"``, ``"Deficit"``)``,`\
-`  Variety    ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Var_1"``, ``"Var_2"``, ``"Var_3"``)`\
-`)`\
-\
-`# 2. Generate Split-plot layout: 2 main levels x 3 sub levels x 4 blocks = 24 plots`\
-`split_exp`` ``<-`` `[`design_split`](https://inkaverse.com/reference/design_split.md)`(`\
-`  factors ``=`` ``factors_split``,`\
-`  type ``=`` ``"split_rcbd"``,`\
-`  rep ``=`` ``4``,`\
-`  zigzag ``=`` ``TRUE``,`\
-`  seed ``=`` ``2026`\
-`)`\
-\
-`# Fieldbook preview`\
-`split_exp``$``fieldbook`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
-`  `[`head`](https://rdrr.io/r/utils/head.html)`(``10``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
-`  ``knitr``::`[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"Split-plot Fieldbook preview"``)`
+``` r
+
+# 1. Define factors: Irrigation regimes (main plots) and commercial quinoa varieties (sub-plots)
+factors_split <- list(
+  Irrigation = c("Full", "Deficit"),
+  Variety    = c("Var_1", "Var_2", "Var_3")
+)
+
+# 2. Generate Split-plot layout: 2 main levels x 3 sub levels x 4 blocks = 24 plots
+split_exp <- design_split(
+  factors = factors_split,
+  type = "split_rcbd",
+  rep = 4,
+  zigzag = TRUE,
+  seed = 2026
+)
+
+# Fieldbook preview
+split_exp$fieldbook %>% 
+  head(10) %>% 
+  knitr::kable(caption = "Split-plot Fieldbook preview")
+```
 
 | qrcode | plots | ntreat | Irrigation | Variety | wp_sp | block | sort | rows | cols | design |
 |:---|---:|---:|:---|:---|:---|---:|---:|---:|---:|:---|
@@ -298,14 +318,16 @@ varieties) is assigned to sub-plots within each main plot.
 
 Split-plot Fieldbook preview {.table .caption-top}
 
-\
-\
-`# Field layout visualization`\
-[`tarpuy_plotdesign`](https://inkaverse.com/reference/tarpuy_plotdesign.md)`(`\
-`  data ``=`` ``split_exp``,`\
-`  factor ``=`` ``"Irrigation"``,`\
-`  fill ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"plots"``, ``"Variety"``)`\
-`)`
+``` r
+
+
+# Field layout visualization
+tarpuy_plotdesign(
+  data = split_exp,
+  factor = "Irrigation",
+  fill = c("plots", "Variety")
+)
+```
 
 ![](designs_files/figure-html/unnamed-chunk-6-1.png)
 
@@ -316,24 +338,26 @@ entries (e.g., accessions or candidate clones) when seed or space is
 limited, repeating check varieties in each block while evaluating new
 entries only once.
 
-\
-`# 1. Define checks (commercial controls) and new accessions`\
-`checks`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"INIA_415"``, ``"INIA_420"``)`\
-`entries`` ``<-`` `[`paste0`](https://rdrr.io/r/base/paste.html)`(``"Geno_"``, ``1``:``50``)`\
-\
-`# 2. Generate Augmented layout: 18 entries + (2 checks x 3 blocks) = 24 plots`\
-`aug_exp`` ``<-`` `[`design_augmented`](https://inkaverse.com/reference/design_augmented.md)`(`\
-`  checks ``=`` ``checks``,`\
-`  entries ``=`` ``entries``,`\
-`  blocks ``=`` ``5``,`\
-`  zigzag ``=`` ``TRUE``,`\
-`  seed ``=`` ``2026`\
-`)`\
-\
-`# Fieldbook preview`\
-`aug_exp``$``fieldbook`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
-`  `[`head`](https://rdrr.io/r/utils/head.html)`(``10``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
-`  ``knitr``::`[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"Augmented RCBD Fieldbook preview"``)`
+``` r
+
+# 1. Define checks (commercial controls) and new accessions
+checks <- c("INIA_415", "INIA_420")
+entries <- paste0("Geno_", 1:50)
+
+# 2. Generate Augmented layout: 18 entries + (2 checks x 3 blocks) = 24 plots
+aug_exp <- design_augmented(
+  checks = checks,
+  entries = entries,
+  blocks = 5,
+  zigzag = TRUE,
+  seed = 2026
+)
+
+# Fieldbook preview
+aug_exp$fieldbook %>% 
+  head(10) %>% 
+  knitr::kable(caption = "Augmented RCBD Fieldbook preview")
+```
 
 | qrcode | plots | ntreat | entry | type | checks | block | sort | rows | cols | design |
 |:---|---:|---:|:---|:---|---:|---:|---:|---:|---:|:---|
@@ -350,13 +374,15 @@ entries only once.
 
 Augmented RCBD Fieldbook preview {.table .caption-top}
 
-\
-\
-`# Field layout visualization`\
-[`tarpuy_plotdesign`](https://inkaverse.com/reference/tarpuy_plotdesign.md)`(`\
-`  data ``=`` ``aug_exp``,`\
-`  factor ``=`` ``"type"``,          `\
-`  fill ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"plots"``, ``"entry"``)`\
-`)`
+``` r
+
+
+# Field layout visualization
+tarpuy_plotdesign(
+  data = aug_exp,
+  factor = "type",          
+  fill = c("plots", "entry")
+)
+```
 
 ![](designs_files/figure-html/unnamed-chunk-7-1.png)

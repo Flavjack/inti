@@ -179,7 +179,6 @@ hr <- H2cal(data = dt
             , plot_diag = FALSE
             , outliers.rm = TRUE
             )
-#> Warning: the 'findbars' function has moved to the reformulas package. Please update your imports, or ask an upstream package maintainer to do so.
 
  hr$tabsmr
 #>    trait rep geno env year     mean      std   min    max      V.g      V.e

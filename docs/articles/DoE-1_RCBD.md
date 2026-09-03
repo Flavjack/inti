@@ -15,63 +15,119 @@ Planning an experiment follows a reproducible routine:
 6.  **Export to Field Book app:** Generate field-ready sheets with trait
     parameters.
 
-\
-`# Install packages and dependencies`\
-\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`inti`](https://inkaverse.com/)`)`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`tidyverse`](https://tidyverse.tidyverse.org)`)`\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`huito`](https://huito.inkaverse.com/)`)`
+``` r
 
-## Randomized Complete Block Design (RCBD)
+# Install packages and dependencies
+
+library(inti)
+library(tidyverse)
+library(huito)
+```
+
+### Randomized Complete Block Design (RCBD)
 
 The Randomized Complete Block Design is recommended when an
 environmental gradient is present in the field, grouping experimental
 units into homogeneous blocks to control spatial variability.
 
-\
-`# 1. Define factors: Bean genotypes and fertilization doses`\
-`factors_rcbd`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
-`  Genotype ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Bean_01"``, ``"Bean_02"``, ``"Bean_03"``)``,`\
-`  Fertilization ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"0"``, ``"50"``, ``"100"``)`\
-`)`\
-\
-`# 2. Generate RCBD layout (3 genotypes x 3 doses = 9 treatments, 4 blocks = 36 )`\
-`rcbd_exp`` ``<-`` `[`design_repblock`](https://inkaverse.com/reference/design_repblock.md)`(`\
-`  nfactors ``=`` ``2``,`\
-`  factors ``=`` ``factors_rcbd``,`\
-`  type ``=`` ``"rcbd"``,`\
-`  rep ``=`` ``4``,`\
-`  zigzag ``=`` ``TRUE``,`\
-`  seed ``=`` ``2026`\
-`)`\
-\
-`# Fieldbook preview`\
-`rcbd_exp``$``fieldbook`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
-`  `[`head`](https://rdrr.io/r/utils/head.html)`(``10``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
-`  ``knitr``::`[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"RCBD Fieldbook preview"``)`
+``` r
 
-| qrcode         | plots | ntreat | Genotype | Fertilization | sort | block | rows | cols | design |
-|:---------------|------:|-------:|:---------|:--------------|-----:|------:|-----:|-----:|:-------|
-| inkaverse_1001 |  1001 |      2 | Bean_02  | 0             |    1 |     1 |    1 |    1 | rcbd   |
-| inkaverse_1002 |  1002 |      9 | Bean_03  | 100           |    2 |     1 |    1 |    2 | rcbd   |
-| inkaverse_1003 |  1003 |      5 | Bean_02  | 50            |    3 |     1 |    1 |    3 | rcbd   |
-| inkaverse_1004 |  1004 |      6 | Bean_03  | 50            |    4 |     1 |    1 |    4 | rcbd   |
-| inkaverse_1005 |  1005 |      4 | Bean_01  | 50            |    5 |     1 |    1 |    5 | rcbd   |
-| inkaverse_1006 |  1006 |      3 | Bean_03  | 0             |    6 |     1 |    1 |    6 | rcbd   |
-| inkaverse_1007 |  1007 |      8 | Bean_02  | 100           |    7 |     1 |    1 |    7 | rcbd   |
-| inkaverse_1008 |  1008 |      7 | Bean_01  | 100           |    8 |     1 |    1 |    8 | rcbd   |
-| inkaverse_1009 |  1009 |      1 | Bean_01  | 0             |    9 |     1 |    1 |    9 | rcbd   |
-| inkaverse_2001 |  2001 |      5 | Bean_02  | 50            |    1 |     2 |    2 |    9 | rcbd   |
+# 1. Define factors: Bean genotypes and fertilization doses
+factors_rcbd <- list(
+  Fertilization = c("0", "50", "100")
+)
+
+# 2. Generate RCBD layout
+rcbd_exp <- design_repblock(
+  nfactors = 1,
+  factors = factors_rcbd,
+  type = "rcbd",
+  rep = 4,
+  zigzag = TRUE,
+  seed = 2026
+)
+
+# Fieldbook preview
+rcbd_exp$fieldbook %>% 
+  head(10) %>% 
+  knitr::kable(caption = "RCBD Fieldbook preview")
+```
+
+| qrcode         | plots | ntreat | Fertilization | sort | block | rows | cols | design |
+|:---------------|------:|-------:|:--------------|-----:|------:|-----:|-----:|:-------|
+| inkaverse_1001 |  1001 |      1 | 0             |    1 |     1 |    1 |    1 | rcbd   |
+| inkaverse_1002 |  1002 |      3 | 100           |    2 |     1 |    1 |    2 | rcbd   |
+| inkaverse_1003 |  1003 |      2 | 50            |    3 |     1 |    1 |    3 | rcbd   |
+| inkaverse_2001 |  2001 |      2 | 50            |    1 |     2 |    2 |    3 | rcbd   |
+| inkaverse_2002 |  2002 |      1 | 0             |    2 |     2 |    2 |    2 | rcbd   |
+| inkaverse_2003 |  2003 |      3 | 100           |    3 |     2 |    2 |    1 | rcbd   |
+| inkaverse_3001 |  3001 |      3 | 100           |    1 |     3 |    3 |    1 | rcbd   |
+| inkaverse_3002 |  3002 |      2 | 50            |    2 |     3 |    3 |    2 | rcbd   |
+| inkaverse_3003 |  3003 |      1 | 0             |    3 |     3 |    3 |    3 | rcbd   |
+| inkaverse_4001 |  4001 |      1 | 0             |    1 |     4 |    4 |    3 | rcbd   |
 
 RCBD Fieldbook preview {.table .caption-top}
 
-\
-\
-`# Field layout visualization`\
-[`tarpuy_plotdesign`](https://inkaverse.com/reference/tarpuy_plotdesign.md)`(`\
-`  data ``=`` ``rcbd_exp``,`\
-`  factor ``=`` ``"Genotype"``,`\
-`  fill ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"plots"``, ``"Fertilization"``)`\
-`)`
+``` r
+
+
+# Field layout visualization
+tarpuy_plotdesign(
+  data = rcbd_exp,
+  factor = "Fertilization",
+  fill = c("plots", "ntreat")
+)
+```
 
 ![](DoE-1_RCBD_files/figure-html/unnamed-chunk-2-1.png)
+
+## Label
+
+The experimental field book generated by the design is used as the input
+data for label creation. Each row represents an experimental unit,
+allowing the automatic generation of individualized labels.
+
+``` r
+
+# Experimental fieldbook
+fb <- rcbd_exp$fieldbook
+```
+
+## Customize the label layout
+
+The label layout can be customized by combining text, images and QR
+codes. Each layer can use values from the experimental field book,
+allowing automatic generation of labels for every experimental plot.
+
+Load package and import fonts.
+
+``` r
+
+font <- c("Permanent Marker", "Tillana", "Courgette")
+
+huito_fonts(font)
+```
+
+> You can find more fonts in <https://fonts.google.com/>
+
+## Label design
+
+### Label preview
+
+The preview mode `label_print(mode = "preview")` generate a example of
+the label design from a random row of the data set.
+
+![](DoE-1_RCBD_files/figure-html/unnamed-chunk-6-1.png)
+
+### Generate the complete labels
+
+If you want generate the complete labels list, change:
+`label_print(mode = "complete")`.
+
+``` r
+
+label %>% 
+  label_print(mode = "complete"
+              , filename = "horizontal-DBCA-1"
+              , nlabels = 12)
+```

@@ -104,54 +104,62 @@ Bonferroni-Holm using re-scaled MAD for standardizing residuals
 
 ### Load packages
 
-\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`inti`](https://inkaverse.com/)`)`
+``` r
+
+library(inti)
+```
 
 ### H2cal function
 
-\
-`dt`` ``<-`` ``inti``::`[`potato`](https://inkaverse.com/reference/potato.md)\
-`hr`` ``<-`` `[`H2cal`](https://inkaverse.com/reference/H2cal.md)`(``data ``=`` ``dt`\
-`          , trait ``=`` ``"stemdw"`\
-`          , gen.name ``=`` ``"geno"`\
-`          , rep.n ``=`` ``5`\
-`          , fixed.model ``=`` ``~`` ``0`` ``+`` ``(``1``|``bloque``)`` ``+`` ``geno`\
-`          , random.model ``=`` ``~`` ``1`` ``+`` ``(``1``|``bloque``)`` ``+`` ``(``1``|``geno``)`\
-`          , emmeans ``=`` ``TRUE`\
-`          , plot_diag ``=`` ``FALSE`\
-`          , outliers.rm ``=`` ``TRUE`\
-`          ``)`
+``` r
+
+dt <- inti::potato
+hr <- H2cal(data = dt
+          , trait = "stemdw"
+          , gen.name = "geno"
+          , rep.n = 5
+          , fixed.model = ~ 0 + (1|bloque) + geno
+          , random.model = ~ 1 + (1|bloque) + (1|geno)
+          , emmeans = TRUE
+          , plot_diag = FALSE
+          , outliers.rm = TRUE
+          )
+```
 
 ### Model information
 
-\
-`hr``$``model`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `[`summary`](https://rdrr.io/r/base/summary.html)`(``)`\
-`#> Linear mixed model fit by REML ['lmerMod']`\
-`#> Formula: stemdw ~ 1 + (1 | bloque) + (1 | geno)`\
-`#>    Data: dt.rm`\
-`#> Weights: weights`\
-`#> `\
-`#> REML criterion at convergence: 796.1`\
-`#> `\
-`#> Scaled residuals: `\
-`#>      Min       1Q   Median       3Q      Max `\
-`#> -2.38440 -0.64247 -0.08589  0.57452  2.84508 `\
-`#> `\
-`#> Random effects:`\
-`#>  Groups   Name        Variance Std.Dev.`\
-`#>  geno     (Intercept) 19.960   4.4677  `\
-`#>  bloque   (Intercept)  0.110   0.3316  `\
-`#>  Residual              9.411   3.0677  `\
-`#> Number of obs: 148, groups:  geno, 15; bloque, 5`\
-`#> `\
-`#> Fixed effects:`\
-`#>             Estimate Std. Error t value`\
-`#> (Intercept)    12.51       1.19   10.51`
+``` r
+
+hr$model %>% summary()
+#> Linear mixed model fit by REML ['lmerMod']
+#> Formula: stemdw ~ 1 + (1 | bloque) + (1 | geno)
+#>    Data: dt.rm
+#> Weights: weights
+#> 
+#> REML criterion at convergence: 796.1
+#> 
+#> Scaled residuals: 
+#>      Min       1Q   Median       3Q      Max 
+#> -2.38440 -0.64247 -0.08589  0.57452  2.84508 
+#> 
+#> Random effects:
+#>  Groups   Name        Variance Std.Dev.
+#>  geno     (Intercept) 19.960   4.4677  
+#>  bloque   (Intercept)  0.110   0.3316  
+#>  Residual              9.411   3.0677  
+#> Number of obs: 148, groups:  geno, 15; bloque, 5
+#> 
+#> Fixed effects:
+#>             Estimate Std. Error t value
+#> (Intercept)    12.51       1.19   10.51
+```
 
 ### Variance components
 
-\
-`hr``$``tabsmr`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"Variance component table"``)`
+``` r
+
+hr$tabsmr %>% kable(caption = "Variance component table")
+```
 
 | trait | rep | geno | env | year | mean | std | min | max | V.g | V.e | V.p | repeatability | H2.s | H2.p | H2.c |
 |:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -161,8 +169,10 @@ Variance component table {.table .caption-top style="width:100%;"}
 
 ### Best Linear Unbiased Estimators (BLUEs)
 
-\
-`hr``$``blues`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"BLUEs"``)`
+``` r
+
+hr$blues %>% kable(caption = "BLUEs")
+```
 
 | geno |   stemdw |       SE |       df |   lower.CL | upper.CL |
 |:-----|---------:|---------:|---------:|-----------:|---------:|
@@ -186,8 +196,10 @@ BLUEs {.table .caption-top}
 
 ### Best Linear Unbiased Predictors (BLUPs)
 
-\
-`hr``$``blups`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"BLUPs"``)`
+``` r
+
+hr$blups %>% kable(caption = "BLUPs")
+```
 
 | geno |    stemdw |
 |:-----|----------:|
@@ -211,8 +223,10 @@ BLUPs {.table .caption-top}
 
 ### Outliers
 
-\
-`hr``$``outliers``$``fixed`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"Outliers fixed model"``)`
+``` r
+
+hr$outliers$fixed %>% kable(caption = "Outliers fixed model")
+```
 
 |     | index | bloque | geno | stemdw |     resi |  res_MAD | rawp.BHStud | adjp | bholm | out_flag |
 |:----|:------|:-------|:-----|-------:|---------:|---------:|------------:|-----:|------:|:---------|
@@ -220,8 +234,10 @@ BLUPs {.table .caption-top}
 
 Outliers fixed model {.table .caption-top}
 
-\
-`hr``$``outliers``$``random`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"Outliers random model"``)`
+``` r
+
+hr$outliers$random %>% kable(caption = "Outliers random model")
+```
 
 |  | index | bloque | geno | stemdw | resi | res_MAD | rawp.BHStud | adjp | bholm | out_flag |
 |:---|:---|:---|:---|---:|---:|---:|---:|---:|---:|:---|

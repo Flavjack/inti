@@ -19,23 +19,29 @@ More information about the project is available at
 
 The stable version of **inti** can be installed from CRAN:
 
-\
-[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"inti"``)`
+``` r
+
+install.packages("inti")
+```
 
 To install the latest development version directly from GitHub, it is
 recommended to use **pak**:
 
-\
-`if`` ``(``!`[`requireNamespace`](https://rdrr.io/r/base/ns-load.html)`(``"pak"``, quietly ``=`` ``TRUE``)``)`` ``{`\
-`  `[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"pak"``)`\
-`}`\
-\
-`pak``::`[`pkg_install`](https://pak.r-lib.org/reference/pkg_install.html)`(``"flavjack/inti"``)`
+``` r
+
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak")
+}
+
+pak::pkg_install("flavjack/inti")
+```
 
 After installation, load the package:
 
-\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`inti`](https://inkaverse.com/)`)`
+``` r
+
+library(inti)
+```
 
 ## Shiny Applications
 
@@ -51,11 +57,15 @@ menu or launched from the R console.
 **Yupana** is an interactive environment for statistical analysis and
 visualization of experimental data.
 
-\
-`inti``:::``yupana_full``(``)`
+``` r
+
+inti:::yupana_full()
+```
 
 **Tarpuy** is an interactive platform for experimental planning,
 field-book generation, treatment organization, and data management.
 
-\
-`inti``:::``tarpuy_full``(``)`
+``` r
+
+inti:::tarpuy_full()
+```

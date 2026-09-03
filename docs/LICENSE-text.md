@@ -1,4 +1,4 @@
 # License
 
-YEAR: 2020\
-COPYRIGHT HOLDER: Flavio Lozano-Isla\
+    YEAR: 2020
+    COPYRIGHT HOLDER: Flavio Lozano-Isla

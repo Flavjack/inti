@@ -40,6 +40,16 @@
 
   Split-Plot in RCBD
 
+- [Three-Factors Design:
+  CRD](https://inkaverse.com/articles/DoE-3_DCA.md):
+
+  Factorial Complete Randomize Design
+
+- [Three-Factors Design:
+  RCBD](https://inkaverse.com/articles/DoE-3_RCBD.md):
+
+  Factorial Complete Randomize Block Design
+
 - [Broad-sense heritability in plant
   breeding](https://inkaverse.com/articles/heritability.md):
 
