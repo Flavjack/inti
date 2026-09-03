@@ -6,6 +6,10 @@
 
   inti: interactive apps.
 
+- [Experimental Designs](https://inkaverse.com/articles/designs.md):
+
+  Create, randomize, and manage experimental field designs with inti.
+
 - [Broad-sense heritability in plant
   breeding](https://inkaverse.com/articles/heritability.md):
 

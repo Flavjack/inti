@@ -81,6 +81,8 @@ navbar:
       - text: "Rticles: scientific documents with R"
         href: articles/rticles.html
       - text: -------
+      - text: "Experimental Designs"
+        href: articles/designs.html
       - text: "Broad-sense heritability in plant breeding"
         href: articles/heritability.html
 

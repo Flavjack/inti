@@ -35,6 +35,7 @@
     <li><a class="dropdown-item" href="../articles/yupana.html">Yupana: experimental design analysis</a></li>
     <li><a class="dropdown-item" href="../articles/rticles.html">Rticles: scientific documents with R</a></li>
     <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../articles/designs.html">Experimental Designs</a></li>
     <li><a class="dropdown-item" href="../articles/heritability.html">Broad-sense heritability in plant breeding</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../articles/policy.html"><span class="fa fa-shield-alt fa-lg"></span> Privacy Policy</a></li>
@@ -56,13 +57,38 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.7.3" id="inti-073">inti 0.7.3<a class="anchor" aria-label="anchor" href="#inti-073"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.7.3" id="inti-073">inti 0.7.3<a class="anchor" aria-label="anchor" href="#inti-073"></a></h2><p class="text-muted">CRAN release: 2026-08-20</p>
+<ul><li>Tarpuy
+<ul><li>Improve trait variable generation to support text and numeric prefixes in <a href="https://josesamos.github.io/when/" class="external-link">when</a> and <code>{samples}</code>
+</li>
+<li>Omit empty trait components from fieldbook variable names instead of adding <code>NA</code>
+</li>
+<li>Preserve existing fieldbook data when traits are added or modified</li>
+<li>Preserve previous variables and manually added columns when updating traits</li>
+<li>Detect changes in the experimental design before replacing an existing fieldbook</li>
+<li>Add a warning before replacing a fieldbook with recorded data when factors, levels, blocks, replications, or treatments are modified</li>
+<li>Improve CRD, RCBD, augmented, and split-plot designs</li>
+<li>Validate plots, QR codes, seed, rows, columns, blocks, and replications to avoid duplicates or incorrect layouts</li>
+<li>Improve Layout Summary according to the experimental design</li>
+<li>Include plots, blocks, replications, checks, entries, rows, and columns in Layout Summary when applicable</li>
+<li>Fix Layout Summary value visibility and horizontal scrolling</li>
+<li>Improve Sketch representation of experimental designs</li>
+<li>Scale experimental-unit boxes according to the selected width and height</li>
+<li>Automatically adjust text inside experimental-unit boxes</li>
+<li>Add PNG, SVG, and PDF export options in Sketch</li>
+<li>Automatically select the <code>fb</code> sheet to generate the Sketch plot</li>
+<li>Add font-size control in the Sketch module</li>
+<li>Automatically select file columns in the Mobile module for export</li>
+</ul></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.3" id="inti-073-1">inti 0.7.3<a class="anchor" aria-label="anchor" href="#inti-073-1"></a></h2><p class="text-muted">CRAN release: 2026-08-20</p>
 <ul><li>Improve PCA supplementary variables</li>
 <li>Select the dimension in PCA</li>
 <li>Sub module for PCA with variable contribution and dimension correlation</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.7.3" id="inti-073-1">inti 0.7.3<a class="anchor" aria-label="anchor" href="#inti-073-1"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.7.3" id="inti-073-2">inti 0.7.3<a class="anchor" aria-label="anchor" href="#inti-073-2"></a></h2><p class="text-muted">CRAN release: 2026-08-20</p>
 <ul><li>Update <code>scihub()</code> to include pages</li>
 <li>
 <code><a href="../reference/rticle.html">rticle()</a></code> improve crossrefs</li>

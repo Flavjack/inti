@@ -12,6 +12,8 @@ Authors@R: c(
           , comment = c(ORCID = "0000-0002-0714-669X")),
     person("Yoel", "Diaz-Saucedo", email = "7576425921@untrm.edu.pe", role = c("aut")
           , comment = c(ORCID = "0009-0003-9765-136X")),
+    person("Victor-Hugo", "Baldera-Chapoñan", email = "victorhugobalderachaponan@gmail.com", role ="aut"
+          , comment = c(ORCID = "0009-0003-4321-7103")), 
     person("María Belén", "Kistner", email = "kistner@agro.uba.ar", role = c("ctb")
           , comment = c(ORCID = "0000-0002-0947-6414")),
     person("QuipoLab", role = c("ctb")),

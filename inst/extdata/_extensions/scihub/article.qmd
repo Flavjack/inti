@@ -30,10 +30,39 @@ source("http://inkaverse.com/docs.r")
 ```
 
 ```{r}
+#| label: format-article-md
+#| echo: false
+
+md_raw <- readLines("render2rticle.md", encoding = "UTF-8", warn = FALSE)
+
+title_idx <- grep("^(#\\s|\\*\\*)", md_raw)[1]
+
+author_idx <- which(nchar(trimws(md_raw)) > 0 & seq_along(md_raw) > title_idx)[1]
+
+md_raw[author_idx] <- gsub(
+  "([[:alpha:]\\.])([0-9]{1,2}(?:,[0-9]{1,2})*\\\\?\\*?)",
+  "\\1^\\2^",
+  md_raw[author_idx],
+  perl = TRUE
+)
+md_raw <- gsub("^([0-9]{1,2})([[:alpha:]])", "^\\1^ \\2", md_raw, perl = TRUE)
+
+pat_caption <- paste0(
+  "^(\\[\\*\\*(?:Table|Figure|Tabla|Figura)\\s+[0-9]+(?:\\\\\\.\\*\\*|\\*\\*\\.)\\]\\([^)]*\\))\\s*",
+  "|",
+  "^(\\[\\*\\*(?:Table|Figure|Tabla|Figura)\\s+[0-9]+\\*\\*\\]\\([^)]*\\))(?:\\*\\*\\.\\*\\*|\\.)\\s*"
+)
+is_caption <- grepl(pat_caption, md_raw, perl = TRUE)
+md_raw[is_caption] <- gsub(pat_caption, "\\1\\2: ", md_raw[is_caption], perl = TRUE)
+
+writeLines(md_raw, "render2rticle_V1.md", useBytes = TRUE)
+```
+
+```{r}
 #| results: 'asis'
 
-"render2rticle.md" %>% 
-  rticle(type = "asis") %>% # ["asis" or "list"]
+"render2rticle_V1.md" %>% 
+  rticle(type = "list") %>% # ["asis" or "list"]
   knitr::knit_child(quiet = TRUE) %>% 
   cat(sep = '\n')
 ```
@@ -45,7 +74,6 @@ knitr::knit_exit()
 # GitHub: check files
 
 ```{bash}
-#| eval: false
 
 SIZE_MB=100
 EXCLUDE_DIRS=(".git" "xclude")
@@ -62,7 +90,6 @@ git status
 # GitHub: update repository
 
 ```{bash}
-#| eval: false
 
 git pull
 
