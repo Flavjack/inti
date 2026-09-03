@@ -42,7 +42,7 @@ navbar:
   bg: dark
   type: light
   structure:
-    left: [intro, home, apps, articles, privacy, reference, news]
+    left: [intro, home, apps, design, analysis, writing, breeding, privacy, reference, news]
     right: [search, github, sponsor]
   components:
     home:
@@ -54,6 +54,75 @@ navbar:
     sponsor:
       icon: fas fa-heart fa-lg
       href: https://github.com/sponsors/Flavjack
+    apps:
+      text: "Apps"
+      icon: fa-gamepad fa-lg
+      href: articles/apps.html
+    design:
+      text: "DoE"
+      icon: fa-book fa-lg
+      menu:
+        - text: "-------"
+        - text: "Tarpuy: field-book experimental plans"
+          href: articles/tarpuy.html
+    
+        - text: "-------"
+        - text: "Single Factor Designs"
+        - text: "DCA"
+          href: articles/DoE-1_DCA.html
+        - text: "RCBD"
+          href: articles/DoE-1_RCBD.html
+    
+        - text: "-------"
+        - text: "Two Factors Designs"
+        - text: "DCA"
+          href: articles/DoE-2_DCA.html
+        - text: "RCBD"
+          href: articles/DoE-2_RCBD.html
+        - text: "Split-Plot in RCBD"
+          href: articles/DoE-2_SPLIT.html
+        - text: "Augmented in RCBD"
+          href: articles/DoE-2_AUG.html
+    
+        - text: "-------"
+        - text: "Three or More Factors Designs"
+        - text: "DCA"
+          href: articles/DoE-3_DCA.html
+        - text: "RCBD"
+          href: articles/DoE-3_RCBD.html
+    
+        - text: "-------"
+    analysis:
+      text: "Analysis"
+      icon: fa-book fa-lg
+      menu:
+      - text: -------
+      - text: "Yupana: experimental design analysis"
+        href: articles/yupana.html
+      - text: -------
+      # - text: "Coding"
+      #   href: articles/designs.html
+      # - text: -------
+    writing:
+      text: "Writing"
+      icon: fa-book fa-lg
+      menu:
+      - text: -------
+      - text: "Rticles: scientific documents with R"
+        href: articles/rticles.html
+      - text: -------
+    breeding:
+      text: "Breeding"
+      icon: fa-book fa-lg
+      menu:
+      - text: -------
+      - text: "Broad-sense heritability in plant breeding"
+        href: articles/heritability.html
+      - text: -------
+    privacy:
+      text: "Privacy Policy"
+      icon: fa-shield-alt fa-lg
+      href: articles/policy.html
     reference:
       text: "Functions"
       icon: fa-file-code fa-lg
@@ -62,29 +131,6 @@ navbar:
       text: "News"
       icon: fa-file-alt fa-lg
       href: news/index.html
-    privacy:
-      text: "Privacy Policy"
-      icon: fa-shield-alt fa-lg
-      href: articles/policy.html
-    apps:
-      text: "Apps"
-      icon: fa-gamepad fa-lg
-      href: articles/apps.html
-    articles:
-      text: "Articles"
-      icon: fa-book fa-lg
-      menu:
-      - text: "Tarpuy: field-book experimental plans"
-        href: articles/tarpuy.html
-      - text: "Yupana: experimental design analysis"
-        href: articles/yupana.html
-      - text: "Rticles: scientific documents with R"
-        href: articles/rticles.html
-      - text: -------
-      - text: "Experimental Designs"
-        href: articles/designs.html
-      - text: "Broad-sense heritability in plant breeding"
-        href: articles/heritability.html
 
 reference:
 - title: Yupana

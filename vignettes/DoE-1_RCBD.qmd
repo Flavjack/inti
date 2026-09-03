@@ -1,0 +1,74 @@
+---
+title: "Single-Factor Design: RCBD"
+description: > 
+  Randomized Complete Block Design
+vignette: >
+  %\VignetteIndexEntry{DoE-1_RCBD}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{quarto::html}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
+    echo: false
+    warning: false
+    message: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
+```
+
+Planning an experiment follows a reproducible routine:
+
+1. **Load required libraries:** Load `inti`, `knitr`, and `dplyr` packages.
+1. **Define factor levels:** Set up lists with genotypes, treatments, and management factors.
+1. **Dispatch design generator:** Choose between CRD, RCBD, Split-plot, or Augmented designs.
+1. **Plot the field sketch:** Verify spatial layouts and serpentine/zigzag sequences.
+1. **Label design:** Design the experimental labels to facilitate the data collection.
+5. **Export to Field Book app:** Generate field-ready sheets with trait parameters.
+
+```{r, echo=TRUE}
+# Install packages and dependencies
+
+library(inti)
+library(tidyverse)
+library(huito)
+```
+
+## Randomized Complete Block Design (RCBD)
+
+The Randomized Complete Block Design is recommended when an environmental gradient is present in the field, grouping experimental units into homogeneous blocks to control spatial variability.
+
+```{r, echo=TRUE}
+# 1. Define factors: Bean genotypes and fertilization doses
+factors_rcbd <- list(
+  Genotype = c("Bean_01", "Bean_02", "Bean_03"),
+  Fertilization = c("0", "50", "100")
+)
+
+# 2. Generate RCBD layout (3 genotypes x 3 doses = 9 treatments, 4 blocks = 36 )
+rcbd_exp <- design_repblock(
+  nfactors = 2,
+  factors = factors_rcbd,
+  type = "rcbd",
+  rep = 4,
+  zigzag = TRUE,
+  seed = 2026
+)
+
+# Fieldbook preview
+rcbd_exp$fieldbook %>% 
+  head(10) %>% 
+  knitr::kable(caption = "RCBD Fieldbook preview")
+
+# Field layout visualization
+tarpuy_plotdesign(
+  data = rcbd_exp,
+  factor = "Genotype",
+  fill = c("plots", "Fertilization")
+)
+```
+

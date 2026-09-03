@@ -18,7 +18,25 @@ editor_options:
   chunk_output_type: console
 ---
 
-The package `inti` has been developed to provide tools used in plant science and experimental designs. The package also include shiny apps for design experiments, interactive analysis and technical writing.
+The package `inti` is part of the inkaverse project for developing procedures and tools used in plant science and experimental designs. The TARPUY module allows researchers to plan, randomize, generate fieldbooks, and visualize experimental design layouts either through R code or via an interactive Shiny add-in (inti::tarpuy()).
+
+```{=html}
+<div id=footer style="width:100%; margin:auto;">
+
+<div style="display:inline-block; width:49%">
+<p style="text-align:center">
+<a target="_blank" href="https://cran.r-project.org/web/packages/inti/index.html"><img src="https://inkaverse.com/logo.png" style="height:80px" title="R cran" alt="inti"></a> 
+<span style="display:block;"><small>inti</small></span>
+</p></div>
+
+<div style="display:inline-block; width:49%">
+<p style="text-align:center">
+<a target="_blank" href="https://inkaverse.com/"><img src="https://pkgdown.r-lib.org/reference/figures/logo.png" style="height:80px" title="inti" alt="inti"></a> 
+<span style="display:block;"><small>Project</small></span>
+</p></div>
+
+</div>
+```
 
 The `inti` package is inspired by the Inca mythology where the sun (`inti`) is considered the most significant deity. The web applications are based on this worldview.
 

@@ -1,0 +1,73 @@
+---
+title: "Single-Factor Design: CRD"
+description: >
+  Complete Randomize Design
+vignette: >
+  %\VignetteIndexEntry{DoE-1_CRD}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{quarto::html}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
+    echo: false
+    warning: false
+    message: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
+```
+
+Planning an experiment follows a reproducible routine:
+
+1. **Load required libraries:** Load `inti`, `knitr`, and `dplyr` packages.
+1. **Define factor levels:** Set up lists with genotypes, treatments, and management factors.
+1. **Dispatch design generator:** Choose between CRD, RCBD, Split-plot, or Augmented designs.
+1. **Plot the field sketch:** Verify spatial layouts and serpentine/zigzag sequences.
+1. **Label design:** Design the experimental labels to facilitate the data collection.
+5. **Export to Field Book app:** Generate field-ready sheets with trait parameters.
+
+```{r, echo=TRUE}
+# Install packages and dependencies
+
+library(inti)
+library(tidyverse)
+library(huito)
+```
+
+# Completely Randomized Design (CRD)
+
+The Completely Randomized Design is recommended when experimental units are homogeneous, such as germination chambers, lab assays, or controlled greenhouse benches.
+
+```{r, echo=TRUE}
+# 1. Define salinity levels (NaCl concentrations in mM)
+factors_crd <- list(
+  NaCl= c("0", "50", "100", "150", "200")
+)
+
+# 2. Generate CRD layout (5 treatments x 4 replications = 20 petri dishes/units)
+crd_exp <- design_repblock(
+  factors = factors_crd,
+  type = "crd",
+  rep = 4,
+  zigzag = TRUE,
+  seed = 2026
+)
+
+# Fieldbook preview
+crd_exp$fieldbook %>% 
+  head(10) %>% 
+  knitr::kable(caption = "CRD Fieldbook preview")
+
+# Layout on germination chamber shelves
+
+tarpuy_plotdesign(
+  data = crd_exp,
+  factor = "NaCl",
+  fill = c("plots", "NaCl")
+)
+```
+

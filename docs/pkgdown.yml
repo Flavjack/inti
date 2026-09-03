@@ -1,15 +1,21 @@
-pandoc: 3.8.3
+pandoc: '3.11'
 pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   apps: apps.html
   designs: designs.html
+  DoE-1_DCA: DoE-1_DCA.html
+  DoE-1_RCBD: DoE-1_RCBD.html
+  DoE-2_AUG: DoE-2_AUG.html
+  DoE-2_DCA: DoE-2_DCA.html
+  DoE-2_RCBD: DoE-2_RCBD.html
+  DoE-2_SPLIT: DoE-2_SPLIT.html
   heritability: heritability.html
   policy: policy.html
   rticles: rticles.html
   tarpuy: tarpuy.html
   yupana: yupana.html
-last_built: 2026-09-03T05:53Z
+last_built: 2026-09-03T14:21Z
 urls:
   reference: https://inkaverse.com/reference
   article: https://inkaverse.com/articles

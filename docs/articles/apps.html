@@ -53,14 +53,49 @@
 <li class="nav-item"><a class="nav-link" href="../index.html"><span class="fa fa-home fa-lg"></span></a></li>
 <li class="active nav-item"><a class="nav-link" href="../articles/apps.html"><span class="fa fa-gamepad fa-lg"></span> Apps</a></li>
 <li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/tarpuy.html">Tarpuy: field-book experimental plans</a></li>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-doe" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> DoE</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-doe">
+<li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../articles/tarpuy.html">Tarpuy: field-book experimental plans</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Single Factor Designs</h6></li>
+    <li><a class="dropdown-item" href="../articles/DoE-1_DCA.html">DCA</a></li>
+    <li><a class="dropdown-item" href="../articles/DoE-1_RCBD.html">RCBD</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Two Factors Designs</h6></li>
+    <li><a class="dropdown-item" href="../articles/DoE-2_DCA.html">DCA</a></li>
+    <li><a class="dropdown-item" href="../articles/DoE-2_RCBD.html">RCBD</a></li>
+    <li><a class="dropdown-item" href="../articles/DoE-2_SPLIT.html">Split-Plot in RCBD</a></li>
+    <li><a class="dropdown-item" href="../articles/DoE-2_AUG.html">Augmented in RCBD</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Three or More Factors Designs</h6></li>
+    <li><a class="dropdown-item" href="../articles/DoE-3_DCA.html">DCA</a></li>
+    <li><a class="dropdown-item" href="../articles/DoE-3_RCBD.html">RCBD</a></li>
+    <li><hr class="dropdown-divider"></li>
+  </ul>
+</li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-analysis" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> Analysis</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-analysis">
+<li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/yupana.html">Yupana: experimental design analysis</a></li>
+    <li><hr class="dropdown-divider"></li>
+  </ul>
+</li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-writing" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> Writing</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-writing">
+<li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/rticles.html">Rticles: scientific documents with R</a></li>
     <li><hr class="dropdown-divider"></li>
-    <li><a class="dropdown-item" href="../articles/designs.html">Experimental Designs</a></li>
+  </ul>
+</li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-breeding" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> Breeding</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-breeding">
+<li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/heritability.html">Broad-sense heritability in plant breeding</a></li>
+    <li><hr class="dropdown-divider"></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../articles/policy.html"><span class="fa fa-shield-alt fa-lg"></span> Privacy Policy</a></li>
@@ -95,7 +130,24 @@
 
 
 
-    <p>The package <code>inti</code> has been developed to provide tools used in plant science and experimental designs. The package also include shiny apps for design experiments, interactive analysis and technical writing.</p>
+    <p>The package <code>inti</code> is part of the inkaverse project for developing procedures and tools used in plant science and experimental designs. The TARPUY module allows researchers to plan, randomize, generate fieldbooks, and visualize experimental design layouts either through R code or via an interactive Shiny add-in (inti::tarpuy()).</p>
+<div id="footer" style="width:100%; margin:auto;">
+
+<div style="display:inline-block; width:49%">
+<p style="text-align:center">
+<a target="_blank" href="https://cran.r-project.org/web/packages/inti/index.html" class="external-link"><img src="https://inkaverse.com/logo.png" style="height:80px" title="R cran" alt="inti"></a>
+<span style="display:block;"><small>inti</small></span>
+</p>
+</div>
+
+<div style="display:inline-block; width:49%">
+<p style="text-align:center">
+<a target="_blank" href="https://inkaverse.com/"><img src="https://pkgdown.r-lib.org/reference/figures/logo.png" style="height:80px" title="inti" alt="inti"></a>
+<span style="display:block;"><small>Project</small></span>
+</p>
+</div>
+
+</div>
 <p>The <code>inti</code> package is inspired by the Inca mythology where the sun (<code>inti</code>) is considered the most significant deity. The web applications are based on this worldview.</p>
 <p>The shiny apps are based in the functions developed in the package <a href="https://inkaverse.com/reference/" class="uri">https://inkaverse.com/reference/</a>.</p>
 <section class="level2"><h2 id="install-the-apps-locally">Install the apps locally<a class="anchor" aria-label="anchor" href="#install-the-apps-locally"></a>

@@ -1,4 +1,4 @@
-# inti 0.7.3
+# inti 0.7.4
 
 - Tarpuy
   - Improve trait variable generation to support text and numeric prefixes in `{when}` and `{samples}`

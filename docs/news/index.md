@@ -1,8 +1,6 @@
 # Changelog
 
-## inti 0.7.3
-
-CRAN release: 2026-08-20
+## inti 0.7.4
 
 - Tarpuy
   - Improve trait variable generation to support text and numeric
@@ -183,7 +181,7 @@ CRAN release: 2023-10-27
   - change params: template ==\> theme
   - reference-doc: style_rticle.docx
 - Tarpuy
-  - Field book design allows different number of rows  
+  - Field book design allows different number of rows\
   - Design without replication (observation plots) ==\>
     [`design_noreps()`](https://inkaverse.com/reference/design_noreps.md)
   - Fix traits name order
