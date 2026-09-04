@@ -6,7 +6,7 @@ TARPUY module allows researchers to plan, randomize, generate
 fieldbooks, and visualize experimental design layouts either through R
 code or via an interactive Shiny add-in (inti::tarpuy()).
 
-[![inti](https://inkaverse.com/logo.png "R cran")](https://cran.r-project.org/web/packages/inti/index.html)
+[![inti](https://inkaverse.com/logo.png "R cran")](https://CRAN.R-project.org/package=inti)
 inti
 
 [![inti](https://pkgdown.r-lib.org/reference/figures/logo.png "inti")](https://inkaverse.com/)

@@ -3,7 +3,6 @@ pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   apps: apps.html
-  designs: designs.html
   DoE-1_DCA: DoE-1_DCA.html
   DoE-1_RCBD: DoE-1_RCBD.html
   DoE-2_AUG: DoE-2_AUG.html
@@ -17,7 +16,7 @@ articles:
   rticles: rticles.html
   tarpuy: tarpuy.html
   yupana: yupana.html
-last_built: 2026-09-04T14:06Z
+last_built: 2026-09-04T17:11Z
 urls:
   reference: https://inkaverse.com/reference
   article: https://inkaverse.com/articles

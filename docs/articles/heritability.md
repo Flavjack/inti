@@ -151,7 +151,7 @@ Bonferroni-Holm using re-scaled MAD for standardizing residuals
 ### Variance components
 
 \
-`hr``$``tabsmr`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"Variance component table"``)`
+`hr``$``tabsmr`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` ``kable``(``caption ``=`` ``"Variance component table"``)`
 
 | trait | rep | geno | env | year | mean | std | min | max | V.g | V.e | V.p | repeatability | H2.s | H2.p | H2.c |
 |:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -162,7 +162,7 @@ Variance component table {.table .caption-top style="width:100%;"}
 ### Best Linear Unbiased Estimators (BLUEs)
 
 \
-`hr``$``blues`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"BLUEs"``)`
+`hr``$``blues`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` ``kable``(``caption ``=`` ``"BLUEs"``)`
 
 | geno |   stemdw |       SE |       df |   lower.CL | upper.CL |
 |:-----|---------:|---------:|---------:|-----------:|---------:|
@@ -187,7 +187,7 @@ BLUEs {.table .caption-top}
 ### Best Linear Unbiased Predictors (BLUPs)
 
 \
-`hr``$``blups`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"BLUPs"``)`
+`hr``$``blups`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` ``kable``(``caption ``=`` ``"BLUPs"``)`
 
 | geno |    stemdw |
 |:-----|----------:|
@@ -212,7 +212,7 @@ BLUPs {.table .caption-top}
 ### Outliers
 
 \
-`hr``$``outliers``$``fixed`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"Outliers fixed model"``)`
+`hr``$``outliers``$``fixed`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` ``kable``(``caption ``=`` ``"Outliers fixed model"``)`
 
 |     | index | bloque | geno | stemdw |     resi |  res_MAD | rawp.BHStud | adjp | bholm | out_flag |
 |:----|:------|:-------|:-----|-------:|---------:|---------:|------------:|-----:|------:|:---------|
@@ -221,7 +221,7 @@ BLUPs {.table .caption-top}
 Outliers fixed model {.table .caption-top}
 
 \
-`hr``$``outliers``$``random`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"Outliers random model"``)`
+`hr``$``outliers``$``random`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` ``kable``(``caption ``=`` ``"Outliers random model"``)`
 
 |  | index | bloque | geno | stemdw | resi | res_MAD | rawp.BHStud | adjp | bholm | out_flag |
 |:---|:---|:---|:---|---:|---:|---:|---:|---:|---:|:---|

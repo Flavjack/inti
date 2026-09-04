@@ -25,7 +25,7 @@ The package `inti` is part of the inkaverse project for developing procedures an
 
 <div style="display:inline-block; width:49%">
 <p style="text-align:center">
-<a target="_blank" href="https://cran.r-project.org/web/packages/inti/index.html"><img src="https://inkaverse.com/logo.png" style="height:80px" title="R cran" alt="inti"></a> 
+<a target="_blank" href="https://CRAN.R-project.org/package=inti"><img src="https://inkaverse.com/logo.png" style="height:80px" title="R cran" alt="inti"></a> 
 <span style="display:block;"><small>inti</small></span>
 </p></div>
 
