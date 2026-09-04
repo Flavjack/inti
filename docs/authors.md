@@ -30,10 +30,10 @@ Inkaverse (2026). *inti: Tools and Statistical Procedures in Plant
 Science*. R package version 0.7.3,
 <https://CRAN.R-project.org/package=inti>.
 
-    @Manual{inti,
-      title = {inti: Tools and Statistical Procedures in Plant Science},
-      author = {Flavio Lozano-Isla and Yoel Diaz-Saucedo and Victor-Hugo Baldera-Chapoñan and María Belén Kistner and {QuipoLab} and {Inkaverse}},
-      year = {2026},
-      note = {R package version 0.7.3},
-      url = {https://CRAN.R-project.org/package=inti},
-    }
+@Manual{inti,\
+  title = {inti: Tools and Statistical Procedures in Plant Science},\
+  author = {Flavio Lozano-Isla and Yoel Diaz-Saucedo and Victor-Hugo Baldera-Chapoñan and María Belén Kistner and {QuipoLab} and {Inkaverse}},\
+  year = {2026},\
+  note = {R package version 0.7.3},\
+  url = {https://CRAN.R-project.org/package=inti},\
+}

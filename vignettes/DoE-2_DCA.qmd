@@ -34,7 +34,7 @@ Planning an experiment follows a reproducible routine:
 # Install packages and dependencies
 
 library(inti)
-library(tidyverse)
+library(dplyr)
 library(huito)
 ```
 
@@ -102,6 +102,8 @@ huito_fonts(font)
 # Label design
 
 ```{r}
+#| echo: true
+
 label <- fb %>%  
   label_layout(size = c(10, 2.5)
                , border_color = "blue"

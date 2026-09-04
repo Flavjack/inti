@@ -30,11 +30,13 @@ Planning an experiment follows a reproducible routine:
 1. **Label design:** Design the experimental labels to facilitate the data collection.
 5. **Export to Field Book app:** Generate field-ready sheets with trait parameters.
 
-```{r, echo=TRUE}
+```{r}
+#| echo: true
+
 # Install packages and dependencies
 
 library(inti)
-library(tidyverse)
+library(dplyr)
 library(huito)
 ```
 
@@ -97,6 +99,8 @@ huito_fonts(font)
 # Label design
 
 ```{r}
+#| echo: true
+
 label <- fb %>%
   label_layout(
     size = c(5.2, 10)
