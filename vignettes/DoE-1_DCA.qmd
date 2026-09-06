@@ -175,11 +175,12 @@ label %>%
 If you want generate the complete labels list, change: `label_print(mode = "complete")`.
 
 ```{r echo = TRUE}
+#| eval: false
 label %>% 
   label_print(mode = "complete"
               , filename = "vertical-DCA-1"
               , nlabels = 12)
 ```
 
-<embed src="vertical-DCA-1.pdf" height="600" width="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+<!-- <embed src="vertical-DCA-1.pdf" height="600" width="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html"> -->
 

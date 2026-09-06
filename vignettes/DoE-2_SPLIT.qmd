@@ -167,12 +167,14 @@ label %>%
 If you want generate the complete labels list, change: `label_print(mode = "complete")`.
 
 ```{r echo = TRUE}
+#| eval: false
+
 label %>% 
   label_print(mode = "complete"
               , filename = "horizontal-split"
               , nlabels = 12)
 ```
 
-<embed src="horizontal-split.pdf" height="600" width="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+<!-- <embed src="horizontal-split.pdf" height="600" width="100%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html"> -->
 
 
