@@ -41,6 +41,11 @@ importFrom(agricolae,
   SNK.test,
   duncan.test
 )
+importFrom(cowplot,
+  draw_label,
+  ggdraw,
+  plot_grid
+)
 importFrom(dplyr,
   "%>%",
   across,
@@ -60,8 +65,13 @@ importFrom(dplyr,
 importFrom(emmeans,emmeans)
 importFrom(ggplot2,
   aes,
+  geom_histogram,
+  geom_hline,
   geom_point,
   ggplot,
+  labs,
+  stat_qq,
+  stat_qq_line,
   theme_minimal
 )
 importFrom(grDevices,

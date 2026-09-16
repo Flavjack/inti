@@ -51,8 +51,8 @@ H2cal(
 \item{weights}{an optional vector of ‘prior weights’ to be used in the
 fitting process (default = NULL).}
 
-\item{plot_diag}{Show diagnostic plots for fixed and random effects (default
-= FALSE).}
+\item{plot_diag}{Show diagnostic plots using ggplot2 and cowplot
+(default = FALSE).}
 
 \item{outliers.rm}{Remove outliers (default = FALSE). See references.}
 
@@ -91,6 +91,12 @@ consuming with the increase of the number of the genotypes. You can specify
 If \code{{emmeans = FALSE}} you should change 1 by 0 in the fixed model for
 exclude the intersect in the analysis and get all the genotypes BLUEs.
 
+Diagnostic plots are produced with ggplot2 and assembled with cowplot.
+If \code{{outliers.rm = FALSE}}, fixed and random model diagnostics are
+displayed in one combined panel. If \code{{outliers.rm = TRUE}}, fixed and
+random diagnostics are displayed in separate panels comparing before
+and after cleaning.
+
 For more information review the references.
 }
 \examples{
@@ -105,8 +111,8 @@ hr <- H2cal(data = dt
             , rep.n = 5
             , fixed.model = ~ 0 + (1|bloque) + geno
             , random.model = ~ 1 + (1|bloque) + (1|geno)
-            , emmeans = TRUE
-            , plot_diag = FALSE
+            , emmeans = FALSE
+            , plot_diag = TRUE
             , outliers.rm = TRUE
             )
 
