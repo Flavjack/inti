@@ -2,6 +2,8 @@
 
 ## inti 0.7.4
 
+CRAN release: 2026-09-06
+
 - Tarpuy
   - Improve trait variable generation to support text and numeric
     prefixes in [when](https://josesamos.github.io/when/) and

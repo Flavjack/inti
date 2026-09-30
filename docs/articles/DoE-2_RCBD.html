@@ -162,15 +162,15 @@
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 1. Define factors: Bean genotypes and fertilization levels</span></span>
-<span><span class="va">factors_rcbd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span><span class="va">factors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  Genotype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Bean_01"</span>, <span class="st">"Bean_02"</span>, <span class="st">"Bean_03"</span><span class="op">)</span>,</span>
 <span>  Fertilization <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"50"</span>, <span class="st">"100"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 2. Generate factorial RCBD layout</span></span>
-<span><span class="va">rcbd_exp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/design_repblock.html">design_repblock</a></span><span class="op">(</span></span>
+<span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/design_repblock.html">design_repblock</a></span><span class="op">(</span></span>
 <span>  nfactors <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  factors <span class="op">=</span> <span class="va">factors_rcbd</span>,</span>
+<span>  factors <span class="op">=</span> <span class="va">factors</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"rcbd"</span>,</span>
 <span>  rep <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  zigzag <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -178,12 +178,13 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Fieldbook preview</span></span>
-<span><span class="va">rcbd_exp</span><span class="op">$</span><span class="va">fieldbook</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Factorial RCBD Fieldbook preview"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="va">design</span><span class="op">$</span><span class="va">fieldbook</span></span>
+<span></span>
+<span><span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Fieldbook preview"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table class="table caption-top">
-<caption>Factorial RCBD Fieldbook preview</caption>
+<caption>Fieldbook preview</caption>
 <colgroup>
 <col style="width: 18%">
 <col style="width: 7%">
@@ -329,6 +330,318 @@
 <td style="text-align: right;">9</td>
 <td style="text-align: left;">rcbd</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_2002</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Bean_01</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_2003</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Bean_03</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_2004</td>
+<td style="text-align: right;">2004</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">Bean_03</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_2005</td>
+<td style="text-align: right;">2005</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Bean_01</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_2006</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">Bean_03</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_2007</td>
+<td style="text-align: right;">2007</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">Bean_02</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_2008</td>
+<td style="text-align: right;">2008</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Bean_02</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_2009</td>
+<td style="text-align: right;">2009</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">Bean_01</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_3001</td>
+<td style="text-align: right;">3001</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">Bean_03</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_3002</td>
+<td style="text-align: right;">3002</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Bean_01</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_3003</td>
+<td style="text-align: right;">3003</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">Bean_01</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_3004</td>
+<td style="text-align: right;">3004</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Bean_01</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_3005</td>
+<td style="text-align: right;">3005</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Bean_02</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_3006</td>
+<td style="text-align: right;">3006</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">Bean_03</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_3007</td>
+<td style="text-align: right;">3007</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Bean_02</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_3008</td>
+<td style="text-align: right;">3008</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Bean_03</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_3009</td>
+<td style="text-align: right;">3009</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">Bean_02</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4001</td>
+<td style="text-align: right;">4001</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">Bean_01</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_4002</td>
+<td style="text-align: right;">4002</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Bean_02</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4003</td>
+<td style="text-align: right;">4003</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Bean_01</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_4004</td>
+<td style="text-align: right;">4004</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Bean_01</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4005</td>
+<td style="text-align: right;">4005</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Bean_03</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_4006</td>
+<td style="text-align: right;">4006</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">Bean_02</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4007</td>
+<td style="text-align: right;">4007</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">Bean_03</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_4008</td>
+<td style="text-align: right;">4008</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Bean_02</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4009</td>
+<td style="text-align: right;">4009</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">Bean_03</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -336,7 +649,7 @@
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Spatial layout visualization</span></span>
 <span><span class="fu"><a href="../reference/tarpuy_plotdesign.html">tarpuy_plotdesign</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">rcbd_exp</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">design</span>,</span>
 <span>  factor <span class="op">=</span> <span class="st">"Genotype"</span>,</span>
 <span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"Fertilization"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -350,17 +663,12 @@
 </section><section class="section level2"><h2 id="label">Label<a class="anchor" aria-label="anchor" href="#label"></a>
 </h2>
 <p>The experimental field book generated by the design is used as the input data for label creation. Each row represents an experimental unit, allowing the automatic generation of individualized labels.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Experimental fieldbook</span></span>
-<span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="va">rcbd_exp</span><span class="op">$</span><span class="va">fieldbook</span></span></code></pre></div>
-</div>
 </section><section class="section level2"><h2 id="customize-the-label-layout">Customize the label layout<a class="anchor" aria-label="anchor" href="#customize-the-label-layout"></a>
 </h2>
 <p>The label layout can be customized by combining text, images and QR codes. Each layer can use values from the experimental field book, allowing automatic generation of labels for every experimental plot.</p>
 <p>Load package and import fonts.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">font</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Permanent Marker"</span>, <span class="st">"Tillana"</span>, <span class="st">"Courgette"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="http://huito.inkaverse.com/reference/huito_fonts.html" class="external-link">huito_fonts</a></span><span class="op">(</span><span class="va">font</span><span class="op">)</span></span></code></pre></div>
@@ -371,45 +679,32 @@
 </section><section class="section level2"><h2 id="label-design">Label design<a class="anchor" aria-label="anchor" href="#label-design"></a>
 </h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">label</span> <span class="op">&lt;-</span> <span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/label_layout.html" class="external-link">label_layout</a></span><span class="op">(</span></span>
 <span>    size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5.2</span>, <span class="fl">10</span><span class="op">)</span></span>
-<span>    ,</span>
-<span>    border_color <span class="op">=</span> <span class="st">"#5C0000"</span></span>
-<span>    ,</span>
-<span>    border_width <span class="op">=</span> <span class="fl">1.5</span></span>
+<span>    , border_color <span class="op">=</span> <span class="st">"#5C0000"</span></span>
+<span>    , border_width <span class="op">=</span> <span class="fl">1.5</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/include_image.html" class="external-link">include_image</a></span><span class="op">(</span></span>
 <span>    value <span class="op">=</span> <span class="st">"https://inkaverse.com/img/inkaverse.png"</span></span>
-<span>    ,</span>
-<span>    size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.3</span>, <span class="fl">1.5</span><span class="op">)</span></span>
-<span>    ,</span>
-<span>    position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">9.1</span><span class="op">)</span></span>
+<span>    , size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.3</span>, <span class="fl">1.5</span><span class="op">)</span></span>
+<span>    , position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">9.1</span><span class="op">)</span></span>
 <span>  <span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/include_text.html" class="external-link">include_text</a></span><span class="op">(</span></span>
 <span>    value <span class="op">=</span> <span class="st">"plots"</span></span>
-<span>    ,</span>
-<span>    position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4.2</span>, <span class="fl">9.1</span><span class="op">)</span></span>
-<span>    ,</span>
-<span>    size <span class="op">=</span> <span class="fl">20</span></span>
-<span>    ,</span>
-<span>    color <span class="op">=</span> <span class="st">"black"</span></span>
-<span>    ,</span>
-<span>    fontface <span class="op">=</span> <span class="st">"bold"</span></span>
-<span>    ,</span>
-<span>    font <span class="op">=</span> <span class="va">font</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>    , position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4.2</span>, <span class="fl">9.1</span><span class="op">)</span></span>
+<span>    , size <span class="op">=</span> <span class="fl">20</span></span>
+<span>    , color <span class="op">=</span> <span class="st">"black"</span></span>
+<span>    , fontface <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>    , font <span class="op">=</span> <span class="va">font</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span>  <span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/include_image.html" class="external-link">include_image</a></span><span class="op">(</span>value <span class="op">=</span> <span class="st">"https://huito.inkaverse.com/img/scale.pdf"</span></span>
-<span>                ,</span>
-<span>                size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span>                ,</span>
-<span>                position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.6</span>, <span class="fl">7.7</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>                , size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span>                , position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.6</span>, <span class="fl">7.7</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/include_barcode.html" class="external-link">include_barcode</a></span><span class="op">(</span>value <span class="op">=</span> <span class="st">"qrcode"</span></span>
-<span>                  ,</span>
-<span>                  size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span></span>
-<span>                  ,</span>
-<span>                  position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.6</span>, <span class="fl">4.7</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>                  , size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span>                  , position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.6</span>, <span class="fl">4.7</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/include_text.html" class="external-link">include_text</a></span><span class="op">(</span></span>
 <span>    value <span class="op">=</span> <span class="st">"Genotype"</span></span>
 <span>    ,</span>
@@ -450,9 +745,12 @@
 </h3>
 <p>The preview mode <code>label_print(mode = "preview")</code> generate a example of the label design from a random row of the data set.</p>
 <div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">label</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/label_print.html" class="external-link">label_print</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"preview"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img src="DoE-2_RCBD_files/figure-html/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center" style="width:98.0%"></p>
+<figure><p><img src="DoE-2_RCBD_files/figure-html/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center" style="width:98.0%"></p>
 </figure>
 </div>
 </div>

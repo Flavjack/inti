@@ -102,24 +102,27 @@ For more information review the references.
 \examples{
 
 library(inti)
+ 
+md <- met \%>\%
+  H2cal(trait = "yield",
+  gen.name = "cultivar",
+  rep.n = 2,
+  env.name = "env",
+  env.n = 18,
+  fixed.model = ~ 0 + env + (1 | env:rep:alpha) + cultivar,
+  random.model = ~ 1 + env +
+    (1 | env:rep) + (1 | env:rep:alpha) +
+    (1 | cultivar:env) + (1 | cultivar),
+  summary = TRUE,
+  plot_diag = TRUE,
+  outliers.rm = TRUE,
+  emmeans = FALSE
+)
 
-dt <- potato
-
-hr <- H2cal(data = dt
-            , trait = "stemdw"
-            , gen.name = "geno"
-            , rep.n = 5
-            , fixed.model = ~ 0 + (1|bloque) + geno
-            , random.model = ~ 1 + (1|bloque) + (1|geno)
-            , emmeans = FALSE
-            , plot_diag = TRUE
-            , outliers.rm = TRUE
-            )
-
- hr$tabsmr
- hr$blues
- hr$blups
- hr$outliers
+ md$tabsmr
+ md$blues
+ md$blups 
+ md$outliers
  
 }
 \references{

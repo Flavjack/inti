@@ -166,7 +166,7 @@
 <span><span class="va">entries</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Geno_"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">50</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 2. Generate Augmented layout: 18 entries + (2 checks x 3 blocks) = 24 plots</span></span>
-<span><span class="va">aug_exp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/design_augmented.html">design_augmented</a></span><span class="op">(</span></span>
+<span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/design_augmented.html">design_augmented</a></span><span class="op">(</span></span>
 <span>  checks <span class="op">=</span> <span class="va">checks</span>,</span>
 <span>  entries <span class="op">=</span> <span class="va">entries</span>,</span>
 <span>  blocks <span class="op">=</span> <span class="fl">5</span>,</span>
@@ -175,8 +175,10 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Fieldbook preview</span></span>
-<span><span class="va">aug_exp</span><span class="op">$</span><span class="va">fieldbook</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span></span>
+<span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="va">design</span><span class="op">$</span><span class="va">fieldbook</span> </span>
+<span></span>
+<span><span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Augmented RCBD Fieldbook preview"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table class="table caption-top">
@@ -338,6 +340,656 @@
 <td style="text-align: right;">10</td>
 <td style="text-align: left;">augmented</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_1011_Geno_27</td>
+<td style="text-align: right;">1011</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: left;">Geno_27</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_1012_Geno_33</td>
+<td style="text-align: right;">1012</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: left;">Geno_33</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_2001_INIA_420</td>
+<td style="text-align: right;">2001</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">INIA_420</td>
+<td style="text-align: left;">check</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_2002_Geno_50</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: left;">Geno_50</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_2003_Geno_37</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: left;">Geno_37</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_2004_Geno_15</td>
+<td style="text-align: right;">2004</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: left;">Geno_15</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_2005_INIA_415</td>
+<td style="text-align: right;">2005</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">INIA_415</td>
+<td style="text-align: left;">check</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_2006_Geno_18</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: left;">Geno_18</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_2007_Geno_41</td>
+<td style="text-align: right;">2007</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: left;">Geno_41</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_2008_Geno_24</td>
+<td style="text-align: right;">2008</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: left;">Geno_24</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_2009_Geno_12</td>
+<td style="text-align: right;">2009</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: left;">Geno_12</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_2010_Geno_43</td>
+<td style="text-align: right;">2010</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: left;">Geno_43</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_2011_Geno_10</td>
+<td style="text-align: right;">2011</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">Geno_10</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_2012_Geno_19</td>
+<td style="text-align: right;">2012</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: left;">Geno_19</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_3001_Geno_40</td>
+<td style="text-align: right;">3001</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: left;">Geno_40</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_3002_Geno_16</td>
+<td style="text-align: right;">3002</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: left;">Geno_16</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_3003_INIA_420</td>
+<td style="text-align: right;">3003</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">INIA_420</td>
+<td style="text-align: left;">check</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_3004_Geno_3</td>
+<td style="text-align: right;">3004</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Geno_3</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_3005_Geno_25</td>
+<td style="text-align: right;">3005</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: left;">Geno_25</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_3006_Geno_8</td>
+<td style="text-align: right;">3006</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">Geno_8</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_3007_Geno_42</td>
+<td style="text-align: right;">3007</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: left;">Geno_42</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_3008_Geno_46</td>
+<td style="text-align: right;">3008</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: left;">Geno_46</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_3009_Geno_47</td>
+<td style="text-align: right;">3009</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: left;">Geno_47</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_3010_Geno_4</td>
+<td style="text-align: right;">3010</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">Geno_4</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_3011_INIA_415</td>
+<td style="text-align: right;">3011</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">INIA_415</td>
+<td style="text-align: left;">check</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_3012_Geno_32</td>
+<td style="text-align: right;">3012</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: left;">Geno_32</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_4001_Geno_13</td>
+<td style="text-align: right;">4001</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: left;">Geno_13</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4002_Geno_35</td>
+<td style="text-align: right;">4002</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: left;">Geno_35</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_4003_Geno_14</td>
+<td style="text-align: right;">4003</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: left;">Geno_14</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4004_Geno_49</td>
+<td style="text-align: right;">4004</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: left;">Geno_49</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_4005_INIA_420</td>
+<td style="text-align: right;">4005</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">INIA_420</td>
+<td style="text-align: left;">check</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4006_Geno_26</td>
+<td style="text-align: right;">4006</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: left;">Geno_26</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_4007_Geno_2</td>
+<td style="text-align: right;">4007</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Geno_2</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4008_Geno_9</td>
+<td style="text-align: right;">4008</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">Geno_9</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_4009_Geno_17</td>
+<td style="text-align: right;">4009</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: left;">Geno_17</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4010_Geno_39</td>
+<td style="text-align: right;">4010</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: left;">Geno_39</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_4011_INIA_415</td>
+<td style="text-align: right;">4011</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">INIA_415</td>
+<td style="text-align: left;">check</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4012_Geno_20</td>
+<td style="text-align: right;">4012</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: left;">Geno_20</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_5001_Geno_23</td>
+<td style="text-align: right;">5001</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: left;">Geno_23</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_5002_Geno_22</td>
+<td style="text-align: right;">5002</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: left;">Geno_22</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_5003_Geno_7</td>
+<td style="text-align: right;">5003</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">Geno_7</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_5004_Geno_21</td>
+<td style="text-align: right;">5004</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: left;">Geno_21</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_5005_Geno_1</td>
+<td style="text-align: right;">5005</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Geno_1</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_5006_Geno_30</td>
+<td style="text-align: right;">5006</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: left;">Geno_30</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_5007_Geno_11</td>
+<td style="text-align: right;">5007</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: left;">Geno_11</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_5008_INIA_420</td>
+<td style="text-align: right;">5008</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">INIA_420</td>
+<td style="text-align: left;">check</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_5009_Geno_6</td>
+<td style="text-align: right;">5009</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">Geno_6</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_5010_INIA_415</td>
+<td style="text-align: right;">5010</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">INIA_415</td>
+<td style="text-align: left;">check</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_5011_Geno_48</td>
+<td style="text-align: right;">5011</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: left;">Geno_48</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">augmented</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_5012_Geno_28</td>
+<td style="text-align: right;">5012</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: left;">Geno_28</td>
+<td style="text-align: left;">test</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">augmented</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -345,7 +997,7 @@
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Field layout visualization</span></span>
 <span><span class="fu"><a href="../reference/tarpuy_plotdesign.html">tarpuy_plotdesign</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">aug_exp</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">design</span>,</span>
 <span>  factor <span class="op">=</span> <span class="st">"type"</span>,          </span>
 <span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"entry"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -359,17 +1011,12 @@
 </section><section class="section level2"><h2 id="label">Label<a class="anchor" aria-label="anchor" href="#label"></a>
 </h2>
 <p>The experimental field book generated by the design is used as the input data for label creation. Each row represents an experimental unit, allowing the automatic generation of individualized labels.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Experimental fieldbook</span></span>
-<span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="va">aug_exp</span><span class="op">$</span><span class="va">fieldbook</span></span></code></pre></div>
-</div>
 </section><section class="section level2"><h2 id="customize-the-label-layout">Customize the label layout<a class="anchor" aria-label="anchor" href="#customize-the-label-layout"></a>
 </h2>
 <p>The label layout can be customized by combining text, images and QR codes. Each layer can use values from the experimental field book, allowing automatic generation of labels for every experimental plot.</p>
 <p>Load package and import fonts.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">font</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Permanent Marker"</span>, <span class="st">"Tillana"</span>, <span class="st">"Courgette"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="http://huito.inkaverse.com/reference/huito_fonts.html" class="external-link">huito_fonts</a></span><span class="op">(</span><span class="va">font</span><span class="op">)</span></span></code></pre></div>
@@ -380,7 +1027,7 @@
 </section><section class="section level2"><h2 id="label-design">Label design<a class="anchor" aria-label="anchor" href="#label-design"></a>
 </h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">label</span> <span class="op">&lt;-</span> <span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/label_layout.html" class="external-link">label_layout</a></span><span class="op">(</span></span>
 <span>    size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5.2</span>, <span class="fl">10</span><span class="op">)</span></span>
@@ -459,9 +1106,12 @@
 </h3>
 <p>The preview mode <code>label_print(mode = "preview")</code> generate a example of the label design from a random row of the data set.</p>
 <div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">label</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/label_print.html" class="external-link">label_print</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"preview"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img src="DoE-2_AUG_files/figure-html/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center" style="width:98.0%"></p>
+<figure><p><img src="DoE-2_AUG_files/figure-html/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center" style="width:98.0%"></p>
 </figure>
 </div>
 </div>

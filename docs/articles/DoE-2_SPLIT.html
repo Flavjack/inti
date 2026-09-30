@@ -162,14 +162,14 @@
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 1. Define factors: Irrigation regimes (main plots) and commercial quinoa varieties (sub-plots)</span></span>
-<span><span class="va">factors_split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span><span class="va">factors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  Irrigation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Full"</span>, <span class="st">"Deficit"</span><span class="op">)</span>,</span>
-<span>  Variety    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Var_1"</span>, <span class="st">"Var_2"</span>, <span class="st">"Var_3"</span><span class="op">)</span></span>
+<span>  Variety    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chulpi"</span>, <span class="st">"kancolla"</span>, <span class="st">"choclito"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 2. Generate Split-plot layout: 2 main levels x 3 sub levels x 4 blocks = 24 plots</span></span>
-<span><span class="va">split_exp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/design_split.html">design_split</a></span><span class="op">(</span></span>
-<span>  factors <span class="op">=</span> <span class="va">factors_split</span>,</span>
+<span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/design_split.html">design_split</a></span><span class="op">(</span></span>
+<span>  factors <span class="op">=</span> <span class="va">factors</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"split_rcbd"</span>,</span>
 <span>  rep <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  zigzag <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -177,24 +177,25 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Fieldbook preview</span></span>
-<span><span class="va">split_exp</span><span class="op">$</span><span class="va">fieldbook</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="va">design</span><span class="op">$</span><span class="va">fieldbook</span> </span>
+<span></span>
+<span><span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Split-plot Fieldbook preview"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table class="table caption-top">
 <caption>Split-plot Fieldbook preview</caption>
 <colgroup>
-<col style="width: 27%">
+<col style="width: 28%">
 <col style="width: 5%">
 <col style="width: 6%">
-<col style="width: 10%">
+<col style="width: 9%">
 <col style="width: 7%">
-<col style="width: 13%">
+<col style="width: 14%">
 <col style="width: 5%">
 <col style="width: 4%">
 <col style="width: 4%">
 <col style="width: 4%">
-<col style="width: 10%">
+<col style="width: 9%">
 </colgroup>
 <thead><tr class="header">
 <th style="text-align: left;">qrcode</th>
@@ -211,12 +212,12 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">inkaverse_1001_Full_Var_1</td>
+<td style="text-align: left;">inkaverse_1001_Full_chulpi</td>
 <td style="text-align: right;">1001</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">Full</td>
-<td style="text-align: left;">Var_1</td>
-<td style="text-align: left;">Full_Var_1</td>
+<td style="text-align: left;">chulpi</td>
+<td style="text-align: left;">Full_chulpi</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
@@ -224,12 +225,12 @@
 <td style="text-align: left;">split-rcbd</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">inkaverse_1002_Full_Var_2</td>
+<td style="text-align: left;">inkaverse_1002_Full_kancolla</td>
 <td style="text-align: right;">1002</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: left;">Full</td>
-<td style="text-align: left;">Var_2</td>
-<td style="text-align: left;">Full_Var_2</td>
+<td style="text-align: left;">kancolla</td>
+<td style="text-align: left;">Full_kancolla</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">2</td>
@@ -237,12 +238,12 @@
 <td style="text-align: left;">split-rcbd</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">inkaverse_1003_Full_Var_3</td>
+<td style="text-align: left;">inkaverse_1003_Full_choclito</td>
 <td style="text-align: right;">1003</td>
 <td style="text-align: right;">5</td>
 <td style="text-align: left;">Full</td>
-<td style="text-align: left;">Var_3</td>
-<td style="text-align: left;">Full_Var_3</td>
+<td style="text-align: left;">choclito</td>
+<td style="text-align: left;">Full_choclito</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">3</td>
@@ -250,12 +251,12 @@
 <td style="text-align: left;">split-rcbd</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">inkaverse_1004_Deficit_Var_2</td>
+<td style="text-align: left;">inkaverse_1004_Deficit_kancolla</td>
 <td style="text-align: right;">1004</td>
 <td style="text-align: right;">4</td>
 <td style="text-align: left;">Deficit</td>
-<td style="text-align: left;">Var_2</td>
-<td style="text-align: left;">Deficit_Var_2</td>
+<td style="text-align: left;">kancolla</td>
+<td style="text-align: left;">Deficit_kancolla</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">3</td>
@@ -263,12 +264,12 @@
 <td style="text-align: left;">split-rcbd</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">inkaverse_1005_Deficit_Var_1</td>
+<td style="text-align: left;">inkaverse_1005_Deficit_chulpi</td>
 <td style="text-align: right;">1005</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: left;">Deficit</td>
-<td style="text-align: left;">Var_1</td>
-<td style="text-align: left;">Deficit_Var_1</td>
+<td style="text-align: left;">chulpi</td>
+<td style="text-align: left;">Deficit_chulpi</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">2</td>
@@ -276,12 +277,12 @@
 <td style="text-align: left;">split-rcbd</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">inkaverse_1006_Deficit_Var_3</td>
+<td style="text-align: left;">inkaverse_1006_Deficit_choclito</td>
 <td style="text-align: right;">1006</td>
 <td style="text-align: right;">6</td>
 <td style="text-align: left;">Deficit</td>
-<td style="text-align: left;">Var_3</td>
-<td style="text-align: left;">Deficit_Var_3</td>
+<td style="text-align: left;">choclito</td>
+<td style="text-align: left;">Deficit_choclito</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">6</td>
 <td style="text-align: right;">1</td>
@@ -289,12 +290,12 @@
 <td style="text-align: left;">split-rcbd</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">inkaverse_2001_Deficit_Var_1</td>
+<td style="text-align: left;">inkaverse_2001_Deficit_chulpi</td>
 <td style="text-align: right;">2001</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: left;">Deficit</td>
-<td style="text-align: left;">Var_1</td>
-<td style="text-align: left;">Deficit_Var_1</td>
+<td style="text-align: left;">chulpi</td>
+<td style="text-align: left;">Deficit_chulpi</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">4</td>
@@ -302,12 +303,12 @@
 <td style="text-align: left;">split-rcbd</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">inkaverse_2002_Deficit_Var_3</td>
+<td style="text-align: left;">inkaverse_2002_Deficit_choclito</td>
 <td style="text-align: right;">2002</td>
 <td style="text-align: right;">6</td>
 <td style="text-align: left;">Deficit</td>
-<td style="text-align: left;">Var_3</td>
-<td style="text-align: left;">Deficit_Var_3</td>
+<td style="text-align: left;">choclito</td>
+<td style="text-align: left;">Deficit_choclito</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">5</td>
@@ -315,12 +316,12 @@
 <td style="text-align: left;">split-rcbd</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">inkaverse_2003_Deficit_Var_2</td>
+<td style="text-align: left;">inkaverse_2003_Deficit_kancolla</td>
 <td style="text-align: right;">2003</td>
 <td style="text-align: right;">4</td>
 <td style="text-align: left;">Deficit</td>
-<td style="text-align: left;">Var_2</td>
-<td style="text-align: left;">Deficit_Var_2</td>
+<td style="text-align: left;">kancolla</td>
+<td style="text-align: left;">Deficit_kancolla</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">6</td>
@@ -328,15 +329,197 @@
 <td style="text-align: left;">split-rcbd</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">inkaverse_2004_Full_Var_1</td>
+<td style="text-align: left;">inkaverse_2004_Full_chulpi</td>
 <td style="text-align: right;">2004</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">Full</td>
-<td style="text-align: left;">Var_1</td>
-<td style="text-align: left;">Full_Var_1</td>
+<td style="text-align: left;">chulpi</td>
+<td style="text-align: left;">Full_chulpi</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">split-rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_2005_Full_choclito</td>
+<td style="text-align: right;">2005</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Full</td>
+<td style="text-align: left;">choclito</td>
+<td style="text-align: left;">Full_choclito</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">split-rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_2006_Full_kancolla</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Full</td>
+<td style="text-align: left;">kancolla</td>
+<td style="text-align: left;">Full_kancolla</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">split-rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_3001_Full_chulpi</td>
+<td style="text-align: right;">3001</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Full</td>
+<td style="text-align: left;">chulpi</td>
+<td style="text-align: left;">Full_chulpi</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">split-rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_3002_Full_kancolla</td>
+<td style="text-align: right;">3002</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Full</td>
+<td style="text-align: left;">kancolla</td>
+<td style="text-align: left;">Full_kancolla</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">split-rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_3003_Full_choclito</td>
+<td style="text-align: right;">3003</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Full</td>
+<td style="text-align: left;">choclito</td>
+<td style="text-align: left;">Full_choclito</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">split-rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_3004_Deficit_chulpi</td>
+<td style="text-align: right;">3004</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Deficit</td>
+<td style="text-align: left;">chulpi</td>
+<td style="text-align: left;">Deficit_chulpi</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">split-rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_3005_Deficit_choclito</td>
+<td style="text-align: right;">3005</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">Deficit</td>
+<td style="text-align: left;">choclito</td>
+<td style="text-align: left;">Deficit_choclito</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">split-rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_3006_Deficit_kancolla</td>
+<td style="text-align: right;">3006</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Deficit</td>
+<td style="text-align: left;">kancolla</td>
+<td style="text-align: left;">Deficit_kancolla</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">split-rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_4001_Deficit_chulpi</td>
+<td style="text-align: right;">4001</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Deficit</td>
+<td style="text-align: left;">chulpi</td>
+<td style="text-align: left;">Deficit_chulpi</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">split-rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4002_Deficit_choclito</td>
+<td style="text-align: right;">4002</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">Deficit</td>
+<td style="text-align: left;">choclito</td>
+<td style="text-align: left;">Deficit_choclito</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">split-rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_4003_Deficit_kancolla</td>
+<td style="text-align: right;">4003</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Deficit</td>
+<td style="text-align: left;">kancolla</td>
+<td style="text-align: left;">Deficit_kancolla</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">split-rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4004_Full_choclito</td>
+<td style="text-align: right;">4004</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Full</td>
+<td style="text-align: left;">choclito</td>
+<td style="text-align: left;">Full_choclito</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">split-rcbd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_4005_Full_kancolla</td>
+<td style="text-align: right;">4005</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Full</td>
+<td style="text-align: left;">kancolla</td>
+<td style="text-align: left;">Full_kancolla</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">split-rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4006_Full_chulpi</td>
+<td style="text-align: right;">4006</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Full</td>
+<td style="text-align: left;">chulpi</td>
+<td style="text-align: left;">Full_chulpi</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">10</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: left;">split-rcbd</td>
 </tr>
@@ -347,7 +530,7 @@
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Field layout visualization</span></span>
 <span><span class="fu"><a href="../reference/tarpuy_plotdesign.html">tarpuy_plotdesign</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">split_exp</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">design</span>,</span>
 <span>  factor <span class="op">=</span> <span class="st">"Irrigation"</span>,</span>
 <span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"Variety"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -361,17 +544,12 @@
 </section></section><section class="section level2"><h2 id="label">Label<a class="anchor" aria-label="anchor" href="#label"></a>
 </h2>
 <p>The experimental field book generated by the design is used as the input data for label creation. Each row represents an experimental unit, allowing the automatic generation of individualized labels.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Experimental fieldbook</span></span>
-<span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="va">split_exp</span><span class="op">$</span><span class="va">fieldbook</span></span></code></pre></div>
-</div>
 </section><section class="section level2"><h2 id="customize-the-label-layout">Customize the label layout<a class="anchor" aria-label="anchor" href="#customize-the-label-layout"></a>
 </h2>
 <p>The label layout can be customized by combining text, images and QR codes. Each layer can use values from the experimental field book, allowing automatic generation of labels for every experimental plot.</p>
 <p>Load package and import fonts.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">font</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Permanent Marker"</span>, <span class="st">"Tillana"</span>, <span class="st">"Courgette"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="http://huito.inkaverse.com/reference/huito_fonts.html" class="external-link">huito_fonts</a></span><span class="op">(</span><span class="va">font</span><span class="op">)</span></span></code></pre></div>
@@ -382,7 +560,7 @@
 </section><section class="section level2"><h2 id="label-design">Label design<a class="anchor" aria-label="anchor" href="#label-design"></a>
 </h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">label</span> <span class="op">&lt;-</span> <span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  </span>
 <span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/label_layout.html" class="external-link">label_layout</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">2.5</span><span class="op">)</span></span>
 <span>               , border_color <span class="op">=</span> <span class="st">"blue"</span></span>
@@ -394,7 +572,7 @@
 <span>    <span class="co"># , opts = list("image_scale(200)", "image_noise()")</span></span>
 <span>    <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/include_barcode.html" class="external-link">include_barcode</a></span><span class="op">(</span></span>
-<span>     value <span class="op">=</span> <span class="st">"barcode"</span></span>
+<span>     value <span class="op">=</span> <span class="st">"qrcode"</span></span>
 <span>     , size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">2.5</span><span class="op">)</span></span>
 <span>     , position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8.2</span>, <span class="fl">1.25</span><span class="op">)</span></span>
 <span>     <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -436,9 +614,12 @@
 </h3>
 <p>The preview mode <code>label_print(mode = "preview")</code> generate a example of the label design from a random row of the data set.</p>
 <div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">label</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/label_print.html" class="external-link">label_print</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"preview"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img src="DoE-2_SPLIT_files/figure-html/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center" style="width:98.0%"></p>
+<figure><p><img src="DoE-2_SPLIT_files/figure-html/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center" style="width:98.0%"></p>
 </figure>
 </div>
 </div>

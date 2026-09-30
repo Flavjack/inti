@@ -162,16 +162,16 @@
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 1. Define factors: Salinity levels, incubation temperatures, and genotypes</span></span>
-<span><span class="va">factors_crd_3f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span><span class="va">factors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  NaCl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"50"</span><span class="op">)</span>,</span>
 <span>  Temp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"20"</span>, <span class="st">"25"</span><span class="op">)</span>,</span>
 <span>  Genotype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"G1"</span>, <span class="st">"G2"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 2. Generate factorial CRD layout</span></span>
-<span><span class="va">crd_exp_3f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/design_repblock.html">design_repblock</a></span><span class="op">(</span></span>
+<span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/design_repblock.html">design_repblock</a></span><span class="op">(</span></span>
 <span>  nfactors <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  factors <span class="op">=</span> <span class="va">factors_crd_3f</span>,</span>
+<span>  factors <span class="op">=</span> <span class="va">factors</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"crd"</span>,</span>
 <span>  rep <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  zigzag <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -179,8 +179,9 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Fieldbook preview</span></span>
-<span><span class="va">crd_exp_3f</span><span class="op">$</span><span class="va">fieldbook</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="va">design</span><span class="op">$</span><span class="va">fieldbook</span> </span>
+<span></span>
+<span><span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Factorial CRD Fieldbook preview"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table class="table caption-top">
@@ -342,6 +343,292 @@
 <td style="text-align: right;">7</td>
 <td style="text-align: left;">crd</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_1011</td>
+<td style="text-align: right;">1011</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">G2</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_1012</td>
+<td style="text-align: right;">1012</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">G2</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_1013</td>
+<td style="text-align: right;">1013</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">G2</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_1014</td>
+<td style="text-align: right;">1014</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">G2</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_1015</td>
+<td style="text-align: right;">1015</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">G2</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_1016</td>
+<td style="text-align: right;">1016</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">G1</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_1017</td>
+<td style="text-align: right;">1017</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">G2</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_1018</td>
+<td style="text-align: right;">1018</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">G2</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_1019</td>
+<td style="text-align: right;">1019</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">G2</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_1020</td>
+<td style="text-align: right;">1020</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">G1</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_1021</td>
+<td style="text-align: right;">1021</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">G1</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_1022</td>
+<td style="text-align: right;">1022</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">G1</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_1023</td>
+<td style="text-align: right;">1023</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">G2</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_1024</td>
+<td style="text-align: right;">1024</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">G2</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_1025</td>
+<td style="text-align: right;">1025</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">G1</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_1026</td>
+<td style="text-align: right;">1026</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">G1</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_1027</td>
+<td style="text-align: right;">1027</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">G2</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_1028</td>
+<td style="text-align: right;">1028</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">G2</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_1029</td>
+<td style="text-align: right;">1029</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">G1</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_1030</td>
+<td style="text-align: right;">1030</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">G2</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_1031</td>
+<td style="text-align: right;">1031</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">G1</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">crd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_1032</td>
+<td style="text-align: right;">1032</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">G1</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">crd</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -349,7 +636,7 @@
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Spatial layout visualization</span></span>
 <span><span class="fu"><a href="../reference/tarpuy_plotdesign.html">tarpuy_plotdesign</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">crd_exp_3f</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">design</span>,</span>
 <span>  factor <span class="op">=</span> <span class="st">"NaCl"</span>,</span>
 <span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"Temp"</span>, <span class="st">"Genotype"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -363,17 +650,12 @@
 </section><section class="section level2"><h2 id="label">Label<a class="anchor" aria-label="anchor" href="#label"></a>
 </h2>
 <p>The experimental field book generated by the design is used as the input data for label creation. Each row represents an experimental unit, allowing the automatic generation of individualized labels.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Experimental fieldbook</span></span>
-<span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="va">crd_exp_3f</span><span class="op">$</span><span class="va">fieldbook</span></span></code></pre></div>
-</div>
 </section><section class="section level2"><h2 id="customize-the-label-layout">Customize the label layout<a class="anchor" aria-label="anchor" href="#customize-the-label-layout"></a>
 </h2>
 <p>The label layout can be customized by combining text, images and QR codes. Each layer can use values from the experimental field book, allowing automatic generation of labels for every experimental plot.</p>
 <p>Load package and import fonts.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">font</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Permanent Marker"</span>, <span class="st">"Tillana"</span>, <span class="st">"Courgette"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="http://huito.inkaverse.com/reference/huito_fonts.html" class="external-link">huito_fonts</a></span><span class="op">(</span><span class="va">font</span><span class="op">)</span></span></code></pre></div>
@@ -384,7 +666,7 @@
 </section><section class="section level2"><h2 id="label-design">Label design<a class="anchor" aria-label="anchor" href="#label-design"></a>
 </h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">label</span> <span class="op">&lt;-</span> <span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/label_layout.html" class="external-link">label_layout</a></span><span class="op">(</span></span>
 <span>    size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5.2</span>, <span class="fl">10</span><span class="op">)</span></span>
@@ -463,9 +745,12 @@
 </h3>
 <p>The preview mode <code>label_print(mode = "preview")</code> generate a example of the label design from a random row of the data set.</p>
 <div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">label</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/label_print.html" class="external-link">label_print</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"preview"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img src="DoE-3_DCA_files/figure-html/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center" style="width:98.0%"></p>
+<figure><p><img src="DoE-3_DCA_files/figure-html/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center" style="width:98.0%"></p>
 </figure>
 </div>
 </div>

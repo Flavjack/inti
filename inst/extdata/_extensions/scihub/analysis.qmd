@@ -32,7 +32,10 @@ gs <- "url" %>%
   as_sheets_id()
 
 fb <- gs %>% 
-  range_read(ss = .,sheet = "fb")
+  range_read(ss = .,sheet = "fb") %>% 
+  mutate(across(c(1:4), ~ as.factor(.))) 
+
+fb %>% str()
 ```
 
 # Research Objectives
@@ -56,13 +59,15 @@ fb <- gs %>%
 ```{r}
 #| eval: false
 
-library(FactoMineR)
 library(factoextra)
 
 dtx <- fb %>% 
   dplyr::select(!c("var1", "var2")) %>% 
+  unite("rowname", c("varX", "varY"), remove = F, sep = "-") %>% 
+  column_to_rownames() %>% 
   as.data.frame()
-# str(dtx)
+
+str(dtx)
   
 mv <- dtx %>% 
   PCA(scale.unit = T
@@ -97,10 +102,15 @@ cls <- mv %>% HCPC(nb.clust = -1, graph = FALSE)
 
 map <- \() {plot.HCPC(cls, choice = "map", draw.tree = FALSE)}
 
-cls$data.clust # Cluster membership of each individual
-cls$desc.var$quanti # Quantitative variables characterizing each cluster
-cls$desc.var$category # Categorical variables significantly by cluster 
-table(cls$data.clust$clust) # Number of individuals assigned to each cluster
+cls$call$t$tree
+cls$data.clust %>% 
+  kable(caption = "Cluster membership of each individual")  
+cls$desc.var$quanti %>% 
+  kable(caption = "Quantitative variables characterizing each cluster")
+cls$desc.var$category%>% 
+  kable(caption = "Categorical variables significantly by cluster")  
+table(cls$data.clust$clust) %>% 
+  kable(caption = "Number of individuals assigned to each cluster")
 
 plot <- list(var, cos, ind, map) %>% 
   plot_grid(plotlist = ., ncol = 2, labels = "auto") %>% 
@@ -109,6 +119,99 @@ plot <- list(var, cos, ind, map) %>%
 
 plot %>% include_graphics()
 ```
+
+## PCA information
+
+```{r}
+c1 <- fviz_eig(mv, 
+                addlabels = TRUE,
+                hjust = 0.05,
+                barfill="white",
+                barcolor ="darkblue",
+                linecolor ="red") + 
+  # ylim(0, 30) +
+  labs(
+    title = "PCA - percentage of explained variances",
+    y = "Variance (%)") +
+  theme_minimal()  +
+  theme(
+    axis.text.x = element_text(size = 12)
+    , axis.text.y = element_text(size = 12)
+  )
+
+c1
+
+c2 <- fviz_contrib(mv,
+                     choice = "var", 
+                     axes = 1, 
+                     top = 30,
+                     fill="white",
+                     color ="darkblue"
+                   , sort.val = "asc"
+                   ) +
+  # ylim(0, 8) +
+  labs(title = "Dim 1 - variables contribution", x = "") +
+  coord_flip()  +
+  theme(
+    axis.text.x = element_text(size = 12)
+    , axis.text.y = element_text(size = 12)
+  )
+
+c2
+
+c3 <- fviz_contrib(mv,
+                     choice = "var", 
+                     axes = 2, 
+                     top = 30,
+                     fill="white",
+                     color ="darkblue"
+                   , sort.val = "asc"
+                   ) +
+  # ylim(0, 8) +
+  labs(title = "Dim 2 - variables contribution", x = "") +
+  coord_flip()  +
+  theme(
+    axis.text.x = element_text(size = 12)
+    , axis.text.y = element_text(size = 12)
+  )
+
+c3
+
+lpanel <- c(c1, c2, c3) %>% 
+  plot_grid(plotlist = ., ncol = 1, labels = "auto"
+            , rel_heights = c(1, 1.2, 1.2))
+  
+rpanel <- \() {
+  
+pcainfo$cos2[, 1:2] %>% 
+  corrplot(
+    is.corr = F
+    , method = "number",
+    type = "full",
+    tl.col = "black",
+    tl.srt = 45,
+    tl.cex = 0.9, 
+    number.cex = 0.5, 
+    number.digits = 1,
+    cl.cex = 0.7,
+    cl.pos = "r",
+    cl.align = "r",
+    cl.ratio = 4 
+  )
+
+}
+
+grid <- c(lpanel, rpanel) %>% 
+  plot_grid(plotlist = ., ncol = 2, labels = c("", "d"))
+
+plot <- grid %>% 
+  ggsave(plot = ., "manuscript/contribution.jpg"
+         , units = "cm"
+         , width = 28, height = 36)
+
+plot %>% include_graphics()
+```
+
 
 # References
 

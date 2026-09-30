@@ -36,14 +36,14 @@ varieties) is assigned to sub-plots within each main plot.
 
 \
 `# 1. Define factors: Irrigation regimes (main plots) and commercial quinoa varieties (sub-plots)`\
-`factors_split`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`factors`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
 `  Irrigation ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Full"``, ``"Deficit"``)``,`\
-`  Variety    ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Var_1"``, ``"Var_2"``, ``"Var_3"``)`\
+`  Variety    ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"chulpi"``, ``"kancolla"``, ``"choclito"``)`\
 `)`\
 \
 `# 2. Generate Split-plot layout: 2 main levels x 3 sub levels x 4 blocks = 24 plots`\
-`split_exp`` ``<-`` `[`design_split`](https://inkaverse.com/reference/design_split.md)`(`\
-`  factors ``=`` ``factors_split``,`\
+`design`` ``<-`` `[`design_split`](https://inkaverse.com/reference/design_split.md)`(`\
+`  factors ``=`` ``factors``,`\
 `  type ``=`` ``"split_rcbd"``,`\
 `  rep ``=`` ``4``,`\
 `  zigzag ``=`` ``TRUE``,`\
@@ -51,22 +51,37 @@ varieties) is assigned to sub-plots within each main plot.
 `)`\
 \
 `# Fieldbook preview`\
-`split_exp``$``fieldbook`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
-`  `[`head`](https://rdrr.io/r/utils/head.html)`(``10``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
+`fb`` ``<-`` ``design``$``fieldbook`` `\
+\
+`fb`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
 `  ``knitr``::`[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"Split-plot Fieldbook preview"``)`
 
 | qrcode | plots | ntreat | Irrigation | Variety | wp_sp | block | sort | rows | cols | design |
 |:---|---:|---:|:---|:---|:---|---:|---:|---:|---:|:---|
-| inkaverse_1001_Full_Var_1 | 1001 | 1 | Full | Var_1 | Full_Var_1 | 1 | 1 | 1 | 1 | split-rcbd |
-| inkaverse_1002_Full_Var_2 | 1002 | 3 | Full | Var_2 | Full_Var_2 | 1 | 2 | 2 | 1 | split-rcbd |
-| inkaverse_1003_Full_Var_3 | 1003 | 5 | Full | Var_3 | Full_Var_3 | 1 | 3 | 3 | 1 | split-rcbd |
-| inkaverse_1004_Deficit_Var_2 | 1004 | 4 | Deficit | Var_2 | Deficit_Var_2 | 1 | 4 | 3 | 2 | split-rcbd |
-| inkaverse_1005_Deficit_Var_1 | 1005 | 2 | Deficit | Var_1 | Deficit_Var_1 | 1 | 5 | 2 | 2 | split-rcbd |
-| inkaverse_1006_Deficit_Var_3 | 1006 | 6 | Deficit | Var_3 | Deficit_Var_3 | 1 | 6 | 1 | 2 | split-rcbd |
-| inkaverse_2001_Deficit_Var_1 | 2001 | 2 | Deficit | Var_1 | Deficit_Var_1 | 2 | 1 | 4 | 1 | split-rcbd |
-| inkaverse_2002_Deficit_Var_3 | 2002 | 6 | Deficit | Var_3 | Deficit_Var_3 | 2 | 2 | 5 | 1 | split-rcbd |
-| inkaverse_2003_Deficit_Var_2 | 2003 | 4 | Deficit | Var_2 | Deficit_Var_2 | 2 | 3 | 6 | 1 | split-rcbd |
-| inkaverse_2004_Full_Var_1 | 2004 | 1 | Full | Var_1 | Full_Var_1 | 2 | 4 | 6 | 2 | split-rcbd |
+| inkaverse_1001_Full_chulpi | 1001 | 1 | Full | chulpi | Full_chulpi | 1 | 1 | 1 | 1 | split-rcbd |
+| inkaverse_1002_Full_kancolla | 1002 | 3 | Full | kancolla | Full_kancolla | 1 | 2 | 2 | 1 | split-rcbd |
+| inkaverse_1003_Full_choclito | 1003 | 5 | Full | choclito | Full_choclito | 1 | 3 | 3 | 1 | split-rcbd |
+| inkaverse_1004_Deficit_kancolla | 1004 | 4 | Deficit | kancolla | Deficit_kancolla | 1 | 4 | 3 | 2 | split-rcbd |
+| inkaverse_1005_Deficit_chulpi | 1005 | 2 | Deficit | chulpi | Deficit_chulpi | 1 | 5 | 2 | 2 | split-rcbd |
+| inkaverse_1006_Deficit_choclito | 1006 | 6 | Deficit | choclito | Deficit_choclito | 1 | 6 | 1 | 2 | split-rcbd |
+| inkaverse_2001_Deficit_chulpi | 2001 | 2 | Deficit | chulpi | Deficit_chulpi | 2 | 1 | 4 | 1 | split-rcbd |
+| inkaverse_2002_Deficit_choclito | 2002 | 6 | Deficit | choclito | Deficit_choclito | 2 | 2 | 5 | 1 | split-rcbd |
+| inkaverse_2003_Deficit_kancolla | 2003 | 4 | Deficit | kancolla | Deficit_kancolla | 2 | 3 | 6 | 1 | split-rcbd |
+| inkaverse_2004_Full_chulpi | 2004 | 1 | Full | chulpi | Full_chulpi | 2 | 4 | 6 | 2 | split-rcbd |
+| inkaverse_2005_Full_choclito | 2005 | 5 | Full | choclito | Full_choclito | 2 | 5 | 5 | 2 | split-rcbd |
+| inkaverse_2006_Full_kancolla | 2006 | 3 | Full | kancolla | Full_kancolla | 2 | 6 | 4 | 2 | split-rcbd |
+| inkaverse_3001_Full_chulpi | 3001 | 1 | Full | chulpi | Full_chulpi | 3 | 1 | 7 | 1 | split-rcbd |
+| inkaverse_3002_Full_kancolla | 3002 | 3 | Full | kancolla | Full_kancolla | 3 | 2 | 8 | 1 | split-rcbd |
+| inkaverse_3003_Full_choclito | 3003 | 5 | Full | choclito | Full_choclito | 3 | 3 | 9 | 1 | split-rcbd |
+| inkaverse_3004_Deficit_chulpi | 3004 | 2 | Deficit | chulpi | Deficit_chulpi | 3 | 4 | 9 | 2 | split-rcbd |
+| inkaverse_3005_Deficit_choclito | 3005 | 6 | Deficit | choclito | Deficit_choclito | 3 | 5 | 8 | 2 | split-rcbd |
+| inkaverse_3006_Deficit_kancolla | 3006 | 4 | Deficit | kancolla | Deficit_kancolla | 3 | 6 | 7 | 2 | split-rcbd |
+| inkaverse_4001_Deficit_chulpi | 4001 | 2 | Deficit | chulpi | Deficit_chulpi | 4 | 1 | 10 | 1 | split-rcbd |
+| inkaverse_4002_Deficit_choclito | 4002 | 6 | Deficit | choclito | Deficit_choclito | 4 | 2 | 11 | 1 | split-rcbd |
+| inkaverse_4003_Deficit_kancolla | 4003 | 4 | Deficit | kancolla | Deficit_kancolla | 4 | 3 | 12 | 1 | split-rcbd |
+| inkaverse_4004_Full_choclito | 4004 | 5 | Full | choclito | Full_choclito | 4 | 4 | 12 | 2 | split-rcbd |
+| inkaverse_4005_Full_kancolla | 4005 | 3 | Full | kancolla | Full_kancolla | 4 | 5 | 11 | 2 | split-rcbd |
+| inkaverse_4006_Full_chulpi | 4006 | 1 | Full | chulpi | Full_chulpi | 4 | 6 | 10 | 2 | split-rcbd |
 
 Split-plot Fieldbook preview {.table .caption-top}
 
@@ -74,7 +89,7 @@ Split-plot Fieldbook preview {.table .caption-top}
 \
 `# Field layout visualization`\
 [`tarpuy_plotdesign`](https://inkaverse.com/reference/tarpuy_plotdesign.md)`(`\
-`  data ``=`` ``split_exp``,`\
+`  data ``=`` ``design``,`\
 `  factor ``=`` ``"Irrigation"``,`\
 `  fill ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"plots"``, ``"Variety"``)`\
 `)`
@@ -86,10 +101,6 @@ Split-plot Fieldbook preview {.table .caption-top}
 The experimental field book generated by the design is used as the input
 data for label creation. Each row represents an experimental unit,
 allowing the automatic generation of individualized labels.
-
-\
-`# Experimental fieldbook`\
-`fb`` ``<-`` ``split_exp``$``fieldbook`
 
 ## Customize the label layout
 
@@ -120,7 +131,7 @@ Load package and import fonts.
 `    ``# , opts = list("image_scale(200)", "image_noise()")`\
 `    ``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)\
 `  `[`include_barcode`](http://huito.inkaverse.com/reference/include_barcode.md)`(`\
-`     value ``=`` ``"barcode"`\
+`     value ``=`` ``"qrcode"`\
 `     , size ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``2.5``, ``2.5``)`\
 `     , position ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``8.2``, ``1.25``)`\
 `     ``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)\
@@ -163,7 +174,11 @@ Load package and import fonts.
 The preview mode `label_print(mode = "preview")` generate a example of
 the label design from a random row of the data set.
 
-![](DoE-2_SPLIT_files/figure-html/unnamed-chunk-6-1.png)
+\
+`label`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
+`  `[`label_print`](http://huito.inkaverse.com/reference/label_print.md)`(``mode ``=`` ``"preview"``)`
+
+![](DoE-2_SPLIT_files/figure-html/unnamed-chunk-5-1.png)
 
 ### Generate the complete labels
 

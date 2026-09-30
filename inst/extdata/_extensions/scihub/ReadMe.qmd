@@ -9,6 +9,7 @@ format:
     number-sections: true
     self-contained: true
     code-fold: false
+    output-file: index.html
 editor_options: 
   chunk_output_type: console
 execute: 

@@ -66,6 +66,7 @@ rmout <- potato %>%
   , title = "Plot Diagnostic"
   )
 #> fixed-effect model matrix is rank deficient so dropping 1 column / coefficient
+#> Warning: the 'findbars' function has moved to the reformulas package. Please update your imports, or ask an upstream package maintainer to do so.
 #> fixed-effect model matrix is rank deficient so dropping 1 column / coefficient
 
 rmout

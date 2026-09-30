@@ -170,8 +170,8 @@ fitting process (default = NULL).</p></dd>
 
 
 <dt id="arg-plot-diag">plot_diag<a class="anchor" aria-label="anchor" href="#arg-plot-diag"></a></dt>
-<dd><p>Show diagnostic plots for fixed and random effects (default
-= FALSE).</p></dd>
+<dd><p>Show diagnostic plots using ggplot2 and cowplot
+(default = FALSE).</p></dd>
 
 
 <dt id="arg-outliers-rm">outliers.rm<a class="anchor" aria-label="anchor" href="#arg-outliers-rm"></a></dt>
@@ -206,6 +206,11 @@ consuming with the increase of the number of the genotypes. You can specify
 <code>{emmeans = FALSE}</code> and the calculate of the BLUEs will be faster.</p>
 <p>If <code>{emmeans = FALSE}</code> you should change 1 by 0 in the fixed model for
 exclude the intersect in the analysis and get all the genotypes BLUEs.</p>
+<p>Diagnostic plots are produced with ggplot2 and assembled with cowplot.
+If <code>{outliers.rm = FALSE}</code>, fixed and random model diagnostics are
+displayed in one combined panel. If <code>{outliers.rm = TRUE}</code>, fixed and
+random diagnostics are displayed in separate panels comparing before
+and after cleaning.</p>
 <p>For more information review the references.</p>
     </div>
     <div class="section level2">
@@ -237,76 +242,178 @@ Ltd.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://inkaverse.com/">inti</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span> </span></span>
+<span class="r-in"><span><span class="va">md</span> <span class="op">&lt;-</span> <span class="va">met</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">H2cal</span><span class="op">(</span>trait <span class="op">=</span> <span class="st">"yield"</span>,</span></span>
+<span class="r-in"><span>  gen.name <span class="op">=</span> <span class="st">"cultivar"</span>,</span></span>
+<span class="r-in"><span>  rep.n <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  env.name <span class="op">=</span> <span class="st">"env"</span>,</span></span>
+<span class="r-in"><span>  env.n <span class="op">=</span> <span class="fl">18</span>,</span></span>
+<span class="r-in"><span>  fixed.model <span class="op">=</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">env</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">env</span><span class="op">:</span><span class="va">rep</span><span class="op">:</span><span class="va">alpha</span><span class="op">)</span> <span class="op">+</span> <span class="va">cultivar</span>,</span></span>
+<span class="r-in"><span>  random.model <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">env</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">env</span><span class="op">:</span><span class="va">rep</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">env</span><span class="op">:</span><span class="va">rep</span><span class="op">:</span><span class="va">alpha</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">cultivar</span><span class="op">:</span><span class="va">env</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">cultivar</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  summary <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  plot_diag <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  outliers.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  emmeans <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Linear mixed model fit by REML ['lmerMod']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: yield ~ 1 + env + (1 | env:rep) + (1 | env:rep:alpha) + (1 |  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     cultivar:env) + (1 | cultivar)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Data: dt.rm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Weights: weights</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> REML criterion at convergence: 11329.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Scaled residuals: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Min      1Q  Median      3Q     Max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -4.0239 -0.3641  0.0002  0.3969  2.1831 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random effects:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Groups        Name        Variance Std.Dev.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  cultivar:env  (Intercept) 2107.0   45.90   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  env:rep:alpha (Intercept) 1030.8   32.11   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  env:rep       (Intercept)  382.4   19.55   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  cultivar      (Intercept)  712.1   26.69   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Residual                   880.4   29.67   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of obs: 1055, groups:  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cultivar:env, 536; env:rep:alpha, 251; env:rep, 36; cultivar, 30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       Estimate Std. Error t value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)            1066.29      19.26  55.355</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envmiddle_07bm28_2016  -358.80      26.29 -13.648</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envmiddle_07bm29_2016  -613.09      26.46 -23.168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envmiddle_07bm32_2016   -12.32      26.64  -0.462</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envmiddle_07bm36_2016  -431.05      26.64 -16.183</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envmiddle_07bm37_2016  -515.39      26.64 -19.348</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envmiddle_07bm39_2016   144.85      26.64   5.438</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envnorth_07bm25_2016   -439.09      26.29 -16.703</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envnorth_07bm26_2016    -47.97      26.32  -1.823</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envnorth_07bm38_2016   -105.29      26.64  -3.953</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envnorth_07bm40_2016   -276.36      26.64 -10.376</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envnorth_07bm41_2016   -138.43      26.66  -5.192</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envsouth_07bm20_2016   -218.75      26.31  -8.314</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envsouth_07bm21_2016     31.50      26.32   1.197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envsouth_07bm22_2016   -167.38      26.29  -6.367</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envsouth_07bm23_2016   -140.88      26.31  -5.355</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envsouth_07bm30_2016   -421.47      26.72 -15.775</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> envsouth_07bm35_2016   -233.93      26.73  -8.751</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Correlation matrix not shown by default, as p = 18 &gt; 12.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Use print(g.ran.sum, correlation=TRUE)  or</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     vcov(g.ran.sum)        if you need it</span>
+<span class="r-plt img"><img src="H2cal-1.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="H2cal-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dt</span> <span class="op">&lt;-</span> <span class="va">potato</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">hr</span> <span class="op">&lt;-</span> <span class="fu">H2cal</span><span class="op">(</span>data <span class="op">=</span> <span class="va">dt</span></span></span>
-<span class="r-in"><span>            , trait <span class="op">=</span> <span class="st">"stemdw"</span></span></span>
-<span class="r-in"><span>            , gen.name <span class="op">=</span> <span class="st">"geno"</span></span></span>
-<span class="r-in"><span>            , rep.n <span class="op">=</span> <span class="fl">5</span></span></span>
-<span class="r-in"><span>            , fixed.model <span class="op">=</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">bloque</span><span class="op">)</span> <span class="op">+</span> <span class="va">geno</span></span></span>
-<span class="r-in"><span>            , random.model <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">bloque</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">geno</span><span class="op">)</span></span></span>
-<span class="r-in"><span>            , emmeans <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span>            , plot_diag <span class="op">=</span> <span class="cn">FALSE</span></span></span>
-<span class="r-in"><span>            , outliers.rm <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span>            <span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the 'findbars' function has moved to the reformulas package. Please update your imports, or ask an upstream package maintainer to do so.</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span> <span class="va">hr</span><span class="op">$</span><span class="va">tabsmr</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    trait rep geno env year     mean      std   min    max      V.g      V.e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 stemdw   5   15   1    1 12.59867 4.749994 2.818 22.302 19.96002 9.410932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        V.p repeatability     H2.s      H2.p      H2.c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 21.84221      0.913828 0.913828 0.9502395 0.9533473</span>
-<span class="r-in"><span> <span class="va">hr</span><span class="op">$</span><span class="va">blues</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 15 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    geno  stemdw    SE    df lower.CL upper.CL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> G01    15.7   1.03  120.   13.7      17.8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> G02    10.1   1.03  120.    8.08     12.2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> G03     9.70  1.03  120.    7.65     11.7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> G04    15.2   1.03  120.   13.1      17.2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> G05    12.9   1.09  123.   10.7      15.0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> G06    22.3   1.03  120.   20.3      24.3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> G07     2.82  1.03  120.    0.778     4.86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> G08    10.4   1.03  120.    8.38     12.5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> G09    15.7   1.03  120.   13.6      17.7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> G10     9.24  1.03  120.    7.20     11.3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> G11     6.43  1.03  120.    4.38      8.47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> G12    16.1   1.03  120.   14.1      18.2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> G13    14.6   1.03  120.   12.6      16.7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> G14    16.3   1.03  120.   14.3      18.3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> G15    11.5   1.03  120.    9.43     13.5 </span>
-<span class="r-in"><span> <span class="va">hr</span><span class="op">$</span><span class="va">blups</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 15 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    geno  stemdw</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> G01    15.6 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> G02    10.2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> G03     9.82</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> G04    15.1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> G05    12.8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> G06    20.6 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> G07     3.25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> G08    10.5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> G09    15.5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> G10     9.39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> G11     6.70</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> G12    15.9 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> G13    14.5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> G14    16.1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> G15    11.5 </span>
-<span class="r-in"><span> <span class="va">hr</span><span class="op">$</span><span class="va">outliers</span></span></span>
+<span class="r-in"><span> <span class="va">md</span><span class="op">$</span><span class="va">tabsmr</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 18</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   trait   rep  geno   env  year  mean   std   min   max   V.g V.gxl V.gxlxy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> yield     2    30    18     1  50.5  25.8 -<span style="color: #BB0000;">15.5</span>  106.  712. <span style="text-decoration: underline;">2</span>107.       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6 more variables: V.e &lt;dbl&gt;, V.p &lt;dbl&gt;, repeatability &lt;dbl&gt;, H2.s &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   H2.p &lt;dbl&gt;, H2.c &lt;dbl&gt;</span></span>
+<span class="r-in"><span> <span class="va">md</span><span class="op">$</span><span class="va">blues</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 29 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    cultivar yield smith.w</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 23286     29.8  0.012<span style="text-decoration: underline;">6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 23524    -<span style="color: #BB0000;">15.5</span>  0.012<span style="text-decoration: underline;">9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 24054     62.3  0.012<span style="text-decoration: underline;">6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 24521     75.2  0.012<span style="text-decoration: underline;">6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 24984     52.9  0.012<span style="text-decoration: underline;">6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 25512     37.5  0.013<span style="text-decoration: underline;">1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 25965     30.4  0.012<span style="text-decoration: underline;">6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 26362     34.7  0.012<span style="text-decoration: underline;">0</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 26742     58.0  0.012<span style="text-decoration: underline;">9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 26777     34.1  0.012<span style="text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 19 more rows</span></span>
+<span class="r-in"><span> <span class="va">md</span><span class="op">$</span><span class="va">blups</span> </span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 30 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    cultivar yield</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 22455    <span style="text-decoration: underline;">1</span>027.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 23286    <span style="text-decoration: underline;">1</span>048.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 23524    <span style="text-decoration: underline;">1</span>017.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 24054    <span style="text-decoration: underline;">1</span>076.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 24521    <span style="text-decoration: underline;">1</span>088.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 24984    <span style="text-decoration: underline;">1</span>073.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 25512    <span style="text-decoration: underline;">1</span>061.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 25965    <span style="text-decoration: underline;">1</span>055.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 26362    <span style="text-decoration: underline;">1</span>054.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 26742    <span style="text-decoration: underline;">1</span>075.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 20 more rows</span></span>
+<span class="r-in"><span> <span class="va">md</span><span class="op">$</span><span class="va">outliers</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $fixed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    index bloque geno stemdw     resi  res_MAD rawp.BHStud adjp bholm out_flag</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68    68     IV  G05  80.65 60.36709 18.84505           0    0     0  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     index                env rep alpha cultivar     yield      resi    res_MAD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108   108  south_07bm21_2016   2     1    27609 1177.4254  175.7415   4.558418</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 376   378 middle_07bm27_2016   2     7    26362  875.4764 -160.2806  -4.157392</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 416   418 middle_07bm27_2016   2     8    28950 1345.2563  239.2646   6.206094</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 486   488 middle_07bm29_2016   2     7    24054  236.6704 -196.0316  -5.084709</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 515   521 middle_07bm29_2016   1     7    27599  626.0585  181.9093   4.718400</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 520   527 middle_07bm29_2016   1     7    27609   83.1913 -233.4284  -6.054713</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 521   528 middle_07bm29_2016   2     6    27609  149.2549 -179.7321  -4.661929</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 552   561  south_07bm30_2016   1     3    26777  294.0247 -266.3388  -6.908350</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 578   587  south_07bm30_2016   1     3    27609  309.0891 -181.2963  -4.702502</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 582   591  south_07bm30_2016   1     3    28128  815.9065  186.9957   4.850334</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 588   597  south_07bm30_2016   1     6    28950  551.0540 -163.0237  -4.228543</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 589   598  south_07bm30_2016   2     2    28950  366.6649 -197.0120  -5.110139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 655   664  south_07bm35_2016   2     2    23286  519.1671 -262.8217  -6.817124</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 698   707  south_07bm35_2016   1     4    27609  256.9020 -424.3367 -11.006533</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 699   708  south_07bm35_2016   2     5    27609  345.2121 -355.3906  -9.218194</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 704   713  south_07bm35_2016   1     6    28209 1018.5923  180.8066   4.689800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 708   717  south_07bm35_2016   1     2    28950  568.7687 -258.2803  -6.699327</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      rawp.BHStud         adjp        bholm out_flag</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 108 5.154036e-06 5.154036e-06 5.437508e-03  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 376 3.219018e-05 3.219018e-05 3.389626e-02  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 416 5.431779e-10 5.431779e-10 5.779413e-07  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 486 3.681896e-07 3.681896e-07 3.906492e-04  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 515 2.377069e-06 2.377069e-06 2.517316e-03  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 520 1.406685e-09 1.406685e-09 1.495306e-06  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 521 3.132588e-06 3.132588e-06 3.308013e-03  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 552 4.903189e-12 4.903189e-12 5.231703e-09  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 578 2.569931e-06 2.569931e-06 2.718987e-03  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 582 1.232538e-06 1.232538e-06 1.306491e-03  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 588 2.352101e-05 2.352101e-05 2.479114e-02  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 589 3.219225e-07 3.219225e-07 3.418817e-04  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 655 9.288126e-12 9.288126e-12 9.901142e-09  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 698 0.000000e+00 0.000000e+00 0.000000e+00  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 699 0.000000e+00 0.000000e+00 0.000000e+00  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 704 2.734723e-06 2.734723e-06 2.890603e-03  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 708 2.093814e-11 2.093814e-11 2.229912e-08  OUTLIER</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $random</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     index bloque geno stemdw     resi   res_MAD  rawp.BHStud         adjp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68     68     IV  G05  80.65 61.39925 18.886676 0.0000000000 0.0000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 100   100     IV  G06  33.52 12.02340  3.698449 0.0002169207 0.0002169207</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          bholm out_flag</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68  0.00000000  OUTLIER</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 100 0.03232119  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     index                env rep alpha cultivar     yield       resi   res_MAD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 387   389 middle_07bm27_2016   1     5    27543 1225.2806   78.79465  4.089582</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 392   394 middle_07bm27_2016   2     3    27548 1204.8185   85.86587  4.456591</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 407   409 middle_07bm27_2016   1     6    27669 1273.3470   93.39383  4.847305</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 415   417 middle_07bm27_2016   1     5    28950 1108.5987  -92.21395 -4.786067</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 416   418 middle_07bm27_2016   2     8    28950 1345.2563  146.18893  7.587465</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 515   521 middle_07bm29_2016   1     7    27599  626.0585   88.56392  4.596624</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 552   561  south_07bm30_2016   1     3    26777  294.0247 -161.53662 -8.384037</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 553   562  south_07bm30_2016   2     2    26777  529.5605   85.30100  4.427273</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 582   591  south_07bm30_2016   1     3    28128  815.9065   96.78572  5.023350</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 654   663  south_07bm35_2016   1     1    23286  942.9373  152.02098  7.890158</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 655   664  south_07bm35_2016   2     2    23286  519.1671 -189.68244 -9.844855</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 698   707  south_07bm35_2016   1     4    27609  256.9020 -127.00325 -6.591694</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 704   713  south_07bm35_2016   1     6    28209 1018.5923  106.56969  5.531156</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 708   717  south_07bm35_2016   1     2    28950  568.7687  -88.59804 -4.598395</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      rawp.BHStud         adjp        bholm out_flag</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 387 4.321510e-05 4.321510e-05 4.563515e-02  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 392 8.327338e-06 8.327338e-06 8.810324e-03  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 407 1.251498e-06 1.251498e-06 1.329091e-03  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 415 1.700810e-06 1.700810e-06 1.804559e-03  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 416 3.264056e-14 3.264056e-14 3.479483e-11  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 515 4.293904e-06 4.293904e-06 4.547245e-03  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 552 0.000000e+00 0.000000e+00 0.000000e+00  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 553 9.543189e-06 9.543189e-06 1.008715e-02  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 582 5.077786e-07 5.077786e-07 5.397686e-04  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 654 3.108624e-15 3.108624e-15 3.316902e-12  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 655 0.000000e+00 0.000000e+00 0.000000e+00  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 698 4.348366e-11 4.348366e-11 4.631010e-08  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 704 3.181277e-08 3.181277e-08 3.384879e-05  OUTLIER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 708 4.257577e-06 4.257577e-06 4.513032e-03  OUTLIER</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span> </span></span>
 </code></pre></div>

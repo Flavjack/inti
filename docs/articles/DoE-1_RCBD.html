@@ -158,15 +158,15 @@
 <p>The Randomized Complete Block Design is recommended when an environmental gradient is present in the field, grouping experimental units into homogeneous blocks to control spatial variability.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 1. Define factors: Bean genotypes and fertilization doses</span></span>
-<span><span class="va">factors_rcbd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  Fertilization <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"50"</span>, <span class="st">"100"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># 1. Define factors: fertilization doses</span></span>
+<span><span class="va">factors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  fertilization <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"50"</span>, <span class="st">"100"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 2. Generate RCBD layout</span></span>
-<span><span class="va">rcbd_exp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/design_repblock.html">design_repblock</a></span><span class="op">(</span></span>
+<span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/design_repblock.html">design_repblock</a></span><span class="op">(</span></span>
 <span>  nfactors <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  factors <span class="op">=</span> <span class="va">factors_rcbd</span>,</span>
+<span>  factors <span class="op">=</span> <span class="va">factors</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"rcbd"</span>,</span>
 <span>  rep <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  zigzag <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -174,12 +174,13 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Fieldbook preview</span></span>
-<span><span class="va">rcbd_exp</span><span class="op">$</span><span class="va">fieldbook</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"RCBD Fieldbook preview"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="va">design</span><span class="op">$</span><span class="va">fieldbook</span> </span>
+<span></span>
+<span><span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Fieldbook preview"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table class="table caption-top">
-<caption>RCBD Fieldbook preview</caption>
+<caption>Fieldbook preview</caption>
 <colgroup>
 <col style="width: 21%">
 <col style="width: 8%">
@@ -195,7 +196,7 @@
 <th style="text-align: left;">qrcode</th>
 <th style="text-align: right;">plots</th>
 <th style="text-align: right;">ntreat</th>
-<th style="text-align: left;">Fertilization</th>
+<th style="text-align: left;">fertilization</th>
 <th style="text-align: right;">sort</th>
 <th style="text-align: right;">block</th>
 <th style="text-align: right;">rows</th>
@@ -313,6 +314,28 @@
 <td style="text-align: right;">3</td>
 <td style="text-align: left;">rcbd</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">inkaverse_4002</td>
+<td style="text-align: right;">4002</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inkaverse_4003</td>
+<td style="text-align: right;">4003</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">50</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">rcbd</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -320,8 +343,8 @@
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Field layout visualization</span></span>
 <span><span class="fu"><a href="../reference/tarpuy_plotdesign.html">tarpuy_plotdesign</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">rcbd_exp</span>,</span>
-<span>  factor <span class="op">=</span> <span class="st">"Fertilization"</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">design</span>,</span>
+<span>  factor <span class="op">=</span> <span class="st">"fertilization"</span>,</span>
 <span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plots"</span>, <span class="st">"ntreat"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
@@ -334,17 +357,12 @@
 </section><section class="section level2"><h2 id="label">Label<a class="anchor" aria-label="anchor" href="#label"></a>
 </h2>
 <p>The experimental field book generated by the design is used as the input data for label creation. Each row represents an experimental unit, allowing the automatic generation of individualized labels.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Experimental fieldbook</span></span>
-<span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="va">rcbd_exp</span><span class="op">$</span><span class="va">fieldbook</span></span></code></pre></div>
-</div>
 </section><section class="section level2"><h2 id="customize-the-label-layout">Customize the label layout<a class="anchor" aria-label="anchor" href="#customize-the-label-layout"></a>
 </h2>
 <p>The label layout can be customized by combining text, images and QR codes. Each layer can use values from the experimental field book, allowing automatic generation of labels for every experimental plot.</p>
 <p>Load package and import fonts.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">font</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Permanent Marker"</span>, <span class="st">"Tillana"</span>, <span class="st">"Courgette"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="http://huito.inkaverse.com/reference/huito_fonts.html" class="external-link">huito_fonts</a></span><span class="op">(</span><span class="va">font</span><span class="op">)</span></span></code></pre></div>
@@ -355,7 +373,7 @@
 </section><section class="section level2"><h2 id="label-design">Label design<a class="anchor" aria-label="anchor" href="#label-design"></a>
 </h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">label</span> <span class="op">&lt;-</span> <span class="va">fb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  </span>
 <span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/label_layout.html" class="external-link">label_layout</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">2.5</span><span class="op">)</span></span>
 <span>               , border_color <span class="op">=</span> <span class="st">"blue"</span></span>
@@ -367,7 +385,7 @@
 <span>    <span class="co"># , opts = list("image_scale(200)", "image_noise()")</span></span>
 <span>    <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/include_barcode.html" class="external-link">include_barcode</a></span><span class="op">(</span></span>
-<span>     value <span class="op">=</span> <span class="st">"barcode"</span></span>
+<span>     value <span class="op">=</span> <span class="st">"qrcode"</span></span>
 <span>     , size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">2.5</span><span class="op">)</span></span>
 <span>     , position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8.2</span>, <span class="fl">1.25</span><span class="op">)</span></span>
 <span>     <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -408,9 +426,12 @@
 </h3>
 <p>The preview mode <code>label_print(mode = "preview")</code> generate a example of the label design from a random row of the data set.</p>
 <div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">label</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="http://huito.inkaverse.com/reference/label_print.html" class="external-link">label_print</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"preview"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img src="DoE-1_RCBD_files/figure-html/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center" style="width:98.0%"></p>
+<figure><p><img src="DoE-1_RCBD_files/figure-html/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center" style="width:98.0%"></p>
 </figure>
 </div>
 </div>
