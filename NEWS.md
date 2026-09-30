@@ -1,3 +1,10 @@
+# inti 0.7.5
+
+- Update H2Cal() faster calculations and new diagnostic plot
+- Update Vignettes
+- Update SciHub()
+
+
 # inti 0.7.4
 
 - Tarpuy

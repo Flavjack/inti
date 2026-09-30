@@ -1,5 +1,11 @@
 # Changelog
 
+## inti 0.7.5
+
+- Update H2Cal() faster calculations and new diagnostic plot
+- Update Vignettes
+- Update SciHub()
+
 ## inti 0.7.4
 
 CRAN release: 2026-09-06
