@@ -1,3 +1,5 @@
+# inti (development version)
+
 # inti 0.7.5
 
 - Update H2Cal() faster calculations and new diagnostic plot
