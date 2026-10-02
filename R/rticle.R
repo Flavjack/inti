@@ -36,9 +36,9 @@ rticle <- function(file = "render2rticle.md",
   
   dir.create(export, recursive = T, showWarnings = F)
   
-
-# page break --------------------------------------------------------------
-
+  
+  # page break --------------------------------------------------------------
+  
   fmt <- tryCatch(
     knitr::pandoc_to(),
     error = function(e)
@@ -210,7 +210,6 @@ rticle <- function(file = "render2rticle.md",
     )
     
     ##------------------------------------------------------------
-    ## REFEREN------------
     ## REFERENCIAS A FIGURAS
     ##------------------------------------------------------------
     
@@ -319,12 +318,36 @@ rticle <- function(file = "render2rticle.md",
   
   # Google Docs -------------------------------------------------------------
   
-  gdoc <- file %>%
-    readLines(warn = F) %>%
+  md_raw <- readLines(file, warn = FALSE)
+  
+  # autores: superindices de afiliacion (Nombre1, Nombre2,3 -> Nombre^1^)
+  title_idx <- grep("^(#\\s|\\*\\*)", md_raw)[1]
+  
+  author_idx <- which(nchar(trimws(md_raw)) > 0 & seq_along(md_raw) > title_idx)[1]
+  
+  md_raw[author_idx] <- gsub(
+    "([[:alpha:]\\.])([0-9]{1,2}(?:,[0-9]{1,2})*\\\\?\\*?)",
+    "\\1^\\2^",
+    md_raw[author_idx],
+    perl = TRUE
+  )
+  md_raw <- gsub("^([0-9]{1,2})([[:alpha:]])", "^\\1^ \\2", md_raw, perl = TRUE)
+  
+  # captions de tablas/figuras: agrega ": " despues del link
+  pat_caption <- paste0(
+    "^(\\[\\*\\*(?:Table|Figure|Tabla|Figura)\\s+[0-9]+(?:\\\\\\.\\*\\*|\\*\\*\\.)\\]\\([^)]*\\))\\s*",
+    "|",
+    "^(\\[\\*\\*(?:Table|Figure|Tabla|Figura)\\s+[0-9]+\\*\\*\\]\\([^)]*\\))(?:\\*\\*\\.\\*\\*|\\.)?\\s*"
+  )
+  is_caption <- grepl(pat_caption, md_raw, perl = TRUE)
+  md_raw[is_caption] <- gsub(pat_caption, "\\1\\2: ", md_raw[is_caption], perl = TRUE)
+  
+  gdoc <- md_raw %>%
     tibble::enframe() %>%
     dplyr::filter(!grepl("^#+ $", .data$value)) %>%
     dplyr::filter(!grepl("^#$", .data$value)) %>%
     dplyr::mutate(
+      value = gsub("\\$", "$", .data$value, fixed = TRUE),
       value = gsub(
         "!\\[(\\$\\$[^]]*\\$\\$|\\$[^]]*\\$)\\]\\[image[0-9]+\\]",
         "\\1",
@@ -525,9 +548,9 @@ rticle <- function(file = "render2rticle.md",
     tibble::deframe() %>%
     writeLines(con = output_file)
   
-
+  
   # return ------------------------------------------------------------------
-
+  
   output_file
   
 }
