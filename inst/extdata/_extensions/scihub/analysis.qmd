@@ -38,6 +38,37 @@ fb <- gs %>%
 fb %>% str()
 ```
 
+# Traits
+
+```{r}
+traits <- gs %>% 
+  range_read(ss = .,sheet = "traits")
+
+trait_label <- traits %>% 
+  rename(fb = `{trait}`) %>% 
+  mutate(trait = paste(variable, " (", units, ")", sep = "")) %>% 
+  dplyr::select(fb, trait) %>% 
+  distinct()
+
+paleta_factor1 <- c(
+"#1f78b4"
+, "#f0027f"
+, "#33a02c"
+, "#6a3d9a"
+, "#ff7f00"
+  )
+
+paleta_factor2 <- c(
+"#fed976"
+, "#feb24c"
+, "#fd8d3c"
+, "#fc4e2a"
+, "#b10026"
+  )
+
+paleta_factor3 <- c("#e41a1c", "#a65628")
+```
+
 # Research Objectives
 
 > https://docs.google.com/spreadsheets/d/1u6xgTT8jDFkHSMkK1iRrNVR-1iOINQidbEiaDCu2Nqw/edit?gid=504037395#gid=504037395
@@ -45,29 +76,246 @@ fb %>% str()
 ## RO 1
 
 ```{r}
+trait <- "trait1"
 
+p_raw <- fb %>%
+  plot_raw(
+    x = "factor1",
+    y = trait,
+    group = "factor2"
+  ) +
+  facet_wrap(. ~ factor3)
+
+print(p_raw)
+
+model <- fb %>% 
+  aov(trait ~ block + factor1*factor2*factor3)
+
+av <- car::Anova(
+  model,
+  type = 3,
+  test.statistic = "F")
+
+mc <- av %>% 
+  emmeans( ~ factor1 | factor2 | factor3 ) %>% 
+  cld(Letters = letters, reversed = TRUE) %>% 
+  mutate(across(".group", trimws)) %>% 
+  rename(sig = ".group")
+
+plot <- mc %>%
+  plot_smr(type = "bar"
+    , x = "factor1"
+    , y = "emmean"
+    , group = "factor2"
+    , sig = "sig"
+    , ylab = trait
+    , color = paleta_factor2
+    # , xlab = ""
+    # , glab = ""
+  ) +
+  facet_wrap(. ~ factor3, scales = "free") +
+  labs(y = deframe(trait_label)[trait])
 ```
 
 ## RO 2
 
 ```{r}
+dtx <- fb 
+  
+dtx %>% str()
+ 
+traits <- names(dtx)[5:nrow(dtx)]
 
+results <- purrr::map(
+  traits, 
+  \(trait) {
+
+    gc()
+
+    cat("\n\n## Análisis para:", trait, "\n\n")
+
+    #--------------------------------------------------
+    # 1. Exploración de los datos originales
+    #--------------------------------------------------
+
+    p_raw <- dtx %>%
+      plot_raw(
+        x = "factor1",
+        y = trait,
+        group = "factor2"
+      ) +
+      facet_wrap(. ~ factor3)
+
+    print(p_raw)
+
+    #--------------------------------------------------
+    # 2. Modelo estadístico
+    #--------------------------------------------------
+
+    mdf <- reformulate(
+      "1 + factor1 * factor2 * factor3 + (1 | block)",
+      response = trait
+    )
+
+    #--------------------------------------------------
+    # 3. Detección y eliminación de outliers
+    #--------------------------------------------------
+
+    md <- dtx %>%
+      remove_outliers(
+        mdf,
+        plot_diag = TRUE,
+        drop_na = TRUE
+      )
+    
+    md$diagplot %>% print()
+
+    dtc <- md %>%
+      purrr::pluck(1, "clean")
+
+    #--------------------------------------------------
+    # 4. Datos después de remover outliers
+    #--------------------------------------------------
+
+    p_clean <- dtc %>%
+      plot_raw(
+        x = "factor1",
+        y = trait,
+        group = "factor2"
+      ) +
+      facet_wrap(. ~ factor3)
+
+    print(p_clean)
+
+    #--------------------------------------------------
+    # 6. ANOVA
+    #--------------------------------------------------
+
+    cat("\n### ANOVA\n\n")
+
+    model <- md$model$clean
+
+    aov <- car::Anova(
+      model,
+      type = 3,
+      test.statistic = "F"
+    )
+
+    print(aov)
+
+    #--------------------------------------------------
+    # 7. Comparaciones múltiples
+    #--------------------------------------------------
+
+    cat("\n### Comparaciones múltiples (emmeans)\n\n")
+    
+    mc_i <- md$model$clean %>% emmeans( ~ factor1 |
+                                          factor2 |
+                                          factor3) %>% 
+      cld(Letters = letters, reversed = TRUE) %>%
+      mutate(across(".group", trimws)) %>%
+      mutate(across(".group", tolower)) %>% 
+      rename(sig_i = ".group")
+    
+    mc_o <- md$model$clean %>% emmeans( ~ factor2 |
+                                          factor1 |
+                                          factor3) %>% 
+      cld(Letters = letters, reversed = TRUE) %>% 
+      mutate(across(".group", trimws)) %>% 
+      mutate(across(".group", toupper)) %>% 
+      rename(sig_o = ".group")
+    
+    mc <- merge(mc_i, mc_o) %>% 
+      unite(col = "sig", c("sig_i", "sig_o"), sep = "") %>% 
+      mutate(var = trait)
+    
+    mc %>% kable() %>% print()
+
+    #--------------------------------------------------
+    # 8. Gráfico resumen
+    #--------------------------------------------------
+
+    cat("\n### Gráfico resumen\n\n")
+
+    plot <- mc %>%
+      plot_smr(type = "line"
+        , x = "factor1"
+        , y = "emmean"
+        , group = "factor2"
+        , sig = "sig"
+        , ylab = trait
+        , color = paleta_factor2
+        # , xlab = ""
+        # , glab = ""
+      ) +
+      facet_wrap(. ~ factor3, scales = "free")  +
+      labs(y = deframe(trait_label)[trait])
+
+    print(plot)
+
+    #--------------------------------------------------
+    # 9. Resultado
+    #--------------------------------------------------
+
+    list(
+      trait = trait
+      , model = model
+      , data_clean = dtc
+      , anova = aov
+      , emmeans = emm
+      , mc = mc
+      , plot = plot
+    )
+  }
+) %>%
+  purrr::set_names(traits)
+
+dt_merge <- map(results_int, "mc") %>% 
+  bind_rows() %>% 
+  pivot_wider(
+    id_cols = c(factor1, factor2),
+    names_from = var,
+    values_from = emmean
+  ) 
 ```
 
-# Multivariate
+```{r}
+plots <- map(results, "plot")
+
+grid <- list(
+  plots$var1
+  , plots$var2
+  , plots$var3
+  , plots$var4
+  ) %>% 
+  plot_grid(plotlist = ., ncol = 2, labels = "auto")
+
+fig <- grid %>% 
+  ggsave(plot = ., "manuscript/Figure-1.jpg"
+         , units = "cm"
+         , width = 20
+         , height = 20)
+
+fig %>% include_graphics()
+```
+
+# Multivariate Analysis
 
 ```{r}
 #| eval: false
 
 library(factoextra)
+library(corrplot)
 
 dtx <- fb %>% 
-  dplyr::select(!c("var1", "var2")) %>% 
-  unite("rowname", c("varX", "varY"), remove = F, sep = "-") %>% 
+  dplyr::select(!c("factorX", "factorY")) %>% 
+  unite("rowname", c("factor1", "factor2"), remove = F, sep = "-") %>% 
   column_to_rownames() %>% 
   as.data.frame()
 
 str(dtx)
+
+#> Principal Component Analysis (PCA)
   
 mv <- dtx %>% 
   PCA(scale.unit = T
@@ -77,11 +325,15 @@ mv <- dtx %>%
 var <- mv %>% 
   plot.PCA(choix = c("var"), cex=0.7)
 
+var
+
 cos <- mv %>% 
   fviz_pca_var(col.var = "cos2"
                , gradient.cols = inti:::paleta()
                , repel = TRUE
                , labelsize = 2)
+
+cos
 
 ind <- mv %>% 
   plot.PCA(choix = c("ind")
@@ -92,15 +344,25 @@ ind <- mv %>%
            , habillage = "none"
            )
 
+ind
+
+#> PCA info
+
 pcainfo <- factoextra::get_pca(mv); pcainfo
 
 pcainfo$cor %>% kable(caption = "Variable correlations")
 pcainfo$contrib %>% kable(caption = "Variable Contribution")
 pcainfo$cos2 %>% kable(caption = "Variable Cos2")
 
+#> Hierarchical Clustering on Principle Components (HCPC)
+
 cls <- mv %>% HCPC(nb.clust = -1, graph = FALSE)
 
+plot.HCPC(cls, choice = "map", draw.tree = FALSE)
+
 map <- \() {plot.HCPC(cls, choice = "map", draw.tree = FALSE)}
+
+#> HCPC info
 
 cls$call$t$tree
 cls$data.clust %>% 
@@ -112,17 +374,22 @@ cls$desc.var$category%>%
 table(cls$data.clust$clust) %>% 
   kable(caption = "Number of individuals assigned to each cluster")
 
-plot <- list(var, cos, ind, map) %>% 
-  plot_grid(plotlist = ., ncol = 2, labels = "auto") %>% 
-  ggsave(plot = ., "manuscript/multivariate.jpg", units = "cm"
-                , width = 30, height = 30)
+#> multivariate plot
 
-plot %>% include_graphics()
+fig <- list(var, cos, ind, map) %>% 
+  plot_grid(plotlist = ., ncol = 2, labels = "auto") %>% 
+  ggsave(plot = ., "manuscript/multivariate.jpg"
+         , units = "cm"
+         , width = 30, height = 30)
+
+fig %>% include_graphics()
 ```
 
-## PCA information
+## Multivariate graphical information
 
 ```{r}
+#> Percentage of explained variances
+
 c1 <- fviz_eig(mv, 
                 addlabels = TRUE,
                 hjust = 0.05,
@@ -141,6 +408,8 @@ c1 <- fviz_eig(mv,
 
 c1
 
+#> Dim 1 - variables contribution
+
 c2 <- fviz_contrib(mv,
                      choice = "var", 
                      axes = 1, 
@@ -158,6 +427,8 @@ c2 <- fviz_contrib(mv,
   )
 
 c2
+
+#> Dim 2 - variables contribution
 
 c3 <- fviz_contrib(mv,
                      choice = "var", 
@@ -180,7 +451,9 @@ c3
 lpanel <- c(c1, c2, c3) %>% 
   plot_grid(plotlist = ., ncol = 1, labels = "auto"
             , rel_heights = c(1, 1.2, 1.2))
-  
+
+#> Variables correlation
+
 rpanel <- \() {
   
 pcainfo$cos2[, 1:2] %>% 
@@ -207,7 +480,7 @@ grid <- c(lpanel, rpanel) %>%
 plot <- grid %>% 
   ggsave(plot = ., "manuscript/contribution.jpg"
          , units = "cm"
-         , width = 28, height = 36)
+         , width = 20, height = 30)
 
 plot %>% include_graphics()
 ```
