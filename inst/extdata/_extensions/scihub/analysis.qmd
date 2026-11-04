@@ -2,6 +2,7 @@
 # title: "Manuscript Analysis"
 format:
   html:
+    css: "files/style.css"
     toc: true
     toc-expand: true
     toc-depth: 4

@@ -18,11 +18,9 @@ execute:
   echo: true
 ---
 
-# Information
+# Article Information
 
 **Manuscript Title**
-
-Author List
 
 ---
 
@@ -46,21 +44,18 @@ Author List
 project-root/
   ├── analysis.qmd          # Script with data analysis
   ├── article.qmd           # Script for formatting the article
-  ├── article.zip           # Zipped file in Markdown from Articul8
-  ├── design/               # Experimental design and setup
-  │   ├── design                # Information of experimental setup and planning
-  │   └── labels.pdf            # Labels script from experiments
+  ├── render2rticle.md      # File in Markdown from Google Docs
   ├── files/                # Supporting files for the project
-  │   ├── images/               # Raw and processed images
   │   ├── zotero/               # Zotero library (.rds)
-  │   └── template.docx         # Journal article template  
+  │   ├── labels.qmd            # Script for experimental labels
+  │   └── styles                # Style for article (.docx) and webpage (.css)  
+  ├── library/              # Folder to host images
   ├── manuscript/           # Core outputs of the article
   │   ├── Figures               # Figures for the manuscript (.jpg & .eps)
   │   ├── ESM                   # Electronic Supplementary Material (ESM)
-  │   └── draft.docx            # Manuscript text versions
-  └── README.qmd            # Article title with authors:
+  │   └── article.docx          # Manuscript text versions
+  └── README.qmd            # Manuscript information
                                 # Manuscript link (Google Docs)
                                 # Database link (Google Sheets)
                                 # Presentation link (Google Slides)
 ```
-
