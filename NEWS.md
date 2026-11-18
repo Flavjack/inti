@@ -1,5 +1,7 @@
 # inti (development version)
 
+- Fix `met` documentation: yield is dry matter yield in g/m^2, not kg/ha
+
 # inti 0.7.5
 
 - Update H2Cal() faster calculations and new diagnostic plot
