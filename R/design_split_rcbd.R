@@ -316,7 +316,7 @@ design_split_rcbd <- function(nfactors = 2,
     }
     
     seed <- as.integer(seed_value)
-    set.seed(seed)
+    local_seed(seed)
   } else {
     seed <- NULL
   }

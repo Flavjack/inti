@@ -178,11 +178,6 @@ scihub <- function() {
 
 paleta <- function() {
   
-  # paleta <- function() {
-  #   list(RColorBrewer::brewer.pal(8, "Set2"), 
-  #        RColorBrewer::brewer.pal(8, "Pastel1")) |>
-  #     unlist()
-  #   }
   
   c("#66C2A5", "#FC8D62", "#8DA0CB", "#E78AC3"
     , "#A6D854", "#FFD92F", "#E5C494", "#B3B3B3"
@@ -194,3 +189,33 @@ paleta <- function() {
   
   
 
+
+# Set a seed locally ------------------------------------------------------
+
+# Set the RNG seed for the calling function only. The user's previous RNG
+# state (`.Random.seed` in the global environment) is restored when the
+# calling function exits, so randomizations are reproducible without
+# altering the user's random number stream.
+local_seed <- function(seed, .local_envir = parent.frame()) {
+
+  had_seed <- exists(".Random.seed", envir = globalenv(), inherits = FALSE)
+  old_seed <- if (had_seed) get(".Random.seed", envir = globalenv()) else NULL
+
+  restore <- function() {
+    if (is.null(old_seed)) {
+      if (exists(".Random.seed", envir = globalenv(), inherits = FALSE)) {
+        rm(".Random.seed", envir = globalenv())
+      }
+    } else {
+      assign(".Random.seed", old_seed, envir = globalenv())
+    }
+  }
+
+  # Register the restore in the caller's frame (the function object is
+  # embedded in the call, so nothing is assigned in the caller).
+  do.call(base::on.exit, list(as.call(list(restore)), add = TRUE),
+          envir = .local_envir)
+
+  set.seed(seed)
+  invisible(seed)
+}

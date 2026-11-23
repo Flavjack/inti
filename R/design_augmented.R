@@ -285,7 +285,7 @@ design_augmented <- function(
     seed_parameter <- as.integer(seed_value)
 
     if(seed_parameter != 0L) {
-      set.seed(seed_parameter)
+      local_seed(seed_parameter)
     }
   }
 

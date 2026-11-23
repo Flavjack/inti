@@ -25,7 +25,7 @@
 #' 
 #' fb <- design_noreps(factors = factores
 #'                      , type = "sorted"
-#'                      , zigzag = F
+#'                      , zigzag = FALSE
 #'                      , nrows = 10
 #'                      )
 #'                      
@@ -48,9 +48,8 @@ design_noreps <- function(factors
                           , qrcode = "{project}{plots}"
                             ) {
   
-  # factors <- factores
   
-  set.seed(seed)
+  if (!is.null(seed) && !all(is.na(seed))) local_seed(seed)
   
   nfactors <- 1
   rep <- 1
@@ -109,7 +108,7 @@ design_noreps <- function(factors
     dplyr::mutate(across(.data$cols, as.numeric)) %>% 
     dplyr::mutate(project = project) %>%
     dplyr::mutate(design = type) %>% 
-    tidyr::unite("qrcode", any_of({{qrcolumns}}), sep = "_", remove = F) %>% 
+    tidyr::unite("qrcode", any_of({{qrcolumns}}), sep = "_", remove = FALSE) %>% 
     dplyr::select(.data$qrcode, dplyr::everything()) %>% 
     dplyr::select(!c(.data$icols, .data$project))
   

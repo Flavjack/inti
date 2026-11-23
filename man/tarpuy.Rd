@@ -4,12 +4,17 @@
 \alias{tarpuy}
 \title{Interactive fieldbook designs}
 \usage{
-tarpuy(dependencies = FALSE)
+tarpuy(dependencies = FALSE, port = 1221)
 }
 \arguments{
 \item{dependencies}{Logical. If \code{TRUE}, install any missing TARPUY runtime
 dependencies using the local \code{inst/tarpuy/setup.R} script included with
 the installed \code{inti} package.}
+
+\item{port}{Port on which the app runs \verb{[numeric: 1221]}. The default
+matches the port registered for Google sign-in. Use another value (or
+\code{NULL} for a random free port) if 1221 is busy, e.g. when YUPANA is
+already running; Google sign-in may not work on other ports.}
 }
 \value{
 A Shiny application launched with \code{\link[shiny:runApp]{shiny::runApp()}}.

@@ -4,10 +4,15 @@
 \alias{yupana}
 \title{Interactive data analysis}
 \usage{
-yupana(dependencies = FALSE)
+yupana(dependencies = FALSE, port = 1221)
 }
 \arguments{
 \item{dependencies}{Install package dependencies for run the app}
+
+\item{port}{Port on which the app runs \verb{[numeric: 1221]}. The default
+matches the port registered for Google sign-in. Use another value (or
+\code{NULL} for a random free port) if 1221 is busy, e.g. when TARPUY is
+already running; Google sign-in may not work on other ports.}
 }
 \value{
 Shiny app

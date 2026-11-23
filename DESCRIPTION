@@ -22,13 +22,13 @@ License: GPL-3 | file LICENSE
 URL: https://inkaverse.com/, https://github.com/Flavjack/inti
 BugReports: https://github.com/Flavjack/inti/issues
 Depends:
+    R (>= 4.1.0)
+Imports:
     shiny,
     ggplot2,
     dplyr,
     tidyr,
     tibble,
-    R (>= 4.1.0)
-Imports:
     lme4, 
     agricolae, 
     FactoMineR, 

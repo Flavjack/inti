@@ -657,8 +657,8 @@ H2cal <- function(data
 
     smd <- BLUEs %>%
         dplyr::summarise(
-          mean = mean(.data[[trait]], na.rm = T)
-          , std = sqrt(var(.data[[trait]], na.rm = T))
+          mean = mean(.data[[trait]], na.rm = TRUE)
+          , std = sqrt(var(.data[[trait]], na.rm = TRUE))
           , min = min(.data[[trait]])
           , max = max(.data[[trait]])
         ) 

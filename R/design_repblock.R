@@ -327,7 +327,7 @@ design_repblock <- function(nfactors = 1,
     }
     
     seed <- as.integer(seed_value)
-    set.seed(seed)
+    local_seed(seed)
   } else {
     seed <- NULL
   }

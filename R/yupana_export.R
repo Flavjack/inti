@@ -274,7 +274,6 @@ dimension = "20*10*100"
 
   } else { 
     
-    # data <- info
     
     pallete <- data$plot_args$color %>% 
       enframe(value = "colors") %>% 

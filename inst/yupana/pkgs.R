@@ -12,6 +12,7 @@
 # -------------------------------------------------------------------------
 
 library(inti)
+library(shiny)
 library(bslib)
 library(metathis)
 library(googlesheets4)

@@ -2,12 +2,27 @@
 
 - Fix `met` documentation: yield is dry matter yield in g/m^2, not kg/ha
 
+## Breaking changes
+
+- `shiny`, `ggplot2`, `dplyr`, `tidyr` and `tibble` moved from `Depends` to `Imports`. `library(inti)` no longer attaches them; load them explicitly (e.g. `library(ggplot2)`) if your scripts use their functions directly. The pipe `%>%` is still exported by `inti`
+
+## Improvements
+
+- Design functions (`design_repblock()`, `design_split_rcbd()`, `design_augmented()`, `design_noreps()`) no longer modify the user's global random number generator: the `seed` is applied locally and the previous RNG state is restored on exit. `design_noreps(seed = NULL)` no longer resets the RNG
+- `tarpuy()` and `yupana()` gain a `port` argument (default `1221`, the port registered for Google sign-in), so the apps can run on another port if 1221 is busy
+- YUPANA app explicitly attaches `shiny`
+
+## Internal
+
+- Update GitHub Actions workflows (R-CMD-check and pkgdown) to `r-lib/actions@v2`, `actions/checkout@v4` and current runners; add Quarto setup
+- Use `TRUE`/`FALSE` instead of `T`/`F`
+- Remove leftover commented debugging code
+
 # inti 0.7.5
 
 - Update H2Cal() faster calculations and new diagnostic plot
 - Update Vignettes
 - Update SciHub()
-
 
 # inti 0.7.4
 

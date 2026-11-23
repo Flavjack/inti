@@ -18,7 +18,7 @@
 #' \dontrun{
 #' 
 #' split_folder("pictures/QUINOA 2018-2019 SC SEEDS EDWIN - CAMACANI/"
-#'    , "pictures/split_num", remove = T, size = 400, units = "number")
+#'    , "pictures/split_num", remove = TRUE, size = 400, units = "number")
 #' 
 #' }
 #' 
@@ -31,7 +31,7 @@ split_folder <- function(folder
                          , remove = FALSE) {
   
   listfiles <- folder %>% 
-    list.files(full.names = T)
+    list.files(full.names = TRUE)
   
   if (units == "megas") {
     
@@ -67,14 +67,14 @@ split_folder <- function(folder
       dplyr::select(.data$value) %>% 
       tibble::deframe()
     
-    file.copy(files, newpath, recursive = T)
+    file.copy(files, newpath, recursive = TRUE)
     
     if(isTRUE(zip)) utils::zip(zipfile = paste0(newpath, ".zip")
                              , files = newpath
                              , flags = "-r9Xj"
                              )
     
-    if(isTRUE(remove)) unlink(newpath, recursive = T)
+    if(isTRUE(remove)) unlink(newpath, recursive = TRUE)
     
   })
   

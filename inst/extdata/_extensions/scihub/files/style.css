@@ -3,15 +3,48 @@
    Clean, Professional, Publication-Oriented
    ========================================================== */
 
+/* ---------- Tokens ---------- */
+
+:root {
+  --text: #222222;
+  --text-muted: #555555;
+  --heading: #111111;
+  --accent: #1f5f3f;          /* quinoa / andean green */
+  --accent-soft: #e9f2ec;
+  --link: #0563c1;
+  --link-visited: #954f72;
+  --link-hover: #0b5ed7;
+  --bg: #ffffff;
+  --bg-soft: #f7f7f5;
+  --border: #d6d6d6;
+  --border-strong: #9e9e9e;
+  --code-bg: #f6f8fa;
+  --radius: 6px;
+  --serif: Georgia, "Times New Roman", Times, serif;
+  --sans: "Helvetica Neue", Arial, "Segoe UI", sans-serif;
+  --mono: "Fira Code", "JetBrains Mono", Consolas, Menlo, monospace;
+}
+
 /* ---------- Global ---------- */
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
   font-size: 16px;
   line-height: 1.7;
-  color: #222222;
-  background-color: #ffffff;
+  color: var(--text);
+  background-color: var(--bg);
   text-align: justify;
+  hyphens: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent-soft);
 }
 
 /* ---------- Layout ---------- */
@@ -27,67 +60,82 @@ main.content {
   margin-right: auto;
 }
 
-/* ---------- Title ---------- */
+/* ---------- Title block ---------- */
+
+#title-block-header {
+  margin-bottom: 2em;
+  padding-bottom: 1em;
+  border-bottom: 2px solid var(--accent);
+}
 
 h1.title {
   font-size: 2em;
   font-weight: 700;
+  line-height: 1.3;
   text-align: center;
-  color: #000;
+  color: var(--heading);
   margin-top: 0.5em;
-  margin-bottom: 1.2em;
-  border: none;
-}
-
-/* ---------- Main Sections ---------- */
-
-h1 {
-  font-size: 1.45em;
-  font-weight: 700;
-  color: #000;
-  margin-top: 2em;
   margin-bottom: 0.8em;
   border: none;
 }
 
-/* ---------- Subsections ---------- */
+.subtitle,
+.quarto-title-meta {
+  text-align: center;
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 0.95em;
+}
+
+/* ---------- Headings ---------- */
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading);
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: left;
+  scroll-margin-top: 4.5rem;
+}
+
+h1 {
+  font-size: 1.5em;
+  margin-top: 2.2em;
+  margin-bottom: 0.8em;
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--border);
+}
 
 h2 {
-  font-size: 1.25em;
-  font-weight: 700;
-  color: #000;
-  margin-top: 1.5em;
+  font-size: 1.28em;
+  margin-top: 1.7em;
   margin-bottom: 0.6em;
   border: none;
 }
 
-/* ---------- Sub-subsections ---------- */
-
 h3 {
-  font-size: 1.10em;
-  font-weight: 700;
-  color: #000;
-  margin-top: 1.2em;
+  font-size: 1.12em;
+  margin-top: 1.4em;
   margin-bottom: 0.5em;
 }
 
-h4,
-h5,
-h6 {
+h4, h5, h6 {
   font-size: 1em;
-  font-weight: 700;
-  color: #000;
+  margin-top: 1.2em;
+  margin-bottom: 0.4em;
 }
 
-/* ---------- Paragraphs ---------- */
+.header-section-number {
+  color: var(--accent);
+  margin-right: 0.35em;
+}
+
+/* ---------- Paragraphs & lists ---------- */
 
 p {
   margin-top: 0;
-  margin-bottom: 0.8em;
+  margin-bottom: 0.9em;
   text-align: justify;
 }
-
-/* ---------- Lists ---------- */
 
 ul,
 ol {
@@ -100,6 +148,16 @@ li {
   margin-bottom: 0.25em;
 }
 
+li > p {
+  margin-bottom: 0.3em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2em 0;
+}
+
 /* ---------- Tables ---------- */
 
 table {
@@ -107,54 +165,74 @@ table {
   border-collapse: collapse;
   margin-top: 1em;
   margin-bottom: 1.5em;
-  font-size: 0.95em;
+  font-family: var(--sans);
+  font-size: 0.88em;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
 }
 
 th {
-  background-color: #f5f5f5;
-  color: #000;
-  border: 1px solid #bdbdbd;
-  padding: 8px;
+  background-color: var(--bg-soft);
+  color: var(--heading);
+  border: 1px solid var(--border-strong);
+  border-bottom: 2px solid var(--border-strong);
+  padding: 7px 9px;
   font-weight: 700;
   text-align: center;
+  vertical-align: bottom;
 }
 
 td {
-  border: 1px solid #d0d0d0;
-  padding: 8px;
+  border: 1px solid var(--border);
+  padding: 6px 9px;
   vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fbfbfa;
+}
+
+tbody tr:hover {
+  background-color: var(--accent-soft);
+}
+
+/* wide tables scroll instead of breaking the layout */
+.cell-output-display,
+.table-responsive {
+  overflow-x: auto;
 }
 
 caption,
 .table-caption,
 .quarto-float-caption {
-  caption-side: bottom;
+  caption-side: top;
   text-align: justify !important;
   text-justify: inter-word;
+  font-family: var(--serif);
   font-size: 0.9em;
   font-style: italic;
-  margin-top: 0.5em;
+  color: var(--text-muted);
+  margin: 0.5em 0;
 }
 
 /* ---------- Figures ---------- */
 
 figure {
-  margin: 1.5em auto;
+  margin: 1.8em auto;
   text-align: center;
 }
 
-figcaption {
+figcaption,
+.figure-caption {
   display: block;
   width: 100%;
   font-size: 0.9em;
   font-style: italic;
-  color: #333;
-  margin-top: 0.5em;
+  color: var(--text-muted);
+  margin-top: 0.6em;
   text-align: justify;
   text-justify: inter-word;
 }
-
-/* ---------- Images ---------- */
 
 img {
   max-width: 100%;
@@ -163,91 +241,171 @@ img {
   margin: 1em auto;
 }
 
-/* ---------- Blockquotes ---------- */
+/* ---------- Blockquotes & callouts ---------- */
 
 blockquote {
-  border-left: 3px solid #999;
-  padding-left: 1em;
-  margin-left: 1em;
+  border-left: 3px solid var(--accent);
+  background: var(--bg-soft);
+  padding: 0.6em 1em;
+  margin: 1.2em 0 1.2em 0.5em;
   color: #444;
   font-style: italic;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.callout {
+  border-radius: var(--radius);
+  font-family: var(--sans);
+  font-size: 0.95em;
 }
 
 /* ---------- Code ---------- */
 
 code {
-  font-size: 0.9em;
+  font-family: var(--mono);
+  font-size: 0.86em;
+}
+
+/* inline code */
+p code,
+li code,
+td code {
+  background: var(--code-bg);
+  color: #b3305a;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+pre,
+div.sourceCode {
+  background-color: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: left;
 }
 
 pre {
-  border: 1px solid #d0d0d0;
-  padding: 1em;
+  padding: 0.9em 1em;
   overflow-x: auto;
-  background-color: #fafafa;
+  line-height: 1.5;
+  tab-size: 2;
+}
+
+/* R source chunks: accent bar to separate code from output */
+div.sourceCode {
+  border-left: 3px solid var(--accent);
+  margin: 1em 0 0.6em;
+}
+
+div.sourceCode pre {
+  border: none;
+  margin: 0;
+  background: transparent;
+}
+
+/* chunk output */
+.cell-output pre,
+.cell-output-stdout pre {
+  background: #ffffff;
+  border: 1px dashed var(--border);
+  font-size: 0.9em;
+  color: #333;
+}
+
+.cell {
+  margin-bottom: 1.5em;
+}
+
+/* copy button */
+.code-copy-button {
+  opacity: 0.6;
+}
+
+.code-copy-button:hover {
+  opacity: 1;
+}
+
+/* folded code */
+details.code-fold > summary {
+  font-family: var(--sans);
+  font-size: 0.85em;
+  color: var(--accent);
+  cursor: pointer;
 }
 
 /* ---------- Hyperlinks ---------- */
 
 a {
-  color: #0563C1;
+  color: var(--link);
   text-decoration: none;
+  transition: color 0.15s ease;
 }
 
 a:visited {
-  color: #954F72;
-  text-decoration: none;
+  color: var(--link-visited);
 }
 
-a:hover {
-  color: #0B5ED7;
-  text-decoration: none;
-}
-
+a:hover,
 a:active {
-  color: #0B5ED7;
-  text-decoration: none;
+  color: var(--link-hover);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* ---------- References ---------- */
 
-.references {
-  font-size: 0.95em;
+.references,
+#refs {
+  font-size: 0.93em;
   line-height: 1.5;
+  text-align: left;
+}
+
+.csl-entry {
+  margin-bottom: 0.6em;
+  padding-left: 2em;
+  text-indent: -2em;
 }
 
 /* ---------- TOC ---------- */
 
-#TOC {
-  font-size: 0.95em;
+#TOC,
+#quarto-margin-sidebar,
+#quarto-sidebar {
+  font-family: var(--sans);
+  font-size: 0.88em;
+  text-align: left;
 }
 
 #TOC ul {
-  padding-left: 1.2em;
+  padding-left: 1em;
 }
 
-/* ---------- Print ---------- */
+#TOC a.nav-link {
+  color: var(--text-muted);
+  padding-top: 0.15em;
+  padding-bottom: 0.15em;
+}
 
-@media print {
+#TOC a.nav-link:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
 
-  body {
-    font-size: 11pt;
-  }
+#TOC a.nav-link.active {
+  color: var(--accent);
+  font-weight: 600;
+  border-left-color: var(--accent);
+}
 
-  h1,
-  h2,
-  h3 {
-    page-break-after: avoid;
-  }
+/* ---------- Navbar ---------- */
 
-  table,
-  figure {
-    page-break-inside: avoid;
-  }
-
-  a {
-    color: black;
-    text-decoration: none;
-  }
+.navbar {
+  font-family: var(--sans);
 }
 
 /* ---------- Back Button ---------- */
@@ -256,16 +414,80 @@ a:active {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  padding: 8px 12px;
-  background: white;
-  border: 1px solid #999;
-  border-radius: 4px;
-  cursor: pointer;
+  padding: 8px 14px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  font-family: var(--sans);
   font-size: 0.9em;
+  cursor: pointer;
   z-index: 9999;
   display: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 #back-button:hover {
-  background: #f5f5f5;
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+    text-align: left;
+  }
+
+  p,
+  figcaption,
+  caption {
+    text-align: left !important;
+  }
+
+  h1.title {
+    font-size: 1.6em;
+  }
+
+  table {
+    font-size: 0.82em;
+  }
+}
+
+/* ---------- Print ---------- */
+
+@media print {
+  body {
+    font-size: 11pt;
+    color: #000;
+  }
+
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+
+  table,
+  figure,
+  pre {
+    page-break-inside: avoid;
+  }
+
+  tbody tr:nth-child(even),
+  tbody tr:hover {
+    background: none;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  #back-button,
+  #TOC,
+  .navbar,
+  .code-copy-button {
+    display: none !important;
+  }
 }

@@ -49,9 +49,6 @@ remove_outliers <- function(data
                             , title = "Diagnostic Plot"
                             ) {
   
-  # data = potato; drop_na = F; plot_diag = T
-  # formula = stemdw ~ 0  + (1|bloque) + treat*geno
-  # title = "Plot Diagnostic"
   
   out_flag <- bholm <- NULL
   
@@ -92,7 +89,6 @@ remove_outliers <- function(data
   BHStud_test <- tibble(adjp = rawp.BHStud
                         , bholm = test.BHStud
                         ) %>% 
-    # rownames_to_column("index") %>% 
     mutate(out_flag = ifelse(bholm <0.05, "OUTLIER", "."))
   
   mrgdt <- cbind(newdt, BHStud_test)

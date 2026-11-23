@@ -122,7 +122,7 @@ test_comp <- "TUKEY"
     if ( length(comparison) <= 3 ) {
 
       tb_mc <- tb_mc %>%
-        separate(.data$treatments, {{comparison}}, sep = ":", remove = F)
+        separate(.data$treatments, {{comparison}}, sep = ":", remove = FALSE)
 
     }
 

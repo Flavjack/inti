@@ -99,7 +99,7 @@ yrs$meancomp \%>\%
            , error = "ste"
            , sig = "sig"
            #, ylimits = c(0, 1, 0.2)
-           , color = T #c("red", "black")
+           , color = TRUE #c("red", "black")
            , gtext = c("Irrigado", "Sequia")
            )
            

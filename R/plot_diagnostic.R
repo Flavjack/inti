@@ -26,8 +26,6 @@
 
 plot_diagnostic <- function(data, formula, title = NA) {
   
-  # data <- inti::potato; formula = stemdw ~ (1|bloque) + geno*treat
-  # formula <- stemdw ~ bloque + geno*treat; title = NA
   
   formula <- as.formula(formula)
   

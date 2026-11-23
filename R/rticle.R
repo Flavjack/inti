@@ -25,8 +25,6 @@ rticle <- function(file = "render2rticle.md",
                    export = "files",
                    type = c("asis", "list")) {
   
-  # library(tidyverse)
-  # file = "draft.md" ; export = NULL ; type = "list"
   
   type <- match.arg(type)
   
@@ -34,7 +32,7 @@ rticle <- function(file = "render2rticle.md",
     export <- dirname(file)
   }
   
-  dir.create(export, recursive = T, showWarnings = F)
+  dir.create(export, recursive = TRUE, showWarnings = FALSE)
   
   
   # page break --------------------------------------------------------------

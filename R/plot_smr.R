@@ -59,7 +59,7 @@
 #'            , error = "ste"
 #'            , sig = "sig"
 #'            #, ylimits = c(0, 1, 0.2)
-#'            , color = T #c("red", "black")
+#'            , color = TRUE #c("red", "black")
 #'            , gtext = c("Irrigado", "Sequia")
 #'            )
 #'            
@@ -240,7 +240,7 @@ if(type == "barra") {
       position = position_dodge2(preserve = "single")
       , colour = "black"
       , linewidth = 0.4
-      , na.rm = T
+      , na.rm = TRUE
     ) +
     labs(
       x = lab_x
@@ -255,7 +255,7 @@ if(type == "barra") {
               , ymax = .data[[y]] + .data[[error]] )
           , position = position_dodge(width = 0.9)
           , width = 0.15
-          , na.rm = T) 
+          , na.rm = TRUE) 
       
     } +
     {
@@ -265,7 +265,7 @@ if(type == "barra") {
           aes(label = .data[[sig]]
               , y = if(!is.null(error)) .data[[y]] + .data[[error]] else .data[[y]])
           , position = position_dodge(width = 0.9)
-          , na.rm = T
+          , na.rm = TRUE
           , colour = "black"
           , vjust = -0.5
           , hjust = 0.5
@@ -321,7 +321,7 @@ if (type == "linea") {
           , vjust = -0.3
           , hjust = 0.3
           , angle = 0
-          , na.rm = T
+          , na.rm = TRUE
           , size = sigsize
           # , position = position_jitter(width = 0.03, height = 0.03)
         ) 

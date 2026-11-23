@@ -112,7 +112,7 @@ yupana_mvr <- function(data
   pca_info <- fb %>%
     dplyr::select(where(~length(unique(.)) > 1)) %>%  # drop variables without variation
     FactoMineR::PCA(X = .
-        , scale.unit = T
+        , scale.unit = TRUE
         , quali.sup = quali_ncol
         , graph = FALSE
         )
@@ -138,15 +138,6 @@ yupana_mvr <- function(data
                    , graph = FALSE
                    )
   
-  # plot.HCPC(x = clt_info
-  #           , choice = "map"
-  #           , legend = list(x = "topright"
-  #                           , cex = 0.6
-  #                           , inset = 0.001
-  #                           , box.lty=0
-  #                           )
-  #           , draw.tree = F
-  #           )
   
 # plot --------------------------------------------------------------------
 # -------------------------------------------------------------------------

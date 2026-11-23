@@ -82,7 +82,7 @@ $$\sigma_p^2=\sigma_g^2+\frac{\sigma_{g\cdot e}^2}{n_e}+\frac{\sigma_{g\cdot y}^
 ```{r}
 #| echo: false
 
-tibble(
+tibble::tibble(
   Standart = "$H^2=\\frac{\\sigma_g^2}{\\sigma_p^2}=\\frac{\\Delta G}{S}$",
   Cullis = "$H_{Cullis}^2=1-\\frac{\\overline{V}_{\\Delta..}^{^{BLUP}}}{2\\cdot\\sigma_g^2}$",
   Piepho = "$H_{Piepho}^2=\\frac{\\sigma_g^2}{\\sigma_g^2+\\frac{\\overline{V}_{\\Delta..}^{BLUE}}{2}}$"

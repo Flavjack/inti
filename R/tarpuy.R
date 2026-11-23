@@ -5,6 +5,10 @@
 #' @param dependencies Logical. If `TRUE`, install any missing TARPUY runtime
 #'   dependencies using the local `inst/tarpuy/setup.R` script included with
 #'   the installed `inti` package.
+#' @param port Port on which the app runs `[numeric: 1221]`. The default
+#'   matches the port registered for Google sign-in. Use another value (or
+#'   `NULL` for a random free port) if 1221 is busy, e.g. when YUPANA is
+#'   already running; Google sign-in may not work on other ports.
 #'
 #' @details
 #'
@@ -23,7 +27,7 @@
 #'
 #' @export
 
-tarpuy <- function(dependencies = FALSE) {
+tarpuy <- function(dependencies = FALSE, port = 1221) {
 
   if (isTRUE(dependencies)) {
 
@@ -63,6 +67,6 @@ tarpuy <- function(dependencies = FALSE) {
     appDir,
     display.mode = "normal",
     launch.browser = TRUE,
-    port = 1221
+    port = port
   )
 }

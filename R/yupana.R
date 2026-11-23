@@ -3,6 +3,10 @@
 #' Invoke RStudio addin to analyze and graph experimental design data
 #' 
 #' @param dependencies Install package dependencies for run the app
+#' @param port Port on which the app runs `[numeric: 1221]`. The default
+#'   matches the port registered for Google sign-in. Use another value (or
+#'   `NULL` for a random free port) if 1221 is busy, e.g. when TARPUY is
+#'   already running; Google sign-in may not work on other ports.
 #' 
 #' @details
 #'
@@ -23,7 +27,7 @@
 #' }
 #' 
 
-yupana <- function(dependencies = FALSE) {
+yupana <- function(dependencies = FALSE, port = 1221) {
   
   if (dependencies == TRUE) {
     
@@ -42,7 +46,7 @@ yupana <- function(dependencies = FALSE) {
   shiny::runApp(appDir
                 , display.mode = "normal"
                 , launch.browser = TRUE
-                , port = 1221
+                , port = port
                 )
   
 }

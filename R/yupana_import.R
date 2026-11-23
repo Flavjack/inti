@@ -42,7 +42,6 @@ yupana_import <- function(data){
   
 if(!is.data.frame(data)) {
   
-  # data <- fb
 
   smr <- data$meancomp
   
@@ -94,7 +93,6 @@ if(!is.data.frame(data)) {
 # import from web ---------------------------------------------------------
 # -------------------------------------------------------------------------
 
-  # data <- fb
   
   aov <- data %>%
     select(.data$`[aov]`:.data$`[stats]`) %>% 
