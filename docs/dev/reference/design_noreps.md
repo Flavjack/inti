@@ -67,7 +67,7 @@ factores <- list("geno" = c(1:99))
 
 fb <- design_noreps(factors = factores
                      , type = "sorted"
-                     , zigzag = F
+                     , zigzag = FALSE
                      , nrows = 10
                      )
                      

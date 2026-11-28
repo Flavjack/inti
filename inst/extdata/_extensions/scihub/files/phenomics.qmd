@@ -106,7 +106,7 @@ imgs <- list.files(path = newdir
                    , recursive = TRUE
                    ) %>% 
   enframe() %>% 
-  mutate(url = file.path("https://flavjack.github.io/pheno-germination", value))
+  mutate(url = file.path("https://flozanoisla.github.io/pheno-germination", value))
 
 imgs %>% 
   select(url) %>% 

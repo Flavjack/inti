@@ -19,7 +19,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
+source("https://raw.githubusercontent.com/flozanoisla/inti/master/pkgdown/favicon/docs.r")
 ```
 
 Tarpuy es una herramienta que permite la construcción de planes experimentales de forma interactiva.
@@ -39,13 +39,13 @@ Tarpuy permite:
 <div style="display:inline-block; width:49%">
 <p style="text-align:center">
 <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC">
-<img src="https://flavjack.github.io/inti/img/youtube.png" style="height:65px" title="demo"></a>
+<img src="https://inkaverse.com/img/youtube.png" style="height:65px" title="demo"></a>
 <span style="display:block;"><small>demo</small></span>
 </p></div>
 
 <div style="display:inline-block; width:49%">
 <p style="text-align:center">
-<a target="_blank" href="https://inkaverse.shinyapps.io/tarpuy/"><img src="https://flavjack.github.io/inti/img/tarpuy.png" style="height:80px" title="tarpuy"></a>
+<a target="_blank" href="https://inkaverse.shinyapps.io/tarpuy/"><img src="https://inkaverse.com/img/tarpuy.png" style="height:80px" title="tarpuy"></a>
 <span style="display:block;"><small>Tarpuy</small></span>
 </p></div>
 

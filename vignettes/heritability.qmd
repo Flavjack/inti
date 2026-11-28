@@ -27,7 +27,7 @@ nocite: |
 ```{r setup}
 #| include: false
 
-source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
+source("https://raw.githubusercontent.com/flozanoisla/inti/master/pkgdown/favicon/docs.r")
 knitr::opts_chunk$set(echo = TRUE)
 ```
 

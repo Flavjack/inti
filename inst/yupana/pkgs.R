@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # yupana ------------------------------------------------------------------
 # -------------------------------------------------------------------------
-#> open https://flavjack.github.io/inti/
+#> open https://inkaverse.com/
 #> open https://flavjack.shinyapps.io/yupanapro/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
 #> date .: 2021-06-04

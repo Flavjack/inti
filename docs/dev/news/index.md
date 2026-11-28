@@ -1,6 +1,95 @@
 # Changelog
 
+## inti (development version)
+
+- Fix `met` documentation: yield is dry matter yield in g/m^2, not kg/ha
+
+### Breaking changes
+
+- `shiny`, `ggplot2`, `dplyr`, `tidyr` and `tibble` moved from `Depends`
+  to `Imports`. [`library(inti)`](https://inkaverse.com/) no longer
+  attaches them; load them explicitly
+  (e.g. [`library(ggplot2)`](https://ggplot2.tidyverse.org)) if your
+  scripts use their functions directly. The pipe `%>%` is still exported
+  by `inti`
+
+### Improvements
+
+- Design functions
+  ([`design_repblock()`](https://inkaverse.com/dev/reference/design_repblock.md),
+  [`design_split_rcbd()`](https://inkaverse.com/dev/reference/design_split_rcbd.md),
+  [`design_augmented()`](https://inkaverse.com/dev/reference/design_augmented.md),
+  [`design_noreps()`](https://inkaverse.com/dev/reference/design_noreps.md))
+  no longer modify the user’s global random number generator: the `seed`
+  is applied locally and the previous RNG state is restored on exit.
+  `design_noreps(seed = NULL)` no longer resets the RNG
+- [`tarpuy()`](https://inkaverse.com/dev/reference/tarpuy.md) and
+  [`yupana()`](https://inkaverse.com/dev/reference/yupana.md) gain a
+  `port` argument (default `1221`, the port registered for Google
+  sign-in), so the apps can run on another port if 1221 is busy
+- YUPANA app explicitly attaches `shiny`
+
+### Internal
+
+- Update GitHub Actions workflows (R-CMD-check and pkgdown) to
+  `r-lib/actions@v2`, `actions/checkout@v4` and current runners; add
+  Quarto setup
+- Use `TRUE`/`FALSE` instead of `T`/`F`
+- Remove leftover commented debugging code
+
+## inti 0.7.5
+
+CRAN release: 2026-09-30
+
+- Update H2Cal() faster calculations and new diagnostic plot
+- Update Vignettes
+- Update SciHub()
+
+## inti 0.7.4
+
+CRAN release: 2026-09-06
+
+- Tarpuy
+  - Improve trait variable generation to support text and numeric
+    prefixes in [when](https://josesamos.github.io/when/) and
+    `{samples}`
+  - Omit empty trait components from fieldbook variable names instead of
+    adding `NA`
+  - Preserve existing fieldbook data when traits are added or modified
+  - Preserve previous variables and manually added columns when updating
+    traits
+  - Detect changes in the experimental design before replacing an
+    existing fieldbook
+  - Add a warning before replacing a fieldbook with recorded data when
+    factors, levels, blocks, replications, or treatments are modified
+  - Improve CRD, RCBD, augmented, and split-plot designs
+  - Validate plots, QR codes, seed, rows, columns, blocks, and
+    replications to avoid duplicates or incorrect layouts
+  - Improve Layout Summary according to the experimental design
+  - Include plots, blocks, replications, checks, entries, rows, and
+    columns in Layout Summary when applicable
+  - Fix Layout Summary value visibility and horizontal scrolling
+  - Improve Sketch representation of experimental designs
+  - Scale experimental-unit boxes according to the selected width and
+    height
+  - Automatically adjust text inside experimental-unit boxes
+  - Add PNG, SVG, and PDF export options in Sketch
+  - Automatically select the `fb` sheet to generate the Sketch plot
+  - Add font-size control in the Sketch module
+  - Automatically select file columns in the Mobile module for export
+
 ## inti 0.7.3
+
+CRAN release: 2026-08-20
+
+- Improve PCA supplementary variables
+- Select the dimension in PCA
+- Sub module for PCA with variable contribution and dimension
+  correlation
+
+## inti 0.7.3
+
+CRAN release: 2026-08-20
 
 - Update `scihub()` to include pages
 - [`rticle()`](https://inkaverse.com/dev/reference/rticle.md) improve
@@ -95,12 +184,10 @@ CRAN release: 2025-02-26
 CRAN release: 2024-09-03
 
 - Package
-  - New function related
-    [`outliers_remove()`](https://inkaverse.com/dev/reference/outliers_remove.md)
-    =\> “`remove_outliers`” to work with formula
-  - New function related
-    [`plot_diag()`](https://inkaverse.com/dev/reference/plot_diag.md)
-    =\> “`plot_diagnostic`” to work with formula
+  - New function related `outliers_remove()` =\> “`remove_outliers`” to
+    work with formula
+  - New function related `plot_diag()` =\> “`plot_diagnostic`” to work
+    with formula
 - Rticles
   - Fix Tables and Figures order in final document
 - Tarpuy
@@ -141,7 +228,7 @@ CRAN release: 2023-10-27
   - change params: template ==\> theme
   - reference-doc: style_rticle.docx
 - Tarpuy
-  - Field book design allows different number of rows  
+  - Field book design allows different number of rows\
   - Design without replication (observation plots) ==\>
     [`design_noreps()`](https://inkaverse.com/dev/reference/design_noreps.md)
   - Fix traits name order
@@ -263,8 +350,8 @@ CRAN release: 2022-04-01
 
 CRAN release: 2022-02-22
 
-- [`outliers_remove()`](https://inkaverse.com/dev/reference/outliers_remove.md):
-  change [`cbind()`](https://rdrr.io/r/base/cbind.html) by
+- `outliers_remove()`: change
+  [`cbind()`](https://rdrr.io/r/base/cbind.html) by
   [`cbind.data.frame()`](https://rdrr.io/r/base/cbind.html).
 - Fix apps auth.
 - Thanks to Uwe Ligges to allow consecutive CRAN updates.
@@ -278,9 +365,7 @@ CRAN release: 2022-02-18
 - Update vignettes using bookdown.
 - Fix table summary in
   [`H2cal()`](https://inkaverse.com/dev/reference/H2cal.md).
-- Update diagnostic plot in
-  [`plot_diag()`](https://inkaverse.com/dev/reference/plot_diag.md) to
-  lm and lmerMod.
+- Update diagnostic plot in `plot_diag()` to lm and lmerMod.
 - Update code for logIn modules in apps.
 - Update correlation graph in yupana.
 
@@ -306,7 +391,7 @@ CRAN release: 2021-12-10
 - *Package*
   - [`H2cal()`](https://inkaverse.com/dev/reference/H2cal.md): BLUEs
     from H2cal may be wrong if other fixed effects in the model
-    ([\#10](https://github.com/Flavjack/inti/issues/10)).
+    ([\#10](https://github.com/flozanoisla/inti/issues/10)).
     - Thanks Jim Holland ([@ncsumaize](https://github.com/ncsumaize))
       for the suggestion to improve the function.
   - New functions: `gdoc2rmd()`, `table2rmd()`, `figure2rmd()`

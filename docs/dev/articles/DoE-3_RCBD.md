@@ -1,0 +1,200 @@
+# Three-Factors Design: RCBD
+
+Planning an experiment follows a reproducible routine:
+
+1.  **Load required libraries:** Load `inti`, `knitr`, and `dplyr`
+    packages.
+2.  **Define factor levels:** Set up lists with genotypes, treatments,
+    and management factors.
+3.  **Dispatch design generator:** Choose between CRD, RCBD, Split-plot,
+    or Augmented designs.
+4.  **Plot the field sketch:** Verify spatial layouts and
+    serpentine/zigzag sequences.
+5.  **Label design:** Design the experimental labels to facilitate the
+    data collection.
+6.  **Export to Field Book app:** Generate field-ready sheets with trait
+    parameters.
+
+\
+`# Install packages and dependencies`\
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`inti`](https://inkaverse.com/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`dplyr`](https://dplyr.tidyverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`huito`](https://huito.inkaverse.com/)`)`
+
+## Designs with Three Factors
+
+When evaluating three factors, four designs become available: **CRD**
+and **RCBD**.
+
+## Factorial Randomized Complete Block Design (RCBD)
+
+Recommended for multi-factor trials where field spatial variability or
+environmental gradients require blocking to control experimental error.
+
+\
+`# 1. Define factors: Bean genotypes, fertilization levels, and irrigation regimes`\
+`factors`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`  Genotype ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Bean_01"``, ``"Bean_02"``)``,`\
+`  Fertilization ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"0"``, ``"50"``)``,`\
+`  Irrigation ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Low"``, ``"Medium"``)`\
+`)`\
+\
+`# 2. Generate factorial RCBD layout`\
+`design`` ``<-`` `[`design_repblock`](https://inkaverse.com/dev/reference/design_repblock.md)`(`\
+`  nfactors ``=`` ``3``,`\
+`  factors ``=`` ``factors``,`\
+`  type ``=`` ``"rcbd"``,`\
+`  rep ``=`` ``4``,`\
+`  zigzag ``=`` ``TRUE``,`\
+`  seed ``=`` ``2026`\
+`)`\
+\
+`# Fieldbook preview`\
+`fb`` ``<-`` ``design``$``fieldbook`` `\
+\
+`fb`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)\
+`  ``knitr``::`[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``caption ``=`` ``"Factorial RCBD Fieldbook preview"``)`
+
+| qrcode | plots | ntreat | Genotype | Fertilization | Irrigation | sort | block | rows | cols | design |
+|:---|---:|---:|:---|:---|:---|---:|---:|---:|---:|:---|
+| inkaverse_1001 | 1001 | 2 | Bean_02 | 0 | Low | 1 | 1 | 1 | 1 | rcbd |
+| inkaverse_1002 | 1002 | 7 | Bean_01 | 50 | Medium | 2 | 1 | 1 | 2 | rcbd |
+| inkaverse_1003 | 1003 | 5 | Bean_01 | 0 | Medium | 3 | 1 | 1 | 3 | rcbd |
+| inkaverse_1004 | 1004 | 6 | Bean_02 | 0 | Medium | 4 | 1 | 1 | 4 | rcbd |
+| inkaverse_1005 | 1005 | 1 | Bean_01 | 0 | Low | 5 | 1 | 1 | 5 | rcbd |
+| inkaverse_1006 | 1006 | 8 | Bean_02 | 50 | Medium | 6 | 1 | 1 | 6 | rcbd |
+| inkaverse_1007 | 1007 | 3 | Bean_01 | 50 | Low | 7 | 1 | 1 | 7 | rcbd |
+| inkaverse_1008 | 1008 | 4 | Bean_02 | 50 | Low | 8 | 1 | 1 | 8 | rcbd |
+| inkaverse_2001 | 2001 | 7 | Bean_01 | 50 | Medium | 1 | 2 | 2 | 8 | rcbd |
+| inkaverse_2002 | 2002 | 4 | Bean_02 | 50 | Low | 2 | 2 | 2 | 7 | rcbd |
+| inkaverse_2003 | 2003 | 6 | Bean_02 | 0 | Medium | 3 | 2 | 2 | 6 | rcbd |
+| inkaverse_2004 | 2004 | 3 | Bean_01 | 50 | Low | 4 | 2 | 2 | 5 | rcbd |
+| inkaverse_2005 | 2005 | 2 | Bean_02 | 0 | Low | 5 | 2 | 2 | 4 | rcbd |
+| inkaverse_2006 | 2006 | 8 | Bean_02 | 50 | Medium | 6 | 2 | 2 | 3 | rcbd |
+| inkaverse_2007 | 2007 | 5 | Bean_01 | 0 | Medium | 7 | 2 | 2 | 2 | rcbd |
+| inkaverse_2008 | 2008 | 1 | Bean_01 | 0 | Low | 8 | 2 | 2 | 1 | rcbd |
+| inkaverse_3001 | 3001 | 2 | Bean_02 | 0 | Low | 1 | 3 | 3 | 1 | rcbd |
+| inkaverse_3002 | 3002 | 4 | Bean_02 | 50 | Low | 2 | 3 | 3 | 2 | rcbd |
+| inkaverse_3003 | 3003 | 7 | Bean_01 | 50 | Medium | 3 | 3 | 3 | 3 | rcbd |
+| inkaverse_3004 | 3004 | 3 | Bean_01 | 50 | Low | 4 | 3 | 3 | 4 | rcbd |
+| inkaverse_3005 | 3005 | 5 | Bean_01 | 0 | Medium | 5 | 3 | 3 | 5 | rcbd |
+| inkaverse_3006 | 3006 | 1 | Bean_01 | 0 | Low | 6 | 3 | 3 | 6 | rcbd |
+| inkaverse_3007 | 3007 | 8 | Bean_02 | 50 | Medium | 7 | 3 | 3 | 7 | rcbd |
+| inkaverse_3008 | 3008 | 6 | Bean_02 | 0 | Medium | 8 | 3 | 3 | 8 | rcbd |
+| inkaverse_4001 | 4001 | 8 | Bean_02 | 50 | Medium | 1 | 4 | 4 | 8 | rcbd |
+| inkaverse_4002 | 4002 | 7 | Bean_01 | 50 | Medium | 2 | 4 | 4 | 7 | rcbd |
+| inkaverse_4003 | 4003 | 6 | Bean_02 | 0 | Medium | 3 | 4 | 4 | 6 | rcbd |
+| inkaverse_4004 | 4004 | 3 | Bean_01 | 50 | Low | 4 | 4 | 4 | 5 | rcbd |
+| inkaverse_4005 | 4005 | 1 | Bean_01 | 0 | Low | 5 | 4 | 4 | 4 | rcbd |
+| inkaverse_4006 | 4006 | 5 | Bean_01 | 0 | Medium | 6 | 4 | 4 | 3 | rcbd |
+| inkaverse_4007 | 4007 | 4 | Bean_02 | 50 | Low | 7 | 4 | 4 | 2 | rcbd |
+| inkaverse_4008 | 4008 | 2 | Bean_02 | 0 | Low | 8 | 4 | 4 | 1 | rcbd |
+
+Factorial RCBD Fieldbook preview {.table .caption-top}
+
+\
+\
+`# Spatial layout visualization`\
+[`tarpuy_plotdesign`](https://inkaverse.com/dev/reference/tarpuy_plotdesign.md)`(`\
+`  data ``=`` ``design``,`\
+`  factor ``=`` ``"Genotype"``,`\
+`  fill ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"plots"``, ``"Fertilization"``, ``"Irrigation"``)`\
+`)`
+
+![](DoE-3_RCBD_files/figure-html/unnamed-chunk-2-1.png)
+
+## Label
+
+The experimental field book generated by the design is used as the input
+data for label creation. Each row represents an experimental unit,
+allowing the automatic generation of individualized labels.
+
+## Customize the label layout
+
+The label layout can be customized by combining text, images and QR
+codes. Each layer can use values from the experimental field book,
+allowing automatic generation of labels for every experimental plot.
+
+Load package and import fonts.
+
+\
+`font`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Permanent Marker"``, ``"Tillana"``, ``"Courgette"``)`\
+\
+[`huito_fonts`](http://huito.inkaverse.com/reference/huito_fonts.md)`(``font``)`
+
+> You can find more fonts in <https://fonts.google.com/>
+
+## Label design
+
+\
+`label`` ``<-`` ``fb`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)`  `\
+`  `[`label_layout`](http://huito.inkaverse.com/reference/label_layout.md)`(``size ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``10``, ``2.5``)`\
+`               , border_color ``=`` ``"blue"`\
+`               ``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)\
+`  `[`include_image`](http://huito.inkaverse.com/reference/include_image.md)`(`\
+`    value ``=`` ``"files/inkaverse.png"`\
+`    , size ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``2.1``, ``2.4``)`\
+`    , position ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1.2``, ``1.25``)`\
+`    ``# , opts = list("image_scale(200)", "image_noise()")`\
+`    ``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)\
+`  `[`include_barcode`](http://huito.inkaverse.com/reference/include_barcode.md)`(`\
+`     value ``=`` ``"qrcode"`\
+`     , size ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``2.5``, ``2.5``)`\
+`     , position ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``8.2``, ``1.25``)`\
+`     ``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)\
+`  `[`include_text`](http://huito.inkaverse.com/reference/include_text.md)`(``value ``=`` ``"INKAVERSE"`\
+`               , position ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``4.6``, ``2``)`\
+`               , size ``=`` ``20`\
+`               , font ``=`` ``font``[``1``]`\
+`               , fontface ``=`` ``"bold"`\
+`               , color ``=`` ``"red"`\
+`               ``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)\
+`  `[`include_text`](http://huito.inkaverse.com/reference/include_text.md)`(``value ``=`` ``"Irrigation"`\
+`               , position ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``2.4``, ``1.2``)`\
+`               , size ``=`` ``12`\
+`               , font ``=`` ``font``[``2``]`\
+`               , color ``=`` ``"black"`\
+`               , prefix ``=`` ``"Irrigation: "`\
+`               , fontface ``=`` ``"bold"`\
+`               , opts ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``hjust ``=`` ``0.0``, vjust ``=`` ``0.0``)`\
+`               ``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)\
+`    `[`include_text`](http://huito.inkaverse.com/reference/include_text.md)`(``value ``=`` ``"Genotype"`\
+`               , position ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``2.4``, ``0.5``)`\
+`               , size ``=`` ``12`\
+`               , color ``=`` ``"#009966"`\
+`               , font ``=`` ``font``[``2``]`\
+`               , prefix ``=`` ``"Genotype: "`\
+`               , fontface ``=`` ``"bold"`\
+`               , opts ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``hjust ``=`` ``0.0``, vjust ``=`` ``0.0``)`\
+`               ``)`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
+`  `[`include_text`](http://huito.inkaverse.com/reference/include_text.md)`(``value ``=`` ``"plots"`\
+`               , position ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``9.7``, ``1.25``)`\
+`               , angle ``=`` ``90`\
+`               , size ``=`` ``12`\
+`               , color ``=`` ``"brown"`\
+`               , font ``=`` ``font``[``3``]`\
+`               , prefix ``=`` ``"Plot: "`\
+`               ``)`` `
+
+### Label preview
+
+The preview mode `label_print(mode = "preview")` generate a example of
+the label design from a random row of the data set.
+
+\
+`label`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
+`  `[`label_print`](http://huito.inkaverse.com/reference/label_print.md)`(``mode ``=`` ``"preview"``)`
+
+![](DoE-3_RCBD_files/figure-html/unnamed-chunk-5-1.png)
+
+### Generate the complete labels
+
+If you want generate the complete labels list, change:
+`label_print(mode = "complete")`.
+
+\
+`label`` `[`%>%`](https://magrittr.tidyverse.org/reference/pipe.html)` `\
+`  `[`label_print`](http://huito.inkaverse.com/reference/label_print.md)`(``mode ``=`` ``"complete"`\
+`              , filename ``=`` ``"horizontal_rcbd_exp_3f "`\
+`              , nlabels ``=`` ``12``)`

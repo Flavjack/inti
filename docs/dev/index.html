@@ -42,7 +42,7 @@
 
     <a class="navbar-brand me-2" href="index.html">inti</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.2.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.5.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,13 +54,49 @@
 <li class="active nav-item"><a class="nav-link" href="index.html"><span class="fa fa-home fa-lg"></span></a></li>
 <li class="nav-item"><a class="nav-link" href="articles/apps.html"><span class="fa fa-gamepad fa-lg"></span> Apps</a></li>
 <li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/tarpuy.html">Tarpuy: field-book experimental plans</a></li>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-doe" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> DoE</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-doe">
+<li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="articles/tarpuy.html">Tarpuy: field-book experimental plans</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Single Factor Designs</h6></li>
+    <li><a class="dropdown-item" href="articles/DoE-1_DCA.html">DCA</a></li>
+    <li><a class="dropdown-item" href="articles/DoE-1_RCBD.html">RCBD</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Two Factors Designs</h6></li>
+    <li><a class="dropdown-item" href="articles/DoE-2_DCA.html">DCA</a></li>
+    <li><a class="dropdown-item" href="articles/DoE-2_RCBD.html">RCBD</a></li>
+    <li><a class="dropdown-item" href="articles/DoE-2_SPLIT.html">Split-Plot in RCBD</a></li>
+    <li><a class="dropdown-item" href="articles/DoE-2_AUG.html">Augmented in RCBD</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Three or More Factors Designs</h6></li>
+    <li><a class="dropdown-item" href="articles/DoE-3_DCA.html">DCA</a></li>
+    <li><a class="dropdown-item" href="articles/DoE-3_RCBD.html">RCBD</a></li>
+    <li><hr class="dropdown-divider"></li>
+  </ul>
+</li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-analysis" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> Analysis</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-analysis">
+<li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="articles/yupana.html">Yupana: experimental design analysis</a></li>
+    <li><hr class="dropdown-divider"></li>
+  </ul>
+</li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-writing" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> Writing</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-writing">
+<li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="articles/rticles.html">Rticles: scientific documents with R</a></li>
     <li><hr class="dropdown-divider"></li>
+  </ul>
+</li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-breeding" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> Breeding</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-breeding">
+<li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="articles/heritability.html">Broad-sense heritability in plant breeding</a></li>
+    <li><hr class="dropdown-divider"></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="articles/policy.html"><span class="fa fa-shield-alt fa-lg"></span> Privacy Policy</a></li>
@@ -71,8 +107,8 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/flavjack/inti/"><span class="fa fab fa-github fa-lg"></span></a></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/sponsors/Flavjack"><span class="fa fas fa-heart fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/flozanoisla/inti/"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/sponsors/flozanoisla"><span class="fa fas fa-heart fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -85,7 +121,7 @@
 <img src="logo.png" class="logo" alt=""><h1 id="inti-">inti <a class="anchor" aria-label="anchor" href="#inti-"></a>
 </h1>
 </div>
-<p><a href="https://cran.r-project.org/package=inti" class="external-link"><img src="https://img.shields.io/cran/v/inti.png" alt="CRAN"></a> <a href="https://zenodo.org/badge/latestdoi/82401374" class="external-link"><img src="https://zenodo.org/badge/82401374.svg" alt="DOI"></a> <a href="https://github.com/Flavjack/inti/actions" class="external-link"><img src="https://github.com/Flavjack/inti/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a> <a href="https://r-pkg.org/pkg/inti" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/inti?color=brightgreen.png" alt="Downloads"></a></p>
+<p><a href="https://cran.r-project.org/package=inti" class="external-link"><img src="https://img.shields.io/cran/v/inti.png" alt="CRAN"></a> <a href="https://zenodo.org/badge/latestdoi/82401374" class="external-link"><img src="https://zenodo.org/badge/82401374.svg" alt="DOI"></a> <a href="https://github.com/flozanoisla/inti/actions" class="external-link"><img src="https://github.com/flozanoisla/inti/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a> <a href="https://r-pkg.org/pkg/inti" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/inti?color=brightgreen.png" alt="Downloads"></a></p>
 <p>The <strong>inti</strong> package is part of the <strong>inkaverse</strong> project, which develops tools and workflows for plant science, experimental design, data analysis, and scientific writing. The package supports researchers during experiment planning and field data collection through <strong>Tarpuy</strong>, statistical analysis and visualization through <strong>Yupana</strong>, and the preparation of scientific outputs.</p>
 <p>More information about the project is available at <a href="https://inkaverse.com/" class="uri">https://inkaverse.com/</a>.</p>
 <div class="section level2">
@@ -100,7 +136,7 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"flavjack/inti"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"flozanoisla/inti"</span><span class="op">)</span></span></code></pre></div>
 <p>After installation, load the package:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://inkaverse.com/">inti</a></span><span class="op">)</span></span></code></pre></div>
@@ -126,9 +162,9 @@
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=inti" class="external-link">View on CRAN</a></li>
-<li><a href="https://github.com/Flavjack/inti/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/Flavjack/inti/issues" class="external-link">Report a bug</a></li>
-<li><a href="https://github.com/sponsors/flavjack" class="external-link">Support the project</a></li>
+<li><a href="https://github.com/flozanoisla/inti/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/flozanoisla/inti/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/sponsors/flozanoisla" class="external-link">Support the project</a></li>
 </ul>
 </div>
 
@@ -155,6 +191,7 @@
 <li>
 <a href="https://www.linkedin.com/in/flozanoisla/" class="external-link">Flavio Lozano-Isla</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0714-669X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li>Yoel Diaz-Saucedo <br><small class="roles"> Author </small> <a href="https://orcid.org/0009-0003-9765-136X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Victor-Hugo Baldera-Chapoñan <br><small class="roles"> Author </small> <a href="https://orcid.org/0009-0003-4321-7103" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li>María Belén Kistner <br><small class="roles"> Contributor </small> <a href="https://orcid.org/0000-0002-0947-6414" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li>
 <a href="https://www.quipolab.com/" class="external-link"><img src="https://inkaverse.com/img/quipolab.png" align="middle" width="70"></a> <br><small class="roles"> Contributor </small>   </li>

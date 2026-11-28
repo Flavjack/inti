@@ -42,8 +42,8 @@ load_or_install(cran_packages)
 
 knitr::opts_chunk$set(
   fig.align = "center",
-  out.width = "98%",
-  # message = FALSE,
+  out.width = "98%"
+  # , message = FALSE,
   # warning = FALSE,
   # collapse = TRUE
 )

@@ -24,7 +24,7 @@ website:
         text: Articles & Tools
     right:
       - icon: github
-        href: https://github.com/Flavjack/inti
+        href: https://github.com/flozanoisla/inti
 
 format:
   html:

@@ -1,8 +1,16 @@
 # Apps
 
-The package `inti` has been developed to provide tools used in plant
-science and experimental designs. The package also include shiny apps
-for design experiments, interactive analysis and technical writing.
+The package `inti` is part of the inkaverse project for developing
+procedures and tools used in plant science and experimental designs. The
+TARPUY module allows researchers to plan, randomize, generate
+fieldbooks, and visualize experimental design layouts either through R
+code or via an interactive Shiny add-in (inti::tarpuy()).
+
+[![inti](https://inkaverse.com/logo.png "R cran")](https://CRAN.R-project.org/package=inti)
+inti
+
+[![inti](https://pkgdown.r-lib.org/reference/figures/logo.png "inti")](https://inkaverse.com/)
+Project
 
 The `inti` package is inspired by the Inca mythology where the sun
 (`inti`) is considered the most significant deity. The web applications
@@ -21,26 +29,26 @@ to access to the apps you can use
 
 Ease way to deploy field-book experimental plans.
 
-[![](https://flavjack.github.io/inti/img/youtube.png "demo")](https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC)
+[![](https://inkaverse.com/img/youtube.png "demo")](https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC)
 demo
 
 [![](https://lozanoisla.com/img/tools.png "options")](https://inkaverse.com/articles/tarpuy.html)
 options
 
-[![](https://flavjack.github.io/inti/img/tarpuy.png "tarpuy")](https://inkaverse.shinyapps.io/tarpuy/)
+[![](https://inkaverse.com/img/tarpuy.png "tarpuy")](https://inkaverse.shinyapps.io/tarpuy/)
 Tarpuy
 
 ## Yupana
 
 Data analysis and graphics for experimental designs.
 
-[![](https://flavjack.github.io/inti/img/youtube.png "demo")](https://www.youtube.com/playlist?list=PLSQMdOu57lj9sTx5Dbff9O0g6KCU4pwCQ)
+[![](https://inkaverse.com/img/youtube.png "demo")](https://www.youtube.com/playlist?list=PLSQMdOu57lj9sTx5Dbff9O0g6KCU4pwCQ)
 demo
 
 [![](https://lozanoisla.com/img/tools.png "options")](https://inkaverse.com/articles/yupana.html)
 options
 
-[![](https://flavjack.github.io/inti/img/yupana.png "yupana")](https://inkaverse.shinyapps.io/yupana/)
+[![](https://inkaverse.com/img/yupana.png "yupana")](https://inkaverse.shinyapps.io/yupana/)
 Yupana
 
 ## Huito
@@ -64,7 +72,7 @@ application called “GerminQuant for R” for non programming users.
 
 ------------------------------------------------------------------------
 
-[![GerminaR](https://flavjack.github.io/GerminaR/reference/figures/logo.png "R cran")](https://CRAN.R-project.org/package=GerminaR)
+[![GerminaR](https://germinar.inkaverse.com/reference/figures/logo.png "R cran")](https://CRAN.R-project.org/package=GerminaR)
 GerminaR
 
 [![Demo](https://lozanoisla.com/img/youtube.png "Demo")](https://www.youtube.com/playlist?list=PLSQMdOu57lj9QUoA6JLuv0nBTYacuyrbg)

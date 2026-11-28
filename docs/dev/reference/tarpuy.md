@@ -5,7 +5,7 @@ Invoke RStudio addin to create fieldbook designs
 ## Usage
 
 ``` r
-tarpuy(dependencies = FALSE)
+tarpuy(dependencies = FALSE, port = 1221)
 ```
 
 ## Arguments
@@ -15,6 +15,13 @@ tarpuy(dependencies = FALSE)
   Logical. If `TRUE`, install any missing TARPUY runtime dependencies
   using the local `inst/tarpuy/setup.R` script included with the
   installed `inti` package.
+
+- port:
+
+  Port on which the app runs `[numeric: 1221]`. The default matches the
+  port registered for Google sign-in. Use another value (or `NULL` for a
+  random free port) if 1221 is busy, e.g. when YUPANA is already
+  running; Google sign-in may not work on other ports.
 
 ## Value
 

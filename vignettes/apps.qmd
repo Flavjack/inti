@@ -60,7 +60,7 @@ Ease way to deploy field-book experimental plans.
 <div style="display:inline-block; width:32%">
 <p style="text-align:center">
 <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC">
-<img src="https://flavjack.github.io/inti/img/youtube.png" style="height:80px" title="demo"></a>
+<img src="https://inkaverse.com/img/youtube.png" style="height:80px" title="demo"></a>
 <span style="display:block;"><small>demo</small></span>
 </p></div>
 
@@ -73,7 +73,7 @@ Ease way to deploy field-book experimental plans.
 
 <div style="display:inline-block; width:32%">
 <p style="text-align:center">
-<a target="_blank" href="https://inkaverse.shinyapps.io/tarpuy/"><img src="https://flavjack.github.io/inti/img/tarpuy.png" style="height:80px" title="tarpuy"></a>
+<a target="_blank" href="https://inkaverse.shinyapps.io/tarpuy/"><img src="https://inkaverse.com/img/tarpuy.png" style="height:80px" title="tarpuy"></a>
 <span style="display:block;"><small>Tarpuy</small></span>
 </p></div>
 
@@ -90,7 +90,7 @@ Data analysis and graphics for experimental designs.
 <div style="display:inline-block; width:32%">
 <p style="text-align:center">
 <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj9sTx5Dbff9O0g6KCU4pwCQ">
-<img src="https://flavjack.github.io/inti/img/youtube.png" style="height:80px" title="demo"></a>
+<img src="https://inkaverse.com/img/youtube.png" style="height:80px" title="demo"></a>
 <span style="display:block;"><small>demo</small></span>
 </p></div>
 
@@ -103,7 +103,7 @@ Data analysis and graphics for experimental designs.
 
 <div style="display:inline-block; width:32%">
 <p style="text-align:center">
-<a target="_blank" href="https://inkaverse.shinyapps.io/yupana/"><img src="https://flavjack.github.io/inti/img/yupana.png" style="height:80px" title="yupana"></a>
+<a target="_blank" href="https://inkaverse.shinyapps.io/yupana/"><img src="https://inkaverse.com/img/yupana.png" style="height:80px" title="yupana"></a>
 <span style="display:block;"><small>Yupana</small></span>
 </p></div>
 
@@ -145,7 +145,7 @@ GerminaR is the first platform base in open source package to calculate and grap
 
 <div style="display:inline-block; width:24%">
 <p style="text-align:center">
-<a target="_blank" href="https://CRAN.R-project.org/package=GerminaR"><img src="https://flavjack.github.io/GerminaR/reference/figures/logo.png" style="height:80px" title="R cran" alt="GerminaR"></a> 
+<a target="_blank" href="https://CRAN.R-project.org/package=GerminaR"><img src="https://germinar.inkaverse.com/reference/figures/logo.png" style="height:80px" title="R cran" alt="GerminaR"></a> 
 <span style="display:block;"><small>GerminaR</small></span>
 </p></div>
 

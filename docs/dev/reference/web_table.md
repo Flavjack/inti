@@ -12,7 +12,7 @@ web_table(
   rnames = FALSE,
   buttons = NULL,
   file_name = "file",
-  scrolly = NULL,
+  scrolly = "45vh",
   columnwidth = "200px",
   width = "100%"
 )

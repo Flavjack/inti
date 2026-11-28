@@ -2,7 +2,7 @@
 
 The datasets were obtained from official Swedish cultivar tests. Dry
 matter yield was analyzed. All trials were laid out as alpha-designs
-with two replicates. Within each replicate, there were five to seven
+with two replicates. Within each replicate, there were six to eight
 incomplete blocks.
 
 ## Usage
@@ -26,7 +26,7 @@ A data frame with 1069 rows and 8 variables:
 
 - rep:
 
-  Replications (4): number of replication in the experiment
+  Replications (2): number of replication in the experiment
 
 - alpha:
 
@@ -38,7 +38,7 @@ A data frame with 1069 rows and 8 variables:
 
 - yield:
 
-  Yield in kg/ha
+  Dry matter yield in g/m^2 (100 g/m^2 = 1 t/ha)
 
 - year:
 

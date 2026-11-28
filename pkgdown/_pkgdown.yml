@@ -5,7 +5,7 @@ home:
   description: Tools and Statistical Procedures in Plant Science
   links:
   - text: Support the project
-    href: https://github.com/sponsors/flavjack
+    href: https://github.com/sponsors/flozanoisla
 
 authors:
   Flavio Lozano-Isla:
@@ -50,10 +50,10 @@ navbar:
       href: index.html
     github:
       icon: fab fa-github fa-lg
-      href: https://github.com/flavjack/inti/
+      href: https://github.com/flozanoisla/inti/
     sponsor:
       icon: fas fa-heart fa-lg
-      href: https://github.com/sponsors/Flavjack
+      href: https://github.com/sponsors/flozanoisla
     apps:
       text: "Apps"
       icon: fa-gamepad fa-lg

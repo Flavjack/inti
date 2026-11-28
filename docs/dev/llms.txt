@@ -2,7 +2,7 @@
 
 [![CRAN](https://img.shields.io/cran/v/inti.png)](https://cran.r-project.org/package=inti)
 [![DOI](https://zenodo.org/badge/82401374.svg)](https://zenodo.org/badge/latestdoi/82401374)
-[![R-CMD-check](https://github.com/Flavjack/inti/workflows/R-CMD-check/badge.svg)](https://github.com/Flavjack/inti/actions)
+[![R-CMD-check](https://github.com/flozanoisla/inti/workflows/R-CMD-check/badge.svg)](https://github.com/flozanoisla/inti/actions)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/inti?color=brightgreen.png)](https://r-pkg.org/pkg/inti)
 
 The **inti** package is part of the **inkaverse** project, which
@@ -19,29 +19,23 @@ More information about the project is available at
 
 The stable version of **inti** can be installed from CRAN:
 
-``` r
-
-install.packages("inti")
-```
+\
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"inti"``)`
 
 To install the latest development version directly from GitHub, it is
 recommended to use **pak**:
 
-``` r
-
-if (!requireNamespace("pak", quietly = TRUE)) {
-  install.packages("pak")
-}
-
-pak::pkg_install("flavjack/inti")
-```
+\
+`if`` ``(``!`[`requireNamespace`](https://rdrr.io/r/base/ns-load.html)`(``"pak"``, quietly ``=`` ``TRUE``)``)`` ``{`\
+`  `[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"pak"``)`\
+`}`\
+\
+`pak``::`[`pkg_install`](https://pak.r-lib.org/reference/pkg_install.html)`(``"flozanoisla/inti"``)`
 
 After installation, load the package:
 
-``` r
-
-library(inti)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`inti`](https://inkaverse.com/)`)`
 
 ## Shiny Applications
 
@@ -57,18 +51,14 @@ menu or launched from the R console.
 **Yupana** is an interactive environment for statistical analysis and
 visualization of experimental data.
 
-``` r
-
-inti:::yupana_full()
-```
+\
+`inti``:::``yupana_full``(``)`
 
 **Tarpuy** is an interactive platform for experimental planning,
 field-book generation, treatment organization, and data management.
 
-``` r
-
-inti:::tarpuy_full()
-```
+\
+`inti``:::``tarpuy_full``(``)`
 
 # Package index
 
@@ -90,8 +80,6 @@ Data analysis
   : Fieldbook reshape
 - [`plot_augmented_design()`](https://inkaverse.com/dev/reference/plot_augmented_design.md)
   : Plot augmented fieldbook design
-- [`plot_diag()`](https://inkaverse.com/dev/reference/plot_diag.md) :
-  Diagnostic plots
 - [`plot_diagnostic()`](https://inkaverse.com/dev/reference/plot_diagnostic.md)
   : Diagnostic plots
 - [`plot_raw()`](https://inkaverse.com/dev/reference/plot_raw.md) : Plot
@@ -141,8 +129,6 @@ Algorithms and calculations
   Broad-sense heritability in plant breeding
 - [`metamorphosis()`](https://inkaverse.com/dev/reference/metamorphosis.md)
   : Transform fieldbooks based in a dictionary
-- [`outliers_remove()`](https://inkaverse.com/dev/reference/outliers_remove.md)
-  : Remove outliers
 - [`remove_outliers()`](https://inkaverse.com/dev/reference/remove_outliers.md)
   : Remove outliers using mixed models
 - [`mean_comparison()`](https://inkaverse.com/dev/reference/mean_comparison.md)
@@ -177,6 +163,46 @@ Algorithms and calculations
 - [Apps](https://inkaverse.com/dev/articles/apps.md):
 
   inti: interactive apps.
+
+- [Single-Factor Design:
+  CRD](https://inkaverse.com/dev/articles/DoE-1_DCA.md):
+
+  Complete Randomize Design
+
+- [Single-Factor Design:
+  RCBD](https://inkaverse.com/dev/articles/DoE-1_RCBD.md):
+
+  Randomized Complete Block Design
+
+- [Two-Factors Design: Augmented Design in
+  RCBD](https://inkaverse.com/dev/articles/DoE-2_AUG.md):
+
+  Augmented Design in RCBD
+
+- [Two-Factors Design:
+  CRD](https://inkaverse.com/dev/articles/DoE-2_DCA.md):
+
+  Factorial Complete Randomize Design
+
+- [Two-Factors Design:
+  RCBD](https://inkaverse.com/dev/articles/DoE-2_RCBD.md):
+
+  Factorial Complete Randomize Block Design
+
+- [Two-Factors Design: Split-Plot in
+  RCBD](https://inkaverse.com/dev/articles/DoE-2_SPLIT.md):
+
+  Split-Plot in RCBD
+
+- [Three-Factors Design:
+  CRD](https://inkaverse.com/dev/articles/DoE-3_DCA.md):
+
+  Factorial Complete Randomize Design
+
+- [Three-Factors Design:
+  RCBD](https://inkaverse.com/dev/articles/DoE-3_RCBD.md):
+
+  Factorial Complete Randomize Block Design
 
 - [Broad-sense heritability in plant
   breeding](https://inkaverse.com/dev/articles/heritability.md):

@@ -31,7 +31,7 @@ yupana <- function(dependencies = FALSE, port = 1221) {
   
   if (dependencies == TRUE) {
     
-    source("https://raw.githubusercontent.com/Flavjack/inti/master/inst/yupana/setup.R")
+    source("https://raw.githubusercontent.com/flozanoisla/inti/master/inst/yupana/setup.R")
     
   }
   

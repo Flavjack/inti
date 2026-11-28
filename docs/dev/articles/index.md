@@ -6,6 +6,46 @@
 
   inti: interactive apps.
 
+- [Single-Factor Design:
+  CRD](https://inkaverse.com/dev/articles/DoE-1_DCA.md):
+
+  Complete Randomize Design
+
+- [Single-Factor Design:
+  RCBD](https://inkaverse.com/dev/articles/DoE-1_RCBD.md):
+
+  Randomized Complete Block Design
+
+- [Two-Factors Design: Augmented Design in
+  RCBD](https://inkaverse.com/dev/articles/DoE-2_AUG.md):
+
+  Augmented Design in RCBD
+
+- [Two-Factors Design:
+  CRD](https://inkaverse.com/dev/articles/DoE-2_DCA.md):
+
+  Factorial Complete Randomize Design
+
+- [Two-Factors Design:
+  RCBD](https://inkaverse.com/dev/articles/DoE-2_RCBD.md):
+
+  Factorial Complete Randomize Block Design
+
+- [Two-Factors Design: Split-Plot in
+  RCBD](https://inkaverse.com/dev/articles/DoE-2_SPLIT.md):
+
+  Split-Plot in RCBD
+
+- [Three-Factors Design:
+  CRD](https://inkaverse.com/dev/articles/DoE-3_DCA.md):
+
+  Factorial Complete Randomize Design
+
+- [Three-Factors Design:
+  RCBD](https://inkaverse.com/dev/articles/DoE-3_RCBD.md):
+
+  Factorial Complete Randomize Block Design
+
 - [Broad-sense heritability in plant
   breeding](https://inkaverse.com/dev/articles/heritability.md):
 

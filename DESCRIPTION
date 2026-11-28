@@ -19,8 +19,8 @@ Authors@R: c(
     person("Inkaverse", role = c("cph"))
     )
 License: GPL-3 | file LICENSE
-URL: https://inkaverse.com/, https://github.com/Flavjack/inti
-BugReports: https://github.com/Flavjack/inti/issues
+URL: https://inkaverse.com/, https://github.com/flozanoisla/inti
+BugReports: https://github.com/flozanoisla/inti/issues
 Depends:
     R (>= 4.1.0)
 Imports:

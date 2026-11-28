@@ -52,7 +52,7 @@ zip files
 if (FALSE) { # \dontrun{
 
 split_folder("pictures/QUINOA 2018-2019 SC SEEDS EDWIN - CAMACANI/"
-   , "pictures/split_num", remove = T, size = 400, units = "number")
+   , "pictures/split_num", remove = TRUE, size = 400, units = "number")
 
 } # }
 ```

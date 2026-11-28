@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inti</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.2.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.5.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,20 +30,50 @@
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../index.html"><span class="fa fa-home fa-lg"></span></a></li>
 <li class="nav-item"><a class="nav-link" href="../articles/apps.html"><span class="fa fa-gamepad fa-lg"></span> Apps</a></li>
 <li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/tarpuy.html">Tarpuy: field-book experimental plans</a></li>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-doe" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> DoE</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-doe"><li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../articles/tarpuy.html">Tarpuy: field-book experimental plans</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Single Factor Designs</h6></li>
+    <li><a class="dropdown-item" href="../articles/DoE-1_DCA.html">DCA</a></li>
+    <li><a class="dropdown-item" href="../articles/DoE-1_RCBD.html">RCBD</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Two Factors Designs</h6></li>
+    <li><a class="dropdown-item" href="../articles/DoE-2_DCA.html">DCA</a></li>
+    <li><a class="dropdown-item" href="../articles/DoE-2_RCBD.html">RCBD</a></li>
+    <li><a class="dropdown-item" href="../articles/DoE-2_SPLIT.html">Split-Plot in RCBD</a></li>
+    <li><a class="dropdown-item" href="../articles/DoE-2_AUG.html">Augmented in RCBD</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Three or More Factors Designs</h6></li>
+    <li><a class="dropdown-item" href="../articles/DoE-3_DCA.html">DCA</a></li>
+    <li><a class="dropdown-item" href="../articles/DoE-3_RCBD.html">RCBD</a></li>
+    <li><hr class="dropdown-divider"></li>
+  </ul></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-analysis" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> Analysis</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-analysis"><li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/yupana.html">Yupana: experimental design analysis</a></li>
+    <li><hr class="dropdown-divider"></li>
+  </ul></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-writing" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> Writing</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-writing"><li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/rticles.html">Rticles: scientific documents with R</a></li>
     <li><hr class="dropdown-divider"></li>
+  </ul></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-breeding" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-book fa-lg"></span> Breeding</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-breeding"><li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/heritability.html">Broad-sense heritability in plant breeding</a></li>
+    <li><hr class="dropdown-divider"></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../articles/policy.html"><span class="fa fa-shield-alt fa-lg"></span> Privacy Policy</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-file-code fa-lg"></span> Functions</a></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html"><span class="fa fa-file-alt fa-lg"></span> News</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/flavjack/inti/"><span class="fa fab fa-github fa-lg"></span></a></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/sponsors/Flavjack"><span class="fa fas fa-heart fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/flozanoisla/inti/"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/sponsors/flozanoisla"><span class="fa fas fa-heart fa-lg"></span></a></li>
       </ul></div>
 
 
@@ -52,11 +82,73 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/Flavjack/inti/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/flozanoisla/inti/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.7.3" id="inti-073">inti 0.7.3<a class="anchor" aria-label="anchor" href="#inti-073"></a></h2>
+<h2 class="pkg-version" data-toc-text="development version" id="inti-development-version">inti (development version)<a class="anchor" aria-label="anchor" href="#inti-development-version"></a></h2>
+<ul><li>Fix <code>met</code> documentation: yield is dry matter yield in g/m^2, not kg/ha</li>
+</ul><div class="section level3">
+<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
+<ul><li>
+<code>shiny</code>, <code>ggplot2</code>, <code>dplyr</code>, <code>tidyr</code> and <code>tibble</code> moved from <code>Depends</code> to <code>Imports</code>. <code><a href="https://inkaverse.com/">library(inti)</a></code> no longer attaches them; load them explicitly (e.g. <code><a href="https://ggplot2.tidyverse.org" class="external-link">library(ggplot2)</a></code>) if your scripts use their functions directly. The pipe <code>%&gt;%</code> is still exported by <code>inti</code>
+</li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
+<ul><li>Design functions (<code><a href="../reference/design_repblock.html">design_repblock()</a></code>, <code><a href="../reference/design_split_rcbd.html">design_split_rcbd()</a></code>, <code><a href="../reference/design_augmented.html">design_augmented()</a></code>, <code><a href="../reference/design_noreps.html">design_noreps()</a></code>) no longer modify the user’s global random number generator: the <code>seed</code> is applied locally and the previous RNG state is restored on exit. <code>design_noreps(seed = NULL)</code> no longer resets the RNG</li>
+<li>
+<code><a href="../reference/tarpuy.html">tarpuy()</a></code> and <code><a href="../reference/yupana.html">yupana()</a></code> gain a <code>port</code> argument (default <code>1221</code>, the port registered for Google sign-in), so the apps can run on another port if 1221 is busy</li>
+<li>YUPANA app explicitly attaches <code>shiny</code>
+</li>
+</ul></div>
+<div class="section level3">
+<h3 id="internal-development-version">Internal<a class="anchor" aria-label="anchor" href="#internal-development-version"></a></h3>
+<ul><li>Update GitHub Actions workflows (R-CMD-check and pkgdown) to <code>r-lib/actions@v2</code>, <code>actions/checkout@v4</code> and current runners; add Quarto setup</li>
+<li>Use <code>TRUE</code>/<code>FALSE</code> instead of <code>T</code>/<code>F</code>
+</li>
+<li>Remove leftover commented debugging code</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.5" id="inti-075">inti 0.7.5<a class="anchor" aria-label="anchor" href="#inti-075"></a></h2><p class="text-muted">CRAN release: 2026-09-30</p>
+<ul><li>Update H2Cal() faster calculations and new diagnostic plot</li>
+<li>Update Vignettes</li>
+<li>Update SciHub()</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.4" id="inti-074">inti 0.7.4<a class="anchor" aria-label="anchor" href="#inti-074"></a></h2><p class="text-muted">CRAN release: 2026-09-06</p>
+<ul><li>Tarpuy
+<ul><li>Improve trait variable generation to support text and numeric prefixes in <a href="https://josesamos.github.io/when/" class="external-link">when</a> and <code>{samples}</code>
+</li>
+<li>Omit empty trait components from fieldbook variable names instead of adding <code>NA</code>
+</li>
+<li>Preserve existing fieldbook data when traits are added or modified</li>
+<li>Preserve previous variables and manually added columns when updating traits</li>
+<li>Detect changes in the experimental design before replacing an existing fieldbook</li>
+<li>Add a warning before replacing a fieldbook with recorded data when factors, levels, blocks, replications, or treatments are modified</li>
+<li>Improve CRD, RCBD, augmented, and split-plot designs</li>
+<li>Validate plots, QR codes, seed, rows, columns, blocks, and replications to avoid duplicates or incorrect layouts</li>
+<li>Improve Layout Summary according to the experimental design</li>
+<li>Include plots, blocks, replications, checks, entries, rows, and columns in Layout Summary when applicable</li>
+<li>Fix Layout Summary value visibility and horizontal scrolling</li>
+<li>Improve Sketch representation of experimental designs</li>
+<li>Scale experimental-unit boxes according to the selected width and height</li>
+<li>Automatically adjust text inside experimental-unit boxes</li>
+<li>Add PNG, SVG, and PDF export options in Sketch</li>
+<li>Automatically select the <code>fb</code> sheet to generate the Sketch plot</li>
+<li>Add font-size control in the Sketch module</li>
+<li>Automatically select file columns in the Mobile module for export</li>
+</ul></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.3" id="inti-073">inti 0.7.3<a class="anchor" aria-label="anchor" href="#inti-073"></a></h2><p class="text-muted">CRAN release: 2026-08-20</p>
+<ul><li>Improve PCA supplementary variables</li>
+<li>Select the dimension in PCA</li>
+<li>Sub module for PCA with variable contribution and dimension correlation</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.3" id="inti-073-1">inti 0.7.3<a class="anchor" aria-label="anchor" href="#inti-073-1"></a></h2><p class="text-muted">CRAN release: 2026-08-20</p>
 <ul><li>Update <code>scihub()</code> to include pages</li>
 <li>
 <code><a href="../reference/rticle.html">rticle()</a></code> improve crossrefs</li>
@@ -140,8 +232,8 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.6" id="inti-066">inti 0.6.6<a class="anchor" aria-label="anchor" href="#inti-066"></a></h2><p class="text-muted">CRAN release: 2024-09-03</p>
 <ul><li>Package
-<ul><li>New function related <code><a href="../reference/outliers_remove.html">outliers_remove()</a></code> =&gt; “<code>remove_outliers</code>” to work with formula</li>
-<li>New function related <code><a href="../reference/plot_diag.html">plot_diag()</a></code> =&gt; “<code>plot_diagnostic</code>” to work with formula</li>
+<ul><li>New function related <code>outliers_remove()</code> =&gt; “<code>remove_outliers</code>” to work with formula</li>
+<li>New function related <code>plot_diag()</code> =&gt; “<code>plot_diagnostic</code>” to work with formula</li>
 </ul></li>
 <li>Rticles
 <ul><li>Fix Tables and Figures order in final document</li>
@@ -305,7 +397,7 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.4" id="inti-054">inti 0.5.4<a class="anchor" aria-label="anchor" href="#inti-054"></a></h2><p class="text-muted">CRAN release: 2022-02-22</p>
 <ul><li>
-<code><a href="../reference/outliers_remove.html">outliers_remove()</a></code>: change <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> by <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind.data.frame()</a></code>.</li>
+<code>outliers_remove()</code>: change <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> by <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind.data.frame()</a></code>.</li>
 <li>Fix apps auth.</li>
 <li>Thanks to Uwe Ligges to allow consecutive CRAN updates.</li>
 </ul></div>
@@ -315,7 +407,7 @@
 <li>Avoid labels in axis and legend using <code>""</code>.</li>
 <li>Update vignettes using bookdown.</li>
 <li>Fix table summary in <code><a href="../reference/H2cal.html">H2cal()</a></code>.</li>
-<li>Update diagnostic plot in <code><a href="../reference/plot_diag.html">plot_diag()</a></code> to lm and lmerMod.</li>
+<li>Update diagnostic plot in <code>plot_diag()</code> to lm and lmerMod.</li>
 <li>Update code for logIn modules in apps.</li>
 <li>Update correlation graph in yupana.</li>
 </ul></div>
@@ -339,7 +431,7 @@
 <ul><li>
 <em>Package</em>
 <ul><li>
-<code><a href="../reference/H2cal.html">H2cal()</a></code>: BLUEs from H2cal may be wrong if other fixed effects in the model (<a href="https://github.com/Flavjack/inti/issues/10" class="external-link">#10</a>).
+<code><a href="../reference/H2cal.html">H2cal()</a></code>: BLUEs from H2cal may be wrong if other fixed effects in the model (<a href="https://github.com/flozanoisla/inti/issues/10" class="external-link">#10</a>).
 <ul><li>Thanks Jim Holland (<a href="https://github.com/ncsumaize" class="external-link">@ncsumaize</a>) for the suggestion to improve the function.</li>
 </ul></li>
 <li>New functions: <code>gdoc2rmd()</code>, <code>table2rmd()</code>, <code>figure2rmd()</code>

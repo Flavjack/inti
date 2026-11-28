@@ -19,7 +19,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-source("https://raw.githubusercontent.com/Flavjack/inti/master/pkgdown/favicon/docs.r")
+source("https://raw.githubusercontent.com/flozanoisla/inti/master/pkgdown/favicon/docs.r")
 ```
 
 El paquete `inti` permite usar un plantilla (template) para la generar documentos técnico/científicos (i.e. tesis y artículos) usando [`Quarto`](https://quarto.org/).

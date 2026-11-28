@@ -1,8 +1,8 @@
 # -------------------------------------------------------------------------
 # Tarpuy ------------------------------------------------------------------
 # -------------------------------------------------------------------------
-#> open https://flavjack.github.io/inti/
-#> open https://flavjack.shinyapps.io/tarpuy/
+#> open https://inkaverse.com/
+#> open https://inkaverse.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
 #> date .: 2026-08-05
 # -------------------------------------------------------------------------

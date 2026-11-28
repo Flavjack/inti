@@ -1,8 +1,8 @@
 # -------------------------------------------------------------------------
 # Tarpuy ------------------------------------------------------------------
 # -------------------------------------------------------------------------
-#> open https://flavjack.github.io/inti/
-#> open https://flavjack.shinyapps.io/tarpuy/
+#> open https://inkaverse.com/
+#> open https://inkaverse.shinyapps.io/tarpuy/
 #> author .: Flavio Lozano-Isla (lozanoisla.com)
 #> date .: 2026-08-05
 # -------------------------------------------------------------------------
@@ -11,7 +11,7 @@
 # packages ----------------------------------------------------------------
 # -------------------------------------------------------------------------
 
-#> devtools::install_github("flavjack/inti")
+#> devtools::install_github("flozanoisla/inti")
 
 suppressPackageStartupMessages({
   source("pkgs.R")
@@ -84,15 +84,15 @@ navbarPage(
     ,
     tags$head(
       tags$link(rel = "shortcut icon"
-                , href = "https://flavjack.github.io/inti/img/inkaverse.png")
+                , href = "https://inkaverse.com/img/inkaverse.png")
     ),
     
     meta() %>%
       meta_social(
         title = "Tarpuy",
         description = "Tarpuy: Easy way to create fieldbook experimental designs.",
-        url = "https://flavjack.shinyapps.io/tarpuy/",
-        image = "https://flavjack.github.io/inti/img/tarpuy.png",
+        url = "https://inkaverse.shinyapps.io/tarpuy/",
+        image = "https://inkaverse.com/img/tarpuy.png",
         image_alt = "inkaverse.com"
       ),
     
@@ -106,7 +106,7 @@ navbarPage(
               <div style="display:inline-block; width:100%">
               <p style="text-align:center">
               <a target="_blank" href="https://inkaverse.com/articles/tarpuy.html">
-              <img src="https://flavjack.github.io/inti/img/tarpuy.png" style="height:80px" title="Tarpuy"></a>
+              <img src="https://inkaverse.com/img/tarpuy.png" style="height:80px" title="Tarpuy"></a>
               <span style="display:block;"><small>Tarpuy</small></span>
               </p></div>
               </div>
@@ -120,8 +120,8 @@ navbarPage(
             <div id=footer style="width:100%; margin:auto;">
             <div style="display:inline-block; width:100%">
             <p style="text-align:center">
-            <a target="_blank" href="https://flavjack.github.io/inti/index.html">
-            <img src="https://flavjack.github.io/inti/logo.png" style="height:80px" title="flozano"></a>
+            <a target="_blank" href="https://inkaverse.com/index.html">
+            <img src="https://inkaverse.com/logo.png" style="height:80px" title="flozano"></a>
             <span style="display:block;"><small>project</small></span>
             </p></div>
             </div>
@@ -364,7 +364,7 @@ navbarPage(
                                     Lo que significa que ahora puedes interactuar con tu información y generar tus datos.
 
                                    <li>Cualquier problema o sugerencia puedes escribir en el rastreador de problemas.
-                                   <a href="https://github.com/Flavjack/inti/issues">https://github.com/flavjack/inti/issues</a>
+                                   <a href="https://github.com/flozanoisla/inti/issues">https://github.com/flozanoisla/inti/issues</a>
                                    </li>
                                    </ol>
                                       '
@@ -397,7 +397,7 @@ navbarPage(
                                   Si tienes muchas pestañas que dificultan tu trabajo, puedes ir ocultandolas (<em>click derecho en la pestaña > Ocultar hoja</em>).
                                   Al momento de usar la app puedes especificar qué hoja deseas utilizar y la app extrae la información de la hoja indicada.
                                   <li>Si deseas analizar los datos experimentales de tu proyecto, puedes usar la app Yupana:
-                                  <a href="https://flavjack.shinyapps.io/yupana/">https://flavjack.shinyapps.io/yupana/</a>
+                                  <a href="https://inkaverse.shinyapps.io/yupana/">https://inkaverse.shinyapps.io/yupana/</a>
                                   </li>
                                   </ul>
                                   <p>
@@ -419,7 +419,7 @@ navbarPage(
                              <div style="display:inline-block; width:100%">
                              <p style="text-align:center">
                              <a target="_blank" href="https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC">
-                             <img src="https://flavjack.github.io/inti/img/youtube.png" style="height:60px" title="demo"></a>
+                             <img src="https://inkaverse.com/img/youtube.png" style="height:60px" title="demo"></a>
                              <span style="display:block;"><small>demo</small></span>
                              </p></div>
 
@@ -437,8 +437,8 @@ navbarPage(
 
                              <div style="display:inline-block; width:100%">
                              <p style="text-align:center">
-                             <a target="_blank" href="https://flavjack.shinyapps.io/yupana/">
-                             <img src="https://flavjack.github.io/inti/img/yupana.png" style="height:80px" title="yupana"></a>
+                             <a target="_blank" href="https://inkaverse.shinyapps.io/yupana/">
+                             <img src="https://inkaverse.com/img/yupana.png" style="height:80px" title="yupana"></a>
                              <span style="display:block;"><small>Yupana</small></span>
                              </p></div>
 
@@ -1008,7 +1008,7 @@ navbarPage(
   bslib::nav_item( 
     tags$a( shiny::icon("heart"), 
             "support", 
-            href = "https://github.com/sponsors/flavjack", 
+            href = "https://github.com/sponsors/flozanoisla", 
             target = "_blank" ) ), 
   bslib::nav_item( 
     tags$a( shiny::icon("github"), 
