@@ -142,7 +142,7 @@ label <- fb %>%
                , border_color = "blue"
                ) %>%
   include_image(
-    value = "https://flavjack.github.io/inti/img/inkaverse.png"
+    value = "files/inkaverse.png"
     , size = c(2.1, 2.4)
     , position = c(1.2, 1.25)
     # , opts = list("image_scale(200)", "image_noise()")

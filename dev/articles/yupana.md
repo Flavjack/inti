@@ -12,10 +12,10 @@ Yupana permite:
 - Gráfica de los resultados
 - Análisis multivariados
 
-[![](https://flavjack.github.io/inti/img/youtube.png "demo")](https://www.youtube.com/playlist?list=PLSQMdOu57lj9sTx5Dbff9O0g6KCU4pwCQ)
+[![](https://inkaverse.com/img/youtube.png "demo")](https://www.youtube.com/playlist?list=PLSQMdOu57lj9sTx5Dbff9O0g6KCU4pwCQ)
 demo
 
-[![](https://flavjack.github.io/inti/img/yupana.png "yupana")](https://inkaverse.shinyapps.io/yupana/)
+[![](https://inkaverse.com/img/yupana.png "yupana")](https://inkaverse.shinyapps.io/yupana/)
 Yupana
 
 ## Base de datos

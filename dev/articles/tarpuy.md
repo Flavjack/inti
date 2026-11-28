@@ -12,10 +12,10 @@ Tarpuy permite:
 - Croquis basados en los diseños experimentales
 - Permite adicionar: cronograma, presupuesto y diario
 
-[![](https://flavjack.github.io/inti/img/youtube.png "demo")](https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC)
+[![](https://inkaverse.com/img/youtube.png "demo")](https://www.youtube.com/playlist?list=PLSQMdOu57lj8XTyH5KUN9h-VL5TAEsaBC)
 demo
 
-[![](https://flavjack.github.io/inti/img/tarpuy.png "tarpuy")](https://inkaverse.shinyapps.io/tarpuy/)
+[![](https://inkaverse.com/img/tarpuy.png "tarpuy")](https://inkaverse.shinyapps.io/tarpuy/)
 Tarpuy
 
 ## Módulos

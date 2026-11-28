@@ -23,7 +23,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/Flavjack/inti/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/flozanoisla/inti/blob/master/inst/CITATION)
 
 Lozano-Isla F, Diaz-Saucedo Y, Baldera-Chapoñan V, Kistner M, QuipoLab,
 Inkaverse (2026). *inti: Tools and Statistical Procedures in Plant

@@ -147,7 +147,7 @@ label <- fb %>%
     , border_width = 1.5
   ) %>%
   include_image(
-    value = "https://inkaverse.com/img/inkaverse.png"
+    value = "files/inkaverse.png"
     , size = c(1.3, 1.5)
     , position = c(0.8, 9.1)
   )  %>%

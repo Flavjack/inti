@@ -2,7 +2,7 @@
 
 [![CRAN](https://img.shields.io/cran/v/inti.png)](https://cran.r-project.org/package=inti)
 [![DOI](https://zenodo.org/badge/82401374.svg)](https://zenodo.org/badge/latestdoi/82401374)
-[![R-CMD-check](https://github.com/Flavjack/inti/workflows/R-CMD-check/badge.svg)](https://github.com/Flavjack/inti/actions)
+[![R-CMD-check](https://github.com/flozanoisla/inti/workflows/R-CMD-check/badge.svg)](https://github.com/flozanoisla/inti/actions)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/inti?color=brightgreen.png)](https://r-pkg.org/pkg/inti)
 
 The **inti** package is part of the **inkaverse** project, which
@@ -33,7 +33,7 @@ if (!requireNamespace("pak", quietly = TRUE)) {
   install.packages("pak")
 }
 
-pak::pkg_install("flavjack/inti")
+pak::pkg_install("flozanoisla/inti")
 ```
 
 After installation, load the package:

@@ -391,7 +391,7 @@ CRAN release: 2021-12-10
 - *Package*
   - [`H2cal()`](https://inkaverse.com/dev/reference/H2cal.md): BLUEs
     from H2cal may be wrong if other fixed effects in the model
-    ([\#10](https://github.com/Flavjack/inti/issues/10)).
+    ([\#10](https://github.com/flozanoisla/inti/issues/10)).
     - Thanks Jim Holland ([@ncsumaize](https://github.com/ncsumaize))
       for the suggestion to improve the function.
   - New functions: `gdoc2rmd()`, `table2rmd()`, `figure2rmd()`
