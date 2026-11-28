@@ -1,7 +1,7 @@
 # inti
 
 [![CRAN](https://img.shields.io/cran/v/inti.png)](https://cran.r-project.org/package=inti)
-[![DOI](https://zenodo.org/badge/82401374.svg)](https://zenodo.org/badge/latestdoi/82401374)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4578770.svg)](https://doi.org/10.5281/zenodo.4578770)
 [![R-CMD-check](https://github.com/flozanoisla/inti/workflows/R-CMD-check/badge.svg)](https://github.com/flozanoisla/inti/actions)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/inti?color=brightgreen.png)](https://r-pkg.org/pkg/inti)
 
